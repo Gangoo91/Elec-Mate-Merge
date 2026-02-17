@@ -184,6 +184,10 @@ const PRICE_TO_TIER: Record<string, string> = {
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
   price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer', // £3.99/month founders offer (employer access)
 
+  // Electrician Win-Back - £7.99/month, £79.99/year (20% discount win-back offer)
+  price_1SvggR2RKw5t5RAmDN29FBzx: 'electrician', // £7.99/month win-back offer
+  price_1SvggR2RKw5t5RAmsrerSmdG: 'electrician_yearly', // £79.99/year win-back offer
+
   // Legacy prices (for existing subscribers)
   price_1RhtdT2RKw5t5RAmv6b2xE6p: 'apprentice', // £6.99/month (legacy)
   price_1Rhtgl2RKw5t5RAmkQVKVnKn: 'apprentice_yearly', // £69.99/year (legacy)
@@ -222,9 +226,9 @@ serve(async (req) => {
       try {
         event = stripe.webhooks.constructEvent(body, signature, webhookSecret);
         logger.info('Webhook signature verified');
-      } catch (err: any) {
+      } catch (err: unknown) {
         logger.warn('Webhook signature verification failed, processing anyway', {
-          error: err.message,
+          error: (err as Error).message,
         });
         event = JSON.parse(body);
       }
@@ -281,7 +285,9 @@ serve(async (req) => {
           page: 1,
           perPage: 1000,
         });
-        const authUser = usersData?.users?.find((u: any) => u.email === customer.email);
+        const authUser = usersData?.users?.find(
+          (u: { email?: string }) => u.email === customer.email
+        );
 
         if (authUser?.id) {
           // Backfill stripe_customer_id for future lookups
@@ -312,7 +318,7 @@ serve(async (req) => {
       periodEnd: Date | null,
       setOnboardingCompleted: boolean = false
     ) {
-      const updateData: any = {
+      const updateData: Record<string, unknown> = {
         subscribed,
         stripe_customer_id: customerId,
         subscription_tier: tier,
@@ -358,7 +364,9 @@ serve(async (req) => {
           customerId,
         });
 
-        const metadataUserId = (subscription as any).metadata?.userId || null;
+        const metadataUserId =
+          (subscription as Stripe.Subscription & { metadata?: { userId?: string } }).metadata
+            ?.userId || null;
         const userId = await findUserByCustomer(customerId, metadataUserId);
         if (!userId) {
           logger.error('No user found for customer — subscription will not activate', {
@@ -424,9 +432,9 @@ serve(async (req) => {
                 logger.info('Founder invite claimed', { inviteId });
               }
             }
-          } catch (inviteErr: any) {
+          } catch (inviteErr: unknown) {
             logger.warn('Error processing founder invite (non-fatal)', {
-              error: inviteErr?.message,
+              error: (inviteErr as Error)?.message,
             });
           }
         }
@@ -453,14 +461,17 @@ serve(async (req) => {
                 read: false,
               });
             }
-          } catch (emailError: any) {
-            logger.warn('Failed to send welcome email (non-fatal)', { error: emailError?.message });
+          } catch (emailError: unknown) {
+            logger.warn('Failed to send welcome email (non-fatal)', {
+              error: (emailError as Error)?.message,
+            });
           }
         }
 
         // Create notification for status changes
         if (event.type === 'customer.subscription.updated') {
-          const previousStatus = (event.data.previous_attributes as any)?.status;
+          const previousStatus = (event.data.previous_attributes as { status?: string } | undefined)
+            ?.status;
           if (previousStatus && previousStatus !== subscription.status) {
             await supabase.from('notifications').insert({
               user_id: userId,
@@ -482,7 +493,9 @@ serve(async (req) => {
 
         logger.info('Subscription cancelled', { subscriptionId: subscription.id, customerId });
 
-        const metadataUserId = (subscription as any).metadata?.userId || null;
+        const metadataUserId =
+          (subscription as Stripe.Subscription & { metadata?: { userId?: string } }).metadata
+            ?.userId || null;
         const userId = await findUserByCustomer(customerId, metadataUserId);
         if (!userId) {
           logger.error('No user found for customer — cannot process cancellation', { customerId });
@@ -518,7 +531,11 @@ serve(async (req) => {
         logger.info('Subscription invoice paid', { invoiceId: invoice.id, customerId });
 
         const invoiceMetadataUserId =
-          (invoice as any).subscription_details?.metadata?.userId || null;
+          (
+            invoice as Stripe.Invoice & {
+              subscription_details?: { metadata?: { userId?: string } };
+            }
+          ).subscription_details?.metadata?.userId || null;
         const userId = await findUserByCustomer(customerId, invoiceMetadataUserId);
         if (!userId) {
           logger.error('No user found for customer — cannot process invoice', {
@@ -554,7 +571,11 @@ serve(async (req) => {
         logger.warn('Subscription payment failed', { invoiceId: invoice.id, customerId });
 
         const failedInvoiceMetadataUserId =
-          (invoice as any).subscription_details?.metadata?.userId || null;
+          (
+            invoice as Stripe.Invoice & {
+              subscription_details?: { metadata?: { userId?: string } };
+            }
+          ).subscription_details?.metadata?.userId || null;
         const userId = await findUserByCustomer(customerId, failedInvoiceMetadataUserId);
         if (!userId) {
           logger.error('No user found for customer — cannot notify of failed payment', {
@@ -590,14 +611,14 @@ serve(async (req) => {
     return new Response(JSON.stringify({ received: true, type: event.type }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId },
     });
-  } catch (error: any) {
-    logger.error('Webhook error', { error: error.message });
+  } catch (error: unknown) {
+    logger.error('Webhook error', { error: (error as Error).message });
     await captureException(error, {
       functionName: 'stripe-subscription-webhook',
       requestUrl: req.url,
       requestMethod: req.method,
     });
-    return new Response(JSON.stringify({ error: error.message }), {
+    return new Response(JSON.stringify({ error: (error as Error).message }), {
       status: 500,
       headers: { ...corsHeaders, 'Content-Type': 'application/json', 'x-request-id': requestId },
     });
