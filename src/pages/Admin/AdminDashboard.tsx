@@ -198,7 +198,7 @@ export default function AdminDashboard() {
           supabase
             .from('profiles')
             .select('*', { count: 'exact', head: true })
-            .gte('created_at', today.toISOString()),
+            .gte('subscription_start', today.toISOString()),
           supabase
             .from('profiles')
             .select('*', { count: 'exact', head: true })
@@ -529,7 +529,7 @@ export default function AdminDashboard() {
               <p className="text-2xl sm:text-xl font-bold">
                 {stats?.signupsToday?.toLocaleString()}
               </p>
-              <p className="text-xs text-muted-foreground">Today</p>
+              <p className="text-xs text-muted-foreground">Subs Today</p>
             </CardContent>
           </Card>
 
