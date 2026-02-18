@@ -36,6 +36,23 @@ export const BoardPhotoCapture: React.FC<BoardPhotoCaptureProps> = ({
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [showCamera, setShowCamera] = useState(false);
 
+  // Connect stream to video element once both exist (fixes race condition where
+  // setShowCamera(true) hasn't rendered the <video> yet when srcObject is assigned)
+  useEffect(() => {
+    if (stream && showCamera && videoRef.current) {
+      videoRef.current.srcObject = stream;
+    }
+  }, [stream, showCamera]);
+
+  // Stop camera tracks on unmount to release the camera (prevents LED staying on)
+  useEffect(() => {
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [stream]);
+
   const TOTAL_CAP_MB = 8.0;
 
   // Aggressive target size for faster upload/processing

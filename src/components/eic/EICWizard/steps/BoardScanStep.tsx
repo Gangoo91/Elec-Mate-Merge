@@ -6,6 +6,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { toast } from 'sonner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -247,6 +248,10 @@ const BoardScannerOverlayWrapper: React.FC<{
       })
       .catch(() => {
         console.warn('BoardScannerOverlay not available');
+        toast.error(
+          'Could not load the board scanner. Please check your connection and try again.',
+          { duration: 6000 }
+        );
         onClose();
       });
   }, [onClose]);

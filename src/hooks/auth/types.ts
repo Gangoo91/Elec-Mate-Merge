@@ -54,7 +54,7 @@ export type AuthContextType = {
   hasCompletedInitialCheck: boolean;
   lastError: string | null;
   lastCheckedAt: Date | null;
-  checkSubscriptionStatus: () => Promise<void>;
+  checkSubscriptionStatus: (options?: { forceRefresh?: boolean }) => Promise<void>;
   isDevelopmentMode: boolean;
   toggleDevelopmentMode: () => void;
   signIn: (email: string, password: string) => Promise<{ error: any; user?: User | undefined }>;

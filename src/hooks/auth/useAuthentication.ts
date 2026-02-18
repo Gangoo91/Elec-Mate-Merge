@@ -216,6 +216,20 @@ export function useAuthentication() {
       console.error('Error clearing quiz localStorage on sign-out:', e);
     }
 
+    // Clear subscription cache from sessionStorage
+    try {
+      const keysToRemoveFromSession: string[] = [];
+      for (let i = 0; i < sessionStorage.length; i++) {
+        const key = sessionStorage.key(i);
+        if (key && key.startsWith('elecmate_sub_cache_')) {
+          keysToRemoveFromSession.push(key);
+        }
+      }
+      keysToRemoveFromSession.forEach((key) => sessionStorage.removeItem(key));
+    } catch (e) {
+      // sessionStorage may be unavailable in private browsing
+    }
+
     await supabase.auth.signOut();
     // Clear user from Sentry
     clearSentryUser();
