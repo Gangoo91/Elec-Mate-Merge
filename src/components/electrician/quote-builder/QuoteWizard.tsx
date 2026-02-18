@@ -24,6 +24,7 @@ import { EmailStatusBanner } from './EmailStatusBanner';
 import { FEATURES } from '@/config/features';
 import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transformer';
 import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
+import type { Quote, QuoteClient, QuoteItem, JobDetails, QuoteSettings } from '@/types/quote';
 
 const steps = [
   { id: 0, title: 'Client', shortTitle: 'Client', icon: User },
@@ -33,8 +34,8 @@ const steps = [
 
 interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
-  initialQuote?: any;
-  initialCostData?: any;
+  initialQuote?: Partial<Quote>;
+  initialCostData?: Record<string, unknown>;
   initialCertificateData?: {
     client: {
       name: string;
@@ -56,6 +57,30 @@ interface QuoteWizardProps {
       pdfStoragePath?: string;
     };
   };
+  initialSiteVisitData?: {
+    client: {
+      name: string;
+      email: string;
+      phone: string;
+      address: string;
+      postcode: string;
+    };
+    jobDetails: {
+      title: string;
+      description: string;
+      location: string;
+    };
+    materials?: Array<{
+      id: string;
+      description: string;
+      category: string;
+      quantity: number;
+      unitPrice: number;
+      totalPrice: number;
+      unit: string;
+    }>;
+    siteVisitId?: string;
+  };
 }
 
 export const QuoteWizard = ({
@@ -63,12 +88,13 @@ export const QuoteWizard = ({
   initialQuote,
   initialCostData,
   initialCertificateData,
+  initialSiteVisitData,
 }: QuoteWizardProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [lastSaved, setLastSaved] = useState<Date | undefined>();
   const [isSaving, setIsSaving] = useState(false);
   const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
-  const [recoveredDraft, setRecoveredDraft] = useState<any>(null);
+  const [recoveredDraft, setRecoveredDraft] = useState<Record<string, unknown> | null>(null);
   const quoteIdRef = useRef<string | null>(null);
 
   // Wrap onQuoteGenerated to clear draft after successful save
@@ -84,7 +110,7 @@ export const QuoteWizard = ({
 
   // Check for recoverable draft on mount
   useEffect(() => {
-    if (!initialQuote && !initialCostData && !initialCertificateData) {
+    if (!initialQuote && !initialCostData && !initialCertificateData && !initialSiteVisitData) {
       const draft = draftStorage.loadDraft('quote', null);
       if (draft && draftStorage.hasRecoverableDraft('quote')) {
         setRecoveredDraft(draft.data);
@@ -93,7 +119,7 @@ export const QuoteWizard = ({
     }
   }, []);
 
-  // Merge certificate data into initial quote for proper initialization
+  // Merge certificate or site visit data into initial quote for proper initialization
   const mergedInitialQuote = initialCertificateData
     ? {
         ...initialQuote,
@@ -111,7 +137,14 @@ export const QuoteWizard = ({
           linked_certificate_pdf_url: initialCertificateData.linkedCertificate.pdfUrl,
         }),
       }
-    : initialQuote;
+    : initialSiteVisitData
+      ? {
+          ...initialQuote,
+          client: initialSiteVisitData.client,
+          jobDetails: initialSiteVisitData.jobDetails,
+          items: initialSiteVisitData.materials || [],
+        }
+      : initialQuote;
 
   const {
     quote,
@@ -175,12 +208,12 @@ export const QuoteWizard = ({
   // Handle draft recovery
   const handleRecoverDraft = useCallback(() => {
     if (recoveredDraft) {
-      if (recoveredDraft.client) updateClient(recoveredDraft.client);
-      if (recoveredDraft.jobDetails) updateJobDetails(recoveredDraft.jobDetails);
+      if (recoveredDraft.client) updateClient(recoveredDraft.client as QuoteClient);
+      if (recoveredDraft.jobDetails) updateJobDetails(recoveredDraft.jobDetails as JobDetails);
       if (recoveredDraft.items) {
-        recoveredDraft.items.forEach((item: any) => addItem(item));
+        (recoveredDraft.items as QuoteItem[]).forEach((item) => addItem(item));
       }
-      if (recoveredDraft.settings) updateSettings(recoveredDraft.settings);
+      if (recoveredDraft.settings) updateSettings(recoveredDraft.settings as QuoteSettings);
       setShowRecoveryBanner(false);
       setRecoveredDraft(null);
     }
@@ -508,8 +541,9 @@ export const QuoteWizard = ({
               <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Quote?</h3>
               <p className="text-sm text-white/70">
                 You have an unsaved quote draft
-                {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}. Would you
-                like to recover it?
+                {(recoveredDraft.client as QuoteClient | undefined)?.name &&
+                  ` for ${(recoveredDraft.client as QuoteClient).name}`}
+                . Would you like to recover it?
               </p>
             </div>
             <div className="flex gap-2 flex-shrink-0">

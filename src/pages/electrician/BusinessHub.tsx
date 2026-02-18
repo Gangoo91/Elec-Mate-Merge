@@ -17,6 +17,8 @@ import {
   ChevronUp,
   BarChart3,
   Briefcase,
+  ClipboardList,
+  Camera,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
@@ -189,13 +191,40 @@ const BusinessHub = () => {
         className="px-4 py-4 space-y-6"
       >
         {/* Hero — Centred Title */}
-        <motion.div variants={itemVariants} className="flex flex-col items-center text-center pt-2 pb-1">
+        <motion.div
+          variants={itemVariants}
+          className="flex flex-col items-center text-center pt-2 pb-1"
+        >
           <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
             <Briefcase className="h-7 w-7 text-elec-yellow" />
           </div>
           <h1 className="text-xl font-bold text-white">Business Hub</h1>
           <p className="text-sm text-white mt-1">Quotes, invoices & business tools</p>
         </motion.div>
+
+        {/* Job Management */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <h2 className="text-base font-bold text-white">Job Management</h2>
+          </div>
+          <div className="space-y-2">
+            <BusinessCard
+              title="Site Visits"
+              description="Pre-site, post-site & saved visits"
+              icon={ClipboardList}
+              href="/electrician/site-visits"
+              gradient="from-emerald-400 to-green-500"
+            />
+            <BusinessCard
+              title="Photo Docs"
+              description="Project photos & documentation"
+              icon={Camera}
+              href="/electrician/photo-docs"
+              gradient="from-blue-400 to-cyan-500"
+            />
+          </div>
+        </motion.section>
 
         {/* KPI Strip */}
         <motion.div variants={itemVariants}>
@@ -301,9 +330,7 @@ const BusinessHub = () => {
                   </div>
                   <div className="text-left">
                     <p className="text-[15px] font-bold text-white">Business Insights</p>
-                    <p className="text-[13px] text-white">
-                      {formatCurrency(revenue)} revenue
-                    </p>
+                    <p className="text-[13px] text-white">{formatCurrency(revenue)} revenue</p>
                   </div>
                 </div>
                 {insightsOpen ? (
@@ -327,7 +354,10 @@ const BusinessHub = () => {
         </motion.div>
 
         {/* Disclaimer */}
-        <motion.div variants={itemVariants} className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08]">
+        <motion.div
+          variants={itemVariants}
+          className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.08]"
+        >
           <p className="text-xs text-white leading-relaxed">
             The information provided is for general guidance only and does not constitute financial,
             legal, or business advice. Always consult with qualified professionals regarding your

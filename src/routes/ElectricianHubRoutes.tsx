@@ -111,6 +111,10 @@ const QuoteBuilder = lazy(() => import('@/pages/electrician/QuoteBuilder'));
 const QuoteBuilderCreate = lazy(() => import('@/pages/electrician/QuoteBuilderCreate'));
 const QuoteBuilderEdit = lazy(() => import('@/pages/electrician/QuoteBuilderEdit'));
 const SmartQuoteBuilderPage = lazy(() => import('@/pages/electrician/SmartQuoteBuilderPage'));
+const SiteVisitPage = lazy(() => import('@/pages/electrician/SiteVisitPage'));
+const SiteVisitEditPage = lazy(() => import('@/pages/electrician/SiteVisitEditPage'));
+const SiteVisitsHubPage = lazy(() => import('@/pages/electrician/SiteVisitsHubPage'));
+const PhotoDocsPage = lazy(() => import('@/pages/electrician/PhotoDocsPage'));
 const QuotesPage = lazy(() => import('@/pages/electrician/QuotesPage'));
 const InvoicesPage = lazy(() => import('@/pages/electrician/InvoicesPage'));
 const ExpensesPage = lazy(() => import('@/pages/electrician/ExpensesPage'));
@@ -413,6 +417,38 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <SmartQuoteBuilderPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="site-visits"
+      element={
+        <LazyRoute>
+          <SiteVisitsHubPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="photo-docs"
+      element={
+        <LazyRoute>
+          <PhotoDocsPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="site-visit/new"
+      element={
+        <LazyRoute>
+          <SiteVisitPage />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="site-visit/:id"
+      element={
+        <LazyRoute>
+          <SiteVisitEditPage />
         </LazyRoute>
       }
     />

@@ -22,9 +22,10 @@ interface Tab {
 
 interface PhotoDocumentationProps {
   onBack?: () => void;
+  backLabel?: string;
 }
 
-export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) {
+export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumentationProps) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<TabId>('gallery');
   const { stats } = useSafetyPhotos();
@@ -62,20 +63,25 @@ export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) 
     setActiveTab('gallery');
   }, []);
 
-  const handleTabChange = useCallback((tabId: TabId) => {
-    // Clear camera project context when switching away from camera
-    if (activeTab === 'camera' && tabId !== 'camera') {
-      setCameraProjectRef(undefined);
-    }
-    setActiveTab(tabId);
-  }, [activeTab]);
+  const handleTabChange = useCallback(
+    (tabId: TabId) => {
+      // Clear camera project context when switching away from camera
+      if (activeTab === 'camera' && tabId !== 'camera') {
+        setCameraProjectRef(undefined);
+      }
+      setActiveTab(tabId);
+    },
+    [activeTab]
+  );
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'gallery':
         return <GalleryTab />;
       case 'camera':
-        return <CameraTab onPhotoUploaded={handlePhotoUploaded} projectReference={cameraProjectRef} />;
+        return (
+          <CameraTab onPhotoUploaded={handlePhotoUploaded} projectReference={cameraProjectRef} />
+        );
       case 'projects':
         return <ProjectsTab />;
       case 'export':
@@ -103,7 +109,7 @@ export default function PhotoDocumentation({ onBack }: PhotoDocumentationProps) 
             className="flex items-center gap-2 text-white active:opacity-70 active:scale-[0.98] transition-all touch-manipulation h-11 -ml-2 px-2 rounded-lg"
           >
             <ArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Site Safety</span>
+            <span className="text-sm font-medium">{backLabel || 'Site Safety'}</span>
           </button>
         </div>
       </div>

@@ -40,6 +40,8 @@ const ClientPortalView = lazy(() => import('@/pages/public/ClientPortalView'));
 const PublicElecIdView = lazy(() => import('@/pages/public/PublicElecIdView'));
 const SupervisorVerificationPage = lazy(() => import('@/pages/public/SupervisorVerificationPage'));
 const PhotoSharePage = lazy(() => import('@/pages/public/PhotoSharePage'));
+const ScopeSharePage = lazy(() => import('@/pages/public/ScopeSharePage'));
+const CompletionSignOffPage = lazy(() => import('@/pages/public/CompletionSignOffPage'));
 const SharedPortfolioView = lazy(() => import('@/pages/public/SharedPortfolioView'));
 const LaTeXPDFGeneratorPage = lazy(() => import('@/pages/LaTeXPDFGeneratorPage'));
 const InvoiceQuoteBuilder = lazy(() => import('@/pages/electrician/InvoiceQuoteBuilder'));
@@ -446,6 +448,22 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <PhotoSharePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/scope/:token"
+          element={
+            <LazyRoute>
+              <ScopeSharePage />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/completion/:token"
+          element={
+            <LazyRoute>
+              <CompletionSignOffPage />
             </LazyRoute>
           }
         />

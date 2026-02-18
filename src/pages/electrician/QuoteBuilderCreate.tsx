@@ -18,20 +18,49 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 
+type CertificateContext = {
+  client: { name: string; email: string; phone: string; address: string; postcode: string };
+  jobDetails: { title: string; description: string; location: string };
+  linkedCertificate?: {
+    reportId: string;
+    certificateType: string;
+    certificateReference: string;
+    pdfUrl?: string;
+    pdfStoragePath?: string;
+  };
+};
+
+type SiteVisitContext = {
+  client: { name: string; email: string; phone: string; address: string; postcode: string };
+  jobDetails: { title: string; description: string; location: string };
+  materials?: Array<{
+    id: string;
+    description: string;
+    category: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    unit: string;
+  }>;
+  siteVisitId?: string;
+};
+
 const QuoteBuilderCreate = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { refreshQuotes } = useQuoteStorage();
-  const [costContext, setCostContext] = useState<any>(null);
-  const [certificateContext, setCertificateContext] = useState<any>(null);
+  const [costContext, setCostContext] = useState<Record<string, unknown> | null>(null);
+  const [certificateContext, setCertificateContext] = useState<CertificateContext | null>(null);
+  const [siteVisitContext, setSiteVisitContext] = useState<SiteVisitContext | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
-  // Load cost data or certificate data from sessionStorage
+  // Load cost data, certificate data, or site visit data from sessionStorage
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const costSessionId = params.get('costSessionId');
     const certificateSessionId = params.get('certificateSessionId');
+    const siteVisitSessionId = params.get('siteVisitSessionId');
 
     if (costSessionId) {
       const storedContext = sessionStorage.getItem(costSessionId);
@@ -48,6 +77,15 @@ const QuoteBuilderCreate = () => {
         const parsed = JSON.parse(storedContext);
         setCertificateContext(parsed.certificateData);
         sessionStorage.removeItem(certificateSessionId);
+      }
+    }
+
+    if (siteVisitSessionId) {
+      const storedContext = sessionStorage.getItem(siteVisitSessionId);
+      if (storedContext) {
+        const parsed = JSON.parse(storedContext);
+        setSiteVisitContext(parsed.siteVisitData);
+        sessionStorage.removeItem(siteVisitSessionId);
       }
     }
 
@@ -162,6 +200,23 @@ const QuoteBuilderCreate = () => {
           </motion.div>
         )}
 
+        {/* Site Visit Data Banner */}
+        {siteVisitContext && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20"
+          >
+            <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center flex-shrink-0">
+              <ClipboardCheck className="h-5 w-5 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-emerald-400">Imported from Site Visit</p>
+              <p className="text-[13px] text-white/50">Client details and scope pre-filled</p>
+            </div>
+          </motion.div>
+        )}
+
         {/* Main Content */}
         <main className="px-4 py-4">
           {isLoadingContext ? (
@@ -173,6 +228,7 @@ const QuoteBuilderCreate = () => {
               onQuoteGenerated={handleQuoteGenerated}
               initialCostData={costContext}
               initialCertificateData={certificateContext}
+              initialSiteVisitData={siteVisitContext}
             />
           )}
         </main>
