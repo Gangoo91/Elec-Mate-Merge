@@ -83,6 +83,9 @@ export function initSentry() {
 
         // Capacitor bridge in non-native WebViews (Facebook/Instagram in-app browsers)
         /webkit\.messageHandlers/i,
+
+        // Capacitor native bridge calls in web context (not actionable)
+        /Object Not Found Matching Id/i,
       ],
 
       // Process events before sending

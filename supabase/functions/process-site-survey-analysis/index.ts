@@ -290,7 +290,7 @@ Always call the submit_analysis tool with your complete analysis.`;
           ],
           tools: analysisTools,
           tool_choice: { type: 'function', function: { name: 'submit_analysis' } },
-          max_tokens: 16384,
+          max_tokens: 32768,
         },
         openAiKey
       );
