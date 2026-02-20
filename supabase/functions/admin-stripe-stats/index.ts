@@ -62,24 +62,15 @@ serve(async (req) => {
       throw new Error('Authentication failed');
     }
 
-    // Check if user has admin access
-    // Admin access: role = 'admin' OR role = 'employer' (Andrew's account) OR is in admin list
-    const ADMIN_USER_IDS = [
-      'aa69361d-dad9-4841-84e4-25ee41568594', // Andrew Moore
-      'b0113c59-8611-4c5e-8503-1797a75bb64f', // ANDREW MOORE
-    ];
-
+    // Check if user has admin access via admin_role (consistent with admin-get-users)
     const { data: profile } = await supabase
       .from('profiles')
-      .select('role')
+      .select('admin_role')
       .eq('id', user.id)
       .single();
 
-    const hasAdminAccess =
-      profile?.role === 'admin' || profile?.role === 'employer' || ADMIN_USER_IDS.includes(user.id);
-
-    if (!hasAdminAccess) {
-      console.log('[ADMIN-STRIPE-STATS] Access denied for user:', user.id, 'role:', profile?.role);
+    if (!profile?.admin_role) {
+      console.log('[ADMIN-STRIPE-STATS] Access denied for user:', user.id);
       throw new Error('Admin access required');
     }
 

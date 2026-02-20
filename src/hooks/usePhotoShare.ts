@@ -35,6 +35,8 @@ export interface SharePhotoData {
   location: string | null;
   tags: string[] | null;
   created_at: string;
+  photo_type?: string | null;
+  notes?: string | null;
 }
 
 export interface CreateShareOptions {
@@ -105,6 +107,8 @@ export function usePhotoShare() {
         location: p.location,
         tags: p.tags,
         created_at: p.created_at,
+        photo_type: p.photo_type || null,
+        notes: p.notes || null,
       }));
 
       const expiresAt = options.expiresInDays
@@ -117,6 +121,7 @@ export function usePhotoShare() {
           user_id: session.user.id,
           share_token: token,
           project_reference: options.projectReference,
+          project_id: options.projectId || null,
           title: options.title || options.projectReference,
           message: options.message || null,
           company_name: options.companyName || null,

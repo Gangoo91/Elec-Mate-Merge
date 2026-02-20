@@ -1,4 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { SafetyPhoto, useSafetyPhotos } from '@/hooks/useSafetyPhotos';
 import {
@@ -7,6 +8,7 @@ import {
   getPhotoTypeLabel,
   usePhotoProjects,
 } from '@/hooks/usePhotoProjects';
+import { useSwipeable } from '@/hooks/use-swipeable';
 import { format } from 'date-fns';
 import { MapPin, Trash2, Share2, Pin, Calendar, AlertTriangle, X } from 'lucide-react';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
@@ -51,11 +53,55 @@ export default function PhotoDetailSheet({
   const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
   const [selectedPhotoType, setSelectedPhotoType] = useState<string | null>(null);
 
+  // Swipe navigation state
+  const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('left');
+
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const photoContainerRef = useRef<HTMLDivElement>(null);
 
+  // Current index in the photos array
+  const currentIndex = useMemo(() => {
+    if (!photo) return -1;
+    return photos.findIndex((p) => p.id === photo.id);
+  }, [photo, photos]);
+
+  // Swipe handlers — swipe left = next, swipe right = previous
+  const handleSwipeNav = useCallback(
+    (direction: 'next' | 'prev') => {
+      if (isAnnotating) return; // don't navigate while annotating
+      const idx = currentIndex;
+      if (idx < 0) return;
+
+      if (direction === 'next' && idx < photos.length - 1) {
+        setSlideDirection('left');
+        onNavigate?.(photos[idx + 1]);
+      } else if (direction === 'prev' && idx > 0) {
+        setSlideDirection('right');
+        onNavigate?.(photos[idx - 1]);
+      }
+    },
+    [currentIndex, photos, onNavigate, isAnnotating]
+  );
+
+  const { ref: swipeRef } = useSwipeable({
+    onSwipeLeft: () => handleSwipeNav('next'),
+    onSwipeRight: () => handleSwipeNav('prev'),
+    threshold: 40,
+    preventScrollOnHorizontal: true,
+  });
+
+  // Merge swipeRef + photoContainerRef
+  const mergedPhotoRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      photoContainerRef.current = node;
+      // Assign to swipeRef (it's a RefObject, so we cast)
+      (swipeRef as React.MutableRefObject<HTMLDivElement | null>).current = node;
+    },
+    [swipeRef]
+  );
+
   // --- Sync state when photo changes ---
-   
+
   useEffect(() => {
     if (photo) {
       setNotes(photo.notes || '');
@@ -84,7 +130,7 @@ export default function PhotoDetailSheet({
   }, [photo?.id]);
 
   // --- Auto-save notes with 2s debounce ---
-   
+
   useEffect(() => {
     if (!photo) return;
     if (notes !== (photo.notes || '')) {
@@ -216,27 +262,47 @@ export default function PhotoDetailSheet({
 
             {/* Scrollable content */}
             <div className="flex-1 overflow-y-auto momentum-scroll-y scrollbar-hide">
-              {/* Photo with annotation overlay */}
+              {/* Photo with annotation overlay + swipe navigation */}
               <div className="px-4 pt-3">
                 <div
-                  ref={photoContainerRef}
+                  ref={mergedPhotoRef}
                   className="relative rounded-xl overflow-hidden"
-                  style={{ touchAction: 'pinch-zoom' }}
+                  style={{ touchAction: isAnnotating ? 'pinch-zoom' : 'pan-y' }}
                   onClick={handlePhotoTapForAnnotation}
                   onTouchEnd={isAnnotating ? handlePhotoTapForAnnotation : undefined}
                 >
-                  <img
-                    src={photo.file_url}
-                    alt={photo.description}
-                    className="w-full aspect-auto rounded-xl object-cover"
-                    draggable={false}
-                  />
+                  <AnimatePresence mode="popLayout" initial={false}>
+                    <motion.div
+                      key={photo.id}
+                      initial={{ x: slideDirection === 'left' ? 300 : -300, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      exit={{ x: slideDirection === 'left' ? -300 : 300, opacity: 0 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 30, mass: 0.8 }}
+                    >
+                      {photo.mime_type?.startsWith('video/') ? (
+                        <video
+                          src={photo.file_url}
+                          controls
+                          playsInline
+                          className="w-full aspect-auto rounded-xl object-cover"
+                          draggable={false}
+                        />
+                      ) : (
+                        <img
+                          src={photo.file_url}
+                          alt={photo.description}
+                          className="w-full aspect-auto rounded-xl object-cover"
+                          draggable={false}
+                        />
+                      )}
+                    </motion.div>
+                  </AnimatePresence>
 
                   {/* Annotation pins overlay */}
                   {annotations.map((ann, i) => (
                     <button
                       key={i}
-                      className="absolute touch-manipulation"
+                      className="absolute w-11 h-11 flex items-center justify-center touch-manipulation"
                       style={{
                         left: `${ann.x}%`,
                         top: `${ann.y}%`,
@@ -248,7 +314,7 @@ export default function PhotoDetailSheet({
                       }}
                     >
                       {/* Pulsing ring */}
-                      <span className="absolute inset-0 w-6 h-6 rounded-full bg-elec-yellow/30 animate-ping" />
+                      <span className="absolute w-6 h-6 rounded-full bg-elec-yellow/30 animate-ping" />
                       {/* Pin circle */}
                       <span className="relative block w-6 h-6 rounded-full bg-elec-yellow border-2 border-black/30 shadow-lg" />
 
@@ -287,6 +353,30 @@ export default function PhotoDetailSheet({
                     </div>
                   )}
                 </div>
+
+                {/* Position indicator */}
+                {photos.length > 1 && currentIndex >= 0 && (
+                  <div className="flex items-center justify-center mt-2.5">
+                    {photos.length <= 10 ? (
+                      <div className="flex items-center gap-1.5">
+                        {photos.map((_, i) => (
+                          <span
+                            key={i}
+                            className={`block rounded-full transition-all ${
+                              i === currentIndex
+                                ? 'w-2 h-2 bg-elec-yellow'
+                                : 'w-1.5 h-1.5 bg-white/30'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-xs text-white font-medium">
+                        {currentIndex + 1} / {photos.length}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Pin text input popup */}

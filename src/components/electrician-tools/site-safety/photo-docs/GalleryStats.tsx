@@ -1,15 +1,26 @@
 import { PHOTO_CATEGORIES, getCategoryColor } from '@/hooks/useSafetyPhotos';
 
+function formatBytes(bytes: number): string {
+  if (bytes === 0) return '0 B';
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  if (bytes < 1024 * 1024 * 1024) return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  return `${(bytes / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+}
+
 interface GalleryStatsProps {
   total: number;
   byCategory: Record<string, number>;
+  totalBytes?: number;
 }
 
-export default function GalleryStats({ total, byCategory }: GalleryStatsProps) {
+export default function GalleryStats({ total, byCategory, totalBytes }: GalleryStatsProps) {
   if (total === 0) return null;
 
-  // Calculate total storage estimate (rough: ~500KB per compressed photo)
-  const estimatedStorageMB = ((total * 500) / 1024).toFixed(1);
+  const storageDisplay =
+    totalBytes && totalBytes > 0
+      ? formatBytes(totalBytes)
+      : `~${((total * 500) / 1024).toFixed(1)} MB`;
 
   return (
     <div className="px-3 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
@@ -19,7 +30,7 @@ export default function GalleryStats({ total, byCategory }: GalleryStatsProps) {
           <span className="text-lg font-bold text-elec-yellow">{total}</span>
           <span className="text-xs text-white">photos</span>
         </div>
-        <span className="text-[10px] text-white">~{estimatedStorageMB} MB</span>
+        <span className="text-[10px] text-white">{storageDisplay}</span>
       </div>
 
       {/* Category bar chart */}

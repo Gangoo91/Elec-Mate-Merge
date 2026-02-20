@@ -38,6 +38,7 @@ import {
   Inbox,
   Timer,
   GraduationCap,
+  UserPlus,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -52,8 +53,10 @@ const primaryNavItems = [
 
 // Secondary navigation items - in expandable section (More)
 const secondaryNavItems = [
+  { name: 'Incomplete Signup', path: '/admin/incomplete-signup', icon: UserPlus },
   { name: 'Win-Back', path: '/admin/winback', icon: Gift },
   { name: 'Apprentice Campaigns', path: '/admin/apprentice-campaigns', icon: GraduationCap },
+  { name: 'Outreach', path: '/admin/outreach', icon: Megaphone },
   { name: 'Founders', path: '/admin/founders', icon: Crown },
   { name: 'Early Access', path: '/admin/early-access', icon: Rocket },
   { name: 'Elec-IDs', path: '/admin/elec-ids', icon: IdCard },

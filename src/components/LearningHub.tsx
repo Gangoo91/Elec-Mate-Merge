@@ -58,7 +58,7 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
             </div>
             <div className="flex-1 min-w-0">
               <h1 className="text-base lg:text-xl font-semibold text-white truncate">I&T Hub</h1>
-              <p className="text-[11px] lg:text-sm text-white/50">BS 7671:2018+A3:2024</p>
+              <p className="text-[11px] lg:text-sm text-white">BS 7671:2018+A3:2024</p>
             </div>
           </div>
         </header>

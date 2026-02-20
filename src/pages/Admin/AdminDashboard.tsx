@@ -1,4 +1,4 @@
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,24 +12,21 @@ import {
   Crown,
   Zap,
   Activity,
-  UserPlus,
+  CreditCard,
+  ShoppingCart,
   Eye,
   Mail,
   MessageSquare,
-  Send,
-  Reply,
   Bell,
   FileCheck,
 } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
-import { toast } from '@/hooks/use-toast';
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { getInitials, getRoleColor } from '@/utils/adminUtils';
 import UserManagementSheet from '@/components/admin/UserManagementSheet';
 import UserActivitySheet from '@/components/admin/UserActivitySheet';
-import MessageUserSheet from '@/components/admin/MessageUserSheet';
 import { useAdminUsersBase, AdminUser } from '@/hooks/useAdminUsersBase';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 
@@ -63,6 +60,22 @@ interface OnlineUser {
   } | null;
 }
 
+// Stripe subscription detail from edge function
+interface StripeSubscriptionDetail {
+  subscriptionId: string;
+  customerId: string;
+  customerEmail: string;
+  customerName: string;
+  tier: string;
+  priceId: string;
+  priceAmount: number;
+  monthlyAmount: number;
+  interval: string;
+  status: string;
+  trialEnd: string | null;
+  created: string;
+}
+
 // Stripe stats type
 interface StripeStats {
   stripe: {
@@ -86,10 +99,18 @@ interface StripeStats {
     mrr: number;
     projectedMrr: number;
   };
+  supabase: {
+    subscribedUsers: number;
+    tierCounts: Record<string, number>;
+    withStripeId: number;
+    withoutStripeId: number;
+  };
   discrepancies: {
     inStripeNotSupabase: number;
     inSupabaseNotStripe: number;
   };
+  subscriptions: StripeSubscriptionDetail[];
+  trialingList: StripeSubscriptionDetail[];
   generatedAt: string;
 }
 
@@ -103,13 +124,6 @@ export default function AdminDashboard() {
     userName: string;
     userRole: string;
   } | null>(null);
-  const [replyUser, setReplyUser] = useState<{
-    id: string;
-    full_name?: string;
-    email?: string;
-    role?: string;
-  } | null>(null);
-
   // Shared cached edge function call — reused across admin pages
   const { data: baseUsers } = useAdminUsersBase();
 
@@ -124,35 +138,6 @@ export default function AdminDashboard() {
     ]);
     setTimeout(() => setIsRefreshing(false), 500);
   }, [queryClient]);
-
-  // Mark message as read + open reply
-  const markReadMutation = useMutation({
-    mutationFn: async (messageId: string) => {
-      const { error } = await supabase
-        .from('admin_messages')
-        .update({ read_at: new Date().toISOString() })
-        .eq('id', messageId)
-        .is('read_at', null);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['admin-support-inbox'] });
-    },
-  });
-
-  const handleMessageClick = (msg: SupportMessage) => {
-    const sender = msg.sender;
-    // Mark as read
-    if (!msg.read_at) {
-      markReadMutation.mutate(msg.id);
-    }
-    // Open reply sheet
-    setReplyUser({
-      id: msg.sender_id,
-      full_name: sender?.full_name ?? undefined,
-      role: sender?.role ?? undefined,
-    });
-  };
 
   // Fetch LIVE Stripe stats
   const { data: stripeStats, isLoading: stripeLoading } = useQuery<StripeStats>({
@@ -357,6 +342,34 @@ export default function AdminDashboard() {
   const arr = mrr * 12;
   const totalSubs = stripeStats?.stripe.activeSubscriptions || 0;
 
+  // Abandoned checkouts: have stripe_customer_id but never subscribed and no free access
+  const abandonedCheckouts =
+    baseUsers?.filter((u) => u.stripe_customer_id && !u.subscribed && !u.free_access_granted) || [];
+
+  // Recent subscriptions: combine active + trialing, filter to today, cross-reference with baseUsers
+  const recentSubscriptions = (() => {
+    const allSubs = [...(stripeStats?.subscriptions || []), ...(stripeStats?.trialingList || [])];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return allSubs
+      .filter((s) => new Date(s.created) >= today)
+      .map((s) => {
+        const matchedUser = baseUsers?.find(
+          (u) => u.email?.toLowerCase() === s.customerEmail?.toLowerCase()
+        );
+        return {
+          ...s,
+          full_name: matchedUser?.full_name || s.customerName || 'Unknown',
+          role: matchedUser?.role || null,
+          user_created_at: matchedUser?.created_at || null,
+          matchedUser: matchedUser || null,
+        };
+      })
+      .sort((a, b) => new Date(b.created).getTime() - new Date(a.created).getTime())
+      .slice(0, 5);
+  })();
+
   return (
     <PullToRefresh
       onRefresh={async () => {
@@ -449,7 +462,7 @@ export default function AdminDashboard() {
             <CardContent className="space-y-2">
               {(pendingCounts?.unreadMessages || 0) > 0 && (
                 <button
-                  onClick={() => navigate('/admin/messages')}
+                  onClick={() => navigate('/admin/user-messages')}
                   className="w-full flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 active:bg-muted transition-colors touch-manipulation h-11"
                 >
                   <div className="flex items-center gap-2 text-sm">
@@ -494,6 +507,29 @@ export default function AdminDashboard() {
           </Card>
         )}
 
+        {/* Abandoned Checkouts — only show when count > 0 */}
+        {abandonedCheckouts.length > 0 && (
+          <Card
+            className="border-orange-500/20 bg-gradient-to-r from-orange-500/5 to-red-500/5 touch-manipulation active:scale-[0.99] transition-transform cursor-pointer"
+            onClick={() => navigate('/admin/incomplete-signup')}
+          >
+            <CardContent className="p-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-orange-500/15 flex items-center justify-center">
+                  <ShoppingCart className="h-5 w-5 text-orange-400" />
+                </div>
+                <div>
+                  <p className="font-semibold text-sm">Abandoned Checkouts</p>
+                  <p className="text-xs text-white">Started checkout but never subscribed</p>
+                </div>
+              </div>
+              <Badge className="bg-orange-500/20 text-orange-400 border-0 text-base px-3 py-1">
+                {abandonedCheckouts.length}
+              </Badge>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Quick Stats Row - 2x2 on mobile, 4 cols on tablet+ */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
           <Card
@@ -525,7 +561,7 @@ export default function AdminDashboard() {
             onClick={() => navigate('/admin/users?filter=today')}
           >
             <CardContent className="p-3 sm:p-3 text-center">
-              <UserPlus className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
+              <CreditCard className="h-5 w-5 text-yellow-400 mx-auto mb-1" />
               <p className="text-2xl sm:text-xl font-bold">
                 {stats?.signupsToday?.toLocaleString()}
               </p>
@@ -681,6 +717,74 @@ export default function AdminDashboard() {
           </div>
         </Card>
 
+        {/* Recent Subscriptions */}
+        {recentSubscriptions.length > 0 && (
+          <Card className="border-0 shadow-sm overflow-hidden">
+            <div className="p-4 border-b border-border/50 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CreditCard className="h-4 w-4 text-emerald-400" />
+                <span className="font-semibold text-sm">Recent Subscriptions</span>
+              </div>
+              <Badge variant="secondary" className="text-xs px-2 py-0">
+                {recentSubscriptions.length} today
+              </Badge>
+            </div>
+            <div className="divide-y divide-border/50">
+              {recentSubscriptions.map((sub) => {
+                const roleColor = getRoleColor(sub.role);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const isNewUser = sub.user_created_at && new Date(sub.user_created_at) >= today;
+
+                return (
+                  <button
+                    key={sub.subscriptionId}
+                    onClick={() => {
+                      if (sub.matchedUser) setSelectedUser(sub.matchedUser);
+                    }}
+                    className="w-full flex items-center gap-3 p-3 hover:bg-muted/50 active:bg-muted transition-colors touch-manipulation"
+                  >
+                    <div
+                      className={cn(
+                        'w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-sm shrink-0',
+                        roleColor.bg,
+                        roleColor.text
+                      )}
+                    >
+                      {getInitials(sub.full_name)}
+                    </div>
+                    <div className="flex-1 min-w-0 text-left">
+                      <p className="font-medium text-sm truncate">{sub.full_name}</p>
+                      <p className="text-xs text-muted-foreground truncate">{sub.customerEmail}</p>
+                    </div>
+                    <div className="flex flex-col items-end gap-1 shrink-0">
+                      <div className="flex items-center gap-1">
+                        <Badge className="text-[11px] px-1.5 py-0 bg-emerald-500/20 text-emerald-400 border-0 capitalize">
+                          {sub.tier}
+                        </Badge>
+                        {isNewUser ? (
+                          <Badge className="text-[11px] px-1.5 py-0 bg-green-500/20 text-green-400 border-0">
+                            New
+                          </Badge>
+                        ) : (
+                          <Badge className="text-[11px] px-1.5 py-0 bg-blue-500/20 text-blue-400 border-0">
+                            Returning
+                          </Badge>
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {formatDistanceToNow(new Date(sub.created), {
+                          addSuffix: true,
+                        }).replace('about ', '')}
+                      </p>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </Card>
+        )}
+
         {/* Support Inbox */}
         {supportMessages && supportMessages.length > 0 && (
           <Card className="border-0 shadow-sm overflow-hidden">
@@ -699,7 +803,7 @@ export default function AdminDashboard() {
                   variant="ghost"
                   size="sm"
                   className="text-xs h-11 px-3 touch-manipulation"
-                  onClick={() => navigate('/admin/messages')}
+                  onClick={() => navigate('/admin/user-messages')}
                 >
                   View All
                   <ChevronRight className="h-3 w-3 ml-1" />
@@ -715,7 +819,7 @@ export default function AdminDashboard() {
                 return (
                   <button
                     key={msg.id}
-                    onClick={() => handleMessageClick(msg)}
+                    onClick={() => navigate('/admin/user-messages')}
                     className={cn(
                       'w-full flex items-start gap-3 p-3 text-left transition-colors touch-manipulation',
                       isUnread
@@ -741,35 +845,24 @@ export default function AdminDashboard() {
                       <div className="flex items-center justify-between gap-2">
                         <p
                           className={cn(
-                            'text-sm truncate',
-                            isUnread
-                              ? 'font-semibold text-foreground'
-                              : 'font-medium text-muted-foreground'
+                            'text-sm truncate text-white',
+                            isUnread ? 'font-semibold' : 'font-medium'
                           )}
                         >
                           {sender?.full_name || 'Unknown'}
                         </p>
-                        <span className="text-xs text-muted-foreground/60 shrink-0">
+                        <span className="text-xs text-white shrink-0">
                           {formatDistanceToNow(new Date(msg.created_at), {
                             addSuffix: true,
                           }).replace('about ', '')}
                         </span>
                       </div>
                       {msg.subject && msg.subject !== 'Support Request' && (
-                        <p
-                          className={cn(
-                            'text-xs truncate mt-0.5',
-                            isUnread ? 'text-foreground/80' : 'text-muted-foreground'
-                          )}
-                        >
-                          {msg.subject}
-                        </p>
+                        <p className="text-xs text-white truncate mt-0.5">{msg.subject}</p>
                       )}
-                      <p className="text-xs text-muted-foreground line-clamp-2 mt-0.5">
-                        {msg.message}
-                      </p>
+                      <p className="text-xs text-white line-clamp-2 mt-0.5">{msg.message}</p>
                     </div>
-                    <Reply className="h-4 w-4 text-muted-foreground/40 shrink-0 mt-1" />
+                    <ChevronRight className="h-4 w-4 text-white shrink-0 mt-1" />
                   </button>
                 );
               })}
@@ -827,12 +920,6 @@ export default function AdminDashboard() {
           userRole={selectedOnlineUser?.userRole || null}
           open={!!selectedOnlineUser}
           onOpenChange={(open) => !open && setSelectedOnlineUser(null)}
-        />
-
-        <MessageUserSheet
-          user={replyUser}
-          open={!!replyUser}
-          onOpenChange={(open) => !open && setReplyUser(null)}
         />
       </div>
     </PullToRefresh>

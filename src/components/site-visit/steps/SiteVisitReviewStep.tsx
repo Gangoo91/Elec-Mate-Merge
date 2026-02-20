@@ -2,6 +2,7 @@ import React from 'react';
 import { Home, Camera, HelpCircle, Package } from 'lucide-react';
 import type { SiteVisit } from '@/types/siteVisit';
 import { getRoomLabel } from '@/data/siteVisit/roomTypes';
+import { SurveyAnalysisPanel } from '../review/SurveyAnalysisPanel';
 
 interface SiteVisitReviewStepProps {
   visit: SiteVisit;
@@ -62,23 +63,23 @@ export const SiteVisitReviewStep = ({
         <h3 className="text-sm font-semibold text-white">Client & Property</h3>
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>
-            <p className="text-white/50">Client</p>
+            <p className="text-white">Client</p>
             <p className="text-white">{visit.customerName || '—'}</p>
           </div>
           <div>
-            <p className="text-white/50">Phone</p>
+            <p className="text-white">Phone</p>
             <p className="text-white">{visit.customerPhone || '—'}</p>
           </div>
           <div className="col-span-2">
-            <p className="text-white/50">Address</p>
+            <p className="text-white">Address</p>
             <p className="text-white">{visit.propertyAddress || '—'}</p>
           </div>
           <div>
-            <p className="text-white/50">Postcode</p>
+            <p className="text-white">Postcode</p>
             <p className="text-white">{visit.propertyPostcode || '—'}</p>
           </div>
           <div>
-            <p className="text-white/50">Type</p>
+            <p className="text-white">Type</p>
             <p className="text-white capitalize">{visit.propertyType || '—'}</p>
           </div>
         </div>
@@ -133,14 +134,14 @@ export const SiteVisitReviewStep = ({
               <div className="space-y-1 pt-1 border-t border-white/[0.06]">
                 {roomPrompts.map((prompt) => (
                   <div key={prompt.id} className="flex justify-between text-xs">
-                    <span className="text-white/50">{prompt.promptQuestion}</span>
+                    <span className="text-white">{prompt.promptQuestion}</span>
                     <span className="text-white font-medium">{prompt.response}</span>
                   </div>
                 ))}
               </div>
             )}
 
-            {room.notes && <p className="text-xs text-white/50 italic">{room.notes}</p>}
+            {room.notes && <p className="text-xs text-white italic">{room.notes}</p>}
           </div>
         );
       })}
@@ -154,13 +155,16 @@ export const SiteVisitReviewStep = ({
               .filter((p) => !p.roomId && p.response)
               .map((prompt) => (
                 <div key={prompt.id} className="flex justify-between text-xs">
-                  <span className="text-white/50">{prompt.promptQuestion}</span>
+                  <span className="text-white">{prompt.promptQuestion}</span>
                   <span className="text-white font-medium">{prompt.response}</span>
                 </div>
               ))}
           </div>
         </div>
       )}
+
+      {/* AI Analysis */}
+      <SurveyAnalysisPanel visit={visit} />
     </div>
   );
 };

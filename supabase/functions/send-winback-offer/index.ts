@@ -327,7 +327,8 @@ function generateWinbackEmailV2HTML(user: EligibleUser): string {
   // Shorthand styles to reduce HTML weight (Gmail clips at ~102KB)
   const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
   const b = 'color:#fff;font-weight:700';
-  const h = 'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
 
   return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
 <body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
@@ -412,7 +413,86 @@ function generateWinbackEmailV2HTML(user: EligibleUser): string {
 <p style="margin:0 0 10px;font-size:13px;color:#f59e0b;font-weight:600">You're early. The price reflects that. It's going to &pound;12.99/mo when the app hits the stores.</p>
 <p style="margin:0 0 16px;font-size:15px;color:#e2e8f0;line-height:1.5">Replace your cert software, RAMS tool, quoting spreadsheet, invoicing app and that notes app. One sub instead of five.</p>
 <a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Get back in at &pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo &rarr;</a>
-<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)} &mdash; save &pound;${((WINBACK_CONFIG.monthlyPrice * 12) - WINBACK_CONFIG.yearlyPrice).toFixed(2)}/yr</a>
+<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)} &mdash; save &pound;${(WINBACK_CONFIG.monthlyPrice * 12 - WINBACK_CONFIG.yearlyPrice).toFixed(2)}/yr</a>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 20px"><div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;text-align:center">
+<p style="margin:0;font-size:14px;color:#e2e8f0;line-height:1.6">Not sure? Reply to this email and I'll give you <strong style="color:#60a5fa">another free week</strong> to try it properly. No strings.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 24px 28px">
+<p style="margin:0 0 4px;font-size:15px;color:#e2e8f0">Cheers,</p>
+<p style="margin:0 0 4px;font-size:16px;color:#fff;font-weight:600">Andrew</p>
+<p style="margin:0 0 10px;font-size:13px;color:#64748b">Founder, Elec-Mate</p>
+<p style="margin:0;font-size:14px;color:#e2e8f0">&#x1F4AC; Got questions? Drop me a WhatsApp: <a href="https://wa.me/447507241303" style="color:#25D366;font-weight:600;text-decoration:none">+44 7507 241303</a></p>
+</td></tr>
+
+<tr><td style="padding:14px 24px;text-align:center;background:rgba(15,23,42,0.6);border-top:1px solid rgba(255,255,255,0.05)">
+<p style="margin:0;font-size:12px;color:#475569">&copy; ${new Date().getFullYear()} Elec-Mate &middot; Built for UK Sparks &#x1F1EC;&#x1F1E7;&#x26A1;</p>
+</td></tr>
+
+</table></td></tr></table>
+</body></html>`;
+}
+
+// Generate win-back v3 email HTML — "This Week" weekly round-up style (compact for Gmail)
+function generateWinbackEmailV3HTML(user: EligibleUser): string {
+  const firstName = user.full_name?.split(' ')[0] || 'mate';
+  const t = 'color:#e2e8f0;font-size:14px;line-height:1.6;margin:0 0 5px';
+  const b = 'color:#fff;font-weight:700';
+  const h =
+    'font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 8px';
+
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="color-scheme" content="dark"><!--[if mso]><style>body,table,td{font-family:Arial,sans-serif!important}</style><![endif]--></head>
+<body style="margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;background:#0f172a">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background:#0f172a"><tr><td style="padding:24px 12px">
+<table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width:500px;margin:0 auto;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:24px;overflow:hidden;border:1px solid rgba(251,191,36,0.2)">
+
+<tr><td style="padding:32px 24px 20px">
+<p style="margin:0 0 16px;font-size:17px;color:#fff;line-height:1.6">Hey ${firstName},</p>
+<p style="margin:0;font-size:16px;color:#e2e8f0;line-height:1.7">Quick update from me. Here's what I've been building this week.</p>
+</td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#22c55e;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F525; New This Week</p></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:14px;padding:14px">
+<p style="${h};color:#22c55e">Pre &amp; Post Site Surveys</p>
+<p style="${t}"><strong style="${b}">Walk a job site</strong> &mdash; talk or write per-room what accessories are needed</p>
+<p style="${t}"><strong style="${b}">One-click send to Quote Hub</strong> &mdash; survey feeds straight into your quotes</p>
+<p style="${t}"><strong style="${b}">Send to client for digital signatures</strong> &mdash; scope agreed before you start</p>
+<p style="margin:0;font-size:13px;color:#22c55e;font-style:italic;font-weight:600">Prevents scope creep and captures assumptions for quotes.</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.25);border-radius:14px;padding:14px">
+<p style="${h};color:#3b82f6">Photo Documentation Upgrade</p>
+<p style="${t}">All survey photos now feed directly into <strong style="${b}">Photo Documentation</strong></p>
+<p style="${t}"><strong style="${b}">Post-job walkdown survey</strong> with before/after photos</p>
+<p style="${t}"><strong style="${b}">Client sign-off</strong> then invoice sent &mdash; all in one flow</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#a855f7;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F4DA; Learning &amp; Development</p></td></tr>
+
+<tr><td style="padding:0 20px 10px"><div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:14px;padding:14px">
+<p style="${t}">&#x2705; More learning content added to the <strong style="${b}">Apprentice Hub</strong></p>
+<p style="${t}">&#x2705; Further development / CPD courses in the <strong style="${b}">Study Centre</strong> (work ongoing)</p>
+<p style="${t}">&#x2705; All <strong style="${b}">PDF exports improved</strong> across the app</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 8px"><p style="margin:0;font-size:15px;color:#f59e0b;font-weight:700;text-transform:uppercase;letter-spacing:0.5px">&#x1F527; Under the Hood</p></td></tr>
+
+<tr><td style="padding:0 20px 14px"><div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:14px">
+<p style="${t}">&#x1F527; <strong style="${b}">Inspection &amp; Testing improvements</strong></p>
+<p style="${t}">&#x1F4DD; <strong style="${b}">New learning courses</strong> being written</p>
+<p style="${t}">&#x1F4F1; <strong style="${b}">Apple App Store &amp; Google Play</strong> development ongoing</p>
+</div></td></tr>
+
+<tr><td style="padding:0 20px 20px"><div style="background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,191,36,0.05));border:2px solid rgba(251,191,36,0.4);border-radius:16px;padding:22px 18px;text-align:center">
+<p style="margin:0 0 4px;font-size:14px;color:#e2e8f0">Lock in early-adopter pricing before we hit the app stores</p>
+<p style="margin:0;font-size:48px;font-weight:800;color:#fbbf24;line-height:1">&pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}<span style="font-size:18px;font-weight:600;color:#94a3b8">/mo</span></p>
+<p style="margin:6px 0 4px;font-size:14px;color:#94a3b8"><span style="text-decoration:line-through">&pound;${WINBACK_CONFIG.standardMonthlyPrice.toFixed(2)}</span> &middot; <span style="color:#22c55e;font-weight:600">20% off</span> &middot; price locked forever</p>
+<p style="margin:0 0 14px;font-size:14px;color:#94a3b8">or &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)}/yr (&pound;${(WINBACK_CONFIG.yearlyPrice / 12).toFixed(2)}/mo)</p>
+<a href="${WINBACK_CONFIG.monthlyPaymentLink}" style="display:block;padding:16px;background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a;text-decoration:none;font-size:16px;font-weight:700;border-radius:12px;text-align:center;margin-bottom:10px">Get back in at &pound;${WINBACK_CONFIG.monthlyPrice.toFixed(2)}/mo &rarr;</a>
+<a href="${WINBACK_CONFIG.yearlyPaymentLink}" style="display:block;padding:14px;background:rgba(251,191,36,0.15);border:2px solid rgba(251,191,36,0.5);color:#fbbf24;text-decoration:none;font-size:15px;font-weight:600;border-radius:12px;text-align:center">Go yearly: &pound;${WINBACK_CONFIG.yearlyPrice.toFixed(2)}</a>
 </div></td></tr>
 
 <tr><td style="padding:0 20px 20px"><div style="background:rgba(59,130,246,0.06);border:1px solid rgba(59,130,246,0.2);border-radius:12px;padding:14px;text-align:center">
@@ -529,7 +609,7 @@ Deno.serve(async (req) => {
         // 3. Trial ended 24+ hours ago (created_at + 7 days + 24 hours < now)
         const eligibleCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000;
         const filteredProfiles =
-          profiles?.filter((p: any) => {
+          profiles?.filter((p: Record<string, unknown>) => {
             // Exclude subscribed users
             if (p.subscribed === true) return false;
             // Exclude users with free access
@@ -545,7 +625,7 @@ Deno.serve(async (req) => {
         console.log(`get_eligible: ${filteredProfiles.length} profiles after trial cutoff filter`);
 
         // Get emails from auth.users
-        const userIdsToFetch = filteredProfiles.map((p: any) => p.id);
+        const userIdsToFetch = filteredProfiles.map((p: Record<string, unknown>) => p.id);
         if (userIdsToFetch.length === 0) {
           console.log('get_eligible: No eligible users found');
           result = { users: [] };
@@ -566,23 +646,23 @@ Deno.serve(async (req) => {
         console.log(`get_eligible: Got ${authUsers.users?.length || 0} auth users`);
 
         const emailMap = new Map<string, string>();
-        authUsers.users.forEach((u: any) => {
+        authUsers.users.forEach((u: Record<string, unknown>) => {
           if (u.email) emailMap.set(u.id, u.email);
         });
 
         const usersWithEmails =
           filteredProfiles
-            .map((p: any) => ({
-              id: p.id,
+            .map((p: Record<string, unknown>) => ({
+              id: p.id as string,
               full_name: p.full_name,
               username: p.username,
-              email: emailMap.get(p.id) || null,
+              email: emailMap.get(p.id as string) || null,
               created_at: p.created_at,
               trial_ended_at: new Date(
-                new Date(p.created_at).getTime() + 7 * 24 * 60 * 60 * 1000
+                new Date(p.created_at as string).getTime() + 7 * 24 * 60 * 60 * 1000
               ).toISOString(),
             }))
-            .filter((u: any) => u.email) || [];
+            .filter((u: Record<string, unknown>) => u.email) || [];
 
         console.log(`get_eligible: Returning ${usersWithEmails.length} users with emails`);
         result = { users: usersWithEmails };
@@ -608,7 +688,7 @@ Deno.serve(async (req) => {
         const eligibleCutoff = Date.now() - 7 * 24 * 60 * 60 * 1000 - 24 * 60 * 60 * 1000;
 
         const totalEligible =
-          stats?.filter((s: any) => {
+          stats?.filter((s: Record<string, unknown>) => {
             // Must NOT be subscribed
             if (s.subscribed === true) return false;
             // Must NOT have free access
@@ -616,14 +696,16 @@ Deno.serve(async (req) => {
             // Must NOT have already been sent the offer
             if (s.winback_offer_sent_at) return false;
             // Trial must have ended 48+ hours ago
-            return new Date(s.created_at).getTime() < eligibleCutoff;
+            return new Date(s.created_at as string).getTime() < eligibleCutoff;
           }).length || 0;
 
-        const offersSent = stats?.filter((s: any) => s.winback_offer_sent_at).length || 0;
+        const offersSent =
+          stats?.filter((s: Record<string, unknown>) => s.winback_offer_sent_at).length || 0;
 
         // Count conversions (users who have winback_offer_sent_at AND are now subscribed)
         const conversions =
-          stats?.filter((s: any) => s.winback_offer_sent_at && s.subscribed).length || 0;
+          stats?.filter((s: Record<string, unknown>) => s.winback_offer_sent_at && s.subscribed)
+            .length || 0;
 
         console.log(
           `get_stats: eligible=${totalEligible}, sent=${offersSent}, conversions=${conversions}`
@@ -676,12 +758,21 @@ Deno.serve(async (req) => {
           ).toISOString(),
         };
 
-        // Send email — use v2 template if requested
+        // Send email — use v3/v2 template if requested
+        const isV3 = email_version === 'v3';
         const isV2 = email_version === 'v2';
-        const emailHtml = isV2
-          ? generateWinbackEmailV2HTML(userWithEmail)
-          : generateWinbackEmailHTML(userWithEmail);
-        const emailSubject = isV2 ? 'Your Sunday Round-Up ⚡' : 'Fancy another look?';
+        let emailHtml, emailSubject;
+        if (isV3) {
+          emailHtml = generateWinbackEmailV3HTML(userWithEmail);
+          emailSubject = 'This week at Elec-Mate ⚡';
+        } else if (isV2) {
+          emailHtml = generateWinbackEmailV2HTML(userWithEmail);
+          emailSubject = 'Your Sunday Round-Up ⚡';
+        } else {
+          emailHtml = generateWinbackEmailHTML(userWithEmail);
+          emailSubject = 'Fancy another look?';
+        }
+        const versionTag = isV3 ? 'v3' : isV2 ? 'v2' : 'v1';
         const { data: emailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           to: [userWithEmail.email.trim().toLowerCase()],
@@ -689,7 +780,7 @@ Deno.serve(async (req) => {
           html: emailHtml,
           tags: [
             { name: 'campaign', value: 'winback' },
-            { name: 'version', value: isV2 ? 'v2' : 'v1' },
+            { name: 'version', value: versionTag },
             { name: 'user_id', value: userId },
           ],
         });
@@ -710,12 +801,21 @@ Deno.serve(async (req) => {
         }
 
         // Log to email_logs table
+        const templateName = isV3
+          ? 'winback_offer_v3'
+          : isV2
+            ? 'winback_offer_v2'
+            : 'winback_offer';
         await supabaseAdmin.from('email_logs').insert({
           to_email: userWithEmail.email,
           subject: emailSubject,
-          template: isV2 ? 'winback_offer_v2' : 'winback_offer',
+          template: templateName,
           status: 'sent',
-          metadata: { user_id: userId, email_version: email_version || 'v1', resend_id: emailData?.id },
+          metadata: {
+            user_id: userId,
+            email_version: email_version || 'v1',
+            resend_id: emailData?.id,
+          },
         });
 
         console.log(`Win-back offer sent to ${userWithEmail.email} by admin ${user.id}`);
@@ -770,12 +870,21 @@ Deno.serve(async (req) => {
               ).toISOString(),
             };
 
-            // Send email — use v2 template if requested
+            // Send email — use v3/v2 template if requested
+            const bulkIsV3 = email_version === 'v3';
             const bulkIsV2 = email_version === 'v2';
-            const emailHtml = bulkIsV2
-              ? generateWinbackEmailV2HTML(userWithEmail)
-              : generateWinbackEmailHTML(userWithEmail);
-            const bulkSubject = bulkIsV2 ? 'Your Sunday Round-Up ⚡' : 'Fancy another look?';
+            let emailHtml, bulkSubject;
+            if (bulkIsV3) {
+              emailHtml = generateWinbackEmailV3HTML(userWithEmail);
+              bulkSubject = 'This week at Elec-Mate ⚡';
+            } else if (bulkIsV2) {
+              emailHtml = generateWinbackEmailV2HTML(userWithEmail);
+              bulkSubject = 'Your Sunday Round-Up ⚡';
+            } else {
+              emailHtml = generateWinbackEmailHTML(userWithEmail);
+              bulkSubject = 'Fancy another look?';
+            }
+            const bulkVersionTag = bulkIsV3 ? 'v3' : bulkIsV2 ? 'v2' : 'v1';
             const { data: bulkEmailData, error: emailError } = await resend.emails.send({
               from: 'Elec-Mate <offers@elec-mate.com>',
               to: [userWithEmail.email.trim().toLowerCase()],
@@ -783,7 +892,7 @@ Deno.serve(async (req) => {
               html: emailHtml,
               tags: [
                 { name: 'campaign', value: 'winback' },
-                { name: 'version', value: bulkIsV2 ? 'v2' : 'v1' },
+                { name: 'version', value: bulkVersionTag },
                 { name: 'user_id', value: uid },
               ],
             });
@@ -800,12 +909,21 @@ Deno.serve(async (req) => {
               .eq('id', uid);
 
             // Log email
+            const bulkTemplateName = bulkIsV3
+              ? 'winback_offer_v3'
+              : bulkIsV2
+                ? 'winback_offer_v2'
+                : 'winback_offer';
             await supabaseAdmin.from('email_logs').insert({
               to_email: userWithEmail.email,
               subject: bulkSubject,
-              template: bulkIsV2 ? 'winback_offer_v2' : 'winback_offer',
+              template: bulkTemplateName,
               status: 'sent',
-              metadata: { user_id: uid, email_version: email_version || 'v1', resend_id: bulkEmailData?.id },
+              metadata: {
+                user_id: uid,
+                email_version: email_version || 'v1',
+                resend_id: bulkEmailData?.id,
+              },
             });
 
             sentCount++;
@@ -814,8 +932,8 @@ Deno.serve(async (req) => {
             if (sentCount < userIds.length) {
               await sleep(SEND_DELAY_MS);
             }
-          } catch (err: any) {
-            errors.push(`${uid}: ${err.message}`);
+          } catch (err: unknown) {
+            errors.push(`${uid}: ${err instanceof Error ? err.message : String(err)}`);
           }
         }
 
@@ -862,14 +980,21 @@ Deno.serve(async (req) => {
           trial_ended_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
         };
 
-        // Generate and send the email — use v2 template if requested
+        // Generate and send the email — use v3/v2 template if requested
+        const testIsV3 = email_version === 'v3';
         const testIsV2 = email_version === 'v2';
-        const emailHtml = testIsV2
-          ? generateWinbackEmailV2HTML(testUser)
-          : generateWinbackEmailHTML(testUser);
-        const testSubject = testIsV2
-          ? '[TEST] Your Sunday Round-Up ⚡'
-          : '[TEST] Fancy another look?';
+        let emailHtml, testSubject;
+        if (testIsV3) {
+          emailHtml = generateWinbackEmailV3HTML(testUser);
+          testSubject = '[TEST] This week at Elec-Mate ⚡';
+        } else if (testIsV2) {
+          emailHtml = generateWinbackEmailV2HTML(testUser);
+          testSubject = '[TEST] Your Sunday Round-Up ⚡';
+        } else {
+          emailHtml = generateWinbackEmailHTML(testUser);
+          testSubject = '[TEST] Fancy another look?';
+        }
+        const testVersionTag = testIsV3 ? 'v3' : testIsV2 ? 'v2' : 'v1';
         const { data: testEmailData, error: emailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           to: [testEmail.trim().toLowerCase()],
@@ -877,7 +1002,7 @@ Deno.serve(async (req) => {
           html: emailHtml,
           tags: [
             { name: 'campaign', value: 'winback' },
-            { name: 'version', value: testIsV2 ? 'v2' : 'v1' },
+            { name: 'version', value: testVersionTag },
             { name: 'type', value: 'test' },
           ],
         });
@@ -908,12 +1033,21 @@ Deno.serve(async (req) => {
           trial_ended_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
         };
 
-        // Generate and send the email — use v2 template if requested
+        // Generate and send the email — use v3/v2 template if requested
+        const manualIsV3 = email_version === 'v3';
         const manualIsV2 = email_version === 'v2';
-        const manualEmailHtml = manualIsV2
-          ? generateWinbackEmailV2HTML(manualUser)
-          : generateWinbackEmailHTML(manualUser);
-        const manualSubject = manualIsV2 ? 'Your Sunday Round-Up ⚡' : 'Fancy another look?';
+        let manualEmailHtml, manualSubject;
+        if (manualIsV3) {
+          manualEmailHtml = generateWinbackEmailV3HTML(manualUser);
+          manualSubject = 'This week at Elec-Mate ⚡';
+        } else if (manualIsV2) {
+          manualEmailHtml = generateWinbackEmailV2HTML(manualUser);
+          manualSubject = 'Your Sunday Round-Up ⚡';
+        } else {
+          manualEmailHtml = generateWinbackEmailHTML(manualUser);
+          manualSubject = 'Fancy another look?';
+        }
+        const manualVersionTag = manualIsV3 ? 'v3' : manualIsV2 ? 'v2' : 'v1';
         const { data: manualEmailData, error: manualEmailError } = await resend.emails.send({
           from: 'Elec-Mate <offers@elec-mate.com>',
           to: [manualEmail.trim().toLowerCase()],
@@ -921,7 +1055,7 @@ Deno.serve(async (req) => {
           html: manualEmailHtml,
           tags: [
             { name: 'campaign', value: 'winback' },
-            { name: 'version', value: manualIsV2 ? 'v2' : 'v1' },
+            { name: 'version', value: manualVersionTag },
             { name: 'type', value: 'manual' },
           ],
         });
@@ -932,10 +1066,15 @@ Deno.serve(async (req) => {
         }
 
         // Log to email_logs table
+        const manualTemplateName = manualIsV3
+          ? 'winback_offer_v3_manual'
+          : manualIsV2
+            ? 'winback_offer_v2_manual'
+            : 'winback_offer_manual';
         await supabaseAdmin.from('email_logs').insert({
           to_email: manualEmail.trim().toLowerCase(),
           subject: manualSubject,
-          template: manualIsV2 ? 'winback_offer_v2_manual' : 'winback_offer_manual',
+          template: manualTemplateName,
           status: 'sent',
           metadata: {
             sent_by_admin: user.id,
@@ -965,7 +1104,7 @@ Deno.serve(async (req) => {
 
         if (resetErr) throw resetErr;
 
-        const resetIds = resetUsers?.map((u: any) => u.id) || [];
+        const resetIds = resetUsers?.map((u: Record<string, unknown>) => u.id) || [];
 
         if (resetIds.length === 0) {
           result = {
@@ -998,12 +1137,14 @@ Deno.serve(async (req) => {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
-  } catch (error: any) {
-    console.error('Error in send-winback-offer:', error.message, error.stack);
+  } catch (error: unknown) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const errStack = error instanceof Error ? error.stack : undefined;
+    console.error('Error in send-winback-offer:', errMsg, errStack);
     return new Response(
       JSON.stringify({
-        error: error.message,
-        stack: error.stack?.split('\n').slice(0, 3).join(' | '),
+        error: errMsg,
+        stack: errStack?.split('\n').slice(0, 3).join(' | '),
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

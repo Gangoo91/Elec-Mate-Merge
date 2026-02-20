@@ -188,7 +188,7 @@ export default function AdminRevenue() {
                 </Badge>
               )}
             </h1>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-white">
               {stripeStats
                 ? `From Stripe • ${new Date(stripeStats.generatedAt).toLocaleTimeString()}`
                 : 'Loading live data...'}
@@ -214,7 +214,7 @@ export default function AdminRevenue() {
               <AlertTriangle className="h-5 w-5 text-orange-400 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-orange-400">Data Sync Required</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-white">
                   {stripeStats?.discrepancies.inStripeNotSupabase} in Stripe not synced to database
                 </p>
               </div>
@@ -238,7 +238,7 @@ export default function AdminRevenue() {
                 <PoundSterling className="h-8 w-8 text-emerald-400/50" />
               </div>
               <h3 className="text-lg font-semibold mb-1">No active subscriptions</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Subscription data from Stripe will appear here once users subscribe.
               </p>
             </CardContent>
@@ -257,7 +257,7 @@ export default function AdminRevenue() {
             <div className="relative">
               <div className="flex items-start justify-between mb-4">
                 <div>
-                  <p className="text-xs text-emerald-400/70 uppercase tracking-wider font-medium mb-1">
+                  <p className="text-xs text-emerald-300 uppercase tracking-wider font-medium mb-1">
                     Monthly Recurring Revenue
                   </p>
                   <p className="text-4xl font-bold text-emerald-400">
@@ -277,17 +277,17 @@ export default function AdminRevenue() {
               <div className="grid grid-cols-3 gap-2 mt-4">
                 <div className="bg-black/20 rounded-xl p-3 text-center">
                   <p className="text-lg font-bold text-white">{totalSubs}</p>
-                  <p className="text-xs text-emerald-400/70 uppercase">Active Subs</p>
+                  <p className="text-xs text-emerald-300 uppercase">Active Subs</p>
                 </div>
                 <div className="bg-black/20 rounded-xl p-3 text-center">
                   <p className="text-lg font-bold text-white">
                     £{arr.toLocaleString('en-GB', { maximumFractionDigits: 0 })}
                   </p>
-                  <p className="text-xs text-emerald-400/70 uppercase">ARR</p>
+                  <p className="text-xs text-emerald-300 uppercase">ARR</p>
                 </div>
                 <div className="bg-black/20 rounded-xl p-3 text-center">
                   <p className="text-lg font-bold text-white">£{arpu.toFixed(2)}</p>
-                  <p className="text-xs text-emerald-400/70 uppercase">ARPU</p>
+                  <p className="text-xs text-emerald-300 uppercase">ARPU</p>
                 </div>
               </div>
             </div>
@@ -325,20 +325,20 @@ export default function AdminRevenue() {
                     </Badge>
                   </div>
                   <p className="text-3xl font-bold">{count}</p>
-                  <p className="text-xs text-muted-foreground capitalize mt-1">{tier}s</p>
-                  <p className="text-xs opacity-70 mt-2">£{revenue.toFixed(2)}/mo</p>
+                  <p className="text-xs text-white capitalize mt-1">{tier}s</p>
+                  <p className="text-xs mt-2">£{revenue.toFixed(2)}/mo</p>
                 </CardContent>
               </Card>
             );
           })}
         </div>
 
-        {/* 30-Day Performance */}
+        {/* 14-Day Performance */}
         <Card>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <Calendar className="h-4 w-4 text-blue-400" />
-              Last 30 Days
+              Last 14 Days
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -348,18 +348,18 @@ export default function AdminRevenue() {
                   <ArrowUp className="h-4 w-4 text-green-400" />
                   <p className="text-2xl font-bold text-green-400">+{subsLast14Days}</p>
                 </div>
-                <p className="text-xs text-muted-foreground">New Subs</p>
+                <p className="text-xs text-white">New Subs</p>
               </div>
               <div className="bg-gradient-to-br from-red-500/15 to-red-600/5 rounded-xl p-4 text-center border border-red-500/20">
                 <div className="flex items-center justify-center gap-1 mb-1">
                   <ArrowDown className="h-4 w-4 text-red-400" />
                   <p className="text-2xl font-bold text-red-400">{churned}</p>
                 </div>
-                <p className="text-xs text-muted-foreground">Cancelled</p>
+                <p className="text-xs text-white">Cancelled</p>
               </div>
               <div className="bg-gradient-to-br from-amber-500/15 to-amber-600/5 rounded-xl p-4 text-center border border-amber-500/20">
                 <p className="text-2xl font-bold text-amber-400">{churnRate.toFixed(1)}%</p>
-                <p className="text-xs text-muted-foreground">Churn Rate</p>
+                <p className="text-xs text-white">Churn Rate</p>
               </div>
             </div>
           </CardContent>
@@ -398,7 +398,7 @@ export default function AdminRevenue() {
                     />
                   </div>
                   {/* Day label */}
-                  <span className="text-xs text-muted-foreground">{day.date}</span>
+                  <span className="text-xs text-white">{day.date}</span>
                 </div>
               ))}
             </div>
@@ -407,7 +407,7 @@ export default function AdminRevenue() {
             <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 rounded-full bg-emerald-400" />
-                <span className="text-xs text-muted-foreground">New MRR</span>
+                <span className="text-xs text-white">New MRR</span>
               </div>
               <span className="text-sm font-medium text-emerald-400">
                 +£{totalLast14Days.toFixed(2)}
@@ -432,13 +432,13 @@ export default function AdminRevenue() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium">Stripe</p>
-                <p className="text-xs text-muted-foreground">Live payment data</p>
+                <p className="text-xs text-white">Live payment data</p>
               </div>
               <div className="text-right">
                 <p className="text-lg font-bold text-emerald-400">
                   {stripeStats?.stripe.activeSubscriptions || 0}
                 </p>
-                <p className="text-xs text-muted-foreground">active</p>
+                <p className="text-xs text-white">active</p>
               </div>
             </div>
 
@@ -465,9 +465,7 @@ export default function AdminRevenue() {
               </div>
               <div className="flex-1">
                 <p className="text-sm font-medium">Database</p>
-                <p className="text-xs text-muted-foreground">
-                  {hasDiscrepancies ? 'Needs sync' : 'In sync'}
-                </p>
+                <p className="text-xs text-white">{hasDiscrepancies ? 'Needs sync' : 'In sync'}</p>
               </div>
               <div className="text-right">
                 <p
@@ -478,7 +476,7 @@ export default function AdminRevenue() {
                 >
                   {stripeStats?.supabase.subscribedUsers || 0}
                 </p>
-                <p className="text-xs text-muted-foreground">synced</p>
+                <p className="text-xs text-white">synced</p>
               </div>
             </div>
           </CardContent>
@@ -501,7 +499,7 @@ export default function AdminRevenue() {
                         <div key={price} className="flex items-center gap-3">
                           <div className="flex-1">
                             <div className="flex justify-between text-sm mb-1">
-                              <span className="text-muted-foreground">{price}</span>
+                              <span className="text-white">{price}</span>
                               <span className="font-medium">{count}</span>
                             </div>
                             <div className="h-2 bg-muted rounded-full overflow-hidden">

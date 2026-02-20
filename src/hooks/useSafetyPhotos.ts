@@ -7,6 +7,7 @@ export interface SafetyPhoto {
   id: string;
   filename: string;
   file_url: string;
+  thumbnail_url: string | null;
   description: string;
   category: string;
   location: string | null;
@@ -45,14 +46,38 @@ export const PHOTO_CATEGORIES = [
   { value: 'equipment_check', label: 'Equipment Check', color: 'bg-orange-500', icon: '🔧' },
   { value: 'site_condition', label: 'Site Condition', color: 'bg-cyan-500', icon: '🏗️' },
   // BS 7671 specific categories
-  { value: 'consumer_unit', label: 'Consumer Unit', color: 'bg-amber-500', icon: '⚡', bs7671: '411' },
+  {
+    value: 'consumer_unit',
+    label: 'Consumer Unit',
+    color: 'bg-amber-500',
+    icon: '⚡',
+    bs7671: '411',
+  },
   { value: 'earthing', label: 'Earthing', color: 'bg-lime-500', icon: '🔌', bs7671: '542' },
   { value: 'bonding', label: 'Bonding', color: 'bg-teal-500', icon: '🔗', bs7671: '544' },
   { value: 'cable_routes', label: 'Cable Routes', color: 'bg-sky-500', icon: '🛤️', bs7671: '521' },
-  { value: 'containment', label: 'Containment', color: 'bg-violet-500', icon: '📦', bs7671: '521.5' },
-  { value: 'testing_setup', label: 'Testing Setup', color: 'bg-fuchsia-500', icon: '🔬', bs7671: 'GN3' },
+  {
+    value: 'containment',
+    label: 'Containment',
+    color: 'bg-violet-500',
+    icon: '📦',
+    bs7671: '521.5',
+  },
+  {
+    value: 'testing_setup',
+    label: 'Testing Setup',
+    color: 'bg-fuchsia-500',
+    icon: '🔬',
+    bs7671: 'GN3',
+  },
   { value: 'defects', label: 'Defects', color: 'bg-rose-500', icon: '⛔', bs7671: 'Reg 6' },
-  { value: 'remedial_work', label: 'Remedial Work', color: 'bg-emerald-500', icon: '🛠️', bs7671: 'Reg 6' },
+  {
+    value: 'remedial_work',
+    label: 'Remedial Work',
+    color: 'bg-emerald-500',
+    icon: '🛠️',
+    bs7671: 'Reg 6',
+  },
   { value: 'other', label: 'Other', color: 'bg-gray-500', icon: '📷' },
 ] as const;
 
@@ -155,27 +180,30 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
     enabled: !!session?.user?.id,
   });
 
-  // Get stats by category
+  // Get stats by category + total storage
   const statsQuery = useQuery({
     queryKey: ['safety-photo-stats', session?.user?.id],
     queryFn: async () => {
-      if (!session?.user?.id) return { total: 0, byCategory: {} };
+      if (!session?.user?.id) return { total: 0, byCategory: {}, totalBytes: 0 };
 
       const { data, error } = await supabase
         .from('safety_photos')
-        .select('category')
+        .select('category, file_size')
         .eq('user_id', session.user.id);
 
       if (error) throw error;
 
       const byCategory: Record<string, number> = {};
+      let totalBytes = 0;
       data.forEach((row) => {
         byCategory[row.category] = (byCategory[row.category] || 0) + 1;
+        if (row.file_size) totalBytes += row.file_size;
       });
 
       return {
         total: data.length,
         byCategory,
+        totalBytes,
       };
     },
     enabled: !!session?.user?.id,
@@ -199,8 +227,12 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
       queryClient.invalidateQueries({ queryKey: ['safety-photo-stats'] });
       queryClient.invalidateQueries({ queryKey: ['safety-photo-projects'] });
     },
-    onError: (error: any) => {
-      toast({ title: 'Delete failed', description: error.message, variant: 'destructive' });
+    onError: (error: unknown) => {
+      toast({
+        title: 'Delete failed',
+        description: error instanceof Error ? error.message : 'Unknown error',
+        variant: 'destructive',
+      });
     },
   });
 
@@ -212,7 +244,18 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
     }: {
       id: string;
       updates: Partial<
-        Pick<SafetyPhoto, 'description' | 'category' | 'location' | 'tags' | 'project_reference' | 'project_id' | 'photo_type' | 'notes' | 'annotations'>
+        Pick<
+          SafetyPhoto,
+          | 'description'
+          | 'category'
+          | 'location'
+          | 'tags'
+          | 'project_reference'
+          | 'project_id'
+          | 'photo_type'
+          | 'notes'
+          | 'annotations'
+        >
       >;
     }) => {
       const { error } = await supabase
@@ -225,15 +268,19 @@ export function useSafetyPhotos(filters?: PhotoFilters) {
       toast({ title: 'Photo updated' });
       queryClient.invalidateQueries({ queryKey: ['safety-photos'] });
     },
-    onError: (error: any) => {
-      toast({ title: 'Update failed', description: error.message, variant: 'destructive' });
+    onError: (error: unknown) => {
+      toast({
+        title: 'Update failed',
+        description: error instanceof Error ? error.message : 'Unknown error',
+        variant: 'destructive',
+      });
     },
   });
 
   return {
     photos: photosQuery.data || [],
     projects: projectsQuery.data || [],
-    stats: statsQuery.data || { total: 0, byCategory: {} },
+    stats: statsQuery.data || { total: 0, byCategory: {}, totalBytes: 0 },
     isLoading: photosQuery.isLoading,
     isError: photosQuery.isError,
     refetch: photosQuery.refetch,

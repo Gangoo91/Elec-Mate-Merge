@@ -9,27 +9,29 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ROOM_TYPES } from '@/data/siteVisit/roomTypes';
-import type { RoomType, SiteVisitRoom } from '@/types/siteVisit';
+import { getRoomTypesForProperty } from '@/data/siteVisit/roomTypes';
+import type { RoomType, PropertyType, SiteVisitRoom } from '@/types/siteVisit';
 
 interface RoomSelectorProps {
   existingRooms: SiteVisitRoom[];
   onAddRoom: (roomType: RoomType, roomName: string) => void;
+  propertyType?: PropertyType;
 }
 
-export const RoomSelector = ({ existingRooms, onAddRoom }: RoomSelectorProps) => {
+export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSelectorProps) => {
   const [selectedType, setSelectedType] = useState<RoomType | ''>('');
   const [customName, setCustomName] = useState('');
 
   const usedTypes = new Set(existingRooms.map((r) => r.roomType));
+  const roomTypes = getRoomTypesForProperty(propertyType);
 
   // Filter out already-added rooms (except custom, which can be added multiple times)
-  const availableTypes = ROOM_TYPES.filter((rt) => rt.type === 'custom' || !usedTypes.has(rt.type));
+  const availableTypes = roomTypes.filter((rt) => rt.type === 'custom' || !usedTypes.has(rt.type));
 
   const handleAdd = () => {
     if (!selectedType) return;
 
-    const roomDef = ROOM_TYPES.find((r) => r.type === selectedType);
+    const roomDef = roomTypes.find((r) => r.type === selectedType);
     const name = selectedType === 'custom' ? customName.trim() : roomDef?.label || selectedType;
 
     if (selectedType === 'custom' && !customName.trim()) return;
@@ -65,6 +67,9 @@ export const RoomSelector = ({ existingRooms, onAddRoom }: RoomSelectorProps) =>
             onChange={(e) => setCustomName(e.target.value)}
             placeholder="e.g. Boot Room"
             className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            autoCapitalize="words"
+            autoComplete="off"
+            enterKeyHint="done"
           />
         </div>
       )}

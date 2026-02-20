@@ -8,16 +8,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { GLOBAL_PROMPTS } from '@/data/siteVisit/smartPrompts';
+import { getGlobalPrompts } from '@/data/siteVisit/smartPrompts';
+import type { PropertyType } from '@/types/siteVisit';
 
 interface GlobalPromptsPanelProps {
   getResponse: (promptKey: string) => string | undefined;
   setResponse: (promptKey: string, response: string, roomId?: string, question?: string) => void;
+  propertyType?: PropertyType;
 }
 
-export const GlobalPromptsPanel = ({ getResponse, setResponse }: GlobalPromptsPanelProps) => {
-  const answeredCount = GLOBAL_PROMPTS.filter((p) => getResponse(p.key)).length;
-  const allAnswered = answeredCount === GLOBAL_PROMPTS.length;
+export const GlobalPromptsPanel = ({
+  getResponse,
+  setResponse,
+  propertyType,
+}: GlobalPromptsPanelProps) => {
+  const prompts = getGlobalPrompts(propertyType);
+  const answeredCount = prompts.filter((p) => getResponse(p.key)).length;
+  const allAnswered = answeredCount === prompts.length;
   const [isOpen, setIsOpen] = useState(!allAnswered);
 
   return (
@@ -38,24 +45,24 @@ export const GlobalPromptsPanel = ({ getResponse, setResponse }: GlobalPromptsPa
         <div className="flex-1 text-left">
           <p className="text-sm font-medium text-white">Property Assessment</p>
           <p className="text-xs text-white">
-            {answeredCount}/{GLOBAL_PROMPTS.length} answered
+            {answeredCount}/{prompts.length} answered
           </p>
         </div>
         {isOpen ? (
-          <ChevronUp className="h-4 w-4 text-white/50" />
+          <ChevronUp className="h-4 w-4 text-white" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-white/50" />
+          <ChevronDown className="h-4 w-4 text-white" />
         )}
       </button>
 
       {isOpen && (
         <div className="p-3 space-y-4 border-t border-white/[0.06]">
-          {GLOBAL_PROMPTS.map((prompt) => {
+          {prompts.map((prompt) => {
             const value = getResponse(prompt.key) || '';
             return (
               <div key={prompt.key} className="space-y-1">
                 <label className="text-xs font-medium text-white">{prompt.question}</label>
-                {prompt.helpText && <p className="text-[11px] text-white/50">{prompt.helpText}</p>}
+                {prompt.helpText && <p className="text-[11px] text-white">{prompt.helpText}</p>}
 
                 {prompt.inputType === 'select' && prompt.options && (
                   <Select
@@ -103,6 +110,8 @@ export const GlobalPromptsPanel = ({ getResponse, setResponse }: GlobalPromptsPa
                     }
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                     placeholder="Enter response..."
+                    autoCapitalize="sentences"
+                    enterKeyHint="done"
                   />
                 )}
               </div>

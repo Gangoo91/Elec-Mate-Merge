@@ -172,6 +172,7 @@ export default function ShareProjectSheet({
     try {
       const link = await createShare({
         projectReference,
+        projectId,
         photos: filteredPhotos,
         title: title || projectReference,
         expiresInDays: 30,
@@ -197,6 +198,7 @@ export default function ShareProjectSheet({
     try {
       const link = await createShare({
         projectReference,
+        projectId,
         photos: filteredPhotos,
         title: title || projectReference,
         message: linkMessage || undefined,

@@ -273,8 +273,6 @@ export default function AdminUserMessages() {
 
   // Stats
   const totalUnread = conversations?.reduce((sum, c) => sum + c.unreadCount, 0) || 0;
-  const totalConversations = conversations?.length || 0;
-
   // Get initials helper
   const getInitials = (name: string | null | undefined) => {
     if (!name) return '?';
@@ -293,62 +291,34 @@ export default function AdminUserMessages() {
       }}
     >
       <div className="space-y-4 pb-20">
-        {/* Hero Header */}
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-500 p-5">
-          <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIi8+PC9nPjwvZz48L3N2Zz4=')] opacity-30" />
-          <div className="relative">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-xl bg-white/20 backdrop-blur-sm">
-                  <MessageSquare className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-white">User Messages</h1>
-                  <p className="text-sm text-white/70">Support inbox</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button
-                  onClick={() => setComposeOpen(true)}
-                  className="h-11 touch-manipulation gap-2 bg-yellow-500 hover:bg-yellow-600 text-black rounded-xl font-semibold"
-                >
-                  <PenSquare className="h-4 w-4" />
-                  New Message
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-10 w-10 rounded-xl bg-white/10 hover:bg-white/20 text-white touch-manipulation"
-                  onClick={() => refetch()}
-                >
-                  <RefreshCw className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Stats Row */}
-            <div className="grid grid-cols-2 gap-3 mt-4">
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-                <div className="flex items-center gap-2">
-                  <Users className="h-4 w-4 text-white/70" />
-                  <span className="text-2xl font-bold text-white">{totalConversations}</span>
-                </div>
-                <p className="text-xs text-white/60 mt-0.5">Conversations</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3 border border-white/10">
-                <div className="flex items-center gap-2">
-                  <Inbox className="h-4 w-4 text-white/70" />
-                  <span className="text-2xl font-bold text-white">{totalUnread}</span>
-                  {totalUnread > 0 && (
-                    <span className="flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-red-400 opacity-75" />
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500" />
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-white/60 mt-0.5">Unread</p>
-              </div>
-            </div>
+        {/* Compact Header */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-bold flex items-center gap-2">
+              Messages
+              {totalUnread > 0 && (
+                <Badge className="bg-yellow-500 text-black text-xs font-semibold">
+                  {totalUnread} new
+                </Badge>
+              )}
+            </h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={() => setComposeOpen(true)}
+              className="h-11 touch-manipulation gap-2 bg-yellow-500 hover:bg-yellow-600 text-black rounded-xl font-semibold"
+            >
+              <PenSquare className="h-4 w-4" />
+              New
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-11 w-11 touch-manipulation"
+              onClick={() => refetch()}
+            >
+              <RefreshCw className="h-4 w-4" />
+            </Button>
           </div>
         </div>
 
@@ -400,7 +370,7 @@ export default function AdminUserMessages() {
                 </div>
               </div>
               <h3 className="text-lg font-semibold text-foreground mb-1">All caught up!</h3>
-              <p className="text-sm text-muted-foreground text-center max-w-[250px]">
+              <p className="text-sm text-white text-center max-w-[250px]">
                 No user messages yet. Messages will appear here when users contact support.
               </p>
             </motion.div>
@@ -449,13 +419,13 @@ export default function AdminUserMessages() {
                         <div className="flex items-center justify-between gap-2">
                           <p
                             className={cn(
-                              'font-semibold truncate',
-                              conv.unreadCount > 0 ? 'text-foreground' : 'text-foreground/90'
+                              'truncate text-white',
+                              conv.unreadCount > 0 ? 'font-bold' : 'font-medium'
                             )}
                           >
                             {conv.partner?.full_name || 'Unknown User'}
                           </p>
-                          <span className="text-[11px] text-muted-foreground shrink-0">
+                          <span className="text-[11px] text-white shrink-0">
                             {formatDistanceToNow(new Date(conv.lastMessage.created_at), {
                               addSuffix: false,
                             })}
@@ -463,10 +433,8 @@ export default function AdminUserMessages() {
                         </div>
                         <p
                           className={cn(
-                            'text-sm mt-0.5 line-clamp-1',
-                            conv.unreadCount > 0
-                              ? 'text-foreground/80 font-medium'
-                              : 'text-muted-foreground'
+                            'text-sm mt-0.5 line-clamp-1 text-white',
+                            conv.unreadCount > 0 && 'font-medium'
                           )}
                         >
                           {conv.lastMessage.message}
@@ -474,7 +442,7 @@ export default function AdminUserMessages() {
                         <div className="flex items-center gap-2 mt-1.5">
                           <Badge
                             variant="outline"
-                            className="text-xs px-1.5 py-0 h-5 bg-muted/50 border-0 text-muted-foreground"
+                            className="text-xs px-1.5 py-0 h-5 bg-muted/50 border-0 text-white"
                           >
                             {conv.messages.length} messages
                           </Badge>
@@ -482,7 +450,7 @@ export default function AdminUserMessages() {
                       </div>
 
                       {/* Arrow */}
-                      <ChevronRight className="h-5 w-5 text-muted-foreground/50 shrink-0" />
+                      <ChevronRight className="h-5 w-5 text-white shrink-0" />
                     </div>
                   </button>
                 </motion.div>
@@ -521,7 +489,7 @@ export default function AdminUserMessages() {
                     <SheetTitle className="text-left text-base font-semibold">
                       {selectedConversation?.partner?.full_name || 'Unknown User'}
                     </SheetTitle>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white">
                       {selectedConversation?.messages.length} messages
                     </p>
                   </div>
@@ -544,7 +512,7 @@ export default function AdminUserMessages() {
                       <div key={msg.id}>
                         {showDate && (
                           <div className="flex justify-center my-4">
-                            <span className="text-[11px] text-muted-foreground bg-muted/50 px-3 py-1 rounded-full">
+                            <span className="text-[11px] text-white bg-muted/50 px-3 py-1 rounded-full">
                               {format(new Date(msg.created_at), 'd MMM yyyy')}
                             </span>
                           </div>
@@ -570,7 +538,7 @@ export default function AdminUserMessages() {
                               <span
                                 className={cn(
                                   'text-xs',
-                                  isFromUser ? 'text-muted-foreground' : 'text-white/70'
+                                  isFromUser ? 'text-white' : 'text-white/70'
                                 )}
                               >
                                 {format(new Date(msg.created_at), 'h:mm a')}
@@ -640,18 +608,18 @@ export default function AdminUserMessages() {
                 {searchQuery.length < 2 ? (
                   <div className="flex flex-col items-center justify-center py-16 px-4">
                     <div className="w-16 h-16 rounded-2xl bg-muted/30 flex items-center justify-center mb-4">
-                      <Search className="h-8 w-8 text-muted-foreground/50" />
+                      <Search className="h-8 w-8 text-white" />
                     </div>
-                    <p className="text-sm text-muted-foreground text-center">
+                    <p className="text-sm text-white text-center">
                       Type at least 2 characters to search for users
                     </p>
                   </div>
                 ) : searchResults?.length === 0 ? (
                   <div className="flex flex-col items-center justify-center py-16 px-4">
                     <div className="w-16 h-16 rounded-2xl bg-muted/30 flex items-center justify-center mb-4">
-                      <Users className="h-8 w-8 text-muted-foreground/50" />
+                      <Users className="h-8 w-8 text-white" />
                     </div>
-                    <p className="text-sm text-muted-foreground text-center">
+                    <p className="text-sm text-white text-center">
                       No users found matching "{searchQuery}"
                     </p>
                   </div>
@@ -674,16 +642,14 @@ export default function AdminUserMessages() {
                           <p className="text-sm font-medium truncate">
                             {resultUser.full_name || 'Unknown User'}
                           </p>
-                          <p className="text-xs text-muted-foreground truncate">
-                            {resultUser.email}
-                          </p>
+                          <p className="text-xs text-white truncate">{resultUser.email}</p>
                         </div>
                         {resultUser.role && (
                           <Badge variant="outline" className="text-xs capitalize shrink-0">
                             {resultUser.role}
                           </Badge>
                         )}
-                        <ChevronRight className="h-4 w-4 text-muted-foreground/50 shrink-0" />
+                        <ChevronRight className="h-4 w-4 text-white shrink-0" />
                       </button>
                     ))}
                   </div>

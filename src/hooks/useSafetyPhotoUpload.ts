@@ -6,7 +6,7 @@ import { toast } from '@/hooks/use-toast';
 import { v4 as uuidv4 } from 'uuid';
 
 export interface UploadProgress {
-  status: 'idle' | 'compressing' | 'uploading' | 'saving' | 'complete' | 'error';
+  status: 'idle' | 'compressing' | 'uploading' | 'saving' | 'complete' | 'error' | 'offline';
   progress: number;
   message: string;
 }
@@ -204,7 +204,139 @@ export function useSafetyPhotoUpload() {
     });
   }, []);
 
-  // Upload photo with all metadata
+  // Reverse geocode GPS coordinates to a UK-friendly address string
+  // Uses Nominatim with localStorage cache (30-day TTL)
+  const reverseGeocode = useCallback(async (lat: number, lng: number): Promise<string | null> => {
+    const cacheKey = `geo_cache_reverse_${lat.toFixed(5)}_${lng.toFixed(5)}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const entry = JSON.parse(cached);
+        if (Date.now() < entry.ts + 30 * 24 * 60 * 60 * 1000) {
+          return entry.address;
+        }
+        localStorage.removeItem(cacheKey);
+      }
+    } catch {
+      /* ignore cache errors */
+    }
+
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1&zoom=18`,
+        { headers: { 'Accept-Language': 'en-GB' } }
+      );
+      if (!res.ok) return null;
+
+      const data = await res.json();
+      const addr = data.address || {};
+
+      const parts: string[] = [];
+      if (addr.house_number && addr.road) {
+        parts.push(`${addr.house_number} ${addr.road}`);
+      } else if (addr.road) {
+        parts.push(addr.road);
+      }
+      if (addr.suburb || addr.neighbourhood) {
+        parts.push(addr.suburb || addr.neighbourhood);
+      }
+      if (addr.city || addr.town || addr.village) {
+        parts.push(addr.city || addr.town || addr.village);
+      }
+      if (addr.postcode) {
+        parts.push(addr.postcode);
+      }
+
+      const formatted = parts.length > 0 ? parts.join(', ') : data.display_name || null;
+
+      if (formatted) {
+        try {
+          localStorage.setItem(cacheKey, JSON.stringify({ address: formatted, ts: Date.now() }));
+        } catch {
+          /* storage full — ignore */
+        }
+      }
+
+      return formatted;
+    } catch {
+      return null;
+    }
+  }, []);
+
+  // Check if a file is a video
+  const isVideoFile = useCallback((file: File): boolean => {
+    return file.type.startsWith('video/');
+  }, []);
+
+  // Extract first frame from video as thumbnail image
+  const extractVideoThumbnail = useCallback((file: File): Promise<File | null> => {
+    return new Promise((resolve) => {
+      try {
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.muted = true;
+        video.playsInline = true;
+
+        const url = URL.createObjectURL(file);
+        video.src = url;
+
+        video.addEventListener('loadeddata', () => {
+          // Seek to 0.5s for a meaningful frame
+          video.currentTime = Math.min(0.5, video.duration || 0.5);
+        });
+
+        video.addEventListener('seeked', () => {
+          try {
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.min(video.videoWidth, 640);
+            canvas.height = Math.round((canvas.width / video.videoWidth) * video.videoHeight);
+            const ctx = canvas.getContext('2d');
+            if (!ctx) {
+              URL.revokeObjectURL(url);
+              resolve(null);
+              return;
+            }
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(
+              (blob) => {
+                URL.revokeObjectURL(url);
+                if (blob) {
+                  resolve(
+                    new File([blob], 'thumbnail.jpg', {
+                      type: 'image/jpeg',
+                      lastModified: Date.now(),
+                    })
+                  );
+                } else {
+                  resolve(null);
+                }
+              },
+              'image/jpeg',
+              0.8
+            );
+          } catch {
+            URL.revokeObjectURL(url);
+            resolve(null);
+          }
+        });
+
+        video.addEventListener('error', () => {
+          URL.revokeObjectURL(url);
+          resolve(null);
+        });
+
+        // Timeout after 5s
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+          resolve(null);
+        }, 5000);
+      } catch {
+        resolve(null);
+      }
+    });
+  }, []);
+
+  // Upload photo or video with all metadata
   const uploadPhoto = useCallback(
     async (file: File, options: UploadOptions) => {
       if (!session?.user?.id) {
@@ -216,18 +348,28 @@ export function useSafetyPhotoUpload() {
         return null;
       }
 
-      try {
-        // Step 1: Compress image
-        setUploadProgress({
-          status: 'compressing',
-          progress: 20,
-          message: 'Compressing image...',
-        });
+      const isVideo = isVideoFile(file);
 
-        const compressedFile = await compressImage(
-          file,
-          options.addWatermark ? options : undefined
-        );
+      try {
+        let processedFile: File;
+
+        if (isVideo) {
+          // Skip compression for videos — upload as-is
+          setUploadProgress({
+            status: 'compressing',
+            progress: 20,
+            message: 'Preparing video...',
+          });
+          processedFile = file;
+        } else {
+          // Step 1: Compress image
+          setUploadProgress({
+            status: 'compressing',
+            progress: 20,
+            message: 'Compressing image...',
+          });
+          processedFile = await compressImage(file, options.addWatermark ? options : undefined);
+        }
 
         // Step 2: Upload to storage
         setUploadProgress({
@@ -242,7 +384,7 @@ export function useSafetyPhotoUpload() {
 
         const { data: uploadData, error: uploadError } = await supabase.storage
           .from('safety-photos')
-          .upload(filePath, compressedFile, {
+          .upload(filePath, processedFile, {
             cacheControl: '3600',
             upsert: false,
           });
@@ -262,6 +404,28 @@ export function useSafetyPhotoUpload() {
           data: { publicUrl },
         } = supabase.storage.from('safety-photos').getPublicUrl(filePath);
 
+        // For videos, generate and upload a thumbnail
+        let thumbnailUrl: string | null = null;
+        if (isVideo) {
+          const thumbFile = await extractVideoThumbnail(file);
+          if (thumbFile) {
+            const thumbFileName = `${fileName.replace(/\.[^.]+$/, '')}_thumb.jpg`;
+            const thumbPath = `${session.user.id}/${thumbFileName}`;
+            const { error: thumbError } = await supabase.storage
+              .from('safety-photos')
+              .upload(thumbPath, thumbFile, {
+                cacheControl: '3600',
+                upsert: false,
+              });
+            if (!thumbError) {
+              const {
+                data: { publicUrl: thumbUrl },
+              } = supabase.storage.from('safety-photos').getPublicUrl(thumbPath);
+              thumbnailUrl = thumbUrl;
+            }
+          }
+        }
+
         // Get GPS coordinates: try EXIF first, then browser geolocation
         let gpsLat = options.gpsLatitude;
         let gpsLng = options.gpsLongitude;
@@ -280,6 +444,13 @@ export function useSafetyPhotoUpload() {
           }
         }
 
+        // Auto-fill location from GPS if user didn't provide one
+        let resolvedLocation = options.location || null;
+        if (!resolvedLocation && gpsLat && gpsLng) {
+          const geocoded = await reverseGeocode(gpsLat, gpsLng);
+          if (geocoded) resolvedLocation = geocoded;
+        }
+
         // Step 4: Create database record
         const { data: photoData, error: dbError } = await supabase
           .from('safety_photos')
@@ -289,7 +460,7 @@ export function useSafetyPhotoUpload() {
             file_url: publicUrl,
             description: options.description,
             category: options.category,
-            location: options.location || null,
+            location: resolvedLocation,
             tags: options.tags || null,
             project_reference: options.projectReference || null,
             project_id: options.projectId || null,
@@ -297,8 +468,9 @@ export function useSafetyPhotoUpload() {
             storage_path: filePath,
             gps_latitude: gpsLat || null,
             gps_longitude: gpsLng || null,
-            file_size: compressedFile.size,
-            mime_type: compressedFile.type,
+            file_size: processedFile.size,
+            mime_type: processedFile.type || file.type,
+            thumbnail_url: thumbnailUrl,
           })
           .select()
           .single();
@@ -323,8 +495,10 @@ export function useSafetyPhotoUpload() {
         queryClient.invalidateQueries({ queryKey: ['photo-projects'] });
 
         toast({
-          title: 'Photo uploaded',
-          description: 'Your photo has been saved successfully',
+          title: isVideo ? 'Video uploaded' : 'Photo uploaded',
+          description: isVideo
+            ? 'Your video has been saved successfully'
+            : 'Your photo has been saved successfully',
         });
 
         // Reset progress after short delay
@@ -340,6 +514,23 @@ export function useSafetyPhotoUpload() {
       } catch (error: unknown) {
         console.error('Upload error:', error);
         const msg = error instanceof Error ? error.message : 'Upload failed';
+
+        // Detect offline / network errors for offline queue support
+        const isOffline =
+          !navigator.onLine ||
+          (error instanceof TypeError && error.message === 'Failed to fetch') ||
+          msg.includes('Failed to fetch') ||
+          msg.includes('NetworkError');
+
+        if (isOffline) {
+          setUploadProgress({
+            status: 'offline',
+            progress: 0,
+            message: 'No internet connection',
+          });
+          return null;
+        }
+
         setUploadProgress({
           status: 'error',
           progress: 0,
@@ -355,7 +546,15 @@ export function useSafetyPhotoUpload() {
         return null;
       }
     },
-    [session, compressImage, getCurrentLocation, queryClient]
+    [
+      session,
+      compressImage,
+      isVideoFile,
+      extractVideoThumbnail,
+      getCurrentLocation,
+      reverseGeocode,
+      queryClient,
+    ]
   );
 
   // Upload multiple photos

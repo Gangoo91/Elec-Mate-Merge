@@ -4,6 +4,7 @@ export type PhotoPhase = 'before' | 'after';
 export type ShareLinkStatus = 'active' | 'signed' | 'expired' | 'revoked';
 export type ChecklistStatus = 'pending' | 'in_progress' | 'completed';
 export type RoomType =
+  // Residential
   | 'kitchen'
   | 'living_room'
   | 'dining_room'
@@ -21,6 +22,36 @@ export type RoomType =
   | 'utility'
   | 'study_office'
   | 'conservatory'
+  // Commercial
+  | 'office_space'
+  | 'server_room'
+  | 'plant_room'
+  | 'warehouse'
+  | 'loading_bay'
+  | 'retail_floor'
+  | 'reception'
+  | 'commercial_toilets'
+  | 'break_room'
+  | 'board_room'
+  | 'open_plan'
+  | 'corridor'
+  | 'stairwell'
+  | 'lift_shaft'
+  | 'car_park'
+  | 'roof'
+  // Industrial
+  | 'factory_floor'
+  | 'clean_room'
+  | 'hazardous_area'
+  | 'control_room'
+  | 'compressor_room'
+  | 'switch_room'
+  | 'transformer_room'
+  | 'loading_dock'
+  | 'cold_store'
+  | 'workshop'
+  | 'welding_bay'
+  // Any
   | 'custom';
 
 export interface SiteVisit {

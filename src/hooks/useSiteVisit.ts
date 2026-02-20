@@ -93,7 +93,18 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     ...createEmptyVisit(),
     ...initialVisit,
   }));
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(() => {
+    if (!initialVisit?.status) return 0;
+    switch (initialVisit.status) {
+      case 'completed':
+      case 'scope_sent':
+      case 'signed':
+      case 'post_job':
+        return 3; // Review step — shows completed results
+      default:
+        return 0;
+    }
+  });
   const [activeRoomId, setActiveRoomId] = useState<string | null>(null);
   const [lastSaved, setLastSaved] = useState<Date | undefined>();
   const [isSaving, setIsSaving] = useState(false);

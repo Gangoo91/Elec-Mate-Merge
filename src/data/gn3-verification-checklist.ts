@@ -380,13 +380,13 @@ export const gn3TestingSequence = [
   },
   {
     order: 7,
-    test: 'Prospective Fault Current',
+    test: 'Earth Fault Loop Impedance',
     phase: 'Live testing',
     required: true,
   },
   {
     order: 8,
-    test: 'Earth Fault Loop Impedance',
+    test: 'Prospective Fault Current',
     phase: 'Live testing',
     required: true,
   },

@@ -1,6 +1,16 @@
 import { useState, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, Image as ImageIcon, X, Check, MapPin, Loader2, Zap, Stamp } from 'lucide-react';
+import {
+  Camera,
+  Image as ImageIcon,
+  X,
+  Check,
+  MapPin,
+  Loader2,
+  Zap,
+  Stamp,
+  Video,
+} from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useSafetyPhotoUpload, UploadOptions } from '@/hooks/useSafetyPhotoUpload';
@@ -8,6 +18,7 @@ import { PHOTO_CATEGORIES, getCategoryColor } from '@/hooks/useSafetyPhotos';
 import { PHOTO_TYPES, usePhotoProjects } from '@/hooks/usePhotoProjects';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
 import { usePhotoAI } from '@/hooks/usePhotoAI';
+import { useOfflinePhotoQueue } from '@/hooks/useOfflinePhotoQueue';
 import { toast } from '@/hooks/use-toast';
 
 interface CameraTabProps {
@@ -57,6 +68,7 @@ export default function CameraTab({
 
   const { uploadPhoto, uploadProgress, isUploading, getCurrentLocation } = useSafetyPhotoUpload();
   const { classifyPhoto } = usePhotoAI();
+  const { enqueue: enqueueOffline, pendingCount: offlinePendingCount } = useOfflinePhotoQueue();
 
   const handleFileSelect = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +108,7 @@ export default function CameraTab({
   const handleGallerySelect = useCallback(() => {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = 'image/*';
+    input.accept = 'image/*,video/*';
     input.multiple = captureMode === 'quick';
     input.onchange = (e) => {
       const files = (e.target as HTMLInputElement).files;
@@ -171,6 +183,21 @@ export default function CameraTab({
 
     const result = await uploadPhoto(capturedImage, options);
 
+    // If upload returned null due to offline, enqueue for later
+    if (!result && uploadProgress.status === 'offline') {
+      await enqueueOffline(capturedImage, options);
+      setCapturedImage(null);
+      setImagePreview(null);
+      setDescription('');
+      setLocation('');
+      if (!isProjectLocked) setProjectReference('');
+      setTags([]);
+      setSelectedCategory('before_work');
+      setSelectedPhotoType('general');
+      setCaptureState('ready');
+      return;
+    }
+
     if (result) {
       // Fire-and-forget AI classification in background
       if (result.id) {
@@ -201,6 +228,8 @@ export default function CameraTab({
     selectedProjectId,
     selectedPhotoType,
     uploadPhoto,
+    uploadProgress.status,
+    enqueueOffline,
     classifyPhoto,
     onPhotoUploaded,
     onClose,
@@ -281,7 +310,7 @@ export default function CameraTab({
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,video/*"
           capture="environment"
           className="hidden"
           onChange={handleFileSelect}
@@ -289,11 +318,21 @@ export default function CameraTab({
         <input
           ref={quickInputRef}
           type="file"
-          accept="image/*"
+          accept="image/*,video/*"
           capture="environment"
           className="hidden"
           onChange={handleFileSelect}
         />
+
+        {/* Offline queue indicator */}
+        {offlinePendingCount > 0 && (
+          <div className="px-4 py-2 bg-orange-500/10 border-b border-orange-500/20 flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-orange-400 animate-pulse" />
+            <span className="text-xs text-white font-medium">
+              {offlinePendingCount} photo{offlinePendingCount !== 1 ? 's' : ''} queued for upload
+            </span>
+          </div>
+        )}
 
         {/* Project header when capturing for specific project */}
         {isProjectLocked && (
@@ -354,9 +393,9 @@ export default function CameraTab({
                   <img src={photo.preview} alt="" className="w-full h-full object-cover" />
                   <button
                     onClick={() => handleRemoveFromQueue(index)}
-                    className="absolute top-0.5 right-0.5 p-0.5 rounded-full bg-black/60 text-white touch-manipulation"
+                    className="absolute -top-1 -right-1 w-7 h-7 flex items-center justify-center rounded-full bg-black/60 text-white touch-manipulation active:bg-black/80"
                   >
-                    <X className="h-3 w-3" />
+                    <X className="h-3.5 w-3.5" />
                   </button>
                 </div>
               ))}
@@ -418,18 +457,27 @@ export default function CameraTab({
     );
   }
 
-  // Preview state - review captured image (single mode only)
+  // Preview state - review captured image/video (single mode only)
+  const isVideoCapture = capturedImage?.type?.startsWith('video/');
+
   if (captureState === 'preview' && captureMode === 'single') {
     return (
       <div className="flex flex-col h-full bg-elec-dark">
         <div className="flex-1 relative flex items-center justify-center p-4 md:p-8">
-          {imagePreview && (
-            <img
-              src={imagePreview}
-              alt="Captured"
-              className="max-w-full max-h-full object-contain rounded-xl md:max-w-lg md:max-h-[60vh] border border-white/10"
-            />
-          )}
+          {imagePreview &&
+            (isVideoCapture ? (
+              <video
+                src={imagePreview}
+                controls
+                className="max-w-full max-h-full object-contain rounded-xl md:max-w-lg md:max-h-[60vh] border border-white/10"
+              />
+            ) : (
+              <img
+                src={imagePreview}
+                alt="Captured"
+                className="max-w-full max-h-full object-contain rounded-xl md:max-w-lg md:max-h-[60vh] border border-white/10"
+              />
+            ))}
           <button
             onClick={handleRetake}
             className="absolute top-4 left-4 md:top-8 md:left-8 p-2 rounded-full bg-black/60 text-white touch-manipulation hover:bg-black/80"
@@ -450,7 +498,7 @@ export default function CameraTab({
               onClick={handleProceedToDetails}
               className="flex-[2] h-12 rounded-xl bg-elec-yellow text-black font-semibold touch-manipulation hover:bg-yellow-400 active:bg-yellow-400 transition-colors"
             >
-              Use Photo
+              {isVideoCapture ? 'Use Video' : 'Use Photo'}
             </button>
           </div>
         </div>
@@ -492,14 +540,24 @@ export default function CameraTab({
             </div>
           ) : (
             <div className="relative w-full md:w-48 md:mx-auto h-24 md:h-32 rounded-xl overflow-hidden bg-[#1e1e1e] border border-white/10">
-              {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-              )}
+              {imagePreview &&
+                (isVideoCapture ? (
+                  <div className="relative w-full h-full">
+                    <video src={imagePreview} className="w-full h-full object-cover" muted />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-full bg-black/60 flex items-center justify-center">
+                        <Video className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <img
+                    src={imagePreview}
+                    alt="Preview"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                ))}
               <button
                 onClick={handleRetake}
                 className="absolute top-2 right-2 p-1.5 rounded-full bg-black/60 text-white touch-manipulation hover:bg-black/80"
@@ -692,7 +750,7 @@ export default function CameraTab({
                     {tag}
                     <button
                       onClick={() => handleRemoveTag(tag)}
-                      className="text-white hover:text-white"
+                      className="w-6 h-6 flex items-center justify-center rounded-full text-white active:bg-white/10 touch-manipulation"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -727,7 +785,9 @@ export default function CameraTab({
                 <span>
                   {isQuickMode
                     ? `Upload ${quickQueue.length} Photo${quickQueue.length !== 1 ? 's' : ''}`
-                    : 'Save Photo'}
+                    : isVideoCapture
+                      ? 'Save Video'
+                      : 'Save Photo'}
                 </span>
               </>
             )}

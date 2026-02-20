@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -8,6 +8,7 @@ import {
   Tag,
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   X,
   Check,
   Loader2,
@@ -15,10 +16,13 @@ import {
   Eye,
   Zap,
   AlertTriangle,
+  Download,
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { getCategoryColor, getCategoryLabel } from '@/hooks/useSafetyPhotos';
+import { WORKFLOW_PHASES, getPhotoTypeLabel, getPhotoTypeColour } from '@/hooks/usePhotoProjects';
+import JSZip from 'jszip';
 
 interface SharePhotoData {
   id: string;
@@ -28,6 +32,8 @@ interface SharePhotoData {
   location: string | null;
   tags: string[] | null;
   created_at: string;
+  photo_type?: string | null;
+  notes?: string | null;
 }
 
 interface ShareLinkData {
@@ -41,6 +47,8 @@ interface ShareLinkData {
   requires_signature: boolean;
   status: string;
   created_at: string;
+  signed_at?: string | null;
+  client_name?: string | null;
 }
 
 type PageState = 'loading' | 'viewing' | 'signing' | 'signed' | 'error' | 'expired';
@@ -54,8 +62,13 @@ export default function PhotoSharePage() {
   const [clientName, setClientName] = useState('');
   const [isSigning, setIsSigning] = useState(false);
   const [hasSignature, setHasSignature] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [collapsedPhases, setCollapsedPhases] = useState<Set<string>>(new Set());
   const signatureCanvasRef = useRef<HTMLCanvasElement>(null);
   const isDrawingRef = useRef(false);
+
+  // Swipe state for fullscreen viewer
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   // Load share data
   useEffect(() => {
@@ -122,7 +135,6 @@ export default function PhotoSharePage() {
       const ctx = canvas.getContext('2d');
       if (ctx) {
         ctx.scale(dpr, dpr);
-        // White background
         ctx.fillStyle = '#ffffff';
         ctx.fillRect(0, 0, rect.width, rect.height);
       }
@@ -209,6 +221,30 @@ export default function PhotoSharePage() {
 
   const photos = shareData?.photos_data || [];
 
+  // Group photos by workflow phases
+  const phaseGroups = useMemo(() => {
+    const hasPhotoTypes = photos.some((p) => p.photo_type);
+    if (!hasPhotoTypes) return null; // Fall back to flat grid
+
+    return WORKFLOW_PHASES.map((phase) => {
+      const phasePhotos = photos.filter((p) => {
+        const type = p.photo_type || 'general';
+        return phase.photoTypes.includes(type);
+      });
+      return { ...phase, photos: phasePhotos };
+    }).filter((g) => g.photos.length > 0);
+  }, [photos]);
+
+  // Uncategorised photos (not in any workflow phase)
+  const uncategorisedPhotos = useMemo(() => {
+    if (!phaseGroups) return [];
+    const allPhaseTypes = WORKFLOW_PHASES.flatMap((p) => p.photoTypes);
+    return photos.filter((p) => {
+      const type = p.photo_type || 'general';
+      return !allPhaseTypes.includes(type);
+    });
+  }, [photos, phaseGroups]);
+
   const handleNavigate = useCallback(
     (direction: 'prev' | 'next') => {
       const newIndex =
@@ -220,6 +256,73 @@ export default function PhotoSharePage() {
     },
     [selectedIndex, photos]
   );
+
+  // Swipe handlers for fullscreen viewer
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (!touchStartRef.current) return;
+      const dx = e.changedTouches[0].clientX - touchStartRef.current.x;
+      const dy = e.changedTouches[0].clientY - touchStartRef.current.y;
+      touchStartRef.current = null;
+
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        if (dx < 0) handleNavigate('next');
+        else handleNavigate('prev');
+      }
+    },
+    [handleNavigate]
+  );
+
+  const togglePhase = useCallback((phaseId: string) => {
+    setCollapsedPhases((prev) => {
+      const next = new Set(prev);
+      if (next.has(phaseId)) next.delete(phaseId);
+      else next.add(phaseId);
+      return next;
+    });
+  }, []);
+
+  // Download All as ZIP
+  const handleDownloadAll = useCallback(async () => {
+    if (photos.length === 0) return;
+    setIsDownloading(true);
+
+    try {
+      const zip = new JSZip();
+      for (let i = 0; i < photos.length; i++) {
+        try {
+          const res = await fetch(photos[i].file_url);
+          const blob = await res.blob();
+          const ext = photos[i].file_url.split('.').pop()?.split('?')[0] || 'jpg';
+          const type = photos[i].photo_type || photos[i].category || 'photo';
+          zip.file(`${type}_${i + 1}.${ext}`, blob);
+        } catch {
+          // Skip failed downloads
+        }
+      }
+
+      const content = await zip.generateAsync({ type: 'blob' });
+      const projectName = (shareData?.title || shareData?.project_reference || 'photos')
+        .replace(/\s+/g, '-')
+        .toLowerCase();
+      const url = URL.createObjectURL(content);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${projectName}-${format(new Date(), 'yyyy-MM-dd')}.zip`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch {
+      alert('Failed to create download. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  }, [photos, shareData]);
 
   // Loading state
   if (pageState === 'loading') {
@@ -415,7 +518,7 @@ export default function PhotoSharePage() {
 
           {shareData?.message && <p className="text-sm text-gray-600 mb-3">{shareData.message}</p>}
 
-          <div className="flex items-center gap-4 text-xs text-gray-400">
+          <div className="flex items-center gap-4 text-xs text-gray-500">
             <span className="flex items-center gap-1">
               <Camera className="h-3 w-3" />
               {photos.length} photo{photos.length !== 1 ? 's' : ''}
@@ -429,56 +532,184 @@ export default function PhotoSharePage() {
               Powered by Elec-Mate
             </span>
           </div>
+
+          {/* Download All button */}
+          {photos.length > 0 && (
+            <button
+              onClick={handleDownloadAll}
+              disabled={isDownloading}
+              className="mt-3 flex items-center gap-2 px-4 h-10 rounded-lg bg-gray-100 text-sm font-medium text-gray-700 active:bg-gray-200 disabled:opacity-50 transition-colors"
+            >
+              {isDownloading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Download className="h-4 w-4" />
+              )}
+              {isDownloading ? 'Downloading...' : 'Download All'}
+            </button>
+          )}
         </div>
       </div>
 
-      {/* Photo grid */}
+      {/* Photo content */}
       <div className="max-w-3xl mx-auto px-4 py-4">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {photos.map((photo, index) => (
-            <motion.div
-              key={photo.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.03 }}
-              className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer active:scale-[0.98] transition-transform"
-              onClick={() => {
-                setSelectedPhoto(photo);
-                setSelectedIndex(index);
-              }}
-            >
-              <div className="aspect-square relative">
-                <img
-                  src={photo.file_url}
-                  alt={photo.description}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                <div
-                  className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-medium text-white ${getCategoryColor(photo.category)}`}
+        {phaseGroups && phaseGroups.length > 0 ? (
+          /* Phase-grouped view */
+          <div className="space-y-4">
+            {phaseGroups.map((phase) => (
+              <div
+                key={phase.id}
+                className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100"
+              >
+                {/* Phase header */}
+                <button
+                  onClick={() => togglePhase(phase.id)}
+                  className="w-full flex items-center gap-2.5 px-4 py-3 active:bg-gray-50 transition-colors"
                 >
-                  {getCategoryLabel(photo.category)}
-                </div>
-              </div>
-              <div className="p-2.5">
-                <p className="text-xs text-gray-800 font-medium line-clamp-2">
-                  {photo.description}
-                </p>
-                <div className="flex items-center gap-2 mt-1.5">
-                  {photo.location && (
-                    <span className="flex items-center gap-0.5 text-[10px] text-gray-400">
-                      <MapPin className="h-2.5 w-2.5" />
-                      {photo.location}
-                    </span>
-                  )}
-                  <span className="text-[10px] text-gray-300">
-                    {format(new Date(photo.created_at), 'd MMM')}
+                  <span className={`w-3 h-3 rounded-full ${phase.dotColour}`} />
+                  <span className="text-sm font-semibold text-gray-900 flex-1 text-left">
+                    {phase.label}
                   </span>
+                  <span className="text-xs text-gray-500">
+                    {phase.photos.length} photo{phase.photos.length !== 1 ? 's' : ''}
+                  </span>
+                  <ChevronDown
+                    className={`h-4 w-4 text-gray-400 transition-transform ${
+                      collapsedPhases.has(phase.id) ? '-rotate-90' : 'rotate-0'
+                    }`}
+                  />
+                </button>
+
+                {/* Phase photos */}
+                {!collapsedPhases.has(phase.id) && (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 px-3 pb-3">
+                    {phase.photos.map((photo, index) => (
+                      <motion.div
+                        key={photo.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.03 }}
+                        className="bg-gray-50 rounded-lg overflow-hidden cursor-pointer active:scale-[0.98] transition-transform border border-gray-100"
+                        onClick={() => {
+                          const globalIdx = photos.findIndex((p) => p.id === photo.id);
+                          setSelectedPhoto(photo);
+                          setSelectedIndex(globalIdx >= 0 ? globalIdx : index);
+                        }}
+                      >
+                        <div className="aspect-square relative">
+                          <img
+                            src={photo.file_url}
+                            alt={photo.description}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div className="p-2">
+                          <p className="text-xs text-gray-800 font-medium line-clamp-2">
+                            {photo.description}
+                          </p>
+                          {photo.notes && (
+                            <p className="text-[10px] text-gray-500 line-clamp-1 mt-0.5">
+                              {photo.notes}
+                            </p>
+                          )}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Uncategorised photos */}
+            {uncategorisedPhotos.length > 0 && (
+              <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
+                <div className="flex items-center gap-2.5 px-4 py-3">
+                  <span className="w-3 h-3 rounded-full bg-gray-400" />
+                  <span className="text-sm font-semibold text-gray-900 flex-1">General</span>
+                  <span className="text-xs text-gray-500">{uncategorisedPhotos.length}</span>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 px-3 pb-3">
+                  {uncategorisedPhotos.map((photo, index) => (
+                    <motion.div
+                      key={photo.id}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.03 }}
+                      className="bg-gray-50 rounded-lg overflow-hidden cursor-pointer active:scale-[0.98] transition-transform border border-gray-100"
+                      onClick={() => {
+                        const globalIdx = photos.findIndex((p) => p.id === photo.id);
+                        setSelectedPhoto(photo);
+                        setSelectedIndex(globalIdx >= 0 ? globalIdx : index);
+                      }}
+                    >
+                      <div className="aspect-square">
+                        <img
+                          src={photo.file_url}
+                          alt={photo.description}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="p-2">
+                        <p className="text-xs text-gray-800 font-medium line-clamp-2">
+                          {photo.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  ))}
                 </div>
               </div>
-            </motion.div>
-          ))}
-        </div>
+            )}
+          </div>
+        ) : (
+          /* Flat grid (no photo_type data) */
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            {photos.map((photo, index) => (
+              <motion.div
+                key={photo.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.03 }}
+                className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 cursor-pointer active:scale-[0.98] transition-transform"
+                onClick={() => {
+                  setSelectedPhoto(photo);
+                  setSelectedIndex(index);
+                }}
+              >
+                <div className="aspect-square relative">
+                  <img
+                    src={photo.file_url}
+                    alt={photo.description}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                  <div
+                    className={`absolute top-2 left-2 px-2 py-0.5 rounded-full text-[10px] font-medium text-white ${getCategoryColor(photo.category)}`}
+                  >
+                    {getCategoryLabel(photo.category)}
+                  </div>
+                </div>
+                <div className="p-2.5">
+                  <p className="text-xs text-gray-800 font-medium line-clamp-2">
+                    {photo.description}
+                  </p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    {photo.location && (
+                      <span className="flex items-center gap-0.5 text-[10px] text-gray-500">
+                        <MapPin className="h-2.5 w-2.5" />
+                        {photo.location}
+                      </span>
+                    )}
+                    <span className="text-[10px] text-gray-400">
+                      {format(new Date(photo.created_at), 'd MMM')}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Signature CTA (if required) */}
@@ -496,7 +727,7 @@ export default function PhotoSharePage() {
         </div>
       )}
 
-      {/* Full-screen photo viewer */}
+      {/* Full-screen photo viewer with swipe navigation */}
       <AnimatePresence>
         {selectedPhoto && (
           <motion.div
@@ -504,6 +735,8 @@ export default function PhotoSharePage() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 bg-black flex flex-col"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             {/* Viewer header */}
             <div className="flex-shrink-0 bg-black/90 backdrop-blur-sm px-3 py-2 flex items-center justify-between">
@@ -513,7 +746,7 @@ export default function PhotoSharePage() {
               >
                 <X className="h-5 w-5 text-white" />
               </button>
-              <span className="text-xs text-white/60">
+              <span className="text-xs text-white">
                 {selectedIndex + 1} / {photos.length}
               </span>
               <div className="w-9" />
@@ -521,11 +754,18 @@ export default function PhotoSharePage() {
 
             {/* Image */}
             <div className="flex-1 flex items-center justify-center overflow-hidden relative">
-              <img
-                src={selectedPhoto.file_url}
-                alt={selectedPhoto.description}
-                className="max-w-full max-h-full object-contain"
-              />
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={selectedPhoto.id}
+                  src={selectedPhoto.file_url}
+                  alt={selectedPhoto.description}
+                  className="max-w-full max-h-full object-contain"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.15 }}
+                />
+              </AnimatePresence>
 
               {/* Nav arrows */}
               {selectedIndex > 0 && (
@@ -549,15 +789,31 @@ export default function PhotoSharePage() {
             {/* Photo info */}
             <div className="flex-shrink-0 bg-black/90 backdrop-blur-sm px-4 py-3">
               <div className="flex items-center gap-2 mb-1">
-                <span
-                  className={`w-2 h-2 rounded-full ${getCategoryColor(selectedPhoto.category)}`}
-                />
-                <span className="text-xs text-white/60">
-                  {getCategoryLabel(selectedPhoto.category)}
-                </span>
+                {selectedPhoto.photo_type ? (
+                  <>
+                    <span
+                      className={`w-2 h-2 rounded-full ${getPhotoTypeColour(selectedPhoto.photo_type)}`}
+                    />
+                    <span className="text-xs text-white">
+                      {getPhotoTypeLabel(selectedPhoto.photo_type)}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span
+                      className={`w-2 h-2 rounded-full ${getCategoryColor(selectedPhoto.category)}`}
+                    />
+                    <span className="text-xs text-white">
+                      {getCategoryLabel(selectedPhoto.category)}
+                    </span>
+                  </>
+                )}
               </div>
               <p className="text-sm text-white">{selectedPhoto.description}</p>
-              <div className="flex items-center gap-3 mt-1.5 text-[10px] text-white/40">
+              {selectedPhoto.notes && (
+                <p className="text-xs text-gray-300 mt-1">{selectedPhoto.notes}</p>
+              )}
+              <div className="flex items-center gap-3 mt-1.5 text-[10px] text-gray-400">
                 {selectedPhoto.location && (
                   <span className="flex items-center gap-1">
                     <MapPin className="h-3 w-3" />
@@ -574,7 +830,7 @@ export default function PhotoSharePage() {
                   {selectedPhoto.tags.map((tag, i) => (
                     <span
                       key={i}
-                      className="px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-white/50"
+                      className="px-1.5 py-0.5 rounded-full bg-white/10 text-[10px] text-gray-300"
                     >
                       {tag}
                     </span>

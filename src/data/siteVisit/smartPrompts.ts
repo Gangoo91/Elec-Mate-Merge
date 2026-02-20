@@ -1,4 +1,4 @@
-import type { RoomType } from '@/types/siteVisit';
+import type { RoomType, PropertyType } from '@/types/siteVisit';
 
 export type PromptInputType = 'select' | 'yes_no' | 'text';
 
@@ -10,6 +10,8 @@ export interface SmartPrompt {
   scope: 'global' | 'room';
   /** If scope is 'room', which room types trigger this prompt */
   roomTypes?: RoomType[];
+  /** Which property types this prompt applies to (undefined = all) */
+  propertyTypes?: PropertyType[];
   helpText?: string;
 }
 
@@ -17,6 +19,7 @@ export interface SmartPrompt {
 // Global prompts — shown once at top of Capture step
 // ============================================================
 export const GLOBAL_PROMPTS: SmartPrompt[] = [
+  // All property types
   {
     key: 'cu_type',
     question: 'Consumer unit type?',
@@ -70,6 +73,105 @@ export const GLOBAL_PROMPTS: SmartPrompt[] = [
       'Other',
     ],
     scope: 'global',
+  },
+
+  // Commercial-specific global prompts
+  {
+    key: 'supply_type',
+    question: 'Supply type?',
+    inputType: 'select',
+    options: ['Single phase', 'Three phase', 'Unknown'],
+    scope: 'global',
+    propertyTypes: ['commercial', 'industrial'],
+    helpText: 'Main incoming supply configuration',
+  },
+  {
+    key: 'number_of_phases',
+    question: 'Number of phases?',
+    inputType: 'select',
+    options: ['1', '2', '3', 'Unknown'],
+    scope: 'global',
+    propertyTypes: ['commercial', 'industrial'],
+  },
+  {
+    key: 'estimated_max_demand',
+    question: 'Estimated max demand (kVA)?',
+    inputType: 'text',
+    scope: 'global',
+    propertyTypes: ['commercial', 'industrial'],
+    helpText: 'Approximate maximum demand in kVA',
+  },
+  {
+    key: 'fire_alarm_system',
+    question: 'Fire alarm system?',
+    inputType: 'select',
+    options: ['None', 'L1', 'L2', 'L3', 'L4', 'L5', 'LD1', 'LD2', 'LD3', 'Unknown'],
+    scope: 'global',
+    propertyTypes: ['commercial'],
+    helpText: 'BS 5839-1 category classification',
+  },
+  {
+    key: 'emergency_lighting_type',
+    question: 'Emergency lighting type?',
+    inputType: 'select',
+    options: ['None', 'Maintained', 'Non-maintained', 'Combined', 'Unknown'],
+    scope: 'global',
+    propertyTypes: ['commercial'],
+    helpText: 'BS 5266-1 emergency lighting provision',
+  },
+  {
+    key: 'number_of_dbs',
+    question: 'Number of distribution boards?',
+    inputType: 'text',
+    scope: 'global',
+    propertyTypes: ['commercial', 'industrial'],
+    helpText: 'Total DBs including sub-distribution',
+  },
+
+  // Industrial-specific global prompts
+  {
+    key: 'hazardous_area_zones',
+    question: 'Hazardous area zones?',
+    inputType: 'select',
+    options: ['None', 'Zone 0', 'Zone 1', 'Zone 2', 'Zone 20', 'Zone 21', 'Zone 22'],
+    scope: 'global',
+    propertyTypes: ['industrial'],
+    helpText: 'BS EN 60079-10 hazardous area classification',
+  },
+  {
+    key: 'atex_rating',
+    question: 'ATEX rating?',
+    inputType: 'select',
+    options: ['Not required', 'Category 1', 'Category 2', 'Category 3', 'TBC'],
+    scope: 'global',
+    propertyTypes: ['industrial'],
+    helpText: 'ATEX Directive 2014/34/EU equipment category',
+  },
+  {
+    key: 'ip_rating_requirement',
+    question: 'IP rating requirement?',
+    inputType: 'select',
+    options: ['IP20', 'IP44', 'IP55', 'IP65', 'IP66', 'IP67', 'IP68'],
+    scope: 'global',
+    propertyTypes: ['industrial'],
+    helpText: 'Minimum ingress protection for equipment',
+  },
+  {
+    key: 'cable_containment_type',
+    question: 'Cable containment type?',
+    inputType: 'select',
+    options: ['Tray', 'Ladder', 'Trunking', 'Conduit', 'SWA', 'Mixed'],
+    scope: 'global',
+    propertyTypes: ['industrial'],
+    helpText: 'Primary cable management method',
+  },
+  {
+    key: 'significant_motor_loads',
+    question: 'Significant motor loads?',
+    inputType: 'yes_no',
+    scope: 'global',
+    propertyTypes: ['industrial'],
+    helpText: 'Large motors requiring DOL/star-delta/VSD starters',
   },
 ];
 
@@ -178,18 +280,130 @@ export const ROOM_PROMPTS: SmartPrompt[] = [
     roomTypes: ['loft'],
     helpText: 'Cable routing may need adjustment if insulation is deep',
   },
+
+  // Server room
+  {
+    key: 'server_room_cooling',
+    question: 'Cooling system present?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['server_room'],
+    helpText: 'Dedicated cooling for IT equipment',
+  },
+  {
+    key: 'server_room_ups',
+    question: 'UPS installed?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['server_room'],
+    helpText: 'Uninterruptible power supply for critical loads',
+  },
+  {
+    key: 'server_room_floor_type',
+    question: 'Floor type?',
+    inputType: 'select',
+    options: ['Raised floor', 'Solid floor'],
+    scope: 'room',
+    roomTypes: ['server_room'],
+  },
+
+  // Hazardous area
+  {
+    key: 'hazardous_zone_classification',
+    question: 'Zone classification?',
+    inputType: 'select',
+    options: ['Zone 0', 'Zone 1', 'Zone 2', 'Zone 20', 'Zone 21', 'Zone 22'],
+    scope: 'room',
+    roomTypes: ['hazardous_area'],
+    helpText: 'BS EN 60079-10 zone classification for this area',
+  },
+  {
+    key: 'hazardous_gas_dust_group',
+    question: 'Gas/dust group?',
+    inputType: 'select',
+    options: ['IIA', 'IIB', 'IIC', 'IIIA', 'IIIB', 'IIIC', 'Unknown'],
+    scope: 'room',
+    roomTypes: ['hazardous_area'],
+    helpText: 'Equipment group classification',
+  },
+  {
+    key: 'hazardous_t_class',
+    question: 'Temperature class?',
+    inputType: 'select',
+    options: ['T1 (450°C)', 'T2 (300°C)', 'T3 (200°C)', 'T4 (135°C)', 'T5 (100°C)', 'T6 (85°C)'],
+    scope: 'room',
+    roomTypes: ['hazardous_area'],
+  },
+
+  // Switch room
+  {
+    key: 'switch_room_arc_flash',
+    question: 'Arc flash assessment required?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['switch_room'],
+    helpText: 'IEEE 1584 / NFPA 70E arc flash study',
+  },
+  {
+    key: 'switch_room_clearance',
+    question: 'Clearance distances adequate?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['switch_room'],
+    helpText: 'Minimum working clearances per BS 7671',
+  },
+
+  // Car park
+  {
+    key: 'car_park_ventilation',
+    question: 'Ventilation system present?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['car_park'],
+    helpText: 'Mechanical ventilation for enclosed car parks',
+  },
+  {
+    key: 'car_park_co_detection',
+    question: 'CO detection installed?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['car_park'],
+    helpText: 'Carbon monoxide detection system',
+  },
+
+  // Plant room
+  {
+    key: 'plant_room_drainage',
+    question: 'Drainage present?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['plant_room'],
+  },
+  {
+    key: 'plant_room_ventilation',
+    question: 'Ventilation adequate?',
+    inputType: 'yes_no',
+    scope: 'room',
+    roomTypes: ['plant_room'],
+  },
 ];
 
 /**
- * Returns prompts relevant to a specific room type.
+ * Returns prompts relevant to a specific room type,
+ * optionally filtered by property type.
  */
-export function getPromptsForRoom(roomType: RoomType): SmartPrompt[] {
-  return ROOM_PROMPTS.filter((p) => !p.roomTypes || p.roomTypes.includes(roomType));
+export function getPromptsForRoom(roomType: RoomType, propertyType?: PropertyType): SmartPrompt[] {
+  return ROOM_PROMPTS.filter((p) => {
+    if (p.roomTypes && !p.roomTypes.includes(roomType)) return false;
+    if (p.propertyTypes && propertyType && !p.propertyTypes.includes(propertyType)) return false;
+    return true;
+  });
 }
 
 /**
- * Returns all global prompts.
+ * Returns global prompts, optionally filtered by property type.
  */
-export function getGlobalPrompts(): SmartPrompt[] {
-  return GLOBAL_PROMPTS;
+export function getGlobalPrompts(propertyType?: PropertyType): SmartPrompt[] {
+  if (!propertyType) return GLOBAL_PROMPTS;
+  return GLOBAL_PROMPTS.filter((p) => !p.propertyTypes || p.propertyTypes.includes(propertyType));
 }

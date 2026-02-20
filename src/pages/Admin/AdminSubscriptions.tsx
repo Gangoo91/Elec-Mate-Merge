@@ -71,39 +71,58 @@ export default function AdminSubscriptions() {
   const [roleFilter, setRoleFilter] = useState<string>('all');
   const [selectedUser, setSelectedUser] = useState<SubscribedUser | null>(null);
 
-  // Fetch subscription stats - consolidated from 5 queries to 1
-  const { data: stats } = useQuery({
-    queryKey: ['admin-subscription-stats'],
+  // Live Stripe stats — shares cache key with AdminDashboard (zero extra API calls)
+  const { data: stripeStats } = useQuery<{
+    stripe: {
+      activeSubscriptions: number;
+      trialingSubscriptions: number;
+      mrr: number;
+      projectedMrr: number;
+      tierCounts: Record<string, number>;
+    };
+    supabase: { subscribedUsers: number };
+    generatedAt: string;
+  }>({
+    queryKey: ['admin-stripe-live-stats'],
+    refetchInterval: 60000,
+    refetchOnWindowFocus: true,
+    staleTime: 30000,
     queryFn: async () => {
-      // Single query to get all profile data needed for stats
-      const [profilesRes, offersRes] = await Promise.all([
-        supabase.from('profiles').select('role, subscribed', { count: 'exact' }),
-        supabase.from('promo_offers').select('redemptions, price'),
-      ]);
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
 
-      const profiles = profilesRes.data || [];
-      const total = profilesRes.count || 0;
-      const subscribed = profiles.filter((p) => p.subscribed);
-
-      // Calculate potential MRR based on offer redemptions
-      let estimatedMRR = 0;
-      offersRes.data?.forEach((offer: { redemptions: number; price: number }) => {
-        estimatedMRR += (offer.redemptions || 0) * (offer.price || 0);
+      const { data, error } = await supabase.functions.invoke('admin-stripe-stats', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
       });
 
-      return {
-        total,
-        subscribed: subscribed.length,
-        apprentice: subscribed.filter((p) => p.role === 'apprentice').length,
-        electrician: subscribed.filter((p) => p.role === 'electrician').length,
-        employer: subscribed.filter((p) => p.role === 'employer').length,
-        estimatedMRR,
-        conversionRate: total ? ((subscribed.length / total) * 100).toFixed(1) : '0',
-      };
+      if (error) throw error;
+      return data;
     },
-    staleTime: 2 * 60 * 1000, // Cache for 2 minutes
-    refetchInterval: 30000,
   });
+
+  // Fetch total user count for conversion rate
+  const { data: totalUserCount } = useQuery({
+    queryKey: ['admin-total-users-count'],
+    queryFn: async () => {
+      const { count } = await supabase.from('profiles').select('*', { count: 'exact', head: true });
+      return count || 0;
+    },
+    staleTime: 2 * 60 * 1000,
+  });
+
+  const stats = {
+    mrr: stripeStats?.stripe.mrr || 0,
+    subscribed: stripeStats?.stripe.activeSubscriptions || 0,
+    total: totalUserCount || 0,
+    apprentice: stripeStats?.stripe.tierCounts?.apprentice || 0,
+    electrician: stripeStats?.stripe.tierCounts?.electrician || 0,
+    employer: stripeStats?.stripe.tierCounts?.employer || 0,
+    conversionRate: totalUserCount
+      ? (((stripeStats?.stripe.activeSubscriptions || 0) / totalUserCount) * 100).toFixed(1)
+      : '0',
+  };
 
   // Fetch subscribed users
   const {
@@ -235,8 +254,19 @@ export default function AdminSubscriptions() {
             <CardContent className="pt-4 pb-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xl font-bold">£{(stats?.estimatedMRR || 0).toFixed(2)}</p>
-                  <p className="text-xs text-muted-foreground">Est. MRR</p>
+                  <p className="text-xl font-bold">
+                    £
+                    {stats.mrr.toLocaleString('en-GB', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </p>
+                  <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+                    MRR
+                    <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/20 text-emerald-400 uppercase tracking-wider">
+                      Live
+                    </span>
+                  </p>
                 </div>
                 <PoundSterling className="h-6 w-6 text-emerald-400" />
               </div>
@@ -247,7 +277,7 @@ export default function AdminSubscriptions() {
             <CardContent className="pt-4 pb-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xl font-bold">{stats?.subscribed || 0}</p>
+                  <p className="text-xl font-bold">{stats.subscribed}</p>
                   <p className="text-xs text-muted-foreground">Subscribed</p>
                 </div>
                 <Crown className="h-6 w-6 text-green-400" />
@@ -259,7 +289,7 @@ export default function AdminSubscriptions() {
             <CardContent className="pt-4 pb-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xl font-bold">{stats?.conversionRate}%</p>
+                  <p className="text-xl font-bold">{stats.conversionRate}%</p>
                   <p className="text-xs text-muted-foreground">Conversion</p>
                 </div>
                 <Target className="h-6 w-6 text-orange-400" />
@@ -271,7 +301,7 @@ export default function AdminSubscriptions() {
             <CardContent className="pt-4 pb-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-xl font-bold">{stats?.total || 0}</p>
+                  <p className="text-xl font-bold">{stats.total}</p>
                   <p className="text-xs text-muted-foreground">Total Users</p>
                 </div>
                 <Users className="h-6 w-6 text-blue-400" />
@@ -292,17 +322,17 @@ export default function AdminSubscriptions() {
             <div className="grid grid-cols-3 gap-3">
               <div className="text-center p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
                 <GraduationCap className="h-6 w-6 text-yellow-400 mx-auto mb-1" />
-                <p className="text-lg font-bold">{stats?.apprentice || 0}</p>
+                <p className="text-lg font-bold">{stats.apprentice}</p>
                 <p className="text-xs text-muted-foreground">Apprentices</p>
               </div>
               <div className="text-center p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20">
                 <Zap className="h-6 w-6 text-yellow-400 mx-auto mb-1" />
-                <p className="text-lg font-bold">{stats?.electrician || 0}</p>
+                <p className="text-lg font-bold">{stats.electrician}</p>
                 <p className="text-xs text-muted-foreground">Electricians</p>
               </div>
               <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <Briefcase className="h-6 w-6 text-blue-400 mx-auto mb-1" />
-                <p className="text-lg font-bold">{stats?.employer || 0}</p>
+                <p className="text-lg font-bold">{stats.employer}</p>
                 <p className="text-xs text-muted-foreground">Employers</p>
               </div>
             </div>

@@ -1,17 +1,20 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, Grid3X3, Folder, Download, ArrowLeft } from 'lucide-react';
+import { Camera, Image as ImageIcon, Folder, ArrowLeft } from 'lucide-react';
 import { useSafetyPhotos } from '@/hooks/useSafetyPhotos';
-import { usePhotoProjects } from '@/hooks/usePhotoProjects';
+import { usePhotoProjects, PhotoProject } from '@/hooks/usePhotoProjects';
+import { SafetyPhoto } from '@/hooks/useSafetyPhotos';
+import { useOfflinePhotoQueue } from '@/hooks/useOfflinePhotoQueue';
 
 // Tab components
-import GalleryTab from './photo-docs/GalleryTab';
+import AllPhotosTab from './photo-docs/AllPhotosTab';
 import CameraTab from './photo-docs/CameraTab';
 import ProjectsTab from './photo-docs/ProjectsTab';
-import ExportTab from './photo-docs/ExportTab';
+import ProjectDetailView from './photo-docs/ProjectDetailView';
+import ShareProjectSheet from './photo-docs/ShareProjectSheet';
 
-type TabId = 'gallery' | 'camera' | 'projects' | 'export';
+type TabId = 'projects' | 'photos' | 'camera';
 
 interface Tab {
   id: TabId;
@@ -27,23 +30,24 @@ interface PhotoDocumentationProps {
 
 export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumentationProps) {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<TabId>('gallery');
+  const [activeTab, setActiveTab] = useState<TabId>('projects');
   const { stats } = useSafetyPhotos();
   const { projects } = usePhotoProjects('active');
+  const { pendingCount: offlinePendingCount } = useOfflinePhotoQueue();
+
+  // Project detail view state (lifted to this level)
+  const [viewingProject, setViewingProject] = useState<PhotoProject | null>(null);
+
+  // Camera context: when navigating from a project, camera knows the project
   const [cameraProjectRef, setCameraProjectRef] = useState<string | undefined>();
+  const [cameraProjectId, setCameraProjectId] = useState<string | undefined>();
+
+  // Share sheet state
+  const [shareOpen, setShareOpen] = useState(false);
+  const [shareProject, setShareProject] = useState<PhotoProject | null>(null);
+  const [sharePhotos, setSharePhotos] = useState<SafetyPhoto[]>([]);
 
   const tabs: Tab[] = [
-    {
-      id: 'gallery',
-      label: 'Gallery',
-      icon: <Grid3X3 className="h-[22px] w-[22px]" />,
-      badge: stats.total > 0 ? stats.total : undefined,
-    },
-    {
-      id: 'camera',
-      label: 'Camera',
-      icon: <Camera className="h-[22px] w-[22px]" />,
-    },
     {
       id: 'projects',
       label: 'Projects',
@@ -51,45 +55,59 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
       badge: projects.length > 0 ? projects.length : undefined,
     },
     {
-      id: 'export',
-      label: 'Export',
-      icon: <Download className="h-[22px] w-[22px]" />,
+      id: 'photos',
+      label: 'All Photos',
+      icon: <ImageIcon className="h-[22px] w-[22px]" />,
+      badge: stats.total > 0 ? stats.total : undefined,
+    },
+    {
+      id: 'camera',
+      label: 'Camera',
+      icon: <Camera className="h-[22px] w-[22px]" />,
+      badge: offlinePendingCount > 0 ? offlinePendingCount : undefined,
     },
   ];
 
   const handlePhotoUploaded = useCallback(() => {
-    // Switch to gallery tab after upload
     setCameraProjectRef(undefined);
-    setActiveTab('gallery');
+    setCameraProjectId(undefined);
+    setActiveTab('projects');
   }, []);
 
   const handleTabChange = useCallback(
     (tabId: TabId) => {
-      // Clear camera project context when switching away from camera
-      if (activeTab === 'camera' && tabId !== 'camera') {
+      // If switching to camera from a project, pass context
+      if (tabId === 'camera' && viewingProject) {
+        setCameraProjectRef(viewingProject.name);
+        setCameraProjectId(viewingProject.id);
+      } else if (tabId !== 'camera') {
         setCameraProjectRef(undefined);
+        setCameraProjectId(undefined);
       }
+
+      // If switching away from project detail, close it
+      if (tabId !== 'projects' && viewingProject) {
+        setViewingProject(null);
+      }
+
       setActiveTab(tabId);
     },
-    [activeTab]
+    [viewingProject]
   );
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'gallery':
-        return <GalleryTab />;
-      case 'camera':
-        return (
-          <CameraTab onPhotoUploaded={handlePhotoUploaded} projectReference={cameraProjectRef} />
-        );
-      case 'projects':
-        return <ProjectsTab />;
-      case 'export':
-        return <ExportTab />;
-      default:
-        return null;
-    }
-  };
+  const handleSelectProject = useCallback((project: PhotoProject) => {
+    setViewingProject(project);
+  }, []);
+
+  const handleBackFromProject = useCallback(() => {
+    setViewingProject(null);
+  }, []);
+
+  const handleShare = useCallback((project: PhotoProject, photos: SafetyPhoto[]) => {
+    setShareProject(project);
+    setSharePhotos(photos);
+    setShareOpen(true);
+  }, []);
 
   const handleBack = () => {
     if (onBack) {
@@ -99,10 +117,58 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
     }
   };
 
+  // When viewing a project, show full-page ProjectDetailView (hide tabs)
+  if (viewingProject) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-80px)] bg-background">
+        <ProjectDetailView
+          project={viewingProject}
+          onBack={handleBackFromProject}
+          onShare={handleShare}
+          onOpenCamera={() => {
+            setCameraProjectRef(viewingProject.name);
+            setCameraProjectId(viewingProject.id);
+            setActiveTab('camera');
+          }}
+        />
+
+        {/* Share Sheet */}
+        {shareProject && (
+          <ShareProjectSheet
+            open={shareOpen}
+            onOpenChange={setShareOpen}
+            projectReference={shareProject.name}
+            projectId={shareProject.id}
+            photos={sharePhotos}
+          />
+        )}
+      </div>
+    );
+  }
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'projects':
+        return <ProjectsTab onSelectProject={handleSelectProject} />;
+      case 'photos':
+        return <AllPhotosTab />;
+      case 'camera':
+        return (
+          <CameraTab
+            onPhotoUploaded={handlePhotoUploaded}
+            projectReference={cameraProjectRef}
+            projectId={cameraProjectId}
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] bg-black">
+    <div className="flex flex-col h-[calc(100vh-80px)] bg-background">
       {/* Header with back button */}
-      <div className="flex-shrink-0 bg-black/95 backdrop-blur-sm border-b border-white/[0.08]">
+      <div className="flex-shrink-0 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
           <button
             onClick={handleBack}
@@ -130,8 +196,8 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
         </AnimatePresence>
       </div>
 
-      {/* Bottom tab bar - true iOS style */}
-      <div className="flex-shrink-0 bg-black/90 backdrop-blur-xl border-t border-white/[0.08]">
+      {/* Bottom tab bar */}
+      <div className="flex-shrink-0 bg-background/95 backdrop-blur-xl border-t border-white/10">
         <div className="flex items-stretch">
           {tabs.map((tab) => {
             const isActive = activeTab === tab.id;
@@ -139,7 +205,7 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
               <button
                 key={tab.id}
                 onClick={() => handleTabChange(tab.id)}
-                className={`flex-1 flex flex-col items-center justify-center py-2 touch-manipulation transition-colors ${
+                className={`flex-1 flex flex-col items-center justify-center py-2.5 touch-manipulation transition-colors ${
                   isActive ? 'text-elec-yellow' : 'text-white active:text-white'
                 }`}
               >
@@ -147,7 +213,7 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
                 <div className="relative">
                   {tab.icon}
                   {tab.badge !== undefined && tab.badge > 0 && (
-                    <span className="absolute -top-1 -right-2.5 min-w-[14px] h-[14px] px-0.5 rounded-full bg-elec-yellow text-black text-[9px] font-bold flex items-center justify-center">
+                    <span className="absolute -top-1 -right-2.5 min-w-[16px] h-[16px] px-1 rounded-full bg-elec-yellow text-black text-[9px] font-bold flex items-center justify-center">
                       {tab.badge > 99 ? '99+' : tab.badge}
                     </span>
                   )}
@@ -155,7 +221,7 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
 
                 {/* Label */}
                 <span
-                  className={`text-[9px] mt-0.5 font-medium tracking-tight ${isActive ? 'text-elec-yellow' : ''}`}
+                  className={`text-[10px] mt-1 font-medium ${isActive ? 'text-elec-yellow' : ''}`}
                 >
                   {tab.label}
                 </span>
@@ -166,6 +232,17 @@ export default function PhotoDocumentation({ onBack, backLabel }: PhotoDocumenta
         {/* Safe area spacer */}
         <div className="h-[env(safe-area-inset-bottom)]" />
       </div>
+
+      {/* Share Sheet */}
+      {shareProject && (
+        <ShareProjectSheet
+          open={shareOpen}
+          onOpenChange={setShareOpen}
+          projectReference={shareProject.name}
+          projectId={shareProject.id}
+          photos={sharePhotos}
+        />
+      )}
     </div>
   );
 }

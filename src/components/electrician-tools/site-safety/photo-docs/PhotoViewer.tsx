@@ -259,7 +259,7 @@ export default function PhotoViewer({
         <div className="flex items-center justify-between px-2 py-2">
           <button
             onClick={onClose}
-            className="w-10 h-10 flex items-center justify-center rounded-full active:bg-white/10 transition-colors touch-manipulation"
+            className="w-11 h-11 flex items-center justify-center rounded-full active:bg-white/10 transition-colors touch-manipulation"
           >
             <X className="h-5 w-5 text-white" />
           </button>
@@ -270,7 +270,7 @@ export default function PhotoViewer({
 
           <button
             onClick={() => setShowActionMenu(true)}
-            className="w-10 h-10 flex items-center justify-center rounded-full active:bg-white/10 transition-colors touch-manipulation"
+            className="w-11 h-11 flex items-center justify-center rounded-full active:bg-white/10 transition-colors touch-manipulation"
           >
             <MoreVertical className="h-5 w-5 text-white" />
           </button>
@@ -419,7 +419,7 @@ export default function PhotoViewer({
             <button
               onClick={() => setShowDeleteConfirm(true)}
               disabled={isDeleting}
-              className="h-10 w-10 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center touch-manipulation active:bg-red-500/20 disabled:opacity-50"
+              className="h-11 w-11 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center touch-manipulation active:bg-red-500/20 disabled:opacity-50"
             >
               <Trash2 className="h-4 w-4" />
             </button>

@@ -99,7 +99,7 @@ export default function AdminWinback() {
   });
   const [confirmResend, setConfirmResend] = useState(false);
   const [resetting, setResetting] = useState(false);
-  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2'>('v2');
+  const [emailVersion, setEmailVersion] = useState<'v1' | 'v2' | 'v3'>('v3');
 
   // Fetch campaign stats
   const {
@@ -158,6 +158,7 @@ export default function AdminWinback() {
     queryKey: ['admin-winback-tracking'],
     queryFn: async () => {
       const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .from('email_tracking_events' as any)
         .select('email_id, user_email, event_type, link_url, created_at')
         .order('created_at', { ascending: false })
@@ -284,7 +285,13 @@ export default function AdminWinback() {
     }
 
     setBatchSending(true);
-    setBatchProgress({ sent: 0, failed: 0, total: userIds.length, batch: 0, totalBatches: batches.length });
+    setBatchProgress({
+      sent: 0,
+      failed: 0,
+      total: userIds.length,
+      batch: 0,
+      totalBatches: batches.length,
+    });
 
     let totalSent = 0;
     let totalFailed = 0;
@@ -303,10 +310,12 @@ export default function AdminWinback() {
         totalFailed += data.failed || 0;
         setBatchProgress((prev) => ({ ...prev, sent: totalSent, failed: totalFailed }));
         toast.success(`Batch ${i + 1}/${batches.length} done — ${data.sent} sent`);
-      } catch (err: any) {
+      } catch (err: unknown) {
         totalFailed += batches[i].length;
         setBatchProgress((prev) => ({ ...prev, failed: totalFailed }));
-        toast.error(`Batch ${i + 1} failed: ${err.message}`);
+        toast.error(
+          `Batch ${i + 1} failed: ${err instanceof Error ? err.message : 'Unknown error'}`
+        );
       }
 
       if (i < batches.length - 1) await new Promise((r) => setTimeout(r, 2000));
@@ -400,7 +409,19 @@ export default function AdminWinback() {
   };
 
   // Funnel bar helper
-  const FunnelBar = ({ label, value, max, colour, icon: Icon }: { label: string; value: number; max: number; colour: string; icon: any }) => {
+  const FunnelBar = ({
+    label,
+    value,
+    max,
+    colour,
+    icon: Icon,
+  }: {
+    label: string;
+    value: number;
+    max: number;
+    colour: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }) => {
     const pct = max > 0 ? (value / max) * 100 : 0;
     return (
       <div className="flex items-center gap-3">
@@ -411,7 +432,10 @@ export default function AdminWinback() {
         <div className="flex-1 h-5 bg-muted/50 rounded-full overflow-hidden relative">
           <div
             className="h-full rounded-full transition-all duration-700"
-            style={{ width: `${Math.max(pct, 2)}%`, background: `var(--bar-${label.toLowerCase()})` }}
+            style={{
+              width: `${Math.max(pct, 2)}%`,
+              background: `var(--bar-${label.toLowerCase()})`,
+            }}
           />
           <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-white">
             {value} ({pct.toFixed(1)}%)
@@ -424,15 +448,21 @@ export default function AdminWinback() {
   const totalSent = stats?.offersSent || 0;
 
   return (
-    <PullToRefresh onRefresh={async () => { await refetch(); }}>
+    <PullToRefresh
+      onRefresh={async () => {
+        await refetch();
+      }}
+    >
       <div
         className="space-y-4 pb-20"
-        style={{
-          '--bar-delivered': '#3b82f6',
-          '--bar-opened': '#22c55e',
-          '--bar-clicked': '#fbbf24',
-          '--bar-bounced': '#ef4444',
-        } as React.CSSProperties}
+        style={
+          {
+            '--bar-delivered': '#3b82f6',
+            '--bar-opened': '#22c55e',
+            '--bar-clicked': '#fbbf24',
+            '--bar-bounced': '#ef4444',
+          } as React.CSSProperties
+        }
       >
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -464,17 +494,61 @@ export default function AdminWinback() {
         {/* Hero Stats — 6 cards */}
         <div className="grid grid-cols-3 md:grid-cols-6 gap-2">
           {[
-            { label: 'Eligible', value: stats?.totalEligible || 0, icon: Users, colour: 'text-amber-400', bg: 'from-amber-500/10 to-orange-500/5', border: 'border-amber-500/20' },
-            { label: 'Sent', value: totalSent, icon: Mail, colour: 'text-blue-400', bg: 'from-blue-500/10 to-cyan-500/5', border: 'border-blue-500/20' },
-            { label: 'Delivered', value: trackingStats.delivered, icon: CheckCircle, colour: 'text-sky-400', bg: 'from-sky-500/10 to-blue-500/5', border: 'border-sky-500/20' },
-            { label: 'Opened', value: trackingStats.opened, icon: MailOpen, colour: 'text-green-400', bg: 'from-green-500/10 to-emerald-500/5', border: 'border-green-500/20' },
-            { label: 'Clicked', value: trackingStats.clicked, icon: MousePointerClick, colour: 'text-yellow-400', bg: 'from-yellow-500/10 to-amber-500/5', border: 'border-yellow-500/20' },
-            { label: 'Converted', value: stats?.conversions || 0, icon: TrendingUp, colour: 'text-emerald-400', bg: 'from-emerald-500/10 to-green-500/5', border: 'border-emerald-500/20' },
+            {
+              label: 'Eligible',
+              value: stats?.totalEligible || 0,
+              icon: Users,
+              colour: 'text-amber-400',
+              bg: 'from-amber-500/10 to-orange-500/5',
+              border: 'border-amber-500/20',
+            },
+            {
+              label: 'Sent',
+              value: totalSent,
+              icon: Mail,
+              colour: 'text-blue-400',
+              bg: 'from-blue-500/10 to-cyan-500/5',
+              border: 'border-blue-500/20',
+            },
+            {
+              label: 'Delivered',
+              value: trackingStats.delivered,
+              icon: CheckCircle,
+              colour: 'text-sky-400',
+              bg: 'from-sky-500/10 to-blue-500/5',
+              border: 'border-sky-500/20',
+            },
+            {
+              label: 'Opened',
+              value: trackingStats.opened,
+              icon: MailOpen,
+              colour: 'text-green-400',
+              bg: 'from-green-500/10 to-emerald-500/5',
+              border: 'border-green-500/20',
+            },
+            {
+              label: 'Clicked',
+              value: trackingStats.clicked,
+              icon: MousePointerClick,
+              colour: 'text-yellow-400',
+              bg: 'from-yellow-500/10 to-amber-500/5',
+              border: 'border-yellow-500/20',
+            },
+            {
+              label: 'Converted',
+              value: stats?.conversions || 0,
+              icon: TrendingUp,
+              colour: 'text-emerald-400',
+              bg: 'from-emerald-500/10 to-green-500/5',
+              border: 'border-emerald-500/20',
+            },
           ].map((s) => (
             <Card key={s.label} className={`bg-gradient-to-br ${s.bg} ${s.border}`}>
               <CardContent className="p-2.5 sm:p-3 text-center">
                 <s.icon className={`h-4 w-4 ${s.colour} mx-auto mb-1`} />
-                <p className="text-lg sm:text-xl font-bold">{statsLoading ? '...' : s.value.toLocaleString()}</p>
+                <p className="text-lg sm:text-xl font-bold">
+                  {statsLoading ? '...' : s.value.toLocaleString()}
+                </p>
                 <p className="text-[10px] sm:text-xs text-white">{s.label}</p>
               </CardContent>
             </Card>
@@ -503,25 +577,55 @@ export default function AdminWinback() {
             {/* Rates row */}
             <div className="grid grid-cols-3 gap-2">
               <div className="p-2 rounded-lg bg-green-500/10 border border-green-500/20 text-center">
-                <p className="text-base sm:text-lg font-bold text-green-400">{trackingStats.openRate}%</p>
+                <p className="text-base sm:text-lg font-bold text-green-400">
+                  {trackingStats.openRate}%
+                </p>
                 <p className="text-[10px] text-white">Open Rate</p>
               </div>
               <div className="p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-center">
-                <p className="text-base sm:text-lg font-bold text-amber-400">{trackingStats.clickRate}%</p>
+                <p className="text-base sm:text-lg font-bold text-amber-400">
+                  {trackingStats.clickRate}%
+                </p>
                 <p className="text-[10px] text-white">Click Rate</p>
               </div>
               <div className="p-2 rounded-lg bg-red-500/10 border border-red-500/20 text-center">
-                <p className="text-base sm:text-lg font-bold text-red-400">{trackingStats.bounceRate}%</p>
+                <p className="text-base sm:text-lg font-bold text-red-400">
+                  {trackingStats.bounceRate}%
+                </p>
                 <p className="text-[10px] text-white">Bounce Rate</p>
               </div>
             </div>
 
             {/* Funnel bars */}
             <div className="space-y-2">
-              <FunnelBar label="Delivered" value={trackingStats.delivered} max={totalSent || trackingStats.delivered} colour="text-blue-400" icon={CheckCircle} />
-              <FunnelBar label="Opened" value={trackingStats.opened} max={trackingStats.delivered || 1} colour="text-green-400" icon={MailOpen} />
-              <FunnelBar label="Clicked" value={trackingStats.clicked} max={trackingStats.delivered || 1} colour="text-amber-400" icon={MousePointerClick} />
-              <FunnelBar label="Bounced" value={trackingStats.bounced} max={trackingStats.delivered || 1} colour="text-red-400" icon={Ban} />
+              <FunnelBar
+                label="Delivered"
+                value={trackingStats.delivered}
+                max={totalSent || trackingStats.delivered}
+                colour="text-blue-400"
+                icon={CheckCircle}
+              />
+              <FunnelBar
+                label="Opened"
+                value={trackingStats.opened}
+                max={trackingStats.delivered || 1}
+                colour="text-green-400"
+                icon={MailOpen}
+              />
+              <FunnelBar
+                label="Clicked"
+                value={trackingStats.clicked}
+                max={trackingStats.delivered || 1}
+                colour="text-amber-400"
+                icon={MousePointerClick}
+              />
+              <FunnelBar
+                label="Bounced"
+                value={trackingStats.bounced}
+                max={trackingStats.delivered || 1}
+                colour="text-red-400"
+                icon={Ban}
+              />
             </div>
 
             {/* Top clicked links */}
@@ -529,12 +633,17 @@ export default function AdminWinback() {
               <div className="space-y-1.5 pt-2 border-t border-border/50">
                 <p className="text-xs text-white font-semibold">Top Clicked Links</p>
                 {trackingStats.topLinks.map((link, i) => (
-                  <div key={i} className="flex items-center gap-2 p-2 rounded-lg bg-muted/50 text-sm">
+                  <div
+                    key={i}
+                    className="flex items-center gap-2 p-2 rounded-lg bg-muted/50 text-sm"
+                  >
                     <ExternalLink className="h-3 w-3 text-white shrink-0" />
                     <span className="truncate flex-1 text-xs text-white">
                       {link.url.replace('https://', '').slice(0, 50)}
                     </span>
-                    <Badge variant="outline" className="text-xs shrink-0">{link.count} clicks</Badge>
+                    <Badge variant="outline" className="text-xs shrink-0">
+                      {link.count} clicks
+                    </Badge>
                   </div>
                 ))}
               </div>
@@ -542,7 +651,8 @@ export default function AdminWinback() {
 
             {(trackingEvents?.length ?? 0) === 0 && (
               <p className="text-xs text-white text-center py-2">
-                No tracking data yet. Events will appear here after emails are sent and recipients interact with them.
+                No tracking data yet. Events will appear here after emails are sent and recipients
+                interact with them.
               </p>
             )}
           </CardContent>
@@ -587,6 +697,14 @@ export default function AdminWinback() {
               >
                 v2 Round-Up
               </Button>
+              <Button
+                variant={emailVersion === 'v3' ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setEmailVersion('v3')}
+                className={`h-8 touch-manipulation text-xs ${emailVersion === 'v3' ? 'bg-emerald-500 text-black hover:bg-emerald-600' : ''}`}
+              >
+                v3 This Week
+              </Button>
             </div>
 
             {/* Pricing preview */}
@@ -594,12 +712,16 @@ export default function AdminWinback() {
               <div className="p-2 rounded-xl bg-green-500/10 border border-green-500/20 text-center">
                 <p className="text-xs text-green-400 font-semibold">Monthly</p>
                 <p className="text-lg font-bold text-green-400">£7.99</p>
-                <p className="text-[10px] text-white"><span className="line-through">£9.99</span> - 20% off</p>
+                <p className="text-[10px] text-white">
+                  <span className="line-through">£9.99</span> - 20% off
+                </p>
               </div>
               <div className="p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 text-center">
                 <p className="text-xs text-amber-400 font-semibold">Yearly</p>
                 <p className="text-lg font-bold text-amber-400">£79.99</p>
-                <p className="text-[10px] text-white"><span className="line-through">£99.99</span> - 20% off</p>
+                <p className="text-[10px] text-white">
+                  <span className="line-through">£99.99</span> - 20% off
+                </p>
               </div>
             </div>
 
@@ -607,7 +729,13 @@ export default function AdminWinback() {
             {showTestEmail && (
               <div className="p-3 rounded-xl bg-yellow-500/10 border border-yellow-500/20 space-y-2">
                 <p className="text-xs text-yellow-400 font-semibold">
-                  Send Test Email ({emailVersion === 'v2' ? 'Sunday Round-Up' : 'Original'})
+                  Send Test Email (
+                  {emailVersion === 'v3'
+                    ? 'This Week'
+                    : emailVersion === 'v2'
+                      ? 'Sunday Round-Up'
+                      : 'Original'}
+                  )
                 </p>
                 <div className="flex gap-2">
                   <Input
@@ -622,7 +750,11 @@ export default function AdminWinback() {
                     disabled={!testEmail || sendTestMutation.isPending}
                     className="h-11 px-4 touch-manipulation bg-yellow-500 hover:bg-yellow-600"
                   >
-                    {sendTestMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                    {sendTestMutation.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Send className="h-4 w-4" />
+                    )}
                   </Button>
                 </div>
               </div>
@@ -642,7 +774,11 @@ export default function AdminWinback() {
                 disabled={!manualEmail || sendManualMutation.isPending}
                 className="h-11 px-4 touch-manipulation bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black shrink-0"
               >
-                {sendManualMutation.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
+                {sendManualMutation.isPending ? (
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                ) : (
+                  <Send className="h-4 w-4" />
+                )}
               </Button>
             </div>
 
@@ -654,12 +790,16 @@ export default function AdminWinback() {
                     <Loader2 className="h-4 w-4 animate-spin" />
                     Sending batch {batchProgress.batch}/{batchProgress.totalBatches}...
                   </span>
-                  <span className="text-white">{batchProgress.sent}/{batchProgress.total}</span>
+                  <span className="text-white">
+                    {batchProgress.sent}/{batchProgress.total}
+                  </span>
                 </div>
                 <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full transition-all duration-500"
-                    style={{ width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%` }}
+                    style={{
+                      width: `${batchProgress.total > 0 ? (batchProgress.sent / batchProgress.total) * 100 : 0}%`,
+                    }}
                   />
                 </div>
                 {batchProgress.failed > 0 && (
@@ -676,7 +816,11 @@ export default function AdminWinback() {
                   disabled={resetting || batchSending}
                   className="w-full h-12 touch-manipulation text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-black rounded-xl gap-2"
                 >
-                  {resetting ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+                  {resetting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RefreshCw className="h-4 w-4" />
+                  )}
                   Resend New Email to All ({totalSent} users)
                 </Button>
                 <p className="text-[10px] text-white text-center">
@@ -714,13 +858,19 @@ export default function AdminWinback() {
           <Card>
             <CardContent className="pt-4 pb-4 px-3 sm:px-4">
               <div className="space-y-3">
-                <AdminSearchInput value={search} onChange={setSearch} placeholder="Search eligible users..." />
+                <AdminSearchInput
+                  value={search}
+                  onChange={setSearch}
+                  placeholder="Search eligible users..."
+                />
 
                 {filteredUsers.length > 0 && (
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <Checkbox
-                        checked={filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length}
+                        checked={
+                          filteredUsers.length > 0 && selectedUsers.size === filteredUsers.length
+                        }
                         onCheckedChange={toggleSelectAll}
                         disabled={batchSending}
                         className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
@@ -752,7 +902,11 @@ export default function AdminWinback() {
                   <AdminEmptyState
                     icon={Users}
                     title="No eligible users"
-                    description={search ? 'No users match your search.' : 'All eligible users have been sent the offer.'}
+                    description={
+                      search
+                        ? 'No users match your search.'
+                        : 'All eligible users have been sent the offer.'
+                    }
                   />
                 ) : (
                   <div className="space-y-1.5">
@@ -767,18 +921,30 @@ export default function AdminWinback() {
                           onClick={(e) => e.stopPropagation()}
                           className="border-white/40 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                         />
-                        <div className="flex-1 min-w-0 cursor-pointer" onClick={() => setSelectedUser(user)}>
-                          <p className="font-medium text-sm text-white truncate">{user.full_name || 'Unknown'}</p>
+                        <div
+                          className="flex-1 min-w-0 cursor-pointer"
+                          onClick={() => setSelectedUser(user)}
+                        >
+                          <p className="font-medium text-sm text-white truncate">
+                            {user.full_name || 'Unknown'}
+                          </p>
                           <div className="flex items-center gap-2 text-xs text-white">
                             <span className="truncate max-w-[140px]">{user.email}</span>
                             <span>·</span>
                             <span className="flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              {formatDistanceToNow(parseISO(user.trial_ended_at), { addSuffix: true })}
+                              {formatDistanceToNow(parseISO(user.trial_ended_at), {
+                                addSuffix: true,
+                              })}
                             </span>
                           </div>
                         </div>
-                        <Button variant="ghost" size="sm" onClick={() => setSelectedUser(user)} className="h-11 px-2 touch-manipulation">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => setSelectedUser(user)}
+                          className="h-11 px-2 touch-manipulation"
+                        >
                           <ChevronRight className="h-4 w-4" />
                         </Button>
                       </div>
@@ -801,7 +967,11 @@ export default function AdminWinback() {
                   ))}
                 </div>
               ) : !sentUsers || sentUsers.length === 0 ? (
-                <AdminEmptyState icon={Mail} title="No emails sent yet" description="Send win-back offers to see tracking data here." />
+                <AdminEmptyState
+                  icon={Mail}
+                  title="No emails sent yet"
+                  description="Send win-back offers to see tracking data here."
+                />
               ) : (
                 <div className="space-y-1.5">
                   {sentUsers.map((user) => {
@@ -812,14 +982,22 @@ export default function AdminWinback() {
                     const wasClicked = false;
 
                     return (
-                      <div key={user.id} className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50">
+                      <div
+                        key={user.id}
+                        className="flex items-center gap-3 p-2.5 rounded-xl bg-muted/50"
+                      >
                         <div className="w-9 h-9 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
                           <User className="h-4 w-4 text-blue-400" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-white truncate">{user.full_name || user.username}</p>
+                          <p className="font-medium text-sm text-white truncate">
+                            {user.full_name || user.username}
+                          </p>
                           <p className="text-xs text-white">
-                            Sent {formatDistanceToNow(parseISO(user.winback_offer_sent_at), { addSuffix: true })}
+                            Sent{' '}
+                            {formatDistanceToNow(parseISO(user.winback_offer_sent_at), {
+                              addSuffix: true,
+                            })}
                           </p>
                         </div>
                         <div className="flex items-center gap-1.5 shrink-0">
@@ -829,7 +1007,9 @@ export default function AdminWinback() {
                               Converted
                             </Badge>
                           ) : (
-                            <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5">Pending</Badge>
+                            <Badge className="bg-gray-500/20 text-gray-400 text-[10px] px-1.5">
+                              Pending
+                            </Badge>
                           )}
                         </div>
                       </div>
@@ -870,16 +1050,27 @@ export default function AdminWinback() {
                   <CardContent className="space-y-3">
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-white">Signed Up</span>
-                      <span className="text-sm">{selectedUser?.created_at && format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}</span>
+                      <span className="text-sm">
+                        {selectedUser?.created_at &&
+                          format(parseISO(selectedUser.created_at), 'dd MMM yyyy')}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-white">Trial Ended</span>
-                      <span className="text-sm">{selectedUser?.trial_ended_at && format(parseISO(selectedUser.trial_ended_at), 'dd MMM yyyy')}</span>
+                      <span className="text-sm">
+                        {selectedUser?.trial_ended_at &&
+                          format(parseISO(selectedUser.trial_ended_at), 'dd MMM yyyy')}
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-sm text-white">Days Since Expiry</span>
                       <Badge variant="outline" className="text-red-400">
-                        {selectedUser?.trial_ended_at && Math.floor((Date.now() - parseISO(selectedUser.trial_ended_at).getTime()) / (1000 * 60 * 60 * 24))} days
+                        {selectedUser?.trial_ended_at &&
+                          Math.floor(
+                            (Date.now() - parseISO(selectedUser.trial_ended_at).getTime()) /
+                              (1000 * 60 * 60 * 24)
+                          )}{' '}
+                        days
                       </Badge>
                     </div>
                   </CardContent>
@@ -891,9 +1082,15 @@ export default function AdminWinback() {
                   disabled={sendSingleMutation.isPending}
                 >
                   {sendSingleMutation.isPending ? (
-                    <><Loader2 className="h-4 w-4 mr-2 animate-spin" />Sending...</>
+                    <>
+                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      Sending...
+                    </>
                   ) : (
-                    <><Mail className="h-4 w-4 mr-2" />Send Win-Back Offer</>
+                    <>
+                      <Mail className="h-4 w-4 mr-2" />
+                      Send Win-Back Offer
+                    </>
                   )}
                 </Button>
               </div>
@@ -943,10 +1140,12 @@ export default function AdminWinback() {
                     } else {
                       toast.info('No users to resend to (all subscribed or sent < 24h ago)');
                     }
-                  } catch (err: any) {
+                  } catch (err: unknown) {
                     setResetting(false);
                     haptic.error();
-                    toast.error(`Reset failed: ${err.message}`);
+                    toast.error(
+                      `Reset failed: ${err instanceof Error ? err.message : 'Unknown error'}`
+                    );
                   }
                 }}
                 className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"

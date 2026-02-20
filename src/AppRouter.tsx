@@ -85,7 +85,9 @@ const AdminFounders = lazy(() => import('@/pages/Admin/AdminFounders'));
 const AdminEarlyAccess = lazy(() => import('@/pages/Admin/AdminEarlyAccess'));
 const AdminTrials = lazy(() => import('@/pages/Admin/AdminTrials'));
 const AdminWinback = lazy(() => import('@/pages/Admin/AdminWinback'));
+const AdminIncompleteSignup = lazy(() => import('@/pages/Admin/AdminIncompleteSignup'));
 const AdminApprenticeCampaigns = lazy(() => import('@/pages/Admin/AdminApprenticeCampaigns'));
+const AdminOutreach = lazy(() => import('@/pages/Admin/AdminOutreach'));
 const TrainingPhotoUpload = lazy(() => import('@/pages/Admin/TrainingPhotoUpload'));
 const FounderClaim = lazyWithRetry(() => import('@/pages/founder/FounderClaim'));
 const FounderSignup = lazyWithRetry(() => import('@/pages/founder/FounderSignup'));
@@ -1537,6 +1539,14 @@ const AppRouter = () => {
               }
             />
             <Route
+              path="incomplete-signup"
+              element={
+                <LazyRoute>
+                  <AdminIncompleteSignup />
+                </LazyRoute>
+              }
+            />
+            <Route
               path="winback"
               element={
                 <LazyRoute>
@@ -1549,6 +1559,14 @@ const AppRouter = () => {
               element={
                 <LazyRoute>
                   <AdminApprenticeCampaigns />
+                </LazyRoute>
+              }
+            />
+            <Route
+              path="outreach"
+              element={
+                <LazyRoute>
+                  <AdminOutreach />
                 </LazyRoute>
               }
             />

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { Mic, PenLine } from 'lucide-react';
 import { GlobalPromptsPanel } from '../capture/GlobalPromptsPanel';
 import { RoomList } from '../capture/RoomList';
 import { RoomSelector } from '../capture/RoomSelector';
 import { RoomPanel } from '../capture/RoomPanel';
+import { VoiceCaptureMode } from '../capture/VoiceCaptureMode';
 import type {
   SiteVisit,
   SiteVisitRoom,
@@ -10,6 +12,8 @@ import type {
   SiteVisitPhoto,
   RoomType,
 } from '@/types/siteVisit';
+
+type CaptureMode = 'manual' | 'voice';
 
 interface SiteVisitCaptureStepProps {
   visit: SiteVisit;
@@ -48,6 +52,7 @@ export const SiteVisitCaptureStep = ({
   setPromptResponse,
 }: SiteVisitCaptureStepProps) => {
   const [showSelector, setShowSelector] = useState(visit.rooms.length === 0);
+  const [captureMode, setCaptureMode] = useState<CaptureMode>('manual');
 
   const activeRoom = visit.rooms.find((r) => r.id === activeRoomId);
 
@@ -65,47 +70,94 @@ export const SiteVisitCaptureStep = ({
         </p>
       </div>
 
-      {/* Global prompts */}
-      <GlobalPromptsPanel
-        getResponse={(key) => getPromptResponse(key)}
-        setResponse={setPromptResponse}
-      />
+      {/* Manual / Voice toggle */}
+      <div className="flex gap-2">
+        <button
+          onClick={() => setCaptureMode('manual')}
+          className={`flex-1 h-11 rounded-xl border text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2 ${
+            captureMode === 'manual'
+              ? 'bg-elec-yellow/20 border-elec-yellow text-white'
+              : 'bg-elec-gray border-white/10 text-white'
+          }`}
+        >
+          <PenLine className="h-4 w-4" />
+          Manual
+        </button>
+        <button
+          onClick={() => setCaptureMode('voice')}
+          className={`flex-1 h-11 rounded-xl border text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2 ${
+            captureMode === 'voice'
+              ? 'bg-elec-yellow/20 border-elec-yellow text-white'
+              : 'bg-elec-gray border-white/10 text-white'
+          }`}
+        >
+          <Mic className="h-4 w-4" />
+          Voice Capture
+        </button>
+      </div>
 
-      {/* Room list tabs */}
-      {visit.rooms.length > 0 && (
-        <RoomList
-          rooms={visit.rooms}
+      {captureMode === 'voice' ? (
+        <VoiceCaptureMode
+          visit={visit}
           activeRoomId={activeRoomId}
-          onSelectRoom={onSetActiveRoom}
-          onRemoveRoom={onRemoveRoom}
-          onShowSelector={() => setShowSelector(true)}
-        />
-      )}
-
-      {/* Room selector */}
-      {showSelector && <RoomSelector existingRooms={visit.rooms} onAddRoom={handleAddRoom} />}
-
-      {/* Active room panel */}
-      {activeRoom && (
-        <RoomPanel
-          room={activeRoom}
-          photos={visit.photos}
+          onAddRoom={onAddRoom}
+          onSetActiveRoom={onSetActiveRoom}
           onAddItem={onAddItem}
-          onUpdateItem={onUpdateItem}
-          onRemoveItem={onRemoveItem}
-          onUpdateRoomNotes={onUpdateRoomNotes}
-          onAddPhoto={onAddPhoto}
-          onRemovePhoto={onRemovePhoto}
-          getPromptResponse={getPromptResponse}
           setPromptResponse={setPromptResponse}
+          onAddPhoto={onAddPhoto}
         />
-      )}
+      ) : (
+        <>
+          {/* Global prompts */}
+          <GlobalPromptsPanel
+            getResponse={(key) => getPromptResponse(key)}
+            setResponse={setPromptResponse}
+            propertyType={visit.propertyType}
+          />
 
-      {/* Empty state */}
-      {visit.rooms.length === 0 && !showSelector && (
-        <div className="text-center py-12">
-          <p className="text-sm text-white">No rooms added yet. Add your first room above.</p>
-        </div>
+          {/* Room list tabs */}
+          {visit.rooms.length > 0 && (
+            <RoomList
+              rooms={visit.rooms}
+              activeRoomId={activeRoomId}
+              onSelectRoom={onSetActiveRoom}
+              onRemoveRoom={onRemoveRoom}
+              onShowSelector={() => setShowSelector(true)}
+            />
+          )}
+
+          {/* Room selector */}
+          {showSelector && (
+            <RoomSelector
+              existingRooms={visit.rooms}
+              onAddRoom={handleAddRoom}
+              propertyType={visit.propertyType}
+            />
+          )}
+
+          {/* Active room panel */}
+          {activeRoom && (
+            <RoomPanel
+              room={activeRoom}
+              photos={visit.photos}
+              onAddItem={onAddItem}
+              onUpdateItem={onUpdateItem}
+              onRemoveItem={onRemoveItem}
+              onUpdateRoomNotes={onUpdateRoomNotes}
+              onAddPhoto={onAddPhoto}
+              onRemovePhoto={onRemovePhoto}
+              getPromptResponse={getPromptResponse}
+              setPromptResponse={setPromptResponse}
+            />
+          )}
+
+          {/* Empty state */}
+          {visit.rooms.length === 0 && !showSelector && (
+            <div className="text-center py-12">
+              <p className="text-sm text-white">No rooms added yet. Add your first room above.</p>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

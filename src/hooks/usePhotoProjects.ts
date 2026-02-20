@@ -1,8 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import { useAuth } from "@/contexts/AuthContext";
-import { toast } from "@/hooks/use-toast";
-import { SafetyPhoto } from "./useSafetyPhotos";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
+import { SafetyPhoto } from './useSafetyPhotos';
 
 export interface PhotoProject {
   id: string;
@@ -12,7 +13,7 @@ export interface PhotoProject {
   description: string | null;
   job_reference: string | null;
   address: string | null;
-  status: "active" | "completed" | "archived";
+  status: 'active' | 'completed' | 'archived';
   created_at: string;
   updated_at: string;
   // Joined data (not in DB)
@@ -39,65 +40,102 @@ export interface UpdateProjectInput {
   description?: string | null;
   job_reference?: string | null;
   address?: string | null;
-  status?: "active" | "completed" | "archived";
+  status?: 'active' | 'completed' | 'archived';
 }
 
 export const PHOTO_TYPES = [
   {
-    value: "safety",
-    label: "Safety",
-    colour: "bg-green-500",
-    dotColour: "bg-green-400",
-    icon: "🟢",
+    value: 'safety',
+    label: 'Safety',
+    colour: 'bg-green-500',
+    dotColour: 'bg-green-400',
+    icon: '🟢',
   },
   {
-    value: "job_progress",
-    label: "Job Progress",
-    colour: "bg-blue-500",
-    dotColour: "bg-blue-400",
-    icon: "🔵",
+    value: 'job_progress',
+    label: 'Job Progress',
+    colour: 'bg-blue-500',
+    dotColour: 'bg-blue-400',
+    icon: '🔵',
   },
   {
-    value: "completion",
-    label: "Completion",
-    colour: "bg-emerald-500",
-    dotColour: "bg-emerald-400",
-    icon: "✅",
+    value: 'completion',
+    label: 'Completion',
+    colour: 'bg-emerald-500',
+    dotColour: 'bg-emerald-400',
+    icon: '✅',
   },
   {
-    value: "snagging",
-    label: "Snagging",
-    colour: "bg-orange-500",
-    dotColour: "bg-orange-400",
-    icon: "🟠",
+    value: 'snagging',
+    label: 'Snagging',
+    colour: 'bg-orange-500',
+    dotColour: 'bg-orange-400',
+    icon: '🟠',
   },
   {
-    value: "before",
-    label: "Before",
-    colour: "bg-indigo-500",
-    dotColour: "bg-indigo-400",
-    icon: "⬅",
+    value: 'before',
+    label: 'Before',
+    colour: 'bg-indigo-500',
+    dotColour: 'bg-indigo-400',
+    icon: '⬅',
   },
   {
-    value: "after",
-    label: "After",
-    colour: "bg-purple-500",
-    dotColour: "bg-purple-400",
-    icon: "➡",
+    value: 'after',
+    label: 'After',
+    colour: 'bg-purple-500',
+    dotColour: 'bg-purple-400',
+    icon: '➡',
   },
   {
-    value: "general",
-    label: "General",
-    colour: "bg-gray-500",
-    dotColour: "bg-gray-400",
-    icon: "⚪",
+    value: 'general',
+    label: 'General',
+    colour: 'bg-gray-500',
+    dotColour: 'bg-gray-400',
+    icon: '⚪',
   },
 ] as const;
 
+export type WorkflowPhaseId = 'before' | 'job_progress' | 'completion' | 'snagging';
+
+export const WORKFLOW_PHASES: {
+  id: WorkflowPhaseId;
+  label: string;
+  colour: string;
+  dotColour: string;
+  photoTypes: string[];
+}[] = [
+  {
+    id: 'before',
+    label: 'Before Work',
+    colour: 'bg-indigo-500',
+    dotColour: 'bg-indigo-400',
+    photoTypes: ['before', 'safety'],
+  },
+  {
+    id: 'job_progress',
+    label: 'Job Progress',
+    colour: 'bg-blue-500',
+    dotColour: 'bg-blue-400',
+    photoTypes: ['job_progress', 'general'],
+  },
+  {
+    id: 'completion',
+    label: 'After Work',
+    colour: 'bg-emerald-500',
+    dotColour: 'bg-emerald-400',
+    photoTypes: ['after', 'completion'],
+  },
+  {
+    id: 'snagging',
+    label: 'Snagging',
+    colour: 'bg-orange-500',
+    dotColour: 'bg-orange-400',
+    photoTypes: ['snagging'],
+  },
+];
+
 export function getPhotoTypeColour(type: string): string {
-  return (
-    PHOTO_TYPES.find((t) => t.value === type)?.dotColour || "bg-gray-400"
-  );
+  return PHOTO_TYPES.find((t) => t.value === type)?.dotColour || 'bg-gray-400';
 }
 
 export function getPhotoTypeLabel(type: string): string {
@@ -110,28 +148,25 @@ export function usePhotoProjects(statusFilter?: string) {
 
   // Fetch projects with photo counts and customer info
   const projectsQuery = useQuery({
-    queryKey: ["photo-projects", session?.user?.id, statusFilter],
+    queryKey: ['photo-projects', session?.user?.id, statusFilter],
     queryFn: async () => {
       if (!session?.user?.id) return [];
 
       try {
         // Fetch projects
         let query = supabase
-          .from("photo_projects")
-          .select("*")
-          .eq("user_id", session.user.id)
-          .order("updated_at", { ascending: false });
+          .from('photo_projects')
+          .select('*')
+          .eq('user_id', session.user.id)
+          .order('updated_at', { ascending: false });
 
-        if (statusFilter && statusFilter !== "all") {
-          query = query.eq("status", statusFilter);
+        if (statusFilter && statusFilter !== 'all') {
+          query = query.eq('status', statusFilter);
         }
 
         const { data: projects, error } = await query;
         if (error) {
-          if (
-            error.code === "42P01" ||
-            error.message?.includes("does not exist")
-          ) {
+          if (error.code === '42P01' || error.message?.includes('does not exist')) {
             return [];
           }
           throw error;
@@ -144,39 +179,30 @@ export function usePhotoProjects(statusFilter?: string) {
         const projectIds = projects.map((p) => p.id);
         const projectNames = projects.map((p) => p.name);
 
-        const [{ data: linkedPhotos }, { data: legacyPhotos }] =
-          await Promise.all([
-            supabase
-              .from("safety_photos")
-              .select("project_id, project_reference, photo_type, file_url")
-              .in("project_id", projectIds)
-              .order("created_at", { ascending: false }),
-            supabase
-              .from("safety_photos")
-              .select("project_id, project_reference, photo_type, file_url")
-              .is("project_id", null)
-              .in("project_reference", projectNames)
-              .order("created_at", { ascending: false }),
-          ]);
-        const photoData = [
-          ...(linkedPhotos || []),
-          ...(legacyPhotos || []),
-        ];
+        const [{ data: linkedPhotos }, { data: legacyPhotos }] = await Promise.all([
+          supabase
+            .from('safety_photos')
+            .select('project_id, project_reference, photo_type, file_url, thumbnail_url')
+            .in('project_id', projectIds)
+            .order('created_at', { ascending: false }),
+          supabase
+            .from('safety_photos')
+            .select('project_id, project_reference, photo_type, file_url, thumbnail_url')
+            .is('project_id', null)
+            .in('project_reference', projectNames)
+            .order('created_at', { ascending: false }),
+        ]);
+        const photoData = [...(linkedPhotos || []), ...(legacyPhotos || [])];
 
         // Fetch customer names for projects that have customer_id
-        const customerIds = projects
-          .map((p) => p.customer_id)
-          .filter(Boolean) as string[];
+        const customerIds = projects.map((p) => p.customer_id).filter(Boolean) as string[];
 
-        let customerMap = new Map<
-          string,
-          { name: string; email?: string; phone?: string }
-        >();
+        const customerMap = new Map<string, { name: string; email?: string; phone?: string }>();
         if (customerIds.length > 0) {
           const { data: customers } = await supabase
-            .from("customers")
-            .select("id, name, email, phone")
-            .in("id", customerIds);
+            .from('customers')
+            .select('id, name, email, phone')
+            .in('id', customerIds);
           if (customers) {
             customers.forEach((c) => {
               customerMap.set(c.id, {
@@ -192,31 +218,30 @@ export function usePhotoProjects(statusFilter?: string) {
         return projects.map((project) => {
           const projectPhotos = (photoData || []).filter(
             (p) =>
-              p.project_id === project.id ||
-              (!p.project_id && p.project_reference === project.name),
+              p.project_id === project.id || (!p.project_id && p.project_reference === project.name)
           );
           const typeCounts: Record<string, number> = {};
           projectPhotos.forEach((p) => {
-            const type = p.photo_type || "general";
+            const type = p.photo_type || 'general';
             typeCounts[type] = (typeCounts[type] || 0) + 1;
           });
 
-          const customer = project.customer_id
-            ? customerMap.get(project.customer_id)
-            : null;
+          const customer = project.customer_id ? customerMap.get(project.customer_id) : null;
 
           return {
             ...project,
             photo_count: projectPhotos.length,
             type_counts: typeCounts,
-            thumbnail_urls: projectPhotos.slice(0, 4).map((p) => p.file_url),
+            thumbnail_urls: projectPhotos
+              .slice(0, 4)
+              .map((p) => ((p as Record<string, unknown>).thumbnail_url as string) || p.file_url),
             customer_name: customer?.name || null,
             customer_email: customer?.email || null,
             customer_phone: customer?.phone || null,
           } as PhotoProject;
         });
       } catch (err) {
-        console.error("[usePhotoProjects] Query failed:", err);
+        console.error('[usePhotoProjects] Query failed:', err);
         return [];
       }
     },
@@ -224,66 +249,66 @@ export function usePhotoProjects(statusFilter?: string) {
   });
 
   // Get a single project with all its photos
-  const getProjectWithPhotos = async (
-    projectId: string,
-  ): Promise<{ project: PhotoProject; photos: SafetyPhoto[] } | null> => {
-    if (!session?.user?.id) return null;
+  const getProjectWithPhotos = useCallback(
+    async (projectId: string): Promise<{ project: PhotoProject; photos: SafetyPhoto[] } | null> => {
+      if (!session?.user?.id) return null;
 
-    const { data: project, error: projError } = await supabase
-      .from("photo_projects")
-      .select("*")
-      .eq("id", projectId)
-      .single();
-
-    if (projError || !project) return null;
-
-    // Fetch photos linked by project_id OR by legacy project_reference matching name
-    const [{ data: linkedPhotos }, { data: legacyPhotos }] =
-      await Promise.all([
-        supabase
-          .from("safety_photos")
-          .select("*")
-          .eq("project_id", projectId)
-          .order("created_at", { ascending: false }),
-        supabase
-          .from("safety_photos")
-          .select("*")
-          .is("project_id", null)
-          .eq("project_reference", project.name)
-          .order("created_at", { ascending: false }),
-      ]);
-    const photos = [...(linkedPhotos || []), ...(legacyPhotos || [])];
-
-    // Get customer info
-    let customer = null;
-    if (project.customer_id) {
-      const { data } = await supabase
-        .from("customers")
-        .select("id, name, email, phone")
-        .eq("id", project.customer_id)
+      const { data: project, error: projError } = await supabase
+        .from('photo_projects')
+        .select('*')
+        .eq('id', projectId)
         .single();
-      customer = data;
-    }
 
-    return {
-      project: {
-        ...project,
-        photo_count: (photos || []).length,
-        customer_name: customer?.name || null,
-        customer_email: customer?.email || null,
-        customer_phone: customer?.phone || null,
-      } as PhotoProject,
-      photos: (photos || []) as SafetyPhoto[],
-    };
-  };
+      if (projError || !project) return null;
+
+      // Fetch photos linked by project_id OR by legacy project_reference matching name
+      const [{ data: linkedPhotos }, { data: legacyPhotos }] = await Promise.all([
+        supabase
+          .from('safety_photos')
+          .select('*')
+          .eq('project_id', projectId)
+          .order('created_at', { ascending: false }),
+        supabase
+          .from('safety_photos')
+          .select('*')
+          .is('project_id', null)
+          .eq('project_reference', project.name)
+          .order('created_at', { ascending: false }),
+      ]);
+      const photos = [...(linkedPhotos || []), ...(legacyPhotos || [])];
+
+      // Get customer info
+      let customer = null;
+      if (project.customer_id) {
+        const { data } = await supabase
+          .from('customers')
+          .select('id, name, email, phone')
+          .eq('id', project.customer_id)
+          .single();
+        customer = data;
+      }
+
+      return {
+        project: {
+          ...project,
+          photo_count: (photos || []).length,
+          customer_name: customer?.name || null,
+          customer_email: customer?.email || null,
+          customer_phone: customer?.phone || null,
+        } as PhotoProject,
+        photos: (photos || []) as SafetyPhoto[],
+      };
+    },
+    [session?.user?.id]
+  );
 
   // Create project
   const createMutation = useMutation({
     mutationFn: async (input: CreateProjectInput) => {
-      if (!session?.user?.id) throw new Error("Not authenticated");
+      if (!session?.user?.id) throw new Error('Not authenticated');
 
       const { data, error } = await supabase
-        .from("photo_projects")
+        .from('photo_projects')
         .insert({
           user_id: session.user.id,
           name: input.name,
@@ -291,7 +316,7 @@ export function usePhotoProjects(statusFilter?: string) {
           description: input.description || null,
           job_reference: input.job_reference || null,
           address: input.address || null,
-          status: "active",
+          status: 'active',
         })
         .select()
         .single();
@@ -300,42 +325,36 @@ export function usePhotoProjects(statusFilter?: string) {
       return data as PhotoProject;
     },
     onSuccess: () => {
-      toast({ title: "Project created" });
-      queryClient.invalidateQueries({ queryKey: ["photo-projects"] });
+      toast({ title: 'Project created' });
+      queryClient.invalidateQueries({ queryKey: ['photo-projects'] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Failed to create project",
+        title: 'Failed to create project',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
 
   // Update project
   const updateMutation = useMutation({
-    mutationFn: async ({
-      id,
-      updates,
-    }: {
-      id: string;
-      updates: UpdateProjectInput;
-    }) => {
+    mutationFn: async ({ id, updates }: { id: string; updates: UpdateProjectInput }) => {
       const { error } = await supabase
-        .from("photo_projects")
+        .from('photo_projects')
         .update({ ...updates, updated_at: new Date().toISOString() })
-        .eq("id", id);
+        .eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
-      toast({ title: "Project updated" });
-      queryClient.invalidateQueries({ queryKey: ["photo-projects"] });
+      toast({ title: 'Project updated' });
+      queryClient.invalidateQueries({ queryKey: ['photo-projects'] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Update failed",
+        title: 'Update failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -344,20 +363,20 @@ export function usePhotoProjects(statusFilter?: string) {
   const archiveMutation = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase
-        .from("photo_projects")
-        .update({ status: "archived", updated_at: new Date().toISOString() })
-        .eq("id", id);
+        .from('photo_projects')
+        .update({ status: 'archived', updated_at: new Date().toISOString() })
+        .eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
-      toast({ title: "Project archived" });
-      queryClient.invalidateQueries({ queryKey: ["photo-projects"] });
+      toast({ title: 'Project archived' });
+      queryClient.invalidateQueries({ queryKey: ['photo-projects'] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Archive failed",
+        title: 'Archive failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
@@ -367,41 +386,36 @@ export function usePhotoProjects(statusFilter?: string) {
     mutationFn: async (id: string) => {
       // Check for photos first
       const { count } = await supabase
-        .from("safety_photos")
-        .select("*", { count: "exact", head: true })
-        .eq("project_id", id);
+        .from('safety_photos')
+        .select('*', { count: 'exact', head: true })
+        .eq('project_id', id);
 
       if (count && count > 0) {
-        throw new Error(
-          "Cannot delete a project that has photos. Archive it instead.",
-        );
+        throw new Error('Cannot delete a project that has photos. Archive it instead.');
       }
 
-      const { error } = await supabase
-        .from("photo_projects")
-        .delete()
-        .eq("id", id);
+      const { error } = await supabase.from('photo_projects').delete().eq('id', id);
       if (error) throw error;
     },
     onSuccess: () => {
-      toast({ title: "Project deleted" });
-      queryClient.invalidateQueries({ queryKey: ["photo-projects"] });
+      toast({ title: 'Project deleted' });
+      queryClient.invalidateQueries({ queryKey: ['photo-projects'] });
     },
     onError: (error: Error) => {
       toast({
-        title: "Delete failed",
+        title: 'Delete failed',
         description: error.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
   });
 
   // Generate job reference suggestion
-  const generateJobReference = (): string => {
+  const generateJobReference = useCallback((): string => {
     const year = new Date().getFullYear();
-    const num = String(Math.floor(Math.random() * 999) + 1).padStart(3, "0");
+    const num = String(Math.floor(Math.random() * 999) + 1).padStart(3, '0');
     return `JOB-${year}-${num}`;
-  };
+  }, []);
 
   return {
     projects: projectsQuery.data || [],
