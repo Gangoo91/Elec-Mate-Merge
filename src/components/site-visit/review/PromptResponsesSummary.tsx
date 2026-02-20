@@ -23,7 +23,7 @@ export const PromptResponsesSummary = ({ prompts }: PromptResponsesSummaryProps)
 
       {globalPrompts.length > 0 && (
         <div className="space-y-1">
-          <p className="text-xs font-semibold text-white/50 uppercase tracking-wide">Property</p>
+          <p className="text-xs font-semibold text-white uppercase tracking-wide">Property</p>
           {globalPrompts.map((p) => (
             <div key={p.id} className="flex justify-between text-xs">
               <span className="text-white">{p.promptQuestion}</span>
@@ -35,9 +35,7 @@ export const PromptResponsesSummary = ({ prompts }: PromptResponsesSummaryProps)
 
       {roomPrompts.length > 0 && (
         <div className="space-y-1">
-          <p className="text-xs font-semibold text-white/50 uppercase tracking-wide">
-            Room-specific
-          </p>
+          <p className="text-xs font-semibold text-white uppercase tracking-wide">Room-specific</p>
           {roomPrompts.map((p) => (
             <div key={p.id} className="flex justify-between text-xs">
               <span className="text-white">{p.promptQuestion}</span>

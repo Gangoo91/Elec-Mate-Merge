@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { draftStorage } from '@/utils/draftStorage';
+import { getDefaultAssumptions } from '@/utils/defaultAssumptions';
 import { AutoSaveIndicator } from '@/components/electrician/shared/AutoSaveIndicator';
 import { useSiteVisit } from '@/hooks/useSiteVisit';
 import { SiteVisitClientStep } from './steps/SiteVisitClientStep';
@@ -64,6 +65,13 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
   // Scroll to top on step change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [sv.currentStep]);
+
+  // Auto-populate assumptions when first arriving at Scope step
+  useEffect(() => {
+    if (sv.currentStep === 4 && !assumptions.trim()) {
+      setAssumptions(getDefaultAssumptions(sv.visit.propertyType));
+    }
   }, [sv.currentStep]);
 
   const handleRecoverDraft = useCallback(() => {
@@ -151,11 +159,11 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
               <Icon
                 className={cn(
                   'h-4 w-4',
-                  isActive ? 'text-elec-yellow' : isComplete ? 'text-emerald-400' : 'text-white/50'
+                  isActive ? 'text-elec-yellow' : isComplete ? 'text-emerald-400' : 'text-white'
                 )}
               />
               <span
-                className={cn('text-[10px] font-medium', isActive ? 'text-white' : 'text-white/50')}
+                className={cn('text-[10px] font-medium', isActive ? 'text-white' : 'text-white')}
               >
                 {step.shortTitle}
               </span>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Sparkles,
   Loader2,
@@ -53,26 +53,26 @@ function MaterialsTable({ items }: { items: SurveyAnalysisResult['materials_list
         <Package className="h-4 w-4 text-emerald-400" />
         <h4 className="text-sm font-semibold text-white">Materials List</h4>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-1.5">
         {items.map((item, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between text-xs py-1.5 border-b border-white/[0.04] last:border-0"
-          >
-            <div className="flex-1 min-w-0">
-              <p className="text-white truncate">{item.description}</p>
-              {item.supplier && <p className="text-white text-[10px]">{item.supplier}</p>}
+          <div key={i} className="py-2 border-b border-white/[0.04] last:border-0">
+            <div className="flex items-start justify-between gap-2 mb-0.5">
+              <p className="text-xs text-white font-medium flex-1">{item.description}</p>
+              <span className="text-xs text-emerald-400 font-semibold flex-shrink-0">
+                £{(item.est_price_gbp * item.quantity).toFixed(2)}
+              </span>
             </div>
-            <span className="text-white mx-2 flex-shrink-0">
-              {item.quantity} {item.unit}
-            </span>
-            <span className="text-white font-medium flex-shrink-0">
-              £{(item.est_price_gbp * item.quantity).toFixed(2)}
-            </span>
+            <div className="flex items-center gap-3 text-[10px] text-white">
+              <span>
+                {item.quantity} {item.unit}
+              </span>
+              <span>£{item.est_price_gbp.toFixed(2)} each</span>
+              {item.supplier && <span>{item.supplier}</span>}
+            </div>
           </div>
         ))}
       </div>
-      <div className="flex justify-between text-xs font-semibold pt-1 border-t border-white/10">
+      <div className="flex justify-between text-xs font-semibold pt-2 border-t border-white/10">
         <span className="text-white">Materials Total</span>
         <span className="text-emerald-400">£{total.toFixed(2)}</span>
       </div>
@@ -92,7 +92,7 @@ function RegulatoryFlagsSection({ flags }: { flags: RegulatoryFlag[] }) {
         {flags.map((flag, i) => (
           <div
             key={i}
-            className={`p-2.5 rounded-lg border ${
+            className={`p-3 rounded-lg border ${
               flag.severity === 'critical'
                 ? 'border-red-500/30 bg-red-500/10'
                 : flag.severity === 'warning'
@@ -100,17 +100,17 @@ function RegulatoryFlagsSection({ flags }: { flags: RegulatoryFlag[] }) {
                   : 'border-blue-500/30 bg-blue-500/10'
             }`}
           >
-            <div className="flex items-start gap-2">
+            <div className="flex items-center gap-2 mb-1.5">
               <SeverityIcon severity={flag.severity} />
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-0.5">
-                  <span className="text-xs font-semibold text-white">{flag.regulation}</span>
-                  <SeverityBadge severity={flag.severity} />
-                </div>
-                <p className="text-xs text-white">{flag.description}</p>
-                {flag.room && <p className="text-[10px] text-white mt-0.5">Room: {flag.room}</p>}
-              </div>
+              <span className="text-xs font-semibold text-white">{flag.regulation}</span>
+              <SeverityBadge severity={flag.severity} />
             </div>
+            <p className="text-xs text-white">{flag.description}</p>
+            {flag.room && (
+              <p className="text-[10px] text-white mt-1.5 pt-1.5 border-t border-white/[0.06]">
+                Room: {flag.room}
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -126,15 +126,25 @@ function CableSizingTable({ items }: { items: SurveyAnalysisResult['cable_sizing
         <Cable className="h-4 w-4 text-blue-400" />
         <h4 className="text-sm font-semibold text-white">Cable Sizing</h4>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-2">
         {items.map((item, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between text-xs py-1.5 border-b border-white/[0.04] last:border-0"
-          >
-            <span className="text-white flex-1">{item.circuit}</span>
-            <span className="text-white mx-2">{item.cable_type}</span>
-            <span className="text-white font-medium">{item.csa_mm2}mm²</span>
+          <div key={i} className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            <div className="flex items-center gap-2 mb-2.5">
+              <p className="text-xs font-semibold text-white flex-1">{item.circuit}</p>
+              <span className="text-[10px] font-bold text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded-full flex-shrink-0">
+                {String(item.csa_mm2).replace(/\s*mm²?\s*/gi, '')} mm²
+              </span>
+            </div>
+            <div className="space-y-1.5">
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-[10px] text-white flex-shrink-0 w-16">Cable</span>
+                <span className="text-xs text-white font-medium text-right">{item.cable_type}</span>
+              </div>
+              <div className="flex items-start justify-between gap-3">
+                <span className="text-[10px] text-white flex-shrink-0 w-16">Ref Method</span>
+                <span className="text-xs text-white font-medium text-right">{item.ref_method}</span>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -154,18 +164,25 @@ function CircuitRecommendationsSection({
         <Zap className="h-4 w-4 text-elec-yellow" />
         <h4 className="text-sm font-semibold text-white">Circuit Recommendations</h4>
       </div>
-      <div className="space-y-1">
+      <div className="space-y-2">
         {items.map((item, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between text-xs py-1.5 border-b border-white/[0.04] last:border-0"
-          >
-            <div className="flex-1 min-w-0">
-              <p className="text-white">{item.room}</p>
-              <p className="text-white text-[10px]">{item.circuit_type}</p>
+          <div key={i} className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
+            <div className="flex items-center gap-2 mb-2">
+              <p className="text-xs font-semibold text-white">{item.room}</p>
+              <span className="text-[10px] font-semibold text-elec-yellow bg-elec-yellow/20 px-2 py-0.5 rounded-full">
+                {item.rating_a}A
+              </span>
             </div>
-            <span className="text-white mx-2">{item.rating_a}A</span>
-            <span className="text-white font-medium">{item.protection}</span>
+            <div className="space-y-1">
+              <div>
+                <p className="text-[10px] text-white mb-0.5">Circuit Type</p>
+                <p className="text-xs text-white font-medium">{item.circuit_type}</p>
+              </div>
+              <div>
+                <p className="text-[10px] text-white mb-0.5">Protection</p>
+                <p className="text-xs text-white font-medium">{item.protection}</p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
@@ -221,17 +238,27 @@ function CostSummaryCard({
 
       {/* Labour breakdown */}
       {labour.breakdown.length > 0 && (
-        <div className="space-y-1">
+        <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5 text-white" />
-            <p className="text-[11px] text-white font-medium">Labour Breakdown</p>
+            <Clock className="h-3.5 w-3.5 text-blue-400" />
+            <p className="text-xs text-white font-semibold">Labour Breakdown</p>
+            <span className="text-[10px] text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded-full font-semibold ml-auto">
+              {labour.total_hours}h total
+            </span>
           </div>
-          {labour.breakdown.map((task, i) => (
-            <div key={i} className="flex justify-between text-xs pl-5">
-              <span className="text-white">{task.task}</span>
-              <span className="text-white">{task.hours}h</span>
-            </div>
-          ))}
+          <div className="space-y-1.5">
+            {labour.breakdown.map((task, i) => (
+              <div
+                key={i}
+                className="flex items-start gap-2 py-2 border-b border-white/[0.04] last:border-0"
+              >
+                <p className="text-xs text-white flex-1">{task.task}</p>
+                <span className="text-xs text-white font-semibold flex-shrink-0 tabular-nums">
+                  {task.hours}h
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
@@ -250,7 +277,7 @@ function IssuesSection({ issues }: { issues: SurveyIssue[] }) {
         {issues.map((issue, i) => (
           <div
             key={i}
-            className={`p-2.5 rounded-lg border ${
+            className={`p-3 rounded-lg border ${
               issue.severity === 'critical'
                 ? 'border-red-500/30 bg-red-500/10'
                 : issue.severity === 'warning'
@@ -258,15 +285,66 @@ function IssuesSection({ issues }: { issues: SurveyIssue[] }) {
                   : 'border-blue-500/30 bg-blue-500/10'
             }`}
           >
-            <div className="flex items-start gap-2">
+            <div className="flex items-center gap-2 mb-1.5">
               <SeverityIcon severity={issue.severity} />
-              <div className="flex-1">
-                <p className="text-xs text-white font-medium">{issue.description}</p>
-                <p className="text-[11px] text-white mt-0.5">Action: {issue.action}</p>
-              </div>
+              <SeverityBadge severity={issue.severity} />
+            </div>
+            <p className="text-xs text-white font-medium mb-1.5">{issue.description}</p>
+            <div className="pt-1.5 border-t border-white/[0.06]">
+              <p className="text-[10px] text-white mb-0.5">Recommended Action</p>
+              <p className="text-xs text-white font-medium">{issue.action}</p>
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  );
+}
+
+function AnalysisProgress({
+  progress,
+  currentStep,
+}: {
+  progress: number;
+  currentStep: string | null;
+}) {
+  const [elapsed, setElapsed] = useState(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setElapsed(0);
+    intervalRef.current = setInterval(() => {
+      setElapsed((prev) => prev + 1);
+    }, 1000);
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, []);
+
+  const minutes = Math.floor(elapsed / 60);
+  const seconds = elapsed % 60;
+  const timeStr = minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}s`;
+
+  return (
+    <div className="space-y-3">
+      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+        <div className="flex items-center gap-2 mb-3">
+          <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
+          <span className="text-sm font-medium text-white flex-1">
+            {currentStep || 'Starting analysis...'}
+          </span>
+          <span className="text-xs font-mono text-elec-yellow tabular-nums">{timeStr}</span>
+        </div>
+        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+          <div
+            className="h-full bg-elec-yellow rounded-full transition-all duration-500 ease-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+        <div className="flex items-center justify-between mt-2">
+          <p className="text-[11px] text-white">This can take up to 2 minutes</p>
+          <p className="text-xs text-white font-medium">{progress}%</p>
+        </div>
       </div>
     </div>
   );
@@ -318,25 +396,9 @@ export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
         </div>
       )}
 
-      {/* Processing state — progress bar */}
+      {/* Processing state — progress bar + timer */}
       {(status === 'pending' || status === 'processing') && (
-        <div className="space-y-3">
-          <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-            <div className="flex items-center gap-2 mb-3">
-              <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-              <span className="text-sm font-medium text-white">
-                {currentStep || 'Starting analysis...'}
-              </span>
-            </div>
-            <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-elec-yellow rounded-full transition-all duration-500 ease-out"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-            <p className="text-xs text-white mt-2 text-right">{progress}%</p>
-          </div>
-        </div>
+        <AnalysisProgress progress={progress} currentStep={currentStep} />
       )}
 
       {/* Results */}

@@ -263,15 +263,23 @@ Deno.serve(async (req) => {
       const systemPrompt = `You are an expert UK electrical contractor analysing a site survey.
 Based on the captured site visit data, provide a comprehensive analysis including:
 1. Materials list with estimated UK trade prices in GBP
-2. Regulatory flags (reference BS 7671:2018+A2:2022 regulations where applicable)
-3. Cable sizing recommendations (use BS 7671 Appendix 4 tables)
-4. Circuit recommendations per room
-5. Labour estimate in hours (UK electrician rates)
+2. Regulatory flags — reference BS 7671:2018+A3:2024 (the current 18th Edition with Amendment 3). NEVER reference A2:2022 — always use A3:2024. Keep each flag description to 1 sentence max.
+3. Cable sizing recommendations. Rules:
+   - csa_mm2: ONLY the number e.g. "2.5" or "6" — NO "mm" or "mm²"
+   - cable_type: short e.g. "T&E" or "SWA" — max 3 words
+   - ref_method: just the method letter/number e.g. "C" or "A" or "B" — NOT full BS 7671 references
+   - circuit: short name e.g. "Kitchen ring final" — max 4 words
+4. Circuit recommendations per room. Rules:
+   - Lighting = 6A (NOT 10A), ring final = 32A, radial sockets = 20A, cooker = 32A or 45A
+   - circuit_type: short e.g. "Ring final" or "Radial" — max 3 words
+   - protection: short e.g. "32A MCB + 30mA RCD" — max 6 words
+5. Labour estimate in hours
 6. Overall cost summary
-7. Any issues or concerns
+7. Any issues or concerns — 1 sentence per issue max
 
+CRITICAL: This displays on a mobile phone. ALL text values must be SHORT and concise. No long paragraphs. Max 1 sentence per description field.
 Use the reference pricing data if available. All prices in GBP.
-Labour rate: assume £45/hour for a qualified electrician.
+Labour rate: £${inputData.labourRateGbp || 45}/hour for a qualified electrician.
 Always call the submit_analysis tool with your complete analysis.`;
 
       const response = await callOpenAI(
@@ -282,7 +290,7 @@ Always call the submit_analysis tool with your complete analysis.`;
           ],
           tools: analysisTools,
           tool_choice: { type: 'function', function: { name: 'submit_analysis' } },
-          max_tokens: 4096,
+          max_tokens: 16384,
         },
         openAiKey
       );

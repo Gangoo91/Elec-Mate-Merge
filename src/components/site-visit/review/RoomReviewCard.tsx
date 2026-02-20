@@ -49,14 +49,14 @@ export const RoomReviewCard = ({ room, photos, prompts }: RoomReviewCardProps) =
         <div className="space-y-1 pt-1 border-t border-white/[0.06]">
           {roomPrompts.map((prompt) => (
             <div key={prompt.id} className="flex justify-between text-xs">
-              <span className="text-white/50">{prompt.promptQuestion}</span>
+              <span className="text-white">{prompt.promptQuestion}</span>
               <span className="text-white font-medium">{prompt.response}</span>
             </div>
           ))}
         </div>
       )}
 
-      {room.notes && <p className="text-xs text-white/50 italic">{room.notes}</p>}
+      {room.notes && <p className="text-xs text-white italic">{room.notes}</p>}
     </div>
   );
 };

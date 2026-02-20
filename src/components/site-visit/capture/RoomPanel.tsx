@@ -87,6 +87,9 @@ export const RoomPanel = ({
           onChange={(e) => onUpdateRoomNotes(room.id, e.target.value)}
           placeholder="Any notes about this room..."
           className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          autoCapitalize="sentences"
+          spellCheck
+          enterKeyHint="done"
         />
       </div>
 

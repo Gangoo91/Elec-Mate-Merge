@@ -77,6 +77,7 @@ Deno.serve(async (req) => {
       headers: {
         Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
         'Content-Type': 'application/json',
+        'x-supabase-timeout': '300',
       },
       body: JSON.stringify({ jobId: job.id }),
     }).catch((err) => console.error('Failed to trigger processing:', err));

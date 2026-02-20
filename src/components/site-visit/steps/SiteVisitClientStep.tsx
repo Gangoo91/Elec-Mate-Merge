@@ -111,12 +111,15 @@ export const SiteVisitClientStep = ({
       {!selectedCustomer && !showCreate && (
         <div className="space-y-3">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search by name, email or phone..."
               className="h-11 pl-10 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              autoCapitalize="off"
+              autoComplete="off"
+              enterKeyHint="search"
             />
           </div>
 
@@ -138,7 +141,7 @@ export const SiteVisitClientStep = ({
                   className="w-full flex items-center gap-3 p-3 rounded-xl hover:bg-white/[0.04] transition-colors touch-manipulation text-left"
                 >
                   <div className="w-9 h-9 rounded-lg bg-elec-gray flex items-center justify-center">
-                    <User className="h-4 w-4 text-white/50" />
+                    <User className="h-4 w-4 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-white">{customer.name}</p>
@@ -189,26 +192,37 @@ export const SiteVisitClientStep = ({
               onChange={(e) => setNewName(e.target.value)}
               placeholder="Client name"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              autoCapitalize="words"
+              autoComplete="name"
+              enterKeyHint="next"
             />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-white">Phone</label>
             <Input
               type="tel"
+              inputMode="tel"
               value={newPhone}
               onChange={(e) => setNewPhone(e.target.value)}
               placeholder="07xxx xxxxxx"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              autoCapitalize="off"
+              autoComplete="tel"
+              enterKeyHint="next"
             />
           </div>
           <div className="space-y-1">
             <label className="text-xs font-medium text-white">Email</label>
             <Input
               type="email"
+              inputMode="email"
               value={newEmail}
               onChange={(e) => setNewEmail(e.target.value)}
               placeholder="client@email.com"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              autoCapitalize="off"
+              autoComplete="email"
+              enterKeyHint="done"
             />
           </div>
         </div>

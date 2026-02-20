@@ -49,7 +49,7 @@ export const RoomList = ({
             }}
             className="ml-1 p-0.5 rounded-full hover:bg-red-500/20 transition-colors touch-manipulation"
           >
-            <X className="h-3 w-3 text-white/50 hover:text-red-400" />
+            <X className="h-3 w-3 text-white hover:text-red-400" />
           </button>
         </button>
       ))}

@@ -32,12 +32,15 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
         <div className="space-y-1">
           <label className="text-xs font-medium text-white">Property Address *</label>
           <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
             <Input
               value={visit.propertyAddress || ''}
               onChange={(e) => onUpdateProperty({ propertyAddress: e.target.value })}
               placeholder="123 High Street, Town"
               className="h-11 pl-10 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              autoCapitalize="words"
+              autoComplete="street-address"
+              enterKeyHint="next"
             />
           </div>
         </div>
@@ -50,6 +53,9 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
             placeholder="AB1 2CD"
             className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 uppercase"
             maxLength={8}
+            autoCapitalize="characters"
+            autoComplete="postal-code"
+            enterKeyHint="next"
           />
         </div>
 
@@ -83,6 +89,9 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
             onChange={(e) => onUpdateProperty({ accessNotes: e.target.value })}
             placeholder="Gate code, parking, key safe location..."
             className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+            autoCapitalize="sentences"
+            spellCheck
+            enterKeyHint="done"
           />
         </div>
       </div>

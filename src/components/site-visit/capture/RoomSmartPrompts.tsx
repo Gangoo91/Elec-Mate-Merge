@@ -40,7 +40,7 @@ export const RoomSmartPrompts = ({
           return (
             <div key={prompt.key} className="space-y-1">
               <label className="text-xs font-medium text-white">{prompt.question}</label>
-              {prompt.helpText && <p className="text-[11px] text-white/50">{prompt.helpText}</p>}
+              {prompt.helpText && <p className="text-[11px] text-white">{prompt.helpText}</p>}
 
               {prompt.inputType === 'select' && prompt.options && (
                 <Select
@@ -84,6 +84,8 @@ export const RoomSmartPrompts = ({
                   onChange={(e) => setResponse(prompt.key, e.target.value, roomId, prompt.question)}
                   className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
                   placeholder="Enter response..."
+                  autoCapitalize="sentences"
+                  enterKeyHint="done"
                 />
               )}
             </div>

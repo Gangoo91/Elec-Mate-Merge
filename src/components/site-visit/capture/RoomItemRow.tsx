@@ -58,7 +58,7 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
                 if (!catItems || catItems.length === 0) return null;
                 return (
                   <SelectGroup key={cat.id}>
-                    <SelectLabel className="text-xs text-white/50 font-semibold px-2">
+                    <SelectLabel className="text-xs text-white font-semibold px-2">
                       {cat.label}
                     </SelectLabel>
                     {catItems.map((a) => (
@@ -85,10 +85,12 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
           </Button>
           <Input
             type="number"
+            inputMode="numeric"
             value={item.quantity}
             onChange={(e) => onUpdate({ quantity: Math.max(1, parseInt(e.target.value) || 1) })}
             className="h-11 w-14 text-center text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
             min={1}
+            enterKeyHint="done"
           />
           <Button
             variant="outline"
@@ -105,7 +107,7 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
           variant="ghost"
           size="icon"
           onClick={onRemove}
-          className="h-11 w-11 touch-manipulation text-white/50 hover:text-red-400 hover:bg-red-500/10"
+          className="h-11 w-11 touch-manipulation text-white hover:text-red-400 hover:bg-red-500/10"
         >
           <Trash2 className="h-4 w-4" />
         </Button>
@@ -114,7 +116,7 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
       {/* Expandable notes */}
       <button
         onClick={() => setShowNotes(!showNotes)}
-        className="flex items-center gap-1 text-xs text-white/70 touch-manipulation"
+        className="flex items-center gap-1 text-xs text-white touch-manipulation"
       >
         {showNotes ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
         Notes
@@ -125,6 +127,9 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
           onChange={(e) => onUpdate({ notes: e.target.value })}
           placeholder="Additional notes for this item..."
           className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          autoCapitalize="sentences"
+          spellCheck
+          enterKeyHint="done"
         />
       )}
     </div>

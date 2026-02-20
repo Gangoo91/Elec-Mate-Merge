@@ -1,6 +1,8 @@
 import React from 'react';
-import { FileText, User, MapPin, Home, Package } from 'lucide-react';
+import { FileText, User, MapPin, Home, Package, RotateCcw } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { getDefaultAssumptions } from '@/utils/defaultAssumptions';
 import type { SiteVisit } from '@/types/siteVisit';
 
 interface ScopeOfWorksEditorProps {
@@ -37,15 +39,15 @@ export const ScopeOfWorksEditor = ({
         </div>
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div>
-            <p className="text-white/50">Name</p>
+            <p className="text-white">Name</p>
             <p className="text-white">{visit.customerName || '—'}</p>
           </div>
           <div>
-            <p className="text-white/50">Phone</p>
+            <p className="text-white">Phone</p>
             <p className="text-white">{visit.customerPhone || '—'}</p>
           </div>
           <div>
-            <p className="text-white/50">Email</p>
+            <p className="text-white">Email</p>
             <p className="text-white">{visit.customerEmail || '—'}</p>
           </div>
         </div>
@@ -107,33 +109,47 @@ export const ScopeOfWorksEditor = ({
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-white/50 italic">No items specified</p>
+              <p className="text-xs text-white italic">No items specified</p>
             )}
 
             {roomPrompts.length > 0 && (
               <div className="space-y-1 pt-1 border-t border-white/[0.06]">
                 {roomPrompts.map((p) => (
                   <div key={p.id} className="flex justify-between text-xs">
-                    <span className="text-white/50">{p.promptQuestion}</span>
+                    <span className="text-white">{p.promptQuestion}</span>
                     <span className="text-white font-medium">{p.response}</span>
                   </div>
                 ))}
               </div>
             )}
 
-            {room.notes && <p className="text-xs text-white/50 italic">Note: {room.notes}</p>}
+            {room.notes && <p className="text-xs text-white italic">Note: {room.notes}</p>}
           </div>
         );
       })}
 
       {/* Assumptions / exclusions */}
-      <div className="space-y-1">
-        <label className="text-xs font-medium text-white">Assumptions & Exclusions</label>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <label className="text-xs font-medium text-white">Assumptions & Exclusions</label>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onAssumptionsChange(getDefaultAssumptions(visit.propertyType))}
+            className="h-8 px-2 text-xs text-white touch-manipulation"
+          >
+            <RotateCcw className="h-3.5 w-3.5 mr-1" />
+            Reset Defaults
+          </Button>
+        </div>
         <Textarea
           value={assumptions}
           onChange={(e) => onAssumptionsChange(e.target.value)}
-          placeholder={`E.g.:\n- Price excludes making good / decoration\n- Existing cabling in good condition\n- Access available during normal working hours\n- Any additional work will be quoted separately`}
-          className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          placeholder="Tap 'Reset Defaults' to pre-fill smart assumptions"
+          className="touch-manipulation text-base min-h-[180px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          autoCapitalize="sentences"
+          spellCheck
+          enterKeyHint="done"
         />
       </div>
     </div>

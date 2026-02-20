@@ -138,6 +138,18 @@ export function useSiteSurveyAnalysis(siteVisitId?: string): UseSiteSurveyAnalys
       setProgress(0);
 
       try {
+        // Fetch user's labour rate from company profile
+        let labourRate = 45;
+        try {
+          const { data: profile } = await supabase
+            .from('company_profiles')
+            .select('hourly_rate')
+            .single();
+          if (profile?.hourly_rate) labourRate = profile.hourly_rate;
+        } catch {
+          // Use default
+        }
+
         const { data, error: invokeError } = await supabase.functions.invoke(
           'create-site-survey-analysis',
           {
@@ -147,6 +159,7 @@ export function useSiteSurveyAnalysis(siteVisitId?: string): UseSiteSurveyAnalys
                 propertyType: visit.propertyType,
                 propertyAddress: visit.propertyAddress,
                 propertyPostcode: visit.propertyPostcode,
+                labourRateGbp: labourRate,
                 rooms: visit.rooms.map((r) => ({
                   roomName: r.roomName,
                   roomType: r.roomType,
