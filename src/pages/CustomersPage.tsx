@@ -53,8 +53,15 @@ export default function CustomersPage() {
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
 
-  const { customers, isLoading, saveCustomer, updateCustomer, deleteCustomer, exportCustomers } =
-    useCustomers({ sortField, sortDirection });
+  const {
+    customers,
+    isLoading,
+    saveCustomer,
+    updateCustomer,
+    deleteCustomer,
+    exportCustomers,
+    refreshCustomers,
+  } = useCustomers({ sortField, sortDirection });
 
   const [searchTerm, setSearchTerm] = useState('');
   const [showSearch, setShowSearch] = useState(false);
@@ -311,7 +318,11 @@ export default function CustomersPage() {
       />
 
       {/* Import Dialog */}
-      <CustomerImportDialog open={showImportDialog} onOpenChange={setShowImportDialog} />
+      <CustomerImportDialog
+        open={showImportDialog}
+        onOpenChange={setShowImportDialog}
+        onImportComplete={refreshCustomers}
+      />
 
       {/* Quick Note Dialog */}
       {quickNoteCustomer && (

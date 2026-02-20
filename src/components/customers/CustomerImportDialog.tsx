@@ -160,7 +160,9 @@ export const CustomerImportDialog = ({
               <Alert className="bg-muted border-border">
                 <AlertCircle className="h-4 w-4 flex-shrink-0" />
                 <AlertDescription className="text-xs sm:text-sm text-neutral-300 break-words">
-                  <strong>Expected columns:</strong> Name (required), Email, Phone, Address, Notes
+                  <strong>Expected columns:</strong> Name (required), Email, Phone, Address, Notes.
+                  Exports from Tradify, ServiceM8, Fergus, SimPRO, Jobber and Xero are automatically
+                  mapped.
                 </AlertDescription>
               </Alert>
 

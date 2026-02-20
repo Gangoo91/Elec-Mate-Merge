@@ -15,7 +15,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 interface CustomerImportDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onImportComplete: () => void;
+  onImportComplete?: () => void;
 }
 
 export const CustomerImportDialog = ({
@@ -91,7 +91,7 @@ export const CustomerImportDialog = ({
     try {
       const result = await importCustomers(selectedFile);
       setImportResult(result);
-      onImportComplete();
+      onImportComplete?.();
     } catch (error) {
       console.error('Import error:', error);
     }
