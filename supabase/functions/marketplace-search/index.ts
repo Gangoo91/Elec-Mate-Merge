@@ -34,6 +34,9 @@ serve(async (req: Request) => {
       pageSize = 24,
     } = body;
 
+    // Use a proper ISO timestamp instead of now() which PostgREST may not support
+    const nowISO = new Date().toISOString();
+
     // Define category groups for filtering
     const TOOL_CATEGORIES = ['hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'];
     const MATERIAL_CATEGORIES = [
@@ -77,11 +80,13 @@ serve(async (req: Request) => {
       `);
 
     // Exclude expired products (keep products with no expiry set for backwards compatibility)
-    productsQuery = productsQuery.or('expires_at.gte.now(),expires_at.is.null');
+    productsQuery = productsQuery.or(`expires_at.gte.${nowISO},expires_at.is.null`);
 
-    // Apply filters
+    // Apply filters — use full-text search when available, fall back to ilike
     if (query && query.length > 0) {
-      productsQuery = productsQuery.ilike('name', `%${query}%`);
+      // Convert search query to tsquery format (space-separated words become AND)
+      const tsQuery = query.trim().split(/\s+/).join(' & ');
+      productsQuery = productsQuery.or(`search_vector.fts.${tsQuery},name.ilike.%${query}%`);
     }
 
     if (category) {
@@ -146,9 +151,10 @@ serve(async (req: Request) => {
       .select('*', { count: 'exact', head: true });
 
     // Apply same filters to count query (including expiry filter)
-    countQuery = countQuery.or('expires_at.gte.now(),expires_at.is.null');
+    countQuery = countQuery.or(`expires_at.gte.${nowISO},expires_at.is.null`);
     if (query && query.length > 0) {
-      countQuery = countQuery.ilike('name', `%${query}%`);
+      const tsQueryCount = query.trim().split(/\s+/).join(' & ');
+      countQuery = countQuery.or(`search_vector.fts.${tsQueryCount},name.ilike.%${query}%`);
     }
     if (category) {
       countQuery = countQuery.eq('category', category);
@@ -177,6 +183,7 @@ serve(async (req: Request) => {
     }
 
     // Transform products to include supplier info
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query returns dynamic shape
     const transformedProducts = (products || []).map((p: any) => ({
       id: p.id,
       supplier_id: p.supplier_id,
@@ -224,6 +231,7 @@ serve(async (req: Request) => {
         .select('id, name, slug')
         .eq('scrape_enabled', true)
         .then(({ data }) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase query result
           return (data || []).map((s: any) => ({
             slug: s.slug,
             name: s.name,
