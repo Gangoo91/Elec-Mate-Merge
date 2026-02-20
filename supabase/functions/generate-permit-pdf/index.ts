@@ -1,33 +1,12 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import {
-  SafetyPDFBuilder,
-  C,
-  type StatusColour,
-  type CompanyBranding,
-} from '../_shared/SafetyPDFBuilder.ts';
+import { permitTemplate } from '../_shared/safety-templates/permit.ts';
+import { htmlToPdf } from '../_shared/safety-pdf-renderer.ts';
+import type { Branding } from '../_shared/safety-html-base.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString('en-GB') : 'N/A');
-const fmtDateTime = (d: string | null) => (d ? new Date(d).toLocaleString('en-GB') : 'N/A');
-
-const TYPE_LABELS: Record<string, string> = {
-  'hot-work': 'Hot Work',
-  'confined-space': 'Confined Space',
-  'electrical-isolation': 'Electrical Isolation',
-  'working-at-height': 'Working at Height',
-  excavation: 'Excavation',
-};
-
-const STATUS_MAP: Record<string, StatusColour> = {
-  active: 'success',
-  expired: 'danger',
-  closed: 'info',
-  draft: 'grey',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
@@ -53,123 +32,29 @@ serve(async (req) => {
     const { data: profileRows } = await supabase
       .from('company_profiles')
       .select(
-        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color'
+        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color, scheme_logo_data_url, registration_scheme'
       )
       .eq('user_id', user.id)
       .limit(1);
-    const branding: CompanyBranding = profileRows?.[0] ?? {};
+    const branding: Branding = profileRows?.[0] ?? {};
 
     const { permitId, recordId } = await req.json();
     const id = permitId || recordId;
     if (!id) throw new Error('Missing permitId');
 
-    const { data: permit, error: fetchError } = await userSupabase
+    const { data: record, error: fetchError } = await userSupabase
       .from('permits_to_work')
       .select('*')
       .eq('id', id)
       .single();
 
-    if (fetchError || !permit) throw new Error('Permit not found');
+    if (fetchError || !record) throw new Error('Permit not found');
 
-    // ── Build PDF ──────────────────────────────────────────────────────
-    const statusColour = STATUS_MAP[permit.status] || 'grey';
-    const pdf = await SafetyPDFBuilder.create(
-      'Permit to Work',
-      id,
-      permit.status || 'draft',
-      statusColour,
-      branding
-    );
-
-    // Permit details
-    pdf.section('Permit Details');
-    pdf.keyValueGrid([
-      { label: 'Permit Title', value: permit.title || 'Untitled' },
-      { label: 'Type', value: TYPE_LABELS[permit.type] || permit.type || 'N/A' },
-      { label: 'Location', value: permit.location || 'N/A' },
-      { label: 'Duration', value: `${permit.duration_hours || 'N/A'} hours` },
-      { label: 'Start', value: fmtDateTime(permit.start_time) },
-      { label: 'End', value: fmtDateTime(permit.end_time) },
-      { label: 'Issued', value: fmtDate(permit.created_at) },
-      { label: 'Status', value: (permit.status || 'draft').toUpperCase() },
-    ]);
-
-    // Description
-    if (permit.description) {
-      pdf.section('Description of Work');
-      pdf.textBox(permit.description);
-    }
-
-    // Hazards & Controls
-    const hazards = (permit.hazards as Record<string, unknown>[]) || [];
-    pdf.section('Hazards & Control Measures');
-    if (hazards.length > 0) {
-      pdf.table(
-        ['Hazard', 'Control Measures'],
-        hazards.map((h: Record<string, unknown>) => [
-          h.description || h.hazard || '',
-          h.controls || h.control || 'N/A',
-        ])
-      );
-    } else {
-      pdf.paragraph('None specified.', { color: C.textSec });
-    }
-
-    // Precautions
-    const precautions = (permit.precautions as string[]) || [];
-    if (precautions.length > 0) {
-      pdf.section('Precautions');
-      pdf.bulletList(precautions);
-    }
-
-    // PPE Required
-    const ppe = (permit.ppe_required as string[]) || [];
-    if (ppe.length > 0) {
-      pdf.section('PPE Required');
-      pdf.badges(ppe);
-    }
-
-    // Emergency Procedures
-    if (permit.emergency_procedures) {
-      pdf.section('Emergency Procedures');
-      pdf.textBox(permit.emergency_procedures, C.danger);
-    }
-
-    // Authorisation
-    pdf.section('Authorisation');
-    pdf.signatureBlock([
-      {
-        role: 'Permit Issuer',
-        name: permit.issuer_name || undefined,
-        date: fmtDate(permit.created_at),
-      },
-      {
-        role: 'Permit Receiver',
-        name: permit.receiver_name || undefined,
-        date: fmtDate(permit.created_at),
-      },
-    ]);
-
-    // Additional Notes
-    if (permit.additional_notes) {
-      pdf.section('Additional Notes');
-      pdf.paragraph(permit.additional_notes);
-    }
-
-    // Closure
-    if (permit.closed_at) {
-      pdf.section('Permit Closure');
-      pdf.keyValueGrid([
-        { label: 'Closed At', value: fmtDateTime(permit.closed_at) },
-        { label: 'Closed By', value: permit.closed_by || 'N/A' },
-      ]);
-    }
-
-    // Footer
-    pdf.footnote(`This document was generated electronically by Elec-Mate. Permit Ref: ${id}`);
+    // ── Build PDF via HTML template + Browserless ────────────────────
+    const html = permitTemplate(record, branding);
+    const pdfBytes = await htmlToPdf(html);
 
     // ── Upload PDF ─────────────────────────────────────────────────────
-    const pdfBytes = await pdf.toBuffer();
     const fileName = `permit-${id}-${Date.now()}.pdf`;
 
     const { error: uploadError } = await supabase.storage
@@ -180,9 +65,16 @@ serve(async (req) => {
       });
 
     if (uploadError) {
-      // Fallback: return PDF bytes directly
-      return new Response(pdfBytes, {
-        headers: { ...corsHeaders, 'Content-Type': 'application/pdf' },
+      // Fallback: return base64-encoded PDF as JSON (chunked to avoid stack overflow)
+      const bytes = new Uint8Array(pdfBytes);
+      let binary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+      }
+      const base64 = btoa(binary);
+      return new Response(JSON.stringify({ success: true, pdf_base64: base64 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 

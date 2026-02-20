@@ -15,7 +15,4 @@ export { corsHeaders } from './cors.ts';
 
 // Shared Types
 export type { Database } from './types.ts';
-export type { 
-  ValidationResult, 
-  ValidationIssue 
-} from './response-validation.ts';
+export type { ValidationResult, ValidationIssue } from './response-validation.ts';

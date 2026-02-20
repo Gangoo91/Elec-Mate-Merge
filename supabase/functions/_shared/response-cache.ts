@@ -35,13 +35,21 @@ export class ResponseCache {
   private extractCanonicalEntities(query: string, context?: any): any {
     // Use parseQueryEntities for consistency across the system
     const parsed = parseQueryEntities(query);
-    
+
     return {
       type: parsed.loadType || context?.circuitType || 'general',
-      power: parsed.power ? Math.round(parsed.power / 100) * 100 : (context?.power ? Math.round(context.power / 100) * 100 : null),
-      distance: parsed.distance ? Math.round(parsed.distance) : (context?.cableLength ? Math.round(context.cableLength) : null),
+      power: parsed.power
+        ? Math.round(parsed.power / 100) * 100
+        : context?.power
+          ? Math.round(context.power / 100) * 100
+          : null,
+      distance: parsed.distance
+        ? Math.round(parsed.distance)
+        : context?.cableLength
+          ? Math.round(context.cableLength)
+          : null,
       voltage: parsed.voltage || context?.voltage || 230,
-      phases: parsed.phases || 'single'
+      phases: parsed.phases || 'single',
     };
   }
 
@@ -50,7 +58,7 @@ export class ResponseCache {
     let hash = 0;
     for (let i = 0; i < str.length; i++) {
       const char = str.charCodeAt(i);
-      hash = ((hash << 5) - hash) + char;
+      hash = (hash << 5) - hash + char;
       hash = hash & hash; // Convert to 32-bit integer
     }
     return Math.abs(hash).toString(36);
@@ -59,7 +67,7 @@ export class ResponseCache {
   // Check if query matches cached patterns
   async get(query: string, context?: any): Promise<CacheEntry | null> {
     const key = this.generateKey(query, context);
-    
+
     try {
       const { data, error } = await this.supabase
         .from(this.cacheTable)
@@ -105,7 +113,7 @@ export class ResponseCache {
       // Find best match based on keyword overlap
       for (const entry of data) {
         const entryKeywords = this.extractKeywords(entry.query);
-        const overlap = keywords.filter(k => entryKeywords.includes(k)).length;
+        const overlap = keywords.filter((k) => entryKeywords.includes(k)).length;
         const similarity = overlap / Math.max(keywords.length, entryKeywords.length);
 
         if (similarity > 0.7) {
@@ -121,29 +129,62 @@ export class ResponseCache {
   }
 
   private extractKeywords(text: string): string[] {
-    const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'what', 'how', 'why', 'when', 'where', 'can', 'could', 'should', 'would'];
+    const stopWords = [
+      'the',
+      'a',
+      'an',
+      'and',
+      'or',
+      'but',
+      'in',
+      'on',
+      'at',
+      'to',
+      'for',
+      'of',
+      'with',
+      'by',
+      'from',
+      'is',
+      'are',
+      'was',
+      'were',
+      'what',
+      'how',
+      'why',
+      'when',
+      'where',
+      'can',
+      'could',
+      'should',
+      'would',
+    ];
     return text
       .toLowerCase()
       .split(/\s+/)
-      .filter(word => word.length > 3 && !stopWords.includes(word));
+      .filter((word) => word.length > 3 && !stopWords.includes(word));
   }
 
   // Store response in cache
-  async set(query: string, response: string, citations: any[], confidence: number, context?: any): Promise<void> {
+  async set(
+    query: string,
+    response: string,
+    citations: any[],
+    confidence: number,
+    context?: any
+  ): Promise<void> {
     const key = this.generateKey(query, context);
 
     try {
-      await this.supabase
-        .from(this.cacheTable)
-        .upsert({
-          cache_key: key,
-          query: query.slice(0, 500), // Store truncated query
-          response,
-          citations: JSON.stringify(citations),
-          confidence,
-          timestamp: new Date().toISOString(),
-          hits: 1
-        });
+      await this.supabase.from(this.cacheTable).upsert({
+        cache_key: key,
+        query: query.slice(0, 500), // Store truncated query
+        response,
+        citations: JSON.stringify(citations),
+        confidence,
+        timestamp: new Date().toISOString(),
+        hits: 1,
+      });
 
       console.log('💾 Cached response for:', query.slice(0, 50));
     } catch (error) {
@@ -179,5 +220,5 @@ export const CACHEABLE_PATTERNS = [
 ];
 
 export function isCacheable(query: string): boolean {
-  return CACHEABLE_PATTERNS.some(pattern => pattern.test(query));
+  return CACHEABLE_PATTERNS.some((pattern) => pattern.test(query));
 }

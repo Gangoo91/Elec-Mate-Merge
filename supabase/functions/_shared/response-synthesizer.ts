@@ -27,13 +27,13 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
     foundRegulations,
     ragMetadata,
     agentChain,
-    validationReport
+    validationReport,
   } = config;
 
   // Check if this is a multi-circuit design
-  const designerOutput = agentOutputs.find(o => o.agent === 'designer');
+  const designerOutput = agentOutputs.find((o) => o.agent === 'designer');
   const isMultiCircuit = designerOutput?.data?.structuredData?.circuits?.length > 1;
-  
+
   let synthesizedResponse = '';
 
   // Add introduction
@@ -50,38 +50,35 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
     synthesizedResponse += designerOutput.response + '\n\n';
 
     // Cost breakdown if available
-    const costOutput = agentOutputs.find(o => o.agent === 'cost');
+    const costOutput = agentOutputs.find((o) => o.agent === 'cost');
     if (costOutput) {
       synthesizedResponse += `## Cost Estimate\n\n`;
       synthesizedResponse += costOutput.response + '\n\n';
     }
 
     // Installation guidance
-    const installerOutput = agentOutputs.find(o => o.agent === 'installer');
+    const installerOutput = agentOutputs.find((o) => o.agent === 'installer');
     if (installerOutput) {
       synthesizedResponse += `## Installation Notes\n\n`;
       synthesizedResponse += installerOutput.response + '\n\n';
     }
 
     // Safety considerations
-    const safetyOutput = agentOutputs.find(o => o.agent === 'health-safety');
+    const safetyOutput = agentOutputs.find((o) => o.agent === 'health-safety');
     if (safetyOutput) {
       synthesizedResponse += `## Health & Safety\n\n`;
       synthesizedResponse += safetyOutput.response + '\n\n';
     }
 
     // Project management timeline
-    const projectOutput = agentOutputs.find(o => o.agent === 'project-mgmt');
+    const projectOutput = agentOutputs.find((o) => o.agent === 'project-mgmt');
     if (projectOutput) {
       synthesizedResponse += `## Project Timeline\n\n`;
       synthesizedResponse += projectOutput.response + '\n\n';
     }
-
   } else {
     // Single circuit - simpler narrative flow
-    synthesizedResponse += agentOutputs
-      .map(output => output.response)
-      .join('\n\n');
+    synthesizedResponse += agentOutputs.map((output) => output.response).join('\n\n');
   }
 
   // Add regulation citations footer (compact - no content dumps)
@@ -92,7 +89,7 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
 
   // Add performance metadata
   synthesizedResponse += `\n\n---\n\n`;
-  synthesizedResponse += `*Designed by: ${agentChain.map(a => formatAgentName(a)).join(' → ')}*\n`;
+  synthesizedResponse += `*Designed by: ${agentChain.map((a) => formatAgentName(a)).join(' → ')}*\n`;
   synthesizedResponse += `*RAG efficiency: ${ragMetadata.totalRAGCalls} database ${ragMetadata.totalRAGCalls === 1 ? 'query' : 'queries'} (regulations shared across agents)*`;
 
   // Add validation warnings if any
@@ -105,12 +102,12 @@ export async function synthesizeAgentOutputs(config: SynthesisConfig): Promise<s
 
 function formatAgentName(agent: string): string {
   const names: Record<string, string> = {
-    'designer': 'Circuit Designer',
-    'cost': 'Cost Engineer',
-    'installer': 'Installation Specialist',
+    designer: 'Circuit Designer',
+    cost: 'Cost Engineer',
+    installer: 'Installation Specialist',
     'health-safety': 'H&S Advisor',
-    'inspector': 'Inspector',
-    'project-mgmt': 'Project Manager'
+    inspector: 'Inspector',
+    'project-mgmt': 'Project Manager',
   };
   return names[agent] || agent;
 }

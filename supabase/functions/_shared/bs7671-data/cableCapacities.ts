@@ -20,7 +20,7 @@ export function getCableCapacity(type: CableType, size: number): CableCapacity |
       16: { A1: 76, A2: 73, B1: 85, B2: 80, C: 94 },
       25: { A1: 101, A2: 96, B1: 112, B2: 107, C: 119 },
       35: { A1: 125, A2: 119, B1: 138, B2: 133, C: 148 },
-      50: { A1: 151, A2: 144, B1: 168, B2: 161, C: 180 }
+      50: { A1: 151, A2: 144, B1: 168, B2: 161, C: 180 },
     },
     'xlpe-twin-earth': {
       1.0: { A1: 15, A2: 15, B1: 17, B2: 16, C: 19 },
@@ -32,7 +32,7 @@ export function getCableCapacity(type: CableType, size: number): CableCapacity |
       16: { A1: 85, A2: 81, B1: 93, B2: 89, C: 107 },
       25: { A1: 112, A2: 108, B1: 123, B2: 118, C: 138 },
       35: { A1: 138, A2: 133, B1: 151, B2: 146, C: 171 },
-      50: { A1: 168, A2: 161, B1: 184, B2: 177, C: 209 }
+      50: { A1: 168, A2: 161, B1: 184, B2: 177, C: 209 },
     },
     'pvc-single': {
       1.0: { C: 15, D1: 14, D2: 13, E: 17, F: 14, G: 13 },
@@ -51,7 +51,7 @@ export function getCableCapacity(type: CableType, size: number): CableCapacity |
       150: { C: 344, D1: 309, D2: 275, E: 379, F: 309, G: 280 },
       185: { C: 392, D1: 353, D2: 314, E: 434, F: 353, G: 319 },
       240: { C: 461, D1: 415, D2: 370, E: 514, F: 415, G: 376 },
-      300: { C: 530, D1: 477, D2: 424, E: 593, F: 477, G: 432 }
+      300: { C: 530, D1: 477, D2: 424, E: 593, F: 477, G: 432 },
     },
     'xlpe-single': {
       1.0: { C: 17, D1: 15, D2: 14, E: 19, F: 15, G: 14 },
@@ -70,9 +70,9 @@ export function getCableCapacity(type: CableType, size: number): CableCapacity |
       150: { C: 379, D1: 344, D2: 304, E: 441, F: 344, G: 307 },
       185: { C: 434, D1: 392, D2: 347, E: 506, F: 392, G: 350 },
       240: { C: 514, D1: 464, D2: 410, E: 599, F: 464, G: 413 },
-      300: { C: 593, D1: 535, D2: 473, E: 692, F: 535, G: 476 }
+      300: { C: 593, D1: 535, D2: 473, E: 692, F: 535, G: 476 },
     },
-    'swa': {
+    swa: {
       1.5: { C: 21, D1: 19, D2: 18, E: 24, F: 19, G: 18 },
       2.5: { C: 29, D1: 26, D2: 25, E: 33, F: 27, G: 25 },
       4: { C: 39, D1: 35, D2: 33, E: 45, F: 37, G: 34 },
@@ -88,8 +88,8 @@ export function getCableCapacity(type: CableType, size: number): CableCapacity |
       150: { C: 379, D1: 344, D2: 304, E: 441, F: 344, G: 307 },
       185: { C: 434, D1: 392, D2: 347, E: 506, F: 392, G: 350 },
       240: { C: 514, D1: 464, D2: 410, E: 599, F: 464, G: 413 },
-      300: { C: 593, D1: 535, D2: 473, E: 692, F: 535, G: 476 }
-    }
+      300: { C: 593, D1: 535, D2: 473, E: 692, F: 535, G: 476 },
+    },
   };
 
   const data = capacityData[type]?.[size];
@@ -97,6 +97,6 @@ export function getCableCapacity(type: CableType, size: number): CableCapacity |
 
   return {
     size,
-    capacities: data
+    capacities: data,
   };
 }

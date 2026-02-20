@@ -58,7 +58,7 @@ export class ToolstationScraper extends BaseScraper {
     if (!success) return products;
 
     // Wait for products to load
-    await new Promise(r => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 5000));
     await this.scrollToLoadAll(page);
 
     // Extract products using Toolstation's data-testid attributes
@@ -79,8 +79,12 @@ export class ToolstationScraper extends BaseScraper {
       cards.forEach((card) => {
         try {
           // Get product link and SKU
-          const imageLink = card.querySelector('[data-testid="product-card-image-link"]') as HTMLAnchorElement;
-          const reviewsLink = card.querySelector('[data-testid="product-card-reviews"]') as HTMLAnchorElement;
+          const imageLink = card.querySelector(
+            '[data-testid="product-card-image-link"]'
+          ) as HTMLAnchorElement;
+          const reviewsLink = card.querySelector(
+            '[data-testid="product-card-reviews"]'
+          ) as HTMLAnchorElement;
 
           if (!imageLink && !reviewsLink) return;
 
@@ -89,8 +93,10 @@ export class ToolstationScraper extends BaseScraper {
           if (!sku) return;
 
           // Name from title attribute or img alt
-          const name = reviewsLink?.title ||
-                       card.querySelector('img[src*="toolstation.com/images"]')?.getAttribute('alt') || '';
+          const name =
+            reviewsLink?.title ||
+            card.querySelector('img[src*="toolstation.com/images"]')?.getAttribute('alt') ||
+            '';
           if (!name || name.length < 3) return;
 
           // Product URL
@@ -160,7 +166,8 @@ export class ToolstationScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
       products.push({
@@ -202,7 +209,7 @@ export class ToolstationScraper extends BaseScraper {
       const success = await this.navigateWithRetry(page, dealsUrl);
       if (!success) return deals;
 
-      await new Promise(r => setTimeout(r, 5000));
+      await new Promise((r) => setTimeout(r, 5000));
       await this.scrollToLoadAll(page);
 
       const extractedDeals = await page.evaluate(() => {
@@ -217,8 +224,12 @@ export class ToolstationScraper extends BaseScraper {
         const cards = document.querySelectorAll('[data-testid="product-card"]');
 
         cards.forEach((card) => {
-          const reviewsLink = card.querySelector('[data-testid="product-card-reviews"]') as HTMLAnchorElement;
-          const imageLink = card.querySelector('[data-testid="product-card-image-link"]') as HTMLAnchorElement;
+          const reviewsLink = card.querySelector(
+            '[data-testid="product-card-reviews"]'
+          ) as HTMLAnchorElement;
+          const imageLink = card.querySelector(
+            '[data-testid="product-card-image-link"]'
+          ) as HTMLAnchorElement;
 
           const sku = reviewsLink?.getAttribute('data-product-id') || null;
           const name = reviewsLink?.title || '';

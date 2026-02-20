@@ -1,11 +1,11 @@
 /**
  * Enrichment Keepalive Edge Function
- * 
+ *
  * Auto-relaunches the continuous worker pool every 2 minutes if it's been recycled.
  * Designed to be called by pg_cron scheduler.
- * 
+ *
  * Schedule setup (run in Supabase SQL editor):
- * 
+ *
  * SELECT cron.schedule(
  *   'enrichment-keepalive',
  *   Every 2 minutes: *\/2 * * * *
@@ -18,19 +18,20 @@
  *     ) as request_id;
  *   $$
  * );
- * 
+ *
  * To verify it's running:
  * SELECT * FROM cron.job WHERE jobname = 'enrichment-keepalive';
  * SELECT * FROM cron.job_run_details WHERE jobid = (SELECT jobid FROM cron.job WHERE jobname = 'enrichment-keepalive') ORDER BY start_time DESC LIMIT 10;
  */
 
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -60,13 +61,16 @@ serve(async (req) => {
 
     if (!activeJobs || activeJobs.length === 0) {
       console.log('✅ No active jobs - keepalive not needed');
-      return new Response(JSON.stringify({
-        success: true,
-        message: 'No active jobs',
-        timestamp: new Date().toISOString()
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'No active jobs',
+          timestamp: new Date().toISOString(),
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     console.log(`🔄 Found ${activeJobs.length} active jobs, restarting worker pool...`);
@@ -74,7 +78,7 @@ serve(async (req) => {
     // Call master-enrichment-scheduler with action=start, scope=single for the most recent job
     // This will relaunch the continuous worker if it's been recycled
     const primaryJob = activeJobs[0];
-    
+
     const { data: restartResult, error: restartError } = await supabase.functions.invoke(
       'master-enrichment-scheduler',
       {
@@ -82,8 +86,8 @@ serve(async (req) => {
           action: 'start',
           scope: 'single',
           jobType: primaryJob.job_type,
-          createIfMissing: false
-        }
+          createIfMissing: false,
+        },
       }
     );
 
@@ -94,26 +98,31 @@ serve(async (req) => {
 
     console.log('✅ Worker pool restarted successfully');
 
-    return new Response(JSON.stringify({
-      success: true,
-      message: `Keepalive: Restarted worker for ${activeJobs.length} active jobs`,
-      primary_job: primaryJob.job_type,
-      active_jobs: activeJobs.length,
-      timestamp: new Date().toISOString(),
-      restart_result: restartResult
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `Keepalive: Restarted worker for ${activeJobs.length} active jobs`,
+        primary_job: primaryJob.job_type,
+        active_jobs: activeJobs.length,
+        timestamp: new Date().toISOString(),
+        restart_result: restartResult,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error: any) {
     console.error('❌ Keepalive error:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error.message || String(error),
-      timestamp: new Date().toISOString()
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message || String(error),
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

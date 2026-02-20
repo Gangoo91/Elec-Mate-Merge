@@ -16,28 +16,36 @@ The Complete Project Export System unifies outputs from all specialist agents (D
 ### 1. Transformer Utilities
 
 #### `rams-transformer.ts`
+
 Converts Installer Agent output into formal Method Statements:
+
 - Maps installation steps to method statement steps
 - Extracts safety requirements and PPE
 - Calculates step durations and risk levels
 - Links equipment and qualifications
 
 #### `installer-to-rams-mapper.ts`
+
 Extracts hazards from installation procedures and generates RAMS:
+
 - Identifies implicit hazards (work at height, electrical, manual handling, etc.)
 - Maps hazards to 5x5 risk assessments
 - Applies BS 7671 and HSE standard controls
 - Calculates residual risk after controls
 
 #### `hs-to-rams-transformer.ts`
+
 Transforms Health & Safety Agent output into RAMS format:
+
 - Converts 5x5 risk matrix to RAMS risks
 - Maps hazards to enhanced hazard database
 - Includes PPE requirements and emergency procedures
 - Links ACOP citations
 
 #### `cost-to-quote-transformer.ts`
+
 Converts Cost Engineer output into Quote Builder format:
+
 - Transforms material breakdowns into quote items
 - Categorizes materials (cables, protection devices, accessories, etc.)
 - Adds labour estimates with hourly rates
@@ -46,6 +54,7 @@ Converts Cost Engineer output into Quote Builder format:
 ### 2. Unified Export System (`project-export.ts`)
 
 Central orchestration function that:
+
 - Collects outputs from all agents
 - Generates all project documentation
 - Saves to database with linked IDs
@@ -65,6 +74,7 @@ interface ProjectExport {
 ### 3. Database Schema
 
 New `project_exports` table links all generated documents:
+
 - `conversation_id`: Links to Install Planner session
 - `eic_schedule_id`: Links to EIC schedules table
 - `quote_id`: Links to quotes table
@@ -97,12 +107,14 @@ Click "Export Complete Project" button after consultation with agents:
 ## Benefits
 
 ### For Users
+
 - **Zero duplicate entry**: AI pre-fills all forms
 - **BS 7671 compliance**: Regulatory citations throughout
 - **Consistent data**: Single source of truth
 - **Time savings**: 4-5 documents in seconds
 
 ### For System
+
 - **Cross-selling**: Users see value in all modules
 - **Data accuracy**: Linked documents share common data
 - **Professional output**: Cohesive project documentation
@@ -113,17 +125,20 @@ Click "Export Complete Project" button after consultation with agents:
 ### Calculations
 
 **Cable Sizing** (BS 7671 Appendix 4):
+
 - Based on design current and installation method
 - Applies correction factors (temperature, grouping)
 - Ensures current-carrying capacity > design current
 
 **Risk Assessment** (HSE 5x5 Matrix):
+
 - Likelihood (1-5): How likely the hazard occurs
 - Severity (1-5): Potential harm if it occurs
 - Risk Rating = Likelihood × Severity
 - Residual Risk: After control measures applied
 
 **Cost Estimation**:
+
 - Real-time pricing from embedded database
 - Labour rates by worker type
 - Overheads and profit margins configurable

@@ -66,15 +66,20 @@ export class YesssScraper extends BaseScraper {
     }
 
     // Wait for page to load - Yesss loads content dynamically
-    await new Promise(r => setTimeout(r, 10000));
+    await new Promise((r) => setTimeout(r, 10000));
 
     // Try to wait for product content
     try {
-      await page.waitForFunction(() => {
-        return document.body.innerText.includes('£') ||
-               document.querySelectorAll('a[href*="/product/"]').length > 3 ||
-               document.querySelectorAll('[class*="product"]').length > 3;
-      }, { timeout: 15000 });
+      await page.waitForFunction(
+        () => {
+          return (
+            document.body.innerText.includes('£') ||
+            document.querySelectorAll('a[href*="/product/"]').length > 3 ||
+            document.querySelectorAll('[class*="product"]').length > 3
+          );
+        },
+        { timeout: 15000 }
+      );
     } catch {
       // Continue anyway
     }
@@ -86,7 +91,7 @@ export class YesssScraper extends BaseScraper {
     }
 
     // Extra wait for dynamic price loading
-    await new Promise(r => setTimeout(r, 3000));
+    await new Promise((r) => setTimeout(r, 3000));
 
     // Extract products
     let extractedProducts: Array<{
@@ -121,7 +126,9 @@ export class YesssScraper extends BaseScraper {
           try {
             const content = script.textContent || '';
             if (content.includes('"products"') || content.includes('"items"')) {
-              const productMatches = content.matchAll(/"sku"\s*:\s*"([^"]+)"[^}]*"name"\s*:\s*"([^"]+)"[^}]*"price"\s*:?\s*"?([0-9.]+)"?/g);
+              const productMatches = content.matchAll(
+                /"sku"\s*:\s*"([^"]+)"[^}]*"name"\s*:\s*"([^"]+)"[^}]*"price"\s*:?\s*"?([0-9.]+)"?/g
+              );
               for (const match of productMatches) {
                 const sku = match[1];
                 if (!seenSkus.has(sku)) {
@@ -164,11 +171,13 @@ export class YesssScraper extends BaseScraper {
                 const link = card.querySelector('a[href*="/product/"]') as HTMLAnchorElement;
                 if (!link?.href) return;
 
-                const skuMatch = link.href.match(/\/product\/([^\/\?]+)/i) ||
-                                link.href.match(/\/([A-Z0-9-]+)(?:\?|$)/i);
-                const sku = card.getAttribute('data-sku') ||
-                           card.getAttribute('data-product-id') ||
-                           (skuMatch ? skuMatch[1] : `YES-${Math.random().toString(36).substr(2, 8)}`);
+                const skuMatch =
+                  link.href.match(/\/product\/([^\/\?]+)/i) ||
+                  link.href.match(/\/([A-Z0-9-]+)(?:\?|$)/i);
+                const sku =
+                  card.getAttribute('data-sku') ||
+                  card.getAttribute('data-product-id') ||
+                  (skuMatch ? skuMatch[1] : `YES-${Math.random().toString(36).substr(2, 8)}`);
 
                 if (seenSkus.has(sku)) return;
                 seenSkus.add(sku);
@@ -227,9 +236,11 @@ export class YesssScraper extends BaseScraper {
             }
 
             // Yesss uses h4 for names
-            const name = container?.querySelector('h4')?.textContent?.trim() ||
-                        anchor.textContent?.trim() ||
-                        container?.querySelector('h3, h2')?.textContent?.trim() || '';
+            const name =
+              container?.querySelector('h4')?.textContent?.trim() ||
+              anchor.textContent?.trim() ||
+              container?.querySelector('h3, h2')?.textContent?.trim() ||
+              '';
             if (!name || name.length < 3) return;
 
             const text = container?.textContent || '';
@@ -259,11 +270,25 @@ export class YesssScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
-      const brands = ['Schneider', 'ABB', 'Hager', 'Chint', 'Eaton', 'Legrand', 'BG', 'Click', 'Philips', 'Osram', 'Aurora'];
-      const brand = item.brand || brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+      const brands = [
+        'Schneider',
+        'ABB',
+        'Hager',
+        'Chint',
+        'Eaton',
+        'Legrand',
+        'BG',
+        'Click',
+        'Philips',
+        'Osram',
+        'Aurora',
+      ];
+      const brand =
+        item.brand || brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
         sku: item.sku,
@@ -278,7 +303,8 @@ export class YesssScraper extends BaseScraper {
         description: null,
         highlights: [],
         imageUrl: item.imageUrl,
-        productUrl: item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
+        productUrl:
+          item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
         stockStatus: item.stockStatus || 'Unknown',
       });
     }
@@ -304,7 +330,7 @@ export class YesssScraper extends BaseScraper {
       const success = await this.navigateWithRetry(page, dealsUrl);
       if (!success) return deals;
 
-      await new Promise(r => setTimeout(r, 10000));
+      await new Promise((r) => setTimeout(r, 10000));
       await this.scrollToLoadAll(page);
 
       const extractedDeals = await page.evaluate(() => {

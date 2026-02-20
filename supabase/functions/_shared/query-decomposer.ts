@@ -29,17 +29,17 @@ export interface QueryComponents {
 export function decomposeQuery(query: string): QueryComponents {
   const entities = parseQueryEntities(query);
   const queryType = classifyQuery(query, entities);
-  
+
   // Extract implicit requirements based on context
   const implicit = extractImplicitRequirements(query, entities);
-  
+
   // Identify secondary concerns
   const secondary = identifySecondaryConcerns(query, entities);
-  
+
   return {
     primary: { type: queryType, entities },
     secondary,
-    implicit
+    implicit,
   };
 }
 
@@ -47,45 +47,45 @@ export function decomposeQuery(query: string): QueryComponents {
  * Extract implicit regulation requirements based on query context
  */
 function extractImplicitRequirements(
-  query: string, 
+  query: string,
   entities: ParsedEntities
 ): { regulations: string[]; standards: string[]; tables: string[] } {
   const implicit = {
     regulations: [] as string[],
     standards: [] as string[],
-    tables: [] as string[]
+    tables: [] as string[],
   };
-  
+
   // High-power loads → Diversity factors
   if (entities.power && entities.power > 8000) {
     implicit.regulations.push('433.1.1', '311.1');
     implicit.standards.push('Appendix 1'); // Diversity
   }
-  
+
   // Bathroom location → Section 701 mandatory
   if (entities.location === 'bathroom') {
     implicit.standards.push('Section 701');
     implicit.regulations.push('701.410.3.5', '701.512.3');
     implicit.tables.push('Table 70.1'); // IP ratings
   }
-  
+
   // EV charger → Section 722
   if (entities.loadType === 'ev_charger') {
     implicit.standards.push('Section 722');
     implicit.regulations.push('722.55.101', '722.531.2.101');
   }
-  
+
   // Outdoor → buried cable requirements
   if (entities.location === 'outdoor') {
     implicit.regulations.push('522.8.10', '522.6.101');
     implicit.tables.push('Table 4D4A'); // SWA cables
   }
-  
+
   // TT system → RCD mandatory
   if (entities.earthingSystem === 'TT') {
     implicit.regulations.push('411.5.2', '411.3.3');
   }
-  
+
   return implicit;
 }
 
@@ -95,36 +95,44 @@ function extractImplicitRequirements(
 function identifySecondaryConcerns(
   query: string,
   entities: ParsedEntities
-): Array<{ type: 'location' | 'safety' | 'installation' | 'compliance'; keywords: string[]; priority: number }> {
-  const concerns: Array<{ type: 'location' | 'safety' | 'installation' | 'compliance'; keywords: string[]; priority: number }> = [];
-  
+): Array<{
+  type: 'location' | 'safety' | 'installation' | 'compliance';
+  keywords: string[];
+  priority: number;
+}> {
+  const concerns: Array<{
+    type: 'location' | 'safety' | 'installation' | 'compliance';
+    keywords: string[];
+    priority: number;
+  }> = [];
+
   // Location-based safety
   if (entities.location) {
     concerns.push({
       type: 'safety',
       keywords: [entities.location, 'protection', 'IP rating', 'zones'],
-      priority: 9
+      priority: 9,
     });
   }
-  
+
   // Installation method constraints
   if (entities.installationConstraints && entities.installationConstraints.length > 0) {
     concerns.push({
       type: 'installation',
       keywords: ['install method', 'cable routing', 'derating'],
-      priority: 7
+      priority: 7,
     });
   }
-  
+
   // Special requirements
   if (entities.specialRequirements && entities.specialRequirements.length > 0) {
     concerns.push({
       type: 'compliance',
       keywords: ['RCD', 'bonding', 'supplementary protection'],
-      priority: 8
+      priority: 8,
     });
   }
-  
+
   return concerns.sort((a, b) => b.priority - a.priority);
 }
 
@@ -137,34 +145,36 @@ export function detectWhyQuestion(query: string): {
   inferredRegulation: string | null;
 } {
   const lowerQuery = query.toLowerCase();
-  
-  if (!lowerQuery.startsWith('why ') && 
-      !lowerQuery.includes('why not') &&
-      !lowerQuery.includes('instead of') &&
-      !lowerQuery.includes('better to')) {
+
+  if (
+    !lowerQuery.startsWith('why ') &&
+    !lowerQuery.includes('why not') &&
+    !lowerQuery.includes('instead of') &&
+    !lowerQuery.includes('better to')
+  ) {
     return { isWhy: false, topic: '', inferredRegulation: null };
   }
-  
+
   const topic = query.substring(4, 50).toLowerCase();
-  
+
   // Infer regulation from topic
   const regulationMap: Record<string, string> = {
-    'rcd': '411.3.3',
+    rcd: '411.3.3',
     'cable size': '433.1.1',
     'voltage drop': '525',
-    'bathroom': '701',
-    'outdoor': '522.8.10',
-    'earthing': '411.3.1.1',
-    'bonding': '411.3.1.2',
-    'mcb': '433.1.1',
-    'shower': '701.410.3.5'
+    bathroom: '701',
+    outdoor: '522.8.10',
+    earthing: '411.3.1.1',
+    bonding: '411.3.1.2',
+    mcb: '433.1.1',
+    shower: '701.410.3.5',
   };
-  
+
   for (const [key, reg] of Object.entries(regulationMap)) {
     if (topic.includes(key)) {
       return { isWhy: true, topic, inferredRegulation: reg };
     }
   }
-  
+
   return { isWhy: true, topic, inferredRegulation: null };
 }

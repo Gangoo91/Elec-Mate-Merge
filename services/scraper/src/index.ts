@@ -41,7 +41,10 @@ const scrapers: Record<string, () => BaseScraper> = {
 /**
  * Run a scraper for a specific supplier
  */
-async function runScraper(supplierSlug: string, dealsOnly = false): Promise<{
+async function runScraper(
+  supplierSlug: string,
+  dealsOnly = false
+): Promise<{
   success: boolean;
   products: number;
   deals: number;
@@ -152,7 +155,7 @@ async function runAllScrapers(dealsOnly = false): Promise<void> {
   for (const slug of supplierSlugs) {
     await runScraper(slug, dealsOnly);
     // Wait between suppliers to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   }
 
   // Clean up expired deals

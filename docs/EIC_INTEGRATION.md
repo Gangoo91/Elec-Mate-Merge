@@ -1,41 +1,47 @@
 # EIC Schedule Pre-Population Integration
 
 ## Overview
+
 This system bridges the **AI Install Planner** and the **Inspection & Testing app** by automatically pre-filling EIC (Electrical Installation Certificate) Schedule of Test Results with design data and expected test values calculated from BS 7671 standards.
 
 ## What Gets Pre-Populated
 
 ### ✅ **95% Pre-Filled Fields**
+
 The following fields are automatically populated based on AI agent outputs:
 
-| Field | Source | Example |
-|-------|--------|---------|
-| `circuitNumber` | Circuit index | "C1", "C2" |
-| `phaseType` | Circuit design | "single", "three" |
-| `circuitDescription` | Load type + AI context | "Shower Circuit", "Power Sockets" |
-| `referenceMethod` | Installation method | "100 (Clipped direct)" |
-| `liveSize` | Cable calculation | "6.0mm²" |
-| `cpcSize` | BS 7671 Table 54.7 | "2.5mm²" |
-| `protectiveDeviceType` | Circuit design | "MCB", "RCBO" |
-| `protectiveDeviceCurve` | Device rating | "B", "C", "D" |
-| `protectiveDeviceRating` | Load calculation | "32A" |
-| `bsStandard` | Default standard | "BS EN 60898" |
-| `maxZs` | BS 7671 Appendix 3 | "1.44Ω" (for B32) |
-| `r1r2` | **Expected value** calculated | "0.156Ω (expected)" |
-| `zs` | **Expected value** (Ze + R1+R2) | "0.506Ω (expected)" |
-| `insulationTestVoltage` | Test standard | "500V DC" |
-| `insulationResistance` | Expected range | "≥1.0MΩ (min), expect >50MΩ" |
-| `polarity` | Pre-filled guidance | "Correct (verify on-site)" |
+| Field                    | Source                          | Example                           |
+| ------------------------ | ------------------------------- | --------------------------------- |
+| `circuitNumber`          | Circuit index                   | "C1", "C2"                        |
+| `phaseType`              | Circuit design                  | "single", "three"                 |
+| `circuitDescription`     | Load type + AI context          | "Shower Circuit", "Power Sockets" |
+| `referenceMethod`        | Installation method             | "100 (Clipped direct)"            |
+| `liveSize`               | Cable calculation               | "6.0mm²"                          |
+| `cpcSize`                | BS 7671 Table 54.7              | "2.5mm²"                          |
+| `protectiveDeviceType`   | Circuit design                  | "MCB", "RCBO"                     |
+| `protectiveDeviceCurve`  | Device rating                   | "B", "C", "D"                     |
+| `protectiveDeviceRating` | Load calculation                | "32A"                             |
+| `bsStandard`             | Default standard                | "BS EN 60898"                     |
+| `maxZs`                  | BS 7671 Appendix 3              | "1.44Ω" (for B32)                 |
+| `r1r2`                   | **Expected value** calculated   | "0.156Ω (expected)"               |
+| `zs`                     | **Expected value** (Ze + R1+R2) | "0.506Ω (expected)"               |
+| `insulationTestVoltage`  | Test standard                   | "500V DC"                         |
+| `insulationResistance`   | Expected range                  | "≥1.0MΩ (min), expect >50MΩ"      |
+| `polarity`               | Pre-filled guidance             | "Correct (verify on-site)"        |
 
 ### 🔬 **On-Site Testing Required**
+
 These fields must still be tested and filled on-site:
+
 - `rcdOneX`, `rcdTestButton` (if RCD present)
 - `afddTest` (if AFDD present)
 - `pfc` (prospective fault current)
 - `functionalTesting`
 
 ### 🔁 **Conditional Fields**
+
 For ring circuits only:
+
 - `ringR1`, `ringRn`, `ringR2` (expected values)
 - `ringContinuityLive`, `ringContinuityNeutral` (to be tested)
 
@@ -44,6 +50,7 @@ For ring circuits only:
 ## Database Schema
 
 ### Table: `eic_schedules`
+
 ```sql
 CREATE TABLE public.eic_schedules (
   id UUID PRIMARY KEY,
@@ -60,6 +67,7 @@ CREATE TABLE public.eic_schedules (
 ```
 
 ### RLS Policies
+
 - ✅ Users can only see their own EIC schedules
 - ✅ Full CRUD operations scoped to `user_id`
 
@@ -68,35 +76,38 @@ CREATE TABLE public.eic_schedules (
 ## API Integration
 
 ### Export Function
+
 ```typescript
-import { exportEICScheduleToInspectionApp } from "@/utils/eic-export";
+import { exportEICScheduleToInspectionApp } from '@/utils/eic-export';
 
 // Export from Install Planner
 const result = await exportEICScheduleToInspectionApp(eicSchedule);
 
 if (result.success) {
-  console.log("Schedule ID:", result.scheduleId);
+  console.log('Schedule ID:', result.scheduleId);
 }
 ```
 
 ### Retrieve Schedules
+
 ```typescript
-import { getUserEICSchedules } from "@/utils/eic-export";
+import { getUserEICSchedules } from '@/utils/eic-export';
 
 const schedules = await getUserEICSchedules();
 // Returns: Array<{id, installation_address, circuits, status, ...}>
 ```
 
 ### Query from Inspection App
+
 ```typescript
-import { supabase } from "@/integrations/supabase/client";
+import { supabase } from '@/integrations/supabase/client';
 
 // Get pending schedules for testing
 const { data } = await supabase
-  .from("eic_schedules")
-  .select("*")
-  .eq("status", "pending")
-  .order("created_at", { ascending: false });
+  .from('eic_schedules')
+  .select('*')
+  .eq('status', 'pending')
+  .order('created_at', { ascending: false });
 
 // Access circuit data
 const circuits = data[0].schedule_data; // Array of EICCircuitData
@@ -107,6 +118,7 @@ const circuits = data[0].schedule_data; // Array of EICCircuitData
 ## Calculation Details
 
 ### R1+R2 Calculation (BS 7671 Table I1)
+
 ```typescript
 // Formula: R1+R2 = (r1 + r2) × length × temperature_factor
 // Where:
@@ -119,6 +131,7 @@ R1+R2 = (3.08 + 7.41) × 25 × 1.38 / 1000 = 0.361Ω
 ```
 
 ### Expected Zs Calculation
+
 ```typescript
 // Formula: Zs = Ze + R1+R2
 // Typical Ze values:
@@ -131,12 +144,13 @@ Zs = 0.35 + 0.361 = 0.711Ω
 ```
 
 ### Max Zs Lookup (BS 7671 Appendix 3)
+
 ```typescript
 // Max Zs for 0.4s disconnection time
 const maxZsValues = {
-  "B": { 6: 7.67, 10: 4.60, 16: 2.87, 32: 1.44, 40: 1.15 },
-  "C": { 6: 3.83, 10: 2.30, 16: 1.44, 32: 0.72, 40: 0.57 },
-  "D": { 6: 1.92, 10: 1.15, 16: 0.72, 32: 0.36, 40: 0.29 }
+  B: { 6: 7.67, 10: 4.6, 16: 2.87, 32: 1.44, 40: 1.15 },
+  C: { 6: 3.83, 10: 2.3, 16: 1.44, 32: 0.72, 40: 0.57 },
+  D: { 6: 1.92, 10: 1.15, 16: 0.72, 32: 0.36, 40: 0.29 },
 };
 ```
 
@@ -195,6 +209,7 @@ const maxZsValues = {
 ## Example JSON Payload
 
 ### Single Circuit in `schedule_data`
+
 ```json
 {
   "circuitNumber": "C1",
@@ -232,7 +247,7 @@ const maxZsValues = {
 - [ ] **Database Access**: Confirm Supabase types regenerated after migration
 - [ ] **Query Pending Schedules**: Filter by `status = 'pending'`
 - [ ] **Display Circuit List**: Render `schedule_data` array
-- [ ] **Expected vs Actual Comparison**: 
+- [ ] **Expected vs Actual Comparison**:
   - Show expected values (e.g., "0.506Ω expected")
   - Allow electrician to enter actual measured values
   - Highlight variances (e.g., measured 0.62Ω vs expected 0.506Ω)
@@ -249,12 +264,14 @@ const maxZsValues = {
 ## Benefits
 
 ### For Electricians
+
 - ⏱️ **95% time savings** on data entry
 - 📊 **Expected values** provide testing guidance
 - ⚠️ **Instant warnings** if actual tests deviate from expected
 - 📋 **BS 7671 compliant** calculations built-in
 
 ### For You (Product Owner)
+
 - 🔗 **Seamless integration** between Install Planner and Testing app
 - 🤖 **AI-powered** design → testing workflow
 - 📈 **Higher accuracy** with pre-calculated values
@@ -275,12 +292,14 @@ const maxZsValues = {
 ## Support
 
 **Files to Reference:**
+
 - `src/types/eic-integration.ts` - TypeScript interfaces
 - `src/utils/eic-transformer.ts` - BS 7671 calculations
 - `src/utils/eic-export.ts` - Supabase export functions
 - `src/components/install-planner-v2/IntelligentAIPlanner.tsx` - Frontend integration
 
 **BS 7671 References:**
+
 - Table I1 - Conductor resistances
 - Appendix 3 - Maximum Zs values
 - Regulation 643 - Testing requirements

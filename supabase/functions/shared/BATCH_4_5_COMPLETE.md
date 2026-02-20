@@ -3,6 +3,7 @@
 ## Files Created:
 
 ### 1. `bs7671EarthingBonding.ts`
+
 **Chapter 54: Earthing Arrangements and Protective Conductors**
 
 - ✅ TN-S, TN-C-S (PME), TT, IT earthing systems (Reg 542.1.2)
@@ -15,6 +16,7 @@
 - ✅ Utility functions: `getCPCSizeFromTable`, `calculateAdiabaticCPC`, `getMainBondingSize`, `checkPMEAllowed`
 
 ### 2. `bs7671SpecialLocations_Extended.ts`
+
 **Part 7: Additional Special Locations**
 
 - ✅ **Section 702**: Swimming Pools (Zones 0, 1, 2 + MANDATORY supplementary bonding)
@@ -28,6 +30,7 @@
 ## Knowledge Now Available to Agents:
 
 ### Designer Agent:
+
 - Can specify correct earthing system for project
 - Calculate main bonding conductor sizes
 - Size CPCs using adiabatic or table method
@@ -35,12 +38,14 @@
 - Apply special location requirements (pools, sites, caravan parks)
 
 ### Installer Agent:
+
 - Knows main bonding service connection points
 - Understands supplementary bonding procedures
 - Can guide earth electrode installation
 - Knows PME restrictions (critical for safety)
 
 ### Commissioning Agent:
+
 - Can verify earthing system type
 - Check bonding conductor sizes
 - Verify RCD requirements for special locations
@@ -49,18 +54,21 @@
 ## Critical Safety Knowledge Embedded:
 
 🚨 **PME Restrictions** - Prevents lethal installations:
+
 - Caravans: PME fatal if PEN breaks
 - EV Charging: Exported voltage risk
 - Petrol stations: Fire/explosion risk
 - Agricultural (livestock): Animal safety
 
 🚨 **Special Location RCD Requirements**:
+
 - Bathrooms: 30mA Type A mandatory
 - Swimming pools: SELV + supplementary bonding ALWAYS required
 - Construction sites: 30mA for all sockets ≤32A
 - Caravan parks: Individual RCD per socket (PME prohibited)
 
 ## Next Batches Ready:
-- Batch 6: Chapter 53 (SPDs, Isolation & Switching) 
+
+- Batch 6: Chapter 53 (SPDs, Isolation & Switching)
 - Batch 7: Appendix 3 (Time/Current Characteristics)
 - Batch 8: Appendix 6 (Certification Templates)

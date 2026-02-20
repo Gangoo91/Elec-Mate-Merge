@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req: Request) => {
@@ -34,19 +35,24 @@ serve(async (req: Request) => {
     } = body;
 
     // Define category groups for filtering
-    const TOOL_CATEGORIES = [
-      'hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'
-    ];
+    const TOOL_CATEGORIES = ['hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'];
     const MATERIAL_CATEGORIES = [
-      'cables', 'consumer-units', 'circuit-protection', 'wiring-accessories',
-      'lighting', 'containment', 'earthing', 'fire-security', 'ev-charging',
-      'data-networking', 'fixings', 'hvac'
+      'cables',
+      'consumer-units',
+      'circuit-protection',
+      'wiring-accessories',
+      'lighting',
+      'containment',
+      'earthing',
+      'fire-security',
+      'ev-charging',
+      'data-networking',
+      'fixings',
+      'hvac',
     ];
 
     // Build the query
-    let productsQuery = supabase
-      .from('marketplace_products')
-      .select(`
+    let productsQuery = supabase.from('marketplace_products').select(`
         id,
         sku,
         name,
@@ -69,6 +75,9 @@ serve(async (req: Request) => {
           slug
         )
       `);
+
+    // Exclude expired products (keep products with no expiry set for backwards compatibility)
+    productsQuery = productsQuery.or('expires_at.gte.now(),expires_at.is.null');
 
     // Apply filters
     if (query && query.length > 0) {
@@ -120,10 +129,15 @@ serve(async (req: Request) => {
         productsQuery = productsQuery.order('current_price', { ascending: false });
         break;
       case 'discount':
-        productsQuery = productsQuery.order('discount_percentage', { ascending: false, nullsFirst: false });
+        productsQuery = productsQuery.order('discount_percentage', {
+          ascending: false,
+          nullsFirst: false,
+        });
         break;
       default:
-        productsQuery = productsQuery.order('is_on_sale', { ascending: false }).order('name', { ascending: true });
+        productsQuery = productsQuery
+          .order('is_on_sale', { ascending: false })
+          .order('name', { ascending: true });
     }
 
     // Get total count with same filters
@@ -131,7 +145,8 @@ serve(async (req: Request) => {
       .from('marketplace_products')
       .select('*', { count: 'exact', head: true });
 
-    // Apply same filters to count query
+    // Apply same filters to count query (including expiry filter)
+    countQuery = countQuery.or('expires_at.gte.now(),expires_at.is.null');
     if (query && query.length > 0) {
       countQuery = countQuery.ilike('name', `%${query}%`);
     }
@@ -212,7 +227,7 @@ serve(async (req: Request) => {
           return (data || []).map((s: any) => ({
             slug: s.slug,
             name: s.name,
-            count: 0
+            count: 0,
           }));
         }),
     ]);
@@ -243,7 +258,6 @@ serve(async (req: Request) => {
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Marketplace search error:', error);
     return new Response(
@@ -254,7 +268,7 @@ serve(async (req: Request) => {
         page: 1,
         pageSize: 24,
         totalPages: 0,
-        facets: { categories: [], suppliers: [], priceRange: { min: 0, max: 1000 } }
+        facets: { categories: [], suppliers: [], priceRange: { min: 0, max: 1000 } },
       }),
       {
         status: 500,

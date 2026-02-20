@@ -8,13 +8,14 @@
  * Run via pg_cron daily or manually triggered
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface OverdueInvoice {
@@ -42,10 +43,10 @@ serve(async (req: Request) => {
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {
-      return new Response(
-        JSON.stringify({ error: 'RESEND_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'RESEND_API_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const today = new Date();
@@ -56,12 +57,14 @@ serve(async (req: Request) => {
     // This prevents sending "overdue" reminders before the client has even received the invoice
     const { data: overdueInvoices, error: queryError } = await supabase
       .from('quotes')
-      .select('id, invoice_number, client_data, total, invoice_due_date, invoice_status, user_id, reminder_count, last_reminder_sent_at, invoice_sent_at')
+      .select(
+        'id, invoice_number, client_data, total, invoice_due_date, invoice_status, user_id, reminder_count, last_reminder_sent_at, invoice_sent_at'
+      )
       .not('invoice_number', 'is', null)
       .not('invoice_status', 'eq', 'paid')
       .not('invoice_status', 'eq', 'cancelled')
       .not('invoice_status', 'eq', 'draft')
-      .not('invoice_sent_at', 'is', null)  // Must have been sent to client first
+      .not('invoice_sent_at', 'is', null) // Must have been sent to client first
       .lt('invoice_due_date', today.toISOString());
 
     if (queryError) {
@@ -73,10 +76,9 @@ serve(async (req: Request) => {
     }
 
     if (!overdueInvoices || overdueInvoices.length === 0) {
-      return new Response(
-        JSON.stringify({ message: 'No overdue invoices found', processed: 0 }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ message: 'No overdue invoices found', processed: 0 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     let emailsSent = 0;
@@ -85,9 +87,10 @@ serve(async (req: Request) => {
 
     for (const invoice of overdueInvoices as OverdueInvoice[]) {
       // Parse client data
-      const clientData = typeof invoice.client_data === 'string'
-        ? JSON.parse(invoice.client_data)
-        : invoice.client_data;
+      const clientData =
+        typeof invoice.client_data === 'string'
+          ? JSON.parse(invoice.client_data)
+          : invoice.client_data;
 
       const clientEmail = clientData?.email;
       const clientName = clientData?.name || 'Valued Customer';
@@ -118,7 +121,11 @@ serve(async (req: Request) => {
 
       if (!reminderType) {
         skipped++;
-        results.push({ invoice: invoice.invoice_number, status: 'skipped', reason: 'already reminded at this level' });
+        results.push({
+          invoice: invoice.invoice_number,
+          status: 'skipped',
+          reason: 'already reminded at this level',
+        });
         continue;
       }
 
@@ -128,7 +135,11 @@ serve(async (req: Request) => {
         const hoursSinceLastReminder = (today.getTime() - lastSent.getTime()) / (1000 * 60 * 60);
         if (hoursSinceLastReminder < 24) {
           skipped++;
-          results.push({ invoice: invoice.invoice_number, status: 'skipped', reason: 'rate limited (24h)' });
+          results.push({
+            invoice: invoice.invoice_number,
+            status: 'skipped',
+            reason: 'rate limited (24h)',
+          });
           continue;
         }
       }
@@ -163,7 +174,7 @@ serve(async (req: Request) => {
         const response = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${resendApiKey}`,
+            Authorization: `Bearer ${resendApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -188,18 +199,28 @@ serve(async (req: Request) => {
           .update({
             reminder_count: reminderCount + 1,
             last_reminder_sent_at: new Date().toISOString(),
-            invoice_status: 'overdue'
+            invoice_status: 'overdue',
           })
           .eq('id', invoice.id);
 
         emailsSent++;
-        results.push({ invoice: invoice.invoice_number, status: 'sent', type: reminderType, daysOverdue });
+        results.push({
+          invoice: invoice.invoice_number,
+          status: 'sent',
+          type: reminderType,
+          daysOverdue,
+        });
 
-        console.log(`✅ ${reminderType} reminder sent for ${invoice.invoice_number} to ${clientEmail}`);
-
+        console.log(
+          `✅ ${reminderType} reminder sent for ${invoice.invoice_number} to ${clientEmail}`
+        );
       } catch (emailError: any) {
         console.error(`Error sending reminder for ${invoice.invoice_number}:`, emailError);
-        results.push({ invoice: invoice.invoice_number, status: 'error', reason: emailError.message });
+        results.push({
+          invoice: invoice.invoice_number,
+          status: 'error',
+          reason: emailError.message,
+        });
       }
     }
 
@@ -209,18 +230,21 @@ serve(async (req: Request) => {
         totalOverdue: overdueInvoices.length,
         emailsSent,
         skipped,
-        results
+        results,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('Automated invoice reminders error:', error);
-    await captureException(error, { functionName: 'automated-invoice-reminders', requestUrl: req.url, requestMethod: req.method });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    await captureException(error, {
+      functionName: 'automated-invoice-reminders',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -234,7 +258,7 @@ function generateReminderEmail(
 ): { subject: string; html: string } {
   const formattedTotal = new Intl.NumberFormat('en-GB', {
     style: 'currency',
-    currency: 'GBP'
+    currency: 'GBP',
   }).format(total || 0);
 
   const configs = {
@@ -246,8 +270,8 @@ function generateReminderEmail(
       borderColor: 'rgba(59, 130, 246, 0.2)',
       bgGradient: 'rgba(59, 130, 246, 0.1)',
       message: `Just a friendly reminder that payment for invoice <strong>${invoiceNumber}</strong> was due <strong>${daysOverdue} day${daysOverdue === 1 ? '' : 's'} ago</strong>.`,
-      cta: 'If you\'ve already made the payment, please disregard this message. Otherwise, we\'d appreciate if you could arrange payment at your earliest convenience.',
-      urgency: ''
+      cta: "If you've already made the payment, please disregard this message. Otherwise, we'd appreciate if you could arrange payment at your earliest convenience.",
+      urgency: '',
     },
     firm: {
       emoji: '⚠️',
@@ -257,8 +281,8 @@ function generateReminderEmail(
       borderColor: 'rgba(245, 158, 11, 0.3)',
       bgGradient: 'rgba(245, 158, 11, 0.1)',
       message: `This is a follow-up regarding invoice <strong>${invoiceNumber}</strong>, which is now <strong>${daysOverdue} days overdue</strong>.`,
-      cta: 'Please arrange payment within the next 7 days. If you\'re experiencing any issues, please contact us immediately to discuss payment arrangements.',
-      urgency: 'This matter requires your prompt attention.'
+      cta: "Please arrange payment within the next 7 days. If you're experiencing any issues, please contact us immediately to discuss payment arrangements.",
+      urgency: 'This matter requires your prompt attention.',
     },
     final: {
       emoji: '🚨',
@@ -268,9 +292,9 @@ function generateReminderEmail(
       borderColor: 'rgba(239, 68, 68, 0.3)',
       bgGradient: 'rgba(239, 68, 68, 0.15)',
       message: `Despite previous reminders, invoice <strong>${invoiceNumber}</strong> remains unpaid and is now <strong>${daysOverdue} days overdue</strong>.`,
-      cta: 'To avoid further action, please ensure payment is made within <strong>48 hours</strong>. If you\'re experiencing financial difficulties, please contact us immediately.',
-      urgency: 'This is a final notice before we consider further recovery action.'
-    }
+      cta: "To avoid further action, please ensure payment is made within <strong>48 hours</strong>. If you're experiencing financial difficulties, please contact us immediately.",
+      urgency: 'This is a final notice before we consider further recovery action.',
+    },
   };
 
   const config = configs[type];

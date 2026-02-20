@@ -28,23 +28,24 @@ export class CacheManager {
         voltage: inputs.supply.voltage,
         phases: inputs.supply.phases,
         ze: inputs.supply.ze,
-        earthing: inputs.supply.earthing
+        earthing: inputs.supply.earthing,
       },
-      circuits: inputs.circuits.map(c => ({
-        type: c.loadType,
-        power: Math.round(c.loadPower / 100) * 100, // Round to nearest 100W
-        length: Math.round(c.cableLength / 5) * 5,   // Round to nearest 5m
-        phases: c.phases,
-        method: c.installMethod,
-        location: c.specialLocation,
-        protection: c.protectionType
-      }))
-      // Sort circuits for deterministic order
-      .sort((a, b) => {
-        const typeCompare = a.type.localeCompare(b.type);
-        if (typeCompare !== 0) return typeCompare;
-        return a.power - b.power;
-      })
+      circuits: inputs.circuits
+        .map((c) => ({
+          type: c.loadType,
+          power: Math.round(c.loadPower / 100) * 100, // Round to nearest 100W
+          length: Math.round(c.cableLength / 5) * 5, // Round to nearest 5m
+          phases: c.phases,
+          method: c.installMethod,
+          location: c.specialLocation,
+          protection: c.protectionType,
+        }))
+        // Sort circuits for deterministic order
+        .sort((a, b) => {
+          const typeCompare = a.type.localeCompare(b.type);
+          if (typeCompare !== 0) return typeCompare;
+          return a.power - b.power;
+        }),
     };
 
     return this.hash(JSON.stringify(canonical));
@@ -55,12 +56,12 @@ export class CacheManager {
    */
   private hash(str: string): string {
     let hash = 2166136261; // FNV offset basis
-    
+
     for (let i = 0; i < str.length; i++) {
       hash ^= str.charCodeAt(i);
       hash = Math.imul(hash, 16777619); // FNV prime
     }
-    
+
     // Convert to unsigned 32-bit integer, then base36 string
     return (hash >>> 0).toString(36);
   }
@@ -72,7 +73,7 @@ export class CacheManager {
    */
   async get(key: string): Promise<CachedDesign | null> {
     const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
-    
+
     const { data, error } = await this.supabase
       .from('circuit_design_cache_v3')
       .select('*')
@@ -85,20 +86,22 @@ export class CacheManager {
     }
 
     // Validate cached design has circuits
-    if (!data.design || 
-        !data.design.circuits || 
-        !Array.isArray(data.design.circuits) || 
-        data.design.circuits.length === 0) {
-      this.logger.warn('Invalid cached design - circuits missing or empty', { 
+    if (
+      !data.design ||
+      !data.design.circuits ||
+      !Array.isArray(data.design.circuits) ||
+      data.design.circuits.length === 0
+    ) {
+      this.logger.warn('Invalid cached design - circuits missing or empty', {
         key: key.slice(0, 12),
         hasDesign: !!data.design,
         hasCircuits: !!data.design?.circuits,
-        circuitCount: data.design?.circuits?.length || 0
+        circuitCount: data.design?.circuits?.length || 0,
       });
-      
+
       // Delete corrupt cache entry (fire-and-forget)
       this.delete(key).catch(() => {});
-      
+
       return null; // Force fresh generation
     }
 
@@ -107,14 +110,12 @@ export class CacheManager {
       // Ignore errors on hit counter update
     });
 
-    const ageSeconds = Math.floor(
-      (Date.now() - new Date(data.created_at).getTime()) / 1000
-    );
+    const ageSeconds = Math.floor((Date.now() - new Date(data.created_at).getTime()) / 1000);
 
     return {
       design: data.design,
       ageSeconds,
-      hitCount: data.hit_count || 1
+      hitCount: data.hit_count || 1,
     };
   }
 
@@ -124,36 +125,39 @@ export class CacheManager {
    */
   async set(key: string, design: any): Promise<void> {
     // Validate design before caching
-    if (!design || 
-        !design.circuits || 
-        !Array.isArray(design.circuits) || 
-        design.circuits.length === 0) {
-      this.logger.warn('Refusing to cache invalid design', { 
+    if (
+      !design ||
+      !design.circuits ||
+      !Array.isArray(design.circuits) ||
+      design.circuits.length === 0
+    ) {
+      this.logger.warn('Refusing to cache invalid design', {
         key: key.slice(0, 12),
         hasDesign: !!design,
         hasCircuits: !!design?.circuits,
-        circuitCount: design?.circuits?.length || 0
+        circuitCount: design?.circuits?.length || 0,
       });
       return; // Skip caching
     }
 
     const now = new Date().toISOString();
-    
-    await this.supabase
-      .from('circuit_design_cache_v3')
-      .upsert({
+
+    await this.supabase.from('circuit_design_cache_v3').upsert(
+      {
         cache_key: key,
         design: design,
         hit_count: 1,
         created_at: now,
-        last_hit_at: now
-      }, { 
-        onConflict: 'cache_key' 
-      });
+        last_hit_at: now,
+      },
+      {
+        onConflict: 'cache_key',
+      }
+    );
 
-    this.logger.info('Cache stored', { 
+    this.logger.info('Cache stored', {
       key: key.slice(0, 12),
-      circuits: design.circuits.length 
+      circuits: design.circuits.length,
     });
   }
 
@@ -162,11 +166,8 @@ export class CacheManager {
    * Used to clean up corrupt or invalid cache entries
    */
   async delete(key: string): Promise<void> {
-    await this.supabase
-      .from('circuit_design_cache_v3')
-      .delete()
-      .eq('cache_key', key);
-    
+    await this.supabase.from('circuit_design_cache_v3').delete().eq('cache_key', key);
+
     this.logger.info('Cache entry deleted', { key: key.slice(0, 12) });
   }
 
@@ -175,10 +176,10 @@ export class CacheManager {
    */
   private async incrementHitCount(key: string): Promise<void> {
     const now = new Date().toISOString();
-    
+
     await this.supabase.rpc('increment_cache_hit', {
       p_cache_key: key,
-      p_last_hit_at: now
+      p_last_hit_at: now,
     });
   }
 }

@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { loginViaUI } from "./fixtures/auth";
+import { test, expect } from '@playwright/test';
+import { loginViaUI } from './fixtures/auth';
 
 /**
  * End-to-end tests for Apprentice Calculators
@@ -12,20 +12,20 @@ import { loginViaUI } from "./fixtures/auth";
 // Configure retries for login timeout resilience during parallel execution
 test.describe.configure({ retries: 2 });
 
-test.describe("Calculator Hub", () => {
+test.describe('Calculator Hub', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("calculator hub loads", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('calculator hub loads', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("calculator hub shows categories", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('calculator hub shows categories', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     // Look for calculator-related text
@@ -35,21 +35,21 @@ test.describe("Calculator Hub", () => {
     expect(calcCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("on job calculations page loads", async ({ page }) => {
-    await page.goto("/apprentice/on-job-tools/calculations");
+  test('on job calculations page loads', async ({ page }) => {
+    await page.goto('/apprentice/on-job-tools/calculations');
     await page.waitForTimeout(2000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Fundamental Calculators", () => {
+test.describe('Fundamental Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Ohms Law Calculator page loads", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Ohms Law Calculator page loads', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     // Look for Ohms Law option
@@ -57,11 +57,11 @@ test.describe("Fundamental Calculators", () => {
     const ohmsCount = await ohmsLaw.count();
 
     expect(ohmsCount).toBeGreaterThanOrEqual(0);
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("Power Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Power Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const powerCalc = page.locator('text="Power"');
@@ -70,8 +70,8 @@ test.describe("Fundamental Calculators", () => {
     expect(powerCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Three Phase Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Three Phase Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const threePhase = page.locator('text="Three Phase"');
@@ -80,8 +80,8 @@ test.describe("Fundamental Calculators", () => {
     expect(threePhaseCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Power Factor Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Power Factor Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const powerFactor = page.locator('text="Power Factor"');
@@ -91,13 +91,13 @@ test.describe("Fundamental Calculators", () => {
   });
 });
 
-test.describe("Cable & Sizing Calculators", () => {
+test.describe('Cable & Sizing Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Cable Sizing Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Cable Sizing Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const cableSizing = page.locator('text="Cable Sizing"');
@@ -106,8 +106,8 @@ test.describe("Cable & Sizing Calculators", () => {
     expect(cableCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Voltage Drop Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Voltage Drop Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const voltageDrop = page.locator('text="Voltage Drop"');
@@ -116,8 +116,8 @@ test.describe("Cable & Sizing Calculators", () => {
     expect(vdCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Conduit Fill Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Conduit Fill Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const conduitFill = page.locator('text="Conduit"');
@@ -126,8 +126,8 @@ test.describe("Cable & Sizing Calculators", () => {
     expect(conduitCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Cable Derating Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Cable Derating Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const derating = page.locator('text="Derating"');
@@ -137,13 +137,13 @@ test.describe("Cable & Sizing Calculators", () => {
   });
 });
 
-test.describe("Circuit Analysis Calculators", () => {
+test.describe('Circuit Analysis Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Ring Circuit Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Ring Circuit Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const ringCircuit = page.locator('text="Ring"');
@@ -152,8 +152,8 @@ test.describe("Circuit Analysis Calculators", () => {
     expect(ringCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Earth Fault Loop Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Earth Fault Loop Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const earthFault = page.locator('text="Earth"');
@@ -162,8 +162,8 @@ test.describe("Circuit Analysis Calculators", () => {
     expect(earthCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Resistor Colour Code Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Resistor Colour Code Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const resistor = page.locator('text="Resistor"');
@@ -173,13 +173,13 @@ test.describe("Circuit Analysis Calculators", () => {
   });
 });
 
-test.describe("Protective Device Calculators", () => {
+test.describe('Protective Device Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("RCD Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('RCD Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const rcd = page.locator('text="RCD"');
@@ -188,8 +188,8 @@ test.describe("Protective Device Calculators", () => {
     expect(rcdCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Selectivity Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Selectivity Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const selectivity = page.locator('text="Selectivity"');
@@ -199,13 +199,13 @@ test.describe("Protective Device Calculators", () => {
   });
 });
 
-test.describe("Load & Demand Calculators", () => {
+test.describe('Load & Demand Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Maximum Demand Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Maximum Demand Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const maxDemand = page.locator('text="Demand"');
@@ -214,8 +214,8 @@ test.describe("Load & Demand Calculators", () => {
     expect(demandCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Diversity Factor Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Diversity Factor Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const diversity = page.locator('text="Diversity"');
@@ -224,8 +224,8 @@ test.describe("Load & Demand Calculators", () => {
     expect(diversityCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Motor Starting Current Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Motor Starting Current Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const motor = page.locator('text="Motor"');
@@ -235,13 +235,13 @@ test.describe("Load & Demand Calculators", () => {
   });
 });
 
-test.describe("Renewable Energy Calculators", () => {
+test.describe('Renewable Energy Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Solar PV Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Solar PV Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const solar = page.locator('text="Solar"');
@@ -250,8 +250,8 @@ test.describe("Renewable Energy Calculators", () => {
     expect(solarCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Battery Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Battery Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const battery = page.locator('text="Battery"');
@@ -260,8 +260,8 @@ test.describe("Renewable Energy Calculators", () => {
     expect(batteryCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("EV Charging Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('EV Charging Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const ev = page.locator('text="EV"');
@@ -270,8 +270,8 @@ test.describe("Renewable Energy Calculators", () => {
     expect(evCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Heat Pump Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Heat Pump Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const heatPump = page.locator('text="Heat Pump"');
@@ -281,13 +281,13 @@ test.describe("Renewable Energy Calculators", () => {
   });
 });
 
-test.describe("Specialized Calculators", () => {
+test.describe('Specialized Calculators', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("BS7671 Zs Lookup accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('BS7671 Zs Lookup accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const zs = page.locator('text="Zs"');
@@ -296,8 +296,8 @@ test.describe("Specialized Calculators", () => {
     expect(zsCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Emergency Lighting Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Emergency Lighting Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const emergency = page.locator('text="Emergency"');
@@ -306,8 +306,8 @@ test.describe("Specialized Calculators", () => {
     expect(emergencyCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Generator Sizing Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Generator Sizing Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const generator = page.locator('text="Generator"');
@@ -316,8 +316,8 @@ test.describe("Specialized Calculators", () => {
     expect(generatorCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Transformer Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Transformer Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const transformer = page.locator('text="Transformer"');
@@ -326,8 +326,8 @@ test.describe("Specialized Calculators", () => {
     expect(transformerCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("Adiabatic Calculator accessible", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('Adiabatic Calculator accessible', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     const adiabatic = page.locator('text="Adiabatic"');
@@ -337,13 +337,13 @@ test.describe("Specialized Calculators", () => {
   });
 });
 
-test.describe("Calculator Functionality", () => {
+test.describe('Calculator Functionality', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("calculator has input fields", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('calculator has input fields', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     // Try to open a calculator
@@ -354,15 +354,15 @@ test.describe("Calculator Functionality", () => {
     }
 
     // Look for input fields
-    const inputs = page.locator("input, select");
+    const inputs = page.locator('input, select');
     const inputCount = await inputs.count();
 
     // Calculator should have some inputs
     expect(inputCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("calculator has calculate button", async ({ page }) => {
-    await page.goto("/apprentice/calculators");
+  test('calculator has calculate button', async ({ page }) => {
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
 
     // Look for calculate button

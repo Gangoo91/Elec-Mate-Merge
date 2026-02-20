@@ -6,8 +6,8 @@ The Maintenance Specialist generates comprehensive maintenance instructions for 
 
 ## Agents Involved
 
-| Agent | Edge Function | Core Logic | Purpose |
-|-------|---------------|------------|---------|
+| Agent                 | Edge Function    | Core Logic         | Purpose                         |
+| --------------------- | ---------------- | ------------------ | ------------------------------- |
 | **Maintenance Agent** | `maintenance-v3` | Direct in function | Generate maintenance procedures |
 
 ## Entry Points
@@ -26,14 +26,15 @@ The Maintenance Specialist generates comprehensive maintenance instructions for 
 
 ### RAG Sources
 
-| Table | Search Function | Results Limit | Purpose |
-|-------|-----------------|---------------|---------|
-| `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | 25 | Maintenance procedures, fault patterns |
-| `regulations_intelligence` | `searchRegulationsIntelligence()` | 20 | BS 7671 Chapter 64 (Inspection & Testing) |
+| Table                         | Search Function                     | Results Limit | Purpose                                   |
+| ----------------------------- | ----------------------------------- | ------------- | ----------------------------------------- |
+| `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | 25            | Maintenance procedures, fault patterns    |
+| `regulations_intelligence`    | `searchRegulationsIntelligence()`   | 20            | BS 7671 Chapter 64 (Inspection & Testing) |
 
 ### RAG Search Categories
 
 The agent searches with maintenance-specific filters:
+
 - `maintenance`
 - `periodic inspection`
 - `testing`
@@ -54,14 +55,14 @@ sequenceDiagram
 
     Frontend->>Agent: Submit maintenance request
     Agent->>Agent: Extract equipment keywords
-    
+
     Agent->>RAG: Parallel RAG search
     Note over RAG: practical_work (25) + regulations (20)
     RAG->>Agent: Return knowledge
-    
+
     Agent->>OpenAI: Tool call with schema
     OpenAI->>Agent: Structured maintenance guidance
-    
+
     Agent->>Frontend: Return JSON response
 ```
 
@@ -69,10 +70,10 @@ sequenceDiagram
 
 ```typescript
 interface MaintenanceRequest {
-  query?: string;                    // Equipment description
-  equipmentDescription?: string;     // Alternative to query
-  equipmentType?: string;            // e.g., "consumer unit", "shower"
-  installationAge?: string;          // e.g., "5 years", "pre-2000"
+  query?: string; // Equipment description
+  equipmentDescription?: string; // Alternative to query
+  equipmentType?: string; // e.g., "consumer unit", "shower"
+  installationAge?: string; // e.g., "5 years", "pre-2000"
   ageYears?: number;
   maintenanceType?: 'preventive' | 'reactive' | 'periodic_inspection';
   location?: string;
@@ -87,8 +88,8 @@ interface MaintenanceRequest {
 
 ```typescript
 interface MaintenanceGuidance {
-  response: string;                  // Overview (300-400 words)
-  
+  response: string; // Overview (300-400 words)
+
   equipmentSummary: {
     equipmentType: string;
     location: string;
@@ -96,14 +97,14 @@ interface MaintenanceGuidance {
     maintenanceType: 'preventive' | 'reactive' | 'periodic_inspection';
     overallRiskLevel: 'low' | 'medium' | 'high';
   };
-  
+
   preWorkRequirements: Array<{
     category: 'isolation' | 'ppe' | 'access' | 'permits' | 'tools';
     requirement: string;
     mandatory: boolean;
     bs7671Reference?: string;
   }>;
-  
+
   visualInspection: Array<{
     stepNumber: number;
     checkpoint: string;
@@ -111,7 +112,7 @@ interface MaintenanceGuidance {
     failureAction: string;
     bs7671Reference?: string;
   }>;
-  
+
   testingProcedures: Array<{
     testName: string;
     testType: 'dead' | 'live';
@@ -126,7 +127,7 @@ interface MaintenanceGuidance {
     };
     bs7671Reference?: string;
   }>;
-  
+
   servicingTasks: Array<{
     component: string;
     task: string;
@@ -135,14 +136,14 @@ interface MaintenanceGuidance {
     consumables: string[];
     procedure: string[];
   }>;
-  
+
   documentation: {
     recordsRequired: string[];
     signOffRequirements: string[];
     nextDueCalculation: string;
     certificatesIssued: string[];
   };
-  
+
   commonFaults: Array<{
     symptom: string;
     likelyCauses: string[];
@@ -150,9 +151,9 @@ interface MaintenanceGuidance {
     remedialAction: string;
     partsRequired: string[];
   }>;
-  
+
   maintenanceSchedule: Array<{
-    interval: string;              // e.g., "Annual", "Every 5 years"
+    interval: string; // e.g., "Annual", "Every 5 years"
     task: string;
     priority: 'high' | 'medium' | 'low';
     regulation?: string;
@@ -164,13 +165,13 @@ interface MaintenanceGuidance {
     safetyPrecautions?: string[];
     taskCategory?: 'inspection' | 'testing' | 'maintenance' | 'replacement';
   }>;
-  
+
   qualityRequirements: Array<{
     stage: string;
     requirement: string;
     criteria: string;
   }>;
-  
+
   bs7671References: Array<{
     regulationNumber: string;
     section: string;
@@ -202,6 +203,7 @@ interface MaintenanceGuidance {
 ### Tool Schema Requirements
 
 The agent uses OpenAI tool calling with strict schema:
+
 - `response` - Required overview text
 - `equipmentSummary` - Required equipment context
 - `preWorkRequirements` - Required pre-work items

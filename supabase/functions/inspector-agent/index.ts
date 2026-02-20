@@ -27,107 +27,113 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     const userMessage = messages[messages.length - 1]?.content || '';
     const ragQuery = `${userMessage} inspection testing EICR fault diagnosis BS 7671 Part 6 test procedures`;
-    
+
     logger.debug('RAG query for inspection knowledge', { query: ragQuery });
-    
+
     // Generate embedding for inspection knowledge search with retry + timeout
-    const embeddingResponse = await logger.time(
-      'Lovable AI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'text-embedding-3-small',
-              input: ragQuery,
+    const embeddingResponse = await logger.time('Lovable AI embedding generation', () =>
+      withRetry(
+        () =>
+          withTimeout(
+            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${lovableApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-small',
+                input: ragQuery,
+              }),
             }),
-          }),
-          Timeouts.STANDARD,
-          'Lovable AI embedding generation'
-        ),
+            Timeouts.STANDARD,
+            'Lovable AI embedding generation'
+          ),
         RetryPresets.STANDARD
       )
     );
 
     let inspectionKnowledge = '';
     let bs7671Knowledge = '';
-    
+
     if (embeddingResponse.ok) {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
-      
+
       // Search inspection & testing knowledge and BS 7671 in parallel with timeout
       const { successes, failures } = await safeAll([
         {
           name: 'Inspection knowledge',
-          execute: () => withTimeout(
-            supabase.rpc('search_inspection_testing', {
-              query_embedding: embedding,
-              match_threshold: 0.7,
-              match_count: 8
-            }),
-            Timeouts.STANDARD,
-            'Inspection knowledge search'
-          )
+          execute: () =>
+            withTimeout(
+              supabase.rpc('search_inspection_testing', {
+                query_embedding: embedding,
+                match_threshold: 0.7,
+                match_count: 8,
+              }),
+              Timeouts.STANDARD,
+              'Inspection knowledge search'
+            ),
         },
         {
           name: 'BS 7671 regulations',
-          execute: () => withTimeout(
-            supabase.rpc('search_bs7671', {
-              query_embedding: embedding,
-              match_threshold: 0.6,
-              match_count: 5
-            }),
-            Timeouts.STANDARD,
-            'BS 7671 search'
-          )
-        }
+          execute: () =>
+            withTimeout(
+              supabase.rpc('search_bs7671', {
+                query_embedding: embedding,
+                match_threshold: 0.6,
+                match_count: 5,
+              }),
+              Timeouts.STANDARD,
+              'BS 7671 search'
+            ),
+        },
       ]);
 
       // Extract inspection knowledge
-      const inspectionResult = successes.find(s => s.name === 'Inspection knowledge');
+      const inspectionResult = successes.find((s) => s.name === 'Inspection knowledge');
       const knowledge = inspectionResult?.result?.data;
 
       if (knowledge && knowledge.length > 0) {
-        inspectionKnowledge = knowledge.map((k: any) => 
-          `${k.topic} (${k.source}): ${k.content}`
-        ).join('\n\n');
+        inspectionKnowledge = knowledge
+          .map((k: any) => `${k.topic} (${k.source}): ${k.content}`)
+          .join('\n\n');
         logger.info('Found inspection guides', { count: knowledge.length });
       }
-      
+
       // Extract BS 7671 regulations
-      const bs7671Result = successes.find(s => s.name === 'BS 7671 regulations');
+      const bs7671Result = successes.find((s) => s.name === 'BS 7671 regulations');
       const bs7671Docs = bs7671Result?.result?.data;
 
       if (bs7671Docs && bs7671Docs.length > 0) {
-        bs7671Knowledge = bs7671Docs.map((d: any) => 
-          `Regulation ${d.regulation_number} (${d.section}): ${d.content}`
-        ).join('\n\n');
+        bs7671Knowledge = bs7671Docs
+          .map((d: any) => `Regulation ${d.regulation_number} (${d.section}): ${d.content}`)
+          .join('\n\n');
         logger.info('Found BS 7671 regulations', { count: bs7671Docs.length });
       }
 
       // Log failures without blocking
       if (failures.length > 0) {
-        logger.warn('Some knowledge base queries failed', { failures: failures.map(f => f.name) });
+        logger.warn('Some knowledge base queries failed', {
+          failures: failures.map((f) => f.name),
+        });
       }
     }
 
     const previousAgents = context?.previousAgentOutputs?.map((a: any) => a.agent) || [];
     const hasInstaller = previousAgents.includes('installer');
-    
+
     // Prepend user context if provided
-    const contextPrefix = userContext 
+    const contextPrefix = userContext
       ? `\n\n**PROJECT CONTEXT PROVIDED BY USER:**\n${userContext}\n\nUse this context to inform your analysis and tailor your diagnostic approach.\n\n---\n\n`
       : '';
-    
-    let systemPrompt = contextPrefix + `You are an Inspection & Testing specialist who thinks like a diagnostic electrician. Your FIRST priority is identifying the ROOT CAUSE and guiding the user to find what caused the fault.
+
+    let systemPrompt =
+      contextPrefix +
+      `You are an Inspection & Testing specialist who thinks like a diagnostic electrician. Your FIRST priority is identifying the ROOT CAUSE and guiding the user to find what caused the fault.
 
 **CRITICAL APPROACH - THINK LIKE A DIAGNOSTIC ELECTRICIAN**
 
@@ -228,15 +234,23 @@ TEST EQUIPMENT REQUIREMENTS (Regulation 642.2):
 - RCD tester
 - Proving unit (to verify safe isolation)
 
-${inspectionKnowledge ? `
+${
+  inspectionKnowledge
+    ? `
 INSPECTION & TESTING KNOWLEDGE (from database):
 ${inspectionKnowledge}
-` : ''}
+`
+    : ''
+}
 
-${bs7671Knowledge ? `
+${
+  bs7671Knowledge
+    ? `
 BS 7671 REGULATION DETAILS:
 ${bs7671Knowledge}
-` : ''}
+`
+    : ''
+}
 
 Use professional language with UK English spelling. Cite specific regulations and test procedures. If user asks about remediation methods, suggest they consult the Installer Agent for detailed step-by-step guidance.`;
 
@@ -253,38 +267,47 @@ Use professional language with UK English spelling. Cite specific regulations an
 
     const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
-      headers: { 
-        'Authorization': `Bearer ${lovableApiKey}`, 
-        'Content-Type': 'application/json' 
+      headers: {
+        Authorization: `Bearer ${lovableApiKey}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
-          { role: 'system', content: systemPrompt }, 
+          { role: 'system', content: systemPrompt },
           ...messages,
-          ...(context?.structuredKnowledge ? [{
-            role: 'system',
-            content: context.structuredKnowledge
-          }] : [])
+          ...(context?.structuredKnowledge
+            ? [
+                {
+                  role: 'system',
+                  content: context.structuredKnowledge,
+                },
+              ]
+            : []),
         ],
-        max_completion_tokens: 10000
+        max_completion_tokens: 10000,
       }),
     });
 
     const data = await response.json();
-    return new Response(JSON.stringify({
-      response: data.choices[0]?.message?.content || 'Inspection analysis complete.',
-      confidence: 0.92
-    }), { headers: { ...corsHeaders, 'Content-Type': 'application/json' } });
-
+    return new Response(
+      JSON.stringify({
+        response: data.choices[0]?.message?.content || 'Inspection analysis complete.',
+        confidence: 0.92,
+      }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    );
   } catch (error) {
     console.error('Inspector agent error:', error);
-    return new Response(JSON.stringify({ 
-      response: 'Unable to provide inspection guidance.', 
-      confidence: 0.3 
-    }), {
-      status: 500, 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        response: 'Unable to provide inspection guidance.',
+        confidence: 0.3,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

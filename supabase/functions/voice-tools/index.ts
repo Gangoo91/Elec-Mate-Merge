@@ -19,11 +19,9 @@ serve(async (req: Request) => {
 
     // Create Supabase client with user context (if auth provided) or service role
     const supabase = authHeader
-      ? createClient(
-          Deno.env.get('SUPABASE_URL') ?? '',
-          Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-          { global: { headers: { Authorization: authHeader } } }
-        )
+      ? createClient(Deno.env.get('SUPABASE_URL') ?? '', Deno.env.get('SUPABASE_ANON_KEY') ?? '', {
+          global: { headers: { Authorization: authHeader } },
+        })
       : createClient(
           Deno.env.get('SUPABASE_URL') ?? '',
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -32,13 +30,16 @@ serve(async (req: Request) => {
     // Get user from auth header if provided
     let userId: string | null = null;
     if (authHeader) {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
       if (authError) {
         console.error('Auth error:', authError);
-        return new Response(
-          JSON.stringify({ error: 'Authentication failed' }),
-          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        return new Response(JSON.stringify({ error: 'Authentication failed' }), {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
       userId = user?.id ?? null;
     }
@@ -49,17 +50,19 @@ serve(async (req: Request) => {
     // 1. Old format: { tool: "name", params: {...} }
     // 2. ElevenLabs format: { tool_name: "name", clientName: "...", ... } (params at top level)
     const tool = requestBody.tool || requestBody.tool_name;
-    const params = requestBody.params || (() => {
-      // Extract params from top-level (ElevenLabs format)
-      const { tool: _t, tool_name: _tn, params: _p, ...rest } = requestBody;
-      return rest;
-    })();
+    const params =
+      requestBody.params ||
+      (() => {
+        // Extract params from top-level (ElevenLabs format)
+        const { tool: _t, tool_name: _tn, params: _p, ...rest } = requestBody;
+        return rest;
+      })();
 
     if (!tool) {
-      return new Response(
-        JSON.stringify({ error: 'Tool name is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Tool name is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`Voice tool called: ${tool}`, { params, userId });
@@ -95,10 +98,9 @@ serve(async (req: Request) => {
           let filteredQuotes = quotes;
           if (client) {
             const clientLower = client.toLowerCase();
-            filteredQuotes = quotes.filter(q => {
-              const clientData = typeof q.client_data === 'string'
-                ? JSON.parse(q.client_data)
-                : q.client_data;
+            filteredQuotes = quotes.filter((q) => {
+              const clientData =
+                typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
               return clientData?.name?.toLowerCase().includes(clientLower);
             });
           }
@@ -106,12 +108,14 @@ serve(async (req: Request) => {
           if (filteredQuotes.length === 0) {
             result = client ? `No quotes found for ${client}` : 'No quotes found';
           } else {
-            const summary = filteredQuotes.slice(0, 5).map(q => {
-              const clientData = typeof q.client_data === 'string'
-                ? JSON.parse(q.client_data)
-                : q.client_data;
-              return `Quote #${q.quoteNumber} for ${clientData?.name || 'Unknown'}: £${q.total?.toFixed(2) || 0} (${q.acceptance_status || q.status})`;
-            }).join('. ');
+            const summary = filteredQuotes
+              .slice(0, 5)
+              .map((q) => {
+                const clientData =
+                  typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
+                return `Quote #${q.quoteNumber} for ${clientData?.name || 'Unknown'}: £${q.total?.toFixed(2) || 0} (${q.acceptance_status || q.status})`;
+              })
+              .join('. ');
             result = `Found ${filteredQuotes.length} quotes. ${summary}`;
           }
         }
@@ -122,7 +126,9 @@ serve(async (req: Request) => {
         const { client, status } = params as { client?: string; status?: string };
         let query = supabase
           .from('quotes')
-          .select('id, invoice_number, client_data, total, invoice_status, invoice_date, invoice_due_date')
+          .select(
+            'id, invoice_number, client_data, total, invoice_status, invoice_date, invoice_due_date'
+          )
           .not('invoice_number', 'is', null)
           .order('invoice_date', { ascending: false })
           .limit(10);
@@ -147,10 +153,9 @@ serve(async (req: Request) => {
           let filteredInvoices = invoices;
           if (client) {
             const clientLower = client.toLowerCase();
-            filteredInvoices = invoices.filter(i => {
-              const clientData = typeof i.client_data === 'string'
-                ? JSON.parse(i.client_data)
-                : i.client_data;
+            filteredInvoices = invoices.filter((i) => {
+              const clientData =
+                typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
               return clientData?.name?.toLowerCase().includes(clientLower);
             });
           }
@@ -158,12 +163,14 @@ serve(async (req: Request) => {
           if (filteredInvoices.length === 0) {
             result = client ? `No invoices found for ${client}` : 'No invoices found';
           } else {
-            const summary = filteredInvoices.slice(0, 5).map(i => {
-              const clientData = typeof i.client_data === 'string'
-                ? JSON.parse(i.client_data)
-                : i.client_data;
-              return `Invoice #${i.invoice_number} for ${clientData?.name || 'Unknown'}: £${i.total?.toFixed(2) || 0} (${i.invoice_status})`;
-            }).join('. ');
+            const summary = filteredInvoices
+              .slice(0, 5)
+              .map((i) => {
+                const clientData =
+                  typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
+                return `Invoice #${i.invoice_number} for ${clientData?.name || 'Unknown'}: £${i.total?.toFixed(2) || 0} (${i.invoice_status})`;
+              })
+              .join('. ');
             result = `Found ${filteredInvoices.length} invoices. ${summary}`;
           }
         }
@@ -193,15 +200,18 @@ serve(async (req: Request) => {
           result = 'No overdue invoices. All payments are on track!';
         } else {
           const totalOverdue = overdueInvoices.reduce((sum, i) => sum + (i.total || 0), 0);
-          const summary = overdueInvoices.slice(0, 3).map(i => {
-            const clientData = typeof i.client_data === 'string'
-              ? JSON.parse(i.client_data)
-              : i.client_data;
-            const daysOverdue = Math.floor(
-              (new Date().getTime() - new Date(i.invoice_due_date).getTime()) / (1000 * 60 * 60 * 24)
-            );
-            return `Invoice #${i.invoice_number} for ${clientData?.name || 'Unknown'}: £${i.total?.toFixed(2) || 0} (${daysOverdue} days overdue)`;
-          }).join('. ');
+          const summary = overdueInvoices
+            .slice(0, 3)
+            .map((i) => {
+              const clientData =
+                typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
+              const daysOverdue = Math.floor(
+                (new Date().getTime() - new Date(i.invoice_due_date).getTime()) /
+                  (1000 * 60 * 60 * 24)
+              );
+              return `Invoice #${i.invoice_number} for ${clientData?.name || 'Unknown'}: £${i.total?.toFixed(2) || 0} (${daysOverdue} days overdue)`;
+            })
+            .join('. ');
           result = `You have ${overdueInvoices.length} overdue invoices totalling £${totalOverdue.toFixed(2)}. ${summary}`;
         }
         break;
@@ -227,9 +237,12 @@ serve(async (req: Request) => {
         } else if (!prices || prices.length === 0) {
           result = `No pricing found for ${searchTerm}. Try a different search term.`;
         } else {
-          const priceList = prices.map(p =>
-            `${p.title}: £${p.price?.toFixed(2) || 'N/A'} per ${p.unit || 'unit'}${p.supplier ? ` (${p.supplier})` : ''}`
-          ).join('. ');
+          const priceList = prices
+            .map(
+              (p) =>
+                `${p.title}: £${p.price?.toFixed(2) || 'N/A'} per ${p.unit || 'unit'}${p.supplier ? ` (${p.supplier})` : ''}`
+            )
+            .join('. ');
           result = `Found ${prices.length} results for ${searchTerm}. ${priceList}`;
         }
         break;
@@ -242,7 +255,9 @@ serve(async (req: Request) => {
 
         let quotesQuery = supabase
           .from('quotes')
-          .select('id, total, status, acceptance_status, invoice_status, invoice_number', { count: 'exact' });
+          .select('id, total, status, acceptance_status, invoice_status, invoice_number', {
+            count: 'exact',
+          });
 
         if (userId) {
           quotesQuery = quotesQuery.eq('user_id', userId);
@@ -255,16 +270,18 @@ serve(async (req: Request) => {
           break;
         }
 
-        const quotes = allData.filter(d => !d.invoice_number);
-        const invoices = allData.filter(d => d.invoice_number);
+        const quotes = allData.filter((d) => !d.invoice_number);
+        const invoices = allData.filter((d) => d.invoice_number);
 
-        const pendingQuotes = quotes.filter(q => q.status === 'sent' && !q.acceptance_status).length;
-        const acceptedQuotes = quotes.filter(q => q.acceptance_status === 'accepted').length;
-        const paidInvoices = invoices.filter(i => i.invoice_status === 'paid').length;
-        const unpaidInvoices = invoices.filter(i => i.invoice_status !== 'paid').length;
+        const pendingQuotes = quotes.filter(
+          (q) => q.status === 'sent' && !q.acceptance_status
+        ).length;
+        const acceptedQuotes = quotes.filter((q) => q.acceptance_status === 'accepted').length;
+        const paidInvoices = invoices.filter((i) => i.invoice_status === 'paid').length;
+        const unpaidInvoices = invoices.filter((i) => i.invoice_status !== 'paid').length;
 
         const totalRevenue = invoices
-          .filter(i => i.invoice_status === 'paid')
+          .filter((i) => i.invoice_status === 'paid')
           .reduce((sum, i) => sum + (i.total || 0), 0);
 
         result = `Dashboard summary: ${quotes.length} quotes (${pendingQuotes} pending response, ${acceptedQuotes} accepted). ${invoices.length} invoices (${paidInvoices} paid, ${unpaidInvoices} awaiting payment). Total revenue: £${totalRevenue.toFixed(2)}.`;
@@ -315,14 +332,23 @@ serve(async (req: Request) => {
         if (eicrError && eicError) {
           result = 'Failed to fetch certificates';
         } else {
-          const allCerts = [...(eicrCerts || []).map(c => ({ ...c, type: 'EICR' })), ...(eicCerts || []).map(c => ({ ...c, type: 'EIC' }))];
+          const allCerts = [
+            ...(eicrCerts || []).map((c) => ({ ...c, type: 'EICR' })),
+            ...(eicCerts || []).map((c) => ({ ...c, type: 'EIC' })),
+          ];
 
           if (allCerts.length === 0) {
-            result = certNumber ? `No certificates found matching "${certNumber}"` : 'No certificates found';
+            result = certNumber
+              ? `No certificates found matching "${certNumber}"`
+              : 'No certificates found';
           } else {
-            const summary = allCerts.slice(0, 5).map(c =>
-              `${c.type} ${c.certificate_number || 'Draft'} for ${c.client_name || 'Unknown'} (${c.status})`
-            ).join('. ');
+            const summary = allCerts
+              .slice(0, 5)
+              .map(
+                (c) =>
+                  `${c.type} ${c.certificate_number || 'Draft'} for ${c.client_name || 'Unknown'} (${c.status})`
+              )
+              .join('. ');
             result = `Found ${allCerts.length} certificates. ${summary}`;
           }
         }
@@ -369,8 +395,8 @@ serve(async (req: Request) => {
         if (totalCount === 0) {
           result = `No certificates created in the last ${days} days`;
         } else {
-          const completedEicr = eicrCerts?.filter(c => c.status === 'completed').length || 0;
-          const completedEic = eicCerts?.filter(c => c.status === 'completed').length || 0;
+          const completedEicr = eicrCerts?.filter((c) => c.status === 'completed').length || 0;
+          const completedEic = eicCerts?.filter((c) => c.status === 'completed').length || 0;
           result = `${totalCount} certificates in the last ${days} days: ${eicrCount} EICRs (${completedEicr} completed), ${eicCount} EICs (${completedEic} completed)`;
         }
         break;
@@ -402,9 +428,12 @@ serve(async (req: Request) => {
           query = query.ilike('quote_number', `%${quoteNumber}%`);
         } else if (clientName) {
           // Search in client_data JSON
-          const { data: allQuotes } = await query.order('created_at', { ascending: false }).limit(20);
-          const matchingQuote = allQuotes?.find(q => {
-            const cd = typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
+          const { data: allQuotes } = await query
+            .order('created_at', { ascending: false })
+            .limit(20);
+          const matchingQuote = allQuotes?.find((q) => {
+            const cd =
+              typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
             return cd?.name?.toLowerCase().includes(clientName.toLowerCase());
           });
           if (!matchingQuote) {
@@ -416,7 +445,10 @@ serve(async (req: Request) => {
             body: { quoteId: matchingQuote.id },
             headers: authHeader ? { Authorization: authHeader } : undefined,
           });
-          const cd = typeof matchingQuote.client_data === 'string' ? JSON.parse(matchingQuote.client_data) : matchingQuote.client_data;
+          const cd =
+            typeof matchingQuote.client_data === 'string'
+              ? JSON.parse(matchingQuote.client_data)
+              : matchingQuote.client_data;
           result = error
             ? `Failed to send quote: ${error.message}`
             : `Quote ${matchingQuote.quote_number} for £${matchingQuote.total?.toFixed(2)} sent to ${cd?.email}`;
@@ -435,7 +467,8 @@ serve(async (req: Request) => {
           headers: authHeader ? { Authorization: authHeader } : undefined,
         });
 
-        const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+        const clientData =
+          typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
         result = sendError
           ? `Failed to send quote: ${sendError.message}`
           : `Quote ${quote.quote_number} for £${quote.total?.toFixed(2)} sent to ${clientData?.email}`;
@@ -455,9 +488,7 @@ serve(async (req: Request) => {
         }
 
         // Find the invoice (quotes table with invoice_number set)
-        let invoiceQuery = supabase.from('quotes')
-          .select('*')
-          .not('invoice_number', 'is', null);
+        let invoiceQuery = supabase.from('quotes').select('*').not('invoice_number', 'is', null);
 
         if (userId) invoiceQuery = invoiceQuery.eq('user_id', userId);
 
@@ -466,9 +497,12 @@ serve(async (req: Request) => {
         } else if (invoiceNumber) {
           invoiceQuery = invoiceQuery.ilike('invoice_number', `%${invoiceNumber}%`);
         } else if (clientName) {
-          const { data: allInvoices } = await invoiceQuery.order('invoice_date', { ascending: false }).limit(20);
-          const matchingInvoice = allInvoices?.find(i => {
-            const cd = typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
+          const { data: allInvoices } = await invoiceQuery
+            .order('invoice_date', { ascending: false })
+            .limit(20);
+          const matchingInvoice = allInvoices?.find((i) => {
+            const cd =
+              typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
             return cd?.name?.toLowerCase().includes(clientName.toLowerCase());
           });
           if (!matchingInvoice) {
@@ -480,7 +514,10 @@ serve(async (req: Request) => {
             body: { invoiceId: matchingInvoice.id },
             headers: authHeader ? { Authorization: authHeader } : undefined,
           });
-          const cd = typeof matchingInvoice.client_data === 'string' ? JSON.parse(matchingInvoice.client_data) : matchingInvoice.client_data;
+          const cd =
+            typeof matchingInvoice.client_data === 'string'
+              ? JSON.parse(matchingInvoice.client_data)
+              : matchingInvoice.client_data;
           result = error
             ? `Failed to send invoice: ${error.message}`
             : `Invoice ${matchingInvoice.invoice_number} for £${matchingInvoice.total?.toFixed(2)} sent to ${cd?.email}`;
@@ -498,7 +535,10 @@ serve(async (req: Request) => {
           headers: authHeader ? { Authorization: authHeader } : undefined,
         });
 
-        const invClientData = typeof invoice.client_data === 'string' ? JSON.parse(invoice.client_data) : invoice.client_data;
+        const invClientData =
+          typeof invoice.client_data === 'string'
+            ? JSON.parse(invoice.client_data)
+            : invoice.client_data;
         result = invSendError
           ? `Failed to send invoice: ${invSendError.message}`
           : `Invoice ${invoice.invoice_number} for £${invoice.total?.toFixed(2)} sent to ${invClientData?.email}`;
@@ -523,7 +563,7 @@ serve(async (req: Request) => {
           itemUnitPrice: draftItemUnitPrice,
           vatRegistered: draftVatRegistered = true,
           notes: draftNotes,
-          expiryDays: draftExpiryDays = 30
+          expiryDays: draftExpiryDays = 30,
         } = params as {
           clientName: string;
           clientEmail: string;
@@ -563,16 +603,18 @@ serve(async (req: Request) => {
         const draftTotal = draftSubtotal + draftVatAmount;
 
         // Format items
-        const draftItems = [{
-          id: 'item-1',
-          description: draftItemDescription,
-          quantity: draftItemQuantity,
-          unit: 'each',
-          unitPrice: draftItemUnitPrice,
-          total: draftSubtotal,
-          type: 'line',
-          category: 'labour'
-        }];
+        const draftItems = [
+          {
+            id: 'item-1',
+            description: draftItemDescription,
+            quantity: draftItemQuantity,
+            unit: 'each',
+            unitPrice: draftItemUnitPrice,
+            total: draftSubtotal,
+            type: 'line',
+            category: 'labour',
+          },
+        ];
 
         // Create the quote as draft
         const { data: draftQuote, error: draftInsertError } = await supabase
@@ -584,17 +626,17 @@ serve(async (req: Request) => {
               name: draftClientName,
               email: draftClientEmail,
               phone: draftClientPhone || '',
-              address: draftClientAddress || ''
+              address: draftClientAddress || '',
             },
             job_details: {
               title: draftJobTitle || 'Electrical Work',
-              description: draftJobDescription || ''
+              description: draftJobDescription || '',
             },
             items: draftItems,
             settings: {
               showVat: draftVatRegistered,
               vatPercent: 20,
-              vatRegistered: draftVatRegistered
+              vatRegistered: draftVatRegistered,
             },
             notes: draftNotes || '',
             subtotal: draftSubtotal,
@@ -602,7 +644,7 @@ serve(async (req: Request) => {
             total: draftTotal,
             status: 'draft',
             acceptance_status: null,
-            expiry_date: new Date(Date.now() + draftExpiryDays * 24 * 60 * 60 * 1000).toISOString()
+            expiry_date: new Date(Date.now() + draftExpiryDays * 24 * 60 * 60 * 1000).toISOString(),
           })
           .select()
           .single();
@@ -629,7 +671,7 @@ serve(async (req: Request) => {
           itemUnitPrice: invDraftItemUnitPrice,
           vatRegistered: invDraftVatRegistered = true,
           paymentDays: invDraftPaymentDays = 14,
-          notes: invDraftNotes
+          notes: invDraftNotes,
         } = params as {
           clientName: string;
           clientEmail: string;
@@ -668,16 +710,18 @@ serve(async (req: Request) => {
         const invDraftTotal = invDraftSubtotal + invDraftVatAmount;
 
         // Format items
-        const invDraftItems = [{
-          id: 'item-1',
-          description: invDraftItemDescription,
-          quantity: invDraftItemQuantity,
-          unit: 'each',
-          unitPrice: invDraftItemUnitPrice,
-          total: invDraftSubtotal,
-          type: 'line',
-          category: 'labour'
-        }];
+        const invDraftItems = [
+          {
+            id: 'item-1',
+            description: invDraftItemDescription,
+            quantity: invDraftItemQuantity,
+            unit: 'each',
+            unitPrice: invDraftItemUnitPrice,
+            total: invDraftSubtotal,
+            type: 'line',
+            category: 'labour',
+          },
+        ];
 
         // Create the invoice as draft
         const { data: draftInvoice, error: invDraftInsertError } = await supabase
@@ -690,17 +734,17 @@ serve(async (req: Request) => {
               name: invDraftClientName,
               email: invDraftClientEmail,
               phone: invDraftClientPhone || '',
-              address: invDraftClientAddress || ''
+              address: invDraftClientAddress || '',
             },
             job_details: {
-              title: invDraftJobTitle || 'Electrical Work'
+              title: invDraftJobTitle || 'Electrical Work',
             },
             items: invDraftItems,
             settings: {
               showVat: invDraftVatRegistered,
               vatPercent: 20,
               vatRegistered: invDraftVatRegistered,
-              paymentTerms: `Payment due within ${invDraftPaymentDays} days`
+              paymentTerms: `Payment due within ${invDraftPaymentDays} days`,
             },
             notes: invDraftNotes || '',
             subtotal: invDraftSubtotal,
@@ -709,9 +753,11 @@ serve(async (req: Request) => {
             status: 'approved',
             acceptance_status: 'accepted',
             invoice_date: new Date().toISOString(),
-            invoice_due_date: new Date(Date.now() + invDraftPaymentDays * 24 * 60 * 60 * 1000).toISOString(),
+            invoice_due_date: new Date(
+              Date.now() + invDraftPaymentDays * 24 * 60 * 60 * 1000
+            ).toISOString(),
             invoice_status: 'draft',
-            invoice_raised: true
+            invoice_raised: true,
           })
           .select()
           .single();
@@ -757,7 +803,7 @@ serve(async (req: Request) => {
           notes,
           expiryDays = 30,
           // Send control - TRUE for create_and_send_quote (the whole point is to send)
-          sendNow = true
+          sendNow = true,
         } = params as {
           clientName: string;
           clientEmail: string;
@@ -812,16 +858,18 @@ serve(async (req: Request) => {
         const total = netTotal + vatAmount;
 
         // Format items for storage
-        const formattedItems = [{
-          id: 'item-1',
-          description: itemDescription,
-          quantity: itemQuantity,
-          unit: 'each',
-          unitPrice: itemUnitPrice,
-          total: subtotal,
-          type: 'line',
-          category: itemCategory
-        }];
+        const formattedItems = [
+          {
+            id: 'item-1',
+            description: itemDescription,
+            quantity: itemQuantity,
+            unit: 'each',
+            unitPrice: itemUnitPrice,
+            total: subtotal,
+            type: 'line',
+            category: itemCategory,
+          },
+        ];
 
         // Create the quote
         const { data: newQuote, error: insertError } = await supabase
@@ -834,7 +882,7 @@ serve(async (req: Request) => {
               email: clientEmail,
               phone: clientPhone || '',
               address: clientAddress || '',
-              postcode: clientPostcode || ''
+              postcode: clientPostcode || '',
             },
             job_details: {
               title: jobTitle || 'Electrical Work',
@@ -842,7 +890,7 @@ serve(async (req: Request) => {
               location: jobLocation || '',
               estimatedDuration: estimatedDuration || '',
               workStartDate: workStartDate || '',
-              specialRequirements: specialRequirements || ''
+              specialRequirements: specialRequirements || '',
             },
             items: formattedItems,
             settings: {
@@ -852,7 +900,7 @@ serve(async (req: Request) => {
               profitPercent: profitMargin,
               labourRate: labourRate || 45,
               vatRegistered,
-              showMaterialsBreakdown: breakdownMaterials
+              showMaterialsBreakdown: breakdownMaterials,
             },
             notes: notes || '',
             subtotal,
@@ -862,7 +910,7 @@ serve(async (req: Request) => {
             total,
             status: sendNow ? 'pending' : 'draft',
             acceptance_status: sendNow ? 'pending' : null,
-            expiry_date: new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString()
+            expiry_date: new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString(),
           })
           .select()
           .single();
@@ -926,7 +974,7 @@ serve(async (req: Request) => {
           invoiceNotes,
           purchaseOrder,
           // Send control - TRUE for create_and_send_invoice (the whole point is to send)
-          sendNow: invoiceSendNow = true
+          sendNow: invoiceSendNow = true,
         } = params as {
           quoteNumber?: string;
           clientName?: string;
@@ -963,7 +1011,8 @@ serve(async (req: Request) => {
 
         // MODE 1: Convert from quote (if quoteNumber provided or searching by client name for accepted quote)
         if (invoiceQuoteNumber || (!invoiceClientEmail && invoiceClientName)) {
-          let acceptedQuery = supabase.from('quotes')
+          let acceptedQuery = supabase
+            .from('quotes')
             .select('*')
             .eq('user_id', userId)
             .eq('acceptance_status', 'accepted')
@@ -972,9 +1021,12 @@ serve(async (req: Request) => {
           if (invoiceQuoteNumber) {
             acceptedQuery = acceptedQuery.ilike('quote_number', `%${invoiceQuoteNumber}%`);
           } else if (invoiceClientName) {
-            const { data: allAccepted } = await acceptedQuery.order('created_at', { ascending: false }).limit(20);
-            const matchingAccepted = allAccepted?.find(q => {
-              const cd = typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
+            const { data: allAccepted } = await acceptedQuery
+              .order('created_at', { ascending: false })
+              .limit(20);
+            const matchingAccepted = allAccepted?.find((q) => {
+              const cd =
+                typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
               return cd?.name?.toLowerCase().includes(invoiceClientName.toLowerCase());
             });
             if (!matchingAccepted) {
@@ -986,7 +1038,9 @@ serve(async (req: Request) => {
             acceptedQuery = supabase.from('quotes').select('*').eq('id', matchingAccepted.id);
           }
 
-          const { data: acceptedQuote, error: acceptedFetchError } = await acceptedQuery.limit(1).single();
+          const { data: acceptedQuote, error: acceptedFetchError } = await acceptedQuery
+            .limit(1)
+            .single();
           if (acceptedFetchError || !acceptedQuote) {
             result = 'No accepted quote found to invoice';
             break;
@@ -994,22 +1048,25 @@ serve(async (req: Request) => {
 
           // Generate invoice number and update with bank details
           const newInvoiceNumber = `INV-${Date.now().toString(36).toUpperCase()}`;
-          const existingSettings = typeof acceptedQuote.settings === 'string'
-            ? JSON.parse(acceptedQuote.settings)
-            : acceptedQuote.settings || {};
+          const existingSettings =
+            typeof acceptedQuote.settings === 'string'
+              ? JSON.parse(acceptedQuote.settings)
+              : acceptedQuote.settings || {};
 
           const updatedSettings = {
             ...existingSettings,
             paymentTerms: paymentTerms || `Payment due within ${paymentDays} days`,
             paymentMethod: paymentMethod || 'bank transfer',
-            ...(bankName && bankAccountNumber && bankSortCode ? {
-              bankDetails: {
-                bankName,
-                accountName: bankAccountName || invoiceClientName,
-                accountNumber: bankAccountNumber,
-                sortCode: bankSortCode
-              }
-            } : {})
+            ...(bankName && bankAccountNumber && bankSortCode
+              ? {
+                  bankDetails: {
+                    bankName,
+                    accountName: bankAccountName || invoiceClientName,
+                    accountNumber: bankAccountNumber,
+                    sortCode: bankSortCode,
+                  },
+                }
+              : {}),
           };
 
           const { error: updateError } = await supabase
@@ -1017,12 +1074,14 @@ serve(async (req: Request) => {
             .update({
               invoice_number: newInvoiceNumber,
               invoice_date: new Date().toISOString(),
-              invoice_due_date: new Date(Date.now() + paymentDays * 24 * 60 * 60 * 1000).toISOString(),
+              invoice_due_date: new Date(
+                Date.now() + paymentDays * 24 * 60 * 60 * 1000
+              ).toISOString(),
               invoice_status: invoiceSendNow ? 'sent' : 'draft',
               invoice_raised: true,
               settings: updatedSettings,
               notes: invoiceNotes || acceptedQuote.notes,
-              purchase_order: purchaseOrder
+              purchase_order: purchaseOrder,
             })
             .eq('id', acceptedQuote.id);
 
@@ -1031,14 +1090,20 @@ serve(async (req: Request) => {
             break;
           }
 
-          const quoteClientData = typeof acceptedQuote.client_data === 'string' ? JSON.parse(acceptedQuote.client_data) : acceptedQuote.client_data;
+          const quoteClientData =
+            typeof acceptedQuote.client_data === 'string'
+              ? JSON.parse(acceptedQuote.client_data)
+              : acceptedQuote.client_data;
 
           // Only send if sendNow is true
           if (invoiceSendNow) {
-            const { error: invoiceSendError } = await supabase.functions.invoke('send-invoice-resend', {
-              body: { invoiceId: acceptedQuote.id },
-              headers: authHeader ? { Authorization: authHeader } : undefined,
-            });
+            const { error: invoiceSendError } = await supabase.functions.invoke(
+              'send-invoice-resend',
+              {
+                body: { invoiceId: acceptedQuote.id },
+                headers: authHeader ? { Authorization: authHeader } : undefined,
+              }
+            );
 
             result = invoiceSendError
               ? `Invoice ${newInvoiceNumber} created but failed to send: ${invoiceSendError.message}`
@@ -1069,16 +1134,18 @@ serve(async (req: Request) => {
         const invTotal = invSubtotal + invVatAmount;
 
         // Format items
-        const invoiceItems = [{
-          id: 'item-1',
-          description: invoiceItemDescription,
-          quantity: invoiceItemQuantity,
-          unit: 'each',
-          unitPrice: invoiceItemUnitPrice,
-          total: invSubtotal,
-          type: 'line',
-          category: invoiceItemCategory
-        }];
+        const invoiceItems = [
+          {
+            id: 'item-1',
+            description: invoiceItemDescription,
+            quantity: invoiceItemQuantity,
+            unit: 'each',
+            unitPrice: invoiceItemUnitPrice,
+            total: invSubtotal,
+            type: 'line',
+            category: invoiceItemCategory,
+          },
+        ];
 
         // Build settings with bank details
         const invoiceSettings: Record<string, unknown> = {
@@ -1087,7 +1154,7 @@ serve(async (req: Request) => {
           vatRegistered: invoiceVatRegistered,
           showMaterialsBreakdown: invoiceBreakdownMaterials,
           paymentTerms: paymentTerms || `Payment due within ${paymentDays} days`,
-          paymentMethod: paymentMethod || 'bank transfer'
+          paymentMethod: paymentMethod || 'bank transfer',
         };
 
         // Add bank details if provided
@@ -1096,7 +1163,7 @@ serve(async (req: Request) => {
             bankName,
             accountName: bankAccountName || invoiceClientName,
             accountNumber: bankAccountNumber,
-            sortCode: bankSortCode
+            sortCode: bankSortCode,
           };
         }
 
@@ -1112,12 +1179,12 @@ serve(async (req: Request) => {
               email: invoiceClientEmail,
               phone: invoiceClientPhone || '',
               address: invoiceClientAddress || '',
-              postcode: invoiceClientPostcode || ''
+              postcode: invoiceClientPostcode || '',
             },
             job_details: {
               title: invoiceJobTitle || 'Electrical Work',
               description: invoiceJobDescription || '',
-              completionDate: workCompletionDate || ''
+              completionDate: workCompletionDate || '',
             },
             items: invoiceItems,
             settings: invoiceSettings,
@@ -1129,9 +1196,11 @@ serve(async (req: Request) => {
             status: 'approved', // Already approved since it's an invoice
             acceptance_status: 'accepted',
             invoice_date: new Date().toISOString(),
-            invoice_due_date: new Date(Date.now() + paymentDays * 24 * 60 * 60 * 1000).toISOString(),
+            invoice_due_date: new Date(
+              Date.now() + paymentDays * 24 * 60 * 60 * 1000
+            ).toISOString(),
             invoice_status: invoiceSendNow ? 'sent' : 'draft',
-            invoice_raised: true
+            invoice_raised: true,
           })
           .select()
           .single();
@@ -1143,10 +1212,13 @@ serve(async (req: Request) => {
 
         // Only send if sendNow is true
         if (invoiceSendNow) {
-          const { error: freshInvSendError } = await supabase.functions.invoke('send-invoice-resend', {
-            body: { invoiceId: newInvoice.id },
-            headers: authHeader ? { Authorization: authHeader } : undefined,
-          });
+          const { error: freshInvSendError } = await supabase.functions.invoke(
+            'send-invoice-resend',
+            {
+              body: { invoiceId: newInvoice.id },
+              headers: authHeader ? { Authorization: authHeader } : undefined,
+            }
+          );
 
           result = freshInvSendError
             ? `Invoice ${freshInvoiceNumber} created for £${invTotal.toFixed(2)} but failed to send: ${freshInvSendError.message}`
@@ -1161,17 +1233,15 @@ serve(async (req: Request) => {
         result = `Unknown tool: ${tool}. Available tools are: create_quote, create_invoice, send_quote, send_invoice, create_and_send_quote, create_and_send_invoice`;
     }
 
-    return new Response(
-      JSON.stringify({ result, message: result }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ result, message: result }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: unknown) {
     console.error('Voice tools error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(
-      JSON.stringify({ error: errorMessage, result: `Error: ${errorMessage}` }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: errorMessage, result: `Error: ${errorMessage}` }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

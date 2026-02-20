@@ -8,21 +8,21 @@ This document outlines the iOS-native design system used for the Inspection & Te
 
 ## Courses Requiring iOS Redesign
 
-| Course | Landing Page | Modules | Current State | Priority |
-|--------|--------------|---------|---------------|----------|
-| **Fire Alarm Systems** | FireAlarmCourse.tsx | 7 + Exam | Old design, partial modules | High |
-| **PAT Testing** | PATTestingCourse.tsx | 5 + Exam | Old design, partial sections | High |
-| **Smart Home Technology** | SmartHomeCourse.tsx | 8 | Old design, partial sections | Medium |
-| **Renewable Energy** | RenewableEnergyCourse.tsx | 10 | Old design, partial sections | Medium |
-| **BMS (Building Management)** | BMSCourse.tsx | TBD | Old design | Medium |
-| **Industrial Electrical** | IndustrialElectricalCourse.tsx | 5 | Old design, partial modules | Medium |
-| **Data Cabling** | DataCablingCourse.tsx | TBD | Old design | Low |
-| **Fibre Optics** | FiberOpticsCourse.tsx | TBD | Old design | Low |
-| **Instrumentation** | InstrumentationCourse.tsx | TBD | Old design | Low |
-| **EV Charging** | EVChargingCourse.tsx | TBD | Old design | Low |
-| **Emergency Lighting** | EmergencyLightingCourse.tsx | TBD | Old design | Low |
-| **Energy Efficiency** | EnergyEfficiencyCourse.tsx | TBD | Old design | Low |
-| **BS 7671** | BS7671Course.tsx | TBD | Old design | Low |
+| Course                        | Landing Page                   | Modules  | Current State                | Priority |
+| ----------------------------- | ------------------------------ | -------- | ---------------------------- | -------- |
+| **Fire Alarm Systems**        | FireAlarmCourse.tsx            | 7 + Exam | Old design, partial modules  | High     |
+| **PAT Testing**               | PATTestingCourse.tsx           | 5 + Exam | Old design, partial sections | High     |
+| **Smart Home Technology**     | SmartHomeCourse.tsx            | 8        | Old design, partial sections | Medium   |
+| **Renewable Energy**          | RenewableEnergyCourse.tsx      | 10       | Old design, partial sections | Medium   |
+| **BMS (Building Management)** | BMSCourse.tsx                  | TBD      | Old design                   | Medium   |
+| **Industrial Electrical**     | IndustrialElectricalCourse.tsx | 5        | Old design, partial modules  | Medium   |
+| **Data Cabling**              | DataCablingCourse.tsx          | TBD      | Old design                   | Low      |
+| **Fibre Optics**              | FiberOpticsCourse.tsx          | TBD      | Old design                   | Low      |
+| **Instrumentation**           | InstrumentationCourse.tsx      | TBD      | Old design                   | Low      |
+| **EV Charging**               | EVChargingCourse.tsx           | TBD      | Old design                   | Low      |
+| **Emergency Lighting**        | EmergencyLightingCourse.tsx    | TBD      | Old design                   | Low      |
+| **Energy Efficiency**         | EnergyEfficiencyCourse.tsx     | TBD      | Old design                   | Low      |
+| **BS 7671**                   | BS7671Course.tsx               | TBD      | Old design                   | Low      |
 
 **Completed:** Inspection & Testing (8 modules, 44 sections)
 
@@ -31,11 +31,13 @@ This document outlines the iOS-native design system used for the Inspection & Te
 ## Design System Reference
 
 ### Page Background
+
 ```tsx
 <div className="min-h-screen bg-[#0a0a0a]">
 ```
 
 ### iOS Sticky Header
+
 ```tsx
 <header className="sticky top-0 z-50 bg-[#0a0a0a]/95 backdrop-blur-xl border-b border-white/10">
   <div className="flex items-center h-[56px] px-4 max-w-4xl mx-auto">
@@ -52,6 +54,7 @@ This document outlines the iOS-native design system used for the Inspection & Te
 ```
 
 ### Hero Section (Section Pages)
+
 ```tsx
 <section className="px-4 pt-8 pb-6 max-w-4xl mx-auto">
   <div className="flex items-center gap-3 mb-4">
@@ -65,13 +68,12 @@ This document outlines the iOS-native design system used for the Inspection & Te
   <h1 className="text-[34px] leading-[41px] font-bold text-white tracking-tight mb-3">
     Section Title Here
   </h1>
-  <p className="text-[17px] text-white/70 leading-relaxed">
-    Section description text here.
-  </p>
+  <p className="text-[17px] text-white/70 leading-relaxed">Section description text here.</p>
 </section>
 ```
 
 ### Button Variants
+
 ```tsx
 // Primary CTA (yellow)
 <Button variant="ios-primary" size="ios" className="w-full gap-2">
@@ -92,6 +94,7 @@ This document outlines the iOS-native design system used for the Inspection & Te
 ```
 
 ### Card Variants
+
 ```tsx
 // Standard iOS card
 <Card variant="ios" className="p-4">
@@ -113,6 +116,7 @@ This document outlines the iOS-native design system used for the Inspection & Te
 ```
 
 ### iOS Typography Scale
+
 ```tsx
 // Large Title (page headers)
 text-[34px] leading-[41px] font-bold text-white tracking-tight
@@ -137,18 +141,19 @@ text-[11px] font-medium text-elec-yellow uppercase tracking-wide
 ```
 
 ### Module Colour Coding
+
 Each module should have a consistent accent colour:
 
-| Module | Colour | Tailwind Classes |
-|--------|--------|------------------|
-| Module 1 | Blue | `bg-blue-500/10 border-blue-500/30 text-blue-400` |
-| Module 2 | Green | `bg-green-500/10 border-green-500/30 text-green-400` |
-| Module 3 | Amber | `bg-amber-500/10 border-amber-500/30 text-amber-400` |
+| Module   | Colour | Tailwind Classes                                        |
+| -------- | ------ | ------------------------------------------------------- |
+| Module 1 | Blue   | `bg-blue-500/10 border-blue-500/30 text-blue-400`       |
+| Module 2 | Green  | `bg-green-500/10 border-green-500/30 text-green-400`    |
+| Module 3 | Amber  | `bg-amber-500/10 border-amber-500/30 text-amber-400`    |
 | Module 4 | Purple | `bg-purple-500/10 border-purple-500/30 text-purple-400` |
 | Module 5 | Orange | `bg-orange-500/10 border-orange-500/30 text-orange-400` |
-| Module 6 | Cyan | `bg-cyan-500/10 border-cyan-500/30 text-cyan-400` |
-| Module 7 | Rose | `bg-rose-500/10 border-rose-500/30 text-rose-400` |
-| Module 8 | Sky | `bg-sky-500/10 border-sky-500/30 text-sky-400` |
+| Module 6 | Cyan   | `bg-cyan-500/10 border-cyan-500/30 text-cyan-400`       |
+| Module 7 | Rose   | `bg-rose-500/10 border-rose-500/30 text-rose-400`       |
+| Module 8 | Sky    | `bg-sky-500/10 border-sky-500/30 text-sky-400`          |
 
 ---
 
@@ -157,8 +162,9 @@ Each module should have a consistent accent colour:
 Every section page must include these elements in order:
 
 ### 1. Imports
+
 ```tsx
-import { ArrowLeft, ChevronRight, ChevronLeft, Clock, /* other icons */ } from 'lucide-react';
+import { ArrowLeft, ChevronRight, ChevronLeft, Clock /* other icons */ } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
@@ -169,20 +175,22 @@ import useSEO from '@/hooks/useSEO';
 ```
 
 ### 2. SEO Constants
+
 ```tsx
-const TITLE = "Section Title - Course Name";
-const DESCRIPTION = "Meta description for SEO (150-160 chars)";
+const TITLE = 'Section Title - Course Name';
+const DESCRIPTION = 'Meta description for SEO (150-160 chars)';
 ```
 
 ### 3. Data Definitions
+
 ```tsx
 // InlineCheck questions (3 minimum)
 const quickCheckQuestions = [
   {
-    question: "Question text?",
-    options: ["Option A", "Option B", "Option C", "Option D"],
+    question: 'Question text?',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
     correctAnswer: 1, // 0-indexed
-    explanation: "Explanation text"
+    explanation: 'Explanation text',
   },
   // ... 2 more
 ];
@@ -190,23 +198,23 @@ const quickCheckQuestions = [
 // Quiz questions (10 recommended)
 const quizQuestions = [
   {
-    question: "Question text?",
-    options: ["Option A", "Option B", "Option C", "Option D"],
+    question: 'Question text?',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
     correctAnswer: 1,
-    explanation: "Explanation text"
+    explanation: 'Explanation text',
   },
   // ... 9 more
 ];
 
 // FAQs (6 minimum)
 const faqs = [
-  { question: "FAQ question?", answer: "Answer text" },
+  { question: 'FAQ question?', answer: 'Answer text' },
   // ... 5 more
 ];
 
 // Reference items for UnitsPocketCard
 const referenceItems = [
-  { label: "Label", value: "Value" },
+  { label: 'Label', value: 'Value' },
   // ...
 ];
 ```
@@ -226,6 +234,7 @@ const referenceItems = [
 11. **Navigation Footer** - Previous/Next buttons with pb-safe
 
 ### 5. Navigation Footer
+
 ```tsx
 <section className="px-4 pt-6 pb-safe max-w-4xl mx-auto">
   <div className="flex gap-3">
@@ -246,7 +255,9 @@ const referenceItems = [
 ```
 
 ### 6. Final Section Module Completion Card
+
 On the last section of each module, add:
+
 ```tsx
 <Card variant="ios-elevated" className="border-green-500/20">
   <CardContent className="p-6 text-center">
@@ -379,23 +390,23 @@ src/pages/upskilling/
 
 ## Components Used
 
-| Component | Import Path | Type |
-|-----------|-------------|------|
-| Button | `@/components/ui/button` | Named |
-| Card, CardContent, CardHeader, CardTitle | `@/components/ui/card` | Named |
-| Quiz | `@/components/apprentice-courses/Quiz` | Named |
-| InlineCheck | `@/components/apprentice-courses/InlineCheck` | Named |
-| UnitsPocketCard | `@/components/apprentice-courses/UnitsPocketCard` | Default |
-| useSEO | `@/hooks/useSEO` | Default |
+| Component                                | Import Path                                       | Type    |
+| ---------------------------------------- | ------------------------------------------------- | ------- |
+| Button                                   | `@/components/ui/button`                          | Named   |
+| Card, CardContent, CardHeader, CardTitle | `@/components/ui/card`                            | Named   |
+| Quiz                                     | `@/components/apprentice-courses/Quiz`            | Named   |
+| InlineCheck                              | `@/components/apprentice-courses/InlineCheck`     | Named   |
+| UnitsPocketCard                          | `@/components/apprentice-courses/UnitsPocketCard` | Default |
+| useSEO                                   | `@/hooks/useSEO`                                  | Default |
 
 ---
 
 ## Estimated Work Per Course
 
 | Course Size | Modules | Sections | Est. Files |
-|-------------|---------|----------|------------|
-| Small | 5 | ~25 | ~30 |
-| Medium | 7 | ~35 | ~42 |
-| Large | 8+ | ~44+ | ~52+ |
+| ----------- | ------- | -------- | ---------- |
+| Small       | 5       | ~25      | ~30        |
+| Medium      | 7       | ~35      | ~42        |
+| Large       | 8+      | ~44+     | ~52+       |
 
 Each section file is approximately 60-80KB of content.

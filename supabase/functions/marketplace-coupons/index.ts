@@ -58,12 +58,9 @@ serve(async (req: Request) => {
     const { supplier = null } = body;
 
     // Use the helper function from migration
-    const { data: coupons, error } = await supabase.rpc(
-      'get_valid_marketplace_coupons',
-      {
-        supplier_slug_filter: supplier
-      }
-    );
+    const { data: coupons, error } = await supabase.rpc('get_valid_marketplace_coupons', {
+      supplier_slug_filter: supplier,
+    });
 
     if (error) {
       console.error('Coupons fetch error:', error);
@@ -93,14 +90,13 @@ serve(async (req: Request) => {
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Marketplace coupons error:', error);
     return new Response(
       JSON.stringify({
         coupons: [],
         total: 0,
-        error: error instanceof Error ? error.message : 'Failed to fetch coupons'
+        error: error instanceof Error ? error.message : 'Failed to fetch coupons',
       }),
       {
         status: 500,

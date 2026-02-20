@@ -99,7 +99,10 @@ export async function captureException(
   const dsn = Deno.env.get('SENTRY_DSN');
 
   if (!dsn) {
-    console.error(`[Sentry] No DSN configured - logging error locally: ${context.functionName}`, error);
+    console.error(
+      `[Sentry] No DSN configured - logging error locally: ${context.functionName}`,
+      error
+    );
     return;
   }
 
@@ -129,25 +132,29 @@ export async function captureException(
       release: Deno.env.get('SENTRY_RELEASE') || 'edge-functions@1.0.0',
       environment: Deno.env.get('SENTRY_ENVIRONMENT') || 'production',
       exception: {
-        values: [{
-          type: err.name || 'Error',
-          value: err.message,
-          stacktrace: {
-            frames: parseStackTrace(err.stack),
+        values: [
+          {
+            type: err.name || 'Error',
+            value: err.message,
+            stacktrace: {
+              frames: parseStackTrace(err.stack),
+            },
           },
-        }],
+        ],
       },
       tags: {
         'function.name': context.functionName,
-        'runtime': 'deno',
+        runtime: 'deno',
       },
       extra: {
         ...context.extra,
       },
-      request: context.requestUrl ? {
-        url: context.requestUrl,
-        method: context.requestMethod,
-      } : undefined,
+      request: context.requestUrl
+        ? {
+            url: context.requestUrl,
+            method: context.requestMethod,
+          }
+        : undefined,
     };
 
     if (context.userId || context.email) {
@@ -220,7 +227,7 @@ export async function captureMessage(
       message: { formatted: message },
       tags: {
         'function.name': context.functionName,
-        'runtime': 'deno',
+        runtime: 'deno',
       },
       extra: context.extra,
     };

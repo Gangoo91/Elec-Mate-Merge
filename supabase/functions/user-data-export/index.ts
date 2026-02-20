@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 interface UserDataExport {
@@ -25,28 +26,31 @@ interface UserDataExport {
 
 Deno.serve(async (req) => {
   // Handle CORS preflight
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
     // Get authorization header
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      throw new Error("No authorization header");
+      throw new Error('No authorization header');
     }
 
     // Create Supabase client with user's token
     const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: authHeader } } }
     );
 
     // Get the authenticated user
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser();
     if (userError || !user) {
-      throw new Error("Unauthorized: Could not get user");
+      throw new Error('Unauthorized: Could not get user');
     }
 
     const userId = user.id;
@@ -57,7 +61,7 @@ Deno.serve(async (req) => {
       exportedAt: new Date().toISOString(),
       user: {
         id: user.id,
-        email: user.email || "",
+        email: user.email || '',
       },
       profile: null,
       elecId: null,
@@ -72,9 +76,9 @@ Deno.serve(async (req) => {
 
     // Fetch profile data
     const { data: profile } = await supabaseClient
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
+      .from('profiles')
+      .select('*')
+      .eq('id', userId)
       .single();
 
     if (profile) {
@@ -85,9 +89,9 @@ Deno.serve(async (req) => {
 
     // Fetch Elec-ID data
     const { data: elecId } = await supabaseClient
-      .from("employer_elec_id_profiles")
-      .select("*")
-      .eq("user_id", userId)
+      .from('employer_elec_id_profiles')
+      .select('*')
+      .eq('user_id', userId)
       .single();
 
     if (elecId) {
@@ -96,10 +100,10 @@ Deno.serve(async (req) => {
 
     // Fetch certificates
     const { data: certificates } = await supabaseClient
-      .from("certificates")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('certificates')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
     if (certificates) {
       exportData.certificates = certificates;
@@ -107,10 +111,10 @@ Deno.serve(async (req) => {
 
     // Fetch study progress (apprentice_progress)
     const { data: studyProgress } = await supabaseClient
-      .from("apprentice_progress")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('apprentice_progress')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
     if (studyProgress) {
       exportData.studyProgress = studyProgress;
@@ -118,10 +122,10 @@ Deno.serve(async (req) => {
 
     // Fetch quiz attempts
     const { data: quizAttempts } = await supabaseClient
-      .from("quiz_attempts")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('quiz_attempts')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
     if (quizAttempts) {
       exportData.quizAttempts = quizAttempts;
@@ -129,10 +133,10 @@ Deno.serve(async (req) => {
 
     // Fetch invoices created by user
     const { data: invoices } = await supabaseClient
-      .from("invoices")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('invoices')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
     if (invoices) {
       exportData.invoices = invoices;
@@ -140,10 +144,10 @@ Deno.serve(async (req) => {
 
     // Fetch quotes created by user
     const { data: quotes } = await supabaseClient
-      .from("quotes")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('quotes')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
     if (quotes) {
       exportData.quotes = quotes;
@@ -151,10 +155,10 @@ Deno.serve(async (req) => {
 
     // Fetch customers created by user
     const { data: customers } = await supabaseClient
-      .from("customers")
-      .select("*")
-      .eq("user_id", userId)
-      .order("created_at", { ascending: false });
+      .from('customers')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
     if (customers) {
       exportData.customers = customers;
@@ -162,9 +166,9 @@ Deno.serve(async (req) => {
 
     // Fetch user settings
     const { data: settings } = await supabaseClient
-      .from("user_settings")
-      .select("*")
-      .eq("user_id", userId)
+      .from('user_settings')
+      .select('*')
+      .eq('user_id', userId)
       .single();
 
     if (settings) {
@@ -174,25 +178,19 @@ Deno.serve(async (req) => {
     console.log(`Data export completed for user: ${userId}`);
 
     // Return the data as JSON
-    return new Response(
-      JSON.stringify(exportData, null, 2),
-      {
-        headers: {
-          ...corsHeaders,
-          "Content-Type": "application/json",
-          "Content-Disposition": `attachment; filename="elec-mate-data-export-${new Date().toISOString().split('T')[0]}.json"`,
-        },
-        status: 200,
-      }
-    );
+    return new Response(JSON.stringify(exportData, null, 2), {
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'application/json',
+        'Content-Disposition': `attachment; filename="elec-mate-data-export-${new Date().toISOString().split('T')[0]}.json"`,
+      },
+      status: 200,
+    });
   } catch (error) {
-    console.error("Error in user-data-export:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      }
-    );
+    console.error('Error in user-data-export:', error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
+    });
   }
 });

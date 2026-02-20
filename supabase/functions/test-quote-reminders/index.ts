@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { Resend } from "npm:resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { Resend } from 'npm:resend@2.0.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -43,9 +44,7 @@ function buildReminderEmailHtml(
 ): string {
   const isFinalReminder = reminderNumber === 2;
 
-  const headerMessage = isFinalReminder
-    ? '⏰ Final Reminder'
-    : '📬 Friendly Reminder';
+  const headerMessage = isFinalReminder ? '⏰ Final Reminder' : '📬 Friendly Reminder';
 
   const bodyMessage = isFinalReminder
     ? "This is a final reminder about your outstanding quote. We want to make sure you don't miss out on securing your electrical work before the quote expires."
@@ -184,7 +183,7 @@ const handler = async (req: Request): Promise<Response> => {
       clientName: 'John Smith',
       companyName: 'ElecMate Demo',
       quoteNumber: 'Q-2025-001',
-      total: 2450.00,
+      total: 2450.0,
       expiryDate: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(), // 14 days from now
       acceptUrl: 'https://www.elec-mate.com/quote/test-token#accept',
       companyPhone: '07700 900123',
@@ -251,20 +250,16 @@ const handler = async (req: Request): Promise<Response> => {
       JSON.stringify({
         success: true,
         message: `2 test emails sent to ${testEmail}`,
-        emails: [
-          'Reminder 1 (Day 3 - Friendly)',
-          'Reminder 2 (Day 7 - Final)'
-        ]
+        emails: ['Reminder 1 (Day 3 - Friendly)', 'Reminder 2 (Day 7 - Final)'],
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('❌ Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 };
 

@@ -68,40 +68,40 @@ export function handleError(error: unknown): Response {
       JSON.stringify({
         error: error.message,
         code: error.code,
-        details: error.details
+        details: error.details,
       }),
       {
         status: error.statusCode,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }
-  
+
   // Standard JavaScript errors
   if (error instanceof Error) {
     console.error('[RUNTIME_ERROR]', error.message, error.stack || '');
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message,
-        code: 'RUNTIME_ERROR'
+        code: 'RUNTIME_ERROR',
       }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }
-  
+
   // Unknown error type
   console.error('[UNKNOWN_ERROR]', error);
   return new Response(
-    JSON.stringify({ 
+    JSON.stringify({
       error: 'Internal server error',
-      code: 'UNKNOWN_ERROR'
+      code: 'UNKNOWN_ERROR',
     }),
-    { 
-      status: 500, 
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+    {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     }
   );
 }

@@ -20,7 +20,7 @@ export async function withTimeout<T>(
 ): Promise<T> {
   const timeoutPromise = new Promise<never>((_, reject) => {
     setTimeout(() => {
-      const message = operation 
+      const message = operation
         ? `${operation} timed out after ${timeoutMs}ms`
         : `Operation timed out after ${timeoutMs}ms`;
       reject(new TimeoutError(timeoutMs));
@@ -43,31 +43,31 @@ export async function withTimeout<T>(
 export const Timeouts = {
   /** Quick operations (5s) - health checks, cache reads */
   QUICK: 5000,
-  
+
   /** Standard API calls (30s) - OpenAI, Lovable AI */
   STANDARD: 30000,
-  
+
   /** Long-running operations (60s) - web scraping, embeddings */
   LONG: 60000,
-  
+
   /** Extended operations (90s) - complex AI generation with RAG */
   EXTENDED: 90000,
-  
+
   /** Critical timeout (2 minutes) - batch processing */
   CRITICAL: 120000,
-  
+
   /** AI call timeout (150s) - Allows for large RAG context with complex designs */
   AI_CALL: 150000,
-  
+
   /** Super extended (4 min 40 sec) - complex multi-circuit designs with RAG */
   SUPER_EXTENDED: 280000,
-  
+
   /** Practical work enrichment (6 min) - Extended timeout for 10K token generation with GPT-5 Mini */
   PRACTICAL_WORK: 360000,
-  
+
   /** Detailed installation method (8 min) - Extended timeout for 24K token generation with nested sub-steps */
   DETAILED_INSTALLATION: 480000,
-  
+
   /** Edge function max allowed (6 min) - for complex multi-circuit designs with validation */
   EDGE_FUNCTION_MAX: 360000,
 };

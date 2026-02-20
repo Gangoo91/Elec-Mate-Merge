@@ -4,12 +4,12 @@
  */
 
 export interface RAGPriority {
-  bs7671: number;        // 0-100 priority for regulations
-  design: number;        // 0-100 priority for design docs
+  bs7671: number; // 0-100 priority for regulations
+  design: number; // 0-100 priority for design docs
   health_safety: number; // 0-100 priority for H&S
-  installation: number;  // 0-100 priority for installation
-  inspection: number;    // 0-100 priority for testing
-  project_mgmt: number;  // 0-100 priority for project mgmt
+  installation: number; // 0-100 priority for installation
+  inspection: number; // 0-100 priority for testing
+  project_mgmt: number; // 0-100 priority for project mgmt
 }
 
 export interface QueryIntent {
@@ -55,14 +55,14 @@ export interface ContextEnvelope {
   requestId: string;
   sessionId?: string;
   timestamp: number;
-  
+
   // Intent classification
   queryIntent: QueryIntent;
-  
+
   // Shared knowledge
   foundRegulations: FoundRegulation[];
   designDecisions: DesignDecision[];
-  
+
   // PHASE 2: Cross-Agent Knowledge Sharing
   sharedRegulations?: FoundRegulation[]; // BS 7671 regs from Designer
   sharedKnowledge?: {
@@ -70,7 +70,7 @@ export interface ContextEnvelope {
     installationDocs?: any[];
     healthSafetyDocs?: any[];
   };
-  
+
   // PHASE 1: Conversation insights
   designSummary?: {
     cableType?: string;
@@ -80,7 +80,7 @@ export interface ContextEnvelope {
     load?: number;
     circuitType?: string;
   };
-  
+
   // RAG optimization
   ragPriority: RAGPriority;
   embeddingCache?: {
@@ -88,16 +88,16 @@ export interface ContextEnvelope {
     embedding: number[];
     generatedAt: number;
   };
-  
+
   // Agent handoff
   previousAgent?: string;
   nextAgent?: string;
   agentChain: string[];
-  
+
   // Performance
   totalTokens?: number;
   ragCallCount?: number;
-  
+
   // IMPROVEMENT #4: Context history tracking
   contextHistory?: ContextContribution[];
 }
@@ -133,7 +133,7 @@ export function addContextContribution(
   if (!context.contextHistory) {
     context.contextHistory = [];
   }
-  
+
   context.contextHistory.push({
     agent,
     contribution,
@@ -141,7 +141,7 @@ export function addContextContribution(
     timestamp: Date.now(),
     data,
   });
-  
+
   console.log(`📝 Context contribution from ${agent}: ${contribution} (${confidence}% confidence)`);
 }
 
@@ -196,24 +196,13 @@ export function mergeContext(
   return {
     ...existing,
     ...newData,
-    foundRegulations: [
-      ...existing.foundRegulations,
-      ...(newData.foundRegulations || []),
-    ].filter((reg, index, self) =>
-      index === self.findIndex(r => r.regulation_number === reg.regulation_number)
+    foundRegulations: [...existing.foundRegulations, ...(newData.foundRegulations || [])].filter(
+      (reg, index, self) =>
+        index === self.findIndex((r) => r.regulation_number === reg.regulation_number)
     ),
-    designDecisions: [
-      ...existing.designDecisions,
-      ...(newData.designDecisions || []),
-    ],
-    agentChain: [
-      ...existing.agentChain,
-      ...(newData.agentChain || []),
-    ],
-    contextHistory: [
-      ...existing.contextHistory,
-      ...(newData.contextHistory || []),
-    ],
+    designDecisions: [...existing.designDecisions, ...(newData.designDecisions || [])],
+    agentChain: [...existing.agentChain, ...(newData.agentChain || [])],
+    contextHistory: [...existing.contextHistory, ...(newData.contextHistory || [])],
     ragCallCount: (existing.ragCallCount || 0) + (newData.ragCallCount || 0),
     totalTokens: (existing.totalTokens || 0) + (newData.totalTokens || 0),
   };

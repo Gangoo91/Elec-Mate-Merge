@@ -27,16 +27,16 @@ interface PMKnowledgeResult {
  */
 function expandPMQuery(query: string): string {
   const expansions: Record<string, string[]> = {
-    'timeline': ['critical path', 'gantt', 'schedule', 'program', 'milestones'],
-    'cost': ['budget', 'pricing', 'estimate', 'quote', 'commercial'],
-    'scope': ['work breakdown', 'deliverables', 'requirements', 'specifications'],
-    'risk': ['hazard', 'mitigation', 'contingency', 'safety', 'RAMS'],
-    'team': ['resources', 'labour', 'staffing', 'workforce'],
-    'quality': ['standards', 'compliance', 'BS7671', 'Part P', 'testing'],
-    'procurement': ['materials', 'supply chain', 'ordering', 'delivery'],
-    'client': ['customer', 'stakeholder', 'communication', 'handover'],
-    'rewire': ['full rewire', 'complete rewire', 'first fix', 'second fix'],
-    'board': ['consumer unit', 'CU change', 'distribution board', 'DB upgrade'],
+    timeline: ['critical path', 'gantt', 'schedule', 'program', 'milestones'],
+    cost: ['budget', 'pricing', 'estimate', 'quote', 'commercial'],
+    scope: ['work breakdown', 'deliverables', 'requirements', 'specifications'],
+    risk: ['hazard', 'mitigation', 'contingency', 'safety', 'RAMS'],
+    team: ['resources', 'labour', 'staffing', 'workforce'],
+    quality: ['standards', 'compliance', 'BS7671', 'Part P', 'testing'],
+    procurement: ['materials', 'supply chain', 'ordering', 'delivery'],
+    client: ['customer', 'stakeholder', 'communication', 'handover'],
+    rewire: ['full rewire', 'complete rewire', 'first fix', 'second fix'],
+    board: ['consumer unit', 'CU change', 'distribution board', 'DB upgrade'],
   };
 
   let expanded = query.toLowerCase();
@@ -57,7 +57,7 @@ function generateCacheKey(query: string, projectType?: string): string {
   // UTF-8 safe base64 encoding to handle emojis/special characters
   const encoder = new TextEncoder();
   const data = encoder.encode(key);
-  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join("");
+  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join('');
   return btoa(binString).substring(0, 32);
 }
 
@@ -120,25 +120,23 @@ async function storeSemanticCache(
   try {
     const ttlMs = calculateCacheTTL(avgConfidence);
     const expiresAt = new Date(Date.now() + ttlMs);
-    
-    await supabase
-      .from('rag_cache')
-      .upsert({
-        query_hash: queryHash,
-        query_text: query,
-        agent_name: 'project-mgmt',
-        results,
-        hit_count: 0,
-        cache_confidence: avgConfidence,
-        created_at: new Date().toISOString(),
-        expires_at: expiresAt.toISOString()
-      });
 
-    logger.debug('Stored in cache', { 
-      queryHash, 
+    await supabase.from('rag_cache').upsert({
+      query_hash: queryHash,
+      query_text: query,
+      agent_name: 'project-mgmt',
+      results,
+      hit_count: 0,
+      cache_confidence: avgConfidence,
+      created_at: new Date().toISOString(),
+      expires_at: expiresAt.toISOString(),
+    });
+
+    logger.debug('Stored in cache', {
+      queryHash,
       resultCount: results.length,
       confidence: avgConfidence.toFixed(2),
-      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1)
+      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1),
     });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
@@ -156,7 +154,7 @@ export async function retrievePMKnowledge(
   projectType?: string
 ): Promise<PMKnowledgeResult[]> {
   const searchStart = Date.now();
-  
+
   // Check cache
   const cacheKey = generateCacheKey(query, projectType);
   const cached = await checkSemanticCache(supabase, cacheKey, logger);
@@ -169,7 +167,7 @@ export async function retrievePMKnowledge(
 
   // Expand query
   const expandedQuery = expandPMQuery(query);
-  
+
   // Generate embedding
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
@@ -178,7 +176,7 @@ export async function retrievePMKnowledge(
     const { data, error } = await supabase.rpc('search_project_mgmt_hybrid', {
       query_text: expandedQuery,
       query_embedding: embedding,
-      match_count: 10
+      match_count: 10,
     });
 
     if (error) throw error;
@@ -189,79 +187,88 @@ export async function retrievePMKnowledge(
     if (results.length > 0) {
       logger.debug('Reranking PM knowledge with cross-encoder');
       const rerankStart = Date.now();
-      
+
       // Convert to RegulationResult format
-      const asRegulations: RegulationResult[] = results.map(r => ({
+      const asRegulations: RegulationResult[] = results.map((r) => ({
         id: r.id,
         regulation_number: r.topic,
         section: r.source,
         content: r.content,
-        metadata: r.metadata
+        metadata: r.metadata,
       }));
-      
-      const reranked = await rerankWithCrossEncoder(
-        query,
-        asRegulations,
-        openAiKey,
-        logger
-      );
-      
+
+      const reranked = await rerankWithCrossEncoder(query, asRegulations, openAiKey, logger);
+
       // Merge scores back
       results = results.map((r, idx) => ({
         ...r,
         finalScore: reranked[idx].finalScore,
-        crossEncoderScore: reranked[idx].crossEncoderScore
+        crossEncoderScore: reranked[idx].crossEncoderScore,
       }));
-      
+
       logger.info('Cross-encoder reranking complete', {
-        duration: Date.now() - rerankStart
+        duration: Date.now() - rerankStart,
       });
     }
 
     // Calculate confidence scores
-    const resultsWithConfidence = results.map(r => {
+    const resultsWithConfidence = results.map((r) => {
       const asReg: RegulationResult = {
         id: r.id,
         regulation_number: r.topic,
         section: r.source,
-        content: r.content
+        content: r.content,
       };
       return {
         ...r,
-        confidence: calculateConfidence(asReg, query, { projectType })
+        confidence: calculateConfidence(asReg, query, { projectType }),
       };
     });
 
     // Calculate average confidence
-    const avgConfidence = resultsWithConfidence.length > 0
-      ? resultsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) / resultsWithConfidence.length
-      : 0.7;
+    const avgConfidence =
+      resultsWithConfidence.length > 0
+        ? resultsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) /
+          resultsWithConfidence.length
+        : 0.7;
 
     logger.info('Hybrid PM search complete', {
       duration: Date.now() - searchStart,
       resultsCount: results.length,
       avgConfidence: avgConfidence.toFixed(2),
-      avgScore: results.length > 0 
-        ? (results.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / results.length).toFixed(3)
-        : 0
+      avgScore:
+        results.length > 0
+          ? (
+              results.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) /
+              results.length
+            ).toFixed(3)
+          : 0,
     });
 
     // Store in cache with dynamic TTL
-    await storeSemanticCache(supabase, cacheKey, query, resultsWithConfidence, avgConfidence, logger);
+    await storeSemanticCache(
+      supabase,
+      cacheKey,
+      query,
+      resultsWithConfidence,
+      avgConfidence,
+      logger
+    );
 
     return resultsWithConfidence;
   } catch (error) {
-    const errorDetails = error && typeof error === 'object' 
-      ? JSON.stringify(error, Object.getOwnPropertyNames(error)) 
-      : String(error);
-    
+    const errorDetails =
+      error && typeof error === 'object'
+        ? JSON.stringify(error, Object.getOwnPropertyNames(error))
+        : String(error);
+
     logger.error('Hybrid PM search failed', {
       error: error instanceof Error ? error.message : errorDetails,
       errorCode: (error as any)?.code,
       errorDetails: (error as any)?.details || (error as any)?.hint,
-      duration: Date.now() - searchStart
+      duration: Date.now() - searchStart,
     });
-    
+
     // Re-throw with better error message
     throw new Error(
       `PM knowledge search failed: ${error instanceof Error ? error.message : errorDetails}`
@@ -277,9 +284,11 @@ export function formatPMContext(results: PMKnowledgeResult[]): string {
     return 'No specific PM guidance found. Use general project management principles.';
   }
 
-  return `PROJECT MANAGEMENT GUIDANCE (${results.length} items):\n` +
+  return (
+    `PROJECT MANAGEMENT GUIDANCE (${results.length} items):\n` +
     results
       .slice(0, 8)
-      .map(r => `${r.topic}: ${r.content.substring(0, 160)}...`)
-      .join('\n\n');
+      .map((r) => `${r.topic}: ${r.content.substring(0, 160)}...`)
+      .join('\n\n')
+  );
 }

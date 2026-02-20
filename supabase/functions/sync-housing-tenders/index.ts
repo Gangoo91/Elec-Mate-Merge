@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -43,43 +44,43 @@ const HOUSING_SOURCES = [
     displayName: 'Clarion Housing Group',
     tendersUrl: 'https://www.myclarion.com/business-opportunities',
     regions: ['london', 'southeast', 'east_england'],
-    typicalValueRange: [30000, 500000]
+    typicalValueRange: [30000, 500000],
   },
   {
     name: 'pa_housing',
     displayName: 'PA Housing',
     tendersUrl: 'https://www.pahousing.co.uk/suppliers',
     regions: ['east_midlands', 'west_midlands', 'east_england'],
-    typicalValueRange: [20000, 250000]
+    typicalValueRange: [20000, 250000],
   },
   {
     name: 'hightown_ha',
     displayName: 'Hightown Housing Association',
     tendersUrl: 'https://www.hightownha.org.uk/procurement',
     regions: ['southeast', 'east_england'],
-    typicalValueRange: [15000, 150000]
+    typicalValueRange: [15000, 150000],
   },
   {
     name: 'emh_group',
     displayName: 'EMH Group',
     tendersUrl: 'https://www.emhgroup.org.uk/suppliers',
     regions: ['east_midlands'],
-    typicalValueRange: [25000, 200000]
+    typicalValueRange: [25000, 200000],
   },
   {
     name: 'lq_housing',
     displayName: 'L&Q',
     tendersUrl: 'https://www.lqgroup.org.uk/business-with-us',
     regions: ['london', 'southeast'],
-    typicalValueRange: [50000, 1000000]
+    typicalValueRange: [50000, 1000000],
   },
   {
     name: 'peabody',
     displayName: 'Peabody',
     tendersUrl: 'https://www.peabody.org.uk/suppliers',
     regions: ['london', 'southeast', 'east_england'],
-    typicalValueRange: [40000, 750000]
-  }
+    typicalValueRange: [40000, 750000],
+  },
 ];
 
 const ELECTRICAL_WORKS = [
@@ -90,7 +91,7 @@ const ELECTRICAL_WORKS = [
   { type: 'Consumer Unit Replacements', category: 'consumer_units', multiplier: 0.7 },
   { type: 'Electrical Maintenance Term', category: 'electrical', multiplier: 1.2 },
   { type: 'EV Charging Infrastructure', category: 'ev_charging', multiplier: 1.8 },
-  { type: 'Data Cabling Installation', category: 'data_cabling', multiplier: 0.9 }
+  { type: 'Data Cabling Installation', category: 'data_cabling', multiplier: 0.9 },
 ];
 
 Deno.serve(async (req) => {
@@ -119,13 +120,16 @@ Deno.serve(async (req) => {
 
         // If scraping returns nothing (blocked/changed), generate realistic mock data
         if (pageOpportunities.length === 0) {
-          console.log(`[HOUSING-SYNC] No scraped data for ${source.name}, generating mock opportunities`);
+          console.log(
+            `[HOUSING-SYNC] No scraped data for ${source.name}, generating mock opportunities`
+          );
           pageOpportunities = generateHousingOpportunities(source);
         }
 
         opportunities.push(...pageOpportunities);
-        console.log(`[HOUSING-SYNC] ${source.displayName}: ${pageOpportunities.length} opportunities`);
-
+        console.log(
+          `[HOUSING-SYNC] ${source.displayName}: ${pageOpportunities.length} opportunities`
+        );
       } catch (sourceError: any) {
         console.error(`[HOUSING-SYNC] Error with ${source.name}:`, sourceError);
         errors.push(`${source.name}: ${sourceError.message}`);
@@ -141,9 +145,8 @@ Deno.serve(async (req) => {
     let updated = 0;
 
     for (const opp of opportunities) {
-      const { error } = await supabase
-        .from('tender_opportunities')
-        .upsert({
+      const { error } = await supabase.from('tender_opportunities').upsert(
+        {
           external_id: opp.external_id,
           source: opp.source,
           title: opp.title,
@@ -161,11 +164,13 @@ Deno.serve(async (req) => {
           contact_email: opp.contact_email,
           source_url: opp.source_url,
           status: opp.status,
-          fetched_at: new Date().toISOString()
-        }, {
+          fetched_at: new Date().toISOString(),
+        },
+        {
           onConflict: 'source,external_id',
-          ignoreDuplicates: false
-        });
+          ignoreDuplicates: false,
+        }
+      );
 
       if (!error) {
         inserted++;
@@ -176,8 +181,8 @@ Deno.serve(async (req) => {
     for (const source of HOUSING_SOURCES) {
       await supabase.rpc('update_source_sync_status', {
         p_source_name: source.name,
-        p_sync_count: opportunities.filter(o => o.source === source.name).length,
-        p_error_count: errors.filter(e => e.startsWith(source.name)).length
+        p_sync_count: opportunities.filter((o) => o.source === source.name).length,
+        p_error_count: errors.filter((e) => e.startsWith(source.name)).length,
       });
     }
 
@@ -190,31 +195,33 @@ Deno.serve(async (req) => {
         inserted,
         updated,
         sources_processed: HOUSING_SOURCES.length,
-        errors
+        errors,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[HOUSING-SYNC] Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
 /**
  * Attempt to scrape actual tender listings from housing association website
  */
-async function scrapeHousingTenders(source: typeof HOUSING_SOURCES[0]): Promise<HousingOpportunity[]> {
+async function scrapeHousingTenders(
+  source: (typeof HOUSING_SOURCES)[0]
+): Promise<HousingOpportunity[]> {
   try {
     const response = await fetch(source.tendersUrl, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-GB,en;q=0.9'
-      }
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-GB,en;q=0.9',
+      },
     });
 
     if (!response.ok) {
@@ -229,8 +236,15 @@ async function scrapeHousingTenders(source: typeof HOUSING_SOURCES[0]): Promise<
 
     // Pattern: Look for tender tables, lists, or cards
     const electricalKeywords = [
-      'electrical', 'rewire', 'fire alarm', 'emergency lighting',
-      'eicr', 'consumer unit', 'ev charger', 'testing', 'm&e'
+      'electrical',
+      'rewire',
+      'fire alarm',
+      'emergency lighting',
+      'eicr',
+      'consumer unit',
+      'ev charger',
+      'testing',
+      'm&e',
     ];
 
     // Simple pattern matching - real implementation would use proper HTML parser
@@ -262,10 +276,10 @@ async function scrapeHousingTenders(source: typeof HOUSING_SOURCES[0]): Promise<
               requirements: {
                 niceic: true,
                 insurance: 5000000,
-                dbs_check: true
+                dbs_check: true,
               },
               source_url: source.tendersUrl,
-              status: 'live'
+              status: 'live',
             });
           }
         }
@@ -282,7 +296,7 @@ async function scrapeHousingTenders(source: typeof HOUSING_SOURCES[0]): Promise<
 /**
  * Generate realistic housing association opportunities when scraping fails
  */
-function generateHousingOpportunities(source: typeof HOUSING_SOURCES[0]): HousingOpportunity[] {
+function generateHousingOpportunities(source: (typeof HOUSING_SOURCES)[0]): HousingOpportunity[] {
   const opportunities: HousingOpportunity[] = [];
 
   // Generate 2-4 opportunities per source
@@ -312,11 +326,11 @@ function generateHousingOpportunities(source: typeof HOUSING_SOURCES[0]): Housin
         niceic: true,
         insurance: adjustedValue > 100000 ? 10000000 : 5000000,
         dbs_check: true,
-        asbestos_awareness: work.category === 'rewire'
+        asbestos_awareness: work.category === 'rewire',
       },
       contact_email: `procurement@${source.name.replace('_', '')}.org.uk`,
       source_url: source.tendersUrl,
-      status: 'live'
+      status: 'live',
     });
   }
 
@@ -344,38 +358,41 @@ function generateDescription(workType: string, client: string): string {
     'Consumer Unit Replacements': `Programme of consumer unit upgrades to latest regulations. AMD3 compliant metal consumer units with dual RCD protection.`,
     'Electrical Maintenance Term': `Term contract for responsive electrical maintenance across ${client}'s housing stock. Mix of void works, responsive repairs, and planned works.`,
     'EV Charging Infrastructure': `Design and installation of electric vehicle charging points to residential parking areas. Including all associated electrical infrastructure.`,
-    'Data Cabling Installation': `Cat6 structured cabling installation for new build and refurbishment projects. Full testing and certification required.`
+    'Data Cabling Installation': `Cat6 structured cabling installation for new build and refurbishment projects. Full testing and certification required.`,
   };
 
-  return descriptions[workType] || `${workType} works for ${client}. Full specification available from procurement team.`;
+  return (
+    descriptions[workType] ||
+    `${workType} works for ${client}. Full specification available from procurement team.`
+  );
 }
 
 function regionToLocation(region: string): string {
   const locations: Record<string, string> = {
-    'london': 'Greater London',
-    'southeast': 'South East England',
-    'east_england': 'East of England',
-    'east_midlands': 'East Midlands',
-    'west_midlands': 'West Midlands',
-    'northwest': 'North West England',
-    'northeast': 'North East England',
-    'yorkshire': 'Yorkshire & Humber',
-    'southwest': 'South West England'
+    london: 'Greater London',
+    southeast: 'South East England',
+    east_england: 'East of England',
+    east_midlands: 'East Midlands',
+    west_midlands: 'West Midlands',
+    northwest: 'North West England',
+    northeast: 'North East England',
+    yorkshire: 'Yorkshire & Humber',
+    southwest: 'South West England',
   };
   return locations[region] || 'England';
 }
 
 function regionToPostcode(region: string): string {
   const postcodes: Record<string, string[]> = {
-    'london': ['E1', 'N1', 'SE1', 'SW1', 'W1', 'NW1'],
-    'southeast': ['RG1', 'GU1', 'TN1', 'BN1', 'CT1'],
-    'east_england': ['CB1', 'NR1', 'IP1', 'CM1'],
-    'east_midlands': ['NG1', 'LE1', 'DE1', 'NN1'],
-    'west_midlands': ['B1', 'CV1', 'WV1', 'DY1'],
-    'northwest': ['M1', 'L1', 'CH1', 'PR1'],
-    'northeast': ['NE1', 'SR1', 'TS1', 'DH1'],
-    'yorkshire': ['LS1', 'S1', 'BD1', 'HU1'],
-    'southwest': ['BS1', 'BA1', 'EX1', 'PL1']
+    london: ['E1', 'N1', 'SE1', 'SW1', 'W1', 'NW1'],
+    southeast: ['RG1', 'GU1', 'TN1', 'BN1', 'CT1'],
+    east_england: ['CB1', 'NR1', 'IP1', 'CM1'],
+    east_midlands: ['NG1', 'LE1', 'DE1', 'NN1'],
+    west_midlands: ['B1', 'CV1', 'WV1', 'DY1'],
+    northwest: ['M1', 'L1', 'CH1', 'PR1'],
+    northeast: ['NE1', 'SR1', 'TS1', 'DH1'],
+    yorkshire: ['LS1', 'S1', 'BD1', 'HU1'],
+    southwest: ['BS1', 'BA1', 'EX1', 'PL1'],
   };
   const codes = postcodes[region] || ['SW1'];
   return codes[Math.floor(Math.random() * codes.length)];

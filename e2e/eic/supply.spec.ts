@@ -1,6 +1,10 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testInstallation, testInstallation3Phase, earthingArrangements } from "../fixtures/test-data";
+import {
+  testInstallation,
+  testInstallation3Phase,
+  earthingArrangements,
+} from '../fixtures/test-data';
 
 /**
  * EIC Certificate - Supply Characteristics Tests
@@ -12,7 +16,7 @@ import { testInstallation, testInstallation3Phase, earthingArrangements } from "
 
 // Helper to navigate to EIC form
 async function navigateToEIC(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=eic");
+  await page.goto('/electrician/inspection-testing?section=eic');
   await page.waitForTimeout(3000);
 }
 
@@ -27,12 +31,20 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
 }
 
 // Helper to select from dropdown
-async function selectOption(page: Page, triggerSelector: string, optionText: string): Promise<boolean> {
+async function selectOption(
+  page: Page,
+  triggerSelector: string,
+  optionText: string
+): Promise<boolean> {
   const trigger = page.locator(triggerSelector).first();
   if (await trigger.isVisible({ timeout: 2000 }).catch(() => false)) {
     await trigger.click();
     await page.waitForTimeout(300);
-    const option = page.locator(`[role="option"]:has-text("${optionText}"), [role="menuitem"]:has-text("${optionText}")`).first();
+    const option = page
+      .locator(
+        `[role="option"]:has-text("${optionText}"), [role="menuitem"]:has-text("${optionText}")`
+      )
+      .first();
     if (await option.isVisible({ timeout: 2000 })) {
       await option.click();
       return true;
@@ -41,13 +53,13 @@ async function selectOption(page: Page, triggerSelector: string, optionText: str
   return false;
 }
 
-test.describe("EIC Certificate - Supply Type", () => {
+test.describe('EIC Certificate - Supply Type', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("1. Supply Voltage field accepts value", async ({ page }) => {
+  test('1. Supply Voltage field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name="supplyVoltage"], input[name*="voltage" i]',
@@ -62,63 +74,66 @@ test.describe("EIC Certificate - Supply Type", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Supply Phases can be selected (single/three)", async ({ page }) => {
+  test('2. Supply Phases can be selected (single/three)', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name="supplyPhases"], [name*="phase" i], button:has-text("Phase")',
-      "Single"
+      'Single'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
+      const pageContent = await page.textContent('body');
       expect(pageContent?.toLowerCase()).toMatch(/single|1-phase|1p/i);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. Frequency field has default value", async ({ page }) => {
+  test('3. Frequency field has default value', async ({ page }) => {
     const frequencyInput = page.locator('input[name*="frequency" i]').first();
 
     if (await frequencyInput.isVisible({ timeout: 3000 })) {
       const value = await frequencyInput.inputValue();
-      expect(value).toBe("50");
+      expect(value).toBe('50');
     } else {
       // Frequency may be displayed as text
       const frequencyText = page.locator('text=/50.*Hz|50Hz/i');
-      const hasFrequency = await frequencyText.first().isVisible({ timeout: 2000 }).catch(() => true);
+      const hasFrequency = await frequencyText
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => true);
       expect(hasFrequency).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Certificate - Earthing System", () => {
+test.describe('EIC Certificate - Earthing System', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("4. Earthing System can be selected", async ({ page }) => {
+  test('4. Earthing System can be selected', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name="earthingSystem"], [name*="earthing" i], button:has-text("Earthing")',
-      "TN-C-S"
+      'TN-C-S'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent).toContain("TN-C-S");
+      const pageContent = await page.textContent('body');
+      expect(pageContent).toContain('TN-C-S');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Ze field accepts value", async ({ page }) => {
+  test('5. Ze field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name="ze"], input[name*="ze" i]',
@@ -133,10 +148,10 @@ test.describe("EIC Certificate - Earthing System", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("6. Prospective Fault Current field accepts value", async ({ page }) => {
+  test('6. Prospective Fault Current field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name="prospectiveFaultCurrent"], input[name*="pfc" i], input[name*="fault" i]',
@@ -151,22 +166,22 @@ test.describe("EIC Certificate - Earthing System", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Certificate - Supply Characteristics", () => {
+test.describe('EIC Certificate - Supply Characteristics', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("7. Number of phases affects voltage default", async ({ page }) => {
+  test('7. Number of phases affects voltage default', async ({ page }) => {
     // Select three-phase
     const selected = await selectOption(
       page,
       '[name="supplyPhases"], button:has-text("Phase")',
-      "Three"
+      'Three'
     );
 
     if (selected) {
@@ -180,29 +195,33 @@ test.describe("EIC Certificate - Supply Characteristics", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("8. Max demand field accepts value", async ({ page }) => {
+  test('8. Max demand field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="maxDemand" i], input[name*="demand" i]',
-      "100"
+      '100'
     );
 
     if (filled) {
       const input = page.locator('input[name*="maxDemand" i]').first();
       if (await input.isVisible()) {
         const value = await input.inputValue();
-        expect(value).toBe("100");
+        expect(value).toBe('100');
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("9. Alternative source checkbox works", async ({ page }) => {
-    const checkbox = page.locator('input[type="checkbox"][name*="alternative" i], [role="checkbox"][id*="alternative" i]').first();
+  test('9. Alternative source checkbox works', async ({ page }) => {
+    const checkbox = page
+      .locator(
+        'input[type="checkbox"][name*="alternative" i], [role="checkbox"][id*="alternative" i]'
+      )
+      .first();
 
     if (await checkbox.isVisible({ timeout: 3000 })) {
       await checkbox.click();
@@ -212,24 +231,24 @@ test.describe("EIC Certificate - Supply Characteristics", () => {
       expect(typeof isChecked).toBe('boolean');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("10. Supply company field accepts input", async ({ page }) => {
+  test('10. Supply company field accepts input', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="supplyCompany" i], input[name*="dno" i], input[placeholder*="supply" i]',
-      "UK Power Networks"
+      'UK Power Networks'
     );
 
     if (filled) {
       const input = page.locator('input[name*="supplyCompany" i], input[name*="dno" i]').first();
       if (await input.isVisible()) {
         const value = await input.inputValue();
-        expect(value).toContain("Power");
+        expect(value).toContain('Power');
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

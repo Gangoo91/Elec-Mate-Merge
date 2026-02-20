@@ -3,6 +3,7 @@
 ## Files Created:
 
 ### 1. `bs7671Appendix3_Luminaires.ts`
+
 **Appendix 3: Time/Current Characteristics + Section 559: Luminaires**
 
 #### Appendix 3: Time/Current Characteristics of Protective Devices
@@ -32,6 +33,7 @@
 ## Knowledge Now Available to Agents:
 
 ### Designer Agent:
+
 - Specify correct MCB curve type (B/C/D) based on load characteristics
 - Calculate disconnection times for given fault currents
 - Design selectivity between upstream/downstream devices
@@ -42,6 +44,7 @@
 - Specify polyphase luminaire group isolation requirements
 
 ### Installer Agent:
+
 - Connect lampholders with correct polarity (outer contact to neutral)
 - Install luminaires with adequate fixing (min 5kg capacity)
 - Ensure ground-recessed luminaires follow BS EN 60598-2-13 guidance
@@ -50,6 +53,7 @@
 - Install discharge resistors for capacitors >0.5μF
 
 ### Commissioning Agent:
+
 - Test RCD disconnection times (300ms at IΔn, 40ms at 5×IΔn)
 - Verify MCB curve type matches design (check instantaneous trip points)
 - Test selectivity between devices (upstream should NOT trip before downstream)
@@ -61,27 +65,32 @@
 ## Critical Safety Knowledge Embedded:
 
 🚨 **Lampholder Overcurrent Protection (Reg 559.5.1.204)**:
+
 - B15, B22, E14, E27, E40 lampholders MUST be protected by max **16A** device
 - Prevents cable/lampholder overheating during fault conditions
 - Non-compliance = fire risk
 
 🚨 **Lampholder Polarity (Reg 559.5.1.206)**:
+
 - Edison screw/bayonet OUTER CONTACT → NEUTRAL conductor
 - Prevents shock when changing lamps (centre contact de-energized first)
 - Applies to TN and TT systems
 
 🚨 **Domestic Luminaire RCD (Reg 411.3.4 - A3:2024)**:
+
 - ALL fixed luminaires in household installations require 30mA RCD
 - Mandatory from Amendment 3:2024
 - Provides additional protection against fire and shock
 
 🚨 **Selectivity (Reg 536.4.1)**:
+
 - Downstream device MUST trip before upstream to minimize supply loss
 - RCDs: upstream ≥3× downstream rating OR time-delayed
 - MCBs: upstream ≥1.6× downstream rating for discrimination
 - Check manufacturer time/current curves for accurate analysis
 
 🚨 **Ground-Recessed Luminaires (Reg 559.10 - A2:2022)**:
+
 - Follow BS EN 60598-2-13 Table A.1 guidance
 - Require adequate IP rating (typically IPX7)
 - Load-bearing capacity critical for driveways/pedestrian areas
@@ -102,6 +111,7 @@
 🎯 **~98% COMPLETE** - Critical BS 7671:18th Edition (A3:2024) knowledge now available
 
 ### Remaining Sections (Optional/Specialized):
+
 - Appendix 6: Certification Templates (EIC, MEIWC, PEIR forms)
 - Appendix 14: Prospective Fault Current Determination
 - Section 753: Heating Cables and Embedded Heating Systems
@@ -109,6 +119,7 @@
 - Section 729: Operating and Maintenance Gangways
 
 ### Key Achievements:
+
 ✅ All fundamental circuit design calculations
 ✅ All special locations requirements
 ✅ All protection device characteristics

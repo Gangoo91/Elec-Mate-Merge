@@ -1,8 +1,9 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
@@ -20,10 +21,10 @@ Deno.serve(async (req: Request) => {
     const { pdfUrl } = await req.json();
 
     if (!pdfUrl) {
-      return new Response(
-        JSON.stringify({ error: 'No PDF URL provided' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No PDF URL provided' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('[proxy-pdf] Fetching PDF from:', pdfUrl.substring(0, 80) + '...');
@@ -33,10 +34,10 @@ Deno.serve(async (req: Request) => {
 
     if (!response.ok) {
       console.error('[proxy-pdf] Failed to fetch:', response.status, response.statusText);
-      return new Response(
-        JSON.stringify({ error: `Failed to fetch PDF: ${response.status}` }),
-        { status: response.status, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: `Failed to fetch PDF: ${response.status}` }), {
+        status: response.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Get the PDF as an ArrayBuffer

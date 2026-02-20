@@ -36,14 +36,15 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Connect test leads between earth terminal and far end of protective conductor',
       'Measure resistance - should be very low',
       'For ring final circuits: test both legs, then cross-connect to verify ring integrity',
-      'Record (R1 + R2) value for later Zs calculation'
+      'Record (R1 + R2) value for later Zs calculation',
     ],
-    passFailCriteria: 'Resistance should be very low (typically <0.05Ω for short runs, <1Ω for longer runs). Must be continuous path with no breaks.',
+    passFailCriteria:
+      'Resistance should be very low (typically <0.05Ω for short runs, <1Ω for longer runs). Must be continuous path with no breaks.',
     safetyNotes: [
       'Ensure circuit is dead before testing',
       'Test lead resistance must be subtracted or leads must be nulled',
-      'Check test leads for damage before use'
-    ]
+      'Check test leads for damage before use',
+    ],
   },
   {
     testNumber: 2,
@@ -60,14 +61,15 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Measure resistance of CPC loop: r2',
       'Cross-connect L to N and test at each socket: reading should be (r1+rn)/4 at midpoint',
       'Cross-connect L to CPC and test at each socket: reading should be (r1+r2)/4 at midpoint',
-      'Verify no interconnections (spurring) between sockets'
+      'Verify no interconnections (spurring) between sockets',
     ],
-    passFailCriteria: 'All three loop resistances (r1, rn, r2) should be similar (within 0.05Ω). Cross-connection test readings should follow expected pattern with minimum at midpoint. No breaks or spurring detected.',
+    passFailCriteria:
+      'All three loop resistances (r1, rn, r2) should be similar (within 0.05Ω). Cross-connection test readings should follow expected pattern with minimum at midpoint. No breaks or spurring detected.',
     safetyNotes: [
       'MUST test ring integrity - broken rings are dangerous',
       'Highest reading should be at ends, lowest at middle',
-      'Large variations indicate spurring or poor connections'
-    ]
+      'Large variations indicate spurring or poor connections',
+    ],
   },
   {
     testNumber: 3,
@@ -77,7 +79,10 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
     testVoltage: 500, // V DC for 230V circuits
     minimumValue: 1.0, // MΩ minimum, but should be >>1MΩ
     unit: 'MΩ (megohms)',
-    equipment: ['Insulation resistance tester (500V DC for 230V circuits)', 'Lock-off device for isolation'],
+    equipment: [
+      'Insulation resistance tester (500V DC for 230V circuits)',
+      'Lock-off device for isolation',
+    ],
     procedure: [
       'Isolate circuit and lock off',
       'Remove or disconnect sensitive equipment (electronics, LED lamps, surge protectors)',
@@ -87,7 +92,7 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Test between Live and Earth with all switches closed',
       'Test between Neutral and Earth with all switches closed',
       'Test between Live and Neutral with all switches closed',
-      'Record lowest reading'
+      'Record lowest reading',
     ],
     passFailCriteria: `Table 64 - Minimum values:
       - SELV/PELV: ≥0.5MΩ at 250V DC
@@ -100,8 +105,8 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'High voltage DC test - can damage equipment',
       'Discharge capacitance after testing',
       'Ensure personnel clear of circuit during test',
-      'Low readings (<1MΩ) indicate insulation breakdown - DO NOT ENERGIZE'
-    ]
+      'Low readings (<1MΩ) indicate insulation breakdown - DO NOT ENERGIZE',
+    ],
   },
   {
     testNumber: 4,
@@ -116,14 +121,15 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Verify centre contact of Edison screw connected to line',
       'Verify socket-outlets: Line to Line, Neutral to Neutral, Earth to Earth',
       'Check switch wiring: switched conductor is line, not neutral',
-      'For 3-phase: verify correct phase rotation if required'
+      'For 3-phase: verify correct phase rotation if required',
     ],
-    passFailCriteria: 'All single-pole devices in line conductors only. No reversed polarity at socket-outlets. Edison screw lampholders correctly connected. All switching on line conductor only.',
+    passFailCriteria:
+      'All single-pole devices in line conductors only. No reversed polarity at socket-outlets. Edison screw lampholders correctly connected. All switching on line conductor only.',
     safetyNotes: [
       'Reversed polarity is DANGEROUS - creates live exposed metalwork',
       'Common error: neutral switched instead of line',
-      'Check EVERY socket-outlet - don\'t assume'
-    ]
+      "Check EVERY socket-outlet - don't assume",
+    ],
   },
   {
     testNumber: 5,
@@ -138,7 +144,7 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Test at furthest point of each circuit to determine Zs',
       'For RCD-protected circuits: use low-current non-trip test mode',
       'Record all Zs values',
-      'Verify Zs ≤ maximum permitted value for protective device type/rating'
+      'Verify Zs ≤ maximum permitted value for protective device type/rating',
     ],
     passFailCriteria: `Zs must be ≤ maximum value from Table 41.3 (or 41.2, 41.4, 41.6 depending on system):
       
@@ -155,8 +161,8 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'For RCD circuits: use non-trip mode or may cause disconnection',
       'High Zs values indicate inadequate earthing - DANGEROUS',
       'Check supply voltage during test - affects reading',
-      'Note: Some testers give invalid readings with inverters/solar'
-    ]
+      'Note: Some testers give invalid readings with inverters/solar',
+    ],
   },
   {
     testNumber: 6,
@@ -173,7 +179,7 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Test at 5× IΔn - check fast disconnection time',
       'Test using on-board test button to verify mechanical function',
       'For Type AC/A RCDs: test both half-cycles (0° and 180°)',
-      'Record trip times for each test'
+      'Record trip times for each test',
     ],
     passFailCriteria: `Regulation 643.8 / 415.1.1:
       - At 1× IΔn: Must disconnect within 300ms (general type)
@@ -187,8 +193,8 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'RCD WILL trip during test - warn occupants',
       'Test button must work - if not, RCD is faulty',
       'Non-tripping RCD is LIFE-THREATENING - replace immediately',
-      'Slow trip times (>300ms) indicate degraded RCD'
-    ]
+      'Slow trip times (>300ms) indicate degraded RCD',
+    ],
   },
   {
     testNumber: 7,
@@ -205,15 +211,16 @@ export const BS7671_TEST_SEQUENCE: TestRequirement[] = [
       'Verify interlocks operate correctly',
       'Check control and automation systems',
       'Verify residual current monitoring devices (RCMs) if fitted',
-      'Test any isolation devices'
+      'Test any isolation devices',
     ],
-    passFailCriteria: 'All equipment operates as designed. Safety devices function correctly. Interlocks prevent unsafe operation. RCD test buttons cause disconnection.',
+    passFailCriteria:
+      'All equipment operates as designed. Safety devices function correctly. Interlocks prevent unsafe operation. RCD test buttons cause disconnection.',
     safetyNotes: [
       'Test under normal operating conditions',
       'Verify safety systems cannot be bypassed',
-      'Check mechanical and electrical interlocks'
-    ]
-  }
+      'Check mechanical and electrical interlocks',
+    ],
+  },
 ];
 
 /**
@@ -231,20 +238,20 @@ export const INSULATION_RESISTANCE_LIMITS: InsulationResistanceLimit[] = [
     circuitVoltage: 'SELV and PELV',
     minimumResistance: 0.5,
     testVoltage: 250,
-    regulation: 'Table 64'
+    regulation: 'Table 64',
   },
   {
     circuitVoltage: 'Up to 500V (inc. 230V single-phase, 400V 3-phase)',
     minimumResistance: 1.0,
     testVoltage: 500,
-    regulation: 'Table 64'
+    regulation: 'Table 64',
   },
   {
     circuitVoltage: 'Above 500V up to 1000V',
     minimumResistance: 1.0,
     testVoltage: 1000,
-    regulation: 'Table 64'
-  }
+    regulation: 'Table 64',
+  },
 ];
 
 /**
@@ -259,10 +266,11 @@ export function getTestSequence(): TestRequirement[] {
  */
 export function getTest(testName: string): TestRequirement | null {
   const query = testName.toLowerCase();
-  return BS7671_TEST_SEQUENCE.find(t => 
-    t.testName.toLowerCase().includes(query) ||
-    t.regulation.toLowerCase().includes(query)
-  ) || null;
+  return (
+    BS7671_TEST_SEQUENCE.find(
+      (t) => t.testName.toLowerCase().includes(query) || t.regulation.toLowerCase().includes(query)
+    ) || null
+  );
 }
 
 /**
@@ -278,7 +286,7 @@ export function verifyInsulationResistance(
   assessment: string;
 } {
   let limit: InsulationResistanceLimit;
-  
+
   if (circuitVoltage <= 50) {
     limit = INSULATION_RESISTANCE_LIMITS[0]; // SELV/PELV
   } else if (circuitVoltage <= 500) {
@@ -286,9 +294,9 @@ export function verifyInsulationResistance(
   } else {
     limit = INSULATION_RESISTANCE_LIMITS[2]; // >500V
   }
-  
+
   const compliant = measuredResistance >= limit.minimumResistance;
-  
+
   let assessment = '';
   if (measuredResistance >= 50) {
     assessment = 'EXCELLENT - Very high insulation resistance';
@@ -301,11 +309,11 @@ export function verifyInsulationResistance(
   } else {
     assessment = 'FAIL - Below minimum requirement, DO NOT ENERGIZE. Insulation breakdown present.';
   }
-  
+
   return {
     compliant,
     requiredMinimum: limit.minimumResistance,
     testVoltageUsed: limit.testVoltage,
-    assessment
+    assessment,
   };
 }

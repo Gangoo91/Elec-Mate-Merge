@@ -28,11 +28,11 @@ serve(async (req) => {
             safe: false,
             message: `⛔ BLOCKED: Cannot delete ${deleteCount} design_knowledge rows at once. Maximum allowed: ${MAX_SAFE_DELETE}. Use soft-delete (is_active=false) instead.`,
             maxAllowed: MAX_SAFE_DELETE,
-            requestedCount: deleteCount
+            requestedCount: deleteCount,
           }),
-          { 
-            status: 403, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          {
+            status: 403,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
       }
@@ -42,7 +42,7 @@ serve(async (req) => {
           safe: true,
           message: `✅ Delete request is within safe limits (${deleteCount}/${MAX_SAFE_DELETE})`,
           maxAllowed: MAX_SAFE_DELETE,
-          requestedCount: deleteCount
+          requestedCount: deleteCount,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -50,17 +50,17 @@ serve(async (req) => {
 
     if (action === 'soft_delete') {
       const { ids } = await req.json();
-      
+
       if (!ids || ids.length === 0) {
         throw new Error('No IDs provided for soft delete');
       }
 
       const { error } = await supabase
         .from('design_knowledge')
-        .update({ 
-          is_active: false, 
+        .update({
+          is_active: false,
           deleted_at: new Date().toISOString(),
-          last_modified_by: 'admin'
+          last_modified_by: 'admin',
         })
         .in('id', ids);
 
@@ -70,7 +70,7 @@ serve(async (req) => {
         JSON.stringify({
           success: true,
           message: `✅ Soft-deleted ${ids.length} design_knowledge entries (intelligence preserved)`,
-          deletedCount: ids.length
+          deletedCount: ids.length,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -78,17 +78,17 @@ serve(async (req) => {
 
     if (action === 'restore_soft_deleted') {
       const { ids } = await req.json();
-      
+
       if (!ids || ids.length === 0) {
         throw new Error('No IDs provided for restoration');
       }
 
       const { error } = await supabase
         .from('design_knowledge')
-        .update({ 
-          is_active: true, 
+        .update({
+          is_active: true,
           deleted_at: null,
-          last_modified_by: 'admin'
+          last_modified_by: 'admin',
         })
         .in('id', ids);
 
@@ -98,29 +98,25 @@ serve(async (req) => {
         JSON.stringify({
           success: true,
           message: `✅ Restored ${ids.length} design_knowledge entries`,
-          restoredCount: ids.length
+          restoredCount: ids.length,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
-    return new Response(
-      JSON.stringify({ error: 'Invalid action' }),
-      { 
-        status: 400, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
-      }
-    );
-
+    return new Response(JSON.stringify({ error: 'Invalid action' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('❌ Guard function error:', error);
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error' 
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error',
       }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

@@ -56,18 +56,27 @@ export function buildConversationState(messages: Message[], context?: any): Conv
     decisions: [],
     requirements: [],
     openQuestions: [],
-    stage: 'discovery'
+    stage: 'discovery',
   };
 
   // Analyze messages to build state
   for (const msg of messages) {
     if (msg.role === 'user') {
       const content = msg.content.toLowerCase();
-      
+
       // Detect project type
-      if (content.includes('domestic') || content.includes('house') || content.includes('flat') || content.includes('bed')) {
+      if (
+        content.includes('domestic') ||
+        content.includes('house') ||
+        content.includes('flat') ||
+        content.includes('bed')
+      ) {
         state.projectType = 'domestic';
-      } else if (content.includes('commercial') || content.includes('shop') || content.includes('office')) {
+      } else if (
+        content.includes('commercial') ||
+        content.includes('shop') ||
+        content.includes('office')
+      ) {
         state.projectType = 'commercial';
       } else if (content.includes('industrial') || content.includes('factory')) {
         state.projectType = 'industrial';
@@ -101,9 +110,13 @@ export function buildConversationState(messages: Message[], context?: any): Conv
     // Track decisions from assistant messages
     if (msg.role === 'assistant') {
       const content = msg.content.toLowerCase();
-      
+
       // Detect stage progression
-      if (content.includes('calculate') || content.includes('cable size') || content.includes('mcb')) {
+      if (
+        content.includes('calculate') ||
+        content.includes('cable size') ||
+        content.includes('mcb')
+      ) {
         state.stage = 'design';
       } else if (content.includes('cost') || content.includes('price') || content.includes('£')) {
         state.stage = 'costing';
@@ -117,7 +130,7 @@ export function buildConversationState(messages: Message[], context?: any): Conv
 }
 
 function addCircuitIfNew(circuits: Circuit[], newCircuit: Circuit) {
-  if (!circuits.some(c => c.type === newCircuit.type)) {
+  if (!circuits.some((c) => c.type === newCircuit.type)) {
     circuits.push(newCircuit);
   }
 }
@@ -135,31 +148,33 @@ export async function summarizeConversation(
   // Keep last 20 messages full, compress older ones BUT preserve technical specs
   const recentMessages = messages.slice(-20);
   const olderMessages = messages.slice(0, -20);
-  
+
   // Import query parser to detect technical content
   const { parseQueryEntities } = await import('./query-parser.ts');
-  
+
   // Compress older messages but preserve technical specs
-  const compressedOlder = olderMessages.map(msg => {
+  const compressedOlder = olderMessages.map((msg) => {
     const entities = parseQueryEntities(msg.content);
-    
+
     // NEVER compress messages with technical parameters
     if (entities.power || entities.distance || entities.loadType) {
       return `${msg.role}: ${msg.content}`; // Keep full message
     }
-    
+
     // Only compress conversational fluff
     if (msg.role === 'user' && msg.content.length > 200) {
       return `${msg.role}: [User query about electrical installation]`;
     }
-    
+
     return `${msg.role}: ${msg.content}`;
   });
-  
+
   const conversationText = [
     ...compressedOlder,
-    ...recentMessages.map(m => `${m.role}: ${m.content}`)
-  ].filter(Boolean).join('\n');
+    ...recentMessages.map((m) => `${m.role}: ${m.content}`),
+  ]
+    .filter(Boolean)
+    .join('\n');
 
   const summaryPrompt = `Analyze this electrical installation conversation and extract COMPREHENSIVE structured data as JSON:
 
@@ -182,17 +197,21 @@ CRITICAL: Extract ALL technical specifications and reasoning chains, not just su
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-2025-08-07',
         messages: [
-          { role: 'system', content: 'You extract ALL structured information from electrical conversations. Return comprehensive JSON with every technical detail.' },
+          {
+            role: 'system',
+            content:
+              'You extract ALL structured information from electrical conversations. Return comprehensive JSON with every technical detail.',
+          },
           { role: 'user', content: summaryPrompt },
         ],
-        response_format: { type: "json_object" },
-        max_completion_tokens: 2000
+        response_format: { type: 'json_object' },
+        max_completion_tokens: 2000,
       }),
     });
 
@@ -209,28 +228,28 @@ CRITICAL: Extract ALL technical specifications and reasoning chains, not just su
 
 function extractSimpleSummary(messages: Message[]): ConversationSummary {
   const state = buildConversationState(messages);
-  const lastUserMessage = [...messages].reverse().find(m => m.role === 'user')?.content || '';
-  
+  const lastUserMessage = [...messages].reverse().find((m) => m.role === 'user')?.content || '';
+
   return {
     projectType: state.projectType,
-    decisions: state.decisions.map(d => d.decision),
+    decisions: state.decisions.map((d) => d.decision),
     requirements: state.requirements,
     openQuestions: state.openQuestions,
-    keyFacts: state.circuits.map(c => `${c.type} circuit`),
-    lastTopic: detectLastTopic(messages)
+    keyFacts: state.circuits.map((c) => `${c.type} circuit`),
+    lastTopic: detectLastTopic(messages),
   };
 }
 
 function detectLastTopic(messages: Message[]): string {
-  const recentAssistant = messages.filter(m => m.role === 'assistant').slice(-2);
-  const combined = recentAssistant.map(m => m.content.toLowerCase()).join(' ');
-  
+  const recentAssistant = messages.filter((m) => m.role === 'assistant').slice(-2);
+  const combined = recentAssistant.map((m) => m.content.toLowerCase()).join(' ');
+
   if (combined.includes('3-bed') || combined.includes('three bed')) return '3-bed house design';
   if (combined.includes('shower')) return 'shower circuit';
   if (combined.includes('cooker')) return 'cooker circuit';
   if (combined.includes('ev') || combined.includes('charger')) return 'ev charger';
   if (combined.includes('cable') && combined.includes('size')) return 'cable sizing';
   if (combined.includes('test')) return 'testing and commissioning';
-  
+
   return 'general electrical installation';
 }

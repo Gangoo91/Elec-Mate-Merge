@@ -9,10 +9,13 @@ This document defines the standard design pattern for ALL course content pages i
 ## CRITICAL REQUIREMENTS
 
 ### 1. Text Alignment
+
 **ALL TEXT MUST BE LEFT-ALIGNED** - Never use `text-center` on content text. Only the page title header is centered.
 
 ### 2. Language
+
 **UK ENGLISH ONLY** - Use British spelling throughout:
+
 - colour (not color)
 - centre (not center)
 - organise (not organize)
@@ -22,13 +25,17 @@ This document defines the standard design pattern for ALL course content pages i
 - metre (not meter)
 
 ### 3. Text Colour
+
 **WHITE TEXT ONLY** - Use `text-white` for all body text. Never use grey/gray text like `text-white/60` or `text-gray-400`.
+
 - Body text: `text-white`
 - Accent text: `text-elec-yellow` or `text-elec-yellow/80`
 - Secondary text (subtitles only): `text-white/80` or `text-white/90`
 
 ### 4. Navigation Setup
+
 **NAVIGATION MUST WORK CORRECTLY:**
+
 - Back button: Always returns to parent module page using `<Link to="..">`
 - Previous Section: Links to the previous section using relative or absolute paths
 - Next Section: Links to the next section using relative or absolute paths
@@ -39,13 +46,13 @@ This document defines the standard design pattern for ALL course content pages i
 ## Required Imports
 
 ```tsx
-import { ArrowLeft, Zap, CheckCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Quiz } from "@/components/apprentice-courses/Quiz";
-import { InlineCheck } from "@/components/apprentice-courses/InlineCheck";
-import UnitsPocketCard from "@/components/apprentice-courses/UnitsPocketCard";
-import useSEO from "@/hooks/useSEO";
+import { ArrowLeft, Zap, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Quiz } from '@/components/apprentice-courses/Quiz';
+import { InlineCheck } from '@/components/apprentice-courses/InlineCheck';
+import UnitsPocketCard from '@/components/apprentice-courses/UnitsPocketCard';
+import useSEO from '@/hooks/useSEO';
 ```
 
 ---
@@ -55,8 +62,8 @@ import useSEO from "@/hooks/useSEO";
 ### 1. SEO Constants
 
 ```tsx
-const TITLE = "Page Title - Course Module Section";
-const DESCRIPTION = "SEO description for the page.";
+const TITLE = 'Page Title - Course Module Section';
+const DESCRIPTION = 'SEO description for the page.';
 ```
 
 ### 2. Quick Check Questions (3-4 questions)
@@ -64,12 +71,12 @@ const DESCRIPTION = "SEO description for the page.";
 ```tsx
 const quickCheckQuestions = [
   {
-    id: "unique-id",
-    question: "Question text?",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    id: 'unique-id',
+    question: 'Question text?',
+    options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
     correctIndex: 1,
-    explanation: "Why this answer is correct."
-  }
+    explanation: 'Why this answer is correct.',
+  },
 ];
 ```
 
@@ -79,11 +86,11 @@ const quickCheckQuestions = [
 const quizQuestions = [
   {
     id: 1,
-    question: "Question text?",
-    options: ["Option 1", "Option 2", "Option 3", "Option 4"],
+    question: 'Question text?',
+    options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
     correctAnswer: 0,
-    explanation: "Explanation text."
-  }
+    explanation: 'Explanation text.',
+  },
 ];
 ```
 
@@ -92,9 +99,9 @@ const quizQuestions = [
 ```tsx
 const faqs = [
   {
-    question: "Question text?",
-    answer: "Detailed answer text."
-  }
+    question: 'Question text?',
+    answer: 'Detailed answer text.',
+  },
 ];
 ```
 
@@ -113,7 +120,12 @@ const faqs = [
 ```tsx
 <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
   <div className="px-4 sm:px-6 py-2">
-    <Button variant="ghost" size="lg" className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+    <Button
+      variant="ghost"
+      size="lg"
+      className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+      asChild
+    >
       <Link to="..">
         <ArrowLeft className="w-4 h-4 mr-2" />
         Back
@@ -139,12 +151,8 @@ const faqs = [
     <Zap className="h-4 w-4" />
     <span>Module X Section Y</span>
   </div>
-  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
-    Page Title
-  </h1>
-  <p className="text-white/80">
-    Brief subtitle description
-  </p>
+  <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Page Title</h1>
+  <p className="text-white/80">Brief subtitle description</p>
 </header>
 ```
 
@@ -155,14 +163,20 @@ const faqs = [
   <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
     <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
     <ul className="text-sm text-white space-y-1">
-      <li><strong>Key:</strong> Value</li>
+      <li>
+        <strong>Key:</strong> Value
+      </li>
     </ul>
   </div>
   <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
     <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
     <ul className="text-sm text-white space-y-1">
-      <li><strong>Spot:</strong> How to identify</li>
-      <li><strong>Use:</strong> How to apply</li>
+      <li>
+        <strong>Spot:</strong> How to identify
+      </li>
+      <li>
+        <strong>Use:</strong> How to apply
+      </li>
     </ul>
   </div>
 </div>
@@ -175,12 +189,12 @@ const faqs = [
   <h2 className="text-lg font-semibold text-white mb-4">What You'll Learn</h2>
   <div className="grid sm:grid-cols-2 gap-2">
     {[
-      "Learning outcome 1",
-      "Learning outcome 2",
-      "Learning outcome 3",
-      "Learning outcome 4",
-      "Learning outcome 5",
-      "Learning outcome 6"
+      'Learning outcome 1',
+      'Learning outcome 2',
+      'Learning outcome 3',
+      'Learning outcome 4',
+      'Learning outcome 5',
+      'Learning outcome 6',
     ].map((item, i) => (
       <div key={i} className="flex items-start gap-2 text-sm text-white">
         <CheckCircle className="h-4 w-4 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
@@ -249,8 +263,12 @@ const faqs = [
     <div>
       <h3 className="text-sm font-medium text-red-400/80 mb-2">Common Mistakes to Avoid</h3>
       <ul className="text-sm text-white space-y-1 ml-4">
-        <li><strong>Mistake 1</strong> — explanation</li>
-        <li><strong>Mistake 2</strong> — explanation</li>
+        <li>
+          <strong>Mistake 1</strong> — explanation
+        </li>
+        <li>
+          <strong>Mistake 2</strong> — explanation
+        </li>
       </ul>
     </div>
   </div>
@@ -305,10 +323,7 @@ const faqs = [
 
 ```tsx
 <section className="mb-10">
-  <Quiz
-    title="Test Your Knowledge"
-    questions={quizQuestions}
-  />
+  <Quiz title="Test Your Knowledge" questions={quizQuestions} />
 </section>
 ```
 
@@ -316,13 +331,22 @@ const faqs = [
 
 ```tsx
 <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
-  <Button variant="ghost" size="lg" className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]" asChild>
+  <Button
+    variant="ghost"
+    size="lg"
+    className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+    asChild
+  >
     <Link to="..">
       <ArrowLeft className="w-4 h-4 mr-2" />
       Back
     </Link>
   </Button>
-  <Button size="lg" className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]" asChild>
+  <Button
+    size="lg"
+    className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
+    asChild
+  >
     <Link to="../section-Y">
       Next Section
       <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
@@ -335,17 +359,17 @@ const faqs = [
 
 ## Key Styling Classes
 
-| Element | Classes |
-|---------|---------|
-| Page background | `min-h-screen overflow-x-hidden bg-[#1a1a1a]` |
-| Sticky header | `border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm` |
-| Touch buttons | `min-h-[44px] touch-manipulation active:scale-[0.98]` |
-| Section numbers | `text-elec-yellow/80 text-sm font-normal` |
-| Yellow accent boxes | `p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50` |
-| Yellow accent text | `text-elec-yellow`, `text-elec-yellow/80`, `text-elec-yellow/70` |
-| Next button | `bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90` |
-| Back button | `variant="ghost" text-white/70 hover:text-white hover:bg-white/5` |
-| Dividers | `border-white/5` |
+| Element             | Classes                                                                       |
+| ------------------- | ----------------------------------------------------------------------------- |
+| Page background     | `min-h-screen overflow-x-hidden bg-[#1a1a1a]`                                 |
+| Sticky header       | `border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm` |
+| Touch buttons       | `min-h-[44px] touch-manipulation active:scale-[0.98]`                         |
+| Section numbers     | `text-elec-yellow/80 text-sm font-normal`                                     |
+| Yellow accent boxes | `p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50`            |
+| Yellow accent text  | `text-elec-yellow`, `text-elec-yellow/80`, `text-elec-yellow/70`              |
+| Next button         | `bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90`                       |
+| Back button         | `variant="ghost" text-white/70 hover:text-white hover:bg-white/5`             |
+| Dividers            | `border-white/5`                                                              |
 
 ---
 
@@ -367,6 +391,7 @@ const faqs = [
 ## Navigation URL Patterns
 
 ### Upskilling Courses
+
 ```
 Base: /study-centre/upskilling/{course-name}
 Module: /study-centre/upskilling/{course-name}/module-X
@@ -374,11 +399,13 @@ Section: /study-centre/upskilling/{course-name}/module-X/section-Y
 ```
 
 **Examples:**
+
 - `/study-centre/upskilling/inspection-testing/module-1`
 - `/study-centre/upskilling/inspection-testing/module-1/section-1`
 - `/study-centre/upskilling/bms/module-2/section-3`
 
 ### Apprentice Courses
+
 ```
 Base: /study-centre/apprentice/courses/level-X
 Module: /study-centre/apprentice/courses/level-X/module-X
@@ -388,6 +415,7 @@ Section: /study-centre/apprentice/courses/level-X/module-X/X-Y
 ### Navigation Button Implementation
 
 **Back Button (to module page):**
+
 ```tsx
 <Button variant="ghost" size="lg" asChild>
   <Link to="..">
@@ -398,6 +426,7 @@ Section: /study-centre/apprentice/courses/level-X/module-X/X-Y
 ```
 
 **Previous Section Button:**
+
 ```tsx
 <Button variant="ghost" size="lg" asChild>
   <Link to="/study-centre/upskilling/{course}/module-{X}/section-{Y-1}">
@@ -408,6 +437,7 @@ Section: /study-centre/apprentice/courses/level-X/module-X/X-Y
 ```
 
 **Next Section Button:**
+
 ```tsx
 <Button size="lg" className="bg-elec-yellow text-[#1a1a1a]" asChild>
   <Link to="/study-centre/upskilling/{course}/module-{X}/section-{Y+1}">
@@ -418,10 +448,12 @@ Section: /study-centre/apprentice/courses/level-X/module-X/X-Y
 ```
 
 **First Section (no previous):**
+
 - Hide or disable the Previous button
 - Only show Back and Next
 
 **Last Section of Module:**
+
 - Next button should link to the next module's first section or module overview
 
 ---
@@ -429,6 +461,7 @@ Section: /study-centre/apprentice/courses/level-X/module-X/X-Y
 ## JSX Escape Characters
 
 When using comparison symbols in content, escape them:
+
 - `>` becomes `&gt;`
 - `<` becomes `&lt;`
 

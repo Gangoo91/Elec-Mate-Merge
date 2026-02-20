@@ -1,10 +1,11 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
 interface UnifiedJob {
@@ -22,14 +23,19 @@ const parseAdzuna = (json: any): UnifiedJob[] => {
   return json.results.map((r: any) => {
     const min = r.salary_min ? Math.round(r.salary_min) : null;
     const max = r.salary_max ? Math.round(r.salary_max) : null;
-    const salary = min && max ? `£${min.toLocaleString()} - £${max.toLocaleString()}` : (min ? `£${min.toLocaleString()}` : null);
+    const salary =
+      min && max
+        ? `£${min.toLocaleString()} - £${max.toLocaleString()}`
+        : min
+          ? `£${min.toLocaleString()}`
+          : null;
     return {
-      title: r.title || "",
-      company: r.company?.display_name || "",
-      location: r.location?.display_name || "",
+      title: r.title || '',
+      company: r.company?.display_name || '',
+      location: r.location?.display_name || '',
       salary,
-      type: (r.contract_type || r.contract_time || "").toString(),
-      description: r.description || "",
+      type: (r.contract_type || r.contract_time || '').toString(),
+      description: r.description || '',
       posted_date: r.created || new Date().toISOString(),
     } as UnifiedJob;
   });
@@ -40,14 +46,19 @@ const parseReed = (json: any): UnifiedJob[] => {
   return json.results.map((r: any) => {
     const min = r.minimumSalary ? Math.round(r.minimumSalary) : null;
     const max = r.maximumSalary ? Math.round(r.maximumSalary) : null;
-    const salary = min && max ? `£${min.toLocaleString()} - £${max.toLocaleString()}` : (min ? `£${min.toLocaleString()}` : null);
+    const salary =
+      min && max
+        ? `£${min.toLocaleString()} - £${max.toLocaleString()}`
+        : min
+          ? `£${min.toLocaleString()}`
+          : null;
     return {
-      title: r.jobTitle || "",
-      company: r.employerName || "",
-      location: r.locationName || "",
+      title: r.jobTitle || '',
+      company: r.employerName || '',
+      location: r.locationName || '',
       salary,
-      type: (r.jobType || "").toString(),
-      description: r.jobDescription || "",
+      type: (r.jobType || '').toString(),
+      description: r.jobDescription || '',
       posted_date: r.date || new Date().toISOString(),
     } as UnifiedJob;
   });
@@ -58,15 +69,15 @@ const computeMetrics = (jobs: UnifiedJob[]) => {
 
   // Salaries
   const baseSalaries = jobs
-    .filter(j => j.salary)
-    .map(j => {
-      const clean = (j.salary || "").replace(/[£$,]/g, "");
+    .filter((j) => j.salary)
+    .map((j) => {
+      const clean = (j.salary || '').replace(/[£$,]/g, '');
       const nums = clean.match(/\d+/g);
       if (!nums) return 0;
       if (nums.length >= 2) return Math.round((parseInt(nums[0]) + parseInt(nums[1])) / 2);
       return parseInt(nums[0]);
     })
-    .filter(v => v > 0);
+    .filter((v) => v > 0);
 
   let salaryStats = { median: 0, q1: 0, q3: 0, min: 0, max: 0, count: 0 };
   let salaryBuckets: { label: string; count: number }[] = [];
@@ -82,26 +93,35 @@ const computeMetrics = (jobs: UnifiedJob[]) => {
       count: n,
     };
     const ranges = [
-      { label: "Up to £25k", min: 0, max: 25000 },
-      { label: "£25k–£35k", min: 25000, max: 35000 },
-      { label: "£35k–£45k", min: 35000, max: 45000 },
-      { label: "£45k–£60k", min: 45000, max: 60000 },
-      { label: "£60k+", min: 60000, max: Infinity },
+      { label: 'Up to £25k', min: 0, max: 25000 },
+      { label: '£25k–£35k', min: 25000, max: 35000 },
+      { label: '£35k–£45k', min: 35000, max: 45000 },
+      { label: '£45k–£60k', min: 45000, max: 60000 },
+      { label: '£60k+', min: 60000, max: Infinity },
     ];
-    salaryBuckets = ranges.map(r => ({ label: r.label, count: s.filter(v => v >= r.min && v < r.max).length }));
+    salaryBuckets = ranges.map((r) => ({
+      label: r.label,
+      count: s.filter((v) => v >= r.min && v < r.max).length,
+    }));
   }
 
   // Type mix and other metrics (same as original)
   const typeCounts: Record<string, number> = {};
-  jobs.forEach(j => {
+  jobs.forEach((j) => {
     const t = (j.type || 'Unspecified').toString();
     typeCounts[t] = (typeCounts[t] || 0) + 1;
   });
   const jobTypeMix = Object.entries(typeCounts).map(([label, count]) => ({ label, count }));
 
   // Experience mix
-  const expCounters: Record<string, number> = { 'Apprentice/Trainee': 0, 'Entry': 0, 'Mid': 0, 'Senior': 0, 'Unspecified': 0 };
-  jobs.forEach(j => {
+  const expCounters: Record<string, number> = {
+    'Apprentice/Trainee': 0,
+    Entry: 0,
+    Mid: 0,
+    Senior: 0,
+    Unspecified: 0,
+  };
+  jobs.forEach((j) => {
     const t = lowerText(j);
     if (/(apprentice|trainee)/.test(t)) expCounters['Apprentice/Trainee'] += 1;
     else if (/(senior|lead|manager)/.test(t)) expCounters['Senior'] += 1;
@@ -112,8 +132,8 @@ const computeMetrics = (jobs: UnifiedJob[]) => {
   const experienceMix = Object.entries(expCounters).map(([label, count]) => ({ label, count }));
 
   // Working pattern
-  const workCounters: Record<string, number> = { 'Remote': 0, 'Hybrid': 0, 'On-site': 0 };
-  jobs.forEach(j => {
+  const workCounters: Record<string, number> = { Remote: 0, Hybrid: 0, 'On-site': 0 };
+  jobs.forEach((j) => {
     const t = lowerText(j);
     if (/remote/.test(t)) workCounters['Remote'] += 1;
     else if (/hybrid/.test(t)) workCounters['Hybrid'] += 1;
@@ -123,47 +143,92 @@ const computeMetrics = (jobs: UnifiedJob[]) => {
 
   // Freshness
   const now = new Date();
-  const ages = jobs.map(j => {
-    const d = new Date(j.posted_date);
-    return Math.max(0, Math.round((now.getTime() - d.getTime()) / (1000 * 3600 * 24)));
-  }).sort((a, b) => a - b);
+  const ages = jobs
+    .map((j) => {
+      const d = new Date(j.posted_date);
+      return Math.max(0, Math.round((now.getTime() - d.getTime()) / (1000 * 3600 * 24)));
+    })
+    .sort((a, b) => a - b);
   const medianDays = ages[Math.floor(ages.length / 2)] || 0;
-  const last48h = jobs.filter(j => (now.getTime() - new Date(j.posted_date).getTime()) <= 48 * 3600 * 1000).length;
-  const last7d = jobs.filter(j => (now.getTime() - new Date(j.posted_date).getTime()) <= 7 * 24 * 3600 * 1000).length;
-  const freshness = { last48hPct: Math.round((last48h / Math.max(1, jobs.length)) * 100), recent7dPct: Math.round((last7d / Math.max(1, jobs.length)) * 100), medianDays };
+  const last48h = jobs.filter(
+    (j) => now.getTime() - new Date(j.posted_date).getTime() <= 48 * 3600 * 1000
+  ).length;
+  const last7d = jobs.filter(
+    (j) => now.getTime() - new Date(j.posted_date).getTime() <= 7 * 24 * 3600 * 1000
+  ).length;
+  const freshness = {
+    last48hPct: Math.round((last48h / Math.max(1, jobs.length)) * 100),
+    recent7dPct: Math.round((last7d / Math.max(1, jobs.length)) * 100),
+    medianDays,
+  };
 
   // Top companies
   const companyCounts: Record<string, number> = {};
-  jobs.forEach(j => { companyCounts[j.company] = (companyCounts[j.company] || 0) + 1; });
-  const topCompanies = Object.entries(companyCounts).sort((a, b) => b[1] - a[1]).slice(0, 5).map(([name, count]) => ({ name, count }));
+  jobs.forEach((j) => {
+    companyCounts[j.company] = (companyCounts[j.company] || 0) + 1;
+  });
+  const topCompanies = Object.entries(companyCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 5)
+    .map(([name, count]) => ({ name, count }));
 
   // Skills / certs
-  const skillKeywords = ['testing','installation','maintenance','commissioning','solar','led','commercial','domestic','industrial','eicr','fault finding','controls'];
-  const certKeywordsMap: Record<string,string> = {
+  const skillKeywords = [
+    'testing',
+    'installation',
+    'maintenance',
+    'commissioning',
+    'solar',
+    'led',
+    'commercial',
+    'domestic',
+    'industrial',
+    'eicr',
+    'fault finding',
+    'controls',
+  ];
+  const certKeywordsMap: Record<string, string> = {
     'bs 7671': 'BS 7671 (18th Edition)',
     '18th edition': '18th Edition',
     '2391': '2391 Testing & Inspection',
-    'ecs': 'ECS',
-    'cscs': 'CSCS',
-    'niceic': 'NICEIC',
-    'napit': 'NAPIT',
-    'ev': 'EV Charging',
-    'solar': 'Solar',
+    ecs: 'ECS',
+    cscs: 'CSCS',
+    niceic: 'NICEIC',
+    napit: 'NAPIT',
+    ev: 'EV Charging',
+    solar: 'Solar',
   };
   const skillCounts: Record<string, number> = {};
-  skillKeywords.forEach(k => {
-    const c = jobs.filter(j => lowerText(j).includes(k)).length;
+  skillKeywords.forEach((k) => {
+    const c = jobs.filter((j) => lowerText(j).includes(k)).length;
     if (c > 0) skillCounts[k] = c;
   });
   const certCounts: Record<string, number> = {};
-  Object.keys(certKeywordsMap).forEach(k => {
-    const c = jobs.filter(j => lowerText(j).includes(k)).length;
+  Object.keys(certKeywordsMap).forEach((k) => {
+    const c = jobs.filter((j) => lowerText(j).includes(k)).length;
     if (c > 0) certCounts[k] = c;
   });
-  const topSkills = Object.entries(skillCounts).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([name,count])=>({ name: name.charAt(0).toUpperCase()+name.slice(1), count }));
-  const topCerts = Object.entries(certCounts).sort((a,b)=>b[1]-a[1]).slice(0,6).map(([key,count])=>({ name: certKeywordsMap[key], count }));
+  const topSkills = Object.entries(skillCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([name, count]) => ({ name: name.charAt(0).toUpperCase() + name.slice(1), count }));
+  const topCerts = Object.entries(certCounts)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([key, count]) => ({ name: certKeywordsMap[key], count }));
 
-  return { salaryStats, salaryBuckets, jobTypeMix, experienceMix, workingPattern, freshness, topCompanies, topSkills, topCerts, jobsCount: jobs.length };
+  return {
+    salaryStats,
+    salaryBuckets,
+    jobTypeMix,
+    experienceMix,
+    workingPattern,
+    freshness,
+    topCompanies,
+    topSkills,
+    topCerts,
+    jobsCount: jobs.length,
+  };
 };
 
 const updateMarketInsights = async (keywords: string, location: string) => {
@@ -175,9 +240,12 @@ const updateMarketInsights = async (keywords: string, location: string) => {
 
   try {
     // Use the live job aggregator to get jobs from all 5 sources
-    const { data: aggregatorResult, error: aggregatorError } = await supabase.functions.invoke('live-job-aggregator', {
-      body: { keywords, location, page: 1 }
-    });
+    const { data: aggregatorResult, error: aggregatorError } = await supabase.functions.invoke(
+      'live-job-aggregator',
+      {
+        body: { keywords, location, page: 1 },
+      }
+    );
 
     if (aggregatorError) {
       console.error('Live job aggregator error:', aggregatorError);
@@ -200,24 +268,33 @@ const updateMarketInsights = async (keywords: string, location: string) => {
       posted_date: job.posted_date || job.postedDate || new Date().toISOString(),
     }));
 
-    console.log(`Found ${jobs.length} jobs from live aggregator (${aggregatorResult.summary?.sourceCounts ? Object.entries(aggregatorResult.summary.sourceCounts).map(([source, count]) => `${source}: ${count}`).join(', ') : 'all sources'})`);
+    console.log(
+      `Found ${jobs.length} jobs from live aggregator (${
+        aggregatorResult.summary?.sourceCounts
+          ? Object.entries(aggregatorResult.summary.sourceCounts)
+              .map(([source, count]) => `${source}: ${count}`)
+              .join(', ')
+          : 'all sources'
+      })`
+    );
 
     // Compute metrics
     const metrics = computeMetrics(jobs);
 
     // Store in database with automatic expiry
-    const { error } = await supabase
-      .from('market_insights_cache')
-      .upsert({
+    const { error } = await supabase.from('market_insights_cache').upsert(
+      {
         keywords,
         location,
         data: metrics,
         data_source: 'live_aggregator_5_sources',
         last_updated: new Date().toISOString(),
-        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString() // 7 days
-      }, {
-        onConflict: 'keywords,location'
-      });
+        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days
+      },
+      {
+        onConflict: 'keywords,location',
+      }
+    );
 
     if (error) {
       console.error('Database error:', error);
@@ -251,40 +328,49 @@ serve(async (req) => {
       ];
 
       const results = await Promise.all(
-        searchCombinations.map(combo => updateMarketInsights(combo.keywords, combo.location))
+        searchCombinations.map((combo) => updateMarketInsights(combo.keywords, combo.location))
       );
 
       const successCount = results.filter(Boolean).length;
-      
-      return new Response(JSON.stringify({
-        success: true,
-        updated: successCount,
-        total: searchCombinations.length,
-        timestamp: new Date().toISOString()
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          updated: successCount,
+          total: searchCombinations.length,
+          timestamp: new Date().toISOString(),
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     } else {
       // Single update mode
       const success = await updateMarketInsights(keywords, location);
-      
-      return new Response(JSON.stringify({
-        success,
-        keywords,
-        location,
-        timestamp: new Date().toISOString()
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-      });
+
+      return new Response(
+        JSON.stringify({
+          success,
+          keywords,
+          location,
+          timestamp: new Date().toISOString(),
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
   } catch (error) {
     console.error('Scheduler error:', error);
-    return new Response(JSON.stringify({
-      error: String(error),
-      timestamp: new Date().toISOString()
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-    });
+    return new Response(
+      JSON.stringify({
+        error: String(error),
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

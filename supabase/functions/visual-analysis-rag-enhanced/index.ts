@@ -1,4 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
 
@@ -38,7 +38,7 @@ serve(async (req) => {
       'search_maintenance_hybrid',
       {
         query_text: userContext,
-        match_count: 6
+        match_count: 6,
       }
     );
 
@@ -51,7 +51,7 @@ serve(async (req) => {
       'search_regulations_intelligence_hybrid',
       {
         query_text: userContext,
-        match_count: 6
+        match_count: 6,
       }
     );
 
@@ -181,7 +181,7 @@ Provide clear, safe wiring instructions based on:
 - GN3 installation best practices
 - Safe working procedures
 
-Include cable sizing, protection requirements, and testing procedures.`
+Include cable sizing, protection requirements, and testing procedures.`,
     };
 
     // Call Gemini 3 Flash Vision API
@@ -192,23 +192,25 @@ Include cable sizing, protection requirements, and testing procedures.`
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{
-            role: 'user',
-            parts: [
-              { text: systemPrompt + '\n\n' + enrichedContext },
-              {
-                inlineData: {
-                  mimeType: 'image/jpeg',
-                  data: imageBase64
-                }
-              }
-            ]
-          }],
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                { text: systemPrompt + '\n\n' + enrichedContext },
+                {
+                  inlineData: {
+                    mimeType: 'image/jpeg',
+                    data: imageBase64,
+                  },
+                },
+              ],
+            },
+          ],
           generationConfig: {
             maxOutputTokens: 2000,
             temperature: 0.1,
-            responseMimeType: 'application/json'
-          }
+            responseMimeType: 'application/json',
+          },
         }),
       }
     );
@@ -235,45 +237,46 @@ Include cable sizing, protection requirements, and testing procedures.`
         success: true,
         analysis,
         ragSources: {
-          maintenanceKnowledge: maintenanceResults?.map((r: any) => ({
-            topic: r.topic,
-            content: r.content,
-            source: r.source,
-            score: r.hybrid_score
-          })) || [],
-          bs7671Regulations: bs7671Results?.map((r: any) => ({
-            regulation: r.regulation_number,
-            section: r.section,
-            content: r.content,
-            score: r.hybrid_score
-          })) || []
+          maintenanceKnowledge:
+            maintenanceResults?.map((r: any) => ({
+              topic: r.topic,
+              content: r.content,
+              source: r.source,
+              score: r.hybrid_score,
+            })) || [],
+          bs7671Regulations:
+            bs7671Results?.map((r: any) => ({
+              regulation: r.regulation_number,
+              section: r.section,
+              content: r.content,
+              score: r.hybrid_score,
+            })) || [],
         },
-        verified: (maintenanceResults?.length > 0 || bs7671Results?.length > 0),
-        timestamp: new Date().toISOString()
+        verified: maintenanceResults?.length > 0 || bs7671Results?.length > 0,
+        timestamp: new Date().toISOString(),
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
+        status: 200,
       }
     );
-
   } catch (error) {
     console.error('Error in visual-analysis-rag-enhanced:', error);
 
     await captureException(error, {
       functionName: 'visual-analysis-rag-enhanced',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

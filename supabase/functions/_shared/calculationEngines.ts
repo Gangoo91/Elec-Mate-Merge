@@ -50,7 +50,17 @@ export function calculateCableCapacity(params: {
   cableLength?: number;
   voltage?: number;
 }): CableCapacityResult {
-  const { cableSize, designCurrent, deviceRating, ambientTemp, groupingCircuits, installationMethod, cableType, cableLength = 15, voltage = 230 } = params;
+  const {
+    cableSize,
+    designCurrent,
+    deviceRating,
+    ambientTemp,
+    groupingCircuits,
+    installationMethod,
+    cableType,
+    cableLength = 15,
+    voltage = 230,
+  } = params;
 
   // Get base capacity from BS 7671 tables (simplified)
   const baseCapacities: Record<number, number> = {
@@ -70,23 +80,40 @@ export function calculateCableCapacity(params: {
 
   const IzTabulated = baseCapacities[cableSize];
   if (!IzTabulated) {
-    throw new Error(`Unsupported cable size: ${cableSize}mm². Supported sizes: ${Object.keys(baseCapacities).join(', ')}`);
+    throw new Error(
+      `Unsupported cable size: ${cableSize}mm². Supported sizes: ${Object.keys(baseCapacities).join(', ')}`
+    );
   }
 
   // Temperature derating (BS 7671 Table 4B1)
-  const tempFactor = ambientTemp <= 25 ? 1.0 :
-                     ambientTemp <= 30 ? 0.94 :
-                     ambientTemp <= 35 ? 0.87 :
-                     ambientTemp <= 40 ? 0.79 :
-                     ambientTemp <= 45 ? 0.71 :
-                     ambientTemp <= 50 ? 0.61 : 0.5;
+  const tempFactor =
+    ambientTemp <= 25
+      ? 1.0
+      : ambientTemp <= 30
+        ? 0.94
+        : ambientTemp <= 35
+          ? 0.87
+          : ambientTemp <= 40
+            ? 0.79
+            : ambientTemp <= 45
+              ? 0.71
+              : ambientTemp <= 50
+                ? 0.61
+                : 0.5;
 
   // Grouping factor (BS 7671 Table 4C1)
-  const groupingFactor = groupingCircuits === 1 ? 1.0 :
-                        groupingCircuits === 2 ? 0.8 :
-                        groupingCircuits === 3 ? 0.7 :
-                        groupingCircuits <= 6 ? 0.65 :
-                        groupingCircuits <= 9 ? 0.6 : 0.5;
+  const groupingFactor =
+    groupingCircuits === 1
+      ? 1.0
+      : groupingCircuits === 2
+        ? 0.8
+        : groupingCircuits === 3
+          ? 0.7
+          : groupingCircuits <= 6
+            ? 0.65
+            : groupingCircuits <= 9
+              ? 0.6
+              : 0.5;
 
   const overallFactor = tempFactor * groupingFactor;
   const Iz = IzTabulated * overallFactor;
@@ -101,13 +128,13 @@ export function calculateCableCapacity(params: {
     cableLength,
     cableSize,
     voltage,
-    phases: 'single'
+    phases: 'single',
   });
 
   // Calculate earth fault
   const earthFault = calculateMaxZs({
     deviceRating,
-    deviceType: 'B'
+    deviceType: 'B',
   });
 
   return {
@@ -129,10 +156,10 @@ export function calculateCableCapacity(params: {
     equation: `Iz = It × Ca × Cg = ${IzTabulated} × ${tempFactor.toFixed(2)} × ${groupingFactor.toFixed(2)} = ${Iz.toFixed(1)}A`,
     voltageDrop: voltDrop,
     earthFault: {
-      calculated: 0.35 + (0.01 * cableLength), // Simplified calculation
+      calculated: 0.35 + 0.01 * cableLength, // Simplified calculation
       max: earthFault.maxZs,
-      compliant: (0.35 + (0.01 * cableLength)) <= earthFault.maxZs
-    }
+      compliant: 0.35 + 0.01 * cableLength <= earthFault.maxZs,
+    },
   };
 }
 
@@ -164,7 +191,9 @@ export function calculateVoltageDrop(params: {
 
   const mvPerAPerMValue = mvPerAPerM[cableSize];
   if (!mvPerAPerMValue) {
-    throw new Error(`No voltage drop data for cable size ${cableSize}mm². Supported: ${Object.keys(mvPerAPerM).join(', ')}`);
+    throw new Error(
+      `No voltage drop data for cable size ${cableSize}mm². Supported: ${Object.keys(mvPerAPerM).join(', ')}`
+    );
   }
   const voltageDropVolts = (mvPerAPerMValue * current * cableLength) / 1000;
   const voltageDropPercent = (voltageDropVolts / voltage) * 100;
@@ -189,13 +218,17 @@ export function calculateDiversity(loads: Array<{ type: string; power: number }>
   const totalConnected = loads.reduce((sum, load) => sum + load.power, 0);
 
   // BS 7671 diversity factors (simplified)
-  const lightingLoads = loads.filter(l => l.type === 'lighting');
-  const socketLoads = loads.filter(l => l.type === 'socket');
-  const fixedLoads = loads.filter(l => !['lighting', 'socket'].includes(l.type));
+  const lightingLoads = loads.filter((l) => l.type === 'lighting');
+  const socketLoads = loads.filter((l) => l.type === 'socket');
+  const fixedLoads = loads.filter((l) => !['lighting', 'socket'].includes(l.type));
 
   const lightingDemand = lightingLoads.reduce((sum, l) => sum + l.power, 0) * 0.66;
-  const socketDemand = Math.min(socketLoads.reduce((sum, l) => sum + l.power, 0), 100) +
-                       (socketLoads.reduce((sum, l) => sum + l.power, 0) - 100) * 0.4;
+  const socketDemand =
+    Math.min(
+      socketLoads.reduce((sum, l) => sum + l.power, 0),
+      100
+    ) +
+    (socketLoads.reduce((sum, l) => sum + l.power, 0) - 100) * 0.4;
   const fixedDemand = fixedLoads.reduce((sum, l) => sum + l.power, 0);
 
   const afterDiversity = lightingDemand + socketDemand + fixedDemand;
@@ -219,22 +252,57 @@ export function calculateMaxZs(params: {
   // Using Cmin = 0.95 per BS 7671:2018+A2:2022
   const zsTable: Record<string, Record<number, number>> = {
     B: {
-      6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75, 32: 1.37,
-      40: 1.09, 45: 0.97, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35,
+      6: 7.28,
+      10: 4.37,
+      16: 2.73,
+      20: 2.19,
+      25: 1.75,
+      32: 1.37,
+      40: 1.09,
+      45: 0.97,
+      50: 0.87,
+      63: 0.69,
+      80: 0.55,
+      100: 0.44,
+      125: 0.35,
     },
     C: {
-      6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87, 32: 0.68,
-      40: 0.55, 45: 0.48, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17,
+      6: 3.64,
+      10: 2.19,
+      16: 1.37,
+      20: 1.09,
+      25: 0.87,
+      32: 0.68,
+      40: 0.55,
+      45: 0.48,
+      50: 0.44,
+      63: 0.35,
+      80: 0.27,
+      100: 0.22,
+      125: 0.17,
     },
     D: {
-      6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44, 32: 0.34,
-      40: 0.27, 45: 0.24, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09,
+      6: 1.82,
+      10: 1.09,
+      16: 0.68,
+      20: 0.55,
+      25: 0.44,
+      32: 0.34,
+      40: 0.27,
+      45: 0.24,
+      50: 0.22,
+      63: 0.17,
+      80: 0.14,
+      100: 0.11,
+      125: 0.09,
     },
   };
 
   const maxZs = zsTable[deviceType]?.[deviceRating];
   if (!maxZs) {
-    throw new Error(`No Zs data for ${deviceType}-type MCB rated ${deviceRating}A. Supported ratings: ${Object.keys(zsTable[deviceType] || {}).join(', ')}`);
+    throw new Error(
+      `No Zs data for ${deviceType}-type MCB rated ${deviceRating}A. Supported ratings: ${Object.keys(zsTable[deviceType] || {}).join(', ')}`
+    );
   }
 
   return {

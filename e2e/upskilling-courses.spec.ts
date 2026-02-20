@@ -42,7 +42,9 @@ async function loginIfRequired(page: Page) {
 // Helper to wait for page content to load
 async function waitForContentLoad(page: Page) {
   await page.waitForLoadState('networkidle');
-  await page.waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 }).catch(() => {});
+  await page
+    .waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 })
+    .catch(() => {});
 }
 
 // Helper to verify page has content and no errors
@@ -84,7 +86,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'BS7671 (Wiring Regulations)',
@@ -99,7 +101,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 4, section: 3 },
       { module: 6, section: 2 },
-    ]
+    ],
   },
   {
     name: 'PAT Testing',
@@ -114,7 +116,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 2, section: 2 },
       { module: 4, section: 3 },
-    ]
+    ],
   },
   {
     name: 'Fire Alarm Systems',
@@ -129,7 +131,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Inspection & Testing',
@@ -144,7 +146,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 2, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Industrial Electrical',
@@ -159,7 +161,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Data Cabling',
@@ -174,7 +176,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Emergency Lighting',
@@ -189,7 +191,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Fiber Optics',
@@ -204,7 +206,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Renewable Energy',
@@ -219,7 +221,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 4, section: 2 },
       { module: 7, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Smart Home',
@@ -234,7 +236,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'EV Charging',
@@ -249,7 +251,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Instrumentation',
@@ -264,7 +266,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 4, section: 2 },
       { module: 7, section: 1 },
-    ]
+    ],
   },
   {
     name: 'Energy Efficiency',
@@ -279,7 +281,7 @@ const UPSKILLING_COURSES = [
       { module: 1, section: 1 },
       { module: 3, section: 2 },
       { module: 5, section: 1 },
-    ]
+    ],
   },
 ];
 
@@ -294,7 +296,9 @@ test.describe('Upskilling Courses - Navigation & Access', () => {
     await waitForContentLoad(page);
 
     // Look for Upskilling or CPD section
-    const upskillingLink = page.locator('text=Upskilling, text=CPD, text=Professional Development').first();
+    const upskillingLink = page
+      .locator('text=Upskilling, text=CPD, text=Professional Development')
+      .first();
     await expect(upskillingLink).toBeVisible({ timeout: 10000 });
   });
 
@@ -304,7 +308,16 @@ test.describe('Upskilling Courses - Navigation & Access', () => {
     await waitForContentLoad(page);
 
     // Check for course categories - at least some should be visible
-    const courseKeywords = ['BS7671', 'Fire', 'PAT', 'EV', 'Smart', 'Solar', 'Renewable', 'Testing'];
+    const courseKeywords = [
+      'BS7671',
+      'Fire',
+      'PAT',
+      'EV',
+      'Smart',
+      'Solar',
+      'Renewable',
+      'Testing',
+    ];
     let foundCount = 0;
 
     for (const keyword of courseKeywords) {
@@ -363,7 +376,9 @@ for (const course of UPSKILLING_COURSES) {
 
     // Test sample sections for content
     for (const section of course.testSections) {
-      test(`should load Module ${section.module} Section ${section.section} with content`, async ({ page }) => {
+      test(`should load Module ${section.module} Section ${section.section} with content`, async ({
+        page,
+      }) => {
         const sectionUrl = `/electrician/upskilling/${course.sectionPattern
           .replace('{m}', section.module.toString())
           .replace('{n}', section.section.toString())}`;
@@ -406,7 +421,9 @@ for (const course of UPSKILLING_COURSES) {
       await waitForContentLoad(page);
 
       // Find back button
-      const backLink = page.locator('a:has-text("Back"), button:has-text("Back"), [aria-label*="back"]').first();
+      const backLink = page
+        .locator('a:has-text("Back"), button:has-text("Back"), [aria-label*="back"]')
+        .first();
 
       if (await backLink.isVisible()) {
         await backLink.click();
@@ -425,9 +442,9 @@ test.describe('Mock Exam Consistency Tests', () => {
   });
 
   // Test that all mock exams have consistent structure like AM2
-  const mockExamRoutes = UPSKILLING_COURSES.map(c => ({
+  const mockExamRoutes = UPSKILLING_COURSES.map((c) => ({
     name: c.name,
-    route: c.mockExamRoute
+    route: c.mockExamRoute,
   }));
 
   for (const exam of mockExamRoutes) {
@@ -442,7 +459,9 @@ test.describe('Mock Exam Consistency Tests', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await expect(startButton).toBeVisible({ timeout: 10000 });
     });
 
@@ -457,7 +476,9 @@ test.describe('Mock Exam Consistency Tests', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
 
       if (await startButton.isVisible()) {
         await startButton.click();
@@ -480,7 +501,9 @@ test.describe('Mock Exam Consistency Tests', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
 
       if (await startButton.isVisible()) {
         await startButton.click();
@@ -503,14 +526,18 @@ test.describe('Mock Exam Consistency Tests', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
 
       if (await startButton.isVisible()) {
         await startButton.click();
         await waitForContentLoad(page);
 
         // Should show answer options (radio buttons or clickable options)
-        const options = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)');
+        const options = page.locator(
+          'input[type="radio"], button[role="radio"], .answer-option, label:has(input)'
+        );
         const count = await options.count();
         expect(count).toBeGreaterThan(1);
       }
@@ -527,7 +554,9 @@ test.describe('Mock Exam Consistency Tests', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
 
       if (await startButton.isVisible()) {
         await startButton.click();
@@ -565,14 +594,18 @@ test.describe('Mock Exam Full Flow Test', () => {
     await waitForContentLoad(page);
 
     // Step 3: Verify exam interface
-    await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({ timeout: 10000 });
+    await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({
+      timeout: 10000,
+    });
 
     // Step 4: Verify timer
     const timer = page.locator('.timer, [data-timer], text=:00, text=:59').first();
     await expect(timer).toBeVisible();
 
     // Step 5: Answer first question
-    const firstOption = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+    const firstOption = page
+      .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+      .first();
     await firstOption.click();
 
     // Step 6: Navigate to next question
@@ -581,10 +614,14 @@ test.describe('Mock Exam Full Flow Test', () => {
     await waitForContentLoad(page);
 
     // Step 7: Verify moved to question 2
-    await expect(page.locator('text=Question 2, text=2 of, text=2/')).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('text=Question 2, text=2 of, text=2/')).toBeVisible({
+      timeout: 5000,
+    });
 
     // Step 8: Test flag functionality
-    const flagButton = page.locator('button:has-text("Flag"), button[aria-label*="flag"], .flag-button').first();
+    const flagButton = page
+      .locator('button:has-text("Flag"), button[aria-label*="flag"], .flag-button')
+      .first();
     if (await flagButton.isVisible()) {
       await flagButton.click();
     }
@@ -594,38 +631,48 @@ test.describe('Mock Exam Full Flow Test', () => {
     if (await prevButton.isVisible()) {
       await prevButton.click();
       await waitForContentLoad(page);
-      await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({ timeout: 5000 });
+      await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({
+        timeout: 5000,
+      });
     }
 
     // Step 10: Quick answer a few questions
     for (let i = 0; i < 3; i++) {
-      const option = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+      const option = page
+        .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+        .first();
       if (await option.isVisible()) {
         await option.click();
       }
 
       const next = page.locator('button:has-text("Next")').first();
-      if (await next.isVisible() && await next.isEnabled()) {
+      if ((await next.isVisible()) && (await next.isEnabled())) {
         await next.click();
         await page.waitForTimeout(300);
       }
     }
 
     // Step 11: Look for question grid (jump to end)
-    const lastQuestion = page.locator('button:has-text("30"), .question-grid button:last-child').first();
+    const lastQuestion = page
+      .locator('button:has-text("30"), .question-grid button:last-child')
+      .first();
     if (await lastQuestion.isVisible()) {
       await lastQuestion.click();
       await waitForContentLoad(page);
     }
 
     // Step 12: Answer last question
-    const lastOption = page.locator('input[type="radio"], button[role="radio"], .answer-option').first();
+    const lastOption = page
+      .locator('input[type="radio"], button[role="radio"], .answer-option')
+      .first();
     if (await lastOption.isVisible()) {
       await lastOption.click();
     }
 
     // Step 13: Submit
-    const submitButton = page.locator('button:has-text("Submit"), button:has-text("Finish")').first();
+    const submitButton = page
+      .locator('button:has-text("Submit"), button:has-text("Finish")')
+      .first();
     if (await submitButton.isVisible()) {
       await submitButton.click();
       await waitForContentLoad(page);
@@ -635,7 +682,9 @@ test.describe('Mock Exam Full Flow Test', () => {
       await expect(results).toBeVisible({ timeout: 10000 });
 
       // Step 15: Check for review button
-      const reviewButton = page.locator('button:has-text("Review"), button:has-text("View Answers")').first();
+      const reviewButton = page
+        .locator('button:has-text("Review"), button:has-text("View Answers")')
+        .first();
       if (await reviewButton.isVisible()) {
         await reviewButton.click();
         await waitForContentLoad(page);
@@ -645,7 +694,9 @@ test.describe('Mock Exam Full Flow Test', () => {
       }
 
       // Step 16: Check for retake button
-      const retakeButton = page.locator('button:has-text("Retake"), button:has-text("Try Again")').first();
+      const retakeButton = page
+        .locator('button:has-text("Retake"), button:has-text("Try Again")')
+        .first();
       await expect(retakeButton).toBeVisible();
     }
   });
@@ -670,7 +721,9 @@ test.describe('Content Rendering Tests', () => {
       await waitForContentLoad(page);
 
       // Should have clickable module elements
-      const moduleElements = page.locator('a[href*="module"], .module-card, [data-module], button:has-text("Module")');
+      const moduleElements = page.locator(
+        'a[href*="module"], .module-card, [data-module], button:has-text("Module")'
+      );
       const count = await moduleElements.count();
       expect(count).toBeGreaterThan(0);
     });
@@ -684,9 +737,9 @@ test.describe('Back Navigation Tests', () => {
 
   // Test browser back button for a few courses
   const navigationTestCourses = [
-    UPSKILLING_COURSES.find(c => c.slug === 'bs7671'),
-    UPSKILLING_COURSES.find(c => c.slug === 'fire-alarm'),
-    UPSKILLING_COURSES.find(c => c.slug === 'ev-charging'),
+    UPSKILLING_COURSES.find((c) => c.slug === 'bs7671'),
+    UPSKILLING_COURSES.find((c) => c.slug === 'fire-alarm'),
+    UPSKILLING_COURSES.find((c) => c.slug === 'ev-charging'),
   ].filter(Boolean);
 
   for (const course of navigationTestCourses) {
@@ -731,8 +784,8 @@ test.describe('Mobile Responsiveness', () => {
 
   // Test mobile view for a few courses
   const mobileTestCourses = [
-    UPSKILLING_COURSES.find(c => c.slug === 'bs7671'),
-    UPSKILLING_COURSES.find(c => c.slug === 'pat-testing'),
+    UPSKILLING_COURSES.find((c) => c.slug === 'bs7671'),
+    UPSKILLING_COURSES.find((c) => c.slug === 'pat-testing'),
   ].filter(Boolean);
 
   for (const course of mobileTestCourses) {
@@ -753,8 +806,8 @@ test.describe('Mobile Responsiveness', () => {
 
       // No horizontal scroll
       const body = page.locator('body');
-      const scrollWidth = await body.evaluate(el => el.scrollWidth);
-      const clientWidth = await body.evaluate(el => el.clientWidth);
+      const scrollWidth = await body.evaluate((el) => el.scrollWidth);
+      const clientWidth = await body.evaluate((el) => el.clientWidth);
       expect(scrollWidth - clientWidth).toBeLessThan(20);
 
       // Content should be visible
@@ -776,7 +829,9 @@ test.describe('Mobile Responsiveness', () => {
       await waitForContentLoad(page);
 
       // Start button should be visible and tappable
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await expect(startButton).toBeVisible();
 
       // Start exam
@@ -788,7 +843,9 @@ test.describe('Mobile Responsiveness', () => {
       await expect(question).toBeVisible({ timeout: 10000 });
 
       // Answer options should be tappable
-      const option = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+      const option = page
+        .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+        .first();
       await expect(option).toBeVisible();
     });
   }
@@ -800,8 +857,14 @@ test.describe('Inspection & Testing Guides', () => {
     { name: 'Visual Inspection Guide', route: '/electrician/upskilling/visual-inspection-guide' },
     { name: 'Safe Isolation Guide', route: '/electrician/upskilling/safe-isolation-guide' },
     { name: 'CPC Continuity Guide', route: '/electrician/upskilling/cpc-continuity-guide' },
-    { name: 'Ring Final Continuity Guide', route: '/electrician/upskilling/ring-final-continuity-guide' },
-    { name: 'Insulation Resistance Guide', route: '/electrician/upskilling/insulation-resistance-guide' },
+    {
+      name: 'Ring Final Continuity Guide',
+      route: '/electrician/upskilling/ring-final-continuity-guide',
+    },
+    {
+      name: 'Insulation Resistance Guide',
+      route: '/electrician/upskilling/insulation-resistance-guide',
+    },
     { name: 'Polarity Testing Guide', route: '/electrician/upskilling/polarity-testing-guide' },
     { name: 'Earth Fault Loop Guide', route: '/electrician/upskilling/earth-fault-loop-guide' },
     { name: 'RCD Testing Guide', route: '/electrician/upskilling/rcd-testing-guide' },

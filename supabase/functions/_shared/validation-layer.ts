@@ -31,24 +31,24 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
   const suggestions: string[] = [];
 
   // Extract structured data from each agent
-  const designerData = agentOutputs.find(a => a.agent === 'designer')?.structuredData;
-  const costData = agentOutputs.find(a => a.agent === 'cost-engineer')?.structuredData;
-  const installerData = agentOutputs.find(a => a.agent === 'installer')?.structuredData;
-  const safetyData = agentOutputs.find(a => a.agent === 'health-safety')?.structuredData;
+  const designerData = agentOutputs.find((a) => a.agent === 'designer')?.structuredData;
+  const costData = agentOutputs.find((a) => a.agent === 'cost-engineer')?.structuredData;
+  const installerData = agentOutputs.find((a) => a.agent === 'installer')?.structuredData;
+  const safetyData = agentOutputs.find((a) => a.agent === 'health-safety')?.structuredData;
 
   // VALIDATION 1: Cable size consistency
   if (designerData?.cableSize && costData?.materials) {
     const designCableSize = designerData.cableSize;
-    const costCableMaterial = costData.materials.find((m: any) => 
-      m.item.toLowerCase().includes('cable') || m.item.toLowerCase().includes('twin')
+    const costCableMaterial = costData.materials.find(
+      (m: any) => m.item.toLowerCase().includes('cable') || m.item.toLowerCase().includes('twin')
     );
-    
+
     if (costCableMaterial && !costCableMaterial.item.includes(`${designCableSize}mm`)) {
       warnings.push({
         severity: 'high',
         message: `Cable size mismatch: Designer specified ${designCableSize}mm² but Cost Engineer quoted different cable`,
         affectedAgents: ['designer', 'cost-engineer'],
-        recommendation: `Verify cable specification matches ${designCableSize}mm² across all documents`
+        recommendation: `Verify cable specification matches ${designCableSize}mm² across all documents`,
       });
     }
   }
@@ -56,16 +56,19 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
   // VALIDATION 2: Protection device consistency
   if (designerData?.protectionDevice && costData?.materials) {
     const designProtection = designerData.protectionDevice;
-    const costProtection = costData.materials.find((m: any) => 
-      m.item.toLowerCase().includes('mcb') || m.item.toLowerCase().includes('rcbo')
+    const costProtection = costData.materials.find(
+      (m: any) => m.item.toLowerCase().includes('mcb') || m.item.toLowerCase().includes('rcbo')
     );
-    
-    if (costProtection && !costProtection.item.includes(designProtection.match(/\d+A/)?.[0] || '')) {
+
+    if (
+      costProtection &&
+      !costProtection.item.includes(designProtection.match(/\d+A/)?.[0] || '')
+    ) {
       warnings.push({
         severity: 'high',
         message: `Protection device mismatch between designer (${designProtection}) and costing`,
         affectedAgents: ['designer', 'cost-engineer'],
-        recommendation: 'Ensure protection device ratings match across all documents'
+        recommendation: 'Ensure protection device ratings match across all documents',
       });
     }
   }
@@ -78,7 +81,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
         severity: 'medium',
         message: `High design current detected (${designerData.designCurrent}A) - verify load calculations`,
         affectedAgents: ['designer'],
-        recommendation: 'Double-check load diversity and simultaneous demand factors'
+        recommendation: 'Double-check load diversity and simultaneous demand factors',
       });
     }
 
@@ -88,7 +91,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
         severity: 'high',
         message: `Voltage drop ${designerData.voltageDrop.percentage}% approaching 3% limit`,
         affectedAgents: ['designer'],
-        recommendation: 'Consider larger cable size or shorter route to improve voltage drop'
+        recommendation: 'Consider larger cable size or shorter route to improve voltage drop',
       });
     }
 
@@ -98,7 +101,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
         severity: 'medium',
         message: `Heavy de-rating detected (overall factor ${designerData.correctionFactors.overall})`,
         affectedAgents: ['designer'],
-        recommendation: 'Review grouping and ambient temperature - consider alternative routing'
+        recommendation: 'Review grouping and ambient temperature - consider alternative routing',
       });
     }
 
@@ -108,7 +111,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
         type: 'undersized_cable',
         message: `${designerData.cableSize}mm² cable may be undersized for ${designerData.designCurrent}A load`,
         affectedData: { cableSize: designerData.cableSize, current: designerData.designCurrent },
-        requiresAttention: true
+        requiresAttention: true,
       });
     }
   }
@@ -116,7 +119,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
   // VALIDATION 4: Safety consistency
   if (safetyData?.riskAssessment?.hazards && installerData?.installationSteps) {
     const highRisks = safetyData.riskAssessment.hazards.filter((h: any) => h.riskRating >= 15);
-    
+
     if (highRisks.length > 0) {
       suggestions.push(
         `${highRisks.length} high-risk hazard(s) identified - ensure adequate controls are in place before installation`
@@ -131,12 +134,17 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
         severity: 'medium',
         message: `Cost estimate (£${costData.totalCost}) seems low for ${designerData.cableSize}mm² installation`,
         affectedAgents: ['cost-engineer'],
-        recommendation: 'Verify all materials and labour hours are included'
+        recommendation: 'Verify all materials and labour hours are included',
       });
     }
 
-    if (costData.totalCost > 5000 && !costData.materials.some((m: any) => m.item.toLowerCase().includes('board'))) {
-      suggestions.push('High-value installation - consider detailed breakdown for client presentation');
+    if (
+      costData.totalCost > 5000 &&
+      !costData.materials.some((m: any) => m.item.toLowerCase().includes('board'))
+    ) {
+      suggestions.push(
+        'High-value installation - consider detailed breakdown for client presentation'
+      );
     }
   }
 
@@ -153,23 +161,24 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
     const zs = designerData.earthFaultLoop.zs;
     const mcbMatch = designerData.protectionDevice.match(/(\d+)A/);
     const mcbRating = mcbMatch ? parseInt(mcbMatch[1]) : 0;
-    
+
     if (mcbRating > 0) {
       const maxZs = getMaxZsForMCB(mcbRating, designerData.protectionDevice);
-      
+
       if (zs >= maxZs) {
         criticalIssues.push({
           type: 'zs_too_high',
           message: `Earth fault loop impedance (${zs.toFixed(2)}Ω) exceeds maximum ${maxZs.toFixed(2)}Ω for ${mcbRating}A MCB - circuit will not disconnect safely under fault conditions`,
           affectedData: { zs, maxZs, mcbRating, protectionDevice: designerData.protectionDevice },
-          requiresAttention: true
+          requiresAttention: true,
         });
       } else if (zs >= maxZs * 0.8) {
         warnings.push({
           severity: 'high',
           message: `Earth fault loop impedance (${zs.toFixed(2)}Ω) is approaching limit of ${maxZs.toFixed(2)}Ω for ${mcbRating}A MCB`,
           affectedAgents: ['designer'],
-          recommendation: 'Consider reducing cable length or improving earthing to provide safety margin'
+          recommendation:
+            'Consider reducing cable length or improving earthing to provide safety margin',
         });
       }
     }
@@ -180,29 +189,29 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
     const circuitType = (designerData.circuitType || '').toLowerCase();
     const location = (designerData.location || '').toLowerCase();
     const protectionDevice = (designerData.protectionDevice || '').toLowerCase();
-    
+
     const hasRCD = protectionDevice.includes('rcbo') || protectionDevice.includes('rcd');
-    
+
     // Check locations requiring RCD protection
-    const requiresRCD = 
-      circuitType.includes('socket') && location.includes('outdoor') ||
+    const requiresRCD =
+      (circuitType.includes('socket') && location.includes('outdoor')) ||
       location.includes('bathroom') ||
       location.includes('outside') ||
       location.includes('garden') ||
-      circuitType.includes('socket') && location.includes('kitchen') ||
+      (circuitType.includes('socket') && location.includes('kitchen')) ||
       designerData.supplyType === 'TT';
-    
+
     if (requiresRCD && !hasRCD) {
       criticalIssues.push({
         type: 'missing_rcd',
         message: `RCD protection required for ${circuitType} in ${location} (BS 7671 Reg 411.3.3) but ${designerData.protectionDevice} specified`,
-        affectedData: { 
-          circuitType, 
-          location, 
+        affectedData: {
+          circuitType,
+          location,
           protectionDevice: designerData.protectionDevice,
-          regulation: 'BS 7671 Reg 411.3.3'
+          regulation: 'BS 7671 Reg 411.3.3',
         },
-        requiresAttention: true
+        requiresAttention: true,
       });
     }
   }
@@ -210,22 +219,23 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
   // WAVE 3 FIX - VALIDATION 9: Diversity factor validation
   if (designerData?.diversityFactor !== undefined) {
     const diversity = designerData.diversityFactor;
-    
+
     if (diversity > 1.0) {
       criticalIssues.push({
         type: 'invalid_diversity',
         message: `Diversity factor ${diversity} is greater than 1.0 - this would increase simultaneous demand above total load, which is physically impossible`,
         affectedData: { diversityFactor: diversity },
-        requiresAttention: true
+        requiresAttention: true,
       });
     }
-    
+
     if (diversity < 0.3) {
       warnings.push({
         severity: 'medium',
         message: `Very conservative diversity factor (${diversity}) may result in oversized installation`,
         affectedAgents: ['designer'],
-        recommendation: 'Review diversity assumptions - typical values are 0.4-0.7 for domestic installations'
+        recommendation:
+          'Review diversity assumptions - typical values are 0.4-0.7 for domestic installations',
       });
     }
   }
@@ -235,13 +245,13 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
     const mcbMatch = designerData.protectionDevice.match(/(\d+)A/);
     const mcbRating = mcbMatch ? parseInt(mcbMatch[1]) : 0;
     const cableCapacity = designerData.cableCurrentCapacity;
-    
+
     if (mcbRating > cableCapacity) {
       criticalIssues.push({
         type: 'mcb_exceeds_cable_capacity',
         message: `${mcbRating}A MCB rating exceeds cable current capacity of ${cableCapacity}A - cable will not be protected from overload`,
         affectedData: { mcbRating, cableCapacity },
-        requiresAttention: true
+        requiresAttention: true,
       });
     }
   }
@@ -253,7 +263,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
         type: 'ring_cable_undersized',
         message: `Ring final circuit requires minimum 2.5mm² cable but ${designerData.cableSize}mm² specified (BS 7671 Reg 433.1.204)`,
         affectedData: { cableSize: designerData.cableSize, circuitType: 'ring final' },
-        requiresAttention: true
+        requiresAttention: true,
       });
     }
   }
@@ -262,7 +272,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
     isValid: criticalIssues.length === 0,
     warnings,
     criticalIssues,
-    suggestions
+    suggestions,
   };
 }
 
@@ -273,7 +283,7 @@ export function validateAgentOutputs(agentOutputs: any[]): ValidationResult {
 function getMaxZsForMCB(rating: number, deviceType: string): number {
   const isTypeC = deviceType.toLowerCase().includes('type c');
   const isTypeB = deviceType.toLowerCase().includes('type b') || !isTypeC;
-  
+
   // BS 7671 Table 41.3 - Maximum Zs values for MCBs
   // Using Cmin = 0.95 per BS 7671:2018+A2:2022
   // Type B values (5 x In for magnetic trip)
@@ -289,9 +299,9 @@ function getMaxZsForMCB(rating: number, deviceType: string): number {
     63: 0.69,
     80: 0.55,
     100: 0.44,
-    125: 0.35
+    125: 0.35,
   };
-  
+
   // Type C values (10 x In for magnetic trip)
   const typeCMaxZs: Record<number, number> = {
     6: 3.64,
@@ -305,20 +315,22 @@ function getMaxZsForMCB(rating: number, deviceType: string): number {
     63: 0.35,
     80: 0.27,
     100: 0.22,
-    125: 0.17
+    125: 0.17,
   };
-  
+
   const maxZsTable = isTypeB ? typeBMaxZs : typeCMaxZs;
-  
+
   // Return exact value if available, otherwise calculate conservatively
   if (maxZsTable[rating]) {
     return maxZsTable[rating];
   }
-  
+
   // Conservative fallback: use next lower rating's value
-  const availableRatings = Object.keys(maxZsTable).map(Number).sort((a, b) => a - b);
-  const lowerRating = availableRatings.reverse().find(r => r < rating);
-  
+  const availableRatings = Object.keys(maxZsTable)
+    .map(Number)
+    .sort((a, b) => a - b);
+  const lowerRating = availableRatings.reverse().find((r) => r < rating);
+
   return lowerRating ? maxZsTable[lowerRating] : 0.46; // 100A Type B as most conservative
 }
 
@@ -326,7 +338,11 @@ function getMaxZsForMCB(rating: number, deviceType: string): number {
  * Format validation results for display to user
  */
 export function formatValidationReport(validation: ValidationResult): string {
-  if (validation.isValid && validation.warnings.length === 0 && validation.suggestions.length === 0) {
+  if (
+    validation.isValid &&
+    validation.warnings.length === 0 &&
+    validation.suggestions.length === 0
+  ) {
     return '';
   }
 
@@ -334,27 +350,27 @@ export function formatValidationReport(validation: ValidationResult): string {
 
   if (validation.criticalIssues.length > 0) {
     report += '⚠️ **Critical Issues:**\n';
-    validation.criticalIssues.forEach(issue => {
+    validation.criticalIssues.forEach((issue) => {
       report += `- ${issue.message}\n`;
     });
     report += '\n';
   }
 
   if (validation.warnings.length > 0) {
-    const highWarnings = validation.warnings.filter(w => w.severity === 'high');
+    const highWarnings = validation.warnings.filter((w) => w.severity === 'high');
     if (highWarnings.length > 0) {
       report += '🔴 **Important Warnings:**\n';
-      highWarnings.forEach(w => {
+      highWarnings.forEach((w) => {
         report += `- ${w.message}\n`;
         report += `  *${w.recommendation}*\n`;
       });
       report += '\n';
     }
 
-    const mediumWarnings = validation.warnings.filter(w => w.severity === 'medium');
+    const mediumWarnings = validation.warnings.filter((w) => w.severity === 'medium');
     if (mediumWarnings.length > 0) {
       report += '🟡 **Design Notes:**\n';
-      mediumWarnings.forEach(w => {
+      mediumWarnings.forEach((w) => {
         report += `- ${w.message}\n`;
       });
       report += '\n';
@@ -363,7 +379,7 @@ export function formatValidationReport(validation: ValidationResult): string {
 
   if (validation.suggestions.length > 0) {
     report += '💡 **Suggestions:**\n';
-    validation.suggestions.forEach(s => {
+    validation.suggestions.forEach((s) => {
       report += `- ${s}\n`;
     });
   }

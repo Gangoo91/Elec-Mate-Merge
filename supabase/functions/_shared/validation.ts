@@ -59,7 +59,7 @@ export function validateAgentRequest(data: any): AgentRequest {
   if (invalidMessages.length > 0) {
     throw new ValidationError('Invalid message format', {
       invalidCount: invalidMessages.length,
-      example: invalidMessages[0]
+      example: invalidMessages[0],
     });
   }
 
@@ -121,16 +121,16 @@ export const validators = {
   email: (email: string): boolean => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   },
-  
+
   uuid: (id: string): boolean => {
     return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id);
   },
-  
+
   notEmpty: (str: string): boolean => {
     return typeof str === 'string' && str.trim().length > 0;
   },
-  
+
   inRange: (num: number, min: number, max: number): boolean => {
     return typeof num === 'number' && num >= min && num <= max;
-  }
+  },
 };

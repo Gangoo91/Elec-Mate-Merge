@@ -46,7 +46,11 @@ async function applyMigration() {
   console.log('📦 Tables not found, applying migration...');
 
   // Read migration file
-  const migrationPath = path.resolve(__dirname, '../../..', 'supabase/migrations/20260115120000_marketplace_tables.sql');
+  const migrationPath = path.resolve(
+    __dirname,
+    '../../..',
+    'supabase/migrations/20260115120000_marketplace_tables.sql'
+  );
 
   if (!fs.existsSync(migrationPath)) {
     console.error('❌ Migration file not found:', migrationPath);

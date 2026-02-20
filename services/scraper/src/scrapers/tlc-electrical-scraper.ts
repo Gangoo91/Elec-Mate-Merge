@@ -28,7 +28,7 @@ export class TLCElectricalScraper extends BaseScraper {
           '/Catalogue/Testers_Meters',
           '/Catalogue/Installation_Testers',
         ],
-        'cables': [
+        cables: [
           '/Catalogue/Cable',
           '/Catalogue/Twin_and_Earth',
           '/Catalogue/Flex',
@@ -40,20 +40,13 @@ export class TLCElectricalScraper extends BaseScraper {
           '/Catalogue/RCDs',
           '/Catalogue/RCBOs',
         ],
-        'wiring-accessories': [
-          '/Catalogue/Wiring_Accessories',
-          '/Catalogue/Switches_Sockets',
-        ],
-        'lighting': [
+        'wiring-accessories': ['/Catalogue/Wiring_Accessories', '/Catalogue/Switches_Sockets'],
+        lighting: [
           '/Catalogue/Lighting',
           '/Catalogue/LED_Lighting',
           '/Catalogue/Emergency_Lighting',
         ],
-        'containment': [
-          '/Catalogue/Cable_Management',
-          '/Catalogue/Trunking',
-          '/Catalogue/Conduit',
-        ],
+        containment: ['/Catalogue/Cable_Management', '/Catalogue/Trunking', '/Catalogue/Conduit'],
       };
 
       const categoriesToScrape = category
@@ -94,7 +87,7 @@ export class TLCElectricalScraper extends BaseScraper {
     if (!success) return products;
 
     // Wait for page to load
-    await new Promise(r => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 5000));
     await this.scrollToLoadAll(page);
 
     // Extract products using direct DOM queries
@@ -144,7 +137,9 @@ export class TLCElectricalScraper extends BaseScraper {
           // Extract name from link or container
           let name = anchor.textContent?.trim() || '';
           if (!name || name.length < 3) {
-            const nameEl = container.querySelector('h2, h3, h4, td, [class*="name"], [class*="title"], [class*="desc"]');
+            const nameEl = container.querySelector(
+              'h2, h3, h4, td, [class*="name"], [class*="title"], [class*="desc"]'
+            );
             name = nameEl?.textContent?.trim() || '';
           }
           if (!name || name.length < 3) return;
@@ -159,14 +154,20 @@ export class TLCElectricalScraper extends BaseScraper {
             currentPrice = priceMatches[0];
             if (priceMatches.length > 1) {
               const lowerText = containerText.toLowerCase();
-              if (lowerText.includes('was') || lowerText.includes('rrp') || lowerText.includes('save')) {
+              if (
+                lowerText.includes('was') ||
+                lowerText.includes('rrp') ||
+                lowerText.includes('save')
+              ) {
                 regularPrice = priceMatches[1];
               }
             }
           }
 
           // Find image
-          const img = container.querySelector('img[src*="tlc-direct"], img[src*="product"], img[data-src]') as HTMLImageElement;
+          const img = container.querySelector(
+            'img[src*="tlc-direct"], img[src*="product"], img[data-src]'
+          ) as HTMLImageElement;
           const imageUrl = img?.src || img?.getAttribute('data-src') || null;
 
           items.push({
@@ -185,15 +186,18 @@ export class TLCElectricalScraper extends BaseScraper {
       // Fallback: Look for table rows or div containers
       if (items.length === 0) {
         // Try table rows (TLC sometimes uses tables)
-        const rows = document.querySelectorAll('tr[class*="product"], tr[class*="item"], [class*="product-row"]');
+        const rows = document.querySelectorAll(
+          'tr[class*="product"], tr[class*="item"], [class*="product-row"]'
+        );
         rows.forEach((row) => {
           try {
             const linkEl = row.querySelector('a') as HTMLAnchorElement;
             if (!linkEl?.href) return;
 
             const skuMatch = linkEl.href.match(/\/Products?\/([^\/\?]+)/i);
-            const sku = skuMatch ? skuMatch[1].toUpperCase().replace(/\.html?$/i, '') :
-                       `TLC-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
+            const sku = skuMatch
+              ? skuMatch[1].toUpperCase().replace(/\.html?$/i, '')
+              : `TLC-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`;
 
             if (seenSkus.has(sku)) return;
             seenSkus.add(sku);
@@ -240,7 +244,9 @@ export class TLCElectricalScraper extends BaseScraper {
               if (seenSkus.has(sku)) return;
               seenSkus.add(sku);
 
-              const nameEl = container.querySelector('h2, h3, h4, [class*="name"], [class*="title"]');
+              const nameEl = container.querySelector(
+                'h2, h3, h4, [class*="name"], [class*="title"]'
+              );
               const name = nameEl?.textContent?.trim() || linkEl.textContent?.trim() || '';
               if (!name || name.length < 3) return;
 
@@ -270,12 +276,13 @@ export class TLCElectricalScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
       // TLC brands
       const brands = ['Schneider', 'Hager', 'MK', 'Click', 'Chint', 'Legrand', 'Hamilton', 'BG'];
-      const brand = brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+      const brand = brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
         sku: item.sku,
@@ -290,7 +297,8 @@ export class TLCElectricalScraper extends BaseScraper {
         description: null,
         highlights: [],
         imageUrl: item.imageUrl,
-        productUrl: item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
+        productUrl:
+          item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
         stockStatus: item.stockStatus || 'Unknown',
       });
     }
@@ -367,8 +375,8 @@ export class TLCElectricalScraper extends BaseScraper {
             originalPrice: regularPrice,
             dealPrice: currentPrice,
             discountPercentage: discount,
-            dealType: 'clearance',  // TLC sale is usually clearance
-            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),  // 30 days for clearance
+            dealType: 'clearance', // TLC sale is usually clearance
+            expiresAt: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days for clearance
             sourceUrl: item.productUrl || dealsUrl,
           });
         }

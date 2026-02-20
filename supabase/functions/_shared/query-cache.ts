@@ -34,9 +34,9 @@ export async function getCachedQuery(
     .eq('query_hash', queryHash)
     .gte('timestamp', Date.now() - CACHE_TTL)
     .single();
-  
+
   if (error || !data) return null;
-  
+
   // Increment hit counter asynchronously
   supabase
     .from('query_cache')
@@ -44,24 +44,19 @@ export async function getCachedQuery(
     .eq('query_hash', queryHash)
     .then(() => {})
     .catch(() => {}); // Fire and forget
-  
+
   return data;
 }
 
 /**
  * Store query response in cache
  */
-export async function cacheQuery(
-  supabase: any,
-  cache: CachedQuery
-): Promise<void> {
+export async function cacheQuery(supabase: any, cache: CachedQuery): Promise<void> {
   try {
-    await supabase
-      .from('query_cache')
-      .upsert({
-        ...cache,
-        hit_count: 1
-      });
+    await supabase.from('query_cache').upsert({
+      ...cache,
+      hit_count: 1,
+    });
   } catch (error) {
     console.error('Failed to cache query:', error);
     // Don't throw - caching is non-critical
@@ -76,21 +71,21 @@ export async function cacheQuery(
 export function hashQuery(userMessage: string, circuitParams: any): string {
   // Normalize user message for consistent caching
   const normalizedMessage = normalizeQuery(userMessage);
-  
+
   // Normalize circuit parameters to canonical form
   const canonical = {
     type: circuitParams.circuitType || 'general',
     power: circuitParams.power ? Math.round(circuitParams.power / 100) * 100 : null,
     distance: circuitParams.cableLength ? Math.round(circuitParams.cableLength) : null,
     voltage: circuitParams.voltage || 230,
-    phases: circuitParams.phases || 'single'
+    phases: circuitParams.phases || 'single',
   };
-  
+
   // Combine normalized message + params for hash
   const str = normalizedMessage + JSON.stringify(canonical);
   let hash = 0;
   for (let i = 0; i < str.length; i++) {
-    hash = ((hash << 5) - hash) + str.charCodeAt(i);
+    hash = (hash << 5) - hash + str.charCodeAt(i);
     hash = hash & hash; // Convert to 32-bit integer
   }
   return Math.abs(hash).toString(36);

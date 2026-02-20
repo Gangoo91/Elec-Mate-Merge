@@ -1,11 +1,12 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
-import { Resend } from "https://esm.sh/resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { Resend } from 'https://esm.sh/resend@2.0.0';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface PaymentReminderRequest {
@@ -21,7 +22,7 @@ const handler = async (req: Request): Promise<Response> => {
   if (req.method !== 'POST') {
     return new Response(JSON.stringify({ error: 'Method not allowed' }), {
       status: 405,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 
@@ -35,10 +36,13 @@ const handler = async (req: Request): Promise<Response> => {
     const { invoiceId, reminderType }: PaymentReminderRequest = await req.json();
 
     if (!invoiceId || !reminderType) {
-      return new Response(JSON.stringify({ error: 'Missing required fields: invoiceId and reminderType' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({ error: 'Missing required fields: invoiceId and reminderType' }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Get the invoice/quote details
@@ -52,24 +56,24 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Error fetching invoice:', fetchError);
       return new Response(JSON.stringify({ error: 'Invoice not found' }), {
         status: 404,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
     // Parse client data
-    const clientData = typeof invoice.client_data === 'string'
-      ? JSON.parse(invoice.client_data)
-      : invoice.client_data;
+    const clientData =
+      typeof invoice.client_data === 'string'
+        ? JSON.parse(invoice.client_data)
+        : invoice.client_data;
 
-    const settingsData = typeof invoice.settings === 'string'
-      ? JSON.parse(invoice.settings)
-      : invoice.settings;
+    const settingsData =
+      typeof invoice.settings === 'string' ? JSON.parse(invoice.settings) : invoice.settings;
 
     const clientEmail = clientData?.email;
     if (!clientEmail) {
       return new Response(JSON.stringify({ error: 'No client email address' }), {
         status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
@@ -83,7 +87,10 @@ const handler = async (req: Request): Promise<Response> => {
     // Calculate days overdue
     const dueDate = invoice.invoice_due_date ? new Date(invoice.invoice_due_date) : new Date();
     const today = new Date();
-    const daysOverdue = Math.max(0, Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)));
+    const daysOverdue = Math.max(
+      0,
+      Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
+    );
 
     // Generate reminder email content
     const emailContent = generateReminderEmail(
@@ -94,13 +101,15 @@ const handler = async (req: Request): Promise<Response> => {
       daysOverdue
     );
 
-    console.log(`📧 Sending ${reminderType} payment reminder for ${invoice.invoice_number} to ${clientEmail}`);
+    console.log(
+      `📧 Sending ${reminderType} payment reminder for ${invoice.invoice_number} to ${clientEmail}`
+    );
 
     // Send via Resend
     if (!resendApiKey) {
       return new Response(JSON.stringify({ error: 'Email service not configured' }), {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
@@ -120,7 +129,7 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Resend error:', emailError);
       return new Response(JSON.stringify({ error: 'Failed to send email', details: emailError }), {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
@@ -130,7 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
       .update({
         last_reminder_sent_at: new Date().toISOString(),
         last_reminder_type: reminderType,
-        reminder_count: (invoice.reminder_count || 0) + 1
+        reminder_count: (invoice.reminder_count || 0) + 1,
       })
       .eq('id', invoiceId);
 
@@ -140,29 +149,31 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log(`✅ ${reminderType} reminder sent successfully to ${clientEmail}`);
 
-    return new Response(JSON.stringify({
-      success: true,
-      message: `${reminderType.charAt(0).toUpperCase() + reminderType.slice(1)} reminder sent successfully`,
-      sentTo: clientEmail,
-      invoiceNumber: invoice.invoice_number,
-      daysOverdue,
-      reminderCount: (invoice.reminder_count || 0) + 1,
-      emailId: emailResult?.id
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: `${reminderType.charAt(0).toUpperCase() + reminderType.slice(1)} reminder sent successfully`,
+        sentTo: clientEmail,
+        invoiceNumber: invoice.invoice_number,
+        daysOverdue,
+        reminderCount: (invoice.reminder_count || 0) + 1,
+        emailId: emailResult?.id,
+      }),
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error: any) {
     console.error('Error in send-payment-reminder:', error);
     await captureException(error, {
       functionName: 'send-payment-reminder',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 };
@@ -180,7 +191,11 @@ function generateReminderEmail(
   const bankDetails = company?.bank_details || invoice.settings?.bankDetails;
 
   const dueDate = invoice.invoice_due_date
-    ? new Date(invoice.invoice_due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    ? new Date(invoice.invoice_due_date).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      })
     : 'as agreed';
   const amount = `£${(invoice.total || 0).toFixed(2)}`;
   const clientName = client?.name || 'Valued Customer';
@@ -242,7 +257,8 @@ function generateReminderEmail(
       break;
   }
 
-  const bankDetailsHtml = bankDetails ? `
+  const bankDetailsHtml = bankDetails
+    ? `
     <div class="bank-details">
       <h4 style="margin: 0 0 12px 0;">Bank Transfer Details</h4>
       ${bankDetails.bankName ? `<p style="margin: 4px 0;"><strong>Bank:</strong> ${bankDetails.bankName}</p>` : ''}
@@ -251,7 +267,8 @@ function generateReminderEmail(
       ${bankDetails.sortCode ? `<p style="margin: 4px 0;"><strong>Sort Code:</strong> ${bankDetails.sortCode}</p>` : ''}
       <p style="margin: 12px 0 0 0; font-size: 13px; color: #666;">Reference: ${invoice.invoice_number}</p>
     </div>
-  ` : '';
+  `
+    : '';
 
   const html = `
 <!DOCTYPE html>
@@ -271,13 +288,19 @@ function generateReminderEmail(
     <div class="content">
       <p>Dear ${clientName},</p>
 
-      ${type === 'gentle' ? `
+      ${
+        type === 'gentle'
+          ? `
         <p>I hope this message finds you well. This is a friendly reminder regarding the outstanding payment for the following invoice:</p>
-      ` : type === 'firm' ? `
+      `
+          : type === 'firm'
+            ? `
         <p>I'm following up regarding the outstanding payment that is now overdue:</p>
-      ` : `
+      `
+            : `
         <p>Despite previous reminders, the following invoice remains unpaid:</p>
-      `}
+      `
+      }
 
       ${urgencyBanner}
 
@@ -290,13 +313,19 @@ function generateReminderEmail(
 
       ${bankDetailsHtml}
 
-      ${type === 'gentle' ? `
+      ${
+        type === 'gentle'
+          ? `
         <p>If you've already arranged payment, please disregard this message. Otherwise, I'd appreciate it if you could arrange payment at your earliest convenience.</p>
-      ` : type === 'firm' ? `
+      `
+          : type === 'firm'
+            ? `
         <p>If there are any issues preventing payment, please contact me immediately so we can discuss a solution.</p>
-      ` : `
+      `
+            : `
         <p><strong>Please contact me immediately</strong> if you have already made payment or need to discuss payment arrangements.</p>
-      `}
+      `
+      }
 
       <p style="margin-top: 30px;">
         Best regards,<br>

@@ -19,14 +19,8 @@ serve(async (req: Request) => {
   }
 
   try {
-    const {
-      certificateType,
-      reportId,
-      recipientEmail,
-      cc,
-      customMessage,
-      certificateData
-    } = await req.json();
+    const { certificateType, reportId, recipientEmail, cc, customMessage, certificateData } =
+      await req.json();
 
     // Validate required fields
     if (!certificateType || !['EICR', 'EIC'].includes(certificateType)) {
@@ -54,7 +48,10 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
@@ -68,7 +65,9 @@ serve(async (req: Request) => {
       .order('updated_at', { ascending: false });
 
     if (configError || !configs || configs.length === 0) {
-      throw new ValidationError('No email account connected. Please connect Gmail or Outlook in Settings.');
+      throw new ValidationError(
+        'No email account connected. Please connect Gmail or Outlook in Settings.'
+      );
     }
 
     const config = configs[0];
@@ -81,7 +80,9 @@ serve(async (req: Request) => {
       .gte('sent_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString());
 
     if (emailUsage && emailUsage.length >= DAILY_RATE_LIMIT) {
-      throw new ValidationError(`Daily email limit reached (${DAILY_RATE_LIMIT}/day). Try again tomorrow.`);
+      throw new ValidationError(
+        `Daily email limit reached (${DAILY_RATE_LIMIT}/day). Try again tomorrow.`
+      );
     }
 
     // Get company profile for branding
@@ -107,17 +108,20 @@ serve(async (req: Request) => {
     console.log('📄 Generating certificate PDF...');
 
     const pdfFunctionName = certificateType === 'EICR' ? 'generate-eicr-pdf' : 'generate-eic-pdf';
-    const pdfResponse = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/${pdfFunctionName}`, {
-      method: 'POST',
-      headers: {
-        'Authorization': authHeader,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        formData: report.form_data,
-        reportId: reportId
-      })
-    });
+    const pdfResponse = await fetch(
+      `${Deno.env.get('SUPABASE_URL')}/functions/v1/${pdfFunctionName}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: authHeader,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          formData: report.form_data,
+          reportId: reportId,
+        }),
+      }
+    );
 
     const pdfData = await pdfResponse.json();
 
@@ -151,7 +155,7 @@ serve(async (req: Request) => {
       companyName: company?.company_name || certificateData?.companyName,
       companyPhone: company?.phone,
       companyEmail: company?.email,
-      customMessage
+      customMessage,
     });
 
     // Build email subject
@@ -192,7 +196,7 @@ serve(async (req: Request) => {
       recipient: recipientEmail,
       document_type: certificateType,
       document_id: reportId,
-      sent_at: new Date().toISOString()
+      sent_at: new Date().toISOString(),
     });
 
     console.log('✅ Email sent successfully');
@@ -201,17 +205,16 @@ serve(async (req: Request) => {
       JSON.stringify({
         success: true,
         message: 'Certificate sent successfully',
-        recipient: recipientEmail
+        recipient: recipientEmail,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Error:', error);
     await captureException(error, {
       functionName: 'send-certificate-email',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return handleError(error);
   }
@@ -240,13 +243,14 @@ function buildCertificateEmailHtml(data: {
     ? new Date(data.inspectionDate).toLocaleDateString('en-GB', {
         day: 'numeric',
         month: 'long',
-        year: 'numeric'
+        year: 'numeric',
       })
     : '';
 
-  const certificateTitle = data.certificateType === 'EICR'
-    ? 'Electrical Installation Condition Report'
-    : 'Electrical Installation Certificate';
+  const certificateTitle =
+    data.certificateType === 'EICR'
+      ? 'Electrical Installation Condition Report'
+      : 'Electrical Installation Certificate';
 
   return `
 <!DOCTYPE html>
@@ -304,26 +308,38 @@ function buildCertificateEmailHtml(data: {
                     </h2>
 
                     <!-- Details -->
-                    ${data.installationAddress ? `
+                    ${
+                      data.installationAddress
+                        ? `
                     <p style="margin: 8px 0; font-size: 14px; color: #ccc;">
                       <span style="color: #888;">📍</span> ${data.installationAddress}
                     </p>
-                    ` : ''}
+                    `
+                        : ''
+                    }
 
-                    ${formattedDate ? `
+                    ${
+                      formattedDate
+                        ? `
                     <p style="margin: 8px 0; font-size: 13px; color: #888;">
                       <span>📅</span> ${formattedDate}
                     </p>
-                    ` : ''}
+                    `
+                        : ''
+                    }
 
                     <!-- Assessment Badge -->
-                    ${data.overallAssessment ? `
+                    ${
+                      data.overallAssessment
+                        ? `
                     <div style="margin-top: 16px; padding: 12px 16px; background-color: ${assessmentBgColor}; border-radius: 8px; display: inline-block;">
                       <span style="font-size: 14px; font-weight: 600; color: ${assessmentColor};">
                         ${data.overallAssessment === 'satisfactory' ? '✓' : '✗'} ${assessmentText}
                       </span>
                     </div>
-                    ` : ''}
+                    `
+                        : ''
+                    }
                   </td>
                 </tr>
               </table>
@@ -340,13 +356,17 @@ function buildCertificateEmailHtml(data: {
                 Please find attached your ${certificateTitle.toLowerCase()} for the above property.
               </p>
 
-              ${data.customMessage ? `
+              ${
+                data.customMessage
+                  ? `
               <div style="margin: 16px 0; padding: 12px 16px; background-color: #333; border-radius: 8px; border-left: 3px solid #f59e0b;">
                 <p style="margin: 0; font-size: 14px; color: #fff; font-style: italic;">
                   "${data.customMessage}"
                 </p>
               </div>
-              ` : ''}
+              `
+                  : ''
+              }
 
               <!-- Attachment Notice -->
               <div style="margin: 20px 0; padding: 12px 16px; background-color: #3b82f620; border: 1px solid #3b82f640; border-radius: 8px;">
@@ -363,16 +383,24 @@ function buildCertificateEmailHtml(data: {
               <p style="margin: 0 0 8px 0; font-size: 12px; color: #888;">
                 BS 7671:2018 Compliant Certificate
               </p>
-              ${data.companyPhone ? `
+              ${
+                data.companyPhone
+                  ? `
               <p style="margin: 0 0 4px 0; font-size: 12px; color: #888;">
                 📞 ${data.companyPhone}
               </p>
-              ` : ''}
-              ${data.companyEmail ? `
+              `
+                  : ''
+              }
+              ${
+                data.companyEmail
+                  ? `
               <p style="margin: 0 0 4px 0; font-size: 12px; color: #888;">
                 ✉️ ${data.companyEmail}
               </p>
-              ` : ''}
+              `
+                  : ''
+              }
               <p style="margin: 12px 0 0 0; font-size: 11px; color: #666;">
                 Powered by Elec-Mate
               </p>
@@ -425,18 +453,22 @@ async function sendViaGmail(
     '',
     attachmentBase64,
     '',
-    `--${boundary}--`
-  ].filter(Boolean).join('\r\n');
+    `--${boundary}--`,
+  ]
+    .filter(Boolean)
+    .join('\r\n');
 
   const rawMessage = encodeBase64(new TextEncoder().encode(mimeMessage));
 
   const response = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ raw: rawMessage.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') })
+    body: JSON.stringify({
+      raw: rawMessage.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, ''),
+    }),
   });
 
   if (!response.ok) {
@@ -468,7 +500,7 @@ async function sendViaOutlook(
       subject,
       body: {
         contentType: 'HTML',
-        content: htmlBody
+        content: htmlBody,
       },
       toRecipients: [{ emailAddress: { address: to } }],
       attachments: [
@@ -476,26 +508,26 @@ async function sendViaOutlook(
           '@odata.type': '#microsoft.graph.fileAttachment',
           name: attachmentFilename,
           contentType: 'application/pdf',
-          contentBytes: attachmentBase64
-        }
-      ]
+          contentBytes: attachmentBase64,
+        },
+      ],
     },
-    saveToSentItems: true
+    saveToSentItems: true,
   };
 
   if (cc && cc.length > 0) {
-    messagePayload.message.ccRecipients = cc.map(email => ({
-      emailAddress: { address: email }
+    messagePayload.message.ccRecipients = cc.map((email) => ({
+      emailAddress: { address: email },
     }));
   }
 
   const response = await fetch('https://graph.microsoft.com/v1.0/me/sendMail', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${accessToken}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(messagePayload)
+    body: JSON.stringify(messagePayload),
   });
 
   if (!response.ok) {

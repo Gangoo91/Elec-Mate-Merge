@@ -1,53 +1,125 @@
-
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Electrical domain query expansions for better RAG retrieval
 const queryExpansions: Record<string, string[]> = {
-  'test': ['testing', 'initial verification', 'periodic inspection', 'inspection', 'verify'],
-  'testing': ['test', 'initial verification', 'periodic inspection', 'inspection', 'verify'],
-  'sequence': ['procedure', 'order', 'steps', 'method', 'process'],
-  'order': ['sequence', 'procedure', 'steps'],
-  'rcd': ['residual current device', 'rcbo', 'trip', '30ma', 'protective device'],
-  'circuit': ['wiring', 'installation', 'ring', 'radial', 'final circuit'],
-  'continuity': ['r1r2', 'ring', 'cpc', 'protective conductor'],
-  'insulation': ['ir', 'resistance', 'megger', 'insulation resistance'],
-  'earth': ['earthing', 'cpc', 'ze', 'zs', 'electrode', 'tncs', 'tns', 'tt'],
-  'fault': ['loop', 'impedance', 'zs', 'prospective', 'pfc', 'pscc'],
-  'polarity': ['phase', 'neutral', 'live', 'correct'],
-  'isolation': ['safe isolation', 'lock off', 'prove dead', 'isolate'],
-  'safe': ['safety', 'isolation', 'procedure', 'secure'],
-  'cable': ['wiring', 'conductor', 'size', 'csa', 'current carrying'],
-  'voltage': ['drop', 'supply', '230v', '400v', 'nominal'],
-  'consumer': ['unit', 'board', 'distribution', 'fuseboard', 'db'],
-  'protection': ['mcb', 'rcbo', 'rcd', 'fuse', 'overcurrent', 'protective device'],
-  'regulation': ['bs7671', 'regs', 'amendment', 'requirement', 'compliance'],
-  'certificate': ['eicr', 'eic', 'minor works', 'condition report'],
-  'domestic': ['house', 'dwelling', 'home', 'residential'],
-  'commercial': ['shop', 'office', 'retail', 'business'],
-  'industrial': ['factory', 'plant', 'manufacturing', 'heavy'],
-  'special': ['location', 'bathroom', 'zone', 'swimming', 'agricultural'],
+  test: ['testing', 'initial verification', 'periodic inspection', 'inspection', 'verify'],
+  testing: ['test', 'initial verification', 'periodic inspection', 'inspection', 'verify'],
+  sequence: ['procedure', 'order', 'steps', 'method', 'process'],
+  order: ['sequence', 'procedure', 'steps'],
+  rcd: ['residual current device', 'rcbo', 'trip', '30ma', 'protective device'],
+  circuit: ['wiring', 'installation', 'ring', 'radial', 'final circuit'],
+  continuity: ['r1r2', 'ring', 'cpc', 'protective conductor'],
+  insulation: ['ir', 'resistance', 'megger', 'insulation resistance'],
+  earth: ['earthing', 'cpc', 'ze', 'zs', 'electrode', 'tncs', 'tns', 'tt'],
+  fault: ['loop', 'impedance', 'zs', 'prospective', 'pfc', 'pscc'],
+  polarity: ['phase', 'neutral', 'live', 'correct'],
+  isolation: ['safe isolation', 'lock off', 'prove dead', 'isolate'],
+  safe: ['safety', 'isolation', 'procedure', 'secure'],
+  cable: ['wiring', 'conductor', 'size', 'csa', 'current carrying'],
+  voltage: ['drop', 'supply', '230v', '400v', 'nominal'],
+  consumer: ['unit', 'board', 'distribution', 'fuseboard', 'db'],
+  protection: ['mcb', 'rcbo', 'rcd', 'fuse', 'overcurrent', 'protective device'],
+  regulation: ['bs7671', 'regs', 'amendment', 'requirement', 'compliance'],
+  certificate: ['eicr', 'eic', 'minor works', 'condition report'],
+  domestic: ['house', 'dwelling', 'home', 'residential'],
+  commercial: ['shop', 'office', 'retail', 'business'],
+  industrial: ['factory', 'plant', 'manufacturing', 'heavy'],
+  special: ['location', 'bathroom', 'zone', 'swimming', 'agricultural'],
 };
 
 // Extract keywords with domain expansion for better RAG
 const extractKeywords = (query: string): string[] => {
   const stopWords = new Set([
-    'the', 'a', 'an', 'is', 'are', 'was', 'were', 'be', 'been', 'being',
-    'what', 'how', 'why', 'when', 'where', 'which', 'who', 'whom',
-    'do', 'does', 'did', 'can', 'could', 'should', 'would', 'will', 'shall',
-    'i', 'you', 'we', 'they', 'he', 'she', 'it', 'me', 'him', 'her', 'us', 'them',
-    'my', 'your', 'our', 'their', 'his', 'its',
-    'this', 'that', 'these', 'those',
-    'for', 'to', 'of', 'in', 'on', 'at', 'by', 'with', 'from', 'about', 'into',
-    'and', 'or', 'but', 'if', 'then', 'so', 'as', 'than',
-    'have', 'has', 'had', 'need', 'want', 'tell', 'explain', 'help', 'please',
-    'correct', 'right', 'proper', 'best', 'good',
+    'the',
+    'a',
+    'an',
+    'is',
+    'are',
+    'was',
+    'were',
+    'be',
+    'been',
+    'being',
+    'what',
+    'how',
+    'why',
+    'when',
+    'where',
+    'which',
+    'who',
+    'whom',
+    'do',
+    'does',
+    'did',
+    'can',
+    'could',
+    'should',
+    'would',
+    'will',
+    'shall',
+    'i',
+    'you',
+    'we',
+    'they',
+    'he',
+    'she',
+    'it',
+    'me',
+    'him',
+    'her',
+    'us',
+    'them',
+    'my',
+    'your',
+    'our',
+    'their',
+    'his',
+    'its',
+    'this',
+    'that',
+    'these',
+    'those',
+    'for',
+    'to',
+    'of',
+    'in',
+    'on',
+    'at',
+    'by',
+    'with',
+    'from',
+    'about',
+    'into',
+    'and',
+    'or',
+    'but',
+    'if',
+    'then',
+    'so',
+    'as',
+    'than',
+    'have',
+    'has',
+    'had',
+    'need',
+    'want',
+    'tell',
+    'explain',
+    'help',
+    'please',
+    'correct',
+    'right',
+    'proper',
+    'best',
+    'good',
   ]);
 
   // Extract base keywords
@@ -55,15 +127,15 @@ const extractKeywords = (query: string): string[] => {
     .toLowerCase()
     .replace(/[^\w\s]/g, ' ')
     .split(/\s+/)
-    .filter(word => word.length > 2 && !stopWords.has(word));
+    .filter((word) => word.length > 2 && !stopWords.has(word));
 
   // Expand with domain-specific terms
   const expanded = new Set<string>();
-  baseKeywords.forEach(keyword => {
+  baseKeywords.forEach((keyword) => {
     expanded.add(keyword);
     const expansions = queryExpansions[keyword];
     if (expansions) {
-      expansions.forEach(exp => expanded.add(exp));
+      expansions.forEach((exp) => expanded.add(exp));
     }
   });
 
@@ -77,10 +149,7 @@ const searchRegulations = async (supabase: any, keywords: string[]): Promise<any
 
   try {
     // Search in both content and title for better matching
-    const orConditions = keywords.flatMap(k => [
-      `content.ilike.%${k}%`,
-      `title.ilike.%${k}%`
-    ]);
+    const orConditions = keywords.flatMap((k) => [`content.ilike.%${k}%`, `title.ilike.%${k}%`]);
 
     const { data, error } = await supabase
       .from('regulations_intelligence')
@@ -105,10 +174,7 @@ const searchPractical = async (supabase: any, keywords: string[]): Promise<any[]
 
   try {
     // Search in both content and title for better matching
-    const orConditions = keywords.flatMap(k => [
-      `content.ilike.%${k}%`,
-      `title.ilike.%${k}%`
-    ]);
+    const orConditions = keywords.flatMap((k) => [`content.ilike.%${k}%`, `title.ilike.%${k}%`]);
 
     const { data, error } = await supabase
       .from('practical_work_intelligence')
@@ -154,8 +220,14 @@ const searchQualificationRequirements = async (
 };
 
 // Build context from RAG results - prioritise regulations for compliance
-const buildContext = (regulations: any[], practical: any[], qualificationReqs: any[] = [], qualificationName?: string): string => {
-  if (regulations.length === 0 && practical.length === 0 && qualificationReqs.length === 0) return '';
+const buildContext = (
+  regulations: any[],
+  practical: any[],
+  qualificationReqs: any[] = [],
+  qualificationName?: string
+): string => {
+  if (regulations.length === 0 && practical.length === 0 && qualificationReqs.length === 0)
+    return '';
 
   let context = '\n\n';
 
@@ -163,7 +235,7 @@ const buildContext = (regulations: any[], practical: any[], qualificationReqs: a
   if (regulations.length > 0) {
     context += '📖 BS 7671 REGULATIONS (Authoritative):\n\n';
     // Take top 6 most relevant regulations
-    regulations.slice(0, 6).forEach(r => {
+    regulations.slice(0, 6).forEach((r) => {
       context += `REGULATION ${r.regulation_number || 'N/A'}: ${r.title || ''}\n`;
       if (r.content) {
         context += `${r.content.slice(0, 250)}${r.content.length > 250 ? '...' : ''}\n\n`;
@@ -174,7 +246,7 @@ const buildContext = (regulations: any[], practical: any[], qualificationReqs: a
   if (practical.length > 0) {
     context += '\n🔧 PRACTICAL GUIDANCE (Field-tested procedures):\n\n';
     // Take top 5 practical guides
-    practical.slice(0, 5).forEach(p => {
+    practical.slice(0, 5).forEach((p) => {
       context += `${p.title || 'Procedure'}:\n`;
       if (p.content) {
         context += `${p.content.slice(0, 250)}${p.content.length > 250 ? '...' : ''}\n\n`;
@@ -184,7 +256,7 @@ const buildContext = (regulations: any[], practical: any[], qualificationReqs: a
 
   if (qualificationReqs.length > 0) {
     context += `\n📋 QUALIFICATION REQUIREMENTS (${qualificationName ? `Student's course: ${qualificationName}` : 'Student course'}):\n\n`;
-    qualificationReqs.forEach(r => {
+    qualificationReqs.forEach((r) => {
       context += `Unit ${r.unit_code || 'N/A'}: ${r.unit_title || ''}\n`;
       if (r.learning_outcome) {
         context += `LO: ${r.learning_outcome}\n`;
@@ -209,7 +281,15 @@ serve(async (req) => {
   }
 
   try {
-    const { message, context, stream = true, history = [], imageUrl, qualificationCode, qualificationName } = await req.json();
+    const {
+      message,
+      context,
+      stream = true,
+      history = [],
+      imageUrl,
+      qualificationCode,
+      qualificationName,
+    } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
@@ -228,21 +308,25 @@ serve(async (req) => {
     const [regulations, practical, qualificationReqs] = await Promise.all([
       searchRegulations(supabase, keywords),
       searchPractical(supabase, keywords),
-      qualificationCode ? searchQualificationRequirements(supabase, qualificationCode, keywords) : Promise.resolve([]),
+      qualificationCode
+        ? searchQualificationRequirements(supabase, qualificationCode, keywords)
+        : Promise.resolve([]),
     ]);
 
     // Build context from RAG results
     const ragContext = buildContext(regulations, practical, qualificationReqs, qualificationName);
 
     // Build system prompt with RAG context at the TOP for priority
-    const ragSection = ragContext ? `
+    const ragSection = ragContext
+      ? `
 === CRITICAL: USE THIS TECHNICAL REFERENCE ===
 The following information comes from official BS 7671 regulations and verified practical guidance.
 You MUST base your answer on this documentation. Quote regulation numbers where relevant.
 ${ragContext}
 === END TECHNICAL REFERENCE ===
 
-` : '';
+`
+      : '';
 
     const systemPrompt = `${ragSection}You are Dave, a master electrician with 20 years of experience in the UK electrical industry. You've seen it all - from small domestic jobs to major commercial installations, industrial plants, and everything in between. You've trained dozens of apprentices over the years, many of whom have gone on to run their own successful businesses.
 
@@ -382,8 +466,8 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
         role: 'user',
         content: [
           { type: 'text', text: message },
-          { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
-        ]
+          { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } },
+        ],
       };
     } else {
       // Text-only message
@@ -396,16 +480,12 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: modelToUse,
-        messages: [
-          { role: 'system', content: systemPrompt },
-          ...conversationHistory,
-          userMessage
-        ],
+        messages: [{ role: 'system', content: systemPrompt }, ...conversationHistory, userMessage],
         max_completion_tokens: 4000,
         stream: stream,
       }),
@@ -422,20 +502,21 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
           ...corsHeaders,
           'Content-Type': 'text/event-stream',
           'Cache-Control': 'no-cache',
-          'Connection': 'keep-alive',
+          Connection: 'keep-alive',
         },
       });
     }
 
     // Non-streaming fallback
     const data = await response.json();
-    let assistantResponse = data.choices[0]?.message?.content || "I'm here to help with your electrical apprenticeship questions! ⚡";
+    let assistantResponse =
+      data.choices[0]?.message?.content ||
+      "I'm here to help with your electrical apprenticeship questions! ⚡";
     assistantResponse = assistantResponse.trim();
 
     return new Response(JSON.stringify({ response: assistantResponse }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Error in chat-assistant function:', error);
 
@@ -443,15 +524,19 @@ Current topic context: ${context || 'general electrical apprenticeship support'}
     await captureException(error, {
       functionName: 'chat-assistant',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
-    return new Response(JSON.stringify({
-      error: 'I apologise, but I encountered an issue processing your question. Please try again in a moment.',
-      details: error instanceof Error ? error.message : 'Unknown error occurred'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error:
+          'I apologise, but I encountered an issue processing your question. Please try again in a moment.',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

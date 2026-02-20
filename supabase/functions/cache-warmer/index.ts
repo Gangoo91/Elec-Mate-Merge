@@ -20,26 +20,26 @@ serve(async (req) => {
 
   // Top 50 most common queries (from analytics)
   const COMMON_QUERIES = [
-    "9.5kW shower 15m from board",
-    "Consumer unit change 10 way",
-    "Socket circuit ring final",
-    "Bathroom lighting IP rating",
-    "EV charger 7kW installation",
-    "Cable sizing for 10kW cooker",
-    "RCD requirements domestic",
-    "Earth bonding regulations",
-    "Voltage drop calculation",
-    "MCB selection guide",
-    "Three phase installation",
-    "Outdoor socket requirements",
-    "Garage supply regulations",
-    "Kitchen ring circuit",
-    "Smoke alarm requirements",
-    "Periodic inspection intervals",
-    "EICR codes explained",
-    "Testing procedures sequence",
-    "Zs values for MCBs",
-    "Cable colours new regulations"
+    '9.5kW shower 15m from board',
+    'Consumer unit change 10 way',
+    'Socket circuit ring final',
+    'Bathroom lighting IP rating',
+    'EV charger 7kW installation',
+    'Cable sizing for 10kW cooker',
+    'RCD requirements domestic',
+    'Earth bonding regulations',
+    'Voltage drop calculation',
+    'MCB selection guide',
+    'Three phase installation',
+    'Outdoor socket requirements',
+    'Garage supply regulations',
+    'Kitchen ring circuit',
+    'Smoke alarm requirements',
+    'Periodic inspection intervals',
+    'EICR codes explained',
+    'Testing procedures sequence',
+    'Zs values for MCBs',
+    'Cable colours new regulations',
   ];
 
   let warmed = 0;
@@ -48,13 +48,13 @@ serve(async (req) => {
   for (const query of COMMON_QUERIES) {
     try {
       console.log(`Warming cache for: ${query}`);
-      
+
       // Call designer agent to populate cache
       const { error } = await supabase.functions.invoke('designer-v3', {
-        body: { 
-          query, 
-          systemContext: { cacheWarming: true } 
-        }
+        body: {
+          query,
+          systemContext: { cacheWarming: true },
+        },
       });
 
       if (error) {
@@ -65,8 +65,7 @@ serve(async (req) => {
       }
 
       // Rate limit: 1 request per second
-      await new Promise(resolve => setTimeout(resolve, 1000));
-
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     } catch (error) {
       console.error(`Error warming cache for: ${query}`, error);
       failed++;
@@ -76,11 +75,11 @@ serve(async (req) => {
   console.log(`✅ Cache warming complete: ${warmed} warmed, ${failed} failed`);
 
   return new Response(
-    JSON.stringify({ 
+    JSON.stringify({
       success: true,
-      warmed, 
+      warmed,
       failed,
-      total: COMMON_QUERIES.length
+      total: COMMON_QUERIES.length,
     }),
     { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
   );

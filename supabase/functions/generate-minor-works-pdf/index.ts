@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const PDF_MONKEY_API_KEY = Deno.env.get('PDF_MONKEY_API_KEY');
@@ -21,27 +22,24 @@ serve(async (req) => {
     // Verify PDF Monkey API key is configured
     if (!PDF_MONKEY_API_KEY) {
       console.error('[MINOR-WORKS-PDF] API key not configured');
-      return new Response(
-        JSON.stringify({ error: 'PDF Monkey API key not configured' }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: 'PDF Monkey API key not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Parse request body
     const { formData, templateId } = await req.json();
-    console.log('[MINOR-WORKS-PDF] Received form data for certificate:', formData?.certificateNumber);
+    console.log(
+      '[MINOR-WORKS-PDF] Received form data for certificate:',
+      formData?.certificateNumber
+    );
 
     if (!formData) {
-      return new Response(
-        JSON.stringify({ error: 'Form data is required' }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: 'Form data is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Use provided template ID or default
@@ -57,16 +55,16 @@ serve(async (req) => {
     const pdfMonkeyResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${PDF_MONKEY_API_KEY}`,
+        Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         document: {
           document_template_id: TEMPLATE_ID,
           status: 'pending',
-          payload: payload
-        }
-      })
+          payload: payload,
+        },
+      }),
     });
 
     if (!pdfMonkeyResponse.ok) {
@@ -76,11 +74,11 @@ serve(async (req) => {
         JSON.stringify({
           error: 'Failed to generate PDF',
           details: errorText,
-          status: pdfMonkeyResponse.status
+          status: pdfMonkeyResponse.status,
         }),
         {
           status: pdfMonkeyResponse.status,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         }
       );
     }
@@ -95,18 +93,26 @@ serve(async (req) => {
     let documentStatus = pdfData.document?.status;
 
     while (documentStatus !== 'success' && documentStatus !== 'failure' && attempts < maxAttempts) {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      const statusResponse = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
-        headers: {
-          'Authorization': `Bearer ${PDF_MONKEY_API_KEY}`,
+      const statusResponse = await fetch(
+        `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
+          },
         }
-      });
+      );
 
       if (statusResponse.ok) {
         const statusData = await statusResponse.json();
         documentStatus = statusData.document?.status;
-        console.log('[MINOR-WORKS-PDF] Status check attempt', attempts + 1, '- Status:', documentStatus);
+        console.log(
+          '[MINOR-WORKS-PDF] Status check attempt',
+          attempts + 1,
+          '- Status:',
+          documentStatus
+        );
 
         if (documentStatus === 'success') {
           console.log('[MINOR-WORKS-PDF] PDF generated successfully');
@@ -123,7 +129,7 @@ serve(async (req) => {
               expiresAt,
             }),
             {
-              headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
             }
           );
         }
@@ -134,13 +140,10 @@ serve(async (req) => {
 
     if (documentStatus === 'failure') {
       console.error('[MINOR-WORKS-PDF] PDF generation failed');
-      return new Response(
-        JSON.stringify({ error: 'PDF generation failed' }),
-        {
-          status: 500,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: 'PDF generation failed' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Timeout
@@ -150,23 +153,23 @@ serve(async (req) => {
         success: false,
         timeout: true,
         message: 'PDF generation in progress - taking longer than expected',
-        documentId: documentId
+        documentId: documentId,
       }),
       {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error) {
     console.error('[MINOR-WORKS-PDF] Error:', error.message);
-    await captureException(error, { functionName: 'generate-minor-works-pdf', requestUrl: req.url, requestMethod: req.method });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
-    );
+    await captureException(error, {
+      functionName: 'generate-minor-works-pdf',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -187,14 +190,14 @@ function transformFormDataForTemplate(formData: any): any {
     // Contractor details
     contractor: {
       name: formData.contractorName || formData.forAndOnBehalfOf || '',
-      address: formData.contractorAddress || ''
+      address: formData.contractorAddress || '',
     },
 
     // Supply characteristics
     supply: {
       voltage: formData.supplyVoltage || '230',
       frequency: formData.frequency || '50',
-      phases: formData.supplyPhases || '1'
+      phases: formData.supplyPhases || '1',
     },
 
     // Company details (for header)
@@ -204,14 +207,16 @@ function transformFormDataForTemplate(formData: any): any {
       phone: formData.electricianPhone || '',
       email: formData.electricianEmail || '',
       address: formData.contractorAddress || '',
-      registration_no: formData.registrationNumber ? `${formData.schemeProvider || ''}/${formData.registrationNumber}` : ''
+      registration_no: formData.registrationNumber
+        ? `${formData.schemeProvider || ''}/${formData.registrationNumber}`
+        : '',
     },
 
     // Client details
     client: {
       name: formData.clientName || '',
       phone: formData.clientPhone || '',
-      email: formData.clientEmail || ''
+      email: formData.clientEmail || '',
     },
 
     person_ordering_work: formData.personOrderingWork || '',
@@ -219,7 +224,7 @@ function transformFormDataForTemplate(formData: any): any {
     // Installation address
     installation: {
       address: formData.propertyAddress || '',
-      postcode: formData.postcode || ''
+      postcode: formData.postcode || '',
     },
 
     // Work details
@@ -237,7 +242,7 @@ function transformFormDataForTemplate(formData: any): any {
       zdb: formData.zdb || '',
       conductor_present: formData.earthingConductorPresent || false,
       conductor_size: formData.mainEarthingConductorSize || '',
-      conductor_material: formData.mainEarthingConductorMaterial || 'Copper'
+      conductor_material: formData.mainEarthingConductorMaterial || 'Copper',
     },
 
     // Bonding
@@ -252,7 +257,7 @@ function transformFormDataForTemplate(formData: any): any {
       structural: formData.bondingStructural || false,
       structural_size: formData.bondingStructuralSize || '',
       other: formData.bondingOther || false,
-      other_specify: formData.bondingOtherSpecify || ''
+      other_specify: formData.bondingOtherSpecify || '',
     },
 
     // Circuit details
@@ -271,28 +276,28 @@ function transformFormDataForTemplate(formData: any): any {
         bs_en: formData.overcurrentDeviceBsEn || '',
         type: formData.protectiveDeviceType || '',
         rating: formData.protectiveDeviceRating || '',
-        breaking_capacity: formData.protectiveDeviceKaRating || ''
+        breaking_capacity: formData.protectiveDeviceKaRating || '',
       },
       protection: {
         rcd: formData.protectionRcd || false,
         rcbo: formData.protectionRcbo || false,
         afdd: formData.protectionAfdd || false,
-        spd: formData.protectionSpd || false
+        spd: formData.protectionSpd || false,
       },
       rcd: {
         bs_en: formData.rcdBsEn || '',
         type: formData.rcdType || '',
         rating: formData.rcdRatingAmps || '',
-        idn: formData.rcdIdn || ''
+        idn: formData.rcdIdn || '',
       },
       afdd: {
         bs_en: formData.afddBsEn || '',
-        rating: formData.afddRating || ''
+        rating: formData.afddRating || '',
       },
       spd: {
         bs_en: formData.spdBsEn || '',
-        type: formData.spdType || ''
-      }
+        type: formData.spdType || '',
+      },
     },
 
     // Test results
@@ -332,7 +337,7 @@ function transformFormDataForTemplate(formData: any): any {
       spd_visual: formData.spdVisualInspection || '',
       spd_indicator: formData.spdIndicatorStatus || '',
       spd_test_button: formData.spdTestButton || false,
-      temperature: formData.testTemperature || ''
+      temperature: formData.testTemperature || '',
     },
 
     // Test equipment
@@ -340,7 +345,7 @@ function transformFormDataForTemplate(formData: any): any {
       model: formData.testEquipmentModel || '',
       serial: formData.testEquipmentSerial || '',
       calibration_date: formatDate(formData.testEquipmentCalDate),
-      custom: formData.customTestEquipment || ''
+      custom: formData.customTestEquipment || '',
     },
 
     // Declaration
@@ -362,12 +367,12 @@ function transformFormDataForTemplate(formData: any): any {
       work_safety: formData.workSafety || false,
       part_p_notification: formData.partPNotification || false,
       copy_provided: formData.copyProvided || false,
-      additional_notes: formData.additionalNotes || ''
+      additional_notes: formData.additionalNotes || '',
     },
 
     // Generation metadata
     _generated_at: new Date().toISOString(),
-    _cache_bust: Date.now()
+    _cache_bust: Date.now(),
   };
 }
 

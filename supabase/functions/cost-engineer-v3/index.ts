@@ -10,7 +10,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -29,44 +30,39 @@ Deno.serve(async (req) => {
     // Authenticate user
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
-    );
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Parse request body
-    const { 
-      query, 
-      region, 
-      projectContext, 
-      businessSettings, 
-      skipProfitability 
-    } = await req.json();
+    const { query, region, projectContext, businessSettings, skipProfitability } = await req.json();
 
     if (!query) {
-      return new Response(
-        JSON.stringify({ error: 'Query is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Query is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('💷 Cost Engineer called', {
       userId: user.id,
       query: query.substring(0, 100),
       region,
-      projectType: projectContext?.projectType
+      projectType: projectContext?.projectType,
     });
 
     // Generate cost estimate using core logic
@@ -75,13 +71,13 @@ Deno.serve(async (req) => {
       region,
       projectContext,
       businessSettings,
-      skipProfitability
+      skipProfitability,
     });
 
     console.log('✅ Cost estimate generated', {
       materials: result.materials.items.length,
       labourTasks: result.labour.tasks.length,
-      totalCost: result.summary.grandTotal
+      totalCost: result.summary.grandTotal,
     });
 
     // Return JSON response (no SSE)
@@ -91,15 +87,14 @@ Deno.serve(async (req) => {
         data: {
           originalQuery: query,
           structuredData: result,
-          response: formatTextSummary(result)
-        }
+          response: formatTextSummary(result),
+        },
       }),
-      { 
+      {
         status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error: any) {
     console.error('❌ Error in cost-engineer-v3:', error);
 
@@ -107,14 +102,14 @@ Deno.serve(async (req) => {
     await captureException(error, {
       functionName: 'cost-engineer-v3',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     return new Response(
       JSON.stringify({
         success: false,
         error: error.message,
-        details: error.stack
+        details: error.stack,
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -126,25 +121,25 @@ Deno.serve(async (req) => {
  */
 function formatTextSummary(result: any): string {
   let text = '# COST ESTIMATE\n\n';
-  
+
   text += '## MATERIALS\n';
   result.materials.items.forEach((item: any) => {
     text += `• ${item.description} (${item.quantity} ${item.unit}) - £${item.total.toFixed(2)} from ${item.supplier}\n`;
   });
   text += `\nSubtotal Materials: £${result.materials.subtotal.toFixed(2)}\n\n`;
-  
+
   text += '## LABOUR\n';
   result.labour.tasks.forEach((task: any) => {
     text += `• ${task.description} - ${task.hours} hours @ £${task.rate}/hr = £${task.total.toFixed(2)}\n`;
   });
   text += `\nSubtotal Labour: £${result.labour.subtotal.toFixed(2)}\n\n`;
-  
+
   text += '## PROJECT TOTAL\n';
   text += `Materials: £${result.summary.materialsSubtotal.toFixed(2)}\n`;
   text += `Labour: £${result.summary.labourSubtotal.toFixed(2)}\n`;
   text += `Subtotal: £${result.summary.subtotal.toFixed(2)}\n`;
   text += `VAT (20%): £${result.summary.vat.toFixed(2)}\n`;
   text += `**FINAL QUOTE: £${result.summary.grandTotal.toFixed(2)}**\n`;
-  
+
   return text;
 }

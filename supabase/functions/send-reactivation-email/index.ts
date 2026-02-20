@@ -1,11 +1,11 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { Resend } from "npm:resend@2.0.0";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { Resend } from 'npm:resend@2.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
 interface ReactivationRequest {
@@ -14,8 +14,8 @@ interface ReactivationRequest {
 }
 
 function generateReactivationEmailHTML(firstName: string): string {
-  const loginUrl = "https://elec-mate.com/auth/signin";
-  const logoUrl = "https://elec-mate.com/logo.jpg";
+  const loginUrl = 'https://elec-mate.com/auth/signin';
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
 
   return `
 <!DOCTYPE html>
@@ -97,46 +97,45 @@ function generateReactivationEmailHTML(firstName: string): string {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const { email, fullName } = await req.json() as ReactivationRequest;
+    const { email, fullName } = (await req.json()) as ReactivationRequest;
 
     if (!email) {
-      throw new Error("Email is required");
+      throw new Error('Email is required');
     }
 
-    const firstName = (fullName || "there").split(" ")[0];
+    const firstName = (fullName || 'there').split(' ')[0];
     const emailHtml = generateReactivationEmailHTML(firstName);
 
     console.log(`Sending reactivation email to: ${email}`);
 
     const { data, error } = await resend.emails.send({
-      from: "Andrew at Elec-Mate <founder@elec-mate.com>",
+      from: 'Andrew at Elec-Mate <founder@elec-mate.com>',
       to: [email],
       subject: "You're all set - jump back in to Elec-Mate",
       html: emailHtml,
-      reply_to: "founder@elec-mate.com",
+      reply_to: 'founder@elec-mate.com',
     });
 
     if (error) {
-      console.error("Resend error:", error);
+      console.error('Resend error:', error);
       throw error;
     }
 
-    console.log("Email sent successfully:", data?.id);
+    console.log('Email sent successfully:', data?.id);
 
-    return new Response(
-      JSON.stringify({ success: true, emailId: data?.id }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
-    );
+    return new Response(JSON.stringify({ success: true, emailId: data?.id }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
-    console.error("Error:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
-    );
+    console.error('Error:', error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
+    });
   }
 });

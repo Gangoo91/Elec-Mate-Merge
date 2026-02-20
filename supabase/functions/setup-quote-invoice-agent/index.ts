@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ELEVENLABS_API_BASE = 'https://api.elevenlabs.io/v1';
@@ -14,124 +15,390 @@ const QUOTE_INVOICE_AGENT_ID = 'agent_0801kdxbb7hhepg80gfpgq8kgpgs';
 const QUOTE_INVOICE_TOOLS = [
   {
     name: 'send_quote',
-    description: 'Send an existing quote to a client via email. Use when user says "send quote to [name]" or "email the quote to [name]".',
+    description:
+      'Send an existing quote to a client via email. Use when user says "send quote to [name]" or "email the quote to [name]".',
     parameters: [
-      { name: 'clientName', type: 'string', required: false, description: 'Client name to search for. Example: John Smith, Mrs Johnson' },
-      { name: 'quoteNumber', type: 'string', required: false, description: 'Quote number like Q-ABC123 or QT-2024-001' },
-    ]
+      {
+        name: 'clientName',
+        type: 'string',
+        required: false,
+        description: 'Client name to search for. Example: John Smith, Mrs Johnson',
+      },
+      {
+        name: 'quoteNumber',
+        type: 'string',
+        required: false,
+        description: 'Quote number like Q-ABC123 or QT-2024-001',
+      },
+    ],
   },
   {
     name: 'send_invoice',
-    description: 'Send an existing invoice to a client via email. Use when user says "send invoice to [name]" or "email the invoice".',
+    description:
+      'Send an existing invoice to a client via email. Use when user says "send invoice to [name]" or "email the invoice".',
     parameters: [
-      { name: 'clientName', type: 'string', required: false, description: 'Client name to search for' },
-      { name: 'invoiceNumber', type: 'string', required: false, description: 'Invoice number like INV-ABC123' },
-    ]
+      {
+        name: 'clientName',
+        type: 'string',
+        required: false,
+        description: 'Client name to search for',
+      },
+      {
+        name: 'invoiceNumber',
+        type: 'string',
+        required: false,
+        description: 'Invoice number like INV-ABC123',
+      },
+    ],
   },
   {
     name: 'create_and_send_quote',
-    description: 'Create a new quote and send to client via email. Gather ALL details through conversation before calling.',
+    description:
+      'Create a new quote and send to client via email. Gather ALL details through conversation before calling.',
     parameters: [
       // CLIENT DETAILS (QuoteClient)
-      { name: 'clientName', type: 'string', required: true, description: 'Client full name. Example: John Smith, Mrs Sarah Johnson' },
-      { name: 'clientEmail', type: 'string', required: true, description: 'Client email address - REQUIRED for sending. Example: john@email.com' },
-      { name: 'clientPhone', type: 'string', required: false, description: 'Client phone number. Example: 07700 900123' },
-      { name: 'clientAddress', type: 'string', required: false, description: 'Client property address. Example: 42 High Street, Manchester M1 1AA' },
-      { name: 'clientPostcode', type: 'string', required: false, description: 'Client postcode. Example: M1 1AA, SW1A 1AA' },
+      {
+        name: 'clientName',
+        type: 'string',
+        required: true,
+        description: 'Client full name. Example: John Smith, Mrs Sarah Johnson',
+      },
+      {
+        name: 'clientEmail',
+        type: 'string',
+        required: true,
+        description: 'Client email address - REQUIRED for sending. Example: john@email.com',
+      },
+      {
+        name: 'clientPhone',
+        type: 'string',
+        required: false,
+        description: 'Client phone number. Example: 07700 900123',
+      },
+      {
+        name: 'clientAddress',
+        type: 'string',
+        required: false,
+        description: 'Client property address. Example: 42 High Street, Manchester M1 1AA',
+      },
+      {
+        name: 'clientPostcode',
+        type: 'string',
+        required: false,
+        description: 'Client postcode. Example: M1 1AA, SW1A 1AA',
+      },
 
       // JOB DETAILS (JobDetails)
-      { name: 'jobTitle', type: 'string', required: true, description: 'Short job title. Example: Kitchen rewire, Consumer unit upgrade, Socket installation' },
-      { name: 'jobDescription', type: 'string', required: false, description: 'Detailed description of work. Example: Full rewire of kitchen including new consumer unit' },
-      { name: 'jobLocation', type: 'string', required: false, description: 'Job site location if different from client address' },
-      { name: 'estimatedDuration', type: 'string', required: false, description: 'How long the job will take. Example: 2 days, 1 week, half a day' },
-      { name: 'workStartDate', type: 'string', required: false, description: 'When work will start. Example: next Monday, 15th January' },
-      { name: 'specialRequirements', type: 'string', required: false, description: 'Any special requirements or notes for the job' },
+      {
+        name: 'jobTitle',
+        type: 'string',
+        required: true,
+        description:
+          'Short job title. Example: Kitchen rewire, Consumer unit upgrade, Socket installation',
+      },
+      {
+        name: 'jobDescription',
+        type: 'string',
+        required: false,
+        description:
+          'Detailed description of work. Example: Full rewire of kitchen including new consumer unit',
+      },
+      {
+        name: 'jobLocation',
+        type: 'string',
+        required: false,
+        description: 'Job site location if different from client address',
+      },
+      {
+        name: 'estimatedDuration',
+        type: 'string',
+        required: false,
+        description: 'How long the job will take. Example: 2 days, 1 week, half a day',
+      },
+      {
+        name: 'workStartDate',
+        type: 'string',
+        required: false,
+        description: 'When work will start. Example: next Monday, 15th January',
+      },
+      {
+        name: 'specialRequirements',
+        type: 'string',
+        required: false,
+        description: 'Any special requirements or notes for the job',
+      },
 
       // LINE ITEM (QuoteItem) - single item, ElevenLabs gathers one at a time
-      { name: 'itemDescription', type: 'string', required: true, description: 'Description of work or materials. Example: Consumer unit upgrade 10-way with SPD' },
-      { name: 'itemQuantity', type: 'number', required: true, description: 'Quantity of items. Usually 1 for labour/services' },
-      { name: 'itemUnitPrice', type: 'number', required: true, description: 'Price in pounds per unit. Example: 450, 75.50, 1200' },
-      { name: 'itemCategory', type: 'string', required: false, description: 'Category: labour, materials, equipment, or manual. Default labour' },
+      {
+        name: 'itemDescription',
+        type: 'string',
+        required: true,
+        description:
+          'Description of work or materials. Example: Consumer unit upgrade 10-way with SPD',
+      },
+      {
+        name: 'itemQuantity',
+        type: 'number',
+        required: true,
+        description: 'Quantity of items. Usually 1 for labour/services',
+      },
+      {
+        name: 'itemUnitPrice',
+        type: 'number',
+        required: true,
+        description: 'Price in pounds per unit. Example: 450, 75.50, 1200',
+      },
+      {
+        name: 'itemCategory',
+        type: 'string',
+        required: false,
+        description: 'Category: labour, materials, equipment, or manual. Default labour',
+      },
 
       // SETTINGS (QuoteSettings)
-      { name: 'labourRate', type: 'number', required: false, description: 'Hourly labour rate in pounds. Uses default from profile if not specified' },
-      { name: 'overheadPercentage', type: 'number', required: false, description: 'Overhead percentage. Default 10' },
-      { name: 'profitMargin', type: 'number', required: false, description: 'Profit margin percentage. Default 15' },
-      { name: 'vatRate', type: 'number', required: false, description: 'VAT percentage. Use 20 for VAT-registered, 0 for not VAT registered. Default 20' },
-      { name: 'vatRegistered', type: 'boolean', required: false, description: 'Is the business VAT registered? Default true' },
-      { name: 'breakdownMaterials', type: 'boolean', required: false, description: 'Show materials line by line or as one total? Default false (one total)' },
+      {
+        name: 'labourRate',
+        type: 'number',
+        required: false,
+        description: 'Hourly labour rate in pounds. Uses default from profile if not specified',
+      },
+      {
+        name: 'overheadPercentage',
+        type: 'number',
+        required: false,
+        description: 'Overhead percentage. Default 10',
+      },
+      {
+        name: 'profitMargin',
+        type: 'number',
+        required: false,
+        description: 'Profit margin percentage. Default 15',
+      },
+      {
+        name: 'vatRate',
+        type: 'number',
+        required: false,
+        description:
+          'VAT percentage. Use 20 for VAT-registered, 0 for not VAT registered. Default 20',
+      },
+      {
+        name: 'vatRegistered',
+        type: 'boolean',
+        required: false,
+        description: 'Is the business VAT registered? Default true',
+      },
+      {
+        name: 'breakdownMaterials',
+        type: 'boolean',
+        required: false,
+        description: 'Show materials line by line or as one total? Default false (one total)',
+      },
 
       // QUOTE EXTRAS
-      { name: 'notes', type: 'string', required: false, description: 'Additional notes to appear on the quote' },
-      { name: 'expiryDays', type: 'number', required: false, description: 'Days until quote expires. Default 30' },
-    ]
+      {
+        name: 'notes',
+        type: 'string',
+        required: false,
+        description: 'Additional notes to appear on the quote',
+      },
+      {
+        name: 'expiryDays',
+        type: 'number',
+        required: false,
+        description: 'Days until quote expires. Default 30',
+      },
+    ],
   },
   {
     name: 'create_and_send_invoice',
-    description: 'Create an invoice and send to client. Either convert an accepted quote OR create a fresh invoice with new details.',
+    description:
+      'Create an invoice and send to client. Either convert an accepted quote OR create a fresh invoice with new details.',
     parameters: [
       // MODE 1: CONVERT FROM QUOTE
-      { name: 'quoteNumber', type: 'string', required: false, description: 'Quote number to convert to invoice. Example: Q-ABC123' },
+      {
+        name: 'quoteNumber',
+        type: 'string',
+        required: false,
+        description: 'Quote number to convert to invoice. Example: Q-ABC123',
+      },
 
       // MODE 2: FRESH INVOICE - CLIENT DETAILS
-      { name: 'clientName', type: 'string', required: false, description: 'Client name - for finding quote or fresh invoice' },
-      { name: 'clientEmail', type: 'string', required: false, description: 'Client email - REQUIRED for fresh invoice if no quote' },
+      {
+        name: 'clientName',
+        type: 'string',
+        required: false,
+        description: 'Client name - for finding quote or fresh invoice',
+      },
+      {
+        name: 'clientEmail',
+        type: 'string',
+        required: false,
+        description: 'Client email - REQUIRED for fresh invoice if no quote',
+      },
       { name: 'clientPhone', type: 'string', required: false, description: 'Client phone number' },
       { name: 'clientAddress', type: 'string', required: false, description: 'Client address' },
       { name: 'clientPostcode', type: 'string', required: false, description: 'Client postcode' },
 
       // JOB DETAILS (for fresh invoice)
-      { name: 'jobTitle', type: 'string', required: false, description: 'Job title for fresh invoice' },
-      { name: 'jobDescription', type: 'string', required: false, description: 'Job description for fresh invoice' },
-      { name: 'workCompletionDate', type: 'string', required: false, description: 'When the work was completed' },
+      {
+        name: 'jobTitle',
+        type: 'string',
+        required: false,
+        description: 'Job title for fresh invoice',
+      },
+      {
+        name: 'jobDescription',
+        type: 'string',
+        required: false,
+        description: 'Job description for fresh invoice',
+      },
+      {
+        name: 'workCompletionDate',
+        type: 'string',
+        required: false,
+        description: 'When the work was completed',
+      },
 
       // LINE ITEM (for fresh invoice)
-      { name: 'itemDescription', type: 'string', required: false, description: 'Work description for fresh invoice' },
-      { name: 'itemQuantity', type: 'number', required: false, description: 'Quantity for fresh invoice. Usually 1' },
-      { name: 'itemUnitPrice', type: 'number', required: false, description: 'Price in pounds for fresh invoice' },
-      { name: 'itemCategory', type: 'string', required: false, description: 'Category: labour, materials, equipment' },
+      {
+        name: 'itemDescription',
+        type: 'string',
+        required: false,
+        description: 'Work description for fresh invoice',
+      },
+      {
+        name: 'itemQuantity',
+        type: 'number',
+        required: false,
+        description: 'Quantity for fresh invoice. Usually 1',
+      },
+      {
+        name: 'itemUnitPrice',
+        type: 'number',
+        required: false,
+        description: 'Price in pounds for fresh invoice',
+      },
+      {
+        name: 'itemCategory',
+        type: 'string',
+        required: false,
+        description: 'Category: labour, materials, equipment',
+      },
 
       // FINANCIAL SETTINGS
-      { name: 'vatRate', type: 'number', required: false, description: 'VAT percentage. Default 20' },
-      { name: 'vatRegistered', type: 'boolean', required: false, description: 'VAT registered? Default true' },
-      { name: 'breakdownMaterials', type: 'boolean', required: false, description: 'Break down materials line by line? Default false' },
+      {
+        name: 'vatRate',
+        type: 'number',
+        required: false,
+        description: 'VAT percentage. Default 20',
+      },
+      {
+        name: 'vatRegistered',
+        type: 'boolean',
+        required: false,
+        description: 'VAT registered? Default true',
+      },
+      {
+        name: 'breakdownMaterials',
+        type: 'boolean',
+        required: false,
+        description: 'Break down materials line by line? Default false',
+      },
 
       // INVOICE-SPECIFIC (InvoiceSettings)
-      { name: 'paymentTerms', type: 'string', required: false, description: 'Payment terms text. Example: Due within 14 days, Payment on completion' },
-      { name: 'paymentDays', type: 'number', required: false, description: 'Days until payment due. Default 14' },
-      { name: 'paymentMethod', type: 'string', required: false, description: 'Preferred payment method: bank transfer, card, cash' },
+      {
+        name: 'paymentTerms',
+        type: 'string',
+        required: false,
+        description: 'Payment terms text. Example: Due within 14 days, Payment on completion',
+      },
+      {
+        name: 'paymentDays',
+        type: 'number',
+        required: false,
+        description: 'Days until payment due. Default 14',
+      },
+      {
+        name: 'paymentMethod',
+        type: 'string',
+        required: false,
+        description: 'Preferred payment method: bank transfer, card, cash',
+      },
 
       // BANK DETAILS (for invoice)
-      { name: 'bankName', type: 'string', required: false, description: 'Bank name for payment. Example: Barclays, Lloyds, NatWest' },
-      { name: 'bankAccountName', type: 'string', required: false, description: 'Account holder name' },
-      { name: 'bankAccountNumber', type: 'string', required: false, description: 'Bank account number (8 digits)' },
-      { name: 'bankSortCode', type: 'string', required: false, description: 'Sort code. Example: 20-00-00' },
+      {
+        name: 'bankName',
+        type: 'string',
+        required: false,
+        description: 'Bank name for payment. Example: Barclays, Lloyds, NatWest',
+      },
+      {
+        name: 'bankAccountName',
+        type: 'string',
+        required: false,
+        description: 'Account holder name',
+      },
+      {
+        name: 'bankAccountNumber',
+        type: 'string',
+        required: false,
+        description: 'Bank account number (8 digits)',
+      },
+      {
+        name: 'bankSortCode',
+        type: 'string',
+        required: false,
+        description: 'Sort code. Example: 20-00-00',
+      },
 
       // INVOICE EXTRAS
-      { name: 'invoiceNotes', type: 'string', required: false, description: 'Notes to appear on invoice' },
-      { name: 'purchaseOrder', type: 'string', required: false, description: 'Client PO number if provided' },
-    ]
+      {
+        name: 'invoiceNotes',
+        type: 'string',
+        required: false,
+        description: 'Notes to appear on invoice',
+      },
+      {
+        name: 'purchaseOrder',
+        type: 'string',
+        required: false,
+        description: 'Client PO number if provided',
+      },
+    ],
   },
   {
     name: 'get_quote_info',
-    description: 'Get information about quotes. Use to check quote status, amounts, or find quotes for a client.',
+    description:
+      'Get information about quotes. Use to check quote status, amounts, or find quotes for a client.',
     parameters: [
       { name: 'client', type: 'string', required: false, description: 'Client name to filter by' },
-      { name: 'status', type: 'string', required: false, description: 'Quote status to filter by: draft, sent, approved, rejected' },
-    ]
+      {
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Quote status to filter by: draft, sent, approved, rejected',
+      },
+    ],
   },
   {
     name: 'get_invoice_info',
-    description: 'Get information about invoices. Use to check invoice status, amounts, or find invoices for a client.',
+    description:
+      'Get information about invoices. Use to check invoice status, amounts, or find invoices for a client.',
     parameters: [
       { name: 'client', type: 'string', required: false, description: 'Client name to filter by' },
-      { name: 'status', type: 'string', required: false, description: 'Invoice status to filter by: sent, paid, overdue' },
-    ]
+      {
+        name: 'status',
+        type: 'string',
+        required: false,
+        description: 'Invoice status to filter by: sent, paid, overdue',
+      },
+    ],
   },
   {
     name: 'get_overdue_invoices',
-    description: 'Get list of overdue/unpaid invoices. Use when user asks about outstanding payments, unpaid invoices, or overdue invoices.',
-    parameters: []
+    description:
+      'Get list of overdue/unpaid invoices. Use when user asks about outstanding payments, unpaid invoices, or overdue invoices.',
+    parameters: [],
   },
 ];
 
@@ -239,7 +506,7 @@ User: "What quotes are pending?"
 - If no accepted quotes: "There's no accepted quote for that client. Would you like to create a fresh invoice?"`;
 
 // Convert tool to ElevenLabs format
-function convertToElevenLabsFormat(tool: typeof QUOTE_INVOICE_TOOLS[0]) {
+function convertToElevenLabsFormat(tool: (typeof QUOTE_INVOICE_TOOLS)[0]) {
   const properties: Record<string, object> = {};
   const required: string[] = [];
 
@@ -330,7 +597,12 @@ async function createTool(apiKey: string, toolConfig: object): Promise<string> {
 }
 
 // Update agent with tool IDs, system prompt, and TTS model
-async function updateAgent(apiKey: string, agentId: string, toolIds: string[], systemPrompt: string): Promise<void> {
+async function updateAgent(
+  apiKey: string,
+  agentId: string,
+  toolIds: string[],
+  systemPrompt: string
+): Promise<void> {
   const response = await fetch(`${ELEVENLABS_API_BASE}/convai/agents/${agentId}`, {
     method: 'PATCH',
     headers: {
@@ -392,10 +664,10 @@ serve(async (req) => {
     const apiKey = Deno.env.get('ELEVENLABS_API_KEY');
 
     if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: 'ELEVENLABS_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'ELEVENLABS_API_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Starting quote/invoice voice agent setup...');
@@ -406,7 +678,7 @@ serve(async (req) => {
     console.log('Agent tools cleared');
 
     // Small delay to ensure tools are unassigned
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     // Step 2: Get all existing tools
     console.log('Fetching existing tools...');
@@ -414,7 +686,15 @@ serve(async (req) => {
     console.log(`Found ${existingTools.length} existing tools`);
 
     // Step 3: Delete quote/invoice related tools (or all if clean slate desired)
-    const toolNamesToDelete = ['send_quote', 'send_invoice', 'create_and_send_quote', 'create_and_send_invoice', 'get_quote_info', 'get_invoice_info', 'get_overdue_invoices'];
+    const toolNamesToDelete = [
+      'send_quote',
+      'send_invoice',
+      'create_and_send_quote',
+      'create_and_send_invoice',
+      'get_quote_info',
+      'get_invoice_info',
+      'get_overdue_invoices',
+    ];
     let deletedCount = 0;
     const deletedNames: string[] = [];
 
@@ -428,7 +708,7 @@ serve(async (req) => {
         } catch (e) {
           console.log(`Could not delete ${tool.name}: ${e}`);
         }
-        await new Promise(resolve => setTimeout(resolve, 150)); // Rate limit
+        await new Promise((resolve) => setTimeout(resolve, 150)); // Rate limit
       }
     }
     console.log(`Deleted ${deletedCount} tools: ${deletedNames.join(', ')}`);
@@ -443,7 +723,7 @@ serve(async (req) => {
       const toolId = await createTool(apiKey, elevenLabsFormat);
       newToolIds.push(toolId);
       console.log(`Created ${tool.name} with ID: ${toolId}`);
-      await new Promise(resolve => setTimeout(resolve, 100)); // Rate limit
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Rate limit
     }
 
     // Step 5: Update agent with new tools and system prompt
@@ -457,18 +737,17 @@ serve(async (req) => {
         message: 'Quote/Invoice voice agent configured successfully',
         agentId: QUOTE_INVOICE_AGENT_ID,
         deletedTools: deletedCount,
-        createdTools: QUOTE_INVOICE_TOOLS.map(t => t.name),
+        createdTools: QUOTE_INVOICE_TOOLS.map((t) => t.name),
         toolIds: newToolIds,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error setting up quote/invoice voice agent:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Internal server error'
+        error: error instanceof Error ? error.message : 'Internal server error',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

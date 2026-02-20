@@ -1,10 +1,11 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4'
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
-}
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+};
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -26,10 +27,10 @@ serve(async (req) => {
     if (!ADZUNA_APP_ID || !ADZUNA_APP_KEY || !REED_API_KEY) {
       console.log('Missing API keys - using mock data mode');
       return new Response(
-        JSON.stringify({ 
-          success: true, 
+        JSON.stringify({
+          success: true,
           message: 'API keys not configured, skipping real data fetch',
-          records_processed: 0
+          records_processed: 0,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -46,10 +47,15 @@ serve(async (req) => {
       { name: 'Cardiff', location: 'Cardiff' },
       { name: 'Belfast', location: 'Belfast' },
       { name: 'Bristol', location: 'Bristol' },
-      { name: 'Liverpool', location: 'Liverpool' }
+      { name: 'Liverpool', location: 'Liverpool' },
     ];
 
-    const jobTypes = ['electrician', 'electrical engineer', 'electrical installer', 'electrical technician'];
+    const jobTypes = [
+      'electrician',
+      'electrical engineer',
+      'electrical installer',
+      'electrical technician',
+    ];
     let totalRecordsProcessed = 0;
 
     // Process each region and job type combination
@@ -63,19 +69,21 @@ serve(async (req) => {
             `https://www.reed.co.uk/api/1.0/search?keywords=${encodeURIComponent(jobType)}&locationName=${encodeURIComponent(region.location)}&resultsToTake=20`,
             {
               headers: {
-                'Authorization': `Basic ${btoa(REED_API_KEY + ':')}`
-              }
+                Authorization: `Basic ${btoa(REED_API_KEY + ':')}`,
+              },
             }
           );
 
           if (reedResponse.ok) {
             const reedData = await reedResponse.json();
-            console.log(`Reed API returned ${reedData.results?.length || 0} jobs for ${jobType} in ${region.name}`);
+            console.log(
+              `Reed API returned ${reedData.results?.length || 0} jobs for ${jobType} in ${region.name}`
+            );
 
             if (reedData.results && reedData.results.length > 0) {
               // Process Reed data and convert to regional pricing
               const processedJobs = processReedJobs(reedData.results, region.name, jobType);
-              
+
               for (const job of processedJobs) {
                 await upsertRegionalPricing(supabase, job);
                 totalRecordsProcessed++;
@@ -84,8 +92,7 @@ serve(async (req) => {
           }
 
           // Small delay to respect API limits
-          await new Promise(resolve => setTimeout(resolve, 500));
-
+          await new Promise((resolve) => setTimeout(resolve, 500));
         } catch (error) {
           console.error(`Error processing ${jobType} in ${region.name}:`, error);
         }
@@ -93,36 +100,33 @@ serve(async (req) => {
     }
 
     // Update last ingestion timestamp
-    await supabase
-      .from('pricing_ingest_log')
-      .insert({
-        ingest_type: 'nightly_job_pricing',
-        records_processed: totalRecordsProcessed,
-        status: 'completed',
-        notes: `Processed ${totalRecordsProcessed} job pricing records`
-      });
+    await supabase.from('pricing_ingest_log').insert({
+      ingest_type: 'nightly_job_pricing',
+      records_processed: totalRecordsProcessed,
+      status: 'completed',
+      notes: `Processed ${totalRecordsProcessed} job pricing records`,
+    });
 
     console.log(`Nightly ingest completed. Processed ${totalRecordsProcessed} records.`);
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         records_processed: totalRecordsProcessed,
-        message: 'Nightly job pricing ingest completed successfully'
+        message: 'Nightly job pricing ingest completed successfully',
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error in nightly job pricing ingest:', error);
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
       }),
-      { 
+      {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }
@@ -131,37 +135,38 @@ serve(async (req) => {
 function processReedJobs(jobs: any[], regionName: string, jobType: string) {
   const processedJobs = [];
   const salaries = jobs
-    .filter(job => job.minimumSalary && job.maximumSalary)
-    .map(job => ({
+    .filter((job) => job.minimumSalary && job.maximumSalary)
+    .map((job) => ({
       min: job.minimumSalary,
-      max: job.maximumSalary
+      max: job.maximumSalary,
     }));
 
   if (salaries.length === 0) return [];
 
   // Convert annual salaries to daily rates (assuming 220 working days)
-  const dailyRates = salaries.map(salary => ({
+  const dailyRates = salaries.map((salary) => ({
     min: Math.round(salary.min / 220),
-    max: Math.round(salary.max / 220)
+    max: Math.round(salary.max / 220),
   }));
 
   // Calculate regional job pricing from daily rates
-  const allMins = dailyRates.map(rate => rate.min);
-  const allMaxs = dailyRates.map(rate => rate.max);
-  
+  const allMins = dailyRates.map((rate) => rate.min);
+  const allMaxs = dailyRates.map((rate) => rate.max);
+
   const minPrice = Math.min(...allMins);
   const maxPrice = Math.max(...allMaxs);
   const averagePrice = Math.round((minPrice + maxPrice) / 2);
 
   // Map job types to our categories
   const jobTypeMapping = {
-    'electrician': 'General Electrical Work',
+    electrician: 'General Electrical Work',
     'electrical engineer': 'Electrical Design & Installation',
     'electrical installer': 'Installation Services',
-    'electrical technician': 'Maintenance & Testing'
+    'electrical technician': 'Maintenance & Testing',
   };
 
-  const mappedJobType = (jobTypeMapping as Record<string, string>)[jobType] || 'General Electrical Work';
+  const mappedJobType =
+    (jobTypeMapping as Record<string, string>)[jobType] || 'General Electrical Work';
 
   processedJobs.push({
     region: regionName,
@@ -172,7 +177,7 @@ function processReedJobs(jobs: any[], regionName: string, jobType: string) {
     average_price: averagePrice,
     complexity_level: 'standard',
     data_source: 'reed_api',
-    confidence_score: Math.min(95, Math.max(60, 70 + salaries.length * 2)) // Higher confidence with more data points
+    confidence_score: Math.min(95, Math.max(60, 70 + salaries.length * 2)), // Higher confidence with more data points
   });
 
   return processedJobs;
@@ -194,13 +199,11 @@ async function upsertRegionalPricing(supabase: any, jobData: any) {
       .update({
         ...jobData,
         last_updated: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', existing.id);
   } else {
     // Insert new record
-    await supabase
-      .from('regional_job_pricing')
-      .insert(jobData);
+    await supabase.from('regional_job_pricing').insert(jobData);
   }
 }

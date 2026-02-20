@@ -1,31 +1,12 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import {
-  SafetyPDFBuilder,
-  C,
-  type StatusColour,
-  type CompanyBranding,
-} from '../_shared/SafetyPDFBuilder.ts';
+import { nearMissTemplate } from '../_shared/safety-templates/near-miss.ts';
+import { htmlToPdf } from '../_shared/safety-pdf-renderer.ts';
+import type { Branding } from '../_shared/safety-html-base.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString('en-GB') : 'N/A');
-
-const SEVERITY_STATUS: Record<string, StatusColour> = {
-  critical: 'danger',
-  high: 'danger',
-  medium: 'warning',
-  low: 'success',
-};
-
-const SEVERITY_ACCENT: Record<string, typeof C.danger> = {
-  critical: C.danger,
-  high: C.danger,
-  medium: C.warning,
-  low: C.success,
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
@@ -51,11 +32,11 @@ serve(async (req) => {
     const { data: profileRows } = await supabase
       .from('company_profiles')
       .select(
-        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color'
+        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color, scheme_logo_data_url, registration_scheme'
       )
       .eq('user_id', user.id)
       .limit(1);
-    const branding: CompanyBranding = profileRows?.[0] ?? {};
+    const branding: Branding = profileRows?.[0] ?? {};
 
     const { recordId } = await req.json();
     if (!recordId) throw new Error('Missing recordId');
@@ -68,45 +49,11 @@ serve(async (req) => {
 
     if (fetchError || !record) throw new Error('Record not found');
 
-    // ── Build PDF ──────────────────────────────────────────────────────
-    const sev = (record.severity || '').toLowerCase();
-    const statusColour: StatusColour = SEVERITY_STATUS[sev] || 'grey';
-
-    const pdf = await SafetyPDFBuilder.create(
-      'Near Miss Report',
-      recordId,
-      record.severity || 'unknown',
-      statusColour,
-      branding
-    );
-
-    // Incident Details
-    pdf.section('Incident Details');
-    pdf.keyValueGrid([
-      { label: 'Category', value: record.category || 'N/A' },
-      { label: 'Location', value: record.location || 'N/A' },
-      { label: 'Incident Date', value: fmtDate(record.incident_date) },
-      { label: 'Status', value: record.status || 'N/A' },
-      { label: 'Reported', value: fmtDate(record.created_at) },
-    ]);
-
-    // Description
-    pdf.section('Description');
-    pdf.textBox(record.description || 'No description provided.', SEVERITY_ACCENT[sev] || C.border);
-
-    // Immediate Actions
-    if (record.immediate_actions) {
-      pdf.section('Immediate Actions Taken');
-      pdf.textBox(record.immediate_actions, C.info);
-    }
-
-    // Footer
-    pdf.footnote(
-      `This document was generated electronically by Elec-Mate. Near Miss Ref: ${recordId}`
-    );
+    // ── Build PDF via HTML template + Browserless ────────────────────
+    const html = nearMissTemplate(record, branding);
+    const pdfBytes = await htmlToPdf(html);
 
     // ── Upload PDF ─────────────────────────────────────────────────────
-    const pdfBytes = await pdf.toBuffer();
     const fileName = `near-miss-${recordId}-${Date.now()}.pdf`;
 
     const { error: uploadError } = await supabase.storage
@@ -117,8 +64,16 @@ serve(async (req) => {
       });
 
     if (uploadError) {
-      return new Response(pdfBytes, {
-        headers: { ...corsHeaders, 'Content-Type': 'application/pdf' },
+      // Fallback: return base64-encoded PDF as JSON (chunked to avoid stack overflow)
+      const bytes = new Uint8Array(pdfBytes);
+      let binary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+      }
+      const base64 = btoa(binary);
+      return new Response(JSON.stringify({ success: true, pdf_base64: base64 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 

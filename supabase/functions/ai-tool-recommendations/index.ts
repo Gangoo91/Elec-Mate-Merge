@@ -3,7 +3,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface ToolItem {
@@ -36,24 +37,27 @@ serve(async (req) => {
 
   try {
     console.log('🤖 [AI-TOOL-RECOMMENDATIONS] Starting request...');
-    
+
     const { searchQuery, tools = [] } = await req.json();
-    
+
     console.log(`🔍 Analyzing ${tools.length} tools for search: "${searchQuery}"`);
 
     if (!tools || tools.length === 0) {
-      return new Response(JSON.stringify({
-        success: true,
-        recommendations: [],
-        insights: {
-          totalAnalyzed: 0,
-          categories: [],
-          averagePrice: 0,
-          topBrands: []
+      return new Response(
+        JSON.stringify({
+          success: true,
+          recommendations: [],
+          insights: {
+            totalAnalyzed: 0,
+            categories: [],
+            averagePrice: 0,
+            topBrands: [],
+          },
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         }
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      );
     }
 
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -67,30 +71,35 @@ serve(async (req) => {
 
     console.log(`✅ Generated AI insights with ${recommendations.length} recommendations`);
 
-    return new Response(JSON.stringify({
-      success: true,
-      recommendations,
-      insights: toolAnalysis
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        recommendations,
+        insights: toolAnalysis,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error in ai-tool-recommendations:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error occurred'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 function analyzeTools(tools: ToolItem[]) {
-  const categories = [...new Set(tools.map(tool => tool.category))];
-  const brands = [...new Set(tools.map(tool => extractBrand(tool.name)))];
-  const prices = tools.map(tool => parseFloat(tool.price.replace(/[£,]/g, '')));
+  const categories = [...new Set(tools.map((tool) => tool.category))];
+  const brands = [...new Set(tools.map((tool) => extractBrand(tool.name)))];
+  const prices = tools.map((tool) => parseFloat(tool.price.replace(/[£,]/g, '')));
   const averagePrice = prices.length > 0 ? prices.reduce((a, b) => a + b, 0) / prices.length : 0;
 
   return {
@@ -98,15 +107,29 @@ function analyzeTools(tools: ToolItem[]) {
     categories,
     averagePrice: Math.round(averagePrice),
     topBrands: brands.slice(0, 5),
-    priceRange: prices.length > 0 ? {
-      min: Math.min(...prices),
-      max: Math.max(...prices)
-    } : { min: 0, max: 0 }
+    priceRange:
+      prices.length > 0
+        ? {
+            min: Math.min(...prices),
+            max: Math.max(...prices),
+          }
+        : { min: 0, max: 0 },
   };
 }
 
 function extractBrand(toolName: string): string {
-  const commonBrands = ['Bosch', 'DeWalt', 'Makita', 'Milwaukee', 'Festool', 'Hilti', 'Stanley', 'Klein', 'Fluke', 'Wera'];
+  const commonBrands = [
+    'Bosch',
+    'DeWalt',
+    'Makita',
+    'Milwaukee',
+    'Festool',
+    'Hilti',
+    'Stanley',
+    'Klein',
+    'Fluke',
+    'Wera',
+  ];
   for (const brand of commonBrands) {
     if (toolName.toLowerCase().includes(brand.toLowerCase())) {
       return brand;
@@ -115,11 +138,15 @@ function extractBrand(toolName: string): string {
   return 'Other';
 }
 
-async function generateAIRecommendations(tools: ToolItem[], searchQuery: string, apiKey: string): Promise<AIRecommendation[]> {
+async function generateAIRecommendations(
+  tools: ToolItem[],
+  searchQuery: string,
+  apiKey: string
+): Promise<AIRecommendation[]> {
   const prompt = `You are a professional electrician's assistant analyzing tools for: "${searchQuery}".
 
 Tools available:
-${tools.map(tool => `- ${tool.name} (${tool.price}) - ${tool.supplier} ${tool.isOnSale ? '(ON SALE)' : ''}`).join('\n')}
+${tools.map((tool) => `- ${tool.name} (${tool.price}) - ${tool.supplier} ${tool.isOnSale ? '(ON SALE)' : ''}`).join('\n')}
 
 Generate 3-4 actionable recommendations for an electrician. Focus on:
 1. BRAND COMPATIBILITY: Tools that work together (same battery platform, etc.)
@@ -141,7 +168,7 @@ Keep descriptions practical and specific to electrical work.`;
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${apiKey}`,
+      Authorization: `Bearer ${apiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -158,7 +185,7 @@ Keep descriptions practical and specific to electrical work.`;
 
   const data = await response.json();
   const content = data.choices[0].message.content;
-  
+
   try {
     const recommendations = JSON.parse(content);
     return Array.isArray(recommendations) ? recommendations : [];

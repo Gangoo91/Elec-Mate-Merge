@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ELEVENLABS_API_BASE = 'https://api.elevenlabs.io/v1';
@@ -100,7 +101,10 @@ async function getExistingTools(apiKey: string): Promise<Map<string, string>> {
 }
 
 // Create a tool in ElevenLabs
-async function createTool(apiKey: string, toolConfig: object): Promise<{ id: string; name: string }> {
+async function createTool(
+  apiKey: string,
+  toolConfig: object
+): Promise<{ id: string; name: string }> {
   const response = await fetch(`${ELEVENLABS_API_BASE}/convai/tools`, {
     method: 'POST',
     headers: {
@@ -145,7 +149,11 @@ async function updateAgentTools(apiKey: string, agentId: string, toolIds: string
 }
 
 // Update agent system prompt
-async function updateAgentPrompt(apiKey: string, agentId: string, systemPrompt: string): Promise<void> {
+async function updateAgentPrompt(
+  apiKey: string,
+  agentId: string,
+  systemPrompt: string
+): Promise<void> {
   const response = await fetch(`${ELEVENLABS_API_BASE}/convai/agents/${agentId}`, {
     method: 'PATCH',
     headers: {
@@ -183,23 +191,26 @@ serve(async (req) => {
 
     if (!apiKey) {
       return new Response(
-        JSON.stringify({ error: 'API key is required (either in request body or ELEVENLABS_API_KEY environment variable)' }),
+        JSON.stringify({
+          error:
+            'API key is required (either in request body or ELEVENLABS_API_KEY environment variable)',
+        }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     if (!agentId) {
-      return new Response(
-        JSON.stringify({ error: 'Agent ID is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Agent ID is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     if (!tools || !Array.isArray(tools) || tools.length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'Tools array is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Tools array is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`Starting sync of ${tools.length} tools to agent ${agentId}`);
@@ -236,7 +247,7 @@ serve(async (req) => {
           console.log(`Created tool "${tool.name}" with ID: ${created.id}`);
 
           // Small delay to avoid rate limiting
-          await new Promise(resolve => setTimeout(resolve, 100));
+          await new Promise((resolve) => setTimeout(resolve, 100));
         }
       } catch (error) {
         console.error(`Failed to create tool "${tool.name}":`, error);
@@ -278,17 +289,15 @@ serve(async (req) => {
 
     console.log('Sync completed:', summary.message);
 
-    return new Response(
-      JSON.stringify(summary),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify(summary), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error in sync-elevenlabs-tools function:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Internal server error'
+        error: error instanceof Error ? error.message : 'Internal server error',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

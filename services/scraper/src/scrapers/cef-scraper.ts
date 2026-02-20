@@ -42,7 +42,7 @@ export class CEFScraper extends BaseScraper {
           '/catalogue/search?q=fluke',
           '/catalogue/search?q=megger',
         ],
-        'cables': [
+        cables: [
           '/catalogue/products/cables-accessories',
           '/catalogue/search?q=twin+earth',
           '/catalogue/search?q=swa+cable',
@@ -54,7 +54,7 @@ export class CEFScraper extends BaseScraper {
           '/catalogue/search?q=rcbo',
           '/catalogue/search?q=rcd',
         ],
-        'lighting': [
+        lighting: [
           '/catalogue/products/lighting',
           '/catalogue/search?q=led+downlight',
           '/catalogue/search?q=emergency+lighting',
@@ -99,14 +99,19 @@ export class CEFScraper extends BaseScraper {
     if (!success) return products;
 
     // CEF is a heavy React site - wait longer for hydration
-    await new Promise(r => setTimeout(r, 8000));
+    await new Promise((r) => setTimeout(r, 8000));
 
     // Try to wait for product content to appear
     try {
-      await page.waitForFunction(() => {
-        return document.body.innerText.includes('£') ||
-               document.querySelectorAll('a[href*="/catalogue/"]').length > 5;
-      }, { timeout: 10000 });
+      await page.waitForFunction(
+        () => {
+          return (
+            document.body.innerText.includes('£') ||
+            document.querySelectorAll('a[href*="/catalogue/"]').length > 5
+          );
+        },
+        { timeout: 10000 }
+      );
     } catch {
       // Continue anyway
     }
@@ -128,12 +133,18 @@ export class CEFScraper extends BaseScraper {
       const seenSkus = new Set<string>();
 
       // Method 1: Look for embedded JSON data in script tags (modern React sites)
-      const scripts = document.querySelectorAll('script[type="application/json"], script:not([src])');
+      const scripts = document.querySelectorAll(
+        'script[type="application/json"], script:not([src])'
+      );
       scripts.forEach((script) => {
         try {
           const content = script.textContent || '';
           // Look for product data patterns
-          if (content.includes('"products"') || content.includes('"items"') || content.includes('"sku"')) {
+          if (
+            content.includes('"products"') ||
+            content.includes('"items"') ||
+            content.includes('"sku"')
+          ) {
             // Try to find product arrays
             const productMatch = content.match(/"products"\s*:\s*(\[[\s\S]*?\])/);
             if (productMatch) {
@@ -177,20 +188,25 @@ export class CEFScraper extends BaseScraper {
           cards.forEach((card) => {
             try {
               // Find link to product
-              const link = card.querySelector('a[href*="/catalogue/"], a[href*="/product/"], a[href*="/p/"]') as HTMLAnchorElement;
+              const link = card.querySelector(
+                'a[href*="/catalogue/"], a[href*="/product/"], a[href*="/p/"]'
+              ) as HTMLAnchorElement;
               if (!link?.href) return;
 
               // Extract SKU from URL or data attribute
               const skuFromUrl = link.href.match(/\/([A-Z0-9-]+)(?:\/|\?|$)/i);
-              const sku = card.getAttribute('data-sku') ||
-                         card.getAttribute('data-product-id') ||
-                         (skuFromUrl ? skuFromUrl[1] : `CEF-${Math.random().toString(36).substr(2, 8)}`);
+              const sku =
+                card.getAttribute('data-sku') ||
+                card.getAttribute('data-product-id') ||
+                (skuFromUrl ? skuFromUrl[1] : `CEF-${Math.random().toString(36).substr(2, 8)}`);
 
               if (seenSkus.has(sku)) return;
               seenSkus.add(sku);
 
               // Get name
-              const nameEl = card.querySelector('h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"], [class*="Title"]');
+              const nameEl = card.querySelector(
+                'h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"], [class*="Title"]'
+              );
               const name = nameEl?.textContent?.trim() || link.textContent?.trim() || '';
               if (!name || name.length < 3) return;
 
@@ -227,7 +243,12 @@ export class CEFScraper extends BaseScraper {
           const href = anchor.href;
 
           // Skip navigation/category links
-          if (href.includes('/categories') || href.includes('/search') || !href.match(/\/[A-Z0-9]{3,}/i)) return;
+          if (
+            href.includes('/categories') ||
+            href.includes('/search') ||
+            !href.match(/\/[A-Z0-9]{3,}/i)
+          )
+            return;
 
           const skuMatch = href.match(/\/([A-Z0-9]{4,})/i);
           if (!skuMatch) return;
@@ -244,8 +265,10 @@ export class CEFScraper extends BaseScraper {
           }
           if (!container) container = anchor.parentElement;
 
-          const name = anchor.textContent?.trim() ||
-                      container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+          const name =
+            anchor.textContent?.trim() ||
+            container?.querySelector('h2, h3, h4')?.textContent?.trim() ||
+            '';
           if (!name || name.length < 3) return;
 
           const text = container?.textContent || '';
@@ -273,12 +296,24 @@ export class CEFScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
       // Extract brand from name
-      const brands = ['Fluke', 'Megger', 'Chint', 'Hager', 'Schneider', 'ABB', 'Eaton', 'Legrand', 'MK', 'Click'];
-      const brand = brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+      const brands = [
+        'Fluke',
+        'Megger',
+        'Chint',
+        'Hager',
+        'Schneider',
+        'ABB',
+        'Eaton',
+        'Legrand',
+        'MK',
+        'Click',
+      ];
+      const brand = brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
         sku: item.sku,
@@ -293,7 +328,9 @@ export class CEFScraper extends BaseScraper {
         description: null,
         highlights: [],
         imageUrl: item.imageUrl,
-        productUrl: item.productUrl || `${this.config.baseUrl}/catalogue/search?q=${encodeURIComponent(item.name)}`,
+        productUrl:
+          item.productUrl ||
+          `${this.config.baseUrl}/catalogue/search?q=${encodeURIComponent(item.name)}`,
         stockStatus: item.stockStatus || 'Unknown',
       });
     }
@@ -349,7 +386,8 @@ export class CEFScraper extends BaseScraper {
               currentPrice: priceEl?.textContent?.trim() || null,
               regularPrice: wasPriceEl?.textContent?.trim() || null,
               productUrl: linkEl?.href || null,
-              expiryText: expiryEl?.textContent?.trim() || expiryEl?.getAttribute('data-expires') || null,
+              expiryText:
+                expiryEl?.textContent?.trim() || expiryEl?.getAttribute('data-expires') || null,
             });
           }
         });
@@ -414,8 +452,18 @@ export class CEFScraper extends BaseScraper {
           // Handle month name format
           if (match[3] && isNaN(parseInt(match[3]))) {
             const months: Record<string, number> = {
-              january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-              july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+              january: 0,
+              february: 1,
+              march: 2,
+              april: 3,
+              may: 4,
+              june: 5,
+              july: 6,
+              august: 7,
+              september: 8,
+              october: 9,
+              november: 10,
+              december: 11,
             };
             const day = parseInt(match[1]);
             const month = months[match[3].toLowerCase()];

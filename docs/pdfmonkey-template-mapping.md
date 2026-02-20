@@ -5,6 +5,7 @@ This document shows how to update your PDFMonkey HTML template to use dynamic va
 ## Template Syntax
 
 PDFMonkey uses **Liquid template** syntax:
+
 - `{{ variable }}` - Output a value
 - `{% for item in array %}...{% endfor %}` - Loop through arrays
 - `{% if condition %}...{% endif %}` - Conditionals
@@ -53,11 +54,13 @@ Replace static values with:
 <!-- Also available as flat: {{ premises_type }}, {{ other_premises_description }} -->
 
 <!-- Estimated Age -->
-<span class="inline-value">{{ installation_details.estimated_age }} {{ installation_details.age_unit }}</span>
+<span class="inline-value"
+  >{{ installation_details.estimated_age }} {{ installation_details.age_unit }}</span
+>
 
 <!-- Evidence of Alterations (yes / no / not-apparent) -->
-{% if installation_details.evidence_of_alterations == 'yes' %}✓{% endif %}
-{% if installation_details.evidence_of_alterations == 'not-apparent' %}✓ Not Apparent{% endif %}
+{% if installation_details.evidence_of_alterations == 'yes' %}✓{% endif %} {% if
+installation_details.evidence_of_alterations == 'not-apparent' %}✓ Not Apparent{% endif %}
 
 <!-- Alterations Details -->
 <span class="inline-value wide">{{ installation_details.alterations_details }}</span>
@@ -137,10 +140,10 @@ Replace static values with:
 <!-- Values: "ac" or "dc". Also available as flat: {{ supply_ac_dc }} -->
 
 <!-- System Type checkboxes -->
-{% if supply_characteristics.earthing_arrangement == 'TN-C' %}✓{% endif %}
-{% if supply_characteristics.earthing_arrangement == 'TN-S' %}✓{% endif %}
-{% if supply_characteristics.earthing_arrangement == 'TN-C-S' %}✓{% endif %}
-{% if supply_characteristics.earthing_arrangement == 'TT' %}✓{% endif %}
+{% if supply_characteristics.earthing_arrangement == 'TN-C' %}✓{% endif %} {% if
+supply_characteristics.earthing_arrangement == 'TN-S' %}✓{% endif %} {% if
+supply_characteristics.earthing_arrangement == 'TN-C-S' %}✓{% endif %} {% if
+supply_characteristics.earthing_arrangement == 'TT' %}✓{% endif %}
 
 <!-- Supply PME -->
 <div class="data-field-value">{{ supply_characteristics.supply_pme }}</div>
@@ -295,33 +298,35 @@ The template uses **flat variables** for each inspection item (not a loop), sinc
 ```html
 <!-- Header row (9 columns) -->
 <tr>
-    <th>Item</th>
-    <th>Description</th>
-    <th>Acc</th>
-    <th>N/A</th>
-    <th>C1/C2</th>
-    <th>C3</th>
-    <th>FI</th>
-    <th>N/V</th>
-    <th>LIM</th>
+  <th>Item</th>
+  <th>Description</th>
+  <th>Acc</th>
+  <th>N/A</th>
+  <th>C1/C2</th>
+  <th>C3</th>
+  <th>FI</th>
+  <th>N/V</th>
+  <th>LIM</th>
 </tr>
 
 <!-- Each inspection item uses flat variables: insp_{item}_{column} -->
 <!-- Example for item 1.0: -->
 <tr>
-    <td>1.0</td>
-    <td>Service cable, Service head, Earthing arrangement...</td>
-    <td>{{ insp_1_0_acc }}</td>
-    <td>{{ insp_1_0_na }}</td>
-    <td>{{ insp_1_0_c1c2 }}</td>
-    <td>{{ insp_1_0_c3 }}</td>
-    <td>{{ insp_1_0_fi }}</td>
-    <td>{{ insp_1_0_nv }}</td>
-    <td>{{ insp_1_0_lim }}</td>
+  <td>1.0</td>
+  <td>Service cable, Service head, Earthing arrangement...</td>
+  <td>{{ insp_1_0_acc }}</td>
+  <td>{{ insp_1_0_na }}</td>
+  <td>{{ insp_1_0_c1c2 }}</td>
+  <td>{{ insp_1_0_c3 }}</td>
+  <td>{{ insp_1_0_fi }}</td>
+  <td>{{ insp_1_0_nv }}</td>
+  <td>{{ insp_1_0_lim }}</td>
 </tr>
 
 <!-- Section header rows use colspan="9" -->
-<tr class="section-header-row"><td colspan="9">1.0 INTAKE EQUIPMENT</td></tr>
+<tr class="section-header-row">
+  <td colspan="9">1.0 INTAKE EQUIPMENT</td>
+</tr>
 ```
 
 The `inspection_checklist` array is also available for alternative loop-based rendering:
@@ -329,15 +334,17 @@ The `inspection_checklist` array is also available for alternative loop-based re
 ```html
 {% for item in inspection_checklist %}
 <tr>
-    <td class="item-num">{{ item.item_number }}</td>
-    <td class="item-desc">{{ item.description }}</td>
-    <td class="outcome">{% if item.outcome == 'satisfactory' %}✓{% endif %}</td>
-    <td class="outcome">{% if item.outcome == 'not-applicable' %}✓{% endif %}</td>
-    <td class="outcome-text">{% if item.outcome == 'C1' or item.outcome == 'C2' %}{{ item.outcome }}{% endif %}</td>
-    <td class="outcome">{% if item.outcome == 'C3' %}✓{% endif %}</td>
-    <td class="outcome">{% if item.outcome == 'FI' %}✓{% endif %}</td>
-    <td class="outcome">{% if item.outcome == 'not-verified' %}✓{% endif %}</td>
-    <td class="outcome">{% if item.outcome == 'limitation' %}✓{% endif %}</td>
+  <td class="item-num">{{ item.item_number }}</td>
+  <td class="item-desc">{{ item.description }}</td>
+  <td class="outcome">{% if item.outcome == 'satisfactory' %}✓{% endif %}</td>
+  <td class="outcome">{% if item.outcome == 'not-applicable' %}✓{% endif %}</td>
+  <td class="outcome-text">
+    {% if item.outcome == 'C1' or item.outcome == 'C2' %}{{ item.outcome }}{% endif %}
+  </td>
+  <td class="outcome">{% if item.outcome == 'C3' %}✓{% endif %}</td>
+  <td class="outcome">{% if item.outcome == 'FI' %}✓{% endif %}</td>
+  <td class="outcome">{% if item.outcome == 'not-verified' %}✓{% endif %}</td>
+  <td class="outcome">{% if item.outcome == 'limitation' %}✓{% endif %}</td>
 </tr>
 {% endfor %}
 ```
@@ -351,36 +358,41 @@ Use a loop for circuits:
 ```html
 {% for circuit in schedule_of_tests %}
 <tr>
-    <td>{{ circuit.circuit_number }}</td>
-    <td colspan="3" class="desc">{{ circuit.circuit_description }}</td>
-    <td>{{ circuit.type_of_wiring }}</td>
-    <td>{{ circuit.reference_method }}</td>
-    <td>{{ circuit.points_served }}</td>
-    <td>{{ circuit.live_size }}</td>
-    <td>{{ circuit.cpc_size }}</td>
-    <td>{{ circuit.bs_standard }}</td>
-    <td>{{ circuit.protective_device_type }}</td>
-    <td>{{ circuit.protective_device_rating }}</td>
-    <td>{{ circuit.protective_device_ka_rating }}</td>
-    <td>{{ circuit.max_zs }}</td>
-    <td>{{ circuit.rcd_bs_standard }}</td>
-    <td>{{ circuit.rcd_type }}</td>
-    <td>{{ circuit.rcd_rating }}</td>
-    <td>{{ circuit.rcd_rating_a }}</td>
-    <td>{{ circuit.ring_r1 }}</td>
-    <td>{{ circuit.ring_rn }}</td>
-    <td>{{ circuit.ring_r2 }}</td>
-    <td>{{ circuit.r1r2 }}</td>
-    <td>{{ circuit.r2 }}</td>
-    <td>{{ circuit.insulation_test_voltage }}</td>
-    <td>{{ circuit.insulation_live_neutral }}</td>
-    <td>{{ circuit.insulation_live_earth }}</td>
-    <td>{% if circuit.polarity == 'correct' or circuit.polarity == 'Correct' %}✓{% else %}{{ circuit.polarity }}{% endif %}</td>
-    <td>{{ circuit.zs }}</td>
-    <td>{{ circuit.rcd_one_x }}</td>
-    <td>{% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' %}✓{% endif %}</td>
-    <td>{{ circuit.afdd_test }}</td>
-    <td class="remarks">{{ circuit.notes }}</td>
+  <td>{{ circuit.circuit_number }}</td>
+  <td colspan="3" class="desc">{{ circuit.circuit_description }}</td>
+  <td>{{ circuit.type_of_wiring }}</td>
+  <td>{{ circuit.reference_method }}</td>
+  <td>{{ circuit.points_served }}</td>
+  <td>{{ circuit.live_size }}</td>
+  <td>{{ circuit.cpc_size }}</td>
+  <td>{{ circuit.bs_standard }}</td>
+  <td>{{ circuit.protective_device_type }}</td>
+  <td>{{ circuit.protective_device_rating }}</td>
+  <td>{{ circuit.protective_device_ka_rating }}</td>
+  <td>{{ circuit.max_zs }}</td>
+  <td>{{ circuit.rcd_bs_standard }}</td>
+  <td>{{ circuit.rcd_type }}</td>
+  <td>{{ circuit.rcd_rating }}</td>
+  <td>{{ circuit.rcd_rating_a }}</td>
+  <td>{{ circuit.ring_r1 }}</td>
+  <td>{{ circuit.ring_rn }}</td>
+  <td>{{ circuit.ring_r2 }}</td>
+  <td>{{ circuit.r1r2 }}</td>
+  <td>{{ circuit.r2 }}</td>
+  <td>{{ circuit.insulation_test_voltage }}</td>
+  <td>{{ circuit.insulation_live_neutral }}</td>
+  <td>{{ circuit.insulation_live_earth }}</td>
+  <td>
+    {% if circuit.polarity == 'correct' or circuit.polarity == 'Correct' %}✓{% else %}{{
+    circuit.polarity }}{% endif %}
+  </td>
+  <td>{{ circuit.zs }}</td>
+  <td>{{ circuit.rcd_one_x }}</td>
+  <td>
+    {% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' %}✓{% endif %}
+  </td>
+  <td>{{ circuit.afdd_test }}</td>
+  <td class="remarks">{{ circuit.notes }}</td>
 </tr>
 {% endfor %}
 ```
@@ -394,7 +406,10 @@ For installations with multiple distribution boards, use `boards_with_schedules`
 ```html
 {% for board in boards_with_schedules %}
 <div class="board-schedule">
-  <h3>{{ board.db_reference }} - {{ board.db_location }}{% if board.supplied_from %} | Supplied from: {{ board.supplied_from }}{% endif %}</h3>
+  <h3>
+    {{ board.db_reference }} - {{ board.db_location }}{% if board.supplied_from %} | Supplied from:
+    {{ board.supplied_from }}{% endif %}
+  </h3>
   <div class="board-meta">
     <span>Manufacturer: {{ board.db_manufacturer }}</span>
     <span>Type: {{ board.db_type }}</span>
@@ -406,38 +421,47 @@ For installations with multiple distribution boards, use `boards_with_schedules`
   <!-- Incoming Protective Device (distribution circuit OCPD) -->
   {% if board.incoming_device_type %}
   <div class="incoming-device-row">
-    <span>Incoming Device: BS EN {{ board.incoming_device_bs_en }} {{ board.incoming_device_type }} {{ board.incoming_device_rating }}A</span>
+    <span
+      >Incoming Device: BS EN {{ board.incoming_device_bs_en }} {{ board.incoming_device_type }} {{
+      board.incoming_device_rating }}A</span
+    >
   </div>
   {% endif %}
 
   <!-- SPD T1/T2/T3 checkboxes per board -->
   <div class="spd-row">
     <span>SPD:</span>
-    {% if board.spd_t1 %}<span class="spd-check">T1 ✓</span>{% endif %}
-    {% if board.spd_t2 %}<span class="spd-check">T2 ✓</span>{% endif %}
-    {% if board.spd_t3 %}<span class="spd-check">T3 ✓</span>{% endif %}
-    {% if board.spd_na %}<span class="spd-check">N/A ✓</span>{% endif %}
-    {% if board.spd_operational %}<span class="spd-check">Operational ✓</span>{% endif %}
+    {% if board.spd_t1 %}<span class="spd-check">T1 ✓</span>{% endif %} {% if board.spd_t2 %}<span
+      class="spd-check"
+      >T2 ✓</span
+    >{% endif %} {% if board.spd_t3 %}<span class="spd-check">T3 ✓</span>{% endif %} {% if
+    board.spd_na %}<span class="spd-check">N/A ✓</span>{% endif %} {% if board.spd_operational
+    %}<span class="spd-check">Operational ✓</span>{% endif %}
   </div>
 
   <!-- Main switch for this board -->
   <div class="main-switch-row">
-    <span>Main Switch: {{ board.main_switch_type }} {{ board.main_switch_rating }}A {{ board.main_switch_poles }}P</span>
+    <span
+      >Main Switch: {{ board.main_switch_type }} {{ board.main_switch_rating }}A {{
+      board.main_switch_poles }}P</span
+    >
     <span>BS EN: {{ board.main_switch_bs_en }}</span>
   </div>
 
   <!-- Polarity / Phase Sequence -->
   <div class="verification-row">
-    {% if board.polarity_confirmed %}<span>Polarity ✓</span>{% endif %}
-    {% if board.phase_sequence_confirmed %}<span>Phase Sequence ✓</span>{% endif %}
+    {% if board.polarity_confirmed %}<span>Polarity ✓</span>{% endif %} {% if
+    board.phase_sequence_confirmed %}<span>Phase Sequence ✓</span>{% endif %}
   </div>
 
   <!-- Circuit table for this board -->
   <table>
-    <thead>...</thead>
+    <thead>
+      ...
+    </thead>
     <tbody>
-    {% for circuit in board.circuits %}
-    <tr>
+      {% for circuit in board.circuits %}
+      <tr>
         <td>{{ circuit.circuit_number }}</td>
         <td colspan="3" class="desc">{{ circuit.circuit_description }}</td>
         <td>{{ circuit.type_of_wiring }}</td>
@@ -462,14 +486,20 @@ For installations with multiple distribution boards, use `boards_with_schedules`
         <td>{{ circuit.insulation_test_voltage }}</td>
         <td>{{ circuit.insulation_live_neutral }}</td>
         <td>{{ circuit.insulation_live_earth }}</td>
-        <td>{% if circuit.polarity == 'correct' or circuit.polarity == 'Correct' %}✓{% else %}{{ circuit.polarity }}{% endif %}</td>
+        <td>
+          {% if circuit.polarity == 'correct' or circuit.polarity == 'Correct' %}✓{% else %}{{
+          circuit.polarity }}{% endif %}
+        </td>
         <td>{{ circuit.zs }}</td>
         <td>{{ circuit.rcd_one_x }}</td>
-        <td>{% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' %}✓{% endif %}</td>
+        <td>
+          {% if circuit.rcd_test_button == 'pass' or circuit.rcd_test_button == 'Pass' %}✓{% endif
+          %}
+        </td>
         <td>{{ circuit.afdd_test }}</td>
         <td class="remarks">{{ circuit.notes }}</td>
-    </tr>
-    {% endfor %}
+      </tr>
+      {% endfor %}
     </tbody>
   </table>
 </div>
@@ -523,8 +553,8 @@ Loop through observations:
 ```html
 {% for obs in observations %}
 <div class="observations-row">
-    <div class="observations-text">{{ obs.description }}</div>
-    <div class="observations-code code-{{ obs.defect_code | downcase }}">{{ obs.defect_code }}</div>
+  <div class="observations-text">{{ obs.description }}</div>
+  <div class="observations-code code-{{ obs.defect_code | downcase }}">{{ obs.defect_code }}</div>
 </div>
 {% endfor %}
 ```
@@ -598,13 +628,17 @@ Loop through observations:
 ## Final Assessment Box
 
 ```html
-<div class="final-assessment-option {% if declarations.overall_assessment == 'satisfactory' %}satisfactory-selected{% endif %}">
-    {% if declarations.overall_assessment == 'satisfactory' %}✓{% endif %}
-    <span class="option-label satisfactory-label">SATISFACTORY</span>
+<div
+  class="final-assessment-option {% if declarations.overall_assessment == 'satisfactory' %}satisfactory-selected{% endif %}"
+>
+  {% if declarations.overall_assessment == 'satisfactory' %}✓{% endif %}
+  <span class="option-label satisfactory-label">SATISFACTORY</span>
 </div>
-<div class="final-assessment-option {% if declarations.overall_assessment == 'unsatisfactory' %}unsatisfactory-selected{% endif %}">
-    {% if declarations.overall_assessment == 'unsatisfactory' %}✓{% endif %}
-    <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
+<div
+  class="final-assessment-option {% if declarations.overall_assessment == 'unsatisfactory' %}unsatisfactory-selected{% endif %}"
+>
+  {% if declarations.overall_assessment == 'unsatisfactory' %}✓{% endif %}
+  <span class="option-label unsatisfactory-label">UNSATISFACTORY</span>
 </div>
 ```
 

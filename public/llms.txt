@@ -8,13 +8,22 @@ Elec-Mate is a mobile-first web application built for UK electrical professional
 
 ## Key Features
 
-- **8 Certificate Types**: EICR, EIC, Minor Works, Emergency Lighting, Fire Alarm, PAT Testing, EV Charger, Solar PV — all with digital signatures, observation coding, and PDF export
-- **70 Electrical & Business Calculators**: Cable sizing, voltage drop, earth loop impedance (Zs), fault current (PSCC/PEFC), RCD testing, conduit fill, maximum demand, power factor, solar PV, EV charging, arc flash, plus 14 business calculators (quoting, cash flow, tax, VAT)
-- **8 Elec-AI Specialists + 12 AI Tools**: Circuit Designer, Cost Engineer, Voice Quotes, Inspector, Maintenance Advisor, Regulations Guide, Study Coach, Assistant — plus Fault Diagnosis, Diagram Builder, Visual Analysis, Report Writer, and more. All trained on BS 7671:2018 + Amendment 3:2024
-- **36+ Training Courses**: 18th Edition (BS 7671), Level 2 & 3 Diplomas, AM2 simulator, EPA simulator with AI grading, HNC, plus 24 upskilling courses (IPAF, first aid, fire safety, COSHH, working at height, CDM, confined spaces, and more)
-- **Business Management**: Smart quote builder, invoice builder, expenses, project management, scheduling, staff management, Stripe payments, Xero & QuickBooks integrations
-- **Employer Dashboard**: Team management, apprentice progress tracking, compliance monitoring, timesheets, leave management
-- **Wellbeing & Community**: Mental health support, community chat, Elec-ID digital card, portfolio evidence tracking, OJT hours management
+- **8 Certificate Types**: EICR, EIC, Minor Works, Emergency Lighting, Fire Alarm, PAT Testing, EV Charger, Solar PV — BS 7671 compliant, digital signatures, offline-capable, professional PDF export
+- **70 Electrical & Business Calculators**: Cable sizing, voltage drop, earth loop impedance (Zs), fault current (PSCC/PEFC), RCD testing, conduit fill, maximum demand, power factor, plus 14 business calculators
+- **Elec-AI — Like ChatGPT for Electricians**: 8 specialist AI agents + 12 AI tools trained on BS 7671 + UK trade knowledge. Circuit Designer, Cost Engineer, RAMS Generator (30-page docs in 2 mins), Installation Specialist, Maintenance, Regulations Lookup, Study Coach, Voice Quotes, Fault Diagnosis, Board Scanner, and more
+- **One-Click Workflows**: AI Circuit Designer → EIC Certificate in one click. EICR Observations → Remedial Quote with cost estimator. Cost Engineer → Professional quote in minutes
+- **AM2 Simulator**: Full AM2 practical assessment simulation with timed exercises and AI grading — the only app that offers this
+- **AI Portfolio Builder**: Captures evidence and AI auto-maps to assessment criteria
+- **EPA Readiness Checker**: Reads your entire portfolio and shows exactly how ready you are
+- **30-Page RAMS in 2 Minutes**: AI generates complete CDM 2015 compliant Risk Assessment and Method Statements
+- **36+ Training Courses**: 18th Edition, Level 2 & 3, AM2 prep, EPA simulator, HNC, plus 24 CPD courses
+- **Business Tools**: AI-powered quoting, invoicing, Stripe payments, Xero & QuickBooks
+- **Board Scanner**: Photo a consumer unit → AI identifies every device → imports into certificates
+- **ElecID**: Verified digital professional identity card, shareable via QR code
+- **Job Vacancies**: Integrated UK electrical job board
+- **Employer Dashboard**: Team management, apprentice tracking, compliance monitoring
+- **Mental Health Hub**: Confidential wellbeing resources for the construction trade
+- **Fully Offline**: Every tool works without internet — auto-saves, syncs when online
 
 ## Who is it for?
 

@@ -52,15 +52,13 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/c/tools/electrical-testers/cat7910001?page_size=100',
         '/c/tools/measuring-tools/cat830714?page_size=100',
       ],
-      'ppe': [
+      ppe: [
         '/c/workwear-safety/safety-clothing/cat830838?page_size=100',
         '/c/workwear-safety/safety-footwear/cat830840?page_size=100',
       ],
-      'tool-storage': [
-        '/c/tools/tool-boxes-storage/cat830718?page_size=100',
-      ],
+      'tool-storage': ['/c/tools/tool-boxes-storage/cat830718?page_size=100'],
       // === MATERIALS (using search URLs for reliability) ===
-      'cables': [
+      cables: [
         '/search?search=twin+and+earth+cable&page_size=100',
         '/search?search=armoured+cable+swa&page_size=100',
         '/search?search=flex+cable&page_size=100',
@@ -79,18 +77,18 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/search?search=light+switch&page_size=100',
         '/search?search=back+box+pattress&page_size=100',
       ],
-      'lighting': [
+      lighting: [
         '/search?search=led+bulb&page_size=100',
         '/search?search=downlight+spotlight&page_size=100',
         '/search?search=emergency+lighting&page_size=100',
         '/search?search=batten+light&page_size=100',
       ],
-      'containment': [
+      containment: [
         '/search?search=cable+trunking&page_size=100',
         '/search?search=conduit+fitting&page_size=100',
         '/search?search=cable+tray&page_size=100',
       ],
-      'earthing': [
+      earthing: [
         '/search?search=earth+rod+clamp&page_size=100',
         '/search?search=earth+tape+bonding&page_size=100',
       ],
@@ -98,14 +96,12 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/search?search=smoke+alarm+detector&page_size=100',
         '/search?search=fire+alarm&page_size=100',
       ],
-      'ev-charging': [
-        '/search?search=ev+charger+electric+vehicle&page_size=100',
-      ],
+      'ev-charging': ['/search?search=ev+charger+electric+vehicle&page_size=100'],
       'data-networking': [
         '/search?search=cat6+ethernet+cable&page_size=100',
         '/search?search=data+socket+rj45&page_size=100',
       ],
-      'fixings': [
+      fixings: [
         '/search?search=cable+clip&page_size=100',
         '/search?search=cable+gland&page_size=100',
         '/search?search=cable+tie&page_size=100',
@@ -115,9 +111,9 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     couponsUrl: null,
     // Screwfix uses obfuscated class names - selectors work via data attributes and structure
     selectors: {
-      productCard: '[data-qaid="product-heading"]',  // Parent container
+      productCard: '[data-qaid="product-heading"]', // Parent container
       productName: 'a[data-qaid="product_description"] span',
-      productPrice: '[class*="price"]',  // Will extract £X.XX pattern
+      productPrice: '[class*="price"]', // Will extract £X.XX pattern
       originalPrice: '[class*="was"], [class*="Was"]',
       productImage: 'picture img, img[src*="screwfix.com"]',
       productUrl: 'a[href*="/p/"]',
@@ -150,81 +146,45 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/power-tools/saws/c722',
         '/power-tools/angle-grinders/c378',
       ],
-      'test-equipment': [
-        '/electrical-supplies-accessories/electrical-test-equipment/c1024',
-      ],
-      'ppe': [
-        '/workwear-safety/ppe/c735',
-      ],
-      'tool-storage': [
-        '/site-equipment/tool-storage/c742',
-      ],
+      'test-equipment': ['/electrical-supplies-accessories/electrical-test-equipment/c1024'],
+      ppe: ['/workwear-safety/ppe/c735'],
+      'tool-storage': ['/site-equipment/tool-storage/c742'],
       // === MATERIALS (using search URLs for reliability) ===
-      'cables': [
-        '/search?q=twin+earth+cable',
-        '/search?q=armoured+cable',
-        '/search?q=flex+cable',
-      ],
-      'consumer-units': [
-        '/search?q=consumer+unit',
-        '/search?q=distribution+board',
-      ],
-      'circuit-protection': [
-        '/search?q=mcb',
-        '/search?q=rcbo+rcd',
-        '/search?q=surge+protector',
-      ],
+      cables: ['/search?q=twin+earth+cable', '/search?q=armoured+cable', '/search?q=flex+cable'],
+      'consumer-units': ['/search?q=consumer+unit', '/search?q=distribution+board'],
+      'circuit-protection': ['/search?q=mcb', '/search?q=rcbo+rcd', '/search?q=surge+protector'],
       'wiring-accessories': [
         '/search?q=socket+outlet',
         '/search?q=light+switch',
         '/search?q=back+box',
       ],
-      'lighting': [
+      lighting: [
         '/search?q=led+bulb',
         '/search?q=downlight',
         '/search?q=emergency+light',
         '/search?q=batten+light',
       ],
-      'containment': [
-        '/search?q=cable+trunking',
-        '/search?q=conduit',
-        '/search?q=cable+tray',
-      ],
-      'earthing': [
-        '/search?q=earth+rod',
-        '/search?q=earth+clamp',
-      ],
-      'fire-security': [
-        '/search?q=smoke+alarm',
-        '/search?q=fire+alarm',
-      ],
-      'ev-charging': [
-        '/search?q=ev+charger',
-      ],
-      'data-networking': [
-        '/search?q=cat6+cable',
-        '/search?q=ethernet+socket',
-      ],
-      'fixings': [
-        '/search?q=cable+clip',
-        '/search?q=cable+gland',
-        '/search?q=cable+tie',
-      ],
+      containment: ['/search?q=cable+trunking', '/search?q=conduit', '/search?q=cable+tray'],
+      earthing: ['/search?q=earth+rod', '/search?q=earth+clamp'],
+      'fire-security': ['/search?q=smoke+alarm', '/search?q=fire+alarm'],
+      'ev-charging': ['/search?q=ev+charger'],
+      'data-networking': ['/search?q=cat6+cable', '/search?q=ethernet+socket'],
+      fixings: ['/search?q=cable+clip', '/search?q=cable+gland', '/search?q=cable+tie'],
     },
     dealsUrl: '/deals',
     couponsUrl: null,
     // Toolstation uses data-testid attributes
     selectors: {
       productCard: '[data-testid="product-card"]',
-      productName: '[data-testid="product-card-reviews"]',  // Use title attribute
+      productName: '[data-testid="product-card-reviews"]', // Use title attribute
       productPrice: '.font-bold.text-blue, span.text-blue',
       originalPrice: '.line-through, [class*="was"]',
       productImage: 'img[src*="toolstation.com/images"]',
       productUrl: '[data-testid="product-card-image-link"]',
-      productSku: '[data-testid="product-card-reviews"]',  // Use data-product-id
+      productSku: '[data-testid="product-card-reviews"]', // Use data-product-id
       stockStatus: '[class*="stock"]',
       nextPage: '[aria-label="Next page"], .pagination-next',
-      brand: 'img[alt]:first-child',  // Brand logo
+      brand: 'img[alt]:first-child', // Brand logo
     },
     pagination: {
       type: 'scroll',
@@ -239,17 +199,11 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     baseUrl: 'https://www.cef.co.uk',
     categoryUrls: {
       // === TOOLS ===
-      'hand-tools': [
-        '/catalogue/products/hand-tools',
-      ],
-      'power-tools': [
-        '/catalogue/products/power-tools',
-      ],
-      'test-equipment': [
-        '/catalogue/products/test-measurement',
-      ],
+      'hand-tools': ['/catalogue/products/hand-tools'],
+      'power-tools': ['/catalogue/products/power-tools'],
+      'test-equipment': ['/catalogue/products/test-measurement'],
       // === MATERIALS (CEF is primarily an electrical wholesaler) ===
-      'cables': [
+      cables: [
         '/catalogue/products/cables-accessories',
         '/catalogue/products/cable',
         '/catalogue/products/data-cable',
@@ -269,37 +223,30 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/catalogue/products/switches-sockets',
         '/catalogue/products/back-boxes',
       ],
-      'lighting': [
+      lighting: [
         '/catalogue/products/lighting',
         '/catalogue/products/led-lighting',
         '/catalogue/products/emergency-lighting',
         '/catalogue/products/commercial-lighting',
       ],
-      'containment': [
+      containment: [
         '/catalogue/products/cable-management',
         '/catalogue/products/trunking',
         '/catalogue/products/conduit',
         '/catalogue/products/cable-tray',
       ],
-      'earthing': [
-        '/catalogue/products/earthing-bonding',
-      ],
+      earthing: ['/catalogue/products/earthing-bonding'],
       'fire-security': [
         '/catalogue/products/fire-alarms',
         '/catalogue/products/smoke-detectors',
         '/catalogue/products/intruder-alarms',
       ],
-      'ev-charging': [
-        '/catalogue/products/ev-charging',
-      ],
+      'ev-charging': ['/catalogue/products/ev-charging'],
       'data-networking': [
         '/catalogue/products/data-communications',
         '/catalogue/products/structured-cabling',
       ],
-      'fixings': [
-        '/catalogue/products/fixings-fasteners',
-        '/catalogue/products/cable-accessories',
-      ],
+      fixings: ['/catalogue/products/fixings-fasteners', '/catalogue/products/cable-accessories'],
     },
     dealsUrl: '/offers',
     couponsUrl: null,
@@ -327,12 +274,8 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     slug: 'electrical-direct',
     baseUrl: 'https://www.electricaldirect.co.uk',
     categoryUrls: {
-      'test-equipment': [
-        '/test-equipment',
-      ],
-      'cable-accessories': [
-        '/cable-accessories',
-      ],
+      'test-equipment': ['/test-equipment'],
+      'cable-accessories': ['/cable-accessories'],
     },
     dealsUrl: '/deals',
     couponsUrl: '/voucher-codes',
@@ -360,15 +303,9 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     slug: 'rs-components',
     baseUrl: 'https://uk.rs-online.com',
     categoryUrls: {
-      'test-equipment': [
-        '/web/c/test-measurement/',
-      ],
-      'hand-tools': [
-        '/web/c/hand-tools/',
-      ],
-      'power-tools': [
-        '/web/c/power-tools/',
-      ],
+      'test-equipment': ['/web/c/test-measurement/'],
+      'hand-tools': ['/web/c/hand-tools/'],
+      'power-tools': ['/web/c/power-tools/'],
     },
     dealsUrl: '/web/c/offers/',
     couponsUrl: null,
@@ -397,16 +334,10 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     baseUrl: 'https://www.tlc-direct.co.uk',
     categoryUrls: {
       // === TOOLS ===
-      'test-equipment': [
-        '/Catalogue/Test_Equipment',
-        '/Catalogue/Testers_Meters',
-      ],
-      'hand-tools': [
-        '/Catalogue/Hand_Tools',
-        '/Catalogue/Electricians_Tools',
-      ],
+      'test-equipment': ['/Catalogue/Test_Equipment', '/Catalogue/Testers_Meters'],
+      'hand-tools': ['/Catalogue/Hand_Tools', '/Catalogue/Electricians_Tools'],
       // === MATERIALS (TLC Direct is primarily electrical wholesale) ===
-      'cables': [
+      cables: [
         '/Catalogue/Cable',
         '/Catalogue/Twin_and_Earth',
         '/Catalogue/Flex',
@@ -431,40 +362,28 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/Catalogue/Grid_Systems',
         '/Catalogue/Back_Boxes',
       ],
-      'lighting': [
+      lighting: [
         '/Catalogue/Lighting',
         '/Catalogue/LED_Lighting',
         '/Catalogue/Emergency_Lighting',
         '/Catalogue/Downlights',
         '/Catalogue/Battens',
       ],
-      'containment': [
+      containment: [
         '/Catalogue/Cable_Management',
         '/Catalogue/Trunking',
         '/Catalogue/Conduit',
         '/Catalogue/Cable_Tray',
       ],
-      'earthing': [
-        '/Catalogue/Earthing_Bonding',
-        '/Catalogue/Earth_Rods',
-      ],
+      earthing: ['/Catalogue/Earthing_Bonding', '/Catalogue/Earth_Rods'],
       'fire-security': [
         '/Catalogue/Fire_Alarms',
         '/Catalogue/Smoke_Detectors',
         '/Catalogue/Security',
       ],
-      'ev-charging': [
-        '/Catalogue/EV_Charging',
-      ],
-      'data-networking': [
-        '/Catalogue/Data_Communications',
-        '/Catalogue/Structured_Cabling',
-      ],
-      'fixings': [
-        '/Catalogue/Fixings',
-        '/Catalogue/Cable_Clips',
-        '/Catalogue/Cable_Glands',
-      ],
+      'ev-charging': ['/Catalogue/EV_Charging'],
+      'data-networking': ['/Catalogue/Data_Communications', '/Catalogue/Structured_Cabling'],
+      fixings: ['/Catalogue/Fixings', '/Catalogue/Cable_Clips', '/Catalogue/Cable_Glands'],
     },
     dealsUrl: '/sale',
     couponsUrl: null,
@@ -493,16 +412,13 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     baseUrl: 'https://www.edmundson-electrical.co.uk',
     categoryUrls: {
       // === MATERIALS (Edmundson is primarily electrical wholesale) ===
-      'cables': [
+      cables: [
         '/search?q=twin+earth+cable',
         '/search?q=armoured+cable',
         '/search?q=flex+cable',
         '/search?q=data+cable+cat6',
       ],
-      'consumer-units': [
-        '/search?q=consumer+unit',
-        '/search?q=distribution+board',
-      ],
+      'consumer-units': ['/search?q=consumer+unit', '/search?q=distribution+board'],
       'circuit-protection': [
         '/search?q=mcb',
         '/search?q=rcbo',
@@ -514,47 +430,21 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
         '/search?q=light+switch',
         '/search?q=back+box',
       ],
-      'lighting': [
+      lighting: [
         '/search?q=led+downlight',
         '/search?q=led+panel',
         '/search?q=emergency+lighting',
         '/search?q=batten+light',
       ],
-      'containment': [
-        '/search?q=cable+trunking',
-        '/search?q=conduit',
-        '/search?q=cable+tray',
-      ],
-      'earthing': [
-        '/search?q=earth+rod',
-        '/search?q=earth+clamp',
-      ],
-      'fire-security': [
-        '/search?q=smoke+alarm',
-        '/search?q=fire+alarm',
-      ],
-      'ev-charging': [
-        '/search?q=ev+charger',
-      ],
-      'data-networking': [
-        '/search?q=cat6+cable',
-        '/search?q=data+socket',
-      ],
-      'fixings': [
-        '/search?q=cable+clip',
-        '/search?q=cable+gland',
-        '/search?q=cable+tie',
-      ],
+      containment: ['/search?q=cable+trunking', '/search?q=conduit', '/search?q=cable+tray'],
+      earthing: ['/search?q=earth+rod', '/search?q=earth+clamp'],
+      'fire-security': ['/search?q=smoke+alarm', '/search?q=fire+alarm'],
+      'ev-charging': ['/search?q=ev+charger'],
+      'data-networking': ['/search?q=cat6+cable', '/search?q=data+socket'],
+      fixings: ['/search?q=cable+clip', '/search?q=cable+gland', '/search?q=cable+tie'],
       // === TOOLS ===
-      'test-equipment': [
-        '/search?q=multimeter',
-        '/search?q=insulation+tester',
-        '/search?q=fluke',
-      ],
-      'hand-tools': [
-        '/search?q=electricians+tools',
-        '/search?q=cable+cutter',
-      ],
+      'test-equipment': ['/search?q=multimeter', '/search?q=insulation+tester', '/search?q=fluke'],
+      'hand-tools': ['/search?q=electricians+tools', '/search?q=cable+cutter'],
     },
     dealsUrl: '/offers',
     couponsUrl: null,
@@ -582,62 +472,20 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     baseUrl: 'https://www.yesss.co.uk',
     categoryUrls: {
       // === MATERIALS ===
-      'cables': [
-        '/search?q=twin+earth+cable',
-        '/search?q=armoured+cable',
-        '/search?q=flex+cable',
-      ],
-      'consumer-units': [
-        '/search?q=consumer+unit',
-        '/search?q=distribution+board',
-      ],
-      'circuit-protection': [
-        '/search?q=mcb',
-        '/search?q=rcbo',
-        '/search?q=rcd',
-      ],
-      'wiring-accessories': [
-        '/search?q=socket',
-        '/search?q=switch',
-        '/search?q=back+box',
-      ],
-      'lighting': [
-        '/search?q=led+downlight',
-        '/search?q=emergency+light',
-        '/search?q=batten',
-      ],
-      'containment': [
-        '/search?q=trunking',
-        '/search?q=conduit',
-        '/search?q=cable+tray',
-      ],
-      'earthing': [
-        '/search?q=earth+rod',
-        '/search?q=earth+clamp',
-      ],
-      'fire-security': [
-        '/search?q=smoke+detector',
-        '/search?q=fire+alarm',
-      ],
-      'ev-charging': [
-        '/search?q=ev+charger',
-      ],
-      'data-networking': [
-        '/search?q=cat6',
-        '/search?q=data+socket',
-      ],
-      'fixings': [
-        '/search?q=cable+clip',
-        '/search?q=cable+gland',
-      ],
+      cables: ['/search?q=twin+earth+cable', '/search?q=armoured+cable', '/search?q=flex+cable'],
+      'consumer-units': ['/search?q=consumer+unit', '/search?q=distribution+board'],
+      'circuit-protection': ['/search?q=mcb', '/search?q=rcbo', '/search?q=rcd'],
+      'wiring-accessories': ['/search?q=socket', '/search?q=switch', '/search?q=back+box'],
+      lighting: ['/search?q=led+downlight', '/search?q=emergency+light', '/search?q=batten'],
+      containment: ['/search?q=trunking', '/search?q=conduit', '/search?q=cable+tray'],
+      earthing: ['/search?q=earth+rod', '/search?q=earth+clamp'],
+      'fire-security': ['/search?q=smoke+detector', '/search?q=fire+alarm'],
+      'ev-charging': ['/search?q=ev+charger'],
+      'data-networking': ['/search?q=cat6', '/search?q=data+socket'],
+      fixings: ['/search?q=cable+clip', '/search?q=cable+gland'],
       // === TOOLS ===
-      'test-equipment': [
-        '/search?q=multimeter',
-        '/search?q=tester',
-      ],
-      'hand-tools': [
-        '/search?q=electrician+tools',
-      ],
+      'test-equipment': ['/search?q=multimeter', '/search?q=tester'],
+      'hand-tools': ['/search?q=electrician+tools'],
     },
     dealsUrl: '/offers',
     couponsUrl: null,
@@ -665,62 +513,20 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     baseUrl: 'https://www.electric-center.com',
     categoryUrls: {
       // === MATERIALS ===
-      'cables': [
-        '/search?q=twin+earth+cable',
-        '/search?q=armoured+cable',
-        '/search?q=flex+cable',
-      ],
-      'consumer-units': [
-        '/search?q=consumer+unit',
-        '/search?q=distribution+board',
-      ],
-      'circuit-protection': [
-        '/search?q=mcb',
-        '/search?q=rcbo',
-        '/search?q=rcd',
-      ],
-      'wiring-accessories': [
-        '/search?q=socket',
-        '/search?q=switch',
-        '/search?q=back+box',
-      ],
-      'lighting': [
-        '/search?q=led+downlight',
-        '/search?q=emergency+lighting',
-        '/search?q=batten',
-      ],
-      'containment': [
-        '/search?q=trunking',
-        '/search?q=conduit',
-        '/search?q=cable+tray',
-      ],
-      'earthing': [
-        '/search?q=earth+rod',
-        '/search?q=earth+clamp',
-      ],
-      'fire-security': [
-        '/search?q=smoke+detector',
-        '/search?q=fire+alarm',
-      ],
-      'ev-charging': [
-        '/search?q=ev+charger',
-      ],
-      'data-networking': [
-        '/search?q=cat6',
-        '/search?q=data+socket',
-      ],
-      'fixings': [
-        '/search?q=cable+clip',
-        '/search?q=cable+gland',
-      ],
+      cables: ['/search?q=twin+earth+cable', '/search?q=armoured+cable', '/search?q=flex+cable'],
+      'consumer-units': ['/search?q=consumer+unit', '/search?q=distribution+board'],
+      'circuit-protection': ['/search?q=mcb', '/search?q=rcbo', '/search?q=rcd'],
+      'wiring-accessories': ['/search?q=socket', '/search?q=switch', '/search?q=back+box'],
+      lighting: ['/search?q=led+downlight', '/search?q=emergency+lighting', '/search?q=batten'],
+      containment: ['/search?q=trunking', '/search?q=conduit', '/search?q=cable+tray'],
+      earthing: ['/search?q=earth+rod', '/search?q=earth+clamp'],
+      'fire-security': ['/search?q=smoke+detector', '/search?q=fire+alarm'],
+      'ev-charging': ['/search?q=ev+charger'],
+      'data-networking': ['/search?q=cat6', '/search?q=data+socket'],
+      fixings: ['/search?q=cable+clip', '/search?q=cable+gland'],
       // === TOOLS ===
-      'test-equipment': [
-        '/search?q=multimeter',
-        '/search?q=tester',
-      ],
-      'hand-tools': [
-        '/search?q=electrician+tools',
-      ],
+      'test-equipment': ['/search?q=multimeter', '/search?q=tester'],
+      'hand-tools': ['/search?q=electrician+tools'],
     },
     dealsUrl: '/offers',
     couponsUrl: null,
@@ -748,62 +554,20 @@ export const SUPPLIERS: Record<string, SupplierConfig> = {
     baseUrl: 'https://www.rfrelectrical.co.uk',
     categoryUrls: {
       // === MATERIALS ===
-      'cables': [
-        '/search?q=twin+earth+cable',
-        '/search?q=armoured+cable',
-        '/search?q=flex+cable',
-      ],
-      'consumer-units': [
-        '/search?q=consumer+unit',
-        '/search?q=distribution+board',
-      ],
-      'circuit-protection': [
-        '/search?q=mcb',
-        '/search?q=rcbo',
-        '/search?q=rcd',
-      ],
-      'wiring-accessories': [
-        '/search?q=socket',
-        '/search?q=switch',
-        '/search?q=back+box',
-      ],
-      'lighting': [
-        '/search?q=led+downlight',
-        '/search?q=emergency+lighting',
-        '/search?q=batten',
-      ],
-      'containment': [
-        '/search?q=trunking',
-        '/search?q=conduit',
-        '/search?q=cable+tray',
-      ],
-      'earthing': [
-        '/search?q=earth+rod',
-        '/search?q=earth+clamp',
-      ],
-      'fire-security': [
-        '/search?q=smoke+detector',
-        '/search?q=fire+alarm',
-      ],
-      'ev-charging': [
-        '/search?q=ev+charger',
-      ],
-      'data-networking': [
-        '/search?q=cat6',
-        '/search?q=data+socket',
-      ],
-      'fixings': [
-        '/search?q=cable+clip',
-        '/search?q=cable+gland',
-      ],
+      cables: ['/search?q=twin+earth+cable', '/search?q=armoured+cable', '/search?q=flex+cable'],
+      'consumer-units': ['/search?q=consumer+unit', '/search?q=distribution+board'],
+      'circuit-protection': ['/search?q=mcb', '/search?q=rcbo', '/search?q=rcd'],
+      'wiring-accessories': ['/search?q=socket', '/search?q=switch', '/search?q=back+box'],
+      lighting: ['/search?q=led+downlight', '/search?q=emergency+lighting', '/search?q=batten'],
+      containment: ['/search?q=trunking', '/search?q=conduit', '/search?q=cable+tray'],
+      earthing: ['/search?q=earth+rod', '/search?q=earth+clamp'],
+      'fire-security': ['/search?q=smoke+detector', '/search?q=fire+alarm'],
+      'ev-charging': ['/search?q=ev+charger'],
+      'data-networking': ['/search?q=cat6', '/search?q=data+socket'],
+      fixings: ['/search?q=cable+clip', '/search?q=cable+gland'],
       // === TOOLS ===
-      'test-equipment': [
-        '/search?q=multimeter',
-        '/search?q=tester',
-      ],
-      'hand-tools': [
-        '/search?q=electrician+tools',
-      ],
+      'test-equipment': ['/search?q=multimeter', '/search?q=tester'],
+      'hand-tools': ['/search?q=electrician+tools'],
     },
     dealsUrl: '/offers',
     couponsUrl: null,

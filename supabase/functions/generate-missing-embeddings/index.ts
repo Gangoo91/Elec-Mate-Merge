@@ -27,10 +27,10 @@ serve(async (req) => {
 
     if (!missingRows || missingRows.length === 0) {
       return new Response(
-        JSON.stringify({ 
-          success: true, 
+        JSON.stringify({
+          success: true,
           message: 'No missing embeddings found',
-          count: 0 
+          count: 0,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -43,12 +43,12 @@ serve(async (req) => {
     for (const row of missingRows) {
       try {
         const textToEmbed = `${row.topic}\n\n${row.content}`;
-        
+
         // Generate embedding using OpenAI
         const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${openAiKey}`,
+            Authorization: `Bearer ${openAiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -73,7 +73,12 @@ serve(async (req) => {
 
         if (updateError) {
           console.error(`Failed to update row ${row.id}:`, updateError);
-          results.push({ id: row.id, topic: row.topic, success: false, error: updateError.message });
+          results.push({
+            id: row.id,
+            topic: row.topic,
+            success: false,
+            error: updateError.message,
+          });
         } else {
           console.log(`✅ Generated embedding for: ${row.topic}`);
           results.push({ id: row.id, topic: row.topic, success: true });
@@ -84,8 +89,8 @@ serve(async (req) => {
       }
     }
 
-    const successCount = results.filter(r => r.success).length;
-    const failureCount = results.filter(r => !r.success).length;
+    const successCount = results.filter((r) => r.success).length;
+    const failureCount = results.filter((r) => !r.success).length;
 
     return new Response(
       JSON.stringify({
@@ -94,21 +99,20 @@ serve(async (req) => {
         totalProcessed: missingRows.length,
         successful: successCount,
         failed: failureCount,
-        details: results
+        details: results,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error generating embeddings:', error);
     return new Response(
-      JSON.stringify({ 
-        success: false, 
-        error: error.message 
+      JSON.stringify({
+        success: false,
+        error: error.message,
       }),
-      { 
+      {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

@@ -3,7 +3,8 @@ import { generateInstallationMethod } from '../_agents/installation-method-core.
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -19,70 +20,70 @@ Deno.serve(async (req) => {
 
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
-    );
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const { query, projectDetails, designerContext } = await req.json();
 
     if (!query) {
-      return new Response(
-        JSON.stringify({ error: 'Query is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Query is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('🔧 Installation Method Agent called', {
       userId: user.id,
       query: query.substring(0, 100),
       hasProjectDetails: !!projectDetails,
-      hasDesignerContext: !!designerContext
+      hasDesignerContext: !!designerContext,
     });
 
     // Generate installation method using ultra-fast RAG
     const result = await generateInstallationMethod(supabase, {
       query,
       projectDetails,
-      designerContext
+      designerContext,
     });
 
     console.log('✅ Installation method generated', {
       totalSteps: result.installationMethod.steps?.length || 0,
       totalTime: result.metadata.totalTime,
-      qualityScore: result.metadata.qualityScore
+      qualityScore: result.metadata.qualityScore,
     });
 
     return new Response(
       JSON.stringify({
         success: true,
         data: result.installationMethod,
-        metadata: result.metadata
+        metadata: result.metadata,
       }),
-      { 
+      {
         status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error: any) {
     console.error('❌ Error in installation-method-agent:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error.message,
-        details: error.stack
+        details: error.stack,
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

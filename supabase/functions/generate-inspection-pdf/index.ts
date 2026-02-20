@@ -1,22 +1,12 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import {
-  SafetyPDFBuilder,
-  C,
-  type StatusColour,
-  type CompanyBranding,
-} from '../_shared/SafetyPDFBuilder.ts';
+import { inspectionTemplate } from '../_shared/safety-templates/inspection.ts';
+import { htmlToPdf } from '../_shared/safety-pdf-renderer.ts';
+import type { Branding } from '../_shared/safety-html-base.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString('en-GB') : 'N/A');
-
-const RESULT_MAP: Record<string, StatusColour> = {
-  pass: 'success',
-  fail: 'danger',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
@@ -42,11 +32,11 @@ serve(async (req) => {
     const { data: profileRows } = await supabase
       .from('company_profiles')
       .select(
-        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color'
+        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color, scheme_logo_data_url, registration_scheme'
       )
       .eq('user_id', user.id)
       .limit(1);
-    const branding: CompanyBranding = profileRows?.[0] ?? {};
+    const branding: Branding = profileRows?.[0] ?? {};
 
     const { recordId } = await req.json();
     if (!recordId) throw new Error('Missing recordId');
@@ -59,77 +49,11 @@ serve(async (req) => {
 
     if (fetchError || !record) throw new Error('Inspection record not found');
 
-    // ── Build PDF ──────────────────────────────────────────────────────
-    const overallResult = (record.overall_result || '').toLowerCase();
-    const statusColour: StatusColour = RESULT_MAP[overallResult] || 'warning';
-    const titleText = `${record.template_title || 'Safety'} Inspection`;
-    const pdf = await SafetyPDFBuilder.create(
-      titleText,
-      recordId,
-      record.overall_result || 'Unknown',
-      statusColour,
-      branding
-    );
-
-    // Inspection Summary
-    pdf.section('Inspection Summary');
-    pdf.keyValueGrid([
-      { label: 'Inspector', value: record.inspector_name || 'N/A' },
-      { label: 'Date', value: fmtDate(record.date) },
-      { label: 'Location', value: record.location || 'N/A' },
-      {
-        label: 'Overall Result',
-        value: (record.overall_result || 'N/A').toUpperCase(),
-      },
-    ]);
-
-    // Results Overview
-    pdf.section('Results Overview');
-    pdf.table(
-      ['Metric', 'Count'],
-      [
-        ['Pass', String(record.pass_count ?? 0)],
-        ['Fail', String(record.fail_count ?? 0)],
-        ['N/A', String(record.na_count ?? 0)],
-        ['Total', String(record.total_items ?? 0)],
-      ]
-    );
-
-    // Checklist Sections
-    const sections = (record.sections as Record<string, unknown>[]) || [];
-    for (const section of sections) {
-      pdf.section(section.title || 'Untitled Section');
-
-      const items = (section.items || []) as Array<{
-        text: string;
-        result: string;
-        notes?: string;
-      }>;
-
-      if (items.length > 0) {
-        pdf.checklist(
-          items.map((i) => ({
-            label: i.text || '',
-            passed: i.result === 'pass',
-            notes: i.result === 'fail' ? i.notes : undefined,
-          }))
-        );
-      } else {
-        pdf.paragraph('No items in this section.', { color: C.textSec });
-      }
-    }
-
-    // Additional Notes
-    if (record.additional_notes) {
-      pdf.section('Additional Notes');
-      pdf.paragraph(record.additional_notes);
-    }
-
-    // Footer
-    pdf.footnote(`Safety Inspection Record \u2014 ${record.total_items ?? 0} items checked`);
+    // ── Build PDF via HTML template + Browserless ────────────────────
+    const html = inspectionTemplate(record, branding);
+    const pdfBytes = await htmlToPdf(html);
 
     // ── Upload PDF ─────────────────────────────────────────────────────
-    const pdfBytes = await pdf.toBuffer();
     const fileName = `inspection-${recordId}-${Date.now()}.pdf`;
 
     const { error: uploadError } = await supabase.storage
@@ -140,9 +64,16 @@ serve(async (req) => {
       });
 
     if (uploadError) {
-      // Fallback: return PDF bytes directly
-      return new Response(pdfBytes, {
-        headers: { ...corsHeaders, 'Content-Type': 'application/pdf' },
+      // Fallback: return base64-encoded PDF as JSON (chunked to avoid stack overflow)
+      const bytes = new Uint8Array(pdfBytes);
+      let binary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+      }
+      const base64 = btoa(binary);
+      return new Response(JSON.stringify({ success: true, pdf_base64: base64 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 

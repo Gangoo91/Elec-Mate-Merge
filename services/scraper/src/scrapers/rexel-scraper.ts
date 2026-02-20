@@ -66,14 +66,19 @@ export class RexelScraper extends BaseScraper {
     }
 
     // Wait for page to load
-    await new Promise(r => setTimeout(r, 10000));
+    await new Promise((r) => setTimeout(r, 10000));
 
     // Try to wait for product content
     try {
-      await page.waitForFunction(() => {
-        return document.body.innerText.includes('£') ||
-               document.querySelectorAll('[class*="product"]').length > 3;
-      }, { timeout: 15000 });
+      await page.waitForFunction(
+        () => {
+          return (
+            document.body.innerText.includes('£') ||
+            document.querySelectorAll('[class*="product"]').length > 3
+          );
+        },
+        { timeout: 15000 }
+      );
     } catch {
       // Continue anyway
     }
@@ -116,8 +121,14 @@ export class RexelScraper extends BaseScraper {
         scripts.forEach((script) => {
           try {
             const content = script.textContent || '';
-            if (content.includes('"products"') || content.includes('"sku"') || content.includes('"items"')) {
-              const productMatches = content.matchAll(/"sku"\s*:\s*"([^"]+)"[^}]*"name"\s*:\s*"([^"]+)"[^}]*"price"\s*:?\s*"?([0-9.]+)"?/g);
+            if (
+              content.includes('"products"') ||
+              content.includes('"sku"') ||
+              content.includes('"items"')
+            ) {
+              const productMatches = content.matchAll(
+                /"sku"\s*:\s*"([^"]+)"[^}]*"name"\s*:\s*"([^"]+)"[^}]*"price"\s*:?\s*"?([0-9.]+)"?/g
+              );
               for (const match of productMatches) {
                 const sku = match[1];
                 if (!seenSkus.has(sku)) {
@@ -159,18 +170,23 @@ export class RexelScraper extends BaseScraper {
           if (cards.length > 2) {
             cards.forEach((card) => {
               try {
-                const link = card.querySelector('a[href*="/product/"], a[href*="/p/"], a[href*="/products/"]') as HTMLAnchorElement;
+                const link = card.querySelector(
+                  'a[href*="/product/"], a[href*="/p/"], a[href*="/products/"]'
+                ) as HTMLAnchorElement;
 
                 const skuFromUrl = link?.href?.match(/\/([A-Z0-9-]+)(?:\?|$)/i);
-                const sku = card.getAttribute('data-sku') ||
-                           card.getAttribute('data-product-id') ||
-                           card.getAttribute('data-productcode') ||
-                           (skuFromUrl ? skuFromUrl[1] : `RXL-${Math.random().toString(36).substr(2, 8)}`);
+                const sku =
+                  card.getAttribute('data-sku') ||
+                  card.getAttribute('data-product-id') ||
+                  card.getAttribute('data-productcode') ||
+                  (skuFromUrl ? skuFromUrl[1] : `RXL-${Math.random().toString(36).substr(2, 8)}`);
 
                 if (seenSkus.has(sku)) return;
                 seenSkus.add(sku);
 
-                const nameEl = card.querySelector('h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"]');
+                const nameEl = card.querySelector(
+                  'h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"]'
+                );
                 const name = nameEl?.textContent?.trim() || link?.textContent?.trim() || '';
                 if (!name || name.length < 3) return;
 
@@ -205,7 +221,9 @@ export class RexelScraper extends BaseScraper {
         if (items.length > 0) return items;
 
         // Method 3: Find all product links and extract from nearby content
-        const productLinks = document.querySelectorAll('a[href*="/product/"], a[href*="/p/"], a[href*="/products/"]');
+        const productLinks = document.querySelectorAll(
+          'a[href*="/product/"], a[href*="/p/"], a[href*="/products/"]'
+        );
         productLinks.forEach((link) => {
           try {
             const anchor = link as HTMLAnchorElement;
@@ -222,8 +240,10 @@ export class RexelScraper extends BaseScraper {
               container = container.parentElement;
             }
 
-            const name = anchor.textContent?.trim() ||
-                        container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+            const name =
+              anchor.textContent?.trim() ||
+              container?.querySelector('h2, h3, h4')?.textContent?.trim() ||
+              '';
             if (!name || name.length < 3) return;
 
             const text = container?.textContent || '';
@@ -253,11 +273,25 @@ export class RexelScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
-      const brands = ['Schneider', 'ABB', 'Hager', 'Chint', 'Eaton', 'Legrand', 'MK', 'Click', 'Honeywell', 'Gewiss', 'Philips'];
-      const brand = item.brand || brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+      const brands = [
+        'Schneider',
+        'ABB',
+        'Hager',
+        'Chint',
+        'Eaton',
+        'Legrand',
+        'MK',
+        'Click',
+        'Honeywell',
+        'Gewiss',
+        'Philips',
+      ];
+      const brand =
+        item.brand || brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
         sku: item.sku,
@@ -272,7 +306,8 @@ export class RexelScraper extends BaseScraper {
         description: null,
         highlights: [],
         imageUrl: item.imageUrl,
-        productUrl: item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
+        productUrl:
+          item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
         stockStatus: item.stockStatus || 'Unknown',
       });
     }
@@ -298,7 +333,7 @@ export class RexelScraper extends BaseScraper {
       const success = await this.navigateWithRetry(page, dealsUrl);
       if (!success) return deals;
 
-      await new Promise(r => setTimeout(r, 10000));
+      await new Promise((r) => setTimeout(r, 10000));
       await this.scrollToLoadAll(page);
 
       const extractedDeals = await page.evaluate(() => {

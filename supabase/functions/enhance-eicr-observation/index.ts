@@ -1,7 +1,10 @@
 // ENHANCE EICR OBSERVATION - AI-powered observation enhancement
 // Uses RAG (BS 7671 + practical work intelligence) to suggest code, description, regulation refs
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
-import { searchPracticalWorkIntelligence, formatForAIContext } from '../_shared/rag-practical-work.ts';
+import {
+  searchPracticalWorkIntelligence,
+  formatForAIContext,
+} from '../_shared/rag-practical-work.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -11,9 +14,13 @@ serve(async (req) => {
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(JSON.stringify({ success: false, error: 'Missing authorisation header' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ success: false, error: 'Missing authorisation header' }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -21,24 +28,30 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Verify user
-    const userSupabase = createClient(
-      supabaseUrl,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: authHeader } } }
-    );
-    const { data: { user }, error: userError } = await userSupabase.auth.getUser();
+    const userSupabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const {
+      data: { user },
+      error: userError,
+    } = await userSupabase.auth.getUser();
     if (userError || !user) {
       return new Response(JSON.stringify({ success: false, error: 'Unauthorised' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
     const { description, location, currentCode } = await req.json();
 
     if (!description || description.trim().length < 5) {
-      return new Response(JSON.stringify({ success: false, error: 'Description must be at least 5 characters' }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ success: false, error: 'Description must be at least 5 characters' }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Build RAG query from the observation description
@@ -106,7 +119,7 @@ REMEDIAL GUIDANCE:
 ${remedialContext}
 
 REGULATION REFERENCES FOUND:
-${regulationRefs.map(r => `${r.number}: ${r.title}`).join('\n')}
+${regulationRefs.map((r) => `${r.number}: ${r.title}`).join('\n')}
 
 Respond ONLY with valid JSON matching this schema:
 {
@@ -124,7 +137,7 @@ Use UK English only. Be concise but technically accurate.`;
     const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
+        Authorization: `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -149,7 +162,10 @@ Use UK English only. Be concise but technically accurate.`;
     // Parse JSON from response (handle markdown code blocks)
     let parsed: any;
     try {
-      const jsonStr = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      const jsonStr = content
+        .replace(/```json\n?/g, '')
+        .replace(/```\n?/g, '')
+        .trim();
       parsed = JSON.parse(jsonStr);
     } catch {
       console.error('Failed to parse AI response:', content);
@@ -158,7 +174,9 @@ Use UK English only. Be concise but technically accurate.`;
 
     // Validate and sanitise response
     const validCodes = ['C1', 'C2', 'C3', 'FI'];
-    const suggestedCode = validCodes.includes(parsed.suggestedCode) ? parsed.suggestedCode : currentCode || 'C3';
+    const suggestedCode = validCodes.includes(parsed.suggestedCode)
+      ? parsed.suggestedCode
+      : currentCode || 'C3';
 
     const suggestions = {
       suggestedCode,
@@ -169,22 +187,27 @@ Use UK English only. Be concise but technically accurate.`;
       regulationRefs: regulationRefs.slice(0, 8),
     };
 
-    return new Response(JSON.stringify({
-      success: true,
-      suggestions,
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        suggestions,
+      }),
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error: any) {
     console.error('❌ Error in enhance-eicr-observation:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error.message || 'Failed to enhance observation',
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to enhance observation',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

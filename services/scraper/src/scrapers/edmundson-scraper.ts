@@ -66,14 +66,19 @@ export class EdmundsonScraper extends BaseScraper {
     }
 
     // Wait for page to load
-    await new Promise(r => setTimeout(r, 8000));
+    await new Promise((r) => setTimeout(r, 8000));
 
     // Try to wait for product content
     try {
-      await page.waitForFunction(() => {
-        return document.body.innerText.includes('£') ||
-               document.querySelectorAll('[class*="product"]').length > 3;
-      }, { timeout: 15000 });
+      await page.waitForFunction(
+        () => {
+          return (
+            document.body.innerText.includes('£') ||
+            document.querySelectorAll('[class*="product"]').length > 3
+          );
+        },
+        { timeout: 15000 }
+      );
     } catch {
       // Continue anyway
     }
@@ -116,9 +121,15 @@ export class EdmundsonScraper extends BaseScraper {
         scripts.forEach((script) => {
           try {
             const content = script.textContent || '';
-            if (content.includes('"products"') || content.includes('"sku"') || content.includes('"price"')) {
+            if (
+              content.includes('"products"') ||
+              content.includes('"sku"') ||
+              content.includes('"price"')
+            ) {
               // Try to find product arrays
-              const productMatches = content.matchAll(/"sku"\s*:\s*"([^"]+)"[^}]*"name"\s*:\s*"([^"]+)"[^}]*"price"\s*:\s*"?([0-9.]+)"?/g);
+              const productMatches = content.matchAll(
+                /"sku"\s*:\s*"([^"]+)"[^}]*"name"\s*:\s*"([^"]+)"[^}]*"price"\s*:\s*"?([0-9.]+)"?/g
+              );
               for (const match of productMatches) {
                 const sku = match[1];
                 if (!seenSkus.has(sku)) {
@@ -158,18 +169,23 @@ export class EdmundsonScraper extends BaseScraper {
           if (cards.length > 2) {
             cards.forEach((card) => {
               try {
-                const link = card.querySelector('a[href*="/product"], a[href*="/p/"]') as HTMLAnchorElement;
+                const link = card.querySelector(
+                  'a[href*="/product"], a[href*="/p/"]'
+                ) as HTMLAnchorElement;
 
                 // Extract SKU from URL or data attribute
                 const skuFromUrl = link?.href?.match(/\/([A-Z0-9-]+)(?:\?|$)/i);
-                const sku = card.getAttribute('data-sku') ||
-                           card.getAttribute('data-product-id') ||
-                           (skuFromUrl ? skuFromUrl[1] : `EDM-${Math.random().toString(36).substr(2, 8)}`);
+                const sku =
+                  card.getAttribute('data-sku') ||
+                  card.getAttribute('data-product-id') ||
+                  (skuFromUrl ? skuFromUrl[1] : `EDM-${Math.random().toString(36).substr(2, 8)}`);
 
                 if (seenSkus.has(sku)) return;
                 seenSkus.add(sku);
 
-                const nameEl = card.querySelector('h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"]');
+                const nameEl = card.querySelector(
+                  'h2, h3, h4, [class*="name"], [class*="title"], [class*="Name"]'
+                );
                 const name = nameEl?.textContent?.trim() || link?.textContent?.trim() || '';
                 if (!name || name.length < 3) return;
 
@@ -221,8 +237,10 @@ export class EdmundsonScraper extends BaseScraper {
               container = container.parentElement;
             }
 
-            const name = anchor.textContent?.trim() ||
-                        container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+            const name =
+              anchor.textContent?.trim() ||
+              container?.querySelector('h2, h3, h4')?.textContent?.trim() ||
+              '';
             if (!name || name.length < 3) return;
 
             const text = container?.textContent || '';
@@ -252,11 +270,25 @@ export class EdmundsonScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
-      const brands = ['Schneider', 'ABB', 'Hager', 'Chint', 'Eaton', 'Legrand', 'MK', 'Click', 'Honeywell', 'Deta', 'Scolmore'];
-      const brand = item.brand || brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+      const brands = [
+        'Schneider',
+        'ABB',
+        'Hager',
+        'Chint',
+        'Eaton',
+        'Legrand',
+        'MK',
+        'Click',
+        'Honeywell',
+        'Deta',
+        'Scolmore',
+      ];
+      const brand =
+        item.brand || brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
         sku: item.sku,
@@ -271,7 +303,8 @@ export class EdmundsonScraper extends BaseScraper {
         description: null,
         highlights: [],
         imageUrl: item.imageUrl,
-        productUrl: item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
+        productUrl:
+          item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
         stockStatus: item.stockStatus || 'Unknown',
       });
     }
@@ -297,7 +330,7 @@ export class EdmundsonScraper extends BaseScraper {
       const success = await this.navigateWithRetry(page, dealsUrl);
       if (!success) return deals;
 
-      await new Promise(r => setTimeout(r, 8000));
+      await new Promise((r) => setTimeout(r, 8000));
       await this.scrollToLoadAll(page);
 
       const extractedDeals = await page.evaluate(() => {

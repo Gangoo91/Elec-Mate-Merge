@@ -11,7 +11,10 @@
 import { createClient } from './deps.ts';
 import { generateEmbeddingWithRetry } from './v3-core.ts';
 import type { SupabaseClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { rerankWithCrossEncoder, type RegulationResult as CrossEncoderRegulation } from './cross-encoder-reranker.ts';
+import {
+  rerankWithCrossEncoder,
+  type RegulationResult as CrossEncoderRegulation,
+} from './cross-encoder-reranker.ts';
 import { calculateConfidence } from './confidence-scorer.ts';
 
 interface RegulationResult {
@@ -46,17 +49,17 @@ interface CachedQuery {
  */
 function expandDesignQuery(query: string): string {
   const expansions: Record<string, string[]> = {
-    'shower': ['electric shower', 'instantaneous water heater', 'high load bathroom'],
-    'cooker': ['electric cooker', 'cooking appliance', 'diversity'],
-    'ev': ['electric vehicle', 'EV charger', 'charging point', 'Section 722'],
-    'rcd': ['residual current device', 'earth leakage', '30mA protection'],
-    'rcbo': ['residual current circuit breaker', 'combined protection'],
-    'bathroom': ['Section 701', 'zones', 'IP rating', 'special location'],
-    'outdoor': ['SWA', 'buried cable', 'weatherproof', 'external installation'],
-    'fire': ['FP200', 'fire-rated', 'BS 5839', 'enhanced fire performance'],
-    'cable': ['conductor', 'wiring', 'current carrying capacity'],
-    'earth': ['earthing', 'protective conductor', 'CPC', 'bonding'],
-    'loop': ['earth fault loop impedance', 'Zs', 'fault current'],
+    shower: ['electric shower', 'instantaneous water heater', 'high load bathroom'],
+    cooker: ['electric cooker', 'cooking appliance', 'diversity'],
+    ev: ['electric vehicle', 'EV charger', 'charging point', 'Section 722'],
+    rcd: ['residual current device', 'earth leakage', '30mA protection'],
+    rcbo: ['residual current circuit breaker', 'combined protection'],
+    bathroom: ['Section 701', 'zones', 'IP rating', 'special location'],
+    outdoor: ['SWA', 'buried cable', 'weatherproof', 'external installation'],
+    fire: ['FP200', 'fire-rated', 'BS 5839', 'enhanced fire performance'],
+    cable: ['conductor', 'wiring', 'current carrying capacity'],
+    earth: ['earthing', 'protective conductor', 'CPC', 'bonding'],
+    loop: ['earth fault loop impedance', 'Zs', 'fault current'],
   };
 
   let expanded = query.toLowerCase();
@@ -77,7 +80,7 @@ function generateCacheKey(query: string, circuitType?: string): string {
   // UTF-8 safe base64 encoding to handle emojis/special characters
   const encoder = new TextEncoder();
   const data = encoder.encode(key);
-  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join("");
+  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join('');
   return btoa(binString).substring(0, 32);
 }
 
@@ -141,25 +144,23 @@ async function storeSemanticCache(
   try {
     const ttlMs = calculateCacheTTL(avgConfidence);
     const expiresAt = new Date(Date.now() + ttlMs);
-    
-    await supabase
-      .from('rag_cache')
-      .upsert({
-        query_hash: queryHash,
-        query_text: query,
-        agent_name: 'designer',
-        results,
-        hit_count: 0,
-        cache_confidence: avgConfidence,
-        created_at: new Date().toISOString(),
-        expires_at: expiresAt.toISOString()
-      });
 
-    logger.debug('Stored in cache', { 
-      queryHash, 
+    await supabase.from('rag_cache').upsert({
+      query_hash: queryHash,
+      query_text: query,
+      agent_name: 'designer',
+      results,
+      hit_count: 0,
+      cache_confidence: avgConfidence,
+      created_at: new Date().toISOString(),
+      expires_at: expiresAt.toISOString(),
+    });
+
+    logger.debug('Stored in cache', {
+      queryHash,
       resultCount: results.length,
       confidence: avgConfidence.toFixed(2),
-      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1)
+      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1),
     });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
@@ -177,7 +178,7 @@ export async function retrieveDesignKnowledge(
   circuitType?: string
 ): Promise<{ regulations: RegulationResult[]; designKnowledge: DesignKnowledgeResult[] }> {
   const searchStart = Date.now();
-  
+
   // Check cache first
   const cacheKey = generateCacheKey(query, circuitType);
   const cached = await checkSemanticCache(supabase, cacheKey, logger);
@@ -197,14 +198,14 @@ export async function retrieveDesignKnowledge(
       // Regulations Intelligence hybrid search
       supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: expandedQuery,
-        match_count: 15
+        match_count: 15,
       }),
-      
+
       // Design knowledge hybrid search
       supabase.rpc('search_design_hybrid', {
         query_text: expandedQuery,
-        match_count: 12
-      })
+        match_count: 12,
+      }),
     ]);
 
     let regulations = bs7671Results.data || [];
@@ -214,45 +215,51 @@ export async function retrieveDesignKnowledge(
     if (regulations.length > 0) {
       logger.debug('Reranking regulations with cross-encoder');
       const rerankStart = Date.now();
-      
+
       regulations = await rerankWithCrossEncoder(
         query,
         regulations as CrossEncoderRegulation[],
         openAiKey,
         logger
       );
-      
+
       logger.info('Cross-encoder reranking complete', {
         duration: Date.now() - rerankStart,
         topScore: regulations[0]?.finalScore?.toFixed(3),
-        bottomScore: regulations[regulations.length - 1]?.finalScore?.toFixed(3)
+        bottomScore: regulations[regulations.length - 1]?.finalScore?.toFixed(3),
       });
     }
 
     // Calculate confidence scores for each regulation
-    const regulationsWithConfidence = regulations.map(reg => ({
+    const regulationsWithConfidence = regulations.map((reg) => ({
       ...reg,
-      confidence: calculateConfidence(reg as any, query, { circuitType })
+      confidence: calculateConfidence(reg as any, query, { circuitType }),
     }));
 
     // Calculate average confidence for cache TTL
-    const avgConfidence = regulationsWithConfidence.length > 0
-      ? regulationsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) / regulationsWithConfidence.length
-      : 0.7;
+    const avgConfidence =
+      regulationsWithConfidence.length > 0
+        ? regulationsWithConfidence.reduce((sum, r) => sum + (r.confidence?.overall || 0.7), 0) /
+          regulationsWithConfidence.length
+        : 0.7;
 
     logger.info('Hybrid design search complete', {
       duration: Date.now() - searchStart,
       regulationsCount: regulations.length,
       designKnowledgeCount: designKnowledge.length,
       avgConfidence: avgConfidence.toFixed(2),
-      avgRegScore: regulations.length > 0 
-        ? (regulations.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / regulations.length).toFixed(3)
-        : 0
+      avgRegScore:
+        regulations.length > 0
+          ? (
+              regulations.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) /
+              regulations.length
+            ).toFixed(3)
+          : 0,
     });
 
-    const results = { 
-      regulations: regulationsWithConfidence, 
-      designKnowledge 
+    const results = {
+      regulations: regulationsWithConfidence,
+      designKnowledge,
     };
 
     // Store in cache with dynamic TTL
@@ -262,7 +269,7 @@ export async function retrieveDesignKnowledge(
   } catch (error) {
     logger.error('Hybrid design search failed', {
       error: error instanceof Error ? error.message : String(error),
-      duration: Date.now() - searchStart
+      duration: Date.now() - searchStart,
     });
     throw error;
   }
@@ -281,7 +288,7 @@ export function formatDesignContext(
     context += `BS7671 REGULATIONS (${regulations.length} items):\n`;
     context += regulations
       .slice(0, 10) // Top 10 most relevant
-      .map(r => `[${r.regulation_number}] ${r.content.substring(0, 200)}...`)
+      .map((r) => `[${r.regulation_number}] ${r.content.substring(0, 200)}...`)
       .join('\n\n');
     context += '\n\n';
   }
@@ -290,12 +297,13 @@ export function formatDesignContext(
     context += `DESIGN GUIDANCE (${designKnowledge.length} items):\n`;
     context += designKnowledge
       .slice(0, 8) // Top 8 most relevant
-      .map(d => `${d.topic}: ${d.content.substring(0, 180)}...`)
+      .map((d) => `${d.topic}: ${d.content.substring(0, 180)}...`)
       .join('\n\n');
   }
 
   if (!context) {
-    context = 'No specific regulations or design guidance found. Use general electrical design principles.';
+    context =
+      'No specific regulations or design guidance found. Use general electrical design principles.';
   }
 
   return context;

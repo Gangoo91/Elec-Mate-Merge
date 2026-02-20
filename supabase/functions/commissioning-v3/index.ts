@@ -11,8 +11,8 @@ import {
   createClient,
   generateEmbeddingWithRetry,
   callLovableAIWithTimeout,
-  parseJsonWithRepair
-} from "../_shared/v3-core.ts";
+  parseJsonWithRepair,
+} from '../_shared/v3-core.ts';
 import { callOpenAI } from '../_shared/ai-providers.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
@@ -53,10 +53,10 @@ serve(async (req) => {
   if (req.method === 'GET') {
     const requestId = generateRequestId();
     return new Response(
-      JSON.stringify({ 
-        status: 'healthy', 
+      JSON.stringify({
+        status: 'healthy',
         function: 'commissioning-v3',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
@@ -67,7 +67,18 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, queryMode, circuitType, voltage, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails, imageUrl } = body;
+    const {
+      query,
+      queryMode,
+      circuitType,
+      voltage,
+      messages,
+      previousAgentOutputs,
+      sharedRegulations,
+      currentDesign,
+      projectDetails,
+      imageUrl,
+    } = body;
 
     // Track context sources
     const contextSources = {
@@ -75,18 +86,20 @@ serve(async (req) => {
       sharedRegulationsCount: sharedRegulations?.length || 0,
       previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
       projectDetails: !!projectDetails,
-      circuitDesign: !!(currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer'))
+      circuitDesign: !!(
+        currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer')
+      ),
     };
 
     logger.info('📦 Context received from agent-router:', contextSources);
-    
+
     // Log what's being USED from context
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       previousAgentOutputs.forEach((output: any) => {
         logger.info(`📥 Using context from ${output.agent}:`, {
           hasStructuredData: !!output.response?.structuredData,
           hasCitations: !!output.citations,
-          structuredDataKeys: Object.keys(output.response?.structuredData || {})
+          structuredDataKeys: Object.keys(output.response?.structuredData || {}),
         });
       });
     }
@@ -95,7 +108,7 @@ serve(async (req) => {
     const { enhanceQuery, logEnhancement } = await import('../_shared/query-enhancer.ts');
     const enhancement = enhanceQuery(query, messages || []);
     logEnhancement(enhancement, logger);
-    
+
     const effectiveQuery = enhancement.enhanced;
 
     // Enhanced input validation
@@ -106,36 +119,36 @@ serve(async (req) => {
       throw new ValidationError('query must be less than 1000 characters');
     }
 
-    logger.info('🔍 Commissioning V3 request received', { 
+    logger.info('🔍 Commissioning V3 request received', {
       query: effectiveQuery.substring(0, 50),
       enhanced: enhancement.addedContext.length > 0,
-      hasSharedRegs: !!sharedRegulations?.length
+      hasSharedRegs: !!sharedRegulations?.length,
     });
 
     // PHASE 0: Query Classification - Respect user's explicit mode choice
     let classification;
     if (queryMode === 'fault') {
-      classification = { 
+      classification = {
         mode: 'fault-diagnosis' as const,
-        confidence: 1.0, 
-        reasoning: 'User explicitly selected fault-finding mode' 
+        confidence: 1.0,
+        reasoning: 'User explicitly selected fault-finding mode',
       };
     } else if (queryMode === 'testing') {
-      classification = { 
+      classification = {
         mode: 'procedure' as const,
-        confidence: 1.0, 
-        reasoning: 'User explicitly selected testing procedure mode' 
+        confidence: 1.0,
+        reasoning: 'User explicitly selected testing procedure mode',
       };
     } else {
       // Fallback: Use auto-classification
       classification = classifyCommissioningQuery(effectiveQuery);
     }
-    
-    logger.info('🧠 Query classified', { 
+
+    logger.info('🧠 Query classified', {
       mode: classification.mode,
       confidence: classification.confidence,
       reasoning: classification.reasoning,
-      userSelectedMode: queryMode || 'auto'
+      userSelectedMode: queryMode || 'auto',
     });
 
     // Get API keys
@@ -158,15 +171,15 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     logger.debug('Starting commissioning RAG search');
     const ragStart = Date.now();
-    
+
     // Enhanced query for photo analysis
-    const enhancedQuery = imageUrl 
+    const enhancedQuery = imageUrl
       ? `${query} visual inspection photo analysis electrical installation safety compliance`
       : `${query} testing commissioning GN3 Chapter 64 inspection procedures`;
-    
+
     const { retrieveCommissioningKnowledge } = await import('../_shared/rag-commissioning.ts');
     const ragResults = await retrieveCommissioningKnowledge(
       enhancedQuery,
@@ -175,36 +188,44 @@ serve(async (req) => {
       logger,
       circuitType
     );
-    
+
     const ragDuration = Date.now() - ragStart;
-    logger.info('✅ Commissioning RAG complete', { 
+    logger.info('✅ Commissioning RAG complete', {
       duration: ragDuration,
-      resultsCount: ragResults.length
+      resultsCount: ragResults.length,
     });
 
     // Build GN3-first context from commissioning RAG
     let testContext = '';
-    const gn3ProceduresFound = ragResults.filter(r => r.sourceType === 'practical').length;
-    const regulationsFound = ragResults.filter(r => r.sourceType === 'regulatory').length;
+    const gn3ProceduresFound = ragResults.filter((r) => r.sourceType === 'practical').length;
+    const regulationsFound = ragResults.filter((r) => r.sourceType === 'regulatory').length;
 
     if (ragResults.length > 0) {
       testContext = '## GN3 TESTING & INSPECTION GUIDANCE:\n\n';
-      testContext += ragResults.map((item: any) => {
-        const header = item.regulation_number 
-          ? `**[${item.regulation_number}]**` 
-          : item.topic 
-            ? `**${item.topic}**` 
-            : '**Testing Guidance**';
-        return `${header}\n${item.content}`;
-      }).join('\n\n---\n\n');
-      
+      testContext += ragResults
+        .map((item: any) => {
+          const header = item.regulation_number
+            ? `**[${item.regulation_number}]**`
+            : item.topic
+              ? `**${item.topic}**`
+              : '**Testing Guidance**';
+          return `${header}\n${item.content}`;
+        })
+        .join('\n\n---\n\n');
+
       logger.info('✅ RAG Quality Metrics', {
         gn3ProceduresFound,
         regulationsFound,
         totalSources: ragResults.length,
-        avgConfidence: ragResults.length > 0 
-          ? (ragResults.reduce((sum: number, r: any) => sum + (r.confidence?.overall || 0.7), 0) / ragResults.length).toFixed(2)
-          : 'N/A'
+        avgConfidence:
+          ragResults.length > 0
+            ? (
+                ragResults.reduce(
+                  (sum: number, r: any) => sum + (r.confidence?.overall || 0.7),
+                  0
+                ) / ragResults.length
+              ).toFixed(2)
+            : 'N/A',
       });
     } else {
       testContext = '⚠️ No specific GN3 guidance found. Use general BS 7671 Chapter 64 principles.';
@@ -218,7 +239,7 @@ serve(async (req) => {
       reasoning: string;
     } {
       const lowerQuery = query.toLowerCase();
-      
+
       // FAULT-FINDING PATTERNS (HIGHEST PRIORITY - SAFETY CRITICAL)
       const faultFindingPatterns = [
         /fault\s*find/i,
@@ -239,9 +260,9 @@ serve(async (req) => {
         /(?:insulation|continuity|zs|rcd).*(?:failing|failed|won't|doesn't)/i,
         /(?:0\.\d+|[0-9]+\.?[0-9]*)\s*(?:mω|ω|ma|v)\s*on/i,
         /what.*wrong/i,
-        /how.*(?:fix|repair|solve)/i
+        /how.*(?:fix|repair|solve)/i,
       ];
-      
+
       // QUESTION PATTERNS (learning/clarification)
       const questionPatterns = [
         /^what\s+(?:is|are|does|should)/i,
@@ -252,9 +273,9 @@ serve(async (req) => {
         /^why\s+(?:is|does|do)/i,
         /what.*(?:mean|required|acceptable|criteria)/i,
         /explain/i,
-        /difference between/i
+        /difference between/i,
       ];
-      
+
       // PROCEDURE GENERATION PATTERNS (wants full structured output)
       const procedurePatterns = [
         /(?:step|procedure|testing|commission|test).*(?:for|on)/i,
@@ -262,44 +283,44 @@ serve(async (req) => {
         /(?:complete|full).*(?:testing|commissioning|procedure)/i,
         /all.*tests.*required/i,
         /eic|eicr|electrical installation certificate/i,
-        /new.*(?:consumer unit|distribution board|circuit)/i
+        /new.*(?:consumer unit|distribution board|circuit)/i,
       ];
-      
-      const faultFindingScore = faultFindingPatterns.filter(p => p.test(query)).length;
-      const questionScore = questionPatterns.filter(p => p.test(query)).length;
-      const procedureScore = procedurePatterns.filter(p => p.test(query)).length;
-      
+
+      const faultFindingScore = faultFindingPatterns.filter((p) => p.test(query)).length;
+      const questionScore = questionPatterns.filter((p) => p.test(query)).length;
+      const procedureScore = procedurePatterns.filter((p) => p.test(query)).length;
+
       const isDetailedRequest = query.length > 80 && /\d+/.test(query);
-      
+
       // FAULT-FINDING has HIGHEST priority (safety-critical)
       if (faultFindingScore > 0) {
         return {
           mode: 'fault-diagnosis',
-          confidence: Math.min(0.95, 0.7 + (faultFindingScore * 0.1)),
-          reasoning: `Detected fault-finding request (${faultFindingScore} indicators)`
+          confidence: Math.min(0.95, 0.7 + faultFindingScore * 0.1),
+          reasoning: `Detected fault-finding request (${faultFindingScore} indicators)`,
         };
       }
-      
+
       if (questionScore > procedureScore && query.length < 100) {
         return {
           mode: 'question',
-          confidence: Math.min(0.9, 0.5 + (questionScore * 0.2)),
-          reasoning: `Detected question pattern`
+          confidence: Math.min(0.9, 0.5 + questionScore * 0.2),
+          reasoning: `Detected question pattern`,
         };
       }
-      
+
       if (procedureScore > 0 || isDetailedRequest) {
         return {
           mode: 'procedure',
-          confidence: Math.min(0.95, 0.7 + (procedureScore * 0.1)),
-          reasoning: `Detected procedure request`
+          confidence: Math.min(0.95, 0.7 + procedureScore * 0.1),
+          reasoning: `Detected procedure request`,
         };
       }
-      
+
       return {
         mode: 'question',
         confidence: 0.4,
-        reasoning: 'No clear pattern detected - defaulting to conversational mode'
+        reasoning: 'No clear pattern detected - defaulting to conversational mode',
       };
     }
 
@@ -523,7 +544,7 @@ TONE: Clear, helpful, like explaining to an apprentice over coffee`;
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       const designerOutput = previousAgentOutputs.find((o: any) => o.agent === 'designer');
       const hsOutput = previousAgentOutputs.find((o: any) => o.agent === 'health-safety');
-      
+
       contextSection += '\n\nCIRCUIT TO TEST:\n';
       if (designerOutput?.response?.structuredData) {
         const d = designerOutput.response.structuredData;
@@ -542,23 +563,31 @@ TONE: Clear, helpful, like explaining to an apprentice over coffee`;
     }
     // Limit message history to last 6 messages to prevent token overflow
     if (messages && messages.length > 0) {
-      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.slice(-6).map((m: any) => 
-        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
-      ).join('\n');
-      
+      contextSection +=
+        '\n\nCONVERSATION HISTORY:\n' +
+        messages
+          .slice(-6)
+          .map((m: any) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+          .join('\n');
+
       contextSection += '\n\n⚠️ CRITICAL INSTRUCTION - CONVERSATIONAL MODE:\n';
       contextSection += 'This is an ongoing conversation, NOT a standalone query. You MUST:\n';
-      contextSection += '1. Reference previous messages naturally (e.g., "Right, for that 10kW shower circuit we tested...")\n';
-      contextSection += '2. Build on earlier test results (e.g., "Since we already measured Zs at 1.2Ω...")\n';
-      contextSection += '3. Notice context changes (e.g., "Wait, the circuit type changed - we need different tests...")\n';
-      contextSection += '4. Respond like an experienced testing engineer having a conversation, not filling out a form\n';
-      contextSection += '5. If unsure what the user means, reference what was discussed to clarify\n';
+      contextSection +=
+        '1. Reference previous messages naturally (e.g., "Right, for that 10kW shower circuit we tested...")\n';
+      contextSection +=
+        '2. Build on earlier test results (e.g., "Since we already measured Zs at 1.2Ω...")\n';
+      contextSection +=
+        '3. Notice context changes (e.g., "Wait, the circuit type changed - we need different tests...")\n';
+      contextSection +=
+        '4. Respond like an experienced testing engineer having a conversation, not filling out a form\n';
+      contextSection +=
+        '5. If unsure what the user means, reference what was discussed to clarify\n';
     }
 
     // BRANCH LOGIC: Procedure vs Conversational Mode
     if (classification.mode === 'procedure') {
       logger.info('📋 Generating structured procedure');
-      
+
       // EXISTING PROCEDURE GENERATION CODE CONTINUES BELOW
       const systemPrompt = `You are a GN3 PRACTICAL TESTING GURU - BS 7671:2018+A3:2024 Chapter 64 specialist.
 
@@ -894,7 +923,7 @@ Respond ONLY with valid JSON in this exact format:
   "suggestedNextAgents": []
 }`;
 
-    const userPrompt = `Provide detailed GN3 practical testing guidance for:
+      const userPrompt = `Provide detailed GN3 practical testing guidance for:
 ${query}
 
 ${circuitType ? `Circuit Type: ${circuitType}` : ''}
@@ -902,644 +931,798 @@ ${voltage ? `Voltage: ${voltage}V` : ''}
 
 Include instrument setup, lead placement, step-by-step procedures, expected results, and troubleshooting.`;
 
-    // Step 4: Call Lovable AI with universal wrapper
-    logger.debug('Calling AI with wrapper');
-    const { callAI } = await import('../_shared/ai-wrapper.ts');
-    
-    const aiResult = await callAI(OPENAI_API_KEY!, {
-      model: 'gpt-5-mini-2025-08-07',
-      systemPrompt,
-      userPrompt,
-      maxTokens: 16000,  // Increased for more comprehensive outputs
-      timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
-      tools: [{
-        type: 'function',
-        function: {
-          name: 'provide_testing_guidance',
-          description: 'Return comprehensive GN3 testing procedures with instrument setup',
-          parameters: {
-            type: 'object',
-            properties: {
-              response: {
-                type: 'string',
-                description: 'Natural testing guidance. Reference conversation context. Detailed step-by-step as needed.'
-              },
-              testingProcedure: {
+      // Step 4: Call Lovable AI with universal wrapper
+      logger.debug('Calling AI with wrapper');
+      const { callAI } = await import('../_shared/ai-wrapper.ts');
+
+      const aiResult = await callAI(OPENAI_API_KEY!, {
+        model: 'gpt-5-mini-2025-08-07',
+        systemPrompt,
+        userPrompt,
+        maxTokens: 16000, // Increased for more comprehensive outputs
+        timeoutMs: 280000, // 280 seconds = 4 min 40 sec (max safe timeout)
+        tools: [
+          {
+            type: 'function',
+            function: {
+              name: 'provide_testing_guidance',
+              description: 'Return comprehensive GN3 testing procedures with instrument setup',
+              parameters: {
                 type: 'object',
                 properties: {
-                  visualInspection: {
+                  response: {
+                    type: 'string',
+                    description:
+                      'Natural testing guidance. Reference conversation context. Detailed step-by-step as needed.',
+                  },
+                  testingProcedure: {
                     type: 'object',
                     properties: {
-                      checkpoints: {
+                      visualInspection: {
+                        type: 'object',
+                        properties: {
+                          checkpoints: {
+                            type: 'array',
+                            minItems: 8, // Minimum 8 checkpoints required
+                            items: {
+                              type: 'object',
+                              properties: {
+                                item: { type: 'string', minLength: 10 },
+                                requirement: {
+                                  type: 'string',
+                                  minLength: 30,
+                                  description:
+                                    'Detailed requirement description with BS 7671 context',
+                                },
+                                reference: {
+                                  type: 'string',
+                                  description:
+                                    'BS 7671 regulation reference (e.g., "BS 7671:2018 134.1.1")',
+                                },
+                                passCriteria: {
+                                  type: 'string',
+                                  minLength: 20,
+                                  description: 'Specific pass criteria with measurable outcomes',
+                                },
+                                regulation: {
+                                  type: 'string',
+                                  description: 'Specific regulation number',
+                                },
+                                commonFaults: {
+                                  type: 'array',
+                                  items: { type: 'string', minLength: 30 },
+                                  minItems: 2,
+                                  description:
+                                    'Common faults found during this inspection with real-world examples',
+                                },
+                              },
+                              required: ['item', 'requirement', 'passCriteria'],
+                            },
+                          },
+                          safetyNotes: {
+                            type: 'array',
+                            minItems: 3,
+                            items: { type: 'string', minLength: 30 },
+                            description: 'Critical safety warnings for visual inspection stage',
+                          },
+                        },
+                        required: ['checkpoints', 'safetyNotes'],
+                      },
+                      deadTests: {
                         type: 'array',
-                        minItems: 8,  // Minimum 8 checkpoints required
+                        minItems: 4, // Minimum 4 dead tests required
                         items: {
                           type: 'object',
                           properties: {
-                            item: { type: 'string', minLength: 10 },
-                            requirement: { type: 'string', minLength: 30, description: 'Detailed requirement description with BS 7671 context' },
-                            reference: { type: 'string', description: 'BS 7671 regulation reference (e.g., "BS 7671:2018 134.1.1")' },
-                            passCriteria: { type: 'string', minLength: 20, description: 'Specific pass criteria with measurable outcomes' },
-                            regulation: { type: 'string', description: 'Specific regulation number' },
-                            commonFaults: { 
-                              type: 'array', 
+                            testName: { type: 'string', minLength: 10 },
+                            regulation: { type: 'string', pattern: '^BS 7671.*643\\.[0-9]' },
+                            testSequence: { type: 'number', minimum: 1, maximum: 10 },
+                            instrumentSetup: {
+                              type: 'string',
+                              minLength: 100,
+                              description:
+                                'DETAILED instrument setup: Model, mode setting, button sequence, zeroing procedure, range selection',
+                            },
+                            leadPlacement: {
+                              type: 'string',
+                              minLength: 80,
+                              description:
+                                'EXACT lead positions: Terminal numbers, color coding, CU position, far-end connection method',
+                            },
+                            procedure: {
+                              type: 'array',
                               items: { type: 'string', minLength: 30 },
+                              minItems: 4,
+                              description:
+                                'Step-by-step procedure with timings, hold durations, and reading stabilisation',
+                            },
+                            expectedResult: {
+                              type: 'object',
+                              required: ['calculated', 'measured', 'maximumPermitted', 'result'],
+                              properties: {
+                                calculated: { type: 'string', minLength: 15 },
+                                measured: { type: 'string', minLength: 10 },
+                                maximumPermitted: { type: 'string', minLength: 15 },
+                                result: { type: 'string', enum: ['PASS', 'FAIL', 'INVESTIGATE'] },
+                                marginOfSafety: { type: 'string' },
+                                tolerance: { type: 'string' },
+                              },
+                            },
+                            troubleshooting: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 50 },
+                              minItems: 3,
+                              description:
+                                'Real-world failure scenarios with diagnostic steps and fixes',
+                            },
+                            safetyNotes: {
+                              type: 'array',
+                              items: { type: 'string' },
                               minItems: 2,
-                              description: 'Common faults found during this inspection with real-world examples'
-                            }
+                            },
+                            commonMistakes: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 40 },
+                              minItems: 2,
+                              description: 'Common apprentice errors and how to avoid them',
+                            },
+                            proTips: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 40 },
+                              minItems: 4,
+                              description:
+                                'Trade wisdom including at least one documented incident and one time-saving workflow hack',
+                            },
+                            testDuration: {
+                              type: 'string',
+                              description:
+                                'Typical time to complete this test (e.g., "5-8 minutes")',
+                            },
+                            prerequisiteTests: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              description:
+                                'Tests that MUST be completed before this test (e.g., ["Continuity of protective conductors"] before "Insulation resistance")',
+                            },
+                            conflictingTests: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              description:
+                                'Tests that should NOT be performed immediately before/after this test without intermediate steps',
+                            },
+                            siteRealityFactors: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 40 },
+                              minItems: 2,
+                              description:
+                                'Real-world site conditions affecting this test (physical access constraints, environmental factors, time pressures, site coordination issues)',
+                            },
+                            efficiencyTips: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 50 },
+                              minItems: 2,
+                              description:
+                                'Workflow optimisations from experienced testing practice (test sequencing, photographic documentation, lead management)',
+                            },
+                            temperatureNotes: {
+                              type: 'string',
+                              description:
+                                'How ambient temperature affects readings and any correction factors required (e.g., copper resistance changes 0.4% per °C)',
+                            },
+                            instrumentNotes: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              description:
+                                'Brand-specific operational notes for common UK test instruments (Megger, Fluke, Kewtech, Seaward)',
+                            },
+                            clientExplanation: {
+                              type: 'string',
+                              minLength: 50,
+                              description:
+                                'Plain-English explanation for non-technical clients explaining what is being tested and why',
+                            },
+                            realIncidentExample: {
+                              type: 'string',
+                              minLength: 80,
+                              description:
+                                'Documented real-world incident illustrating key learning point with year, location, symptom, root cause, and resolution',
+                            },
                           },
-                          required: ['item', 'requirement', 'passCriteria']
-                        }
+                          required: [
+                            'testName',
+                            'regulation',
+                            'instrumentSetup',
+                            'leadPlacement',
+                            'procedure',
+                            'expectedResult',
+                            'troubleshooting',
+                            'safetyNotes',
+                            'siteRealityFactors',
+                            'efficiencyTips',
+                            'clientExplanation',
+                          ],
+                        },
                       },
-                      safetyNotes: {
+                      liveTests: {
                         type: 'array',
-                        minItems: 3,
-                        items: { type: 'string', minLength: 30 },
-                        description: 'Critical safety warnings for visual inspection stage'
-                      }
-                    },
-                    required: ['checkpoints', 'safetyNotes']
-                  },
-                  deadTests: {
-                    type: 'array',
-                    minItems: 4,  // Minimum 4 dead tests required
-                    items: {
-                      type: 'object',
-                      properties: {
-                        testName: { type: 'string', minLength: 10 },
-                        regulation: { type: 'string', pattern: '^BS 7671.*643\\.[0-9]' },
-                        testSequence: { type: 'number', minimum: 1, maximum: 10 },
-                        instrumentSetup: { 
-                          type: 'string', 
-                          minLength: 100,
-                          description: 'DETAILED instrument setup: Model, mode setting, button sequence, zeroing procedure, range selection'
-                        },
-                        leadPlacement: { 
-                          type: 'string', 
-                          minLength: 80,
-                          description: 'EXACT lead positions: Terminal numbers, color coding, CU position, far-end connection method'
-                        },
-                        procedure: { 
-                          type: 'array', 
-                          items: { type: 'string', minLength: 30 },
-                          minItems: 4,
-                          description: 'Step-by-step procedure with timings, hold durations, and reading stabilisation'
-                        },
-                        expectedResult: { 
+                        minItems: 3, // Minimum 3 live tests required
+                        items: {
                           type: 'object',
-                          required: ['calculated', 'measured', 'maximumPermitted', 'result'],
                           properties: {
-                            calculated: { type: 'string', minLength: 15 },
-                            measured: { type: 'string', minLength: 10 },
-                            maximumPermitted: { type: 'string', minLength: 15 },
-                            result: { type: 'string', enum: ['PASS', 'FAIL', 'INVESTIGATE'] },
-                            marginOfSafety: { type: 'string' },
-                            tolerance: { type: 'string' }
-                          }
+                            testName: { type: 'string', minLength: 10 },
+                            regulation: { type: 'string', pattern: '^BS 7671.*643\\.[0-9]' },
+                            testSequence: { type: 'number', minimum: 1, maximum: 10 },
+                            prerequisite: { type: 'string' },
+                            instrumentSetup: {
+                              type: 'string',
+                              minLength: 100,
+                              description:
+                                'DETAILED instrument setup: Model, mode setting, button sequence, zeroing procedure, range selection. For RCD tests include no-trip mode settings.',
+                            },
+                            leadPlacement: {
+                              type: 'string',
+                              minLength: 80,
+                              description:
+                                'EXACT lead positions: Terminal numbers, color coding, test point location, probe connection method. For Zs tests specify L-N-E connections.',
+                            },
+                            calculation: {
+                              type: 'object',
+                              required: ['formula', 'components'],
+                              properties: {
+                                formula: {
+                                  type: 'string',
+                                  minLength: 10,
+                                  description: 'Mathematical formula (e.g., "Zs = Ze + (R1 + R2)")',
+                                },
+                                components: {
+                                  type: 'object',
+                                  description: 'Individual component values with sources',
+                                  properties: {
+                                    Ze: {
+                                      type: 'string',
+                                      description:
+                                        'External impedance with source (e.g., "0.35Ω (from TNS supply)")',
+                                    },
+                                    R1: {
+                                      type: 'string',
+                                      description: 'Line conductor resistance',
+                                    },
+                                    R2: { type: 'string', description: 'CPC resistance' },
+                                    R1R2: { type: 'string', description: 'Combined R1+R2 value' },
+                                    cableLength: { type: 'string' },
+                                    cableCsa: { type: 'string' },
+                                  },
+                                },
+                                expectedResult: {
+                                  type: 'string',
+                                  minLength: 10,
+                                  description: 'Calculated result with units (e.g., "0.89Ω")',
+                                },
+                                limitCheck: {
+                                  type: 'string',
+                                  minLength: 20,
+                                  description:
+                                    'Comparison against maximum permitted value from BS 7671 (e.g., "0.89Ω < 1.37Ω (Table 41.3) ✓")',
+                                },
+                              },
+                            },
+                            procedure: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 30 },
+                              minItems: 4,
+                              description:
+                                'Step-by-step procedure with timings, hold durations, and reading stabilisation',
+                            },
+                            expectedResult: {
+                              type: 'object',
+                              required: ['calculated', 'measured', 'maximumPermitted', 'result'],
+                              properties: {
+                                calculated: { type: 'string', minLength: 15 },
+                                measured: { type: 'string', minLength: 10 },
+                                maximumPermitted: { type: 'string', minLength: 15 },
+                                result: { type: 'string', enum: ['PASS', 'FAIL', 'INVESTIGATE'] },
+                                marginOfSafety: { type: 'string' },
+                                tolerance: { type: 'string' },
+                              },
+                            },
+                            troubleshooting: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 50 },
+                              minItems: 3,
+                              description:
+                                'Real-world failure scenarios with diagnostic steps and fixes. For Zs tests include high reading diagnosis, RCD trip issues, and contact problems.',
+                            },
+                            interpretation: { type: 'string' },
+                            safetyNotes: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              minItems: 2,
+                              description:
+                                'Critical safety warnings for live testing, PPE requirements, and competency requirements',
+                            },
+                            commonMistakes: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 40 },
+                              minItems: 2,
+                              description:
+                                'Common apprentice errors specific to live testing (e.g., forgetting no-trip mode, poor probe contact, testing with RCD energised)',
+                            },
+                            proTips: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 40 },
+                              minItems: 4,
+                              description:
+                                'Trade wisdom for live testing including safety reminders and efficiency methods',
+                            },
+                            testDuration: {
+                              type: 'string',
+                              description:
+                                'Typical time to complete this test including energisation and safety setup (e.g., "8-12 minutes")',
+                            },
+                            prerequisiteTests: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              description:
+                                'Tests that MUST be completed before this test (e.g., ["Safe re-energisation", "Polarity verification"] before "Zs testing")',
+                            },
+                            conflictingTests: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              description:
+                                'Tests that should NOT be performed immediately before/after this test without intermediate steps',
+                            },
+                            siteRealityFactors: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 40 },
+                              minItems: 2,
+                              description:
+                                'Real-world site conditions affecting this live test (physical access, environmental factors, voltage stability, client presence during testing)',
+                            },
+                            efficiencyTips: {
+                              type: 'array',
+                              items: { type: 'string', minLength: 50 },
+                              minItems: 2,
+                              description:
+                                'Workflow optimisations for live testing (voltage verification first, multiple test points, RCD functional test button verification)',
+                            },
+                            temperatureNotes: {
+                              type: 'string',
+                              description:
+                                'How ambient temperature affects live test readings (conductor heating under load, ambient correction for Zs)',
+                            },
+                            instrumentNotes: {
+                              type: 'array',
+                              items: { type: 'string' },
+                              description:
+                                'Brand-specific notes for live testing (no-trip mode settings, probe contact requirements, RCD test duration)',
+                            },
+                            clientExplanation: {
+                              type: 'string',
+                              minLength: 50,
+                              description:
+                                'Plain-English explanation for clients about live testing (why circuit must be energised, safety precautions, what to expect)',
+                            },
+                            realIncidentExample: {
+                              type: 'string',
+                              minLength: 80,
+                              description:
+                                'Documented real-world incident from live testing illustrating key safety or diagnostic lesson',
+                            },
+                          },
+                          required: [
+                            'testName',
+                            'regulation',
+                            'instrumentSetup',
+                            'leadPlacement',
+                            'procedure',
+                            'expectedResult',
+                            'troubleshooting',
+                            'safetyNotes',
+                            'siteRealityFactors',
+                            'efficiencyTips',
+                            'clientExplanation',
+                          ],
                         },
-                        troubleshooting: { 
-                          type: 'array', 
-                          items: { type: 'string', minLength: 50 },
-                          minItems: 3,
-                          description: 'Real-world failure scenarios with diagnostic steps and fixes'
-                        },
-                        safetyNotes: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          minItems: 2
-                        },
-                        commonMistakes: {
-                          type: 'array',
-                          items: { type: 'string', minLength: 40 },
-                          minItems: 2,
-                          description: 'Common apprentice errors and how to avoid them'
-                        },
-                        proTips: {
-                          type: 'array',
-                          items: { type: 'string', minLength: 40 },
-                          minItems: 4,
-                          description: 'Trade wisdom including at least one documented incident and one time-saving workflow hack'
-                        },
-                        testDuration: {
-                          type: 'string',
-                          description: 'Typical time to complete this test (e.g., "5-8 minutes")'
-                        },
-                        prerequisiteTests: {
-                          type: 'array',
-                          items: { type: 'string' },
-                          description: 'Tests that MUST be completed before this test (e.g., ["Continuity of protective conductors"] before "Insulation resistance")'
-                        },
-                        conflictingTests: {
-                          type: 'array',
-                          items: { type: 'string' },
-                          description: 'Tests that should NOT be performed immediately before/after this test without intermediate steps'
-                        },
-                        siteRealityFactors: {
-                          type: 'array',
-                          items: { type: 'string', minLength: 40 },
-                          minItems: 2,
-                          description: 'Real-world site conditions affecting this test (physical access constraints, environmental factors, time pressures, site coordination issues)'
-                        },
-                        efficiencyTips: {
-                          type: 'array',
-                          items: { type: 'string', minLength: 50 },
-                          minItems: 2,
-                          description: 'Workflow optimisations from experienced testing practice (test sequencing, photographic documentation, lead management)'
-                        },
-                        temperatureNotes: {
-                          type: 'string',
-                          description: 'How ambient temperature affects readings and any correction factors required (e.g., copper resistance changes 0.4% per °C)'
-                        },
-                        instrumentNotes: {
-                          type: 'array',
-                          items: { type: 'string' },
-                          description: 'Brand-specific operational notes for common UK test instruments (Megger, Fluke, Kewtech, Seaward)'
-                        },
-                        clientExplanation: {
-                          type: 'string',
-                          minLength: 50,
-                          description: 'Plain-English explanation for non-technical clients explaining what is being tested and why'
-                        },
-                        realIncidentExample: {
-                          type: 'string',
-                          minLength: 80,
-                          description: 'Documented real-world incident illustrating key learning point with year, location, symptom, root cause, and resolution'
-                        }
                       },
-                      required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes', 'siteRealityFactors', 'efficiencyTips', 'clientExplanation']
-                    }
+                    },
                   },
-                  liveTests: {
+                  certification: {
+                    type: 'object',
+                    properties: {
+                      certificateType: {
+                        type: 'string',
+                        description: 'Type of certificate (EIC, EICR, Minor Works, etc.)',
+                      },
+                      requiredSchedules: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description:
+                          'Required BS 7671 schedules (e.g., "Schedule of Inspections", "Schedule of Test Results")',
+                      },
+                      requiredData: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            field: {
+                              type: 'string',
+                              description: 'Name of the required data field',
+                            },
+                            regulation: {
+                              type: 'string',
+                              description: 'BS 7671 regulation reference',
+                            },
+                            description: {
+                              type: 'string',
+                              description: 'What needs to be recorded and why',
+                            },
+                          },
+                          required: ['field', 'regulation', 'description'],
+                        },
+                        description:
+                          'Detailed list of data fields required for certification with regulation references',
+                      },
+                      nextInspection: {
+                        type: 'string',
+                        description: 'When the next inspection is due and regulation reference',
+                      },
+                      additionalNotes: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description:
+                          'Important additional certification notes (e.g., client signature requirements)',
+                      },
+                    },
+                    required: ['certificateType', 'requiredSchedules', 'requiredData'],
+                  },
+                  suggestedNextAgents: {
                     type: 'array',
-                    minItems: 3,  // Minimum 3 live tests required
                     items: {
                       type: 'object',
                       properties: {
-                        testName: { type: 'string', minLength: 10 },
-                        regulation: { type: 'string', pattern: '^BS 7671.*643\\.[0-9]' },
-                        testSequence: { type: 'number', minimum: 1, maximum: 10 },
-                        prerequisite: { type: 'string' },
-                        instrumentSetup: { 
-                          type: 'string', 
-                          minLength: 100,
-                          description: 'DETAILED instrument setup: Model, mode setting, button sequence, zeroing procedure, range selection. For RCD tests include no-trip mode settings.'
-                        },
-                        leadPlacement: { 
-                          type: 'string', 
-                          minLength: 80,
-                          description: 'EXACT lead positions: Terminal numbers, color coding, test point location, probe connection method. For Zs tests specify L-N-E connections.'
-                        },
-            calculation: {
-              type: 'object',
-              required: ['formula', 'components'],
-              properties: {
-                formula: { 
-                  type: 'string', 
-                  minLength: 10,
-                  description: 'Mathematical formula (e.g., "Zs = Ze + (R1 + R2)")'
+                        agent: { type: 'string' },
+                        reason: { type: 'string' },
+                        priority: { type: 'string', enum: ['high', 'medium', 'low'] },
+                      },
+                      required: ['agent', 'reason', 'priority'],
+                    },
+                  },
                 },
-                components: {
-                  type: 'object',
-                  description: 'Individual component values with sources',
-                  properties: {
-                    Ze: { type: 'string', description: 'External impedance with source (e.g., "0.35Ω (from TNS supply)")' },
-                    R1: { type: 'string', description: 'Line conductor resistance' },
-                    R2: { type: 'string', description: 'CPC resistance' },
-                    R1R2: { type: 'string', description: 'Combined R1+R2 value' },
-                    cableLength: { type: 'string' },
-                    cableCsa: { type: 'string' }
-                  }
-                },
-                expectedResult: { 
-                  type: 'string',
-                  minLength: 10,
-                  description: 'Calculated result with units (e.g., "0.89Ω")'
-                },
-                limitCheck: {
-                  type: 'string',
-                  minLength: 20,
-                  description: 'Comparison against maximum permitted value from BS 7671 (e.g., "0.89Ω < 1.37Ω (Table 41.3) ✓")'
-                }
-              }
+                required: ['response'],
+                additionalProperties: false,
+              },
             },
-                        procedure: { 
-                          type: 'array', 
-                          items: { type: 'string', minLength: 30 },
-                          minItems: 4,
-                          description: 'Step-by-step procedure with timings, hold durations, and reading stabilisation'
-                        },
-                        expectedResult: { 
-                          type: 'object',
-                          required: ['calculated', 'measured', 'maximumPermitted', 'result'],
-                          properties: {
-                            calculated: { type: 'string', minLength: 15 },
-                            measured: { type: 'string', minLength: 10 },
-                            maximumPermitted: { type: 'string', minLength: 15 },
-                            result: { type: 'string', enum: ['PASS', 'FAIL', 'INVESTIGATE'] },
-                            marginOfSafety: { type: 'string' },
-                            tolerance: { type: 'string' }
-                          }
-                        },
-                        troubleshooting: { 
-                          type: 'array', 
-                          items: { type: 'string', minLength: 50 },
-                          minItems: 3,
-                          description: 'Real-world failure scenarios with diagnostic steps and fixes. For Zs tests include high reading diagnosis, RCD trip issues, and contact problems.'
-                        },
-                        interpretation: { type: 'string' },
-                        safetyNotes: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          minItems: 2,
-                          description: 'Critical safety warnings for live testing, PPE requirements, and competency requirements'
-                        },
-                        commonMistakes: {
-                          type: 'array',
-                          items: { type: 'string', minLength: 40 },
-                          minItems: 2,
-                          description: 'Common apprentice errors specific to live testing (e.g., forgetting no-trip mode, poor probe contact, testing with RCD energised)'
-                        },
-                        proTips: {
-                          type: 'array',
-                          items: { type: 'string', minLength: 40 },
-                          minItems: 4,
-                          description: 'Trade wisdom for live testing including safety reminders and efficiency methods'
-                        },
-            testDuration: {
-              type: 'string',
-              description: 'Typical time to complete this test including energisation and safety setup (e.g., "8-12 minutes")'
-            },
-            prerequisiteTests: {
-              type: 'array',
-              items: { type: 'string' },
-              description: 'Tests that MUST be completed before this test (e.g., ["Safe re-energisation", "Polarity verification"] before "Zs testing")'
-            },
-            conflictingTests: {
-              type: 'array',
-              items: { type: 'string' },
-              description: 'Tests that should NOT be performed immediately before/after this test without intermediate steps'
-            },
-            siteRealityFactors: {
-              type: 'array',
-              items: { type: 'string', minLength: 40 },
-              minItems: 2,
-              description: 'Real-world site conditions affecting this live test (physical access, environmental factors, voltage stability, client presence during testing)'
-            },
-            efficiencyTips: {
-              type: 'array',
-              items: { type: 'string', minLength: 50 },
-              minItems: 2,
-              description: 'Workflow optimisations for live testing (voltage verification first, multiple test points, RCD functional test button verification)'
-            },
-            temperatureNotes: {
-              type: 'string',
-              description: 'How ambient temperature affects live test readings (conductor heating under load, ambient correction for Zs)'
-            },
-            instrumentNotes: {
-              type: 'array',
-              items: { type: 'string' },
-              description: 'Brand-specific notes for live testing (no-trip mode settings, probe contact requirements, RCD test duration)'
-            },
-            clientExplanation: {
-              type: 'string',
-              minLength: 50,
-              description: 'Plain-English explanation for clients about live testing (why circuit must be energised, safety precautions, what to expect)'
-            },
-            realIncidentExample: {
-              type: 'string',
-              minLength: 80,
-              description: 'Documented real-world incident from live testing illustrating key safety or diagnostic lesson'
-            }
           },
-          required: ['testName', 'regulation', 'instrumentSetup', 'leadPlacement', 'procedure', 'expectedResult', 'troubleshooting', 'safetyNotes', 'siteRealityFactors', 'efficiencyTips', 'clientExplanation']
-        }
-      }
-                }
-              },
-              certification: {
-                type: 'object',
-                properties: {
-                  certificateType: { type: 'string', description: 'Type of certificate (EIC, EICR, Minor Works, etc.)' },
-                  requiredSchedules: { 
-                    type: 'array', 
-                    items: { type: 'string' },
-                    description: 'Required BS 7671 schedules (e.g., "Schedule of Inspections", "Schedule of Test Results")'
-                  },
-                  requiredData: { 
-                    type: 'array', 
-                    items: {
-                      type: 'object',
-                      properties: {
-                        field: { type: 'string', description: 'Name of the required data field' },
-                        regulation: { type: 'string', description: 'BS 7671 regulation reference' },
-                        description: { type: 'string', description: 'What needs to be recorded and why' }
-                      },
-                      required: ['field', 'regulation', 'description']
-                    },
-                    description: 'Detailed list of data fields required for certification with regulation references'
-                  },
-                  nextInspection: { type: 'string', description: 'When the next inspection is due and regulation reference' },
-                  additionalNotes: {
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'Important additional certification notes (e.g., client signature requirements)'
-                  }
-                },
-                required: ['certificateType', 'requiredSchedules', 'requiredData']
-              },
-              suggestedNextAgents: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    agent: { type: 'string' },
-                    reason: { type: 'string' },
-                    priority: { type: 'string', enum: ['high', 'medium', 'low'] }
-                  },
-                  required: ['agent', 'reason', 'priority']
-                }
-              }
-            },
-            required: ['response'],
-            additionalProperties: false
-          }
-        }
-      }],
-      toolChoice: { type: 'function', function: { name: 'provide_testing_guidance' } }
-    });
-
-    // Handle AI wrapper response - it extracts tool call arguments directly
-    const commResult = JSON.parse(aiResult.content);
-
-    // IMPROVEMENT: Response Quality Validation
-    const { validateResponse } = await import('../_shared/response-validation.ts');
-    const validation = validateResponse(
-      commResult.response,
-      effectiveQuery,
-      { regulations: ragResults?.regulations || [], circuitType }
-    );
-
-    if (!validation.isValid) {
-      logger.warn('⚠️ Testing response validation issues', {
-        issues: validation.issues.length
+        ],
+        toolChoice: { type: 'function', function: { name: 'provide_testing_guidance' } },
       });
-    }
 
-    logger.info('Testing guidance completed', { 
-      deadTests: commResult.testingProcedure?.deadTests?.length,
-      liveTests: commResult.testingProcedure?.liveTests?.length,
-      validationConfidence: validation.confidence
-    });
+      // Handle AI wrapper response - it extracts tool call arguments directly
+      const commResult = JSON.parse(aiResult.content);
 
-    // Step 5: Enrich response with UI metadata
-    const enrichedResponse = enrichResponse(
-      commResult,
-      ragResults?.regulations || [],
-      'commissioning',
-      { circuitType, testType: query }
-    );
+      // IMPROVEMENT: Response Quality Validation
+      const { validateResponse } = await import('../_shared/response-validation.ts');
+      const validation = validateResponse(commResult.response, effectiveQuery, {
+        regulations: ragResults?.regulations || [],
+        circuitType,
+      });
 
-    // Return enriched response
-    const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
-    
-    // Log RAG metrics for observability
-    const totalTime = Date.now() - ragStart;
-    const { error: metricsError } = await supabase.from('agent_metrics').insert({
-      function_name: 'commissioning-v3',
-      request_id: requestId,
-      rag_time: ragStart ? Date.now() - ragStart : null,
-      total_time: totalTime,
-      regulation_count: ragResults?.regulations?.length || 0,
-      success: true,
-      query_type: circuitType || 'general'
-    });
-    if (metricsError) {
-      logger.warn('Failed to log metrics', { error: metricsError.message });
-    }
-
-    return new Response(
-      JSON.stringify({
-        success: true,
-        mode: 'procedure',
-        response: enrichedResponse.response,
-        enrichment: enrichedResponse.enrichment,
-        citations: enrichedResponse.citations,
-        rendering: enrichedResponse.rendering,
-        structuredData: { testingProcedure, certification },
-        suggestedNextAgents: suggestNextAgents(
-          'commissioning',
-          query,
-          enrichedResponse.response,
-          (previousAgentOutputs || []).map((o: any) => o.agent)
-        ).map((s: any) => ({
-          ...s,
-          contextHint: generateContextHint(s.agent, 'commissioning', { testingProcedure, certification })
-        })),
-        metadata: {
-          contextSources,
-          receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
-          ragTimeMs: ragStart ? Date.now() - ragStart : null,
-          totalTimeMs: totalTime,
-          classification,
-          ragQualityMetrics: {
-            gn3ProceduresFound,
-            regulationsFound,
-            totalSources: gn3ProceduresFound + regulationsFound
-          }
-        }
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
+      if (!validation.isValid) {
+        logger.warn('⚠️ Testing response validation issues', {
+          issues: validation.issues.length,
+        });
       }
-    );
 
-  } else {
-    // CONVERSATIONAL MODE - Troubleshooting or Question
-    logger.info('💬 Generating conversational response', { mode: classification.mode });
-    
-    const conversationalPrompt = buildConversationalPrompt(
-      classification.mode,
-      testContext,
-      contextSection
-    );
-    
-    // Use EICR Photo Analysis for photo uploads, otherwise use structured fault diagnosis
-    const useEICRPhotoAnalysis = !!imageUrl;
-    const useStructuredDiagnosis = !imageUrl && classification.mode === 'fault-diagnosis';
-    
-    if (useEICRPhotoAnalysis) {
-      logger.info('📸 Using EICR Photo Analysis tool for image');
-      
-      const eicrPhotoAnalysisTool = {
-        type: 'function' as const,
-        function: {
-          name: 'provide_eicr_photo_analysis',
-          description: 'Analyse electrical installation photo and provide EICR defect coding with BS 7671 compliance assessment',
-          parameters: {
-            type: 'object',
-            properties: {
-              defects: {
-                type: 'array',
-                minItems: 1,
-                description: 'Array of ALL defects identified in the photo. Return multiple items if multiple issues are visible. Each defect must be a separate item.',
-                items: {
-                  type: 'object',
-                  required: ['classification', 'classificationReasoning', 'defectSummary', 'hazardExplanation', 'bs7671Regulations', 'confidenceAssessment'],
-                  properties: {
-                    classification: {
-                      type: 'string',
-                      enum: ['C1', 'C2', 'C3', 'FI', 'NONE'],
-                      description: 'EICR classification code for THIS specific defect. Use NONE only if the entire installation is compliant.'
-                    },
-                    classificationReasoning: {
-                      type: 'string',
-                      description: 'Detailed reasoning for THIS defect classification with specific BS 7671 regulation references'
-                    },
-                    classificationReasoningBullets: {
-                      type: 'array',
-                      items: { type: 'string' },
-                      description: 'Bullet points explaining WHY this classification for THIS defect'
-                    },
-                    defectSummary: {
-                      type: 'string',
-                      description: 'Clear description of THIS specific defect (or compliant installation if NONE)'
-                    },
-                    hazardExplanation: {
-                      type: 'string',
-                      description: 'Why THIS defect is dangerous/concerning (or why it is safe if NONE). Include specific risks.'
-                    },
-                    bs7671Regulations: {
-                      type: 'array',
-                      items: {
+      logger.info('Testing guidance completed', {
+        deadTests: commResult.testingProcedure?.deadTests?.length,
+        liveTests: commResult.testingProcedure?.liveTests?.length,
+        validationConfidence: validation.confidence,
+      });
+
+      // Step 5: Enrich response with UI metadata
+      const enrichedResponse = enrichResponse(
+        commResult,
+        ragResults?.regulations || [],
+        'commissioning',
+        { circuitType, testType: query }
+      );
+
+      // Return enriched response
+      const { response, suggestedNextAgents, testingProcedure, certification } = commResult;
+
+      // Log RAG metrics for observability
+      const totalTime = Date.now() - ragStart;
+      const { error: metricsError } = await supabase.from('agent_metrics').insert({
+        function_name: 'commissioning-v3',
+        request_id: requestId,
+        rag_time: ragStart ? Date.now() - ragStart : null,
+        total_time: totalTime,
+        regulation_count: ragResults?.regulations?.length || 0,
+        success: true,
+        query_type: circuitType || 'general',
+      });
+      if (metricsError) {
+        logger.warn('Failed to log metrics', { error: metricsError.message });
+      }
+
+      return new Response(
+        JSON.stringify({
+          success: true,
+          mode: 'procedure',
+          response: enrichedResponse.response,
+          enrichment: enrichedResponse.enrichment,
+          citations: enrichedResponse.citations,
+          rendering: enrichedResponse.rendering,
+          structuredData: { testingProcedure, certification },
+          suggestedNextAgents: suggestNextAgents(
+            'commissioning',
+            query,
+            enrichedResponse.response,
+            (previousAgentOutputs || []).map((o: any) => o.agent)
+          ).map((s: any) => ({
+            ...s,
+            contextHint: generateContextHint(s.agent, 'commissioning', {
+              testingProcedure,
+              certification,
+            }),
+          })),
+          metadata: {
+            contextSources,
+            receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
+            ragTimeMs: ragStart ? Date.now() - ragStart : null,
+            totalTimeMs: totalTime,
+            classification,
+            ragQualityMetrics: {
+              gn3ProceduresFound,
+              regulationsFound,
+              totalSources: gn3ProceduresFound + regulationsFound,
+            },
+          },
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
+    } else {
+      // CONVERSATIONAL MODE - Troubleshooting or Question
+      logger.info('💬 Generating conversational response', { mode: classification.mode });
+
+      const conversationalPrompt = buildConversationalPrompt(
+        classification.mode,
+        testContext,
+        contextSection
+      );
+
+      // Use EICR Photo Analysis for photo uploads, otherwise use structured fault diagnosis
+      const useEICRPhotoAnalysis = !!imageUrl;
+      const useStructuredDiagnosis = !imageUrl && classification.mode === 'fault-diagnosis';
+
+      if (useEICRPhotoAnalysis) {
+        logger.info('📸 Using EICR Photo Analysis tool for image');
+
+        const eicrPhotoAnalysisTool = {
+          type: 'function' as const,
+          function: {
+            name: 'provide_eicr_photo_analysis',
+            description:
+              'Analyse electrical installation photo and provide EICR defect coding with BS 7671 compliance assessment',
+            parameters: {
+              type: 'object',
+              properties: {
+                defects: {
+                  type: 'array',
+                  minItems: 1,
+                  description:
+                    'Array of ALL defects identified in the photo. Return multiple items if multiple issues are visible. Each defect must be a separate item.',
+                  items: {
+                    type: 'object',
+                    required: [
+                      'classification',
+                      'classificationReasoning',
+                      'defectSummary',
+                      'hazardExplanation',
+                      'bs7671Regulations',
+                      'confidenceAssessment',
+                    ],
+                    properties: {
+                      classification: {
+                        type: 'string',
+                        enum: ['C1', 'C2', 'C3', 'FI', 'NONE'],
+                        description:
+                          'EICR classification code for THIS specific defect. Use NONE only if the entire installation is compliant.',
+                      },
+                      classificationReasoning: {
+                        type: 'string',
+                        description:
+                          'Detailed reasoning for THIS defect classification with specific BS 7671 regulation references',
+                      },
+                      classificationReasoningBullets: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description:
+                          'Bullet points explaining WHY this classification for THIS defect',
+                      },
+                      defectSummary: {
+                        type: 'string',
+                        description:
+                          'Clear description of THIS specific defect (or compliant installation if NONE)',
+                      },
+                      hazardExplanation: {
+                        type: 'string',
+                        description:
+                          'Why THIS defect is dangerous/concerning (or why it is safe if NONE). Include specific risks.',
+                      },
+                      bs7671Regulations: {
+                        type: 'array',
+                        items: {
+                          type: 'object',
+                          properties: {
+                            regulation: {
+                              type: 'string',
+                              description: 'Regulation number (e.g., "411.3.3")',
+                            },
+                            description: {
+                              type: 'string',
+                              description: 'What this regulation requires',
+                            },
+                          },
+                          required: ['regulation', 'description'],
+                        },
+                        description: 'Array of relevant BS 7671 regulations for THIS defect',
+                      },
+                      gn3Guidance: {
                         type: 'object',
                         properties: {
-                          regulation: { type: 'string', description: 'Regulation number (e.g., "411.3.3")' },
-                          description: { type: 'string', description: 'What this regulation requires' }
+                          section: { type: 'string', description: 'GN3 section reference' },
+                          content: { type: 'string', description: 'Guidance Notes content' },
                         },
-                        required: ['regulation', 'description']
                       },
-                      description: 'Array of relevant BS 7671 regulations for THIS defect'
-                    },
-                    gn3Guidance: {
-                      type: 'object',
-                      properties: {
-                        section: { type: 'string', description: 'GN3 section reference' },
-                        content: { type: 'string', description: 'Guidance Notes content' }
-                      }
-                    },
-                    makingSafe: {
-                      type: 'object',
-                      properties: {
-                        immediateSteps: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          description: 'IMMEDIATE steps to make safe THIS defect (isolation, barriers, signage) - DISTINCT from fixing'
+                      makingSafe: {
+                        type: 'object',
+                        properties: {
+                          immediateSteps: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            description:
+                              'IMMEDIATE steps to make safe THIS defect (isolation, barriers, signage) - DISTINCT from fixing',
+                          },
+                          isolationRequired: { type: 'boolean' },
+                          signageRequired: {
+                            type: 'string',
+                            description: 'What warning signs to install',
+                          },
                         },
-                        isolationRequired: { type: 'boolean' },
-                        signageRequired: { type: 'string', description: 'What warning signs to install' }
+                        description:
+                          'Immediate safety measures for THIS defect - NOT the permanent fix',
                       },
-                      description: 'Immediate safety measures for THIS defect - NOT the permanent fix'
-                    },
-                    clientCommunication: {
-                      type: 'object',
-                      properties: {
-                        plainLanguage: { type: 'string', description: 'What to tell the owner/client about THIS defect in plain English' },
-                        severityExplanation: { type: 'string', description: 'How dangerous THIS defect is in everyday terms' },
-                        risksIfUnfixed: { type: 'array', items: { type: 'string' } },
-                        urgencyLevel: { type: 'string', enum: ['IMMEDIATE', 'WITHIN_48HRS', 'WITHIN_WEEK', 'PLANNED'] },
-                        estimatedCost: { type: 'string', description: 'Estimated cost bracket for THIS defect (e.g., "£150-£300")' }
-                      }
-                    },
-                    rectification: {
-                      type: 'object',
-                      properties: {
-                        steps: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          minItems: 3,
-                          description: 'HIGHLY TECHNICAL step-by-step rectification for THIS defect with specific cable sizes (e.g., "2.5mm² T&E"), BS 7671 regulation numbers, testing values (e.g., "IR ≥1.0MΩ @500V DC"), and manufacturer references'
+                      clientCommunication: {
+                        type: 'object',
+                        properties: {
+                          plainLanguage: {
+                            type: 'string',
+                            description:
+                              'What to tell the owner/client about THIS defect in plain English',
+                          },
+                          severityExplanation: {
+                            type: 'string',
+                            description: 'How dangerous THIS defect is in everyday terms',
+                          },
+                          risksIfUnfixed: { type: 'array', items: { type: 'string' } },
+                          urgencyLevel: {
+                            type: 'string',
+                            enum: ['IMMEDIATE', 'WITHIN_48HRS', 'WITHIN_WEEK', 'PLANNED'],
+                          },
+                          estimatedCost: {
+                            type: 'string',
+                            description:
+                              'Estimated cost bracket for THIS defect (e.g., "£150-£300")',
+                          },
                         },
-                        requiredMaterials: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          description: 'List of materials needed to fix THIS defect'
-                        },
-                        estimatedTime: { type: 'string', description: 'Time to complete THIS fix (e.g., "2-3 hours")' }
-                      }
-                    },
-                    verificationProcedure: {
-                      type: 'object',
-                      properties: {
-                        tests: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          minItems: 2,
-                          description: 'Tests required to verify THIS fix (e.g., "Insulation resistance test", "RCD trip time test")'
-                        },
-                        acceptanceCriteria: { 
-                          type: 'array', 
-                          items: { type: 'string' },
-                          minItems: 2,
-                          description: 'What constitutes a successful fix for THIS defect (e.g., "IR reading ≥1MΩ", "RCD trips in <300ms at 1×IΔn")'
-                        }
-                      }
-                    },
-                    confidenceAssessment: {
-                      type: 'object',
-                      properties: {
-                        level: { type: 'string', enum: ['high', 'medium', 'low'] },
-                        score: { type: 'number', minimum: 0, maximum: 100 },
-                        reasoning: { type: 'string', description: 'Why this confidence level for THIS defect (photo quality, visibility, clarity)' }
                       },
-                      required: ['level', 'score', 'reasoning']
-                    },
-                    contextFactors: {
-                      type: 'object',
-                      properties: {
-                        bathroomZone: { type: 'string', description: 'Zone 0, 1, 2, or Outside zones' },
-                        outdoorLocation: { type: 'boolean' },
-                        rcdPresent: { type: 'boolean' },
-                        conductorSize: { type: 'string' },
-                        enclosureRating: { type: 'string', description: 'IP rating if visible' },
-                        supplementaryBonding: { type: 'boolean' }
+                      rectification: {
+                        type: 'object',
+                        properties: {
+                          steps: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            minItems: 3,
+                            description:
+                              'HIGHLY TECHNICAL step-by-step rectification for THIS defect with specific cable sizes (e.g., "2.5mm² T&E"), BS 7671 regulation numbers, testing values (e.g., "IR ≥1.0MΩ @500V DC"), and manufacturer references',
+                          },
+                          requiredMaterials: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            description: 'List of materials needed to fix THIS defect',
+                          },
+                          estimatedTime: {
+                            type: 'string',
+                            description: 'Time to complete THIS fix (e.g., "2-3 hours")',
+                          },
+                        },
                       },
-                      description: 'Installation context visible in photo for THIS defect'
+                      verificationProcedure: {
+                        type: 'object',
+                        properties: {
+                          tests: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            minItems: 2,
+                            description:
+                              'Tests required to verify THIS fix (e.g., "Insulation resistance test", "RCD trip time test")',
+                          },
+                          acceptanceCriteria: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            minItems: 2,
+                            description:
+                              'What constitutes a successful fix for THIS defect (e.g., "IR reading ≥1MΩ", "RCD trips in <300ms at 1×IΔn")',
+                          },
+                        },
+                      },
+                      confidenceAssessment: {
+                        type: 'object',
+                        properties: {
+                          level: { type: 'string', enum: ['high', 'medium', 'low'] },
+                          score: { type: 'number', minimum: 0, maximum: 100 },
+                          reasoning: {
+                            type: 'string',
+                            description:
+                              'Why this confidence level for THIS defect (photo quality, visibility, clarity)',
+                          },
+                        },
+                        required: ['level', 'score', 'reasoning'],
+                      },
+                      contextFactors: {
+                        type: 'object',
+                        properties: {
+                          bathroomZone: {
+                            type: 'string',
+                            description: 'Zone 0, 1, 2, or Outside zones',
+                          },
+                          outdoorLocation: { type: 'boolean' },
+                          rcdPresent: { type: 'boolean' },
+                          conductorSize: { type: 'string' },
+                          enclosureRating: { type: 'string', description: 'IP rating if visible' },
+                          supplementaryBonding: { type: 'boolean' },
+                        },
+                        description: 'Installation context visible in photo for THIS defect',
+                      },
+                      compliantSummary: {
+                        type: 'string',
+                        description:
+                          'ONLY for NONE classification: What the photo shows is compliant (e.g., "Socket outlet correctly installed outside bathroom zones with RCD protection")',
+                      },
+                      goodPracticeNotes: {
+                        type: 'array',
+                        items: { type: 'string' },
+                        description:
+                          'ONLY for NONE classification: Positive observations (e.g., "Good cable management", "Clear labelling", "Tidy terminations")',
+                      },
+                      noActionRequired: {
+                        type: 'boolean',
+                        description: 'Set to true for NONE classification',
+                      },
                     },
-                    compliantSummary: {
-                      type: 'string',
-                      description: 'ONLY for NONE classification: What the photo shows is compliant (e.g., "Socket outlet correctly installed outside bathroom zones with RCD protection")'
-                    },
-                    goodPracticeNotes: {
-                      type: 'array',
-                      items: { type: 'string' },
-                      description: 'ONLY for NONE classification: Positive observations (e.g., "Good cable management", "Clear labelling", "Tidy terminations")'
-                    },
-                    noActionRequired: {
-                      type: 'boolean',
-                      description: 'Set to true for NONE classification'
-                    }
-                  }
-                }
+                  },
+                },
+                overallSummary: {
+                  type: 'string',
+                  description: 'Overall summary of all findings in the photo',
+                },
+                installationCompliant: {
+                  type: 'boolean',
+                  description:
+                    'true if NO defects found (only NONE classifications), false if any defects present',
+                },
               },
-              overallSummary: {
-                type: 'string',
-                description: 'Overall summary of all findings in the photo'
-              },
-              installationCompliant: {
-                type: 'boolean',
-                description: 'true if NO defects found (only NONE classifications), false if any defects present'
-              }
+              required: ['defects', 'overallSummary', 'installationCompliant'],
+              additionalProperties: false,
             },
-            required: ['defects', 'overallSummary', 'installationCompliant'
-            ],
-            additionalProperties: false
-          }
-        }
-      };
-      
-      
-      const photoAnalysisPrompt = `You are a BS 7671:2018+A3:2024 certified EICR Inspector with 30 years experience.
+          },
+        };
+
+        const photoAnalysisPrompt = `You are a BS 7671:2018+A3:2024 certified EICR Inspector with 30 years experience.
 
 Write all responses in UK English (British spelling and terminology).
 
@@ -1742,14 +1925,14 @@ FOR NONE CLASSIFICATION (compliant installation):
 
 **CRITICAL: If you omit ANY required field above, the output will be REJECTED. Complete ALL fields.**`;
 
-      const photoMessages: any[] = [
-        { role: 'system', content: photoAnalysisPrompt },
-        {
-          role: 'user',
-          content: [
-            {
-              type: "text",
-              text: `Analyse this electrical installation photo and identify ALL visible defects:
+        const photoMessages: any[] = [
+          { role: 'system', content: photoAnalysisPrompt },
+          {
+            role: 'user',
+            content: [
+              {
+                type: 'text',
+                text: `Analyse this electrical installation photo and identify ALL visible defects:
 
 ${effectiveQuery}
 
@@ -1772,155 +1955,615 @@ Common defects to look for (check ALL of these):
 
 **CRITICAL:** Scan systematically from top to bottom, left to right. Do not stop after finding the first defect. Each distinct issue must be reported separately in the defects array.
 
-Determine the appropriate classification (C1/C2/C3/FI/NONE) for EACH defect and provide comprehensive details for each one.`
-            },
-            {
-              type: "image_url",
-              image_url: { url: imageUrl }
-            }
-          ]
-        }
-      ];
-
-      // Call Gemini Flash 2.5 for photo analysis (better at vision than GPT-4o-mini)
-      logger.info('🔮 Calling Gemini Flash 2.5 for photo analysis...');
-      const geminiResponse = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': GEMINI_API_KEY!
-        },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: `${photoAnalysisPrompt}\n\nAnalyse this electrical installation photo and provide EICR defect coding:\n\n${effectiveQuery}\n\nDetermine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehensive details.` },
+Determine the appropriate classification (C1/C2/C3/FI/NONE) for EACH defect and provide comprehensive details for each one.`,
+              },
               {
-                inline_data: {
-                  mime_type: imageUrl.startsWith('data:') 
-                    ? imageUrl.split(',')[0].split(':')[1].split(';')[0]
-                    : 'image/jpeg',
-                  data: imageUrl.startsWith('data:') 
-                    ? imageUrl.split(',')[1] 
-                    : arrayBufferToBase64(await (await fetch(imageUrl)).arrayBuffer())
-                }
-              }
-            ]
-          }],
-          generationConfig: {
-            temperature: 0.2,
-            topK: 40,
-            topP: 0.95,
-            maxOutputTokens: 4096,
+                type: 'image_url',
+                image_url: { url: imageUrl },
+              },
+            ],
+          },
+        ];
+
+        // Call Gemini Flash 2.5 for photo analysis (better at vision than GPT-4o-mini)
+        logger.info('🔮 Calling Gemini Flash 2.5 for photo analysis...');
+        const geminiResponse = await fetch(
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': GEMINI_API_KEY!,
+            },
+            body: JSON.stringify({
+              contents: [
+                {
+                  parts: [
+                    {
+                      text: `${photoAnalysisPrompt}\n\nAnalyse this electrical installation photo and provide EICR defect coding:\n\n${effectiveQuery}\n\nDetermine the appropriate classification (C1/C2/C3/FI/NONE) and provide comprehensive details.`,
+                    },
+                    {
+                      inline_data: {
+                        mime_type: imageUrl.startsWith('data:')
+                          ? imageUrl.split(',')[0].split(':')[1].split(';')[0]
+                          : 'image/jpeg',
+                        data: imageUrl.startsWith('data:')
+                          ? imageUrl.split(',')[1]
+                          : arrayBufferToBase64(await (await fetch(imageUrl)).arrayBuffer()),
+                      },
+                    },
+                  ],
+                },
+              ],
+              generationConfig: {
+                temperature: 0.2,
+                topK: 40,
+                topP: 0.95,
+                maxOutputTokens: 4096,
+              },
+            }),
           }
-        })
-      });
+        );
 
-      if (!geminiResponse.ok) {
-        const errorText = await geminiResponse.text();
-        logger.error('❌ Gemini API error:', errorText);
-        throw new Error(`Gemini API error: ${geminiResponse.status} - ${errorText}`);
-      }
+        if (!geminiResponse.ok) {
+          const errorText = await geminiResponse.text();
+          logger.error('❌ Gemini API error:', errorText);
+          throw new Error(`Gemini API error: ${geminiResponse.status} - ${errorText}`);
+        }
 
-      const geminiData = await geminiResponse.json();
-      const geminiText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
-      
-      if (!geminiText) {
-        throw new Error('No response from Gemini API');
-      }
+        const geminiData = await geminiResponse.json();
+        const geminiText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text;
 
-      logger.info('✅ Gemini analysis complete, parsing response...');
+        if (!geminiText) {
+          throw new Error('No response from Gemini API');
+        }
 
-      // Extract JSON from Gemini response (may be wrapped in markdown code blocks)
-      let eicrData;
-      try {
-        const jsonMatch = geminiText.match(/```json\n([\s\S]*?)\n```/) || geminiText.match(/\{[\s\S]*\}/);
-        const jsonText = jsonMatch ? (jsonMatch[1] || jsonMatch[0]) : geminiText;
-        eicrData = JSON.parse(jsonText);
-      } catch (parseError) {
-        logger.error('❌ Failed to parse Gemini response:', geminiText.substring(0, 500));
-        throw new Error('Failed to parse Gemini response as JSON');
-      }
+        logger.info('✅ Gemini analysis complete, parsing response...');
 
-      // Validate completeness for MULTI-DEFECT schema
-      const validationErrors: string[] = [];
+        // Extract JSON from Gemini response (may be wrapped in markdown code blocks)
+        let eicrData;
+        try {
+          const jsonMatch =
+            geminiText.match(/```json\n([\s\S]*?)\n```/) || geminiText.match(/\{[\s\S]*\}/);
+          const jsonText = jsonMatch ? jsonMatch[1] || jsonMatch[0] : geminiText;
+          eicrData = JSON.parse(jsonText);
+        } catch (parseError) {
+          logger.error('❌ Failed to parse Gemini response:', geminiText.substring(0, 500));
+          throw new Error('Failed to parse Gemini response as JSON');
+        }
 
-      // Top-level validation
-      if (!eicrData.defects || !Array.isArray(eicrData.defects) || eicrData.defects.length === 0) {
-        validationErrors.push('Missing or empty defects array');
-      }
+        // Validate completeness for MULTI-DEFECT schema
+        const validationErrors: string[] = [];
 
-      if (typeof eicrData.installationCompliant !== 'boolean') {
-        validationErrors.push('Missing installationCompliant boolean');
-      }
+        // Top-level validation
+        if (
+          !eicrData.defects ||
+          !Array.isArray(eicrData.defects) ||
+          eicrData.defects.length === 0
+        ) {
+          validationErrors.push('Missing or empty defects array');
+        }
 
-      if (!eicrData.overallSummary) {
-        validationErrors.push('Missing overallSummary');
-      }
+        if (typeof eicrData.installationCompliant !== 'boolean') {
+          validationErrors.push('Missing installationCompliant boolean');
+        }
 
-      // Validate each defect in the array
-      if (eicrData.defects && Array.isArray(eicrData.defects)) {
-        eicrData.defects.forEach((defect: any, index: number) => {
-          const prefix = `Defect[${index}]`;
-          
-          if (!defect.classification) {
-            validationErrors.push(`${prefix}: Missing classification`);
-          }
-          
-          if (!defect.defectSummary && !defect.compliantSummary) {
-            validationErrors.push(`${prefix}: Missing defectSummary or compliantSummary`);
-          }
-          
-          if (!defect.hazardExplanation) {
-            validationErrors.push(`${prefix}: Missing hazardExplanation`);
-          }
-          
-          if (!defect.bs7671Regulations || !Array.isArray(defect.bs7671Regulations) || defect.bs7671Regulations.length < 1) {
-            validationErrors.push(`${prefix}: Missing or insufficient bs7671Regulations`);
-          }
-          
-          if (!defect.confidenceAssessment) {
-            validationErrors.push(`${prefix}: Missing confidenceAssessment`);
-          }
-          
-          // Additional validation for actual defects (not NONE)
-          if (defect.classification && defect.classification !== 'NONE') {
-            if (!defect.makingSafe) validationErrors.push(`${prefix}: Missing makingSafe (required for defects)`);
-            if (!defect.clientCommunication) validationErrors.push(`${prefix}: Missing clientCommunication (required for defects)`);
-            if (!defect.rectification) validationErrors.push(`${prefix}: Missing rectification (required for defects)`);
-            if (!defect.verificationProcedure) validationErrors.push(`${prefix}: Missing verificationProcedure (required for defects)`);
-          }
-          
-          // Validation for NONE classification
-          if (defect.classification === 'NONE') {
-            if (!defect.compliantSummary) validationErrors.push(`${prefix}: Missing compliantSummary (required for NONE)`);
-          }
-        });
-      }
+        if (!eicrData.overallSummary) {
+          validationErrors.push('Missing overallSummary');
+        }
 
-      if (validationErrors.length > 0) {
-        logger.error('❌ Validation errors:', validationErrors);
-        logger.error('Received data structure:', JSON.stringify({
-          hasDefects: !!eicrData.defects,
+        // Validate each defect in the array
+        if (eicrData.defects && Array.isArray(eicrData.defects)) {
+          eicrData.defects.forEach((defect: any, index: number) => {
+            const prefix = `Defect[${index}]`;
+
+            if (!defect.classification) {
+              validationErrors.push(`${prefix}: Missing classification`);
+            }
+
+            if (!defect.defectSummary && !defect.compliantSummary) {
+              validationErrors.push(`${prefix}: Missing defectSummary or compliantSummary`);
+            }
+
+            if (!defect.hazardExplanation) {
+              validationErrors.push(`${prefix}: Missing hazardExplanation`);
+            }
+
+            if (
+              !defect.bs7671Regulations ||
+              !Array.isArray(defect.bs7671Regulations) ||
+              defect.bs7671Regulations.length < 1
+            ) {
+              validationErrors.push(`${prefix}: Missing or insufficient bs7671Regulations`);
+            }
+
+            if (!defect.confidenceAssessment) {
+              validationErrors.push(`${prefix}: Missing confidenceAssessment`);
+            }
+
+            // Additional validation for actual defects (not NONE)
+            if (defect.classification && defect.classification !== 'NONE') {
+              if (!defect.makingSafe)
+                validationErrors.push(`${prefix}: Missing makingSafe (required for defects)`);
+              if (!defect.clientCommunication)
+                validationErrors.push(
+                  `${prefix}: Missing clientCommunication (required for defects)`
+                );
+              if (!defect.rectification)
+                validationErrors.push(`${prefix}: Missing rectification (required for defects)`);
+              if (!defect.verificationProcedure)
+                validationErrors.push(
+                  `${prefix}: Missing verificationProcedure (required for defects)`
+                );
+            }
+
+            // Validation for NONE classification
+            if (defect.classification === 'NONE') {
+              if (!defect.compliantSummary)
+                validationErrors.push(`${prefix}: Missing compliantSummary (required for NONE)`);
+            }
+          });
+        }
+
+        if (validationErrors.length > 0) {
+          logger.error('❌ Validation errors:', validationErrors);
+          logger.error(
+            'Received data structure:',
+            JSON.stringify({
+              hasDefects: !!eicrData.defects,
+              defectsCount: eicrData.defects?.length || 0,
+              installationCompliant: eicrData.installationCompliant,
+              hasOverallSummary: !!eicrData.overallSummary,
+            })
+          );
+          throw new Error(`Incomplete EICR analysis: ${validationErrors.join(', ')}`);
+        }
+
+        logger.info('✅ EICR analysis validation passed', {
           defectsCount: eicrData.defects?.length || 0,
           installationCompliant: eicrData.installationCompliant,
-          hasOverallSummary: !!eicrData.overallSummary
+        });
+
+        // Transform EICR data for response
+        logger.info('✅ Parsed EICR defect data', {
+          classification: eicrData.classification,
+          confidence: eicrData.confidenceAssessment?.level,
+          hasRectification: !!eicrData.rectification,
+          hasMakingSafe: !!eicrData.makingSafe,
+        });
+
+        // Sanitize ragResults to prevent circular reference issues during JSON.stringify
+        const safeCitations = (ragResults || []).map((result: any) => ({
+          source: result.source || '',
+          section: result.section || '',
+          regulation_number: result.regulation_number || '',
+          title: result.title || '',
+          content: result.content || '',
+          excerpt: result.excerpt || '',
+          relevance: result.relevance || 0,
         }));
-        throw new Error(`Incomplete EICR analysis: ${validationErrors.join(', ')}`);
+
+        // Transform into EICRDefect format for frontend - handle multiple defects
+        const eicrDefects = [];
+
+        if (
+          eicrData.installationCompliant &&
+          (!eicrData.defects || eicrData.defects.length === 0)
+        ) {
+          // Compliant installation - no defects found
+          eicrDefects.push({
+            classification: 'NONE',
+            defectSummary: eicrData.overallSummary,
+            compliantSummary: eicrData.overallSummary,
+            goodPracticeNotes: [],
+            noActionRequired: true,
+            confidenceAssessment: {
+              level: 'medium',
+              score: 70,
+              reasoning: 'No defects identified',
+            },
+          });
+        } else {
+          // Process ALL defects from the array
+          for (const defect of eicrData.defects || []) {
+            if (defect.classification === 'NONE') {
+              // Handle NONE classification within multi-defect response
+              eicrDefects.push({
+                classification: 'NONE',
+                defectSummary: defect.defectSummary,
+                compliantSummary: defect.compliantSummary,
+                goodPracticeNotes: defect.goodPracticeNotes || [],
+                noActionRequired: true,
+                confidenceAssessment: defect.confidenceAssessment,
+                contextFactors: defect.contextFactors,
+              });
+            } else {
+              // Standard defect
+              eicrDefects.push({
+                defectSummary: defect.defectSummary,
+                primaryCode: {
+                  code: defect.classification,
+                  title:
+                    {
+                      C1: 'Danger Present',
+                      C2: 'Potentially Dangerous',
+                      C3: 'Improvement Recommended',
+                      FI: 'Further Investigation',
+                    }[defect.classification] || 'Unknown',
+                  urgency:
+                    {
+                      C1: 'IMMEDIATE',
+                      C2: 'URGENT',
+                      C3: 'RECOMMENDED',
+                      FI: 'INVESTIGATE',
+                    }[defect.classification] || 'UNKNOWN',
+                },
+                bs7671Regulations: defect.bs7671Regulations || [],
+                classificationReasoningBullets: defect.classificationReasoningBullets || [],
+                hazardExplanation: defect.hazardExplanation,
+                makingSafe: defect.makingSafe,
+                clientCommunication: defect.clientCommunication,
+                rectification: defect.rectification || { steps: [] },
+                verificationProcedure: defect.verificationProcedure || {
+                  tests: [],
+                  acceptanceCriteria: [],
+                },
+                confidenceAssessment: defect.confidenceAssessment,
+                contextFactors: defect.contextFactors,
+              });
+            }
+          }
+        }
+
+        return new Response(
+          safeStringify({
+            success: true,
+            mode: 'eicr-photo-analysis',
+            queryType: 'photo-analysis',
+            eicrDefects,
+            citations: safeCitations,
+            metadata: {
+              classification: {
+                mode: 'photo-analysis',
+                confidence: eicrData.confidenceAssessment.score / 100,
+              },
+              ragQualityMetrics: {
+                gn3ProceduresFound,
+                regulationsFound,
+                totalSources: gn3ProceduresFound + regulationsFound,
+              },
+            },
+          }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200,
+          }
+        );
+      } else if (useStructuredDiagnosis) {
+        logger.info('🔧 Using structured fault diagnosis tool');
+
+        const faultDiagnosisTool = {
+          type: 'function' as const,
+          function: {
+            name: 'provide_fault_diagnosis',
+            description: 'Provide structured fault diagnosis with RAG safety status',
+            parameters: {
+              type: 'object',
+              properties: {
+                faultSummary: {
+                  type: 'object',
+                  properties: {
+                    reportedSymptom: { type: 'string' },
+                    likelyRootCauses: {
+                      type: 'array',
+                      items: { type: 'string' },
+                      minItems: 3,
+                      maxItems: 5,
+                    },
+                    safetyRisk: { type: 'string', enum: ['LOW', 'MODERATE', 'HIGH', 'CRITICAL'] },
+                    immediateAction: { type: 'string' },
+                    secondarySymptoms: { type: 'array', items: { type: 'string' }, minItems: 2 },
+                    riskToOccupants: { type: 'string' },
+                    riskToProperty: { type: 'string' },
+                    typicalRepairTime: { type: 'string' },
+                  },
+                  required: [
+                    'reportedSymptom',
+                    'likelyRootCauses',
+                    'safetyRisk',
+                    'secondarySymptoms',
+                    'riskToOccupants',
+                    'typicalRepairTime',
+                  ],
+                },
+                diagnosticWorkflow: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      stepNumber: { type: 'number' },
+                      ragStatus: { type: 'string', enum: ['RED', 'AMBER', 'GREEN'] },
+                      stepTitle: { type: 'string' },
+                      action: { type: 'string' },
+                      whatToTest: { type: 'string' },
+                      whatToMeasure: { type: 'string' },
+                      expectedReading: { type: 'string' },
+                      acceptableRange: { type: 'string' },
+                      instrumentSetup: { type: 'string' },
+                      safetyWarnings: { type: 'array', items: { type: 'string' } },
+                      ifFailed: { type: 'string' },
+                      regulation: { type: 'string' },
+                      leadPlacement: { type: 'string' },
+                      testDuration: { type: 'string' },
+                      temperatureNotes: { type: 'string' },
+                      troubleshootingSequence: { type: 'array', items: { type: 'string' } },
+                      realWorldExample: { type: 'string' },
+                      instrumentModel: { type: 'string' },
+                      clientExplanation: { type: 'string' },
+                    },
+                    required: [
+                      'stepNumber',
+                      'ragStatus',
+                      'stepTitle',
+                      'action',
+                      'whatToTest',
+                      'leadPlacement',
+                      'testDuration',
+                      'instrumentModel',
+                    ],
+                  },
+                  minItems: 5,
+                },
+                correctiveActions: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      forSymptom: { type: 'string' },
+                      action: { type: 'string' },
+                      tools: { type: 'array', items: { type: 'string' } },
+                      estimatedTime: { type: 'string' },
+                      verificationTest: { type: 'string' },
+                      materialsCost: { type: 'string' },
+                      skillLevel: {
+                        type: 'string',
+                        enum: ['apprentice', 'qualified', 'specialist'],
+                      },
+                      partNumbers: { type: 'array', items: { type: 'string' } },
+                      bs7671Reference: { type: 'string' },
+                      commonBrands: { type: 'array', items: { type: 'string' } },
+                      safetyNotes: { type: 'array', items: { type: 'string' } },
+                    },
+                    required: ['forSymptom', 'action', 'materialsCost', 'skillLevel'],
+                  },
+                  minItems: 2,
+                },
+                lockoutTagout: {
+                  type: 'object',
+                  properties: {
+                    required: { type: 'boolean' },
+                    procedure: { type: 'array', items: { type: 'string' } },
+                    isolationPoints: { type: 'array', items: { type: 'string' } },
+                  },
+                },
+                additionalContext: {
+                  type: 'object',
+                  properties: {
+                    commonMistakes: { type: 'array', items: { type: 'string' } },
+                    proTips: { type: 'array', items: { type: 'string' } },
+                    regulations: { type: 'array', items: { type: 'string' } },
+                  },
+                },
+                costEstimate: {
+                  type: 'object',
+                  properties: {
+                    materials: { type: 'string' },
+                    labour: { type: 'string' },
+                    total: { type: 'string' },
+                    notes: { type: 'string' },
+                  },
+                  required: ['materials', 'labour', 'total'],
+                },
+                clientCommunication: {
+                  type: 'object',
+                  properties: {
+                    summary: { type: 'string' },
+                    urgencyExplanation: { type: 'string' },
+                    whatToExpect: { type: 'string' },
+                    quotationNotes: { type: 'string' },
+                  },
+                  required: ['summary', 'urgencyExplanation', 'whatToExpect'],
+                },
+                documentationRequirements: {
+                  type: 'object',
+                  properties: {
+                    testsToRecord: { type: 'array', items: { type: 'string' } },
+                    certificatesNeeded: { type: 'array', items: { type: 'string' } },
+                    notesForEIC: { type: 'string' },
+                  },
+                  required: ['testsToRecord', 'certificatesNeeded'],
+                },
+              },
+              required: [
+                'faultSummary',
+                'diagnosticWorkflow',
+                'correctiveActions',
+                'costEstimate',
+                'clientCommunication',
+                'documentationRequirements',
+              ],
+            },
+          },
+        };
+
+        // Build messages with vision support
+        const troubleshootingMessages: any[] = [{ role: 'system', content: conversationalPrompt }];
+
+        if (messages && messages.length > 0) {
+          troubleshootingMessages.push(...messages.slice(-6));
+        }
+
+        // Build user message with photo if provided
+        let userMessageContent: any;
+        if (imageUrl) {
+          logger.info('🖼️ Photo analysis mode (structured diagnosis) - using vision model');
+          userMessageContent = [
+            {
+              type: 'text',
+              text: `${effectiveQuery}
+
+📸 PHOTO ANALYSIS - STRUCTURED FAULT DIAGNOSIS:
+Analyse this installation photo and provide structured fault diagnosis with RAG status codes.`,
+            },
+            {
+              type: 'image_url',
+              image_url: {
+                url: imageUrl,
+              },
+            },
+          ];
+        } else {
+          userMessageContent = effectiveQuery;
+        }
+
+        troubleshootingMessages.push({
+          role: 'user',
+          content: userMessageContent,
+        });
+
+        const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
+        logger.info(
+          `🤖 Using model: ${modelToUse}${imageUrl ? ' (vision structured diagnosis)' : ''}`
+        );
+
+        const aiResponse = await callOpenAI(
+          {
+            messages: troubleshootingMessages,
+            model: modelToUse,
+            tools: [faultDiagnosisTool],
+            tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } },
+            max_completion_tokens: 12000,
+          },
+          OPENAI_API_KEY!,
+          120000
+        );
+
+        const toolCall = aiResponse.toolCalls?.[0];
+        logger.info('🔧 Tool call response', {
+          hasToolCall: !!toolCall,
+          toolName: toolCall?.function?.name,
+          hasArguments: !!toolCall?.function?.arguments,
+        });
+
+        if (toolCall?.function?.arguments) {
+          try {
+            const diagnosisData = JSON.parse(toolCall.function.arguments);
+            logger.info('✅ Parsed fault diagnosis data successfully', {
+              hasWorkflow: !!diagnosisData.diagnosticWorkflow,
+              workflowSteps: diagnosisData.diagnosticWorkflow?.length || 0,
+              hasSummary: !!diagnosisData.faultSummary,
+            });
+
+            // Sanitize ragResults to prevent circular reference issues during JSON.stringify
+            const safeCitations = (ragResults || []).map((result: any) => ({
+              source: result.source || '',
+              section: result.section || '',
+              regulation_number: result.regulation_number || '',
+              title: result.title || '',
+              content: result.content || '',
+              excerpt: result.excerpt || '',
+              relevance: result.relevance || 0,
+            }));
+
+            return new Response(
+              safeStringify({
+                success: true,
+                mode: 'fault-diagnosis',
+                queryType: 'troubleshooting',
+                structuredDiagnosis: diagnosisData,
+                citations: safeCitations,
+                metadata: {
+                  classification,
+                  ragQualityMetrics: {
+                    gn3ProceduresFound,
+                    regulationsFound,
+                    totalSources: gn3ProceduresFound + regulationsFound,
+                  },
+                },
+              }),
+              {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                status: 200,
+              }
+            );
+          } catch (error) {
+            logger.error('❌ Failed to parse tool call arguments', {
+              error: error instanceof Error ? error.message : String(error),
+            });
+            // Fall through to conversational mode
+          }
+        } else {
+          logger.warn(
+            '⚠️ No tool call returned despite troubleshooting mode - falling back to conversational',
+            {
+              responseContent: aiResponse.content?.substring(0, 200),
+            }
+          );
+        }
       }
 
-      logger.info('✅ EICR analysis validation passed', {
-        defectsCount: eicrData.defects?.length || 0,
-        installationCompliant: eicrData.installationCompliant
+      // Fallback: QUESTION MODE - conversational text response
+      const questionModePrompt = buildConversationalPrompt('question', testContext, contextSection);
+
+      // Build messages with vision support
+      const questionMessages: any[] = [{ role: 'system', content: questionModePrompt }];
+
+      // Add conversation history
+      if (messages && messages.length > 0) {
+        questionMessages.push(...messages.slice(-6));
+      }
+
+      // Build user message with photo if provided
+      let userMessageContent: any;
+      if (imageUrl) {
+        logger.info('🖼️ Photo analysis mode (question) - using vision model');
+        userMessageContent = [
+          {
+            type: 'text',
+            text: `${effectiveQuery}
+
+📸 Analyse this installation photo and answer the question.`,
+          },
+          {
+            type: 'image_url',
+            image_url: {
+              url: imageUrl,
+            },
+          },
+        ];
+      } else {
+        userMessageContent = effectiveQuery;
+      }
+
+      questionMessages.push({
+        role: 'user',
+        content: userMessageContent,
       });
-      
-      // Transform EICR data for response
-      logger.info('✅ Parsed EICR defect data', {
-        classification: eicrData.classification,
-        confidence: eicrData.confidenceAssessment?.level,
-        hasRectification: !!eicrData.rectification,
-        hasMakingSafe: !!eicrData.makingSafe
-      });
-      
+
+      const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
+      logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision Q&A)' : ''}`);
+
+      const aiResponse = await callOpenAI(
+        {
+          messages: questionMessages,
+          model: modelToUse,
+        },
+        OPENAI_API_KEY!,
+        120000
+      );
+
+      const conversationalResponse = aiResponse.content || 'Unable to generate response';
+
       // Sanitize ragResults to prevent circular reference issues during JSON.stringify
       const safeCitations = (ragResults || []).map((result: any) => ({
         source: result.source || '',
@@ -1929,431 +2572,43 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) for EACH defect and 
         title: result.title || '',
         content: result.content || '',
         excerpt: result.excerpt || '',
-        relevance: result.relevance || 0
+        relevance: result.relevance || 0,
       }));
-          
-      // Transform into EICRDefect format for frontend - handle multiple defects
-      const eicrDefects = [];
-      
-      if (eicrData.installationCompliant && (!eicrData.defects || eicrData.defects.length === 0)) {
-        // Compliant installation - no defects found
-        eicrDefects.push({
-          classification: 'NONE',
-          defectSummary: eicrData.overallSummary,
-          compliantSummary: eicrData.overallSummary,
-          goodPracticeNotes: [],
-          noActionRequired: true,
-          confidenceAssessment: { level: 'medium', score: 70, reasoning: 'No defects identified' }
-        });
-      } else {
-        // Process ALL defects from the array
-        for (const defect of eicrData.defects || []) {
-          if (defect.classification === 'NONE') {
-            // Handle NONE classification within multi-defect response
-            eicrDefects.push({
-              classification: 'NONE',
-              defectSummary: defect.defectSummary,
-              compliantSummary: defect.compliantSummary,
-              goodPracticeNotes: defect.goodPracticeNotes || [],
-              noActionRequired: true,
-              confidenceAssessment: defect.confidenceAssessment,
-              contextFactors: defect.contextFactors
-            });
-          } else {
-            // Standard defect
-            eicrDefects.push({
-              defectSummary: defect.defectSummary,
-              primaryCode: {
-                code: defect.classification,
-                title: {
-                  'C1': 'Danger Present',
-                  'C2': 'Potentially Dangerous',
-                  'C3': 'Improvement Recommended',
-                  'FI': 'Further Investigation'
-                }[defect.classification] || 'Unknown',
-                urgency: {
-                  'C1': 'IMMEDIATE',
-                  'C2': 'URGENT',
-                  'C3': 'RECOMMENDED',
-                  'FI': 'INVESTIGATE'
-                }[defect.classification] || 'UNKNOWN'
-              },
-              bs7671Regulations: defect.bs7671Regulations || [],
-              classificationReasoningBullets: defect.classificationReasoningBullets || [],
-              hazardExplanation: defect.hazardExplanation,
-              makingSafe: defect.makingSafe,
-              clientCommunication: defect.clientCommunication,
-              rectification: defect.rectification || { steps: [] },
-              verificationProcedure: defect.verificationProcedure || { tests: [], acceptanceCriteria: [] },
-              confidenceAssessment: defect.confidenceAssessment,
-              contextFactors: defect.contextFactors
-            });
-          }
-        }
-      }
-      
+
       return new Response(
         safeStringify({
           success: true,
-          mode: 'eicr-photo-analysis',
-          queryType: 'photo-analysis',
-          eicrDefects,
+          mode: 'conversational',
+          queryType: classification.mode,
+          response: conversationalResponse,
           citations: safeCitations,
           metadata: {
-            classification: { mode: 'photo-analysis', confidence: eicrData.confidenceAssessment.score / 100 },
+            classification,
             ragQualityMetrics: {
               gn3ProceduresFound,
               regulationsFound,
-              totalSources: gn3ProceduresFound + regulationsFound
-            }
-          }
-        }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200 
-        }
-      );
-    } else if (useStructuredDiagnosis) {
-      logger.info('🔧 Using structured fault diagnosis tool');
-      
-      const faultDiagnosisTool = {
-        type: 'function' as const,
-        function: {
-          name: 'provide_fault_diagnosis',
-          description: 'Provide structured fault diagnosis with RAG safety status',
-          parameters: {
-            type: 'object',
-            properties: {
-              faultSummary: {
-                type: 'object',
-                properties: {
-                  reportedSymptom: { type: 'string' },
-                  likelyRootCauses: { type: 'array', items: { type: 'string' }, minItems: 3, maxItems: 5 },
-                  safetyRisk: { type: 'string', enum: ['LOW', 'MODERATE', 'HIGH', 'CRITICAL'] },
-                  immediateAction: { type: 'string' },
-                  secondarySymptoms: { type: 'array', items: { type: 'string' }, minItems: 2 },
-                  riskToOccupants: { type: 'string' },
-                  riskToProperty: { type: 'string' },
-                  typicalRepairTime: { type: 'string' }
-                },
-                required: ['reportedSymptom', 'likelyRootCauses', 'safetyRisk', 'secondarySymptoms', 'riskToOccupants', 'typicalRepairTime']
-              },
-              diagnosticWorkflow: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    stepNumber: { type: 'number' },
-                    ragStatus: { type: 'string', enum: ['RED', 'AMBER', 'GREEN'] },
-                    stepTitle: { type: 'string' },
-                    action: { type: 'string' },
-                    whatToTest: { type: 'string' },
-                    whatToMeasure: { type: 'string' },
-                    expectedReading: { type: 'string' },
-                    acceptableRange: { type: 'string' },
-                    instrumentSetup: { type: 'string' },
-                    safetyWarnings: { type: 'array', items: { type: 'string' } },
-                    ifFailed: { type: 'string' },
-                    regulation: { type: 'string' },
-                    leadPlacement: { type: 'string' },
-                    testDuration: { type: 'string' },
-                    temperatureNotes: { type: 'string' },
-                    troubleshootingSequence: { type: 'array', items: { type: 'string' } },
-                    realWorldExample: { type: 'string' },
-                    instrumentModel: { type: 'string' },
-                    clientExplanation: { type: 'string' }
-                  },
-                  required: ['stepNumber', 'ragStatus', 'stepTitle', 'action', 'whatToTest', 'leadPlacement', 'testDuration', 'instrumentModel']
-                },
-                minItems: 5
-              },
-              correctiveActions: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    forSymptom: { type: 'string' },
-                    action: { type: 'string' },
-                    tools: { type: 'array', items: { type: 'string' } },
-                    estimatedTime: { type: 'string' },
-                    verificationTest: { type: 'string' },
-                    materialsCost: { type: 'string' },
-                    skillLevel: { type: 'string', enum: ['apprentice', 'qualified', 'specialist'] },
-                    partNumbers: { type: 'array', items: { type: 'string' } },
-                    bs7671Reference: { type: 'string' },
-                    commonBrands: { type: 'array', items: { type: 'string' } },
-                    safetyNotes: { type: 'array', items: { type: 'string' } }
-                  },
-                  required: ['forSymptom', 'action', 'materialsCost', 'skillLevel']
-                },
-                minItems: 2
-              },
-              lockoutTagout: {
-                type: 'object',
-                properties: {
-                  required: { type: 'boolean' },
-                  procedure: { type: 'array', items: { type: 'string' } },
-                  isolationPoints: { type: 'array', items: { type: 'string' } }
-                }
-              },
-              additionalContext: {
-                type: 'object',
-                properties: {
-                  commonMistakes: { type: 'array', items: { type: 'string' } },
-                  proTips: { type: 'array', items: { type: 'string' } },
-                  regulations: { type: 'array', items: { type: 'string' } }
-                }
-              },
-              costEstimate: {
-                type: 'object',
-                properties: {
-                  materials: { type: 'string' },
-                  labour: { type: 'string' },
-                  total: { type: 'string' },
-                  notes: { type: 'string' }
-                },
-                required: ['materials', 'labour', 'total']
-              },
-              clientCommunication: {
-                type: 'object',
-                properties: {
-                  summary: { type: 'string' },
-                  urgencyExplanation: { type: 'string' },
-                  whatToExpect: { type: 'string' },
-                  quotationNotes: { type: 'string' }
-                },
-                required: ['summary', 'urgencyExplanation', 'whatToExpect']
-              },
-              documentationRequirements: {
-                type: 'object',
-                properties: {
-                  testsToRecord: { type: 'array', items: { type: 'string' } },
-                  certificatesNeeded: { type: 'array', items: { type: 'string' } },
-                  notesForEIC: { type: 'string' }
-                },
-                required: ['testsToRecord', 'certificatesNeeded']
-              }
+              totalSources: gn3ProceduresFound + regulationsFound,
             },
-            required: ['faultSummary', 'diagnosticWorkflow', 'correctiveActions', 'costEstimate', 'clientCommunication', 'documentationRequirements']
-          }
-        }
-      };
-      
-      // Build messages with vision support
-      const troubleshootingMessages: any[] = [
-        { role: 'system', content: conversationalPrompt }
-      ];
-
-      if (messages && messages.length > 0) {
-        troubleshootingMessages.push(...messages.slice(-6));
-      }
-
-      // Build user message with photo if provided
-      let userMessageContent: any;
-      if (imageUrl) {
-        logger.info('🖼️ Photo analysis mode (structured diagnosis) - using vision model');
-        userMessageContent = [
-          {
-            type: "text",
-            text: `${effectiveQuery}
-
-📸 PHOTO ANALYSIS - STRUCTURED FAULT DIAGNOSIS:
-Analyse this installation photo and provide structured fault diagnosis with RAG status codes.`
           },
-          {
-            type: "image_url",
-            image_url: {
-              url: imageUrl
-            }
-          }
-        ];
-      } else {
-        userMessageContent = effectiveQuery;
-      }
-
-      troubleshootingMessages.push({
-        role: 'user',
-        content: userMessageContent
-      });
-
-      const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
-      logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision structured diagnosis)' : ''}`);
-
-      const aiResponse = await callOpenAI(
+        }),
         {
-          messages: troubleshootingMessages,
-          model: modelToUse,
-          tools: [faultDiagnosisTool],
-          tool_choice: { type: 'function', function: { name: 'provide_fault_diagnosis' } },
-          max_completion_tokens: 12000
-        },
-        OPENAI_API_KEY!,
-        120000
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
       );
-      
-      const toolCall = aiResponse.toolCalls?.[0];
-      logger.info('🔧 Tool call response', { 
-        hasToolCall: !!toolCall, 
-        toolName: toolCall?.function?.name,
-        hasArguments: !!toolCall?.function?.arguments 
-      });
-      
-      if (toolCall?.function?.arguments) {
-        try {
-          const diagnosisData = JSON.parse(toolCall.function.arguments);
-          logger.info('✅ Parsed fault diagnosis data successfully', {
-            hasWorkflow: !!diagnosisData.diagnosticWorkflow,
-            workflowSteps: diagnosisData.diagnosticWorkflow?.length || 0,
-            hasSummary: !!diagnosisData.faultSummary
-          });
-          
-          // Sanitize ragResults to prevent circular reference issues during JSON.stringify
-          const safeCitations = (ragResults || []).map((result: any) => ({
-            source: result.source || '',
-            section: result.section || '',
-            regulation_number: result.regulation_number || '',
-            title: result.title || '',
-            content: result.content || '',
-            excerpt: result.excerpt || '',
-            relevance: result.relevance || 0
-          }));
-          
-          return new Response(
-            safeStringify({
-              success: true,
-              mode: 'fault-diagnosis',
-              queryType: 'troubleshooting',
-              structuredDiagnosis: diagnosisData,
-              citations: safeCitations,
-              metadata: {
-                classification,
-                ragQualityMetrics: {
-                  gn3ProceduresFound,
-                  regulationsFound,
-                  totalSources: gn3ProceduresFound + regulationsFound
-                }
-              }
-            }),
-            { 
-              headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-              status: 200 
-            }
-          );
-        } catch (error) {
-          logger.error('❌ Failed to parse tool call arguments', { 
-            error: error instanceof Error ? error.message : String(error) 
-          });
-          // Fall through to conversational mode
-        }
-      } else {
-        logger.warn('⚠️ No tool call returned despite troubleshooting mode - falling back to conversational', {
-          responseContent: aiResponse.content?.substring(0, 200)
-        });
-      }
     }
-    
-    // Fallback: QUESTION MODE - conversational text response
-    const questionModePrompt = buildConversationalPrompt(
-      'question',
-      testContext,
-      contextSection
-    );
-
-    // Build messages with vision support
-    const questionMessages: any[] = [
-      { role: 'system', content: questionModePrompt }
-    ];
-
-    // Add conversation history
-    if (messages && messages.length > 0) {
-      questionMessages.push(...messages.slice(-6));
-    }
-
-    // Build user message with photo if provided
-    let userMessageContent: any;
-    if (imageUrl) {
-      logger.info('🖼️ Photo analysis mode (question) - using vision model');
-      userMessageContent = [
-        {
-          type: "text",
-          text: `${effectiveQuery}
-
-📸 Analyse this installation photo and answer the question.`
-        },
-        {
-          type: "image_url",
-          image_url: {
-            url: imageUrl
-          }
-        }
-      ];
-    } else {
-      userMessageContent = effectiveQuery;
-    }
-
-    questionMessages.push({
-      role: 'user',
-      content: userMessageContent
-    });
-
-    const modelToUse = imageUrl ? 'gpt-4o-mini' : 'gpt-5-mini';
-    logger.info(`🤖 Using model: ${modelToUse}${imageUrl ? ' (vision Q&A)' : ''}`);
-
-    const aiResponse = await callOpenAI(
-      {
-        messages: questionMessages,
-        model: modelToUse
-      },
-      OPENAI_API_KEY!,
-      120000
-    );
-    
-    const conversationalResponse = aiResponse.content || 'Unable to generate response';
-    
-    // Sanitize ragResults to prevent circular reference issues during JSON.stringify
-    const safeCitations = (ragResults || []).map((result: any) => ({
-      source: result.source || '',
-      section: result.section || '',
-      regulation_number: result.regulation_number || '',
-      title: result.title || '',
-      content: result.content || '',
-      excerpt: result.excerpt || '',
-      relevance: result.relevance || 0
-    }));
-    
-    return new Response(
-      safeStringify({
-        success: true,
-        mode: 'conversational',
-        queryType: classification.mode,
-        response: conversationalResponse,
-        citations: safeCitations,
-        metadata: {
-          classification,
-          ragQualityMetrics: {
-            gn3ProceduresFound,
-            regulationsFound,
-            totalSources: gn3ProceduresFound + regulationsFound
-          }
-        }
-      }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
-      }
-    );
-  }
-  // END OF BRANCH LOGIC
-
+    // END OF BRANCH LOGIC
   } catch (error) {
-    logger.error('Commissioning V3 error', { error: error instanceof Error ? error.message : String(error) });
+    logger.error('Commissioning V3 error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
 
     // Capture to Sentry
     await captureException(error, {
       functionName: 'commissioning-v3',
       requestUrl: req.url,
       requestMethod: req.method,
-      extra: { requestId }
+      extra: { requestId },
     });
 
     return handleError(error);

@@ -17,11 +17,9 @@ serve(async (req: Request) => {
 
     // Create Supabase client with user context (if auth provided) or service role
     const supabase = authHeader
-      ? createClient(
-          Deno.env.get('SUPABASE_URL') ?? '',
-          Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-          { global: { headers: { Authorization: authHeader } } }
-        )
+      ? createClient(Deno.env.get('SUPABASE_URL') ?? '', Deno.env.get('SUPABASE_ANON_KEY') ?? '', {
+          global: { headers: { Authorization: authHeader } },
+        })
       : createClient(
           Deno.env.get('SUPABASE_URL') ?? '',
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
@@ -30,13 +28,16 @@ serve(async (req: Request) => {
     // Get user from auth header if provided
     let userId: string | null = null;
     if (authHeader) {
-      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      const {
+        data: { user },
+        error: authError,
+      } = await supabase.auth.getUser();
       if (authError) {
         console.error('Auth error:', authError);
-        return new Response(
-          JSON.stringify({ error: 'Authentication failed' }),
-          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        return new Response(JSON.stringify({ error: 'Authentication failed' }), {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
       userId = user?.id ?? null;
     }
@@ -44,10 +45,10 @@ serve(async (req: Request) => {
     const { tool, params }: VoiceToolRequest = await req.json();
 
     if (!tool) {
-      return new Response(
-        JSON.stringify({ error: 'Tool name is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Tool name is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`Employer voice tool called: ${tool}`, { params, userId });
@@ -82,9 +83,10 @@ serve(async (req: Request) => {
         } else if (!employees || employees.length === 0) {
           result = name ? `No employees found matching "${name}"` : 'No employees found';
         } else {
-          const summary = employees.slice(0, 5).map(e =>
-            `${e.name} (${e.role || 'No role'})`
-          ).join(', ');
+          const summary = employees
+            .slice(0, 5)
+            .map((e) => `${e.name} (${e.role || 'No role'})`)
+            .join(', ');
           result = `Found ${employees.length} employees: ${summary}`;
         }
         break;
@@ -121,10 +123,14 @@ serve(async (req: Request) => {
         } else if (!certs || certs.length === 0) {
           result = `${employee.name} has no certifications on record`;
         } else {
-          const certList = certs.map(c => {
-            const expiry = c.expiry_date ? new Date(c.expiry_date).toLocaleDateString('en-GB') : 'No expiry';
-            return `${c.name} (expires ${expiry})`;
-          }).join(', ');
+          const certList = certs
+            .map((c) => {
+              const expiry = c.expiry_date
+                ? new Date(c.expiry_date).toLocaleDateString('en-GB')
+                : 'No expiry';
+              return `${c.name} (expires ${expiry})`;
+            })
+            .join(', ');
           result = `${employee.name} has ${certs.length} certifications: ${certList}`;
         }
         break;
@@ -148,10 +154,13 @@ serve(async (req: Request) => {
         } else if (!certs || certs.length === 0) {
           result = `No certifications expiring in the next ${days} days`;
         } else {
-          const certList = certs.slice(0, 5).map(c => {
-            const emp = (c as any).employees?.name || 'Unknown';
-            return `${emp}'s ${c.name}`;
-          }).join(', ');
+          const certList = certs
+            .slice(0, 5)
+            .map((c) => {
+              const emp = (c as any).employees?.name || 'Unknown';
+              return `${emp}'s ${c.name}`;
+            })
+            .join(', ');
           result = `${certs.length} certifications expiring within ${days} days: ${certList}`;
         }
         break;
@@ -174,14 +183,19 @@ serve(async (req: Request) => {
           result = 'No pending timesheets to approve';
         } else {
           const totalHours = timesheets.reduce((sum, t) => sum + (t.hours || 0), 0);
-          const employees = [...new Set(timesheets.map(t => (t as any).employees?.name))].filter(Boolean);
+          const employees = [...new Set(timesheets.map((t) => (t as any).employees?.name))].filter(
+            Boolean
+          );
           result = `${timesheets.length} pending time entries from ${employees.length} employees, totalling ${totalHours} hours`;
         }
         break;
       }
 
       case 'approve_timesheet': {
-        const { employeeName, approveAll } = params as { employeeName?: string; approveAll?: boolean };
+        const { employeeName, approveAll } = params as {
+          employeeName?: string;
+          approveAll?: boolean;
+        };
 
         if (approveAll) {
           const { data, error } = await supabase
@@ -269,11 +283,14 @@ serve(async (req: Request) => {
         } else if (!leaveRequests || leaveRequests.length === 0) {
           result = 'No pending leave requests';
         } else {
-          const summary = leaveRequests.slice(0, 3).map(l => {
-            const emp = (l as any).employees?.name || 'Unknown';
-            const start = new Date(l.start_date).toLocaleDateString('en-GB');
-            return `${emp} (${l.type} from ${start})`;
-          }).join(', ');
+          const summary = leaveRequests
+            .slice(0, 3)
+            .map((l) => {
+              const emp = (l as any).employees?.name || 'Unknown';
+              const start = new Date(l.start_date).toLocaleDateString('en-GB');
+              return `${emp} (${l.type} from ${start})`;
+            })
+            .join(', ');
           result = `${leaveRequests.length} pending leave requests: ${summary}`;
         }
         break;
@@ -362,7 +379,10 @@ serve(async (req: Request) => {
       }
 
       case 'approve_expense': {
-        const { employeeName, approveAll } = params as { employeeName?: string; approveAll?: boolean };
+        const { employeeName, approveAll } = params as {
+          employeeName?: string;
+          approveAll?: boolean;
+        };
 
         if (approveAll) {
           const { data, error } = await supabase
@@ -459,9 +479,10 @@ serve(async (req: Request) => {
         } else if (!jobs || jobs.length === 0) {
           result = title ? `No jobs found matching "${title}"` : 'No jobs found';
         } else {
-          const summary = jobs.slice(0, 5).map(j =>
-            `${j.title} for ${j.client} (${j.status}, ${j.progress || 0}% complete)`
-          ).join('. ');
+          const summary = jobs
+            .slice(0, 5)
+            .map((j) => `${j.title} for ${j.client} (${j.status}, ${j.progress || 0}% complete)`)
+            .join('. ');
           result = `Found ${jobs.length} jobs. ${summary}`;
         }
         break;
@@ -495,7 +516,10 @@ serve(async (req: Request) => {
         } else if (!assignments || assignments.length === 0) {
           result = `No workers assigned to ${job.title}`;
         } else {
-          const workers = assignments.map(a => (a as any).employees?.name).filter(Boolean).join(', ');
+          const workers = assignments
+            .map((a) => (a as any).employees?.name)
+            .filter(Boolean)
+            .join(', ');
           result = `${assignments.length} workers on ${job.title}: ${workers}`;
         }
         break;
@@ -541,10 +565,13 @@ serve(async (req: Request) => {
         } else if (!jobs || jobs.length === 0) {
           result = `No job deadlines in the next ${days} days`;
         } else {
-          const summary = jobs.slice(0, 3).map(j => {
-            const date = new Date(j.end_date).toLocaleDateString('en-GB');
-            return `${j.title} (${date})`;
-          }).join(', ');
+          const summary = jobs
+            .slice(0, 3)
+            .map((j) => {
+              const date = new Date(j.end_date).toLocaleDateString('en-GB');
+              return `${j.title} (${date})`;
+            })
+            .join(', ');
           result = `${jobs.length} jobs due within ${days} days: ${summary}`;
         }
         break;
@@ -565,7 +592,7 @@ serve(async (req: Request) => {
         } else if (!locations || locations.length === 0) {
           result = 'No worker location data available';
         } else {
-          const workers = locations.map(l => (l as any).employees?.name).filter(Boolean);
+          const workers = locations.map((l) => (l as any).employees?.name).filter(Boolean);
           result = `${workers.length} workers with location data: ${workers.slice(0, 5).join(', ')}`;
         }
         break;
@@ -619,13 +646,23 @@ serve(async (req: Request) => {
           { count: activeJobs },
         ] = await Promise.all([
           supabase.from('employees').select('*', { count: 'exact', head: true }),
-          supabase.from('time_entries').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-          supabase.from('leave_requests').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
-          supabase.from('expense_claims').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
+          supabase
+            .from('time_entries')
+            .select('*', { count: 'exact', head: true })
+            .eq('status', 'pending'),
+          supabase
+            .from('leave_requests')
+            .select('*', { count: 'exact', head: true })
+            .eq('status', 'pending'),
+          supabase
+            .from('expense_claims')
+            .select('*', { count: 'exact', head: true })
+            .eq('status', 'pending'),
           supabase.from('jobs').select('*', { count: 'exact', head: true }).eq('status', 'active'),
         ]);
 
-        result = `Dashboard summary: ${employeeCount || 0} employees, ${activeJobs || 0} active jobs. ` +
+        result =
+          `Dashboard summary: ${employeeCount || 0} employees, ${activeJobs || 0} active jobs. ` +
           `Pending approvals: ${pendingTimesheets || 0} timesheets, ${pendingLeave || 0} leave requests, ${pendingExpenses || 0} expenses.`;
         break;
       }
@@ -640,21 +677,22 @@ serve(async (req: Request) => {
           .limit(20);
 
         if (error) {
-          result = 'Failed to fetch today\'s schedule';
+          result = "Failed to fetch today's schedule";
         } else if (!assignments || assignments.length === 0) {
           result = 'No job assignments scheduled for today';
         } else {
           const byJob: Record<string, string[]> = {};
-          assignments.forEach(a => {
+          assignments.forEach((a) => {
             const jobTitle = (a as any).jobs?.title || 'Unknown job';
             const worker = (a as any).employees?.name || 'Unknown';
             if (!byJob[jobTitle]) byJob[jobTitle] = [];
             byJob[jobTitle].push(worker);
           });
 
-          const summary = Object.entries(byJob).slice(0, 3).map(([job, workers]) =>
-            `${job}: ${workers.join(', ')}`
-          ).join('. ');
+          const summary = Object.entries(byJob)
+            .slice(0, 3)
+            .map(([job, workers]) => `${job}: ${workers.join(', ')}`)
+            .join('. ');
           result = `Today's schedule: ${summary}`;
         }
         break;
@@ -761,12 +799,10 @@ serve(async (req: Request) => {
           break;
         }
 
-        const { error } = await supabase
-          .from('job_assignments')
-          .insert({
-            employee_id: employee.id,
-            job_id: job.id,
-          });
+        const { error } = await supabase.from('job_assignments').insert({
+          employee_id: employee.id,
+          job_id: job.id,
+        });
 
         if (error) {
           result = `Failed to assign ${employee.name} to ${job.title}`;
@@ -828,9 +864,10 @@ serve(async (req: Request) => {
         } else if (!incidents || incidents.length === 0) {
           result = 'No open incidents';
         } else {
-          const summary = incidents.slice(0, 3).map(i =>
-            `${i.title} (${i.severity})`
-          ).join(', ');
+          const summary = incidents
+            .slice(0, 3)
+            .map((i) => `${i.title} (${i.severity})`)
+            .join(', ');
           result = `${incidents.length} open incidents: ${summary}`;
         }
         break;
@@ -894,10 +931,9 @@ serve(async (req: Request) => {
           let filteredQuotes = quotes;
           if (client) {
             const clientLower = client.toLowerCase();
-            filteredQuotes = quotes.filter(q => {
-              const clientData = typeof q.client_data === 'string'
-                ? JSON.parse(q.client_data)
-                : q.client_data;
+            filteredQuotes = quotes.filter((q) => {
+              const clientData =
+                typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
               return clientData?.name?.toLowerCase().includes(clientLower);
             });
           }
@@ -905,12 +941,14 @@ serve(async (req: Request) => {
           if (filteredQuotes.length === 0) {
             result = client ? `No quotes found for ${client}` : 'No quotes found';
           } else {
-            const summary = filteredQuotes.slice(0, 5).map(q => {
-              const clientData = typeof q.client_data === 'string'
-                ? JSON.parse(q.client_data)
-                : q.client_data;
-              return `Quote #${q.quoteNumber} for ${clientData?.name || 'Unknown'}: £${q.total?.toFixed(2) || 0}`;
-            }).join('. ');
+            const summary = filteredQuotes
+              .slice(0, 5)
+              .map((q) => {
+                const clientData =
+                  typeof q.client_data === 'string' ? JSON.parse(q.client_data) : q.client_data;
+                return `Quote #${q.quoteNumber} for ${clientData?.name || 'Unknown'}: £${q.total?.toFixed(2) || 0}`;
+              })
+              .join('. ');
             result = `Found ${filteredQuotes.length} quotes. ${summary}`;
           }
         }
@@ -944,10 +982,9 @@ serve(async (req: Request) => {
           let filteredInvoices = invoices;
           if (client) {
             const clientLower = client.toLowerCase();
-            filteredInvoices = invoices.filter(i => {
-              const clientData = typeof i.client_data === 'string'
-                ? JSON.parse(i.client_data)
-                : i.client_data;
+            filteredInvoices = invoices.filter((i) => {
+              const clientData =
+                typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
               return clientData?.name?.toLowerCase().includes(clientLower);
             });
           }
@@ -955,12 +992,14 @@ serve(async (req: Request) => {
           if (filteredInvoices.length === 0) {
             result = client ? `No invoices found for ${client}` : 'No invoices found';
           } else {
-            const summary = filteredInvoices.slice(0, 5).map(i => {
-              const clientData = typeof i.client_data === 'string'
-                ? JSON.parse(i.client_data)
-                : i.client_data;
-              return `Invoice #${i.invoice_number} for ${clientData?.name || 'Unknown'}: £${i.total?.toFixed(2) || 0} (${i.invoice_status})`;
-            }).join('. ');
+            const summary = filteredInvoices
+              .slice(0, 5)
+              .map((i) => {
+                const clientData =
+                  typeof i.client_data === 'string' ? JSON.parse(i.client_data) : i.client_data;
+                return `Invoice #${i.invoice_number} for ${clientData?.name || 'Unknown'}: £${i.total?.toFixed(2) || 0} (${i.invoice_status})`;
+              })
+              .join('. ');
             result = `Found ${filteredInvoices.length} invoices. ${summary}`;
           }
         }
@@ -998,15 +1037,16 @@ serve(async (req: Request) => {
       // QUOTE CREATION & SENDING (Full Flow Tools)
       // ============================================
       case 'create_and_send_quote': {
-        const { clientName, clientEmail, clientPhone, clientAddress, description, items, notes } = params as {
-          clientName: string;
-          clientEmail?: string;
-          clientPhone?: string;
-          clientAddress?: string;
-          description?: string;
-          items?: Array<{ description: string; quantity: number; unitPrice: number }>;
-          notes?: string;
-        };
+        const { clientName, clientEmail, clientPhone, clientAddress, description, items, notes } =
+          params as {
+            clientName: string;
+            clientEmail?: string;
+            clientPhone?: string;
+            clientAddress?: string;
+            description?: string;
+            items?: Array<{ description: string; quantity: number; unitPrice: number }>;
+            notes?: string;
+          };
 
         if (!clientName) {
           result = 'Client name is required to create a quote';
@@ -1018,7 +1058,7 @@ serve(async (req: Request) => {
 
         // Calculate total from items
         const quoteItems = items || [];
-        const total = quoteItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+        const total = quoteItems.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
 
         // Create the quote
         const { data: quote, error } = await supabase
@@ -1053,14 +1093,15 @@ serve(async (req: Request) => {
       }
 
       case 'create_quote': {
-        const { clientName, clientEmail, clientPhone, clientAddress, description, items } = params as {
-          clientName: string;
-          clientEmail?: string;
-          clientPhone?: string;
-          clientAddress?: string;
-          description?: string;
-          items?: Array<{ description: string; quantity: number; unitPrice: number }>;
-        };
+        const { clientName, clientEmail, clientPhone, clientAddress, description, items } =
+          params as {
+            clientName: string;
+            clientEmail?: string;
+            clientPhone?: string;
+            clientAddress?: string;
+            description?: string;
+            items?: Array<{ description: string; quantity: number; unitPrice: number }>;
+          };
 
         if (!clientName) {
           result = 'Client name is required';
@@ -1069,7 +1110,7 @@ serve(async (req: Request) => {
 
         const quoteNumber = `Q-${Date.now().toString(36).toUpperCase()}`;
         const quoteItems = items || [];
-        const total = quoteItems.reduce((sum, item) => sum + (item.quantity * item.unitPrice), 0);
+        const total = quoteItems.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0);
 
         const { data: quote, error } = await supabase
           .from('quotes')
@@ -1100,7 +1141,10 @@ serve(async (req: Request) => {
       }
 
       case 'send_quote': {
-        const { quoteNumber, clientEmail } = params as { quoteNumber: string; clientEmail?: string };
+        const { quoteNumber, clientEmail } = params as {
+          quoteNumber: string;
+          clientEmail?: string;
+        };
 
         if (!quoteNumber) {
           result = 'Quote number is required';
@@ -1117,7 +1161,10 @@ serve(async (req: Request) => {
         if (error) {
           result = `Failed to send quote: ${error.message}`;
         } else {
-          const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+          const clientData =
+            typeof quote.client_data === 'string'
+              ? JSON.parse(quote.client_data)
+              : quote.client_data;
           result = `Quote ${quote.quoteNumber} sent to ${clientData?.name || 'client'}`;
         }
         break;
@@ -1145,7 +1192,8 @@ serve(async (req: Request) => {
 
         // Generate invoice number
         const invoiceNumber = `INV-${Date.now().toString(36).toUpperCase()}`;
-        const invoiceDueDate = dueDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        const invoiceDueDate =
+          dueDate || new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
 
         const { error } = await supabase
           .from('quotes')
@@ -1160,7 +1208,10 @@ serve(async (req: Request) => {
         if (error) {
           result = `Failed to create invoice: ${error.message}`;
         } else {
-          const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+          const clientData =
+            typeof quote.client_data === 'string'
+              ? JSON.parse(quote.client_data)
+              : quote.client_data;
           result = `Invoice ${invoiceNumber} created from quote ${quote.quoteNumber} for ${clientData?.name || 'client'} - Due: ${invoiceDueDate}`;
         }
         break;
@@ -1184,7 +1235,10 @@ serve(async (req: Request) => {
         if (error) {
           result = `Failed to send invoice: ${error.message}`;
         } else {
-          const clientData = typeof invoice.client_data === 'string' ? JSON.parse(invoice.client_data) : invoice.client_data;
+          const clientData =
+            typeof invoice.client_data === 'string'
+              ? JSON.parse(invoice.client_data)
+              : invoice.client_data;
           result = `Invoice ${invoice.invoice_number} sent to ${clientData?.name || 'client'}`;
         }
         break;
@@ -1208,7 +1262,10 @@ serve(async (req: Request) => {
         if (error) {
           result = `Failed to mark invoice as paid: ${error.message}`;
         } else {
-          const clientData = typeof invoice.client_data === 'string' ? JSON.parse(invoice.client_data) : invoice.client_data;
+          const clientData =
+            typeof invoice.client_data === 'string'
+              ? JSON.parse(invoice.client_data)
+              : invoice.client_data;
           result = `Invoice ${invoice.invoice_number} marked as paid - £${invoice.total?.toFixed(2) || 0} from ${clientData?.name || 'client'}`;
         }
         break;
@@ -1232,7 +1289,10 @@ serve(async (req: Request) => {
         if (error) {
           result = `Failed to approve quote: ${error.message}`;
         } else {
-          const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+          const clientData =
+            typeof quote.client_data === 'string'
+              ? JSON.parse(quote.client_data)
+              : quote.client_data;
           result = `Quote ${quote.quoteNumber} approved for ${clientData?.name || 'client'} - £${quote.total?.toFixed(2) || 0}`;
         }
         break;
@@ -1242,17 +1302,15 @@ serve(async (req: Request) => {
         result = `Unknown tool: ${tool}. Available employer tools: get_employee_info, get_pending_timesheets, approve_timesheet, get_job_info, get_worker_locations, and more.`;
     }
 
-    return new Response(
-      JSON.stringify({ result, message: result }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ result, message: result }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: unknown) {
     console.error('Employer voice tools error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-    return new Response(
-      JSON.stringify({ error: errorMessage, result: `Error: ${errorMessage}` }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: errorMessage, result: `Error: ${errorMessage}` }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

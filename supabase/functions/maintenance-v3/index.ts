@@ -1,11 +1,12 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from '../_shared/deps.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // System prompt for maintenance guidance with enhanced final review capability
@@ -98,271 +99,319 @@ Remember: This becomes a working document for on-site use. Be precise, practical
 
 // Tool schema for structured maintenance guidance
 const MAINTENANCE_TOOL_SCHEMA = {
-  name: "provide_maintenance_guidance",
-  description: "Provide comprehensive maintenance instructions in PDF-ready format",
+  name: 'provide_maintenance_guidance',
+  description: 'Provide comprehensive maintenance instructions in PDF-ready format',
   parameters: {
-    type: "object",
+    type: 'object',
     properties: {
       response: {
-        type: "string",
-        description: "Comprehensive maintenance overview (300-400 words) in UK English. Explain the maintenance approach, safety considerations, and overall strategy."
+        type: 'string',
+        description:
+          'Comprehensive maintenance overview (300-400 words) in UK English. Explain the maintenance approach, safety considerations, and overall strategy.',
       },
       equipmentSummary: {
-        type: "object",
-        description: "Equipment identification and context",
+        type: 'object',
+        description: 'Equipment identification and context',
         properties: {
-          equipmentType: { type: "string", description: "Type of equipment being maintained" },
-          location: { type: "string", description: "Installation location and environment" },
-          installationAge: { type: "string", description: "Age of installation" },
-          maintenanceType: { type: "string", enum: ["preventive", "reactive", "periodic_inspection"], description: "Type of maintenance work" },
-          overallRiskLevel: { type: "string", enum: ["low", "medium", "high"], description: "Overall risk assessment" }
+          equipmentType: { type: 'string', description: 'Type of equipment being maintained' },
+          location: { type: 'string', description: 'Installation location and environment' },
+          installationAge: { type: 'string', description: 'Age of installation' },
+          maintenanceType: {
+            type: 'string',
+            enum: ['preventive', 'reactive', 'periodic_inspection'],
+            description: 'Type of maintenance work',
+          },
+          overallRiskLevel: {
+            type: 'string',
+            enum: ['low', 'medium', 'high'],
+            description: 'Overall risk assessment',
+          },
         },
-        required: ["equipmentType", "maintenanceType", "overallRiskLevel"]
+        required: ['equipmentType', 'maintenanceType', 'overallRiskLevel'],
       },
       preWorkRequirements: {
-        type: "array",
-        description: "Pre-work requirements before starting maintenance",
+        type: 'array',
+        description: 'Pre-work requirements before starting maintenance',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            category: { type: "string", enum: ["isolation", "ppe", "access", "permits", "tools"], description: "Category of requirement" },
-            requirement: { type: "string", description: "Specific requirement detail" },
-            mandatory: { type: "boolean", description: "Whether this is mandatory" },
-            bs7671Reference: { type: "string", description: "BS 7671 regulation if applicable" }
+            category: {
+              type: 'string',
+              enum: ['isolation', 'ppe', 'access', 'permits', 'tools'],
+              description: 'Category of requirement',
+            },
+            requirement: { type: 'string', description: 'Specific requirement detail' },
+            mandatory: { type: 'boolean', description: 'Whether this is mandatory' },
+            bs7671Reference: { type: 'string', description: 'BS 7671 regulation if applicable' },
           },
-          required: ["category", "requirement", "mandatory"]
-        }
+          required: ['category', 'requirement', 'mandatory'],
+        },
       },
       visualInspection: {
-        type: "array",
-        description: "Visual inspection checkpoint sequence",
+        type: 'array',
+        description: 'Visual inspection checkpoint sequence',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            stepNumber: { type: "number", description: "Inspection step number" },
-            checkpoint: { type: "string", description: "What to inspect" },
-            acceptanceCriteria: { type: "string", description: "What constitutes a pass" },
-            failureAction: { type: "string", description: "What to do if failed" },
-            bs7671Reference: { type: "string", description: "Relevant BS 7671 regulation" }
+            stepNumber: { type: 'number', description: 'Inspection step number' },
+            checkpoint: { type: 'string', description: 'What to inspect' },
+            acceptanceCriteria: { type: 'string', description: 'What constitutes a pass' },
+            failureAction: { type: 'string', description: 'What to do if failed' },
+            bs7671Reference: { type: 'string', description: 'Relevant BS 7671 regulation' },
           },
-          required: ["stepNumber", "checkpoint", "acceptanceCriteria"]
-        }
+          required: ['stepNumber', 'checkpoint', 'acceptanceCriteria'],
+        },
       },
       testingProcedures: {
-        type: "array",
-        description: "Testing procedures with instrument settings",
+        type: 'array',
+        description: 'Testing procedures with instrument settings',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            testName: { type: "string", description: "Name of test (e.g., 'Earth Fault Loop Impedance')" },
-            testType: { type: "string", enum: ["dead", "live"], description: "Dead or live test" },
-            sequence: { type: "number", description: "Test sequence number" },
-            instrumentRequired: { type: "string", description: "Test instrument type" },
-            instrumentSettings: { type: "string", description: "Instrument configuration" },
-            procedure: { 
-              type: "array", 
-              items: { type: "string" },
-              description: "Step-by-step procedure"
+            testName: {
+              type: 'string',
+              description: "Name of test (e.g., 'Earth Fault Loop Impedance')",
+            },
+            testType: { type: 'string', enum: ['dead', 'live'], description: 'Dead or live test' },
+            sequence: { type: 'number', description: 'Test sequence number' },
+            instrumentRequired: { type: 'string', description: 'Test instrument type' },
+            instrumentSettings: { type: 'string', description: 'Instrument configuration' },
+            procedure: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Step-by-step procedure',
             },
             expectedResult: {
-              type: "object",
+              type: 'object',
               properties: {
-                value: { type: "string", description: "Expected value or range" },
-                unit: { type: "string", description: "Unit of measurement" },
-                passFailCriteria: { type: "string", description: "How to determine pass/fail" }
+                value: { type: 'string', description: 'Expected value or range' },
+                unit: { type: 'string', description: 'Unit of measurement' },
+                passFailCriteria: { type: 'string', description: 'How to determine pass/fail' },
               },
-              required: ["value", "passFailCriteria"]
+              required: ['value', 'passFailCriteria'],
             },
-            bs7671Reference: { type: "string", description: "Relevant BS 7671 regulation" }
+            bs7671Reference: { type: 'string', description: 'Relevant BS 7671 regulation' },
           },
-          required: ["testName", "testType", "sequence", "procedure", "expectedResult"]
-        }
+          required: ['testName', 'testType', 'sequence', 'procedure', 'expectedResult'],
+        },
       },
       servicingTasks: {
-        type: "array",
-        description: "Component servicing and maintenance tasks",
+        type: 'array',
+        description: 'Component servicing and maintenance tasks',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            component: { type: "string", description: "Component being serviced" },
-            task: { type: "string", description: "Maintenance task" },
-            frequency: { type: "string", description: "How often (e.g., 'Annual', 'Every 5 years')" },
-            torqueSettings: { type: "string", description: "Torque values if applicable" },
-            consumables: { 
-              type: "array",
-              items: { type: "string" },
-              description: "Consumables needed (e.g., contact cleaner, grease)"
+            component: { type: 'string', description: 'Component being serviced' },
+            task: { type: 'string', description: 'Maintenance task' },
+            frequency: {
+              type: 'string',
+              description: "How often (e.g., 'Annual', 'Every 5 years')",
             },
-            procedure: { 
-              type: "array",
-              items: { type: "string" },
-              description: "Step-by-step servicing procedure"
-            }
-          },
-          required: ["component", "task", "procedure"]
-        }
-      },
-      documentation: {
-        type: "object",
-        description: "Documentation and record-keeping requirements",
-        properties: {
-          recordsRequired: { 
-            type: "array",
-            items: { type: "string" },
-            description: "What must be recorded"
-          },
-          signOffRequirements: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Sign-off and certification needed"
-          },
-          nextDueCalculation: { type: "string", description: "How to calculate next maintenance due date" },
-          certificatesIssued: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Certificates/reports to issue"
-          }
-        },
-        required: ["recordsRequired", "signOffRequirements", "nextDueCalculation"]
-      },
-      commonFaults: {
-        type: "array",
-        description: "Common faults with diagnosis and remedial action",
-        items: {
-          type: "object",
-          properties: {
-            symptom: { type: "string", description: "Observable symptom" },
-            likelyCauses: { 
-              type: "array",
-              items: { type: "string" },
-              description: "Possible causes in order of likelihood"
-            },
-            diagnosisSteps: { 
-              type: "array",
-              items: { type: "string" },
-              description: "How to diagnose (tests to perform)"
-            },
-            remedialAction: { type: "string", description: "How to fix" },
-            partsRequired: { 
-              type: "array",
-              items: { type: "string" },
-              description: "Parts commonly needed"
-            }
-          },
-          required: ["symptom", "likelyCauses", "diagnosisSteps", "remedialAction"]
-        }
-      },
-      maintenanceSchedule: {
-        type: "array",
-        description: "Maintenance tasks with intervals, priorities, and procedures",
-        items: {
-          type: "object",
-          properties: {
-            interval: { 
-              type: "string", 
-              description: "Maintenance interval (e.g., 'Every 6 months', 'Annual', 'Every 3 years')" 
-            },
-            task: { 
-              type: "string", 
-              description: "Clear description of the maintenance task" 
-            },
-            priority: { 
-              type: "string", 
-              enum: ["high", "medium", "low"],
-              description: "Task priority based on safety and compliance" 
-            },
-            regulation: { 
-              type: "string", 
-              description: "BS 7671 regulation reference (e.g., 'BS 7671:2018 Reg 622.1')" 
-            },
-            estimatedDurationMinutes: { 
-              type: "number", 
-              description: "Estimated time to complete task in minutes" 
-            },
-            estimatedCost: {
-              type: "object",
-              properties: {
-                min: { type: "number", description: "Minimum cost in GBP" },
-                max: { type: "number", description: "Maximum cost in GBP" }
-              }
-            },
-            requiredQualifications: {
-              type: "array",
-              items: { type: "string" },
-              description: "Required qualifications (e.g., '18th Edition', 'ECS Gold Card')"
-            },
-            toolsRequired: {
-              type: "array",
-              items: { type: "string" },
-              description: "Tools needed (e.g., 'Multifunction tester', 'Torque screwdriver')"
+            torqueSettings: { type: 'string', description: 'Torque values if applicable' },
+            consumables: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Consumables needed (e.g., contact cleaner, grease)',
             },
             procedure: {
-              type: "array",
-              items: { type: "string" },
-              description: "Step-by-step procedure for the task"
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Step-by-step servicing procedure',
+            },
+          },
+          required: ['component', 'task', 'procedure'],
+        },
+      },
+      documentation: {
+        type: 'object',
+        description: 'Documentation and record-keeping requirements',
+        properties: {
+          recordsRequired: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'What must be recorded',
+          },
+          signOffRequirements: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Sign-off and certification needed',
+          },
+          nextDueCalculation: {
+            type: 'string',
+            description: 'How to calculate next maintenance due date',
+          },
+          certificatesIssued: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Certificates/reports to issue',
+          },
+        },
+        required: ['recordsRequired', 'signOffRequirements', 'nextDueCalculation'],
+      },
+      commonFaults: {
+        type: 'array',
+        description: 'Common faults with diagnosis and remedial action',
+        items: {
+          type: 'object',
+          properties: {
+            symptom: { type: 'string', description: 'Observable symptom' },
+            likelyCauses: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Possible causes in order of likelihood',
+            },
+            diagnosisSteps: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'How to diagnose (tests to perform)',
+            },
+            remedialAction: { type: 'string', description: 'How to fix' },
+            partsRequired: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Parts commonly needed',
+            },
+          },
+          required: ['symptom', 'likelyCauses', 'diagnosisSteps', 'remedialAction'],
+        },
+      },
+      maintenanceSchedule: {
+        type: 'array',
+        description: 'Maintenance tasks with intervals, priorities, and procedures',
+        items: {
+          type: 'object',
+          properties: {
+            interval: {
+              type: 'string',
+              description:
+                "Maintenance interval (e.g., 'Every 6 months', 'Annual', 'Every 3 years')",
+            },
+            task: {
+              type: 'string',
+              description: 'Clear description of the maintenance task',
+            },
+            priority: {
+              type: 'string',
+              enum: ['high', 'medium', 'low'],
+              description: 'Task priority based on safety and compliance',
+            },
+            regulation: {
+              type: 'string',
+              description: "BS 7671 regulation reference (e.g., 'BS 7671:2018 Reg 622.1')",
+            },
+            estimatedDurationMinutes: {
+              type: 'number',
+              description: 'Estimated time to complete task in minutes',
+            },
+            estimatedCost: {
+              type: 'object',
+              properties: {
+                min: { type: 'number', description: 'Minimum cost in GBP' },
+                max: { type: 'number', description: 'Maximum cost in GBP' },
+              },
+            },
+            requiredQualifications: {
+              type: 'array',
+              items: { type: 'string' },
+              description: "Required qualifications (e.g., '18th Edition', 'ECS Gold Card')",
+            },
+            toolsRequired: {
+              type: 'array',
+              items: { type: 'string' },
+              description: "Tools needed (e.g., 'Multifunction tester', 'Torque screwdriver')",
+            },
+            procedure: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Step-by-step procedure for the task',
             },
             safetyPrecautions: {
-              type: "array",
-              items: { type: "string" },
-              description: "Safety precautions and PPE requirements"
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Safety precautions and PPE requirements',
             },
             taskCategory: {
-              type: "string",
-              enum: ["inspection", "testing", "maintenance", "replacement"],
-              description: "Category of maintenance task"
-            }
+              type: 'string',
+              enum: ['inspection', 'testing', 'maintenance', 'replacement'],
+              description: 'Category of maintenance task',
+            },
           },
-          required: ["interval", "task", "priority"]
-        }
+          required: ['interval', 'task', 'priority'],
+        },
       },
       qualityRequirements: {
-        type: "array",
-        description: "Quality checkpoints at each stage",
+        type: 'array',
+        description: 'Quality checkpoints at each stage',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            stage: { type: "string", description: "Installation/testing stage" },
-            requirement: { type: "string", description: "Quality requirement detail" },
-            criteria: { type: "string", description: "Acceptance criteria and verification method" }
+            stage: { type: 'string', description: 'Installation/testing stage' },
+            requirement: { type: 'string', description: 'Quality requirement detail' },
+            criteria: {
+              type: 'string',
+              description: 'Acceptance criteria and verification method',
+            },
           },
-          required: ["stage", "requirement", "criteria"]
-        }
+          required: ['stage', 'requirement', 'criteria'],
+        },
       },
       bs7671References: {
-        type: "array",
-        description: "BS 7671 regulations directly applicable to this maintenance task with excerpts and application context",
+        type: 'array',
+        description:
+          'BS 7671 regulations directly applicable to this maintenance task with excerpts and application context',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            regulationNumber: { type: "string", description: "Full regulation number (e.g., 'BS 7671:2018+A3:2024 Reg 622.1')" },
-            section: { type: "string", description: "Section name (e.g., 'Part 6 - Inspection and Testing')" },
-            excerpt: { type: "string", description: "Direct quote or paraphrase of the regulation text (100-200 words)" },
-            whyApplies: { type: "string", description: "Clear explanation of why this regulation applies to THIS specific equipment/task" },
-            confidence: { type: "number", description: "Confidence score 0-1 for regulation applicability", minimum: 0, maximum: 1 },
-            consequence: { type: "string", description: "What happens if this regulation is not followed" },
-            relatedRegs: { 
-              type: "array", 
-              items: { type: "string" },
-              description: "Related regulation numbers that may also apply" 
-            }
+            regulationNumber: {
+              type: 'string',
+              description: "Full regulation number (e.g., 'BS 7671:2018+A3:2024 Reg 622.1')",
+            },
+            section: {
+              type: 'string',
+              description: "Section name (e.g., 'Part 6 - Inspection and Testing')",
+            },
+            excerpt: {
+              type: 'string',
+              description: 'Direct quote or paraphrase of the regulation text (100-200 words)',
+            },
+            whyApplies: {
+              type: 'string',
+              description:
+                'Clear explanation of why this regulation applies to THIS specific equipment/task',
+            },
+            confidence: {
+              type: 'number',
+              description: 'Confidence score 0-1 for regulation applicability',
+              minimum: 0,
+              maximum: 1,
+            },
+            consequence: {
+              type: 'string',
+              description: 'What happens if this regulation is not followed',
+            },
+            relatedRegs: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Related regulation numbers that may also apply',
+            },
           },
-          required: ["regulationNumber", "excerpt", "whyApplies"]
-        }
-      }
+          required: ['regulationNumber', 'excerpt', 'whyApplies'],
+        },
+      },
     },
     required: [
-      "response",
-      "equipmentSummary",
-      "preWorkRequirements",
-      "visualInspection",
-      "testingProcedures",
-      "maintenanceSchedule",
-      "qualityRequirements",
-      "documentation",
-      "bs7671References"
+      'response',
+      'equipmentSummary',
+      'preWorkRequirements',
+      'visualInspection',
+      'testingProcedures',
+      'maintenanceSchedule',
+      'qualityRequirements',
+      'documentation',
+      'bs7671References',
     ],
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 };
 
 Deno.serve(async (req) => {
@@ -376,18 +425,18 @@ Deno.serve(async (req) => {
     const requestBody = await req.json();
     console.log('📥 Maintenance-v3 request:', JSON.stringify(requestBody, null, 2));
 
-    const { 
-      query, 
+    const {
+      query,
       equipmentDescription,
-      equipmentType, 
+      equipmentType,
       installationAge,
       ageYears,
-      maintenanceType, 
+      maintenanceType,
       location,
       buildingType,
       environment,
       criticality,
-      detailLevel
+      detailLevel,
     } = requestBody;
 
     // Use equipmentDescription as query if query not provided
@@ -422,14 +471,14 @@ Deno.serve(async (req) => {
       supabase.rpc('search_practical_work_intelligence_hybrid', {
         query_text: maintenanceEnhancedQuery, // Enhanced query
         match_count: 12,
-        filter_trade: 'maintenance' // CRITICAL: Filter for maintenance content
+        filter_trade: 'maintenance', // CRITICAL: Filter for maintenance content
       }),
-      
+
       // TIER 2: BS 7671 Regulations Intelligence - KEYWORD-ONLY (testing requirements)
       supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: `${maintenanceEnhancedQuery} inspection testing verification certification`, // Testing-focused
-        match_count: 8
-      })
+        match_count: 8,
+      }),
     ]);
 
     const practicalWorkDocs = practicalWorkResult?.data || [];
@@ -440,23 +489,29 @@ Deno.serve(async (req) => {
 
     if (practicalWorkDocs.length > 0) {
       maintenanceContext = '## PRACTICAL MAINTENANCE PROCEDURES:\n\n';
-      maintenanceContext += practicalWorkDocs.map((pw: any) => 
-        `**${pw.primary_topic}** (${pw.equipment_category || 'General'})\n` +
-        `${pw.content}\n` +
-        `${pw.maintenance_interval ? `Frequency: ${pw.maintenance_interval}\n` : ''}` +
-        `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
-        `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}\n` : ''}` +
-        `${pw.bs7671_regulations?.length > 0 ? `Regulations: ${pw.bs7671_regulations.join(', ')}` : ''}`
-      ).join('\n\n---\n\n');
+      maintenanceContext += practicalWorkDocs
+        .map(
+          (pw: any) =>
+            `**${pw.primary_topic}** (${pw.equipment_category || 'General'})\n` +
+            `${pw.content}\n` +
+            `${pw.maintenance_interval ? `Frequency: ${pw.maintenance_interval}\n` : ''}` +
+            `${pw.expected_results ? `Expected Results: ${pw.expected_results}\n` : ''}` +
+            `${pw.tools_required?.length > 0 ? `Tools: ${pw.tools_required.join(', ')}\n` : ''}` +
+            `${pw.bs7671_regulations?.length > 0 ? `Regulations: ${pw.bs7671_regulations.join(', ')}` : ''}`
+        )
+        .join('\n\n---\n\n');
     }
 
     if (bs7671Data.length > 0) {
       maintenanceContext += '\n\n## BS 7671 TESTING & INSPECTION REQUIREMENTS:\n\n';
-      maintenanceContext += bs7671Data.map((reg: any) =>
-        `**${reg.regulation_number}**: ${reg.content || reg.regulation_text}\n` +
-        `${reg.primary_topic ? `Topic: ${reg.primary_topic}\n` : ''}` +
-        `${reg.keywords?.length > 0 ? `Keywords: ${reg.keywords.join(', ')}` : ''}`
-      ).join('\n\n');
+      maintenanceContext += bs7671Data
+        .map(
+          (reg: any) =>
+            `**${reg.regulation_number}**: ${reg.content || reg.regulation_text}\n` +
+            `${reg.primary_topic ? `Topic: ${reg.primary_topic}\n` : ''}` +
+            `${reg.keywords?.length > 0 ? `Keywords: ${reg.keywords.join(', ')}` : ''}`
+        )
+        .join('\n\n');
     }
 
     const ragDuration = Date.now() - ragStartTime;
@@ -464,27 +519,37 @@ Deno.serve(async (req) => {
     console.log('✅ Maintenance RAG complete (parallel keyword-only)', {
       practicalWork: practicalWorkDocs.length,
       bs7671: bs7671Data.length,
-      avgPracticalScore: practicalWorkDocs.length > 0
-        ? (practicalWorkDocs.reduce((s: number, d: any) => s + (d.hybrid_score || 0), 0) / practicalWorkDocs.length).toFixed(2)
-        : 'N/A',
-      duration: ragDuration
+      avgPracticalScore:
+        practicalWorkDocs.length > 0
+          ? (
+              practicalWorkDocs.reduce((s: number, d: any) => s + (d.hybrid_score || 0), 0) /
+              practicalWorkDocs.length
+            ).toFixed(2)
+          : 'N/A',
+      duration: ragDuration,
     });
 
     // Log RAG quality metrics
     const ragQuality = {
       practicalWorkCount: practicalWorkDocs?.length || 0,
-      practicalWorkAvgScore: practicalWorkDocs?.length > 0
-        ? (practicalWorkDocs.reduce((s: number, d: any) => s + (d.hybrid_score || 0), 0) / practicalWorkDocs.length).toFixed(2)
-        : 'N/A',
+      practicalWorkAvgScore:
+        practicalWorkDocs?.length > 0
+          ? (
+              practicalWorkDocs.reduce((s: number, d: any) => s + (d.hybrid_score || 0), 0) /
+              practicalWorkDocs.length
+            ).toFixed(2)
+          : 'N/A',
       usedFallback: practicalWorkDocs?.length < 4,
       fallbackSource: practicalWorkDocs?.length < 4 ? 'maintenance_knowledge' : 'none',
-      mode: detailLevel
+      mode: detailLevel,
     };
 
     console.log('📊 RAG Quality Metrics:', ragQuality);
 
     // ✅ PHASE 1: Enhanced context already built in maintenanceContext variable above
-    const ragContext = maintenanceContext || 'No specific knowledge found. Use general BS 7671 Chapter 64 principles.';
+    const ragContext =
+      maintenanceContext ||
+      'No specific knowledge found. Use general BS 7671 Chapter 64 principles.';
 
     // Construct user message with context
     const userMessage = `Equipment: ${equipmentType || 'Not specified'}
@@ -511,20 +576,20 @@ Provide comprehensive maintenance instructions following the tool schema structu
         fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${openaiApiKey}`,
-            'Content-Type': 'application/json'
+            Authorization: `Bearer ${openaiApiKey}`,
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            model: 'gpt-5-mini',  // Upgraded for better structured output
+            model: 'gpt-5-mini', // Upgraded for better structured output
             messages: [
               { role: 'system', content: MAINTENANCE_SYSTEM_PROMPT },
-              { role: 'user', content: userMessage }
+              { role: 'user', content: userMessage },
             ],
             tools: [{ type: 'function', function: MAINTENANCE_TOOL_SCHEMA }],
-            tool_choice: { type: 'function', function: { name: 'provide_maintenance_guidance' } }
-          })
+            tool_choice: { type: 'function', function: { name: 'provide_maintenance_guidance' } },
+          }),
         }),
-        Timeouts.PRACTICAL_WORK,  // 6 minutes - maximum timeout for GPT-5 Mini with large outputs
+        Timeouts.PRACTICAL_WORK, // 6 minutes - maximum timeout for GPT-5 Mini with large outputs
         'OpenAI maintenance guidance generation'
       );
     } catch (error: any) {
@@ -532,7 +597,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
         console.error('⏱️ AI call timed out after 6 minutes');
         throw new Error(
           'Maintenance generation took too long. This can happen with very complex equipment in Full Detail mode. ' +
-          'Try: 1) Using Quick mode for faster results, 2) Simplifying the equipment description, or 3) Breaking into smaller maintenance tasks.'
+            'Try: 1) Using Quick mode for faster results, 2) Simplifying the equipment description, or 3) Breaking into smaller maintenance tasks.'
         );
       }
       throw error;
@@ -549,12 +614,15 @@ Provide comprehensive maintenance instructions following the tool schema structu
     // Extract tool call result
     const toolCall = aiData.choices?.[0]?.message?.tool_calls?.[0];
     if (!toolCall) {
-      console.error('❌ No tool call in AI response. Full response:', JSON.stringify(aiData, null, 2));
+      console.error(
+        '❌ No tool call in AI response. Full response:',
+        JSON.stringify(aiData, null, 2)
+      );
       throw new Error('No tool call in AI response');
     }
 
     console.log('🔍 Tool call arguments preview:', toolCall.function.arguments.substring(0, 500));
-    
+
     let maintenanceGuidance;
     try {
       maintenanceGuidance = JSON.parse(toolCall.function.arguments);
@@ -580,7 +648,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
         JSON.stringify({
           success: false,
           error: 'AI returned invalid response structure',
-          code: 'INVALID_AI_RESPONSE'
+          code: 'INVALID_AI_RESPONSE',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
       );
@@ -608,10 +676,12 @@ Provide comprehensive maintenance instructions following the tool schema structu
 
     // Check if response is partial
     const missingSections = [];
-    if (maintenanceGuidance.preWorkRequirements.length === 0) missingSections.push('preWorkRequirements');
+    if (maintenanceGuidance.preWorkRequirements.length === 0)
+      missingSections.push('preWorkRequirements');
     if (maintenanceGuidance.visualInspection.length === 0) missingSections.push('visualInspection');
-    if (maintenanceGuidance.testingProcedures.length === 0) missingSections.push('testingProcedures');
-    
+    if (maintenanceGuidance.testingProcedures.length === 0)
+      missingSections.push('testingProcedures');
+
     if (missingSections.length > 0) {
       maintenanceGuidance.partial = true;
       maintenanceGuidance.missingSections = missingSections;
@@ -619,7 +689,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
     }
 
     // ============= SUMMARY CALCULATION HELPERS =============
-    
+
     // Convert interval string to annual frequency multiplier
     const parseFrequency = (interval: string): number => {
       if (/month/i.test(interval)) {
@@ -646,8 +716,9 @@ Provide comprehensive maintenance instructions following the tool schema structu
 
     // Calculate annual cost from maintenance schedule
     const calculateAnnualCost = (schedule: any[]): { min: number; max: number } => {
-      let minTotal = 0, maxTotal = 0;
-      
+      let minTotal = 0,
+        maxTotal = 0;
+
       for (const task of schedule) {
         if (task.estimatedCost) {
           const frequency = parseFrequency(task.interval || 'annual');
@@ -655,29 +726,29 @@ Provide comprehensive maintenance instructions following the tool schema structu
           maxTotal += (task.estimatedCost.max || 0) * frequency;
         }
       }
-      
+
       return { min: Math.round(minTotal), max: Math.round(maxTotal) };
     };
 
     // Calculate total annual hours
     const calculateAnnualHours = (schedule: any[]): number => {
       let totalMinutes = 0;
-      
+
       for (const task of schedule) {
         if (task.estimatedDurationMinutes) {
           const frequency = parseFrequency(task.interval || 'annual');
           totalMinutes += task.estimatedDurationMinutes * frequency;
         }
       }
-      
-      return Math.round(totalMinutes / 60 * 10) / 10; // Round to 1 decimal
+
+      return Math.round((totalMinutes / 60) * 10) / 10; // Round to 1 decimal
     };
 
     // Calculate next EICR due date
     const calculateNextEICR = (buildingType: string, ageYears: number): string => {
       const now = new Date();
       let yearsUntilEICR = 10; // Default
-      
+
       if (buildingType === 'domestic') {
         yearsUntilEICR = 10;
       } else if (buildingType === 'commercial') {
@@ -685,59 +756,62 @@ Provide comprehensive maintenance instructions following the tool schema structu
       } else if (buildingType === 'industrial') {
         yearsUntilEICR = 3;
       }
-      
+
       // If equipment is old, suggest sooner EICR
       if (ageYears > 10) yearsUntilEICR = Math.min(yearsUntilEICR, 3);
-      
+
       const dueDate = new Date(now);
       dueDate.setFullYear(now.getFullYear() + yearsUntilEICR);
-      
+
       return dueDate.toLocaleDateString('en-GB');
     };
 
     // Calculate all summary metrics
     let calculatedSchedule = maintenanceGuidance.maintenanceSchedule || [];
-    
+
     // ✅ Add fallback tasks if schedule is empty
     if (calculatedSchedule.length === 0) {
       console.warn('⚠️ AI returned empty schedule. Adding fallback tasks.');
       calculatedSchedule.push({
         taskName: 'Visual Inspection',
-        description: 'Perform thorough visual inspection of equipment condition, connections, and enclosure integrity',
+        description:
+          'Perform thorough visual inspection of equipment condition, connections, and enclosure integrity',
         frequency: 'quarterly',
         estimatedDuration: 0.5,
         priority: 'high',
         requiredTools: ['Torch', 'Visual inspection checklist'],
         safetyRequirements: 'Ensure equipment is de-energized and locked out',
         acceptanceCriteria: 'No visible damage, corrosion, or loose connections',
-        bs7671Reference: 'BS 7671:2018+A3:2024 Reg 641.1'
+        bs7671Reference: 'BS 7671:2018+A3:2024 Reg 641.1',
       });
       calculatedSchedule.push({
         taskName: 'Periodic Testing',
-        description: 'Conduct electrical safety testing including insulation resistance and earth continuity',
+        description:
+          'Conduct electrical safety testing including insulation resistance and earth continuity',
         frequency: 'annually',
         estimatedDuration: 1.0,
         priority: 'high',
         requiredTools: ['Insulation resistance tester', 'Earth continuity tester', 'Multimeter'],
         safetyRequirements: 'Follow safe isolation procedures, use appropriate PPE',
         acceptanceCriteria: 'Test results within acceptable limits per BS 7671',
-        bs7671Reference: 'BS 7671:2018+A3:2024 Chapter 64'
+        bs7671Reference: 'BS 7671:2018+A3:2024 Chapter 64',
       });
     }
-    
+
     const riskLevel = maintenanceGuidance.equipmentSummary?.overallRiskLevel || 'medium';
-    const riskScoreValue = riskLevel === 'critical' ? 90 : 
-                           riskLevel === 'high' ? 70 :
-                           riskLevel === 'medium' ? 40 : 20;
+    const riskScoreValue =
+      riskLevel === 'critical' ? 90 : riskLevel === 'high' ? 70 : riskLevel === 'medium' ? 40 : 20;
 
     const totalExecutionTime = Date.now() - startTime;
-    console.log(`✅ Total execution time: ${totalExecutionTime}ms (${(totalExecutionTime / 1000).toFixed(2)}s)`);
+    console.log(
+      `✅ Total execution time: ${totalExecutionTime}ms (${(totalExecutionTime / 1000).toFixed(2)}s)`
+    );
     console.log(`📋 Final schedule: ${calculatedSchedule.length} tasks`);
     console.log(`📋 Raw AI schedule:`, JSON.stringify(calculatedSchedule.slice(0, 2), null, 2));
 
     // Sanitize maintenance schedule data
     const sanitizeSchedule = (tasks: any[]) => {
-      return tasks.map(task => {
+      return tasks.map((task) => {
         // Clean procedure array - remove malformed entries
         let cleanProcedure = task.procedure || [];
         if (Array.isArray(cleanProcedure)) {
@@ -748,7 +822,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
             return !isFieldName && !isEmpty;
           });
         }
-        
+
         // Clean safety precautions array
         let cleanSafety = task.safetyPrecautions || task.safetyRequirements || [];
         if (Array.isArray(cleanSafety)) {
@@ -758,21 +832,25 @@ Provide comprehensive maintenance instructions following the tool schema structu
             return !isFieldName && !isEmpty;
           });
         }
-        
+
         // If safety precautions are empty, add default
         if (cleanSafety.length === 0) {
-          cleanSafety = ['Ensure safe isolation before starting work', 'Wear appropriate PPE', 'Follow permit to work procedures'];
+          cleanSafety = [
+            'Ensure safe isolation before starting work',
+            'Wear appropriate PPE',
+            'Follow permit to work procedures',
+          ];
         }
-        
+
         // If procedure is empty, add placeholder
         if (cleanProcedure.length === 0) {
           cleanProcedure = ['Follow BS 7671 Chapter 64 inspection and testing procedures'];
         }
-        
+
         return {
           ...task,
           procedure: cleanProcedure,
-          safetyPrecautions: cleanSafety
+          safetyPrecautions: cleanSafety,
         };
       });
     };
@@ -782,15 +860,15 @@ Provide comprehensive maintenance instructions following the tool schema structu
     console.log(`📋 Cleaned schedule:`, JSON.stringify(calculatedSchedule.slice(0, 2), null, 2));
 
     // Transform schedule to match frontend interface
-    const transformedSchedule = calculatedSchedule.map(task => ({
+    const transformedSchedule = calculatedSchedule.map((task) => ({
       interval: task.frequency || task.interval,
       task: task.taskName || task.description || task.task,
       regulation: task.bs7671Reference || task.regulation || 'Industry standard',
       priority: task.priority,
-      estimatedDurationMinutes: task.estimatedDuration 
-        ? (typeof task.estimatedDuration === 'number' 
-            ? Math.round(task.estimatedDuration * 60) 
-            : parseInt(task.estimatedDuration) || 0)
+      estimatedDurationMinutes: task.estimatedDuration
+        ? typeof task.estimatedDuration === 'number'
+          ? Math.round(task.estimatedDuration * 60)
+          : parseInt(task.estimatedDuration) || 0
         : task.estimatedDurationMinutes,
       estimatedCost: task.estimatedCost,
       requiredQualifications: task.requiredQualifications,
@@ -798,10 +876,13 @@ Provide comprehensive maintenance instructions following the tool schema structu
       procedure: task.procedure,
       safetyPrecautions: task.safetyRequirements || task.safetyPrecautions,
       taskCategory: task.taskCategory,
-      nextDue: task.nextDue
+      nextDue: task.nextDue,
     }));
 
-    console.log(`📋 Transformed schedule:`, JSON.stringify(transformedSchedule.slice(0, 2), null, 2));
+    console.log(
+      `📋 Transformed schedule:`,
+      JSON.stringify(transformedSchedule.slice(0, 2), null, 2)
+    );
 
     return new Response(
       JSON.stringify({
@@ -816,7 +897,7 @@ Provide comprehensive maintenance instructions following the tool schema structu
           schedule: transformedSchedule,
           recommendations: maintenanceGuidance.recommendations || [],
           regulations: maintenanceGuidance.bs7671References || [],
-          
+
           // Summary metrics
           riskScore: riskScoreValue,
           riskLevel: riskLevel,
@@ -824,9 +905,9 @@ Provide comprehensive maintenance instructions following the tool schema structu
           annualCostEstimate: calculateAnnualCost(calculatedSchedule),
           totalEstimatedHours: calculateAnnualHours(calculatedSchedule),
           nextEICRDue: calculateNextEICR(buildingType || 'domestic', ageYears || 0),
-          
+
           partial: maintenanceGuidance.partial || false,
-          missingSections: maintenanceGuidance.missingSections || []
+          missingSections: maintenanceGuidance.missingSections || [],
         },
         metadata: {
           requestId: crypto.randomUUID(),
@@ -835,27 +916,26 @@ Provide comprehensive maintenance instructions following the tool schema structu
           bs7671Count: bs7671Data?.length || 0,
           intelligenceStatus: bs7671Data ? 'OK' : 'FAILED',
           equipmentType,
-          maintenanceType
-        }
+          maintenanceType,
+        },
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Maintenance-v3 error:', error);
     await captureException(error, {
       functionName: 'maintenance-v3',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

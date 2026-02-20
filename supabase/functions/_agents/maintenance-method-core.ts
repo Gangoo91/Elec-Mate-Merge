@@ -5,7 +5,10 @@
  * Uses ultra-fast regulations_intelligence with GIN keyword search
  */
 
-import { searchPracticalWorkIntelligence, formatForAIContext } from '../_shared/rag-practical-work.ts';
+import {
+  searchPracticalWorkIntelligence,
+  formatForAIContext,
+} from '../_shared/rag-practical-work.ts';
 import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 
 // UK Electrical Qualifications - Proper Industry Standards
@@ -13,100 +16,100 @@ const UK_ELECTRICAL_QUALIFICATIONS = {
   wiring_regulations: {
     name: 'City & Guilds 2382-22 (18th Edition BS 7671:2018+A3:2024)',
     fullTitle: 'C&G 2382-22 Requirements for Electrical Installations',
-    level: 'Level 3'
+    level: 'Level 3',
   },
   inspection_testing: {
     name: 'City & Guilds 2391-52 Inspection & Testing',
     fullTitle: 'C&G 2391-52 Initial Verification and Periodic Inspection',
-    level: 'Level 3'
+    level: 'Level 3',
   },
   installation: {
     name: 'City & Guilds 2365 / EAL Level 3 Electrical Installation',
     fullTitle: 'Level 3 Diploma in Electrical Installations',
-    level: 'Level 3'
+    level: 'Level 3',
   },
   ecs_card: {
     name: 'ECS Gold Card (JIB Registered Electrician)',
     fullTitle: 'Electrotechnical Certification Scheme Gold Card',
-    requirement: 'Industry recognised competence'
+    requirement: 'Industry recognised competence',
   },
   site_safety: {
     name: 'SSSTS/SMSTS Construction Site Safety',
     fullTitle: 'Site Supervisor/Manager Safety Training Scheme',
-    requirement: 'Required for construction sites'
+    requirement: 'Required for construction sites',
   },
   pat_testing: {
     name: 'City & Guilds 2377 PAT Testing',
     fullTitle: 'C&G 2377 Portable Appliance Testing',
-    level: 'Level 2'
+    level: 'Level 2',
   },
   am2: {
     name: 'AM2 Practical Assessment',
     fullTitle: 'Achievement Measurement 2 - JIB/ECS End Point Assessment',
-    requirement: 'Required for electrician registration'
+    requirement: 'Required for electrician registration',
   },
   hv_authorised: {
     name: 'HV Authorised Person (AP)',
     fullTitle: 'High Voltage Authorised Person Competency',
-    requirement: 'Required for HV work >1kV'
+    requirement: 'Required for HV work >1kV',
   },
   emergency_lighting: {
     name: 'City & Guilds 2919 Emergency Lighting',
     fullTitle: 'C&G 2919 Inspection, Testing & Commissioning of Emergency Lighting',
-    level: 'Level 3'
-  }
+    level: 'Level 3',
+  },
 };
 
 // Equipment-specific qualification mapping
 function getRequiredQualificationsForEquipment(equipmentType: string): string[] {
   const baseQuals = [
     'City & Guilds 2382-22 (18th Edition BS 7671:2018+A3:2024)',
-    'ECS Gold Card (JIB Registered Electrician)'
+    'ECS Gold Card (JIB Registered Electrician)',
   ];
-  
+
   const equipmentQuals: Record<string, string[]> = {
     busbar_system: [
       ...baseQuals,
       'City & Guilds 2391-52 Inspection & Testing',
       'HV Authorised Person (if >1kV)',
-      'Manufacturer busbar system training (e.g., Schneider PowerPACT)'
+      'Manufacturer busbar system training (e.g., Schneider PowerPACT)',
     ],
     motor_control: [
       ...baseQuals,
       'City & Guilds 2391-52 Inspection & Testing',
       'Industrial control systems training',
-      'VFD/Inverter manufacturer certification (e.g., ABB, Siemens)'
+      'VFD/Inverter manufacturer certification (e.g., ABB, Siemens)',
     ],
     emergency_lighting: [
       ...baseQuals,
       'City & Guilds 2919 Emergency Lighting Inspection & Testing',
-      'BS 5266 Emergency Lighting Standard training'
+      'BS 5266 Emergency Lighting Standard training',
     ],
     distribution: [
       ...baseQuals,
       'City & Guilds 2391-52 Inspection & Testing',
-      'AM2 Practical Assessment'
+      'AM2 Practical Assessment',
     ],
     transformer: [
       ...baseQuals,
       'City & Guilds 2391-52 Inspection & Testing',
       'HV Authorised Person (AP) for transformers >1kV',
-      'Oil sampling and analysis certification'
+      'Oil sampling and analysis certification',
     ],
     standby_power: [
       ...baseQuals,
       'City & Guilds 2391-52 Inspection & Testing',
       'Generator maintenance certification',
-      'UPS systems specialist training'
+      'UPS systems specialist training',
     ],
     switchgear: [
       ...baseQuals,
       'City & Guilds 2391-52 Inspection & Testing',
       'HV switchgear competency (if applicable)',
-      'Arc flash safety training'
-    ]
+      'Arc flash safety training',
+    ],
   };
-  
+
   return equipmentQuals[equipmentType] || baseQuals;
 }
 
@@ -130,24 +133,39 @@ interface MaintenanceMethodResult {
  */
 function extractMaintenanceKeywords(query: string, equipmentDetails: any): string[] {
   const baseKeywords = [
-    'maintenance', 'inspection', 'testing', 'periodic',
-    'isolation', 'safety', 'earthing', 'bonding'
+    'maintenance',
+    'inspection',
+    'testing',
+    'periodic',
+    'isolation',
+    'safety',
+    'earthing',
+    'bonding',
   ];
-  
+
   // Equipment-specific keywords
   const equipmentKeywords: Record<string, string[]> = {
-    distribution: ['distribution', 'board', 'mcb', 'rcbo', 'rcd', 'consumer', 'busbar', 'protective device'],
+    distribution: [
+      'distribution',
+      'board',
+      'mcb',
+      'rcbo',
+      'rcd',
+      'consumer',
+      'busbar',
+      'protective device',
+    ],
     busbar_system: ['busbar', 'rising main', 'tap-off', 'joints', 'torque', 'trunking'],
     motor_control: ['motor', 'starter', 'vfd', 'inverter', 'contactor', 'overload', 'drive'],
     emergency_lighting: ['emergency', 'lighting', 'battery', 'duration', 'lux', 'bs5266'],
     transformer: ['transformer', 'oil', 'winding', 'tap changer', 'insulation', 'hv'],
     switchgear: ['switchgear', 'circuit breaker', 'isolator', 'busbar', 'arc flash'],
-    standby_power: ['generator', 'ups', 'ats', 'transfer', 'battery', 'fuel', 'standby']
+    standby_power: ['generator', 'ups', 'ats', 'transfer', 'battery', 'fuel', 'standby'],
   };
-  
+
   const equipmentType = detectEquipmentCategory(query);
   const specific = equipmentKeywords[equipmentType] || [];
-  
+
   // Add installation type keywords
   const installationType = equipmentDetails?.installationType?.toLowerCase() || '';
   if (installationType.includes('domestic')) {
@@ -157,13 +175,14 @@ function extractMaintenanceKeywords(query: string, equipmentDetails: any): strin
   } else {
     baseKeywords.push('commercial', 'premises', 'three-phase');
   }
-  
+
   // Extract words from query
-  const queryWords = query.toLowerCase()
+  const queryWords = query
+    .toLowerCase()
     .replace(/[^a-z0-9\s]/g, ' ')
     .split(/\s+/)
-    .filter(w => w.length > 3);
-  
+    .filter((w) => w.length > 3);
+
   return [...new Set([...baseKeywords, ...specific, ...queryWords])];
 }
 
@@ -180,7 +199,7 @@ export async function generateMaintenanceMethod(
 
     // Update progress: Starting - granular updates for smooth UI
     await updateProgress(supabase, jobId, 5, 'Initializing maintenance analysis');
-    await new Promise(r => setTimeout(r, 300)); // Brief pause for UI to catch up
+    await new Promise((r) => setTimeout(r, 300)); // Brief pause for UI to catch up
 
     // Update progress: RAG search starting
     await updateProgress(supabase, jobId, 10, 'Searching maintenance knowledge base');
@@ -189,14 +208,16 @@ export async function generateMaintenanceMethod(
     const ragResult = await searchPracticalWorkIntelligence(supabase, {
       query: `${query} maintenance procedures inspection testing periodic checks wear indicators troubleshooting diagnostics`,
       tradeFilter: 'maintenance',
-      matchCount: 20
+      matchCount: 20,
     });
 
-    console.log(`📚 RAG Results: ${ragResult.results.length} records (quality: ${ragResult.qualityScore.toFixed(1)})`);
+    console.log(
+      `📚 RAG Results: ${ragResult.results.length} records (quality: ${ragResult.qualityScore.toFixed(1)})`
+    );
 
     // Update progress: RAG complete
     await updateProgress(supabase, jobId, 18, 'Analysing maintenance procedures');
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
 
     // Update progress: Ultra-fast regulations intelligence search
     await updateProgress(supabase, jobId, 25, 'Searching regulations intelligence');
@@ -210,7 +231,7 @@ export async function generateMaintenanceMethod(
     const regulations = await searchRegulationsIntelligence(supabase, {
       keywords: maintenanceKeywords,
       appliesTo: [installationType.toLowerCase()],
-      limit: 20
+      limit: 20,
     });
     console.log(`⚡ Regulations search completed in ${Date.now() - regSearchStart}ms`);
 
@@ -218,13 +239,18 @@ export async function generateMaintenanceMethod(
 
     // Granular progress updates before AI generation
     await updateProgress(supabase, jobId, 32, 'Cross-referencing BS 7671 requirements');
-    await new Promise(r => setTimeout(r, 300));
-    
+    await new Promise((r) => setTimeout(r, 300));
+
     await updateProgress(supabase, jobId, 38, 'Preparing AI generation context');
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
 
     // Update progress: AI generation starting
-    await updateProgress(supabase, jobId, 40, 'Generating maintenance instructions (0s elapsed)...');
+    await updateProgress(
+      supabase,
+      jobId,
+      40,
+      'Generating maintenance instructions (0s elapsed)...'
+    );
 
     // === Concurrent progress ticker (replaces setInterval which doesn't work during blocking fetch) ===
     const progressMessages = [
@@ -235,30 +261,31 @@ export async function generateMaintenanceMethod(
       'Incorporating regulation requirements',
       'Building verification procedures',
       'Compiling tools and materials list',
-      'Finalising maintenance intervals'
+      'Finalising maintenance intervals',
     ];
-    
+
     const progressController = new AbortController();
     const aiStartTime = Date.now();
-    
+
     // Concurrent progress ticker function
     async function runProgressTicker(): Promise<void> {
       let progress = 40;
       let tickCount = 0;
-      
+
       while (!progressController.signal.aborted && progress < 80) {
-        await new Promise(resolve => setTimeout(resolve, 10000)); // 10 seconds
+        await new Promise((resolve) => setTimeout(resolve, 10000)); // 10 seconds
         if (progressController.signal.aborted) break;
-        
+
         tickCount++;
-        progress = Math.min(80, 40 + (tickCount * 5));
+        progress = Math.min(80, 40 + tickCount * 5);
         const messageIndex = Math.min(tickCount - 1, progressMessages.length - 1);
         const elapsedSecs = Math.floor((Date.now() - aiStartTime) / 1000);
-        const elapsedStr = elapsedSecs >= 60 
-          ? `${Math.floor(elapsedSecs / 60)}m ${elapsedSecs % 60}s` 
-          : `${elapsedSecs}s`;
+        const elapsedStr =
+          elapsedSecs >= 60
+            ? `${Math.floor(elapsedSecs / 60)}m ${elapsedSecs % 60}s`
+            : `${elapsedSecs}s`;
         const message = `${progressMessages[messageIndex]} (${elapsedStr} elapsed)...`;
-        
+
         try {
           await updateProgress(supabase, jobId, progress, message);
           console.log(`📊 Progress: ${progress}% - ${message}`);
@@ -267,16 +294,20 @@ export async function generateMaintenanceMethod(
         }
       }
     }
-    
+
     // Start progress ticker as concurrent task (NOT awaited)
     const progressTickerPromise = runProgressTicker();
     // === End concurrent progress ticker setup ===
 
     // Prepare context for AI
     const practicalContext = formatForAIContext(ragResult.results);
-    const regulationsContext = regulations?.map((r: any) => 
-      `**${r.regulation_number}**: ${r.primary_topic}\n${r.content || ''}\nKeywords: ${(r.keywords || []).slice(0, 5).join(', ')}`
-    ).join('\n\n') || '';
+    const regulationsContext =
+      regulations
+        ?.map(
+          (r: any) =>
+            `**${r.regulation_number}**: ${r.primary_topic}\n${r.content || ''}\nKeywords: ${(r.keywords || []).slice(0, 5).join(', ')}`
+        )
+        .join('\n\n') || '';
 
     // Generate maintenance method with GPT-5 Mini
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
@@ -298,8 +329,8 @@ export async function generateMaintenanceMethod(
       aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${openAiKey}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${openAiKey}`,
+          'Content-Type': 'application/json',
         },
         signal: controller.signal,
         body: JSON.stringify({
@@ -307,16 +338,22 @@ export async function generateMaintenanceMethod(
           messages: [
             {
               role: 'system',
-              content: getMaintenanceSystemPrompt(detailLevel, query, installationType)
+              content: getMaintenanceSystemPrompt(detailLevel, query, installationType),
             },
             {
               role: 'user',
-              content: getMaintenanceUserPrompt(query, equipmentDetails, practicalContext, regulationsContext, installationType)
-            }
+              content: getMaintenanceUserPrompt(
+                query,
+                equipmentDetails,
+                practicalContext,
+                regulationsContext,
+                installationType
+              ),
+            },
           ],
           max_completion_tokens: 20000,
-          response_format: { type: 'json_object' }
-        })
+          response_format: { type: 'json_object' },
+        }),
       });
     } finally {
       clearTimeout(timeoutId);
@@ -325,10 +362,10 @@ export async function generateMaintenanceMethod(
     }
 
     console.log(`⏱️ OpenAI responded in ${Date.now() - aiStartTime}ms`);
-    
+
     // Granular post-AI progress updates for smooth UI completion
     await updateProgress(supabase, jobId, 85, 'Processing AI response');
-    await new Promise(r => setTimeout(r, 400));
+    await new Promise((r) => setTimeout(r, 400));
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
@@ -342,7 +379,9 @@ export async function generateMaintenanceMethod(
     const usage = aiData.usage;
     const reasoningTokens = usage?.completion_tokens_details?.reasoning_tokens || 0;
     const outputTokens = (usage?.completion_tokens || 0) - reasoningTokens;
-    const reasoningPercent = usage?.completion_tokens ? (reasoningTokens / usage.completion_tokens * 100).toFixed(1) : '0';
+    const reasoningPercent = usage?.completion_tokens
+      ? ((reasoningTokens / usage.completion_tokens) * 100).toFixed(1)
+      : '0';
 
     console.log('📋 OpenAI Response:', {
       hasChoices: !!aiData.choices,
@@ -355,13 +394,15 @@ export async function generateMaintenanceMethod(
         completionTokens: usage?.completion_tokens,
         reasoningTokens,
         outputTokens,
-        reasoningPercent: `${reasoningPercent}%`
-      }
+        reasoningPercent: `${reasoningPercent}%`,
+      },
     });
 
     // Warn if reasoning tokens are consuming too much
     if (parseFloat(reasoningPercent) > 80) {
-      console.warn(`⚠️ High reasoning token usage: ${reasoningPercent}% of completion tokens used for reasoning`);
+      console.warn(
+        `⚠️ High reasoning token usage: ${reasoningPercent}% of completion tokens used for reasoning`
+      );
     }
 
     // Validate response structure
@@ -383,19 +424,25 @@ export async function generateMaintenanceMethod(
       const finishReason = aiData.choices[0].finish_reason;
       console.error('❌ Empty content from OpenAI. Finish reason:', finishReason);
       console.error('📊 Full usage:', JSON.stringify(usage));
-      
+
       // Special handling for finish_reason: length with empty content (reasoning token exhaustion)
       if (finishReason === 'length') {
-        console.error(`⚠️ Token limit reached: ${reasoningTokens} reasoning tokens consumed all ${usage?.completion_tokens || 0} completion tokens, leaving ${outputTokens} for output`);
-        throw new Error('Maintenance method generation exhausted token limit during reasoning. The query may be too complex. Try simplifying or breaking into smaller tasks.');
+        console.error(
+          `⚠️ Token limit reached: ${reasoningTokens} reasoning tokens consumed all ${usage?.completion_tokens || 0} completion tokens, leaving ${outputTokens} for output`
+        );
+        throw new Error(
+          'Maintenance method generation exhausted token limit during reasoning. The query may be too complex. Try simplifying or breaking into smaller tasks.'
+        );
       }
-      
+
       throw new Error(`Empty response from OpenAI (finish_reason: ${finishReason})`);
     }
 
     // Log successful token usage
-    console.log(`📊 Token usage: ${usage?.total_tokens || 'unknown'} total (reasoning: ${reasoningTokens}, output: ${outputTokens})`);
-    
+    console.log(
+      `📊 Token usage: ${usage?.total_tokens || 'unknown'} total (reasoning: ${reasoningTokens}, output: ${outputTokens})`
+    );
+
     if (aiData.choices[0].finish_reason === 'length') {
       console.warn('⚠️ Response was truncated due to max_tokens limit');
     }
@@ -413,13 +460,13 @@ export async function generateMaintenanceMethod(
 
     // Update progress: Finalizing with granular steps
     await updateProgress(supabase, jobId, 90, 'Validating maintenance procedures');
-    await new Promise(r => setTimeout(r, 300));
-    
+    await new Promise((r) => setTimeout(r, 300));
+
     await updateProgress(supabase, jobId, 94, 'Compiling equipment specifications');
-    await new Promise(r => setTimeout(r, 300));
-    
+    await new Promise((r) => setTimeout(r, 300));
+
     await updateProgress(supabase, jobId, 98, 'Finalising maintenance method');
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
 
     const endTime = Date.now();
     const totalDuration = endTime - startTime;
@@ -435,15 +482,14 @@ export async function generateMaintenanceMethod(
         ragQuality: ragResult.qualityScore,
         regulationCount: regulations?.length || 0,
         stepCount: maintenanceMethod.steps?.length || 0,
-        installationType
-      }
+        installationType,
+      },
     };
-
   } catch (error: any) {
     console.error('❌ Maintenance method generation failed:', error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 }
@@ -457,33 +503,45 @@ async function updateProgress(supabase: any, jobId: string, progress: number, st
 
 function detectEquipmentCategory(query: string): string {
   const lowerQuery = query.toLowerCase();
-  if (lowerQuery.includes('busbar') || lowerQuery.includes('bts') || lowerQuery.includes('bus bar')) return 'busbar_system';
-  if (lowerQuery.includes('motor') || lowerQuery.includes('mcc') || lowerQuery.includes('drive')) return 'motor_control';
-  if (lowerQuery.includes('consumer unit') || lowerQuery.includes('distribution board') || lowerQuery.includes('db')) return 'distribution';
-  if (lowerQuery.includes('emergency') && lowerQuery.includes('lighting')) return 'emergency_lighting';
+  if (lowerQuery.includes('busbar') || lowerQuery.includes('bts') || lowerQuery.includes('bus bar'))
+    return 'busbar_system';
+  if (lowerQuery.includes('motor') || lowerQuery.includes('mcc') || lowerQuery.includes('drive'))
+    return 'motor_control';
+  if (
+    lowerQuery.includes('consumer unit') ||
+    lowerQuery.includes('distribution board') ||
+    lowerQuery.includes('db')
+  )
+    return 'distribution';
+  if (lowerQuery.includes('emergency') && lowerQuery.includes('lighting'))
+    return 'emergency_lighting';
   if (lowerQuery.includes('transformer')) return 'transformer';
   if (lowerQuery.includes('generator') || lowerQuery.includes('ups')) return 'standby_power';
   if (lowerQuery.includes('switchgear') || lowerQuery.includes('panel')) return 'switchgear';
   return 'general';
 }
 
-function getMaintenanceSystemPrompt(detailLevel: string, query: string, installationType: string): string {
+function getMaintenanceSystemPrompt(
+  detailLevel: string,
+  query: string,
+  installationType: string
+): string {
   const equipmentType = detectEquipmentCategory(query);
   const requiredQualifications = getRequiredQualificationsForEquipment(equipmentType);
-  
+
   // Installation-type aware step counts
   const isDomestic = installationType?.toLowerCase().includes('domestic');
   const isIndustrial = installationType?.toLowerCase().includes('industrial');
-  
+
   // Simplified step counts: domestic 13-15, commercial/industrial 16-20
   const stepRange = isDomestic ? '13-15' : '16-20';
-  
-  const focusAreas = isDomestic 
+
+  const focusAreas = isDomestic
     ? 'consumer unit maintenance, RCD testing, circuit labelling, domestic installation safety'
-    : isIndustrial 
+    : isIndustrial
       ? 'heavy equipment, three-phase systems, high fault levels, arc flash protection, industrial isolation procedures'
       : 'distribution boards, emergency lighting interfaces, fire alarm circuits, commercial installation requirements';
-  
+
   return `You are a UK electrical maintenance engineer specialising in ${installationType || 'commercial'} installations.
 Generate ${stepRange} detailed maintenance steps per BS 7671:2018+A3:2024.
 
@@ -505,17 +563,17 @@ OUTPUT: Valid JSON object matching the schema provided. No markdown, no code blo
 }
 
 function getMaintenanceUserPrompt(
-  query: string, 
-  equipmentDetails: any, 
-  practicalContext: string, 
+  query: string,
+  equipmentDetails: any,
+  practicalContext: string,
   regulationsContext: string,
   installationType: string
 ): string {
   const { minSteps, maxSteps } = getStepCount(equipmentDetails?.detailLevel, installationType);
-  
+
   const isDomestic = installationType?.toLowerCase().includes('domestic');
   const isIndustrial = installationType?.toLowerCase().includes('industrial');
-  
+
   return `Generate comprehensive maintenance instructions for:
 
 QUERY: ${query}
@@ -591,10 +649,13 @@ OUTPUT JSON (follow structure exactly):
 Generate ${minSteps}-${maxSteps} complete steps. EVERY step must have 125-175 words in the content field.`;
 }
 
-function getStepCount(_detailLevel: string | undefined, installationType: string | undefined): { minSteps: number; maxSteps: number } {
+function getStepCount(
+  _detailLevel: string | undefined,
+  installationType: string | undefined
+): { minSteps: number; maxSteps: number } {
   // Simplified: Domestic 13-15 steps, Commercial/Industrial 16-20 steps
   const isDomestic = installationType?.toLowerCase().includes('domestic');
-  
+
   if (isDomestic) {
     return { minSteps: 13, maxSteps: 15 };
   }

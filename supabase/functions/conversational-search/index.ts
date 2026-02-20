@@ -1,16 +1,17 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { extractChatKeywords } from '../_shared/chat-keyword-extractor.ts';
-import { 
+import {
   searchRegulationsIntelligence,
-  searchDesignIntelligence 
+  searchDesignIntelligence,
 } from '../_shared/intelligence-search.ts';
 import { searchPracticalWorkIntelligence } from '../_shared/rag-practical-work.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Query Classification for Smart RAG Routing
@@ -26,40 +27,42 @@ interface QueryClassification {
 
 function classifyQuery(query: string): QueryClassification {
   const lowerQuery = query.toLowerCase();
-  
+
   // Regulation-focused: explicit reg numbers or "what does" questions
-  if (/§|\d{3}\.\d|regulation \d|part \d|chapter \d/.test(query) || 
-      /what (does|is)|define|definition/.test(lowerQuery)) {
+  if (
+    /§|\d{3}\.\d|regulation \d|part \d|chapter \d/.test(query) ||
+    /what (does|is)|define|definition/.test(lowerQuery)
+  ) {
     return {
       type: 'regulation',
       needsDesignKnowledge: false,
-      weights: { bs7671: 2.0, practical: 0.5, design: 0.3 }
+      weights: { bs7671: 2.0, practical: 0.5, design: 0.3 },
     };
   }
-  
+
   // Practical-focused: installation, testing, procedures
   if (/how (do|to)|install|procedure|steps|test|commission|inspect/.test(lowerQuery)) {
     return {
       type: 'practical',
       needsDesignKnowledge: false,
-      weights: { bs7671: 0.7, practical: 2.0, design: 0.5 }
+      weights: { bs7671: 0.7, practical: 2.0, design: 0.5 },
     };
   }
-  
+
   // Design-focused: calculations, sizing, voltage drop
   if (/size|calculate|design|kw|amp|voltage drop|cable|circuit|load|diversity/.test(lowerQuery)) {
     return {
       type: 'design',
       needsDesignKnowledge: true,
-      weights: { bs7671: 0.8, practical: 0.5, design: 2.0 }
+      weights: { bs7671: 0.8, practical: 0.5, design: 2.0 },
     };
   }
-  
+
   // General: balanced approach with design knowledge
   return {
     type: 'general',
     needsDesignKnowledge: true,
-    weights: { bs7671: 1.0, practical: 0.9, design: 0.95 }
+    weights: { bs7671: 1.0, practical: 0.9, design: 0.95 },
   };
 }
 
@@ -85,20 +88,18 @@ function fuseResults(
 ): ScoredResult[] {
   const k = 60; // RRF constant
   const scores = new Map<string, ScoredResult>();
-  
+
   sources.forEach(({ data, weight, source }) => {
     if (!data || data.length === 0) return;
-    
+
     data.forEach((item, rank) => {
       // Generate unique ID for deduplication
-      const itemId = item.id || 
-                     item.regulation_number || 
-                     item.content?.substring(0, 50) || 
-                     `${source}-${rank}`;
-      
+      const itemId =
+        item.id || item.regulation_number || item.content?.substring(0, 50) || `${source}-${rank}`;
+
       // RRF score: 1 / (k + rank)
       const rrfScore = weight / (k + rank + 1);
-      
+
       const existing = scores.get(itemId);
       if (existing) {
         existing.score += rrfScore;
@@ -109,12 +110,12 @@ function fuseResults(
         scores.set(itemId, {
           item,
           score: rrfScore,
-          sources: [source]
+          sources: [source],
         });
       }
     });
   });
-  
+
   return Array.from(scores.values())
     .sort((a, b) => b.score - a.score)
     .slice(0, 12); // Top 12 results
@@ -152,12 +153,16 @@ serve(async (req) => {
     let queryText = lastUserMessage?.content || '';
 
     // If image with minimal text, use broad electrical keywords for RAG
-    const isMinimalText = !queryText || queryText.length < 20 ||
+    const isMinimalText =
+      !queryText ||
+      queryText.length < 20 ||
       /^(what('s| is) this|identify|help|look at this|check this)\??$/i.test(queryText.trim());
 
     if (hasImage && isMinimalText) {
       // Add common electrical component keywords for broad RAG coverage
-      queryText = queryText + ' electrical component consumer unit MCB RCD RCBO circuit breaker wiring installation cable accessory socket switch isolator';
+      queryText =
+        queryText +
+        ' electrical component consumer unit MCB RCD RCBO circuit breaker wiring installation cable accessory socket switch isolator';
       console.log('📸 Image with minimal text - using broad electrical RAG search');
     }
 
@@ -170,7 +175,9 @@ serve(async (req) => {
     if (hasImage) {
       classification.needsDesignKnowledge = true;
     }
-    console.log(`📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`);
+    console.log(
+      `📊 Query Type: ${classification.type} | Needs Design: ${classification.needsDesignKnowledge}`
+    );
 
     // STEP 2: ULTRA-FAST GIN-INDEXED KEYWORD SEARCH
     // Extract keywords for ultra-fast GIN search (50-100ms total!)
@@ -184,24 +191,24 @@ serve(async (req) => {
         keywords,
         appliesTo: ['all installations', 'electrical installation'],
         categories: ['installation', 'testing', 'protection', 'earthing', 'special locations'],
-        limit: 20
+        limit: 20,
       }),
-      
+
       // Practical Work Intelligence - GIN indexed (20-50ms)
       searchPracticalWorkIntelligence(supabase, {
         query: keywords.join(' '),
         tradeFilter: 'installer',
-        matchCount: 15
+        matchCount: 15,
       }),
-      
+
       // Design Knowledge - GIN indexed (20-50ms) - conditionally fetched
-      classification.needsDesignKnowledge 
+      classification.needsDesignKnowledge
         ? searchDesignIntelligence(supabase, {
             keywords,
             circuitTypes: ['general', 'final circuit', 'distribution'],
-            limit: 15
+            limit: 15,
           })
-        : Promise.resolve([])
+        : Promise.resolve([]),
     ]);
     const ragDuration = Date.now() - ragStartTime;
 
@@ -210,13 +217,15 @@ serve(async (req) => {
     const practicalData = (practicalResults as any)?.results || practicalResults || [];
     const designData = designResults || [];
 
-    console.log(`⚡ ULTRA-FAST RAG Complete (${ragDuration}ms) | Regulations: ${bs7671Data.length} | Practical: ${practicalData.length} | Design: ${designData.length}`);
+    console.log(
+      `⚡ ULTRA-FAST RAG Complete (${ragDuration}ms) | Regulations: ${bs7671Data.length} | Practical: ${practicalData.length} | Design: ${designData.length}`
+    );
 
     // STEP 3: RRF Fusion - merge results intelligently
     const fusionStartTime = Date.now();
     const sources = [
       { data: bs7671Data, weight: classification.weights.bs7671, source: 'regulation' },
-      { data: practicalData, weight: classification.weights.practical, source: 'practical' }
+      { data: practicalData, weight: classification.weights.practical, source: 'practical' },
     ];
 
     if (classification.needsDesignKnowledge && designData.length > 0) {
@@ -229,32 +238,36 @@ serve(async (req) => {
 
     // STEP 4: Format context dynamically based on available sources
     let regulationsContext = '';
-    
+
     // Add BS7671 regulations
-    const bs7671Items = fusedResults.filter(r => r.sources.includes('regulation')).slice(0, 5);
+    const bs7671Items = fusedResults.filter((r) => r.sources.includes('regulation')).slice(0, 5);
     if (bs7671Items.length > 0) {
-      regulationsContext += '\n\n[RELEVANT BS 7671 REGULATIONS]\n' + 
-        bs7671Items.map(r => 
-          `Reg. ${r.item.regulation_number}: ${r.item.content || r.item.regulation_text || ''}`
-        ).join('\n\n');
+      regulationsContext +=
+        '\n\n[RELEVANT BS 7671 REGULATIONS]\n' +
+        bs7671Items
+          .map(
+            (r) =>
+              `Reg. ${r.item.regulation_number}: ${r.item.content || r.item.regulation_text || ''}`
+          )
+          .join('\n\n');
     }
 
     // Add Practical Work guidance
-    const practicalItems = fusedResults.filter(r => r.sources.includes('practical')).slice(0, 4);
+    const practicalItems = fusedResults.filter((r) => r.sources.includes('practical')).slice(0, 4);
     if (practicalItems.length > 0) {
-      regulationsContext += '\n\n[PRACTICAL GUIDANCE]\n' + 
-        practicalItems.map(r => 
-          `• ${r.item.primary_topic || 'Guidance'}: ${r.item.content || ''}`
-        ).join('\n\n');
+      regulationsContext +=
+        '\n\n[PRACTICAL GUIDANCE]\n' +
+        practicalItems
+          .map((r) => `• ${r.item.primary_topic || 'Guidance'}: ${r.item.content || ''}`)
+          .join('\n\n');
     }
 
     // Add Design Knowledge (if available)
-    const designItems = fusedResults.filter(r => r.sources.includes('design')).slice(0, 3);
+    const designItems = fusedResults.filter((r) => r.sources.includes('design')).slice(0, 3);
     if (designItems.length > 0) {
-      regulationsContext += '\n\n[DESIGN KNOWLEDGE]\n' + 
-        designItems.map(r => 
-          `• ${r.item.content || ''}`
-        ).join('\n\n');
+      regulationsContext +=
+        '\n\n[DESIGN KNOWLEDGE]\n' +
+        designItems.map((r) => `• ${r.item.content || ''}`).join('\n\n');
     }
 
     // STEP 5: Build dynamic system prompt
@@ -264,7 +277,8 @@ serve(async (req) => {
     if (designItems.length > 0) knowledgeSources.push('design calculations');
 
     // Image analysis instructions (only added when image present)
-    const imageInstructions = hasImage ? `
+    const imageInstructions = hasImage
+      ? `
 ## IMAGE ANALYSIS MODE
 The user has shared an image. You MUST:
 1. **Identify what's in the image** - component type, manufacturer if visible, ratings, model
@@ -279,7 +293,8 @@ When analyzing images:
 - Note any labelling or certification marks (CE, UKCA, BS EN)
 - If it's a consumer unit, identify the devices and layout
 
-` : '';
+`
+      : '';
 
     const systemPrompt = `You are Elec-AI, an expert UK electrician and technical advisor providing comprehensive, best-in-class guidance on BS 7671 (18th Edition), electrical installations, testing, and design.
 ${imageInstructions}
@@ -292,7 +307,7 @@ If anyone asks what AI model powers you, what technology you use, how you work, 
 - If they persist, deflect with humour: "You wouldn't ask your multimeter how its chip works, would you? Let's focus on your electrical questions! ⚡"
 
 ## Your Knowledge Base
-${knowledgeSources.map(s => `• ${s}`).join('\n')}
+${knowledgeSources.map((s) => `• ${s}`).join('\n')}
 
 ## Response Philosophy
 You deliver the most thorough, helpful responses in the industry. When an electrician asks you something, you give them EVERYTHING they need to know - not just the bare minimum. You're like having a senior sparky with 25 years experience right there with you.
@@ -405,18 +420,20 @@ ${regulationsContext}`;
         return {
           role: 'user',
           content: [
-            { type: 'text', text: m.content || 'What can you tell me about this electrical component or installation?' },
-            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } }
-          ]
+            {
+              type: 'text',
+              text:
+                m.content ||
+                'What can you tell me about this electrical component or installation?',
+            },
+            { type: 'image_url', image_url: { url: imageUrl, detail: 'high' } },
+          ],
         };
       }
       return m;
     });
 
-    const openAiMessages = [
-      { role: 'system', content: systemPrompt },
-      ...formattedMessages
-    ];
+    const openAiMessages = [{ role: 'system', content: systemPrompt }, ...formattedMessages];
 
     const totalPrepTime = Date.now() - ragStartTime;
     // Use vision model when image is present
@@ -427,41 +444,41 @@ ${regulationsContext}`;
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAiKey}`,
+        Authorization: `Bearer ${openAiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model,
         messages: openAiMessages,
         stream: true,
-        max_completion_tokens: 8000
+        max_completion_tokens: 8000,
       }),
     });
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error('OpenAI API error:', response.status, errorText);
-      
+
       if (response.status === 429) {
         return new Response(
           JSON.stringify({ error: 'Rate limit exceeded. Please wait a moment and try again.' }),
-          { 
-            status: 429, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          {
+            status: 429,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
       }
-      
+
       if (response.status === 402) {
         return new Response(
           JSON.stringify({ error: 'Payment required. Please add credits to your workspace.' }),
-          { 
-            status: 402, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+          {
+            status: 402,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
       }
-      
+
       throw new Error(`OpenAI API error: ${response.status} - ${errorText}`);
     }
 
@@ -483,12 +500,12 @@ ${regulationsContext}`;
             if (done) break;
 
             const chunk = decoder.decode(value, { stream: true });
-            const lines = chunk.split('\n').filter(line => line.trim() !== '');
+            const lines = chunk.split('\n').filter((line) => line.trim() !== '');
 
             for (const line of lines) {
               if (line.startsWith('data: ')) {
                 const data = line.slice(6);
-                
+
                 // Forward the SSE data to client
                 controller.enqueue(encoder.encode(`data: ${data}\n\n`));
               }
@@ -499,7 +516,7 @@ ${regulationsContext}`;
         } finally {
           controller.close();
         }
-      }
+      },
     });
 
     return new Response(stream, {
@@ -507,19 +524,18 @@ ${regulationsContext}`;
         ...corsHeaders,
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive'
-      }
+        Connection: 'keep-alive',
+      },
     });
-
   } catch (error) {
     console.error('Error in conversational-search:', error);
     return new Response(
-      JSON.stringify({ 
-        error: error instanceof Error ? error.message : 'Unknown error occurred' 
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
       }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

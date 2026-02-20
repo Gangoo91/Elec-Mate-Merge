@@ -1,25 +1,12 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import {
-  SafetyPDFBuilder,
-  C,
-  type StatusColour,
-  type CompanyBranding,
-} from '../_shared/SafetyPDFBuilder.ts';
+import { coshhTemplate } from '../_shared/safety-templates/coshh.ts';
+import { htmlToPdf } from '../_shared/safety-pdf-renderer.ts';
+import type { Branding } from '../_shared/safety-html-base.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString('en-GB') : 'N/A');
-
-const RISK_MAP: Record<string, StatusColour> = {
-  low: 'success',
-  medium: 'warning',
-  high: 'danger',
-  'very-high': 'danger',
-  'very high': 'danger',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
@@ -45,11 +32,11 @@ serve(async (req) => {
     const { data: profileRows } = await supabase
       .from('company_profiles')
       .select(
-        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color'
+        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color, scheme_logo_data_url, registration_scheme'
       )
       .eq('user_id', user.id)
       .limit(1);
-    const branding: CompanyBranding = profileRows?.[0] ?? {};
+    const branding: Branding = profileRows?.[0] ?? {};
 
     const { assessmentId, recordId } = await req.json();
     const id = assessmentId || recordId;
@@ -63,91 +50,15 @@ serve(async (req) => {
 
     if (fetchError || !record) throw new Error('COSHH assessment not found');
 
-    // ── Build PDF ──────────────────────────────────────────────────────
-    const riskRating = (record.risk_rating || '').toLowerCase();
-    const statusColour: StatusColour = RISK_MAP[riskRating] || 'warning';
-    const pdf = await SafetyPDFBuilder.create(
-      'COSHH Assessment',
-      id,
-      record.risk_rating || 'Unknown',
-      statusColour,
-      branding
-    );
-
-    // Substance Details
-    pdf.section('Substance Details');
-    pdf.keyValueGrid([
-      { label: 'Substance Name', value: record.substance_name || 'N/A' },
-      { label: 'Manufacturer', value: record.manufacturer || 'N/A' },
-      { label: 'Risk Rating', value: record.risk_rating || 'N/A' },
-      { label: 'Assessed By', value: record.assessed_by || 'N/A' },
-      { label: 'Assessment Date', value: fmtDate(record.assessment_date) },
-      { label: 'Review Date', value: fmtDate(record.review_date) },
-    ]);
-
-    // GHS Hazards
-    const ghsHazards = (record.ghs_hazards as string[]) || [];
-    pdf.section('GHS Hazards');
-    if (ghsHazards.length > 0) {
-      pdf.badges(ghsHazards);
-    } else {
-      pdf.paragraph('None specified.', { color: C.textSec });
-    }
-
-    // Health Effects
-    pdf.section('Health Effects');
-    pdf.textBox(record.health_effects || 'Not specified', C.danger);
-
-    // Exposure Routes
-    const exposureRoutes = (record.exposure_routes as string[]) || [];
-    pdf.section('Exposure Routes');
-    if (exposureRoutes.length > 0) {
-      pdf.bulletList(exposureRoutes);
-    } else {
-      pdf.paragraph('None specified.', { color: C.textSec });
-    }
-
-    // Control Measures
-    const controlMeasures = (record.control_measures as string[]) || [];
-    pdf.section('Control Measures');
-    if (controlMeasures.length > 0) {
-      pdf.bulletList(controlMeasures);
-    } else {
-      pdf.paragraph('None specified.', { color: C.textSec });
-    }
-
-    // PPE Required
-    const ppeRequired = (record.ppe_required as string[]) || [];
-    pdf.section('PPE Required');
-    if (ppeRequired.length > 0) {
-      pdf.badges(ppeRequired);
-    } else {
-      pdf.paragraph('None specified.', { color: C.textSec });
-    }
-
-    // Storage Requirements
-    pdf.section('Storage Requirements');
-    pdf.textBox(record.storage_requirements || 'Not specified');
-
-    // Spill Procedure
-    pdf.section('Spill Procedure');
-    pdf.textBox(record.spill_procedure || 'Not specified', C.warning);
-
-    // First Aid Measures
-    pdf.section('First Aid Measures');
-    pdf.textBox(record.first_aid || 'Not specified', C.info);
-
-    // Disposal Method
-    pdf.section('Disposal Method');
-    pdf.paragraph(record.disposal_method || 'Not specified');
-
-    // Footer
-    pdf.footnote(
-      'COSHH Regulations 2002 Compliance \u2014 This assessment must be reviewed regularly and updated when substances, processes, or controls change.'
-    );
+    // ── Build PDF via HTML template + Browserless ────────────────────
+    console.log('[COSHH PDF] Building HTML template...');
+    const html = coshhTemplate(record, branding);
+    console.log('[COSHH PDF] HTML template built, length:', html.length);
+    console.log('[COSHH PDF] Calling Browserless...');
+    const pdfBytes = await htmlToPdf(html);
+    console.log('[COSHH PDF] PDF generated, bytes:', pdfBytes.length);
 
     // ── Upload PDF ─────────────────────────────────────────────────────
-    const pdfBytes = await pdf.toBuffer();
     const fileName = `coshh-${id}-${Date.now()}.pdf`;
 
     const { error: uploadError } = await supabase.storage
@@ -158,9 +69,16 @@ serve(async (req) => {
       });
 
     if (uploadError) {
-      // Fallback: return PDF bytes directly
-      return new Response(pdfBytes, {
-        headers: { ...corsHeaders, 'Content-Type': 'application/pdf' },
+      // Fallback: return base64-encoded PDF as JSON (chunked to avoid stack overflow)
+      const bytes = new Uint8Array(pdfBytes);
+      let binary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+      }
+      const base64 = btoa(binary);
+      return new Response(JSON.stringify({ success: true, pdf_base64: base64 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 

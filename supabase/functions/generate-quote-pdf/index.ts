@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -31,13 +32,16 @@ serve(async (req) => {
 
     if (!template?.pdf_monkey_template_id || !pdfMonkeyApiKey) {
       console.log('No custom template configured, using fallback');
-      return new Response(JSON.stringify({ 
-        success: false,
-        useFallback: true,
-        message: 'No custom template configured'
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          useFallback: true,
+          message: 'No custom template configured',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const mappedData = applyFieldMapping(quoteData, template.field_mapping || {});
@@ -45,7 +49,7 @@ serve(async (req) => {
     const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${pdfMonkeyApiKey}`,
+        Authorization: `Bearer ${pdfMonkeyApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -53,9 +57,9 @@ serve(async (req) => {
           document_template_id: template.pdf_monkey_template_id,
           payload: mappedData,
           meta: {
-            _filename: `Quote_${quoteData.quoteNumber || Date.now()}.pdf`
-          }
-        }
+            _filename: `Quote_${quoteData.quoteNumber || Date.now()}.pdf`,
+          },
+        },
       }),
     });
 
@@ -67,25 +71,30 @@ serve(async (req) => {
 
     const pdfResponse = await response.json();
 
-    return new Response(JSON.stringify({
-      success: true,
-      documentId: pdfResponse.document.id,
-      downloadUrl: pdfResponse.document.download_url,
-      status: pdfResponse.document.status
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        documentId: pdfResponse.document.id,
+        downloadUrl: pdfResponse.document.download_url,
+        status: pdfResponse.document.status,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in generate-quote-pdf function:', error);
-    return new Response(JSON.stringify({ 
-      success: false,
-      useFallback: true,
-      error: error instanceof Error ? error.message : 'Failed to generate PDF'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        useFallback: true,
+        error: error instanceof Error ? error.message : 'Failed to generate PDF',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
@@ -95,7 +104,7 @@ function applyFieldMapping(data: any, fieldMapping: Record<string, string>): any
   }
 
   const mapped: any = {};
-  
+
   for (const [templateField, dataPath] of Object.entries(fieldMapping)) {
     const value = getNestedValue(data, dataPath);
     setNestedValue(mapped, templateField, value);

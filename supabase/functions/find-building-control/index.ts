@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface BuildingControlResult {
@@ -19,7 +20,10 @@ interface BuildingControlResult {
  * Returns the outcode (e.g., "SW1A" from "SW1A 1AA") and area (e.g., "SW")
  */
 function extractPostcodeInfo(input: string): { outcode: string; area: string } | null {
-  const clean = input.trim().toUpperCase().replace(/[^A-Z0-9\s]/g, '');
+  const clean = input
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9\s]/g, '');
 
   // UK postcode regex - matches full postcodes or just outcodes
   const fullPostcodeMatch = clean.match(/([A-Z]{1,2}\d{1,2}[A-Z]?)\s*(\d[A-Z]{2})?/);
@@ -43,10 +47,10 @@ Deno.serve(async (req) => {
     const { address } = await req.json();
 
     if (!address || typeof address !== 'string') {
-      return new Response(
-        JSON.stringify({ error: 'Address or postcode is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Address or postcode is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`[FIND-BUILDING-CONTROL] Searching for: ${address}`);
@@ -61,7 +65,7 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({
           results: [],
-          message: 'Please enter a valid UK postcode (e.g., SW1A 1AA or CA25 5EL)'
+          message: 'Please enter a valid UK postcode (e.g., SW1A 1AA or CA25 5EL)',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -88,7 +92,9 @@ Deno.serve(async (req) => {
       const { data, error } = await supabase
         .from('building_control_authorities')
         .select('*')
-        .or(`postcode_prefixes.cs.{${term}},postcode_area.ilike.%${term}%,authority_name.ilike.%${term}%`)
+        .or(
+          `postcode_prefixes.cs.{${term}},postcode_area.ilike.%${term}%,authority_name.ilike.%${term}%`
+        )
         .limit(10);
 
       if (error) {
@@ -104,8 +110,8 @@ Deno.serve(async (req) => {
           results = simpleData
             .filter((row: any) => {
               const prefixes = row.postcode_prefixes || [];
-              return prefixes.some((p: string) =>
-                p.toUpperCase().startsWith(term) || term.startsWith(p.toUpperCase())
+              return prefixes.some(
+                (p: string) => p.toUpperCase().startsWith(term) || term.startsWith(p.toUpperCase())
               );
             })
             .map((row: any) => ({
@@ -160,18 +166,16 @@ Deno.serve(async (req) => {
 
     console.log(`[FIND-BUILDING-CONTROL] Returning ${results.length} results`);
 
-    return new Response(
-      JSON.stringify({ results }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ results }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('[FIND-BUILDING-CONTROL] Error:', error);
 
     return new Response(
       JSON.stringify({
         error: 'Error searching for building control offices',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

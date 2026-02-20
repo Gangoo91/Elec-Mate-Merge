@@ -12,10 +12,10 @@ Deno.serve(async (req) => {
     const { projectData } = await req.json();
 
     if (!projectData) {
-      return new Response(
-        JSON.stringify({ error: 'Missing projectData' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Missing projectData' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('🚀 Generating PDF for project:', projectData.projectName);
@@ -24,7 +24,7 @@ Deno.serve(async (req) => {
     const generateResponse = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${PDF_MONKEY_API_KEY}`,
+        Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -60,7 +60,7 @@ Deno.serve(async (req) => {
         `https://api.pdfmonkey.io/api/v1/documents/${documentId}`,
         {
           headers: {
-            'Authorization': `Bearer ${PDF_MONKEY_API_KEY}`,
+            Authorization: `Bearer ${PDF_MONKEY_API_KEY}`,
           },
         }
       );

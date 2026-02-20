@@ -1,11 +1,12 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -15,15 +16,15 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   if (req.method !== 'POST') {
-    return new Response('Method not allowed', { 
+    return new Response('Method not allowed', {
       status: 405,
-      headers: corsHeaders 
+      headers: corsHeaders,
     });
   }
 
   try {
     console.log('Starting quote email send process...');
-    
+
     const { quoteId } = await req.json();
 
     if (!quoteId) {
@@ -42,11 +43,9 @@ const handler = async (req: Request): Promise<Response> => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Create user-scoped client for RLS
-    const userSupabase = createClient(
-      supabaseUrl,
-      Deno.env.get('SUPABASE_ANON_KEY') as string,
-      { global: { headers: { Authorization: authHeader } } }
-    );
+    const userSupabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY') as string, {
+      global: { headers: { Authorization: authHeader } },
+    });
 
     // Fetch quote data
     const { data: quote, error: quoteError } = await userSupabase
@@ -60,9 +59,8 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Parse client data
-    const clientData = typeof quote.client_data === 'string' 
-      ? JSON.parse(quote.client_data) 
-      : quote.client_data;
+    const clientData =
+      typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
 
     if (!clientData?.email) {
       throw new Error('Client email not found');
@@ -73,7 +71,9 @@ const handler = async (req: Request): Promise<Response> => {
     const quoteNumber = quote.quote_number;
 
     // Fetch user and company profile
-    const { data: { user } } = await userSupabase.auth.getUser();
+    const {
+      data: { user },
+    } = await userSupabase.auth.getUser();
     if (!user) {
       throw new Error('User not authenticated');
     }
@@ -85,7 +85,11 @@ const handler = async (req: Request): Promise<Response> => {
       .single();
 
     const companyName = companyProfile?.company_name || 'Your Company';
-    const senderEmail = (companyProfile?.company_email || user.email || 'support@elec-mate.com').trim();
+    const senderEmail = (
+      companyProfile?.company_email ||
+      user.email ||
+      'support@elec-mate.com'
+    ).trim();
 
     console.log(`Sending quote ${quoteNumber} to ${clientEmail}`);
 
@@ -106,19 +110,17 @@ const handler = async (req: Request): Promise<Response> => {
       // Generate new token
       publicToken = crypto.randomUUID();
       console.log('Generated new public token:', publicToken);
-      
+
       const expiresAt = new Date(quote.expiry_date || Date.now() + 30 * 24 * 60 * 60 * 1000);
-      
-      const { error: insertError } = await supabase
-        .from('quote_views')
-        .upsert({
-          quote_id: quoteId,
-          public_token: publicToken,
-          is_active: true,
-          expires_at: expiresAt.toISOString(),
-          created_at: new Date().toISOString()
-        });
-        
+
+      const { error: insertError } = await supabase.from('quote_views').upsert({
+        quote_id: quoteId,
+        public_token: publicToken,
+        is_active: true,
+        expires_at: expiresAt.toISOString(),
+        created_at: new Date().toISOString(),
+      });
+
       if (insertError) {
         console.error('Failed to create quote view:', insertError);
         throw new Error('Failed to create public quote link');
@@ -133,14 +135,17 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Public quote URLs:', { acceptUrl, rejectUrl });
 
     // Generate fresh PDF
-    const { data: pdfData, error: pdfError } = await userSupabase.functions.invoke('generate-pdf-monkey', {
-      body: {
-        quote,
-        companyProfile,
-        invoice_mode: false,
-        force_regenerate: true
+    const { data: pdfData, error: pdfError } = await userSupabase.functions.invoke(
+      'generate-pdf-monkey',
+      {
+        body: {
+          quote,
+          companyProfile,
+          invoice_mode: false,
+          force_regenerate: true,
+        },
       }
-    });
+    );
 
     if (pdfError) {
       console.error('PDF generation failed:', pdfError);
@@ -152,10 +157,13 @@ const handler = async (req: Request): Promise<Response> => {
     // Poll for PDF if not immediately available
     if (!pdfDownloadUrl && documentId) {
       for (let i = 0; i < 45; i++) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const { data: statusData, error: statusError } = await userSupabase.functions.invoke('generate-pdf-monkey', {
-          body: { documentId, mode: 'status' }
-        });
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        const { data: statusData, error: statusError } = await userSupabase.functions.invoke(
+          'generate-pdf-monkey',
+          {
+            body: { documentId, mode: 'status' },
+          }
+        );
 
         if (statusError) {
           console.error('Status check error:', statusError);
@@ -181,7 +189,7 @@ const handler = async (req: Request): Promise<Response> => {
         .update({
           pdf_document_id: documentId,
           pdf_generated_at: new Date().toISOString(),
-          pdf_version: newVersion
+          pdf_version: newVersion,
         })
         .eq('id', quoteId);
     }
@@ -193,10 +201,10 @@ const handler = async (req: Request): Promise<Response> => {
       throw new Error('Failed to download PDF from PDF Monkey');
     }
     const pdfArrayBuffer = await pdfFileResponse.arrayBuffer();
-      const pdfBase64 = base64Encode(new Uint8Array(pdfArrayBuffer));
-      // Wrap base64 into 76-character lines for MIME compatibility
-      const pdfBase64Wrapped = pdfBase64.replace(/.{1,76}/g, '$&\r\n');
-      console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
+    const pdfBase64 = base64Encode(new Uint8Array(pdfArrayBuffer));
+    // Wrap base64 into 76-character lines for MIME compatibility
+    const pdfBase64Wrapped = pdfBase64.replace(/.{1,76}/g, '$&\r\n');
+    console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
 
     // Check for linked certificate PDF (when quote was created from EICR/EIC/Minor Works)
     let certPdfBase64Wrapped: string | null = null;
@@ -238,8 +246,8 @@ const handler = async (req: Request): Promise<Response> => {
     if (!gmailClientId || !gmailClientSecret || !gmailRefreshToken) {
       console.error('Gmail credentials missing:', {
         hasClientId: Boolean(gmailClientId),
-        hasClientSecret: Boolean(gmailClientSecret), 
-        hasRefreshToken: Boolean(gmailRefreshToken)
+        hasClientSecret: Boolean(gmailClientSecret),
+        hasRefreshToken: Boolean(gmailRefreshToken),
       });
       throw new Error('Gmail API not configured - missing credentials');
     }
@@ -262,20 +270,21 @@ const handler = async (req: Request): Promise<Response> => {
       const errorText = await tokenResponse.text();
       console.error('Failed to get access token:', errorText);
       console.error('Token request failed with status:', tokenResponse.status);
-      
+
       // Parse the error response to provide more specific feedback
       let errorDetails = 'Gmail API authentication failed';
       try {
         const errorData = JSON.parse(errorText);
         if (errorData.error === 'invalid_client') {
-          errorDetails = 'Gmail OAuth client not found - check GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET';
+          errorDetails =
+            'Gmail OAuth client not found - check GMAIL_CLIENT_ID and GMAIL_CLIENT_SECRET';
         } else if (errorData.error === 'invalid_grant') {
           errorDetails = 'Gmail refresh token expired or invalid - regenerate GMAIL_REFRESH_TOKEN';
         }
       } catch (e) {
         // Keep default error message
       }
-      
+
       throw new Error(errorDetails);
     }
 
@@ -286,7 +295,14 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Generate professional email content
     const emailSubject = `Quote ${quoteNumber} from ${companyName}`;
-    const emailBody = generateEmailHTML(quote, clientName, companyName, companyProfile, acceptUrl, rejectUrl);
+    const emailBody = generateEmailHTML(
+      quote,
+      clientName,
+      companyName,
+      companyProfile,
+      acceptUrl,
+      rejectUrl
+    );
 
     // Create multipart email with PDF attachment(s)
     const boundary = '----=_Part_' + Date.now();
@@ -342,16 +358,19 @@ const handler = async (req: Request): Promise<Response> => {
       .replace(/=+$/, '');
 
     // Send email via Gmail API
-    const gmailResponse = await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages/send', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        raw: encodedMessage,
-      }),
-    });
+    const gmailResponse = await fetch(
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages/send',
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          raw: encodedMessage,
+        }),
+      }
+    );
 
     if (!gmailResponse.ok) {
       const errorText = await gmailResponse.text();
@@ -365,9 +384,9 @@ const handler = async (req: Request): Promise<Response> => {
     // Update quote status to 'sent' and record email send time
     const { error: updateError } = await supabase
       .from('quotes')
-      .update({ 
+      .update({
         status: 'sent',
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', quoteId);
 
@@ -375,79 +394,86 @@ const handler = async (req: Request): Promise<Response> => {
       console.error('Failed to update quote status:', updateError);
     }
 
-    return new Response(JSON.stringify({ 
-      success: true, 
-      messageId: gmailResult.id,
-      message: 'Quote sent successfully via email'
-    }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        ...corsHeaders,
-      },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        messageId: gmailResult.id,
+        message: 'Quote sent successfully via email',
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          ...corsHeaders,
+        },
+      }
+    );
   } catch (error: any) {
     console.error('Error sending quote email:', error);
 
     await captureException(error, {
       functionName: 'send-quote-email',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
-    return new Response(JSON.stringify({
-      success: false,
-      error: error.message || 'Failed to send quote email'
-    }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json',
-        ...corsHeaders,
-      },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to send quote email',
+      }),
+      {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          ...corsHeaders,
+        },
+      }
+    );
   }
 };
 
 function generateEmailHTML(
-  quote: any, 
-  clientName: string, 
-  companyName: string, 
+  quote: any,
+  clientName: string,
+  companyName: string,
   company: any,
   acceptUrl: string,
   rejectUrl: string
 ): string {
-  const clientData = typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
+  const clientData =
+    typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
   const settings = typeof quote.settings === 'string' ? JSON.parse(quote.settings) : quote.settings;
-  const jobDetails = typeof quote.job_details === 'string' ? JSON.parse(quote.job_details) : quote.job_details;
-  
+  const jobDetails =
+    typeof quote.job_details === 'string' ? JSON.parse(quote.job_details) : quote.job_details;
+
   const total = quote.total || 0;
   const quoteNumber = quote.quote_number;
-  const quoteDate = new Date(quote.created_at).toLocaleDateString('en-GB', { 
-    day: 'numeric', 
-    month: 'long', 
-    year: 'numeric' 
+  const quoteDate = new Date(quote.created_at).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
   });
-  const expiryDate = quote.expiry_date 
-    ? new Date(quote.expiry_date).toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
+  const expiryDate = quote.expiry_date
+    ? new Date(quote.expiry_date).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
       })
-    : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', { 
-        day: 'numeric', 
-        month: 'long', 
-        year: 'numeric' 
+    : new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString('en-GB', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
       });
-  
+
   const jobTitle = jobDetails?.title || 'Electrical Work';
   const jobDescription = jobDetails?.description || '';
-  
+
   // Use company profile data with fallbacks
   const finalCompanyName = company?.company_name || companyName || 'Elec-Mate';
-    const companyPhone = company?.company_phone || '07506026934';
-    const companyEmail = company?.company_email || 'support@elec-mate.com';
-  
+  const companyPhone = company?.company_phone || '07506026934';
+  const companyEmail = company?.company_email || 'support@elec-mate.com';
+
   return `
 <!DOCTYPE html>
 <html lang="en">

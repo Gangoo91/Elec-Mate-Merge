@@ -1,7 +1,7 @@
 /**
  * Practical Work Unification Pipeline
  * Deduplicates and clusters knowledge from Installation, Maintenance, and Inspection sources
- * 
+ *
  * Process:
  * 1. Normalize and hash all content
  * 2. Cluster exact duplicates (same hash)
@@ -11,7 +11,13 @@
  */
 
 import { corsHeaders, serve, createClient } from '../_shared/deps.ts';
-import { normalizeText, hashText, jaccardSimilarity, cosineSimilarity, isNearDuplicate } from '../_shared/text-utils.ts';
+import {
+  normalizeText,
+  hashText,
+  jaccardSimilarity,
+  cosineSimilarity,
+  isNearDuplicate,
+} from '../_shared/text-utils.ts';
 
 const BATCH_SIZE = 100;
 const MAX_CLUSTER_SIZE = 20;
@@ -54,7 +60,11 @@ serve(async (req) => {
   try {
     const { mode, skipNormalization, skipClustering } = await req.json();
 
-    console.log('🚀 Starting practical work unification', { mode, skipNormalization, skipClustering });
+    console.log('🚀 Starting practical work unification', {
+      mode,
+      skipNormalization,
+      skipClustering,
+    });
 
     // Step 1: Normalize and hash content
     let normalizedCount = 0;
@@ -87,18 +97,17 @@ serve(async (req) => {
           normalized: normalizedCount,
           exact_clusters: exactClusters,
           semantic_clusters: semanticClusters,
-          ...stats
-        }
+          ...stats,
+        },
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Unification error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -107,7 +116,7 @@ serve(async (req) => {
  */
 async function normalizeAndHashContent(supabase: any): Promise<number> {
   console.log('📝 Normalizing content...');
-  
+
   const { data: records, error } = await supabase
     .from('practical_work')
     .select('id, content')
@@ -124,7 +133,7 @@ async function normalizeAndHashContent(supabase: any): Promise<number> {
   let processed = 0;
   for (let i = 0; i < records.length; i += BATCH_SIZE) {
     const batch = records.slice(i, i + BATCH_SIZE);
-    
+
     const updates = await Promise.all(
       batch.map(async (record) => {
         const normalized = normalizeText(record.content);
@@ -139,7 +148,7 @@ async function normalizeAndHashContent(supabase: any): Promise<number> {
         .from('practical_work')
         .update({
           content_normalized: update.content_normalized,
-          content_hash: update.content_hash
+          content_hash: update.content_hash,
         })
         .eq('id', update.id);
     }
@@ -163,15 +172,15 @@ async function clusterExactDuplicates(supabase: any): Promise<number> {
     .select('content_hash, id, content, source_table, created_at')
     .not('content_hash', 'is', null)
     .order('content_hash');
-  
+
   // Group by hash
   const groups: Record<string, PracticalWorkRecord[]> = {};
   records?.forEach((record: any) => {
     if (!groups[record.content_hash]) groups[record.content_hash] = [];
     groups[record.content_hash].push(record);
   });
-  
-  const hashGroups = Object.values(groups).filter(g => g.length > 1);
+
+  const hashGroups = Object.values(groups).filter((g) => g.length > 1);
 
   if (!hashGroups || hashGroups.length === 0) {
     console.log('ℹ️ No exact duplicates found');
@@ -181,7 +190,7 @@ async function clusterExactDuplicates(supabase: any): Promise<number> {
   console.log(`Found ${hashGroups.length} duplicate hash groups`);
 
   let clustersCreated = 0;
-  
+
   for (const group of hashGroups) {
     // Pick canonical: longest content, earliest created_at
     const canonical = group.sort((a: any, b: any) => {
@@ -198,7 +207,7 @@ async function clusterExactDuplicates(supabase: any): Promise<number> {
         canonical_id: canonical.id,
         member_count: group.length,
         metrics: { method: 'exact', avg_similarity: 1.0 },
-        overlap_flags: buildOverlapFlags(group)
+        overlap_flags: buildOverlapFlags(group),
       })
       .select()
       .single();
@@ -215,7 +224,7 @@ async function clusterExactDuplicates(supabase: any): Promise<number> {
         is_canonical: true,
         cluster_id: cluster.id,
         sources: buildSources(group),
-        activity_suggested: suggestActivities(group)
+        activity_suggested: suggestActivities(group),
       })
       .eq('id', canonical.id);
 
@@ -226,7 +235,7 @@ async function clusterExactDuplicates(supabase: any): Promise<number> {
       match_method: 'exact',
       similarity: 1.0,
       source_table: record.source_table,
-      activity_tags: getActivityTagsForSource(record.source_table)
+      activity_tags: getActivityTagsForSource(record.source_table),
     }));
 
     await supabase.from('practical_work_cluster_members').insert(members);
@@ -301,7 +310,7 @@ async function clusterSemanticDuplicates(supabase: any): Promise<number> {
           match_method: 'semantic',
           similarity: cosine,
           source_table: candidate.source_table,
-          activity_tags: getActivityTagsForSource(candidate.source_table)
+          activity_tags: getActivityTagsForSource(candidate.source_table),
         });
       }
     }
@@ -321,13 +330,13 @@ async function clusterSemanticDuplicates(supabase: any): Promise<number> {
     if (!cluster) continue;
 
     // Add members to cluster
-    const memberInserts = addMatches.map(m => ({
+    const memberInserts = addMatches.map((m) => ({
       cluster_id: cluster.id,
       member_id: m.id,
       match_method: m.match_method,
       similarity: m.similarity,
       source_table: m.source_table,
-      activity_tags: m.activity_tags
+      activity_tags: m.activity_tags,
     }));
 
     await supabase.from('practical_work_cluster_members').insert(memberInserts);
@@ -354,8 +363,9 @@ async function clusterSemanticDuplicates(supabase: any): Promise<number> {
         metrics: {
           ...cluster.metrics,
           semantic_matches: addMatches.length,
-          avg_semantic_similarity: addMatches.reduce((sum, m) => sum + m.similarity, 0) / addMatches.length
-        }
+          avg_semantic_similarity:
+            addMatches.reduce((sum, m) => sum + m.similarity, 0) / addMatches.length,
+        },
       })
       .eq('id', cluster.id);
 
@@ -367,11 +377,11 @@ async function clusterSemanticDuplicates(supabase: any): Promise<number> {
 }
 
 function buildOverlapFlags(members: any[]): Record<string, boolean> {
-  const sources = new Set(members.map(m => m.source_table));
+  const sources = new Set(members.map((m) => m.source_table));
   return {
     has_installation: sources.has('installation_knowledge'),
     has_maintenance: sources.has('maintenance_knowledge'),
-    has_inspection: sources.has('inspection_testing_knowledge')
+    has_inspection: sources.has('inspection_testing_knowledge'),
   };
 }
 
@@ -379,26 +389,26 @@ function buildSources(members: any[]): Record<string, string[]> {
   const sources: Record<string, string[]> = {
     installation_knowledge: [],
     maintenance_knowledge: [],
-    inspection_testing_knowledge: []
+    inspection_testing_knowledge: [],
   };
-  
-  members.forEach(m => {
+
+  members.forEach((m) => {
     if (sources[m.source_table]) {
       sources[m.source_table].push(m.id);
     }
   });
-  
+
   return sources;
 }
 
 function suggestActivities(members: any[]): string[] {
   const activities = new Set<string>();
-  
-  members.forEach(m => {
+
+  members.forEach((m) => {
     const tags = getActivityTagsForSource(m.source_table);
-    tags.forEach(tag => activities.add(tag));
+    tags.forEach((tag) => activities.add(tag));
   });
-  
+
   return Array.from(activities);
 }
 
@@ -439,6 +449,8 @@ async function getUnificationStats(supabase: any) {
     canonical_records: canonicalRecords || 0,
     clustered_records: clusteredRecords || 0,
     total_clusters: totalClusters || 0,
-    deduplication_rate: totalRecords ? ((totalRecords - canonicalRecords) / totalRecords * 100).toFixed(1) : 0
+    deduplication_rate: totalRecords
+      ? (((totalRecords - canonicalRecords) / totalRecords) * 100).toFixed(1)
+      : 0,
   };
 }

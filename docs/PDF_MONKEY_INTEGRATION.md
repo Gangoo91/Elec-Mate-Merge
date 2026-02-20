@@ -22,6 +22,7 @@ The Electrician's Toolkit uses PDF Monkey for professional, branded PDF generati
 ### Edge Functions
 
 Separate edge function for each document type:
+
 - `generate-design-spec-pdf` - Design specifications with calculations
 - `generate-quote-pdf` - Client quotes with pricing
 - `generate-rams-pdf` - Risk assessments and method statements
@@ -31,6 +32,7 @@ Separate edge function for each document type:
 ### Fallback System
 
 If PDF Monkey is not configured or fails:
+
 1. Edge function returns `useFallback: true`
 2. Frontend automatically generates PDF using jsPDF
 3. Users still get professional documents without external service
@@ -181,8 +183,8 @@ Format: `"yourTemplatePlaceholder": "ourDataPath"`
 Query the `document_field_schemas` table to see expected data structures:
 
 ```sql
-SELECT document_type, example_data 
-FROM document_field_schemas 
+SELECT document_type, example_data
+FROM document_field_schemas
 WHERE document_type = 'design_spec';
 ```
 
@@ -193,14 +195,14 @@ const { data, error } = await supabase.functions.invoke('generate-design-spec-pd
   body: {
     designData: {
       projectDetails: {
-        projectName: "Test Project",
-        location: "London",
-        date: "2025-09-15"
+        projectName: 'Test Project',
+        location: 'London',
+        date: '2025-09-15',
       },
       // ... rest of schema
     },
-    userId: 'your-user-id'
-  }
+    userId: 'your-user-id',
+  },
 });
 ```
 
@@ -209,11 +211,13 @@ const { data, error } = await supabase.functions.invoke('generate-design-spec-pd
 ### PDF Monkey API Errors
 
 Check edge function logs:
+
 ```bash
 supabase functions logs generate-design-spec-pdf
 ```
 
 Common issues:
+
 - **401 Unauthorized**: Check API key in secrets
 - **404 Not Found**: Verify template ID
 - **422 Unprocessable**: Check field mapping matches template
@@ -221,6 +225,7 @@ Common issues:
 ### Fallback Not Working
 
 If jsPDF fallback fails:
+
 1. Check browser console for errors
 2. Verify data structure matches expected format
 3. Check network tab for edge function response
@@ -228,9 +233,10 @@ If jsPDF fallback fails:
 ### Field Mapping Issues
 
 Test your mapping:
+
 ```typescript
 const testMapping = {
-  "template_field": "data.path.to.value"
+  template_field: 'data.path.to.value',
 };
 
 // Function to test mapping
@@ -253,6 +259,7 @@ function testFieldMapping(data: any, mapping: any) {
 ## Commercial Benefits
 
 ### For Users
+
 - ✅ Professional branded documents
 - ✅ Consistent company identity
 - ✅ No manual PDF creation
@@ -260,6 +267,7 @@ function testFieldMapping(data: any, mapping: any) {
 - ✅ Works offline (fallback)
 
 ### For Business
+
 - 🎯 **Premium Feature**: Charge for custom branding
 - 🎯 **Lock-in**: Users invest time in template setup
 - 🎯 **Professionalism**: Higher perceived value
@@ -279,6 +287,7 @@ function testFieldMapping(data: any, mapping: any) {
 ## Support
 
 For issues or questions:
+
 1. Check edge function logs
 2. Verify data against schemas
 3. Test with example data

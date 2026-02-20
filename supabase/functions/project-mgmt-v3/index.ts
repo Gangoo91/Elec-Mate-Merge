@@ -9,7 +9,7 @@ import {
   createClient,
   generateEmbeddingWithRetry,
   callLovableAIWithTimeout,
-  parseJsonWithRepair
+  parseJsonWithRepair,
 } from '../_shared/v3-core.ts';
 import { enrichResponse } from '../_shared/response-enricher.ts';
 import { suggestNextAgents, generateContextHint } from '../_shared/agent-suggestions.ts';
@@ -24,7 +24,12 @@ serve(async (req) => {
   if (req.method === 'GET') {
     const requestId = generateRequestId();
     return new Response(
-      JSON.stringify({ status: 'healthy', function: 'project-mgmt-v3', requestId, timestamp: new Date().toISOString() }),
+      JSON.stringify({
+        status: 'healthy',
+        function: 'project-mgmt-v3',
+        requestId,
+        timestamp: new Date().toISOString(),
+      }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   }
@@ -35,15 +40,27 @@ serve(async (req) => {
 
   try {
     const body = await req.json();
-    const { query, projectType, scope, timeline, messages, previousAgentOutputs, sharedRegulations, currentDesign, projectDetails } = body;
+    const {
+      query,
+      projectType,
+      scope,
+      timeline,
+      messages,
+      previousAgentOutputs,
+      sharedRegulations,
+      currentDesign,
+      projectDetails,
+    } = body;
 
     // Track context sources
     const contextSources = {
       sharedRegulations: !!(sharedRegulations && sharedRegulations.length > 0),
       previousAgentOutputs: previousAgentOutputs?.map((o: any) => o.agent) || [],
       projectDetails: !!projectDetails,
-      circuitDesign: !!(currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer')),
-      coordinating: previousAgentOutputs?.length || 0
+      circuitDesign: !!(
+        currentDesign?.circuits || previousAgentOutputs?.find((o: any) => o.agent === 'designer')
+      ),
+      coordinating: previousAgentOutputs?.length || 0,
     };
 
     logger.info('📦 Context received:', contextSources);
@@ -71,11 +88,11 @@ serve(async (req) => {
       throw new ValidationError('timeline must be a string');
     }
 
-    logger.info('📋 Project Manager V3 request received', { 
+    logger.info('📋 Project Manager V3 request received', {
       query: effectiveQuery.substring(0, 50),
       enhanced: enhancement.addedContext.length > 0,
       projectType,
-      hasSharedRegs: !!sharedRegulations?.length
+      hasSharedRegs: !!sharedRegulations?.length,
     });
 
     // Get API keys
@@ -93,10 +110,10 @@ serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     logger.debug('Starting intelligent RAG for project management');
     const ragStart = Date.now();
-    
+
     const { retrievePMKnowledge } = await import('../_shared/rag-project-mgmt.ts');
     const pmKnowledge = await retrievePMKnowledge(
       query,
@@ -105,18 +122,17 @@ serve(async (req) => {
       logger,
       projectType
     );
-    
-    logger.debug('PM knowledge retrieved', { 
+
+    logger.debug('PM knowledge retrieved', {
       duration: Date.now() - ragStart,
-      count: pmKnowledge?.length || 0
+      count: pmKnowledge?.length || 0,
     });
 
     // Step 3: Build PM context
-    const pmContext = pmKnowledge && pmKnowledge.length > 0
-      ? pmKnowledge.map((pm: any) => 
-          `${pm.topic}: ${pm.content}`
-        ).join('\n\n')
-      : 'Apply general UK electrical project management best practices.';
+    const pmContext =
+      pmKnowledge && pmKnowledge.length > 0
+        ? pmKnowledge.map((pm: any) => `${pm.topic}: ${pm.content}`).join('\n\n')
+        : 'Apply general UK electrical project management best practices.';
 
     // Build conversation context with ALL SPECIALIST OUTPUTS - Enhanced for PDF export
     let contextSection = '';
@@ -128,59 +144,63 @@ serve(async (req) => {
       hazards: [],
       requiredPPE: [],
       testSchedule: [],
-      projectMeta: {}
+      projectMeta: {},
     };
-    
+
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
       contextSection += '\n\nPROJECT DELIVERABLES TO COORDINATE:\n';
-      
+
       const designer = previousAgentOutputs.find((o: any) => o.agent === 'designer');
       const cost = previousAgentOutputs.find((o: any) => o.agent === 'cost-engineer');
       const installer = previousAgentOutputs.find((o: any) => o.agent === 'installer');
       const hs = previousAgentOutputs.find((o: any) => o.agent === 'health-safety');
       const comm = previousAgentOutputs.find((o: any) => o.agent === 'commissioning');
-      
+
       if (designer) {
         contextSection += `✓ Design: ${designer.response?.structuredData?.circuitType || 'completed'}\n`;
         aggregatedData.circuits = designer.response?.structuredData?.circuits || [];
         aggregatedData.projectMeta = {
           ...aggregatedData.projectMeta,
           projectName: designer.response?.structuredData?.projectName,
-          location: designer.response?.structuredData?.location
+          location: designer.response?.structuredData?.location,
         };
       }
-      
+
       if (cost) {
         contextSection += `✓ Costing: £${cost.response?.structuredData?.totalCost || 'TBC'}\n`;
         aggregatedData.totalCost = cost.response?.structuredData?.totalCost || 0;
         aggregatedData.materials = cost.response?.structuredData?.materials || [];
         aggregatedData.labour = {
           hours: cost.response?.structuredData?.labourHours || 0,
-          rate: cost.response?.structuredData?.labourRate || 45
+          rate: cost.response?.structuredData?.labourRate || 45,
         };
       }
-      
+
       if (installer) {
         contextSection += `✓ Installation: ${installer.response?.structuredData?.steps?.length || 0} steps\n`;
       }
-      
+
       if (hs) {
         contextSection += `✓ H&S: ${hs.response?.structuredData?.risks?.length || 0} risks assessed\n`;
-        aggregatedData.hazards = hs.response?.structuredData?.risks || hs.response?.structuredData?.hazards || [];
+        aggregatedData.hazards =
+          hs.response?.structuredData?.risks || hs.response?.structuredData?.hazards || [];
         aggregatedData.requiredPPE = hs.response?.structuredData?.requiredPPE || [];
       }
-      
+
       if (comm) {
         contextSection += `✓ Testing: ${comm.response?.structuredData?.tests?.length || 0} tests\n`;
         aggregatedData.testSchedule = comm.response?.structuredData?.tests || [];
       }
-      
-      contextSection += '\n\nFULL SPECIALIST DATA:\n' + JSON.stringify(previousAgentOutputs, null, 2);
+
+      contextSection +=
+        '\n\nFULL SPECIALIST DATA:\n' + JSON.stringify(previousAgentOutputs, null, 2);
     }
     if (messages && messages.length > 0) {
-      contextSection += '\n\nCONVERSATION HISTORY:\n' + messages.map((m: any) => 
-        `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`
-      ).join('\n');
+      contextSection +=
+        '\n\nCONVERSATION HISTORY:\n' +
+        messages
+          .map((m: any) => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+          .join('\n');
     }
 
     const systemPrompt = `You are an experienced electrical project manager who's spent 15+ years on site.
@@ -489,211 +509,224 @@ Include phases, resources, compliance requirements, and risk management.`;
     // Step 4: Call AI with universal wrapper
     logger.debug('Calling AI with wrapper');
     const { callAI } = await import('../_shared/ai-wrapper.ts');
-    
+
     const aiResult = await callAI(OPENAI_API_KEY!, {
       model: 'gpt-5-mini-2025-08-07',
       systemPrompt,
       userPrompt,
-      maxTokens: 24000,  // Increased for highly detailed PM plans with examples, contingencies, and real-world scenarios
-      timeoutMs: 280000,  // 280 seconds = 4 min 40 sec (max safe timeout)
-      tools: [{
-        type: 'function',
-        function: {
-          name: 'provide_project_plan',
-          description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
-          parameters: {
-            type: 'object',
-            properties: {
-              response: {
-                type: 'string',
-                description: 'Electrician-focused project plan (1200-1500 words) in UK English using practical on-site language. MUST include material ordering schedule, phase reasoning, client warnings, compliance timeline, trade coordination, contingencies, and cost/speed trade-offs. Provide 2-3 real-world examples per phase, lessons learned from typical mistakes, troubleshooting tips for common issues, and supplier-specific advice (CEF vs Edmundson vs Screwfix).'
-              },
-              projectPlan: {
-                type: 'object',
-                properties: {
-                  phases: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        phase: { type: 'string', description: 'Use electrician language like "Day 3-5: First Fix" not "Phase 3"' },
-                        duration: { type: 'number' },
-                        durationUnit: { type: 'string' },
-                        tasks: { type: 'array', items: { type: 'string' } },
-                        dependencies: { type: 'array', items: { type: 'string' } },
-                        milestones: { type: 'array', items: { type: 'string' } },
-                        criticalPath: { type: 'boolean' },
-                        practicalNotes: { type: 'string', description: 'WHY THIS ORDER? explanation with practical reasoning' }
+      maxTokens: 24000, // Increased for highly detailed PM plans with examples, contingencies, and real-world scenarios
+      timeoutMs: 280000, // 280 seconds = 4 min 40 sec (max safe timeout)
+      tools: [
+        {
+          type: 'function',
+          function: {
+            name: 'provide_project_plan',
+            description: 'Return comprehensive PRINCE2/APM project plan with phases and resources',
+            parameters: {
+              type: 'object',
+              properties: {
+                response: {
+                  type: 'string',
+                  description:
+                    'Electrician-focused project plan (1200-1500 words) in UK English using practical on-site language. MUST include material ordering schedule, phase reasoning, client warnings, compliance timeline, trade coordination, contingencies, and cost/speed trade-offs. Provide 2-3 real-world examples per phase, lessons learned from typical mistakes, troubleshooting tips for common issues, and supplier-specific advice (CEF vs Edmundson vs Screwfix).',
+                },
+                projectPlan: {
+                  type: 'object',
+                  properties: {
+                    phases: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          phase: {
+                            type: 'string',
+                            description:
+                              'Use electrician language like "Day 3-5: First Fix" not "Phase 3"',
+                          },
+                          duration: { type: 'number' },
+                          durationUnit: { type: 'string' },
+                          tasks: { type: 'array', items: { type: 'string' } },
+                          dependencies: { type: 'array', items: { type: 'string' } },
+                          milestones: { type: 'array', items: { type: 'string' } },
+                          criticalPath: { type: 'boolean' },
+                          practicalNotes: {
+                            type: 'string',
+                            description: 'WHY THIS ORDER? explanation with practical reasoning',
+                          },
+                        },
+                        required: ['phase', 'duration', 'tasks'],
                       },
-                      required: ['phase', 'duration', 'tasks']
-                    }
+                    },
+                    totalDuration: { type: 'number' },
+                    totalDurationUnit: { type: 'string' },
+                    criticalPath: { type: 'array', items: { type: 'string' } },
+                    acceleration: { type: 'array', items: { type: 'string' } },
                   },
-                  totalDuration: { type: 'number' },
-                  totalDurationUnit: { type: 'string' },
-                  criticalPath: { type: 'array', items: { type: 'string' } },
-                  acceleration: { type: 'array', items: { type: 'string' } }
-                }
-              },
-              materialProcurement: {
-                type: 'object',
-                properties: {
-                  orderNow: { 
-                    type: 'array', 
-                    items: { 
-                      type: 'object',
-                      properties: {
-                        item: { type: 'string' },
-                        leadTime: { type: 'string' },
-                        supplier: { type: 'string' },
-                        cost: { type: 'number' },
-                        criticalPath: { type: 'boolean' }
-                      }
-                    }
-                  },
-                  orderWeek1: { type: 'array', items: { type: 'object' } }
-                }
-              },
-              tradeCoordination: {
-                type: 'array',
-                items: {
+                },
+                materialProcurement: {
                   type: 'object',
                   properties: {
-                    day: { type: 'number' },
-                    you: { type: 'string', description: 'What electrician does this day' },
-                    otherTrades: { type: 'string', description: 'What other trades need to do' }
-                  }
-                }
-              },
-              clientImpact: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    when: { type: 'string', description: 'Exact day/time like "Day 1 (9am)"' },
-                    what: { type: 'string', description: 'What stops working - power, water, etc' },
-                    duration: { type: 'string' },
-                    tip: { type: 'string', description: 'How client can prepare/cope' }
-                  }
-                }
-              },
-              complianceTimeline: {
-                type: 'object',
-                properties: {
-                  beforeWork: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        what: { type: 'string' },
-                        when: { type: 'string' },
-                        how: { type: 'string' },
-                        cost: { type: 'string' },
-                        consequence: { type: 'string' }
-                      }
-                    }
+                    orderNow: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          item: { type: 'string' },
+                          leadTime: { type: 'string' },
+                          supplier: { type: 'string' },
+                          cost: { type: 'number' },
+                          criticalPath: { type: 'boolean' },
+                        },
+                      },
+                    },
+                    orderWeek1: { type: 'array', items: { type: 'object' } },
                   },
-                  duringWork: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        what: { type: 'string' },
-                        when: { type: 'string' },
-                        who: { type: 'string' },
-                        bookingTime: { type: 'string' },
-                        passRequired: { type: 'boolean' },
-                        failConsequence: { type: 'string' }
-                      }
-                    }
+                },
+                tradeCoordination: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      day: { type: 'number' },
+                      you: { type: 'string', description: 'What electrician does this day' },
+                      otherTrades: { type: 'string', description: 'What other trades need to do' },
+                    },
                   },
-                  afterWork: {
-                    type: 'array',
-                    items: {
-                      type: 'object',
-                      properties: {
-                        what: { type: 'string' },
-                        when: { type: 'string' },
-                        tests: { type: 'array', items: { type: 'string' } },
-                        consequence: { type: 'string' }
-                      }
-                    }
-                  }
-                }
-              },
-              contingencies: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    scenario: { type: 'string' },
-                    impact: { type: 'string' },
-                    action: { type: 'string' },
-                    prevention: { type: 'string' }
-                  }
-                }
-              },
-              accelerationOptions: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    option: { type: 'string' },
-                    timeSaved: { type: 'string' },
-                    costIncrease: { type: 'number' },
-                    worthIt: { type: 'string' }
-                  }
-                }
-              },
-              resources: {
-                type: 'object',
-                properties: {
-                  team: { type: 'array', items: { type: 'object' } },
-                  equipment: { type: 'array', items: { type: 'string' } }
-                }
-              },
-              compliance: {
-                type: 'object',
-                properties: {
-                  notifications: { type: 'array', items: { type: 'string' } },
-                  certifications: { type: 'array', items: { type: 'string' } },
-                  inspections: { type: 'array', items: { type: 'string' } }
-                }
-              },
-              risks: {
-                type: 'array',
-                items: {
-                  type: 'object',
-                  properties: {
-                    risk: { type: 'string' },
-                    mitigation: { type: 'string' },
-                    severity: { type: 'string' }
+                },
+                clientImpact: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      when: { type: 'string', description: 'Exact day/time like "Day 1 (9am)"' },
+                      what: {
+                        type: 'string',
+                        description: 'What stops working - power, water, etc',
+                      },
+                      duration: { type: 'string' },
+                      tip: { type: 'string', description: 'How client can prepare/cope' },
+                    },
                   },
-                  required: ['risk', 'mitigation']
-                }
-              },
-              recommendations: {
-                type: 'array',
-                items: { type: 'string' }
-              },
-              suggestedNextAgents: {
-                type: 'array',
-                items: {
+                },
+                complianceTimeline: {
                   type: 'object',
                   properties: {
-                    agent: { type: 'string' },
-                    reason: { type: 'string' },
-                    priority: { type: 'string', enum: ['high', 'medium', 'low'] }
+                    beforeWork: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          what: { type: 'string' },
+                          when: { type: 'string' },
+                          how: { type: 'string' },
+                          cost: { type: 'string' },
+                          consequence: { type: 'string' },
+                        },
+                      },
+                    },
+                    duringWork: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          what: { type: 'string' },
+                          when: { type: 'string' },
+                          who: { type: 'string' },
+                          bookingTime: { type: 'string' },
+                          passRequired: { type: 'boolean' },
+                          failConsequence: { type: 'string' },
+                        },
+                      },
+                    },
+                    afterWork: {
+                      type: 'array',
+                      items: {
+                        type: 'object',
+                        properties: {
+                          what: { type: 'string' },
+                          when: { type: 'string' },
+                          tests: { type: 'array', items: { type: 'string' } },
+                          consequence: { type: 'string' },
+                        },
+                      },
+                    },
                   },
-                  required: ['agent', 'reason', 'priority']
-                }
-              }
+                },
+                contingencies: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      scenario: { type: 'string' },
+                      impact: { type: 'string' },
+                      action: { type: 'string' },
+                      prevention: { type: 'string' },
+                    },
+                  },
+                },
+                accelerationOptions: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      option: { type: 'string' },
+                      timeSaved: { type: 'string' },
+                      costIncrease: { type: 'number' },
+                      worthIt: { type: 'string' },
+                    },
+                  },
+                },
+                resources: {
+                  type: 'object',
+                  properties: {
+                    team: { type: 'array', items: { type: 'object' } },
+                    equipment: { type: 'array', items: { type: 'string' } },
+                  },
+                },
+                compliance: {
+                  type: 'object',
+                  properties: {
+                    notifications: { type: 'array', items: { type: 'string' } },
+                    certifications: { type: 'array', items: { type: 'string' } },
+                    inspections: { type: 'array', items: { type: 'string' } },
+                  },
+                },
+                risks: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      risk: { type: 'string' },
+                      mitigation: { type: 'string' },
+                      severity: { type: 'string' },
+                    },
+                    required: ['risk', 'mitigation'],
+                  },
+                },
+                recommendations: {
+                  type: 'array',
+                  items: { type: 'string' },
+                },
+                suggestedNextAgents: {
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      agent: { type: 'string' },
+                      reason: { type: 'string' },
+                      priority: { type: 'string', enum: ['high', 'medium', 'low'] },
+                    },
+                    required: ['agent', 'reason', 'priority'],
+                  },
+                },
+              },
+              required: ['response', 'projectPlan'],
+              additionalProperties: false,
             },
-            required: ['response', 'projectPlan'],
-            additionalProperties: false
-          }
-        }
-      }],
-      toolChoice: { type: 'function', function: { name: 'provide_project_plan' } }
+          },
+        },
+      ],
+      toolChoice: { type: 'function', function: { name: 'provide_project_plan' } },
     });
 
     let pmResult;
@@ -707,36 +740,36 @@ Include phases, resources, compliance requirements, and risk management.`;
       // Fallback: try to parse as full OpenAI response structure
       try {
         const aiData = JSON.parse(aiResult.content);
-        
+
         if (!aiData.choices || !aiData.choices[0] || !aiData.choices[0].message) {
           logger.error('Invalid AI response structure', { aiData });
           throw new Error('AI returned invalid response structure');
         }
-        
+
         const message = aiData.choices[0].message;
-        
+
         if (!message.tool_calls || !message.tool_calls[0]) {
-          logger.error('No tool calls in AI response', { 
+          logger.error('No tool calls in AI response', {
             hasToolCalls: !!message.tool_calls,
             finishReason: aiData.choices[0].finish_reason,
-            messageKeys: Object.keys(message)
+            messageKeys: Object.keys(message),
           });
           throw new Error('AI did not return expected tool call');
         }
-        
+
         const toolCall = message.tool_calls[0];
-        
+
         if (!toolCall.function || !toolCall.function.arguments) {
           logger.error('Invalid tool call structure', { toolCall });
           throw new Error('Tool call missing function arguments');
         }
-        
+
         pmResult = JSON.parse(toolCall.function.arguments);
         logger.debug('Parsed tool call from legacy format', { hasToolCalls: false });
       } catch (parseError) {
-        logger.error('Failed to parse AI response', { 
+        logger.error('Failed to parse AI response', {
           error: parseError instanceof Error ? parseError.message : String(parseError),
-          contentPreview: aiResult.content.substring(0, 200)
+          contentPreview: aiResult.content.substring(0, 200),
         });
         throw new Error('Failed to parse AI response structure');
       }
@@ -744,22 +777,21 @@ Include phases, resources, compliance requirements, and risk management.`;
 
     // IMPROVEMENT: Response Quality Validation
     const { validateResponse } = await import('../_shared/response-validation.ts');
-    const validation = validateResponse(
-      pmResult.response,
-      effectiveQuery,
-      { pmKnowledge, projectType }
-    );
+    const validation = validateResponse(pmResult.response, effectiveQuery, {
+      pmKnowledge,
+      projectType,
+    });
 
     if (!validation.isValid) {
       logger.warn('⚠️ PM response validation issues', {
-        issues: validation.issues.length
+        issues: validation.issues.length,
       });
     }
 
-    logger.info('Project plan completed', { 
+    logger.info('Project plan completed', {
       phasesCount: pmResult.projectPlan?.phases?.length,
       totalDuration: pmResult.projectPlan?.totalDuration,
-      validationConfidence: validation.confidence
+      validationConfidence: validation.confidence,
     });
 
     // Step 5: Enrich response with UI metadata
@@ -779,16 +811,24 @@ Include phases, resources, compliance requirements, and risk management.`;
       total_time: totalTime,
       regulation_count: pmKnowledge?.length || 0,
       success: true,
-      query_type: projectType || 'general'
+      query_type: projectType || 'general',
     });
-    
+
     if (metricsError) {
       logger.warn('Failed to log metrics', { error: metricsError.message });
     }
 
     // Return enriched response with aggregated data for PDF export
-    const { response, suggestedNextAgents, projectPlan, resources, compliance, risks, recommendations } = pmResult;
-    
+    const {
+      response,
+      suggestedNextAgents,
+      projectPlan,
+      resources,
+      compliance,
+      risks,
+      recommendations,
+    } = pmResult;
+
     // Ensure aggregatedData exists with defaults
     const safeAggregatedData = aggregatedData || {
       circuits: [],
@@ -798,16 +838,16 @@ Include phases, resources, compliance requirements, and risk management.`;
       hazards: [],
       requiredPPE: [],
       testSchedule: [],
-      projectMeta: {}
+      projectMeta: {},
     };
-    
+
     // Check which agents have provided outputs
     const designer = previousAgentOutputs?.some((o: any) => o.agent === 'designer');
     const cost = previousAgentOutputs?.some((o: any) => o.agent === 'cost-engineer');
     const hs = previousAgentOutputs?.some((o: any) => o.agent === 'health-safety');
     const installer = previousAgentOutputs?.some((o: any) => o.agent === 'installer');
     const comm = previousAgentOutputs?.some((o: any) => o.agent === 'commissioning');
-    
+
     // Enhance structured data with aggregated specialist outputs
     const enhancedStructuredData = {
       projectPlan: projectPlan || { phases: [] },
@@ -818,20 +858,21 @@ Include phases, resources, compliance requirements, and risk management.`;
           {
             role: 'Electrician',
             hours: safeAggregatedData.labour?.hours || 0,
-            rate: safeAggregatedData.labour?.rate || 45
+            rate: safeAggregatedData.labour?.rate || 45,
           },
-          ...(resources?.labour || [])
+          ...(resources?.labour || []),
         ],
-        totalCost: safeAggregatedData.totalCost || 0
+        totalCost: safeAggregatedData.totalCost || 0,
       },
       compliance: compliance || {},
       risks: [
-        ...((safeAggregatedData.hazards || []).map((h: any) => ({
+        ...(safeAggregatedData.hazards || []).map((h: any) => ({
           risk: h.hazard || h.risk || 'Unknown risk',
           mitigation: h.controls || h.mitigation || 'To be determined',
-          severity: (h.riskRating || 0) >= 15 ? 'High' : (h.riskRating || 0) >= 8 ? 'Medium' : 'Low'
-        }))),
-        ...(risks || [])
+          severity:
+            (h.riskRating || 0) >= 15 ? 'High' : (h.riskRating || 0) >= 8 ? 'Medium' : 'Low',
+        })),
+        ...(risks || []),
       ],
       recommendations: recommendations || [],
       phases: (projectPlan?.phases || []).map((phase: any, idx: number) => {
@@ -848,34 +889,35 @@ Include phases, resources, compliance requirements, and risk management.`;
           logger.warn(`Phase ${idx} has invalid duration`, { phase });
           phase.duration = 1;
         }
-        
+
         return {
           ...phase,
           phaseNumber: idx + 1,
           phaseName: phase.phase,
           tasks: phase.tasks || [],
           resources: phase.resources || [],
-          duration: phase.duration || 1
+          duration: phase.duration || 1,
         };
       }),
-      milestones: (projectPlan?.phases || []).flatMap((p: any) => 
-        (p.milestones || []).map((m: string) => ({
-          milestone: m,
-          targetDate: 'TBC',
-          status: 'Pending' as const
-        }))
-      ) || [],
+      milestones:
+        (projectPlan?.phases || []).flatMap((p: any) =>
+          (p.milestones || []).map((m: string) => ({
+            milestone: m,
+            targetDate: 'TBC',
+            status: 'Pending' as const,
+          }))
+        ) || [],
       referencedDocuments: [
         designer ? 'Circuit Design Specification' : null,
         cost ? 'Cost Estimate & Quote' : null,
         hs ? 'Risk Assessment' : null,
         installer ? 'Installation Method Statement' : null,
-        comm ? 'Test Schedule & EIC' : null
+        comm ? 'Test Schedule & EIC' : null,
       ].filter(Boolean) as string[],
       endDate: 'TBC',
-      notes: `Project coordinated from ${previousAgentOutputs?.length || 0} specialist outputs`
+      notes: `Project coordinated from ${previousAgentOutputs?.length || 0} specialist outputs`,
     };
-    
+
     return new Response(
       JSON.stringify({
         success: true,
@@ -885,7 +927,7 @@ Include phases, resources, compliance requirements, and risk management.`;
           citations: enrichedResponse.citations,
           rendering: enrichedResponse.rendering,
           structuredData: enhancedStructuredData,
-          projectPlan: enhancedStructuredData
+          projectPlan: enhancedStructuredData,
         },
         suggestedNextAgents: suggestNextAgents(
           'project-manager',
@@ -894,26 +936,27 @@ Include phases, resources, compliance requirements, and risk management.`;
           (previousAgentOutputs || []).map((o: any) => o.agent)
         ).map((s: any) => ({
           ...s,
-          contextHint: generateContextHint(s.agent, 'project-manager', enhancedStructuredData)
+          contextHint: generateContextHint(s.agent, 'project-manager', enhancedStructuredData),
         })),
         metadata: {
           contextSources,
           receivedFrom: previousAgentOutputs?.map((o: any) => o.agent).join(', ') || 'none',
-          coordinatingCount: previousAgentOutputs?.length || 0
-        }
+          coordinatingCount: previousAgentOutputs?.length || 0,
+        },
       }),
-      { 
+      {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
+        status: 200,
       }
     );
-
   } catch (error) {
-    logger.error('Project Manager V3 error', { error: error instanceof Error ? error.message : String(error) });
+    logger.error('Project Manager V3 error', {
+      error: error instanceof Error ? error.message : String(error),
+    });
     await captureException(error, {
       functionName: 'project-mgmt-v3',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return handleError(error);
   }

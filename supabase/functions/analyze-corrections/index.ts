@@ -1,6 +1,6 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -9,7 +9,8 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -75,7 +76,7 @@ function analyzeDeviceCorrections(corrections: TrainingCorrection[]): Correction
     }
   }
 
-  return Array.from(patterns.values()).filter(p => p.count >= 3);
+  return Array.from(patterns.values()).filter((p) => p.count >= 3);
 }
 
 function analyzeRatingCorrections(corrections: TrainingCorrection[]): CorrectionPattern[] {
@@ -99,7 +100,7 @@ function analyzeRatingCorrections(corrections: TrainingCorrection[]): Correction
     }
   }
 
-  return Array.from(patterns.values()).filter(p => p.count >= 3);
+  return Array.from(patterns.values()).filter((p) => p.count >= 3);
 }
 
 function analyzeLabelAbbreviations(corrections: TrainingCorrection[]): CorrectionPattern[] {
@@ -129,7 +130,7 @@ function analyzeLabelAbbreviations(corrections: TrainingCorrection[]): Correctio
     }
   }
 
-  return Array.from(patterns.values()).filter(p => p.count >= 2);
+  return Array.from(patterns.values()).filter((p) => p.count >= 2);
 }
 
 // ============================================================================
@@ -143,7 +144,7 @@ async function updateManufacturerAbbreviations(
 
   // Group patterns by brand
   const brandPatterns = new Map<string, CorrectionPattern[]>();
-  for (const pattern of patterns.filter(p => p.type === 'label_abbreviation' && p.board_brand)) {
+  for (const pattern of patterns.filter((p) => p.type === 'label_abbreviation' && p.board_brand)) {
     const brand = pattern.board_brand!;
     if (!brandPatterns.has(brand)) {
       brandPatterns.set(brand, []);
@@ -193,7 +194,10 @@ async function updateManufacturerAbbreviations(
         if (updateError) {
           console.error(`Failed to update abbreviations for ${brand}:`, updateError);
         } else {
-          console.log(`Updated abbreviations for ${brand}:`, newAbbreviations.filter(a => a.brand === brand));
+          console.log(
+            `Updated abbreviations for ${brand}:`,
+            newAbbreviations.filter((a) => a.brand === brand)
+          );
         }
       }
     } catch (error) {
@@ -264,25 +268,27 @@ serve(async (req) => {
     const allPatterns = [...devicePatterns, ...ratingPatterns, ...labelPatterns];
 
     // Calculate accuracy rates
-    const deviceTotal = corrections.filter(c => c.ai_device_type).length;
+    const deviceTotal = corrections.filter((c) => c.ai_device_type).length;
     const deviceCorrect = corrections.filter(
-      c => c.ai_device_type && c.correct_device_type && c.ai_device_type === c.correct_device_type
+      (c) => c.ai_device_type && c.correct_device_type && c.ai_device_type === c.correct_device_type
     ).length;
     const deviceAccuracyRate = deviceTotal > 0 ? deviceCorrect / deviceTotal : 1;
 
-    const ratingTotal = corrections.filter(c => c.ai_rating).length;
+    const ratingTotal = corrections.filter((c) => c.ai_rating).length;
     const ratingCorrect = corrections.filter(
-      c => c.ai_rating && c.correct_rating && c.ai_rating === c.correct_rating
+      (c) => c.ai_rating && c.correct_rating && c.ai_rating === c.correct_rating
     ).length;
     const ratingAccuracyRate = ratingTotal > 0 ? ratingCorrect / ratingTotal : 1;
 
-    console.log(`Accuracy rates - Device: ${(deviceAccuracyRate * 100).toFixed(1)}%, Rating: ${(ratingAccuracyRate * 100).toFixed(1)}%`);
+    console.log(
+      `Accuracy rates - Device: ${(deviceAccuracyRate * 100).toFixed(1)}%, Rating: ${(ratingAccuracyRate * 100).toFixed(1)}%`
+    );
 
     // Apply updates to knowledge base
     const newAbbreviations = await updateManufacturerAbbreviations(labelPatterns);
 
     // Mark corrections as processed
-    const correctionIds = corrections.map(c => c.id);
+    const correctionIds = corrections.map((c) => c.id);
     const { error: markError } = await supabase
       .from('board_scanner_training')
       .update({ used_for_training: true })
@@ -293,26 +299,24 @@ serve(async (req) => {
     }
 
     // Log analysis results
-    const { error: logError } = await supabase
-      .from('ai_analysis_logs')
-      .insert({
-        analysis_type: 'correction_analysis',
-        model_name: 'board-scanner-training',
-        input_summary: `Analyzed ${corrections.length} corrections`,
-        output_summary: JSON.stringify({
-          patterns: allPatterns.length,
-          deviceAccuracy: `${(deviceAccuracyRate * 100).toFixed(1)}%`,
-          ratingAccuracy: `${(ratingAccuracyRate * 100).toFixed(1)}%`,
-          newAbbreviations: newAbbreviations.length,
-        }),
-        confidence_score: (deviceAccuracyRate + ratingAccuracyRate) / 2,
-        processing_time_ms: Date.now() - startTime,
-        metadata: {
-          correctionIds,
-          patterns: allPatterns,
-          newAbbreviations,
-        },
-      });
+    const { error: logError } = await supabase.from('ai_analysis_logs').insert({
+      analysis_type: 'correction_analysis',
+      model_name: 'board-scanner-training',
+      input_summary: `Analyzed ${corrections.length} corrections`,
+      output_summary: JSON.stringify({
+        patterns: allPatterns.length,
+        deviceAccuracy: `${(deviceAccuracyRate * 100).toFixed(1)}%`,
+        ratingAccuracy: `${(ratingAccuracyRate * 100).toFixed(1)}%`,
+        newAbbreviations: newAbbreviations.length,
+      }),
+      confidence_score: (deviceAccuracyRate + ratingAccuracyRate) / 2,
+      processing_time_ms: Date.now() - startTime,
+      metadata: {
+        correctionIds,
+        patterns: allPatterns,
+        newAbbreviations,
+      },
+    });
 
     if (logError) {
       console.error('Failed to log analysis:', logError);
@@ -333,11 +337,9 @@ serve(async (req) => {
       abbreviationsAdded: result.newAbbreviations.length,
     });
 
-    return new Response(
-      JSON.stringify(result),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Analysis error:', error);
     return new Response(

@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -22,13 +23,14 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // User-scoped client for RLS
-    const userSupabase = createClient(
-      supabaseUrl,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: authHeader } } }
-    );
+    const userSupabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } },
+    });
 
-    const { data: { user }, error: userError } = await userSupabase.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await userSupabase.auth.getUser();
     if (userError || !user) {
       throw new Error('Unauthorized');
     }
@@ -73,15 +75,15 @@ serve(async (req) => {
     const pdfResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
       method: 'POST',
       headers: {
-        'Authorization': authHeader,
+        Authorization: authHeader,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         quote: document,
         companyProfile: companyProfile,
         invoice_mode: documentType === 'invoice',
-        force_regenerate: true
-      })
+        force_regenerate: true,
+      }),
     });
 
     if (!pdfResponse.ok) {
@@ -98,14 +100,14 @@ serve(async (req) => {
     if (!pdfDownloadUrl && pdfDocumentId) {
       console.log('⏳ Polling for PDF completion...');
       for (let i = 0; i < 45; i++) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         const statusResponse = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
           method: 'POST',
           headers: {
-            'Authorization': authHeader,
+            Authorization: authHeader,
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ documentId: pdfDocumentId, mode: 'status' })
+          body: JSON.stringify({ documentId: pdfDocumentId, mode: 'status' }),
         });
         const statusData = await statusResponse.json();
         if (statusData?.downloadUrl) {
@@ -132,14 +134,13 @@ serve(async (req) => {
 
     // Step 5: Upload to Supabase Storage
     const fileName = `${user.id}/${documentType}_${documentId}_${Date.now()}.pdf`;
-    
-    const { data: uploadData, error: uploadError } = await supabase
-      .storage
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
       .from('temp-pdfs')
       .upload(fileName, pdfBlob, {
         contentType: 'application/pdf',
         cacheControl: '604800', // 7 days
-        upsert: false
+        upsert: false,
       });
 
     if (uploadError) {
@@ -150,8 +151,7 @@ serve(async (req) => {
     console.log('☁️ PDF uploaded to storage:', uploadData.path);
 
     // Step 6: Generate signed URL (valid for 7 days)
-    const { data: signedUrlData, error: signedUrlError } = await supabase
-      .storage
+    const { data: signedUrlData, error: signedUrlError } = await supabase.storage
       .from('temp-pdfs')
       .createSignedUrl(fileName, 604800); // 7 days in seconds
 
@@ -171,29 +171,34 @@ serve(async (req) => {
         .update({
           pdf_document_id: pdfDocumentId,
           pdf_generated_at: new Date().toISOString(),
-          pdf_version: newVersion
+          pdf_version: newVersion,
         })
         .eq('id', documentId);
     }
 
-    return new Response(JSON.stringify({
-      success: true,
-      publicUrl,
-      expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
-      fileName
-    }), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        publicUrl,
+        expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(), // 7 days from now
+        fileName,
+      }),
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error: any) {
     console.error('❌ Error in generate-temporary-pdf-link:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error.message || 'Failed to generate temporary PDF link'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to generate temporary PDF link',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

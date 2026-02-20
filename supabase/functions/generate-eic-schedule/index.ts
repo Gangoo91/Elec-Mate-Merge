@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -13,7 +14,7 @@ serve(async (req) => {
 
   try {
     const { multiCircuitDesign, projectInfo, siteInfo } = await req.json();
-    
+
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       throw new Error('No authorization header');
@@ -26,7 +27,10 @@ serve(async (req) => {
     );
 
     // Get user from auth
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser();
     if (userError || !user) {
       throw new Error('Unauthorized');
     }
@@ -56,7 +60,7 @@ serve(async (req) => {
       rcdTestButton: circuit.rcdProtected ? 'Pass' : undefined,
       afddTest: circuit.afddRequired ? 'Pass (arc detection functional)' : undefined,
       pfc: 'To be tested',
-      functionalTesting: 'To be completed'
+      functionalTesting: 'To be completed',
     }));
 
     const scheduleData = {
@@ -66,7 +70,7 @@ serve(async (req) => {
       designDate: new Date().toISOString().split('T')[0],
       circuits,
       createdAt: new Date().toISOString(),
-      status: 'pending'
+      status: 'pending',
     };
 
     // Save to database
@@ -79,7 +83,7 @@ serve(async (req) => {
         designer_name: projectInfo.leadElectrician || '',
         design_date: new Date().toISOString().split('T')[0],
         schedule_data: circuits,
-        status: 'pending'
+        status: 'pending',
       })
       .select()
       .single();
@@ -89,22 +93,27 @@ serve(async (req) => {
       throw saveError;
     }
 
-    return new Response(JSON.stringify({
-      success: true,
-      schedule: savedSchedule,
-      data: scheduleData
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        schedule: savedSchedule,
+        data: scheduleData,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in generate-eic-schedule function:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to generate EIC schedule' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to generate EIC schedule',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
@@ -117,30 +126,40 @@ function getReferenceMethodCode(method?: string): string {
     'Clipped Direct': '103',
     'In Conduit': '100',
     'In Trunking': '101',
-    'Buried Direct': '120'
+    'Buried Direct': '120',
   };
   return codes[method || ''] || '103';
 }
 
 function getPointsServed(loadType: string): number {
   const pointsMap: Record<string, number> = {
-    'lighting': 10,
-    'socket': 8,
-    'cooker': 1,
-    'shower': 1,
-    'immersion': 1,
-    'heating': 1,
+    lighting: 10,
+    socket: 8,
+    cooker: 1,
+    shower: 1,
+    immersion: 1,
+    heating: 1,
     'ev-charger': 1,
-    'motor': 1
+    motor: 1,
   };
   return pointsMap[loadType.toLowerCase()] || 1;
 }
 
 function calculateExpectedR1R2(liveSize: number, cpcSize: number, length: number): string {
   const CONDUCTOR_RESISTANCE: Record<number, number> = {
-    1.0: 18.1, 1.5: 12.1, 2.5: 7.41, 4.0: 4.61, 6.0: 3.08,
-    10: 1.83, 16: 1.15, 25: 0.727, 35: 0.524, 50: 0.387,
-    70: 0.268, 95: 0.193, 120: 0.153
+    1.0: 18.1,
+    1.5: 12.1,
+    2.5: 7.41,
+    4.0: 4.61,
+    6.0: 3.08,
+    10: 1.83,
+    16: 1.15,
+    25: 0.727,
+    35: 0.524,
+    50: 0.387,
+    70: 0.268,
+    95: 0.193,
+    120: 0.153,
   };
 
   const r1 = CONDUCTOR_RESISTANCE[liveSize] || 0;

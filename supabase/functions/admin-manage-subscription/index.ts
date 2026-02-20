@@ -1,21 +1,26 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { Resend } from 'npm:resend@2.0.0';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 // Email template for free access notification
-function getFreeAccessEmailHtml(name: string | null, tier: string, expiresAt: string | null): string {
-  const displayName = name || "there";
-  const appUrl = "https://elec-mate.com/dashboard";
-  const logoUrl = "https://elec-mate.com/logo.jpg";
+function getFreeAccessEmailHtml(
+  name: string | null,
+  tier: string,
+  expiresAt: string | null
+): string {
+  const displayName = name || 'there';
+  const appUrl = 'https://elec-mate.com/dashboard';
+  const logoUrl = 'https://elec-mate.com/logo.jpg';
 
   const expiryText = expiresAt
     ? `Your access is valid until <strong style="color: #ffffff;">${new Date(expiresAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</strong>.`
-    : "Your access has no expiry date - enjoy!";
+    : 'Your access has no expiry date - enjoy!';
 
   return `
 <!DOCTYPE html>
@@ -77,13 +82,17 @@ function getFreeAccessEmailHtml(name: string | null, tier: string, expiresAt: st
                       <span style="color: #22c55e;">✓</span> Study centre & CPD resources
                     </td>
                   </tr>
-                  ${tier === "Employer" ? `
+                  ${
+                    tier === 'Employer'
+                      ? `
                   <tr>
                     <td style="padding: 6px 0; color: #a1a1aa; font-size: 14px;">
                       <span style="color: #22c55e;">✓</span> Employer hub & team management
                     </td>
                   </tr>
-                  ` : ""}
+                  `
+                      : ''
+                  }
                 </table>
               </div>
 
@@ -117,73 +126,76 @@ function getFreeAccessEmailHtml(name: string | null, tier: string, expiresAt: st
 
 Deno.serve(async (req) => {
   // Handle CORS preflight
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
     // Get authorization header
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      throw new Error("No authorization header");
+      throw new Error('No authorization header');
     }
 
     // Create Supabase client with user's token
     const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: authHeader } } }
     );
 
     // Verify the caller is an admin
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser();
     if (userError || !user) {
-      throw new Error("Unauthorized: Could not get user");
+      throw new Error('Unauthorized: Could not get user');
     }
 
     const { data: callerProfile, error: profileError } = await supabaseClient
-      .from("profiles")
-      .select("admin_role, full_name")
-      .eq("id", user.id)
+      .from('profiles')
+      .select('admin_role, full_name')
+      .eq('id', user.id)
       .single();
 
     if (profileError || !callerProfile?.admin_role) {
-      throw new Error("Unauthorized: Admin access required");
+      throw new Error('Unauthorized: Admin access required');
     }
 
     // Get request body
     const { action, target_user_id, subscription_tier, expires_at, reason } = await req.json();
 
     if (!target_user_id) {
-      throw new Error("target_user_id is required");
+      throw new Error('target_user_id is required');
     }
 
-    if (!action || !["grant_free_access", "revoke_free_access"].includes(action)) {
+    if (!action || !['grant_free_access', 'revoke_free_access'].includes(action)) {
       throw new Error("Invalid action. Must be 'grant_free_access' or 'revoke_free_access'");
     }
 
     // Create admin client for the update
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
     // Get target user info
     const { data: targetProfile } = await supabaseAdmin
-      .from("profiles")
-      .select("full_name, subscribed, subscription_tier")
-      .eq("id", target_user_id)
+      .from('profiles')
+      .select('full_name, subscribed, subscription_tier')
+      .eq('id', target_user_id)
       .single();
 
     // Get target user's email from auth
     const { data: authData } = await supabaseAdmin.auth.admin.getUserById(target_user_id);
     const targetEmail = authData?.user?.email;
 
-    if (action === "revoke_free_access") {
+    if (action === 'revoke_free_access') {
       // Revoke free access
       const { error: updateError } = await supabaseAdmin
-        .from("profiles")
+        .from('profiles')
         .update({
           subscribed: false,
           free_access_granted: false,
@@ -193,28 +205,30 @@ Deno.serve(async (req) => {
           subscription_start: null,
           subscription_end: null,
         })
-        .eq("id", target_user_id);
+        .eq('id', target_user_id);
 
       if (updateError) {
-        console.error("Error revoking access:", updateError);
+        console.error('Error revoking access:', updateError);
         throw new Error(`Failed to revoke access: ${updateError.message}`);
       }
 
-      console.log(`Free access revoked for ${target_user_id} (${targetProfile?.full_name}) by admin ${user.id} (${callerProfile.full_name}). Reason: ${reason || "Not specified"}`);
+      console.log(
+        `Free access revoked for ${target_user_id} (${targetProfile?.full_name}) by admin ${user.id} (${callerProfile.full_name}). Reason: ${reason || 'Not specified'}`
+      );
 
       return new Response(
-        JSON.stringify({ success: true, message: "Free access revoked successfully" }),
+        JSON.stringify({ success: true, message: 'Free access revoked successfully' }),
         {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 200,
         }
       );
     } else {
       // Grant free access
-      const tier = subscription_tier || "Employer";
+      const tier = subscription_tier || 'Employer';
 
       const { error: updateError } = await supabaseAdmin
-        .from("profiles")
+        .from('profiles')
         .update({
           subscribed: true,
           free_access_granted: true,
@@ -224,24 +238,26 @@ Deno.serve(async (req) => {
           subscription_start: new Date().toISOString(),
           subscription_end: expires_at || null,
         })
-        .eq("id", target_user_id);
+        .eq('id', target_user_id);
 
       if (updateError) {
-        console.error("Error granting access:", updateError);
+        console.error('Error granting access:', updateError);
         throw new Error(`Failed to grant access: ${updateError.message}`);
       }
 
-      console.log(`Free access granted (${tier}) to ${target_user_id} (${targetProfile?.full_name}) by admin ${user.id} (${callerProfile.full_name}). Expires: ${expires_at || "Never"}. Reason: ${reason || "Not specified"}`);
+      console.log(
+        `Free access granted (${tier}) to ${target_user_id} (${targetProfile?.full_name}) by admin ${user.id} (${callerProfile.full_name}). Expires: ${expires_at || 'Never'}. Reason: ${reason || 'Not specified'}`
+      );
 
       // Send notification email
       let emailSent = false;
       if (targetEmail) {
         try {
-          const resendKey = Deno.env.get("RESEND_API_KEY");
+          const resendKey = Deno.env.get('RESEND_API_KEY');
           if (resendKey) {
             const resend = new Resend(resendKey);
             await resend.emails.send({
-              from: "Elec-Mate <founder@elec-mate.com>",
+              from: 'Elec-Mate <founder@elec-mate.com>',
               to: [targetEmail],
               subject: "You've Got Free Elec-Mate Access! 🎉",
               html: getFreeAccessEmailHtml(targetProfile?.full_name || null, tier, expires_at),
@@ -250,7 +266,7 @@ Deno.serve(async (req) => {
             console.log(`Free access email sent to ${targetEmail}`);
           }
         } catch (emailErr) {
-          console.error("Failed to send free access email:", emailErr);
+          console.error('Failed to send free access email:', emailErr);
           // Don't fail the grant - email is secondary
         }
       }
@@ -258,25 +274,22 @@ Deno.serve(async (req) => {
       return new Response(
         JSON.stringify({
           success: true,
-          message: "Free access granted successfully",
+          message: 'Free access granted successfully',
           tier,
           expires_at: expires_at || null,
           emailSent,
         }),
         {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           status: 200,
         }
       );
     }
   } catch (error) {
-    console.error("Error in admin-manage-subscription:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      }
-    );
+    console.error('Error in admin-manage-subscription:', error);
+    return new Response(JSON.stringify({ error: error.message }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 400,
+    });
   }
 });

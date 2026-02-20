@@ -21,7 +21,7 @@ export interface RegulationResult {
 
 /**
  * Execute multiple vector searches in parallel and fuse results
- * Use case: "9.5kW shower in bathroom" → 
+ * Use case: "9.5kW shower in bathroom" →
  *   Search 1: "9.5kW electrical load cable sizing"
  *   Search 2: "bathroom electrical installation zones"
  *   Search 3: "RCD protection requirements"
@@ -33,62 +33,66 @@ export async function multiVectorSearch(
   logger: Logger
 ): Promise<RegulationResult[]> {
   const searches: Promise<any>[] = [];
-  
+
   // Primary search (always present)
   const primaryQuery = buildPrimaryQuery(components);
-  
+
   // INTELLIGENCE: Direct keyword search (no embedding generation!)
   searches.push(
     supabase.rpc('search_regulations_intelligence_hybrid', {
       query_text: primaryQuery,
-      match_count: 10
+      match_count: 10,
     })
   );
-  
+
   // Secondary searches (location, safety, etc.)
-  for (const concern of components.secondary.slice(0, 2)) { // Top 2 concerns
+  for (const concern of components.secondary.slice(0, 2)) {
+    // Top 2 concerns
     const concernQuery = concern.keywords.join(' ');
     searches.push(
       supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: concernQuery,
-        match_count: 5
+        match_count: 5,
       })
     );
   }
-  
+
   // Execute all searches in parallel
   const results = await Promise.all(searches);
-  
+
   // Fuse results with weighted scoring
   const fusedResults = fuseSearchResults(
     results.map((r, idx) => ({
       results: r.data || [],
-      weight: idx === 0 ? 1.0 : 0.5 // Primary search gets full weight
+      weight: idx === 0 ? 1.0 : 0.5, // Primary search gets full weight
     }))
   );
-  
+
   logger.info('Multi-intelligence search complete', {
     searchCount: searches.length,
     totalResults: fusedResults.length,
-    avgScore: fusedResults.length > 0 
-      ? (fusedResults.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / fusedResults.length).toFixed(3)
-      : 0
+    avgScore:
+      fusedResults.length > 0
+        ? (
+            fusedResults.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / fusedResults.length
+          ).toFixed(3)
+        : 0,
   });
-  
+
   return fusedResults.slice(0, 15); // Top 15 most relevant
 }
 
 function buildPrimaryQuery(components: QueryComponents): string {
   const entities = components.primary.entities;
-  
+
   if (entities.loadType && entities.power) {
     return `${entities.loadType} ${entities.power}W design requirements`;
   }
-  
+
   if (entities.jobType) {
     return `${entities.jobType} electrical installation requirements`;
   }
-  
+
   return entities.toString() || 'electrical installation regulations';
 }
 
@@ -96,12 +100,12 @@ function fuseSearchResults(
   searchResults: Array<{ results: RegulationResult[]; weight: number }>
 ): RegulationResult[] {
   const scoreMap = new Map<string, { result: RegulationResult; score: number }>();
-  
+
   for (const { results, weight } of searchResults) {
     for (const result of results) {
       const existing = scoreMap.get(result.id);
       const weightedScore = (result.hybrid_score || result.similarity || 0) * weight;
-      
+
       if (existing) {
         existing.score += weightedScore; // Accumulate scores
       } else {
@@ -109,8 +113,8 @@ function fuseSearchResults(
       }
     }
   }
-  
+
   return Array.from(scoreMap.values())
     .sort((a, b) => b.score - a.score)
-    .map(item => ({ ...item.result, hybrid_score: item.score }));
+    .map((item) => ({ ...item.result, hybrid_score: item.score }));
 }

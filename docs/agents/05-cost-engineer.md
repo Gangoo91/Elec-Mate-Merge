@@ -6,8 +6,8 @@ The Cost Engineer generates detailed cost estimates for UK electrical installati
 
 ## Agents Involved
 
-| Agent | Edge Function | Core Logic | Purpose |
-|-------|---------------|------------|---------|
+| Agent             | Edge Function      | Core Logic                      | Purpose                 |
+| ----------------- | ------------------ | ------------------------------- | ----------------------- |
 | **Cost Engineer** | `cost-engineer-v3` | `_agents/cost-engineer-core.ts` | Generate cost estimates |
 
 ## Entry Points
@@ -29,14 +29,15 @@ The Cost Engineer generates detailed cost estimates for UK electrical installati
 
 ### RAG Sources
 
-| Table | Search Function | Results Limit | Purpose |
-|-------|-----------------|---------------|---------|
-| `pricing_embeddings` | `searchPricingKnowledge()` | 12 | Material pricing from Screwfix/CEF/Toolstation |
-| `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | 20 | Labour timing benchmarks |
+| Table                         | Search Function                     | Results Limit | Purpose                                        |
+| ----------------------------- | ----------------------------------- | ------------- | ---------------------------------------------- |
+| `pricing_embeddings`          | `searchPricingKnowledge()`          | 12            | Material pricing from Screwfix/CEF/Toolstation |
+| `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | 20            | Labour timing benchmarks                       |
 
 ### Pricing Intelligence
 
 The agent searches `pricing_embeddings` for:
+
 - Material costs (cables, consumer units, accessories)
 - Trade prices (applies 20% discount to list prices)
 - Supplier comparison (Screwfix, CEF, Toolstation)
@@ -44,6 +45,7 @@ The agent searches `pricing_embeddings` for:
 ### Labour Timing Benchmarks
 
 RAG results include timing data from `practical_work_intelligence`:
+
 - `typical_duration_minutes`
 - `duration_hours`
 - `team_size`
@@ -61,24 +63,24 @@ sequenceDiagram
     participant Validator
 
     Frontend->>Agent: Submit cost request
-    
+
     Agent->>Agent: Extract cost keywords
     Agent->>Agent: Detect project type
-    
+
     Agent->>RAG: Generate embedding
     Agent->>RAG: Parallel RAG search
     Note over RAG: pricing (12) + practical_work (20)
     RAG->>Agent: Return knowledge
-    
+
     Agent->>OpenAI: Generate estimate (5 min timeout)
     OpenAI->>Agent: JSON estimate
-    
+
     Agent->>Validator: Validate pricing
     Agent->>Validator: Validate timescales
     Validator->>Agent: Warnings added to valueEngineering
-    
+
     Agent->>Agent: Calculate profitability
-    
+
     Agent->>Frontend: Return complete estimate
 ```
 
@@ -86,8 +88,8 @@ sequenceDiagram
 
 ```typescript
 interface CostEngineerRequest {
-  query: string;                    // Job description
-  region?: string;                  // UK region for pricing
+  query: string; // Job description
+  region?: string; // UK region for pricing
   projectContext?: {
     projectType?: 'domestic' | 'commercial' | 'industrial';
     projectName?: string;
@@ -95,7 +97,7 @@ interface CostEngineerRequest {
     additionalInfo?: string;
   };
   businessSettings?: {
-    labourRate?: number;            // Default: £45/hr
+    labourRate?: number; // Default: £45/hr
     overheadPercentage?: number;
     profitMargin?: number;
     dailyOverheads?: number;
@@ -120,7 +122,7 @@ interface CostEstimate {
     }>;
     subtotal: number;
   };
-  
+
   labour: {
     tasks: Array<{
       description: string;
@@ -132,12 +134,12 @@ interface CostEstimate {
     subtotal: number;
     totalHours: number;
   };
-  
+
   timescales: {
     totalDays: number;
     breakdown: string;
   };
-  
+
   summary: {
     materialsSubtotal: number;
     labourSubtotal: number;
@@ -145,15 +147,15 @@ interface CostEstimate {
     vat: number;
     grandTotal: number;
   };
-  
+
   complexity: {
-    rating: number;               // 1-10 scale
+    rating: number; // 1-10 scale
     label: string;
     factors: string[];
     estimatedHours: number;
     reasoning: string;
   };
-  
+
   riskAssessment: {
     risks: Array<{
       title: string;
@@ -163,13 +165,13 @@ interface CostEstimate {
       contingencyPercent: number;
     }>;
   };
-  
+
   siteChecklist: {
     critical: string[];
     important: string[];
     documentation: string[];
   };
-  
+
   upsells: Array<{
     opportunity: string;
     price: number;
@@ -178,7 +180,7 @@ interface CostEstimate {
     timing: string;
     script: string;
   }>;
-  
+
   paymentTerms: {
     depositPercent: number;
     depositAmount: number;
@@ -192,7 +194,7 @@ interface CostEstimate {
       trigger: string;
     }>;
   };
-  
+
   pipeline: Array<{
     opportunity: string;
     description: string;
@@ -202,9 +204,9 @@ interface CostEstimate {
     trigger: string;
     timing: string;
   }>;
-  
-  valueEngineering: string[];     // Cost-saving suggestions + validation warnings
-  
+
+  valueEngineering: string[]; // Cost-saving suggestions + validation warnings
+
   profitability?: {
     breakEvenPoint: number;
     grossMargin: number;
@@ -219,10 +221,10 @@ interface CostEstimate {
 
 ```typescript
 const COST_ENGINEER_PRICING = {
-  ELECTRICIAN_RATE_PER_HOUR: 45.00,
-  APPRENTICE_RATE_PER_HOUR: 25.00,
+  ELECTRICIAN_RATE_PER_HOUR: 45.0,
+  APPRENTICE_RATE_PER_HOUR: 25.0,
   MATERIAL_MARKUP_PERCENT: 12,
-  VAT_RATE: 20
+  VAT_RATE: 20,
 };
 
 const REGIONAL_MULTIPLIERS = {
@@ -233,10 +235,10 @@ const REGIONAL_MULTIPLIERS = {
   yorkshire: 1.02,
   wales: 0.98,
   southwest: 1.05,
-  eastMidlands: 1.00,
-  westMidlands: 1.00,
+  eastMidlands: 1.0,
+  westMidlands: 1.0,
   northeast: 0.95,
-  other: 1.00
+  other: 1.0,
 };
 ```
 
@@ -245,6 +247,7 @@ const REGIONAL_MULTIPLIERS = {
 ### Pricing Validation
 
 `validatePricing()` from `_shared/uk-trade-pricing-2025.ts`:
+
 - Checks material prices against known benchmarks
 - Flags unusual pricing for review
 - Adds warnings to `valueEngineering`
@@ -252,6 +255,7 @@ const REGIONAL_MULTIPLIERS = {
 ### Timescale Validation
 
 `validateTimescales()`:
+
 - Cross-references labour hours with RAG benchmarks
 - Flags estimates >30% different from benchmarks
 - Adds warnings to `valueEngineering`
@@ -278,6 +282,7 @@ function detectProjectType(query: string): 'domestic' | 'commercial' | 'industri
 ### Profitability Calculation
 
 If `skipProfitability` is false, calculates:
+
 - Break-even point
 - Gross margin
 - Net margin

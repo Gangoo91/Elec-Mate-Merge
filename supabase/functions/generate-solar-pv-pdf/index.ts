@@ -1,4 +1,4 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
@@ -7,7 +7,8 @@ const TEMPLATE_ID = '3AE10F9E-6BDA-4DF2-ABF1-20AFADEF5156';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
@@ -19,11 +20,14 @@ interface PDFMonkeyDocument {
   errors?: string[];
 }
 
-async function createPDFMonkeyDocument(formData: any, templateId?: string): Promise<PDFMonkeyDocument> {
+async function createPDFMonkeyDocument(
+  formData: any,
+  templateId?: string
+): Promise<PDFMonkeyDocument> {
   const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${PDFMONKEY_API_KEY}`,
+      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -49,7 +53,7 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
   const response = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${PDFMONKEY_API_KEY}`,
+      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
       'Content-Type': 'application/json',
     },
   });
@@ -64,7 +68,10 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
   return data.document;
 }
 
-async function waitForPDFGeneration(documentId: string, maxAttempts = 30): Promise<PDFMonkeyDocument> {
+async function waitForPDFGeneration(
+  documentId: string,
+  maxAttempts = 30
+): Promise<PDFMonkeyDocument> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const document = await getPDFMonkeyDocument(documentId);
 
@@ -78,7 +85,7 @@ async function waitForPDFGeneration(documentId: string, maxAttempts = 30): Promi
       throw new Error(`PDF generation failed: ${document.errors?.join(', ') || 'Unknown error'}`);
     }
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   throw new Error('PDF generation timed out');
@@ -110,8 +117,14 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-solar-pv-pdf] Total capacity:', formData.total_capacity);
     console.log('[generate-solar-pv-pdf] Arrays count:', formData.array_count);
     console.log('[generate-solar-pv-pdf] Inverters count:', formData.inverter_count);
-    console.log('[generate-solar-pv-pdf] MCS details:', JSON.stringify(formData.mcs_details, null, 2));
-    console.log('[generate-solar-pv-pdf] Grid connection:', JSON.stringify(formData.grid_connection, null, 2));
+    console.log(
+      '[generate-solar-pv-pdf] MCS details:',
+      JSON.stringify(formData.mcs_details, null, 2)
+    );
+    console.log(
+      '[generate-solar-pv-pdf] Grid connection:',
+      JSON.stringify(formData.grid_connection, null, 2)
+    );
 
     // Create the document
     const document = await createPDFMonkeyDocument(formData, templateId);
@@ -137,7 +150,11 @@ Deno.serve(async (req: Request) => {
     );
   } catch (error) {
     console.error('Solar PV PDF generation error:', error);
-    await captureException(error, { functionName: 'generate-solar-pv-pdf', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'generate-solar-pv-pdf',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(
       JSON.stringify({
         success: false,

@@ -1,12 +1,13 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { Resend } from 'npm:resend@2.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 interface PromoOffer {
@@ -24,21 +25,21 @@ const STANDARD_PRICES: Record<string, number> = {
   apprentice: 4.99,
   electrician: 9.99,
   employer: 29.99,
-};  // Email uses monthly prices for display
+}; // Email uses monthly prices for display
 
 const PLAN_NAMES: Record<string, string> = {
-  apprentice: "Apprentice",
-  electrician: "Electrician",
-  employer: "Employer",
+  apprentice: 'Apprentice',
+  electrician: 'Electrician',
+  employer: 'Employer',
 };
 
 // Generate promo offer email HTML
 function generatePromoEmailHTML(offer: PromoOffer): string {
-  const siteUrl = Deno.env.get("SITE_URL") || "https://elec-mate.com";
+  const siteUrl = Deno.env.get('SITE_URL') || 'https://elec-mate.com';
   const claimUrl = `${siteUrl}/auth/signup?offer=${offer.code}`;
   const standardPrice = STANDARD_PRICES[offer.plan_id] || 9.99;
   const discountPercent = Math.round(((standardPrice - offer.price) / standardPrice) * 100);
-  const planName = PLAN_NAMES[offer.plan_id] || "Electrician";
+  const planName = PLAN_NAMES[offer.plan_id] || 'Electrician';
 
   return `
 <!DOCTYPE html>
@@ -211,90 +212,93 @@ function generatePromoEmailHTML(offer: PromoOffer): string {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const authHeader = req.headers.get("Authorization");
+    const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      throw new Error("No authorization header");
+      throw new Error('No authorization header');
     }
 
     // Create Supabase client with user's token
     const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       { global: { headers: { Authorization: authHeader } } }
     );
 
     // Verify the caller is an admin
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser();
     if (userError || !user) {
-      throw new Error("Unauthorized: Could not get user");
+      throw new Error('Unauthorized: Could not get user');
     }
 
     const { data: callerProfile, error: profileError } = await supabaseClient
-      .from("profiles")
-      .select("admin_role, full_name")
-      .eq("id", user.id)
+      .from('profiles')
+      .select('admin_role, full_name')
+      .eq('id', user.id)
       .single();
 
     if (profileError || !callerProfile?.admin_role) {
-      throw new Error("Unauthorized: Admin access required");
+      throw new Error('Unauthorized: Admin access required');
     }
 
     const { action, offerId, email, emails } = await req.json();
 
     // Create admin client for operations
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
     let result;
 
     switch (action) {
-      case "send_single": {
+      case 'send_single': {
         if (!offerId || !email) {
-          throw new Error("Offer ID and email are required");
+          throw new Error('Offer ID and email are required');
         }
 
         // Get offer details
         const { data: offer, error: offerError } = await supabaseAdmin
-          .from("promo_offers")
-          .select("*")
-          .eq("id", offerId)
+          .from('promo_offers')
+          .select('*')
+          .eq('id', offerId)
           .single();
 
         if (offerError || !offer) {
-          throw new Error("Offer not found");
+          throw new Error('Offer not found');
         }
 
         if (!offer.is_active) {
-          throw new Error("This offer is not active");
+          throw new Error('This offer is not active');
         }
 
         // Send email
         const emailHtml = generatePromoEmailHTML(offer as PromoOffer);
         const { error: emailError } = await resend.emails.send({
-          from: "Elec-Mate <offers@elec-mate.com>",
+          from: 'Elec-Mate <offers@elec-mate.com>',
           to: [email.trim().toLowerCase()],
           subject: `Special Offer: ${offer.name} - £${offer.price}/month`,
           html: emailHtml,
         });
 
         if (emailError) {
-          console.error("Email send error:", emailError);
-          throw new Error("Failed to send email");
+          console.error('Email send error:', emailError);
+          throw new Error('Failed to send email');
         }
 
         // Track the sent email
-        await supabaseAdmin.from("promo_offer_emails").insert({
+        await supabaseAdmin.from('promo_offer_emails').insert({
           offer_id: offerId,
           email: email.trim().toLowerCase(),
-          status: "sent",
+          status: 'sent',
         });
 
         console.log(`Promo offer ${offer.code} sent to ${email} by admin ${user.id}`);
@@ -302,30 +306,30 @@ Deno.serve(async (req) => {
         break;
       }
 
-      case "send_bulk": {
+      case 'send_bulk': {
         if (!offerId || !emails || !Array.isArray(emails) || emails.length === 0) {
-          throw new Error("Offer ID and email list are required");
+          throw new Error('Offer ID and email list are required');
         }
 
         // Get offer details
         const { data: offer, error: offerError } = await supabaseAdmin
-          .from("promo_offers")
-          .select("*")
-          .eq("id", offerId)
+          .from('promo_offers')
+          .select('*')
+          .eq('id', offerId)
           .single();
 
         if (offerError || !offer) {
-          throw new Error("Offer not found");
+          throw new Error('Offer not found');
         }
 
         if (!offer.is_active) {
-          throw new Error("This offer is not active");
+          throw new Error('This offer is not active');
         }
 
         // Clean and validate emails
         const cleanEmails = emails
           .map((e: string) => e.trim().toLowerCase())
-          .filter((e: string) => e && e.includes("@"));
+          .filter((e: string) => e && e.includes('@'));
 
         let sentCount = 0;
         const errors: string[] = [];
@@ -335,7 +339,7 @@ Deno.serve(async (req) => {
         for (const recipientEmail of cleanEmails) {
           try {
             const { error: emailError } = await resend.emails.send({
-              from: "Elec-Mate <offers@elec-mate.com>",
+              from: 'Elec-Mate <offers@elec-mate.com>',
               to: [recipientEmail],
               subject: `Special Offer: ${offer.name} - £${offer.price}/month`,
               html: emailHtml,
@@ -346,10 +350,10 @@ Deno.serve(async (req) => {
               continue;
             }
 
-            await supabaseAdmin.from("promo_offer_emails").insert({
+            await supabaseAdmin.from('promo_offer_emails').insert({
               offer_id: offerId,
               email: recipientEmail,
-              status: "sent",
+              status: 'sent',
             });
 
             sentCount++;
@@ -359,20 +363,24 @@ Deno.serve(async (req) => {
         }
 
         console.log(`Sent ${sentCount} promo emails for offer ${offer.code} by admin ${user.id}`);
-        result = { sent: sentCount, failed: errors.length, errors: errors.length > 0 ? errors : undefined };
+        result = {
+          sent: sentCount,
+          failed: errors.length,
+          errors: errors.length > 0 ? errors : undefined,
+        };
         break;
       }
 
-      case "get_sent": {
+      case 'get_sent': {
         if (!offerId) {
-          throw new Error("Offer ID is required");
+          throw new Error('Offer ID is required');
         }
 
         const { data, error } = await supabaseAdmin
-          .from("promo_offer_emails")
-          .select("*")
-          .eq("offer_id", offerId)
-          .order("sent_at", { ascending: false });
+          .from('promo_offer_emails')
+          .select('*')
+          .eq('offer_id', offerId)
+          .order('sent_at', { ascending: false });
 
         if (error) throw error;
         result = { emails: data || [] };
@@ -384,13 +392,13 @@ Deno.serve(async (req) => {
     }
 
     return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
   } catch (error: any) {
-    console.error("Error in send-promo-offer:", error);
+    console.error('Error in send-promo-offer:', error);
     return new Response(JSON.stringify({ error: error.message }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
     });
   }

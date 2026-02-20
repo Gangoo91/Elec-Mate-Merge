@@ -27,16 +27,22 @@ export const COMMERCIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     fireRating: 'Can contribute to fire compartmentation',
     ipRating: 'IP40 standard, IP54+ with gaskets',
     costRating: 'high',
-    notes: 'Mandatory for fire escape routes and fire-rated compartments per BS EN 50085'
+    notes: 'Mandatory for fire escape routes and fire-rated compartments per BS EN 50085',
   },
   'pvc-trunking': {
     type: 'PVC trunking',
     material: 'PVC',
-    applications: ['office areas', 'retail spaces', 'non-fire-rated routes', 'retrofit installations'],
+    applications: [
+      'office areas',
+      'retail spaces',
+      'non-fire-rated routes',
+      'retrofit installations',
+    ],
     bestFor: 'Cost-effective office and retail installations',
     ipRating: 'IP40 standard',
     costRating: 'low',
-    notes: 'Not suitable for fire escape routes. Easy to modify. Available in white for aesthetic installations.'
+    notes:
+      'Not suitable for fire escape routes. Easy to modify. Available in white for aesthetic installations.',
   },
   'dado-trunking': {
     type: 'dado trunking',
@@ -45,16 +51,22 @@ export const COMMERCIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Office fit-out with power and data distribution at desk height',
     ipRating: 'IP40',
     costRating: 'medium',
-    notes: 'Separate compartments for power and data. Allows easy modification.'
+    notes: 'Separate compartments for power and data. Allows easy modification.',
   },
   'perforated-cable-tray': {
     type: 'perforated cable tray',
     material: 'steel',
-    applications: ['ceiling voids', 'above suspended ceilings', 'plant rooms', 'distribution routes'],
+    applications: [
+      'ceiling voids',
+      'above suspended ceilings',
+      'plant rooms',
+      'distribution routes',
+    ],
     bestFor: 'High-capacity overhead routes with ventilation and easy access',
     ipRating: 'None (open system)',
     costRating: 'medium',
-    notes: 'Excellent cooling for loaded cables. Easy to add/remove cables. Perforations aid fire suppression systems.'
+    notes:
+      'Excellent cooling for loaded cables. Easy to add/remove cables. Perforations aid fire suppression systems.',
   },
   'cable-basket': {
     type: 'cable basket',
@@ -63,7 +75,8 @@ export const COMMERCIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Flexible commercial installations with regular cable changes',
     ipRating: 'None (open system)',
     costRating: 'medium',
-    notes: 'Lightweight, easy to modify, excellent cooling. Popular in commercial offices and data centres.'
+    notes:
+      'Lightweight, easy to modify, excellent cooling. Popular in commercial offices and data centres.',
   },
   'steel-conduit': {
     type: 'steel conduit',
@@ -72,7 +85,8 @@ export const COMMERCIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Fire-rated and aesthetically sensitive commercial areas',
     ipRating: 'IP54 with appropriate fittings',
     costRating: 'high',
-    notes: 'Provides excellent mechanical protection. Time-consuming to install. Difficult to modify.'
+    notes:
+      'Provides excellent mechanical protection. Time-consuming to install. Difficult to modify.',
   },
   'pvc-conduit': {
     type: 'PVC conduit',
@@ -81,8 +95,8 @@ export const COMMERCIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Cost-effective concealed runs in low-risk commercial areas',
     ipRating: 'IP54 with appropriate fittings',
     costRating: 'low',
-    notes: 'Not suitable for fire escape routes. Easier to work than steel conduit.'
-  }
+    notes: 'Not suitable for fire escape routes. Easier to work than steel conduit.',
+  },
 };
 
 // ============================================================================
@@ -93,29 +107,47 @@ export const INDUSTRIAL_CONTAINMENT: Record<string, ContainmentOption> = {
   'cable-ladder': {
     type: 'cable ladder',
     material: 'galvanised-steel',
-    applications: ['heavy cable runs (50mm²+)', 'long distribution routes', 'cable basements', 'outdoor gantries'],
+    applications: [
+      'heavy cable runs (50mm²+)',
+      'long distribution routes',
+      'cable basements',
+      'outdoor gantries',
+    ],
     bestFor: 'Heavy-duty industrial installations with large grouped cables',
     ipRating: 'None (open system)',
     costRating: 'high',
-    notes: 'Designed for very heavy loads. Excellent cooling. Easy access for maintenance. Suitable for outdoor use when galvanised.'
+    notes:
+      'Designed for very heavy loads. Excellent cooling. Easy access for maintenance. Suitable for outdoor use when galvanised.',
   },
   'heavy-duty-tray': {
     type: 'heavy-duty perforated tray',
     material: 'galvanised-steel',
-    applications: ['motor circuits', 'grouped SWA cables', 'harsh environments', 'outdoor installations'],
+    applications: [
+      'motor circuits',
+      'grouped SWA cables',
+      'harsh environments',
+      'outdoor installations',
+    ],
     bestFor: 'Robust industrial installations with multiple SWA cables',
     ipRating: 'None (open system)',
     costRating: 'high',
-    notes: 'Thicker gauge than commercial tray (1.5mm-2.5mm). Hot-dip galvanised for corrosion resistance.'
+    notes:
+      'Thicker gauge than commercial tray (1.5mm-2.5mm). Hot-dip galvanised for corrosion resistance.',
   },
   'galvanised-conduit': {
     type: 'galvanised steel conduit',
     material: 'galvanised-steel',
-    applications: ['singles in harsh environments', 'corrosive areas', 'outdoor machinery', 'chemical plants'],
+    applications: [
+      'singles in harsh environments',
+      'corrosive areas',
+      'outdoor machinery',
+      'chemical plants',
+    ],
     bestFor: 'Harsh industrial environments requiring corrosion protection',
     ipRating: 'IP65+ with appropriate fittings',
     costRating: 'high',
-    notes: 'Hot-dip galvanised for maximum corrosion resistance. Use explosion-proof fittings in hazardous areas (ATEX).'
+    notes:
+      'Hot-dip galvanised for maximum corrosion resistance. Use explosion-proof fittings in hazardous areas (ATEX).',
   },
   'cable-tray-outdoor': {
     type: 'outdoor cable tray',
@@ -124,7 +156,7 @@ export const INDUSTRIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Weather-resistant outdoor cable routing',
     ipRating: 'None (open system, weather-resistant)',
     costRating: 'high',
-    notes: 'Hot-dip galvanised. Use cover for extreme weather protection. Designed to drain water.'
+    notes: 'Hot-dip galvanised. Use cover for extreme weather protection. Designed to drain water.',
   },
   'cable-cleats-swa': {
     type: 'clipped direct with SWA cleats',
@@ -133,7 +165,8 @@ export const INDUSTRIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Simple point-to-point SWA installations',
     ipRating: 'N/A (cable provides protection)',
     costRating: 'low',
-    notes: 'Use LSF (Low Smoke & Fume) cleats in fire-rated areas. Spacing per cable weight and route.'
+    notes:
+      'Use LSF (Low Smoke & Fume) cleats in fire-rated areas. Spacing per cable weight and route.',
   },
   'flexible-conduit': {
     type: 'flexible metal conduit',
@@ -142,7 +175,8 @@ export const INDUSTRIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Industrial machinery with vibration or movement',
     ipRating: 'IP54+ with liquid-tight fittings',
     costRating: 'medium',
-    notes: 'Use liquid-tight flexible conduit for wet areas. Must be properly bonded for earth continuity.'
+    notes:
+      'Use liquid-tight flexible conduit for wet areas. Must be properly bonded for earth continuity.',
   },
   'cable-basket-industrial': {
     type: 'industrial cable basket',
@@ -151,8 +185,9 @@ export const INDUSTRIAL_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Industrial areas requiring frequent cable modifications',
     ipRating: 'None (open system)',
     costRating: 'medium',
-    notes: 'Heavier gauge than commercial basket. Suitable for SWA and singles. Good cooling properties.'
-  }
+    notes:
+      'Heavier gauge than commercial basket. Suitable for SWA and singles. Good cooling properties.',
+  },
 };
 
 // ============================================================================
@@ -167,7 +202,8 @@ export const DATA_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'High-density structured cabling with frequent changes',
     ipRating: 'None (open system)',
     costRating: 'medium',
-    notes: 'MUST be segregated 300mm from power cables. Excellent for Cat6/Cat6a/fibre. TIA-942 compliant.'
+    notes:
+      'MUST be segregated 300mm from power cables. Excellent for Cat6/Cat6a/fibre. TIA-942 compliant.',
   },
   'plastic-trunking-data': {
     type: 'plastic trunking (data)',
@@ -176,7 +212,7 @@ export const DATA_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Aesthetic surface-mounted data cable routes',
     ipRating: 'IP40',
     costRating: 'low',
-    notes: 'Separate from power trunking. White finish for office environments. Easy to modify.'
+    notes: 'Separate from power trunking. White finish for office environments. Easy to modify.',
   },
   'raised-floor': {
     type: 'raised floor containment',
@@ -185,7 +221,8 @@ export const DATA_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'High-density data centres with underfloor cooling',
     ipRating: 'N/A',
     costRating: 'high',
-    notes: 'Allows segregation from overhead power. Facilitates airflow for cooling. TIA-942 recommended for data centres.'
+    notes:
+      'Allows segregation from overhead power. Facilitates airflow for cooling. TIA-942 recommended for data centres.',
   },
   'overhead-cable-tray-data': {
     type: 'overhead cable tray (data)',
@@ -194,8 +231,9 @@ export const DATA_CONTAINMENT: Record<string, ContainmentOption> = {
     bestFor: 'Overhead structured cabling separated from power',
     ipRating: 'None (open system)',
     costRating: 'medium',
-    notes: 'Install on opposite side of room from power tray or maintain 300mm separation. Perforated for cooling.'
-  }
+    notes:
+      'Install on opposite side of room from power tray or maintain 300mm separation. Perforated for cooling.',
+  },
 };
 
 // ============================================================================
@@ -205,15 +243,13 @@ export const DATA_CONTAINMENT: Record<string, ContainmentOption> = {
 /**
  * Select optimal containment for commercial installations
  */
-export function selectCommercialContainment(
-  circuitContext: {
-    loadType: string;
-    cableType: string;
-    location: string;
-    fireRated: boolean;
-    dataCable: boolean;
-  }
-): { containment: string; reason: string; material: string } {
+export function selectCommercialContainment(circuitContext: {
+  loadType: string;
+  cableType: string;
+  location: string;
+  fireRated: boolean;
+  dataCable: boolean;
+}): { containment: string; reason: string; material: string } {
   const { loadType, cableType, location, fireRated, dataCable } = circuitContext;
 
   // Data cables get specific containment
@@ -222,13 +258,13 @@ export function selectCommercialContainment(
       return {
         containment: 'cable basket (data-specific) with 300mm power segregation',
         reason: 'Data centre structured cabling per TIA-942',
-        material: 'steel'
+        material: 'steel',
       };
     }
     return {
       containment: 'plastic trunking (separate from power) or cable basket',
       reason: 'Data cables require segregation from power per BS EN 50174',
-      material: 'plastic'
+      material: 'plastic',
     };
   }
 
@@ -237,7 +273,7 @@ export function selectCommercialContainment(
     return {
       containment: 'steel trunking',
       reason: 'Fire-rated containment required for escape routes',
-      material: 'steel'
+      material: 'steel',
     };
   }
 
@@ -247,20 +283,20 @@ export function selectCommercialContainment(
       return {
         containment: 'perforated cable tray',
         reason: 'Overhead distribution with excellent cooling and access',
-        material: 'steel'
+        material: 'steel',
       };
     }
     if (location.includes('office')) {
       return {
         containment: 'PVC trunking (office areas) or steel trunking (high-traffic)',
         reason: 'Cost-effective office distribution',
-        material: 'PVC'
+        material: 'PVC',
       };
     }
     return {
       containment: 'steel trunking',
       reason: 'Standard commercial containment for LSZH singles',
-      material: 'steel'
+      material: 'steel',
     };
   }
 
@@ -269,7 +305,7 @@ export function selectCommercialContainment(
     return {
       containment: 'clipped direct or on cable tray',
       reason: 'SWA provides own mechanical protection',
-      material: 'N/A'
+      material: 'N/A',
     };
   }
 
@@ -277,33 +313,36 @@ export function selectCommercialContainment(
   return {
     containment: 'perforated cable tray or cable basket',
     reason: 'Flexible commercial containment for easy modifications',
-    material: 'steel'
+    material: 'steel',
   };
 }
 
 /**
  * Select optimal containment for industrial installations
  */
-export function selectIndustrialContainment(
-  circuitContext: {
-    loadType: string;
-    cableType: string;
-    cableSize: number;
-    location: string;
-    outdoor: boolean;
-    corrosive: boolean;
-    vibration: boolean;
-  }
-): { containment: string; reason: string; material: string } {
-  const { loadType, cableType, cableSize, location, outdoor, corrosive, vibration } = circuitContext;
+export function selectIndustrialContainment(circuitContext: {
+  loadType: string;
+  cableType: string;
+  cableSize: number;
+  location: string;
+  outdoor: boolean;
+  corrosive: boolean;
+  vibration: boolean;
+}): { containment: string; reason: string; material: string } {
+  const { loadType, cableType, cableSize, location, outdoor, corrosive, vibration } =
+    circuitContext;
 
   // Machinery with vibration
-  if (vibration || loadType.toLowerCase().includes('machinery') || loadType.toLowerCase().includes('motor')) {
+  if (
+    vibration ||
+    loadType.toLowerCase().includes('machinery') ||
+    loadType.toLowerCase().includes('motor')
+  ) {
     if (cableType.includes('Flexible')) {
       return {
         containment: 'liquid-tight flexible conduit',
         reason: 'Flexible containment for moving machinery',
-        material: 'galvanised-steel'
+        material: 'galvanised-steel',
       };
     }
   }
@@ -314,13 +353,13 @@ export function selectIndustrialContainment(
       return {
         containment: 'galvanised steel conduit with IP65+ fittings',
         reason: 'Corrosion protection for harsh industrial environments',
-        material: 'galvanised-steel'
+        material: 'galvanised-steel',
       };
     }
     return {
       containment: 'hot-dip galvanised heavy-duty tray',
       reason: 'Corrosion-resistant containment for grouped cables',
-      material: 'galvanised-steel'
+      material: 'galvanised-steel',
     };
   }
 
@@ -329,7 +368,7 @@ export function selectIndustrialContainment(
     return {
       containment: 'cable ladder',
       reason: 'Heavy-duty support for large cables (50mm²+)',
-      material: 'galvanised-steel'
+      material: 'galvanised-steel',
     };
   }
 
@@ -339,13 +378,13 @@ export function selectIndustrialContainment(
       return {
         containment: 'clipped direct or outdoor cable tray (galvanised)',
         reason: 'Weather-resistant outdoor installation',
-        material: 'galvanised-steel'
+        material: 'galvanised-steel',
       };
     }
     return {
       containment: 'galvanised steel conduit (weatherproof)',
       reason: 'Protected outdoor installation',
-      material: 'galvanised-steel'
+      material: 'galvanised-steel',
     };
   }
 
@@ -355,13 +394,13 @@ export function selectIndustrialContainment(
       return {
         containment: 'heavy-duty perforated tray or cable ladder',
         reason: 'Heavy-duty support for grouped SWA cables',
-        material: 'galvanised-steel'
+        material: 'galvanised-steel',
       };
     }
     return {
       containment: 'clipped direct with SWA cleats',
       reason: 'Simple SWA installation with mechanical support',
-      material: 'steel'
+      material: 'steel',
     };
   }
 
@@ -370,7 +409,7 @@ export function selectIndustrialContainment(
     return {
       containment: 'heavy-duty steel conduit or cable tray',
       reason: 'Industrial containment for singles per BS 7671 Reg 521.5.1',
-      material: 'galvanised-steel'
+      material: 'galvanised-steel',
     };
   }
 
@@ -378,6 +417,6 @@ export function selectIndustrialContainment(
   return {
     containment: 'heavy-duty perforated tray or cable basket',
     reason: 'Standard industrial containment for robust support',
-    material: 'galvanised-steel'
+    material: 'galvanised-steel',
   };
 }

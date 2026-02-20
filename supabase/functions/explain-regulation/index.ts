@@ -2,7 +2,8 @@ import { serve } from '../_shared/deps.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -23,14 +24,14 @@ serve(async (req) => {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
-          { 
-            role: 'system', 
+          {
+            role: 'system',
             content: `You are an experienced UK electrical engineer explaining BS 7671:2018 regulations in plain English.
 
 Provide clear, concise explanations that:
@@ -40,14 +41,14 @@ Provide clear, concise explanations that:
 - Keep it under 100 words
 - Focus on safety rationale
 
-Be professional but approachable.` 
+Be professional but approachable.`,
           },
-          { 
-            role: 'user', 
-            content: `Explain why ${topic} in this context: ${JSON.stringify(context)}` 
-          }
+          {
+            role: 'user',
+            content: `Explain why ${topic} in this context: ${JSON.stringify(context)}`,
+          },
         ],
-        max_completion_tokens: 200
+        max_completion_tokens: 200,
       }),
     });
 
@@ -58,25 +59,30 @@ Be professional but approachable.`
     }
 
     const data = await response.json();
-    const explanation = data.choices[0]?.message?.content || "Unable to generate explanation";
+    const explanation = data.choices[0]?.message?.content || 'Unable to generate explanation';
 
     console.log('Generated explanation for:', topic);
 
-    return new Response(JSON.stringify({ 
-      explanation,
-      topic,
-      timestamp: new Date().toISOString()
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        explanation,
+        topic,
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in explain-regulation function:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to generate explanation' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to generate explanation',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

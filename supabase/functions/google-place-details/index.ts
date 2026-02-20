@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
-}
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+};
 
 interface AddressComponent {
   long_name: string;
@@ -24,33 +25,27 @@ serve(async (req) => {
 
   try {
     const { placeId } = await req.json();
-    
+
     if (!placeId) {
-      return new Response(
-        JSON.stringify({ error: 'Place ID is required' }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 400 
-        }
-      );
+      return new Response(JSON.stringify({ error: 'Place ID is required' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 400,
+      });
     }
 
     const googleApiKey = Deno.env.get('GoogleAPI');
-    
+
     if (!googleApiKey) {
       console.error('Google API key not found in environment variables');
-      return new Response(
-        JSON.stringify({ error: 'Google API key not configured' }),
-        { 
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 500 
-        }
-      );
+      return new Response(JSON.stringify({ error: 'Google API key not configured' }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 500,
+      });
     }
 
     // Get place details
     const detailsUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=formatted_address,address_components&key=${googleApiKey}`;
-    
+
     const response = await fetch(detailsUrl);
     const data = await response.json();
 
@@ -58,15 +53,15 @@ serve(async (req) => {
       console.error('Google Place Details API error:', data);
       return new Response(
         JSON.stringify({ error: 'Place details request failed', status: data.status }),
-        { 
+        {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 500 
+          status: 500,
         }
       );
     }
 
     const place: PlaceDetails = data.result;
-    
+
     // Parse address components
     let streetNumber = '';
     let route = '';
@@ -78,7 +73,7 @@ serve(async (req) => {
 
     place.address_components.forEach((component: AddressComponent) => {
       const types = component.types;
-      
+
       if (types.includes('street_number')) {
         streetNumber = component.long_name;
       } else if (types.includes('route')) {
@@ -99,31 +94,25 @@ serve(async (req) => {
     // Construct address object
     const line1 = [streetNumber, route].filter(Boolean).join(' ');
     const town = postalTown || locality;
-    
+
     const address = {
       line_1: line1,
       line_2: locality && locality !== postalTown ? locality : '',
       post_town: town,
       postcode: postalCode,
       county: administrativeArea1,
-      formatted_address: place.formatted_address
+      formatted_address: place.formatted_address,
     };
 
-    return new Response(
-      JSON.stringify({ address }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
-      }
-    );
+    return new Response(JSON.stringify({ address }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
   } catch (error) {
     console.error('Error in google-place-details:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to fetch place details' }),
-      { 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 500 
-      }
-    );
+    return new Response(JSON.stringify({ error: 'Failed to fetch place details' }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500,
+    });
   }
-})
+});

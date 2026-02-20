@@ -18,21 +18,46 @@ export interface ConfidenceMetrics {
   level: 'high' | 'medium' | 'low';
 }
 
-const CORE_REGULATIONS = ['433.1.1', '525.1', '533.1.1', '411.3.2', '543.1.1', 'Table 4D5', 'Table 41.3'];
+const CORE_REGULATIONS = [
+  '433.1.1',
+  '525.1',
+  '533.1.1',
+  '411.3.2',
+  '543.1.1',
+  'Table 4D5',
+  'Table 41.3',
+];
 
 /**
  * Calculate keyword overlap between regulation content and query
  */
 function calculateKeywordOverlap(content: string, query: string): number {
-  const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'is', 'are'];
-  
-  const queryWords = query.toLowerCase()
+  const stopWords = [
+    'the',
+    'a',
+    'an',
+    'and',
+    'or',
+    'but',
+    'in',
+    'on',
+    'at',
+    'to',
+    'for',
+    'of',
+    'with',
+    'is',
+    'are',
+  ];
+
+  const queryWords = query
+    .toLowerCase()
     .split(/\s+/)
-    .filter(w => w.length > 3 && !stopWords.includes(w));
-  
+    .filter((w) => w.length > 3 && !stopWords.includes(w));
+
   const contentLower = content.toLowerCase();
-  const matches = queryWords.filter(word => contentLower.includes(word));
-  
+  const matches = queryWords.filter((word) => contentLower.includes(word));
+
   return queryWords.length > 0 ? matches.length / queryWords.length : 0;
 }
 
@@ -49,21 +74,20 @@ export function calculateConfidence(
     keywordMatch: calculateKeywordOverlap(regulation.content, query),
     crossEncoderScore: regulation.crossEncoderScore || 0.5,
     temporalRelevance: regulation.amendment === 'Amendment 3:2024' ? 1.0 : 0.8,
-    regulationImportance: CORE_REGULATIONS.includes(regulation.regulation_number) ? 1.0 : 0.7
+    regulationImportance: CORE_REGULATIONS.includes(regulation.regulation_number) ? 1.0 : 0.7,
   };
-  
+
   // Weighted combination
-  const overall = (
+  const overall =
     factors.vectorSimilarity * 0.25 +
-    factors.keywordMatch * 0.20 +
+    factors.keywordMatch * 0.2 +
     factors.crossEncoderScore * 0.35 + // Highest weight
-    factors.temporalRelevance * 0.10 +
-    factors.regulationImportance * 0.10
-  );
-  
+    factors.temporalRelevance * 0.1 +
+    factors.regulationImportance * 0.1;
+
   let reasoning = '';
   let level: 'high' | 'medium' | 'low';
-  
+
   if (overall > 0.85) {
     reasoning = 'Highly relevant - directly addresses your query';
     level = 'high';
@@ -77,7 +101,7 @@ export function calculateConfidence(
     reasoning = 'Supporting information - may be useful';
     level = 'low';
   }
-  
+
   return { overall, factors, reasoning, level };
 }
 
@@ -86,7 +110,7 @@ export function calculateConfidence(
  */
 export function calculateAverageConfidence(confidenceMetrics: ConfidenceMetrics[]): number {
   if (confidenceMetrics.length === 0) return 0.5;
-  
+
   const sum = confidenceMetrics.reduce((acc, m) => acc + m.overall, 0);
   return sum / confidenceMetrics.length;
 }

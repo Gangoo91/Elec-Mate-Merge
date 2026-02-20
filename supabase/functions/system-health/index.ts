@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface HealthCheckResult {
@@ -74,7 +75,7 @@ async function checkOpenAI(): Promise<HealthCheckResult> {
 
     const response = await fetch('https://api.openai.com/v1/models', {
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
     });
 
@@ -122,7 +123,7 @@ async function checkLovableAI(): Promise<HealthCheckResult> {
     // Simple ping to the AI gateway
     const response = await fetch('https://ai.gateway.lovable.dev/v1/models', {
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
       },
     });
 
@@ -170,9 +171,9 @@ serve(async (req) => {
     const checks = [dbCheck, openaiCheck, lovableCheck];
 
     // Determine overall status
-    const hasDown = checks.some(c => c.status === 'down');
-    const hasDegraded = checks.some(c => c.status === 'degraded');
-    
+    const hasDown = checks.some((c) => c.status === 'down');
+    const hasDegraded = checks.some((c) => c.status === 'degraded');
+
     const overall = hasDown ? 'down' : hasDegraded ? 'degraded' : 'healthy';
 
     const status: HealthStatus = {
@@ -183,7 +184,7 @@ serve(async (req) => {
 
     console.log('✅ Health check complete:', {
       overall,
-      checks: checks.map(c => ({ service: c.service, status: c.status })),
+      checks: checks.map((c) => ({ service: c.service, status: c.status })),
     });
 
     return new Response(JSON.stringify(status), {
@@ -195,15 +196,17 @@ serve(async (req) => {
     });
   } catch (error) {
     console.error('❌ Health check failed:', error);
-    
+
     const status: HealthStatus = {
       overall: 'down',
       timestamp: new Date().toISOString(),
-      checks: [{
-        service: 'system',
-        status: 'down',
-        error: error instanceof Error ? error.message : 'Unknown error',
-      }],
+      checks: [
+        {
+          service: 'system',
+          status: 'down',
+          error: error instanceof Error ? error.message : 'Unknown error',
+        },
+      ],
     };
 
     return new Response(JSON.stringify(status), {

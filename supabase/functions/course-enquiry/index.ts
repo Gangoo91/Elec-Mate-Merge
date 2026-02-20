@@ -1,6 +1,6 @@
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from '../_shared/cors.ts';
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -24,23 +24,25 @@ serve(async (req) => {
 
   try {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
+
     // Get user from auth header
     const authHeader = req.headers.get('Authorization');
     const token = authHeader?.replace('Bearer ', '');
-    
+
     let userId = null;
     if (token) {
-      const { data: { user } } = await supabase.auth.getUser(token);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser(token);
       userId = user?.id || null;
     }
 
     const enquiryData: CourseEnquiryRequest = await req.json();
-    
+
     console.log('Processing course enquiry:', {
       courseId: enquiryData.courseId,
       provider: enquiryData.courseProvider,
-      enquirer: enquiryData.enquirerEmail
+      enquirer: enquiryData.enquirerEmail,
     });
 
     // Insert enquiry into database
@@ -55,8 +57,10 @@ serve(async (req) => {
         enquirer_email: enquiryData.enquirerEmail,
         enquirer_phone: enquiryData.enquirerPhone,
         message: enquiryData.message,
-        preferred_start_date: enquiryData.preferredStartDate ? new Date(enquiryData.preferredStartDate) : null,
-        status: 'pending'
+        preferred_start_date: enquiryData.preferredStartDate
+          ? new Date(enquiryData.preferredStartDate)
+          : null,
+        status: 'pending',
       })
       .select()
       .single();
@@ -70,23 +74,29 @@ serve(async (req) => {
 
     // TODO: Add email notification to course provider
     // This would require integrating with Resend or similar email service
-    
-    return new Response(JSON.stringify({
-      success: true,
-      enquiryId: enquiry.id,
-      message: 'Your enquiry has been submitted successfully. The course provider will contact you soon.'
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
 
+    return new Response(
+      JSON.stringify({
+        success: true,
+        enquiryId: enquiry.id,
+        message:
+          'Your enquiry has been submitted successfully. The course provider will contact you soon.',
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in course enquiry function:', error);
-    return new Response(JSON.stringify({ 
-      success: false,
-      error: error instanceof Error ? error.message : 'Failed to submit enquiry'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to submit enquiry',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

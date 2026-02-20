@@ -19,23 +19,51 @@ import { withTimeout, Timeouts } from './timeout.ts';
  */
 function expandInstallationQuery(query: string): string {
   const expansions: Record<string, string[]> = {
-    'clip': ['fixing', 'support', 'saddle', 'bracket', 'spacing', 'Table 4A2'],
-    'conduit': ['trunking', 'enclosed', 'protected run', 'bending radius'],
-    'notch': ['joisting', 'structural', 'building regs', 'floor joists'],
-    'buried': ['direct burial', 'SWA', 'protection', 'warning tape', '600mm depth'],
-    'bathroom': ['zones', 'Section 701', 'IP rating', 'supplementary bonding'],
-    'shower': ['high current', 'pull cord', 'double pole isolation', 'bathroom'],
-    'socket': ['ring final', 'radial', 'spurs', '2.5mm²', '32A', 'power outlet', 'receptacle'],
-    'light': ['lighting circuit', 'switch drops', '1.5mm²', '6A', 'luminaire', 'lamp', 'downlight', 'LED'],
-    'lighting': ['light circuit', 'switch drops', '1.5mm²', '6A', 'luminaire', 'lamp', 'downlight', 'LED', 'illumination'],
-    'cooker': ['oven', 'hob', 'range', 'high current', 'double pole switch', '6mm²'],
-    'immersion': ['water heater', 'dual tariff', 'timer', 'high current'],
+    clip: ['fixing', 'support', 'saddle', 'bracket', 'spacing', 'Table 4A2'],
+    conduit: ['trunking', 'enclosed', 'protected run', 'bending radius'],
+    notch: ['joisting', 'structural', 'building regs', 'floor joists'],
+    buried: ['direct burial', 'SWA', 'protection', 'warning tape', '600mm depth'],
+    bathroom: ['zones', 'Section 701', 'IP rating', 'supplementary bonding'],
+    shower: ['high current', 'pull cord', 'double pole isolation', 'bathroom'],
+    socket: ['ring final', 'radial', 'spurs', '2.5mm²', '32A', 'power outlet', 'receptacle'],
+    light: [
+      'lighting circuit',
+      'switch drops',
+      '1.5mm²',
+      '6A',
+      'luminaire',
+      'lamp',
+      'downlight',
+      'LED',
+    ],
+    lighting: [
+      'light circuit',
+      'switch drops',
+      '1.5mm²',
+      '6A',
+      'luminaire',
+      'lamp',
+      'downlight',
+      'LED',
+      'illumination',
+    ],
+    cooker: ['oven', 'hob', 'range', 'high current', 'double pole switch', '6mm²'],
+    immersion: ['water heater', 'dual tariff', 'timer', 'high current'],
     // FIX 3: Enhanced EV term expansion
-    'ev': ['electric vehicle', 'EV charging', 'EVCP', 'Section 722', 'Mode 3', 'Type 2', 'dedicated circuit', 'charging point'],
-    'charger': ['charging point', 'EVCP', 'socket-outlet', 'dedicated circuit', 'Mode 3', 'Type 2'],
-    'charging': ['EV charging', 'Section 722', 'charging point', 'Mode 3', 'dedicated supply'],
+    ev: [
+      'electric vehicle',
+      'EV charging',
+      'EVCP',
+      'Section 722',
+      'Mode 3',
+      'Type 2',
+      'dedicated circuit',
+      'charging point',
+    ],
+    charger: ['charging point', 'EVCP', 'socket-outlet', 'dedicated circuit', 'Mode 3', 'Type 2'],
+    charging: ['EV charging', 'Section 722', 'charging point', 'Mode 3', 'dedicated supply'],
     '722': ['Section 722', 'EV charging', 'electric vehicle', 'charging installation'],
-    'trunking': ['segregation', 'capacity factor', 'cable management'],
+    trunking: ['segregation', 'capacity factor', 'cable management'],
   };
 
   let expanded = query.toLowerCase();
@@ -56,7 +84,7 @@ function generateCacheKey(query: string, method?: string): string {
   // UTF-8 safe base64 encoding to handle emojis/special characters
   const encoder = new TextEncoder();
   const data = encoder.encode(key);
-  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join("");
+  const binString = Array.from(data, (byte) => String.fromCodePoint(byte)).join('');
   return btoa(binString).substring(0, 32);
 }
 
@@ -120,25 +148,23 @@ async function storeSemanticCache(
   try {
     const ttlMs = calculateCacheTTL(avgConfidence);
     const expiresAt = new Date(Date.now() + ttlMs);
-    
-    await supabase
-      .from('rag_cache')
-      .upsert({
-        query_hash: queryHash,
-        query_text: query.substring(0, 500),
-        agent_name: 'installer-v3',
-        results,
-        hit_count: 0,
-        cache_confidence: avgConfidence,
-        created_at: new Date().toISOString(),
-        expires_at: expiresAt.toISOString()
-      });
 
-    logger.debug('Stored in cache', { 
-      queryHash, 
+    await supabase.from('rag_cache').upsert({
+      query_hash: queryHash,
+      query_text: query.substring(0, 500),
+      agent_name: 'installer-v3',
+      results,
+      hit_count: 0,
+      cache_confidence: avgConfidence,
+      created_at: new Date().toISOString(),
+      expires_at: expiresAt.toISOString(),
+    });
+
+    logger.debug('Stored in cache', {
+      queryHash,
       resultCount: results.length,
       confidence: avgConfidence.toFixed(2),
-      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1)
+      ttlHours: (ttlMs / (60 * 60 * 1000)).toFixed(1),
     });
   } catch (err) {
     logger.warn('Cache store failed', { error: err instanceof Error ? err.message : String(err) });
@@ -170,7 +196,7 @@ async function performInstallationRetrieval(
   logger: any
 ): Promise<any[]> {
   const searchStart = Date.now();
-  
+
   // Create supabase client
   const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
   const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -180,14 +206,14 @@ async function performInstallationRetrieval(
   const cacheKey = generateCacheKey(query, entities.installationMethod);
   const [cached, expandedQuery] = await Promise.all([
     checkSemanticCache(supabase, cacheKey, logger),
-    Promise.resolve(expandInstallationQuery(query))
+    Promise.resolve(expandInstallationQuery(query)),
   ]);
 
   // Early exit if cache hit with high confidence
   if (cached && Array.isArray(cached) && cached[0]?.confidence?.overall > 0.9) {
-    logger.info('RAG cache hit (high confidence, skipping rerank)', { 
+    logger.info('RAG cache hit (high confidence, skipping rerank)', {
       duration: Date.now() - searchStart,
-      confidence: cached[0].confidence.overall
+      confidence: cached[0].confidence.overall,
     });
     return cached;
   }
@@ -197,112 +223,142 @@ async function performInstallationRetrieval(
     return cached;
   }
 
-  logger.debug('Starting hybrid installation search', { query, method: entities.installationMethod });
-  
+  logger.debug('Starting hybrid installation search', {
+    query,
+    method: entities.installationMethod,
+  });
+
   // Generate embedding
   const embedding = await generateEmbeddingWithRetry(expandedQuery, openAiKey);
 
   try {
     // Direct SQL RAG (Solution 4 - proven in installer-v3)
     logger.debug('Starting direct SQL RAG search');
-    
+
     // FIX 1: Improved keyword extraction with stop-word filtering and technical term prioritization
-    const stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'install', 'fit', 'connect', 'need'];
-    const technicalTerms = ['ev', 'charger', 'charging', '722', 'rcbo', 'rcd', 'swa', 'shower', 'bathroom', 'socket'];
-    
+    const stopWords = [
+      'the',
+      'a',
+      'an',
+      'and',
+      'or',
+      'but',
+      'in',
+      'on',
+      'at',
+      'to',
+      'for',
+      'install',
+      'fit',
+      'connect',
+      'need',
+    ];
+    const technicalTerms = [
+      'ev',
+      'charger',
+      'charging',
+      '722',
+      'rcbo',
+      'rcd',
+      'swa',
+      'shower',
+      'bathroom',
+      'socket',
+    ];
+
     // Extract all potential keywords
     const allKeywords = query
       .toLowerCase()
       .split(/\s+/)
-      .filter(w => w.length > 2 && !stopWords.includes(w)) // Allow 3+ chars, remove stop words
+      .filter((w) => w.length > 2 && !stopWords.includes(w)) // Allow 3+ chars, remove stop words
       .slice(0, 8); // Top 8 keywords
-    
+
     // Prioritize technical terms first
-    const priorityKeywords = allKeywords.filter(k => technicalTerms.some(t => k.includes(t)));
+    const priorityKeywords = allKeywords.filter((k) => technicalTerms.some((t) => k.includes(t)));
     const finalKeywords = [...new Set([...priorityKeywords, ...allKeywords])].slice(0, 5);
-    
+
     const keyword1 = finalKeywords[0] || 'installation';
     const keyword2 = finalKeywords[1] || 'cable';
     const keyword3 = finalKeywords[2] || 'circuit';
-    
+
     // Optimized: Fixed moderate limits for speed (30s target)
-    const practicalLimit = 15;  // Down from 25
+    const practicalLimit = 15; // Down from 25
     const regulationsLimit = 10; // Down from 15
-    
-    logger.debug('Keywords extracted', { 
+
+    logger.debug('Keywords extracted', {
       keywords: finalKeywords,
-      limits: { practical: practicalLimit, regulations: regulationsLimit }
+      limits: { practical: practicalLimit, regulations: regulationsLimit },
     });
-    
+
     // Use RPC function for Practical Work Intelligence with retry logic
     let practicalData: any[] = [];
     let practicalError: any = null;
-    
+
     try {
-      const { data, error } = await supabase.rpc(
-        'search_practical_work_intelligence_hybrid',
-        {
-          query_text: query, // Use FULL query for better context
-          match_count: practicalLimit,
-          filter_trade: null
-        }
-      );
-      
+      const { data, error } = await supabase.rpc('search_practical_work_intelligence_hybrid', {
+        query_text: query, // Use FULL query for better context
+        match_count: practicalLimit,
+        filter_trade: null,
+      });
+
       practicalData = data || [];
       practicalError = error;
     } catch (err) {
       practicalError = err;
       logger.error('Practical work RPC exception', { error: err });
     }
-    
+
     if (practicalError && practicalData.length === 0) {
-      logger.warn('⚠️ Graceful degradation: Proceeding with regulations-only (no practical work data)');
+      logger.warn(
+        '⚠️ Graceful degradation: Proceeding with regulations-only (no practical work data)'
+      );
     }
-    
+
     logger.info('Practical work RPC complete', {
       resultsCount: practicalData?.length || 0,
-      avgScore: practicalData?.length > 0 
-        ? (practicalData.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) / practicalData.length).toFixed(2)
-        : 0
+      avgScore:
+        practicalData?.length > 0
+          ? (
+              practicalData.reduce((sum: number, r: any) => sum + (r.hybrid_score || 0), 0) /
+              practicalData.length
+            ).toFixed(2)
+          : 0,
     });
-    
+
     // Use RPC function for Regulations Intelligence
     const { data: regulationsData, error: regulationsError } = await supabase.rpc(
       'search_regulations_intelligence_hybrid',
       {
         query_text: query, // Use FULL query
-        match_count: regulationsLimit
+        match_count: regulationsLimit,
       }
     );
-    
+
     if (regulationsError) {
       logger.error('Regulations RPC failed', { error: regulationsError });
     }
-    
+
     logger.info('Regulations RPC complete', {
-      resultsCount: regulationsData?.length || 0
+      resultsCount: regulationsData?.length || 0,
     });
-    
+
     if (regulationsError) {
       logger.error('Regulations SQL query failed', { error: regulationsError });
     }
-    
+
     const initialResultCount = (practicalData?.length || 0) + (regulationsData?.length || 0);
-    
+
     logger.info('RPC RAG complete', {
       practical: practicalData?.length || 0,
       regulations: regulationsData?.length || 0,
-      total: initialResultCount
+      total: initialResultCount,
     });
 
     // Combine results: practical + regulations only (no fallbacks for speed)
-    let knowledge = [
-      ...(practicalData || []),
-      ...(regulationsData || [])
-    ];
+    let knowledge = [...(practicalData || []), ...(regulationsData || [])];
 
     // Normalize field names for consistent consumption by AI
-    knowledge = knowledge.map(item => ({
+    knowledge = knowledge.map((item) => ({
       ...item,
       // Map 'topic' or 'primary_topic' to 'regulation_number' for consistency
       regulation_number: item.regulation_number || item.primary_topic || item.topic || 'N/A',
@@ -313,13 +369,13 @@ async function performInstallationRetrieval(
       materials: item.materials_needed || [],
       regulations: item.bs7671_regulations || [],
       // Keep source for debugging
-      source: item.source || 'unknown'
+      source: item.source || 'unknown',
     }));
 
-    logger.info('Field normalization complete', { 
+    logger.info('Field normalization complete', {
       totalItems: knowledge.length,
       sampleRegNumber: knowledge[0]?.regulation_number,
-      sampleToolsCount: knowledge[0]?.tools?.length || 0
+      sampleToolsCount: knowledge[0]?.tools?.length || 0,
     });
 
     // Graceful degradation: if BS 7671 search failed, fallback data still available
@@ -328,20 +384,22 @@ async function performInstallationRetrieval(
       knowledge = [
         {
           regulation_number: '134.1.1',
-          content: 'Good workmanship and proper materials shall be used in electrical installations.',
+          content:
+            'Good workmanship and proper materials shall be used in electrical installations.',
           source: 'fallback',
           tools: [],
           materials: [],
-          regulations: ['134.1.1']
+          regulations: ['134.1.1'],
         },
         {
           regulation_number: '411.3.1.1',
-          content: 'Automatic disconnection of supply is required for protection against electric shock.',
+          content:
+            'Automatic disconnection of supply is required for protection against electric shock.',
           source: 'fallback',
           tools: [],
           materials: [],
-          regulations: ['411.3.1.1']
-        }
+          regulations: ['411.3.1.1'],
+        },
       ];
     }
 
@@ -350,14 +408,14 @@ async function performInstallationRetrieval(
     // if (knowledge.length > 0) {
     //   logger.debug('Reranking installation guides with cross-encoder');
     //   const rerankStart = Date.now();
-    //   
+    //
     //   knowledge = await rerankWithCrossEncoder(
     //     query,
     //     knowledge as RegulationResult[],
     //     openAiKey,
     //     logger
     //   );
-    //   
+    //
     //   logger.info('Cross-encoder reranking complete', {
     //     duration: Date.now() - rerankStart,
     //     topScore: knowledge[0]?.finalScore?.toFixed(3),
@@ -366,33 +424,46 @@ async function performInstallationRetrieval(
     // }
 
     // Calculate confidence scores
-    const knowledgeWithConfidence = knowledge.map(item => ({
+    const knowledgeWithConfidence = knowledge.map((item) => ({
       ...item,
-      confidence: calculateConfidence(item as any, query, entities)
+      confidence: calculateConfidence(item as any, query, entities),
     }));
 
     // Calculate average confidence for cache TTL
-    const avgConfidence = knowledgeWithConfidence.length > 0
-      ? knowledgeWithConfidence.reduce((sum, k) => sum + (k.confidence?.overall || 0.7), 0) / knowledgeWithConfidence.length
-      : 0.7;
+    const avgConfidence =
+      knowledgeWithConfidence.length > 0
+        ? knowledgeWithConfidence.reduce((sum, k) => sum + (k.confidence?.overall || 0.7), 0) /
+          knowledgeWithConfidence.length
+        : 0.7;
 
     logger.info('Hybrid installation search complete', {
       duration: Date.now() - searchStart,
       knowledgeCount: knowledge.length,
       avgConfidence: avgConfidence.toFixed(2),
-      avgScore: knowledge.length > 0 
-        ? (knowledge.reduce((sum: number, k: any) => sum + (k.hybrid_score || 0), 0) / knowledge.length).toFixed(3)
-        : 0
+      avgScore:
+        knowledge.length > 0
+          ? (
+              knowledge.reduce((sum: number, k: any) => sum + (k.hybrid_score || 0), 0) /
+              knowledge.length
+            ).toFixed(3)
+          : 0,
     });
 
     // Store in cache with dynamic TTL
-    await storeSemanticCache(supabase, cacheKey, query, knowledgeWithConfidence, avgConfidence, logger);
+    await storeSemanticCache(
+      supabase,
+      cacheKey,
+      query,
+      knowledgeWithConfidence,
+      avgConfidence,
+      logger
+    );
 
     return knowledgeWithConfidence;
   } catch (error) {
     logger.error('Hybrid installation search failed', {
       error: error instanceof Error ? error.message : String(error),
-      duration: Date.now() - searchStart
+      duration: Date.now() - searchStart,
     });
     throw error;
   }

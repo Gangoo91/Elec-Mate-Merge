@@ -1,18 +1,19 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Configuration for follow-up timing
 const FOLLOWUP_CONFIG = {
-  FIRST_REMINDER_DAYS: 3,     // Days to wait before first reminder
-  SECOND_REMINDER_DAYS: 7,    // Days to wait before second reminder
-  MAX_REMINDERS: 2,           // Maximum number of reminders to send
+  FIRST_REMINDER_DAYS: 3, // Days to wait before first reminder
+  SECOND_REMINDER_DAYS: 7, // Days to wait before second reminder
+  MAX_REMINDERS: 2, // Maximum number of reminders to send
   DAYS_BEFORE_EXPIRY_NOTIFICATION: 3,
 };
 
@@ -186,11 +187,15 @@ function buildFollowupEmailHtml(
             <td style="padding: 24px;">
               <p style="margin: 0 0 4px; font-size: 15px; color: #374151;">Cheers,</p>
               <p style="margin: 0 0 12px; font-size: 17px; font-weight: 700; color: #1f2937;">${companyName}</p>
-              ${companyPhone || companyEmail ? `
+              ${
+                companyPhone || companyEmail
+                  ? `
               <p style="margin: 0; font-size: 14px; color: #6b7280;">
                 ${companyPhone ? `📞 ${companyPhone}` : ''}${companyPhone && companyEmail ? ' &nbsp;·&nbsp; ' : ''}${companyEmail ? `✉️ ${companyEmail}` : ''}
               </p>
-              ` : ''}
+              `
+                  : ''
+              }
             </td>
           </tr>
 
@@ -254,12 +259,14 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     console.log('📬 Checking for quotes needing follow-up...');
 
-    const { data: followupQuotes, error: followupError } = await supabase
-      .rpc('get_quotes_needing_followup', {
+    const { data: followupQuotes, error: followupError } = await supabase.rpc(
+      'get_quotes_needing_followup',
+      {
         first_reminder_days: FOLLOWUP_CONFIG.FIRST_REMINDER_DAYS,
         second_reminder_days: FOLLOWUP_CONFIG.SECOND_REMINDER_DAYS,
         max_reminders: FOLLOWUP_CONFIG.MAX_REMINDERS,
-      });
+      }
+    );
 
     if (followupError) {
       console.error('❌ Error fetching follow-up quotes:', followupError);
@@ -342,20 +349,19 @@ const handler = async (req: Request): Promise<Response> => {
             .eq('id', quote.quote_id);
 
           // Record email event
-          await supabase
-            .from('quote_email_events')
-            .insert({
-              quote_id: quote.quote_id,
-              event_type: 'sent',
-              event_data: {
-                type: 'followup',
-                reminder_number: quote.reminder_count + 1,
-              },
-            });
+          await supabase.from('quote_email_events').insert({
+            quote_id: quote.quote_id,
+            event_type: 'sent',
+            event_data: {
+              type: 'followup',
+              reminder_number: quote.reminder_count + 1,
+            },
+          });
 
-          console.log(`✅ Follow-up sent for ${quote.quote_number} (reminder #${quote.reminder_count + 1})`);
+          console.log(
+            `✅ Follow-up sent for ${quote.quote_number} (reminder #${quote.reminder_count + 1})`
+          );
           results.followups_sent++;
-
         } catch (quoteError) {
           console.error(`❌ Error processing ${quote.quote_number}:`, quoteError);
           results.followup_errors++;
@@ -370,10 +376,12 @@ const handler = async (req: Request): Promise<Response> => {
     // ========================================================================
     console.log('\n⏰ Checking for quotes expiring soon...');
 
-    const { data: expiringQuotes, error: expiryError } = await supabase
-      .rpc('get_quotes_expiring_soon', {
+    const { data: expiringQuotes, error: expiryError } = await supabase.rpc(
+      'get_quotes_expiring_soon',
+      {
         days_until_expiry: FOLLOWUP_CONFIG.DAYS_BEFORE_EXPIRY_NOTIFICATION,
-      });
+      }
+    );
 
     if (expiryError) {
       console.error('❌ Error fetching expiring quotes:', expiryError);
@@ -412,7 +420,6 @@ const handler = async (req: Request): Promise<Response> => {
 
           console.log(`✅ Expiry notification sent for ${quote.quote_number}`);
           results.expiry_notifications++;
-
         } catch (notifyError) {
           console.error(`❌ Error notifying for ${quote.quote_number}:`, notifyError);
           results.expiry_errors++;
@@ -440,11 +447,14 @@ const handler = async (req: Request): Promise<Response> => {
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
-    await captureException(error, { functionName: 'quote-automated-followup', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'quote-automated-followup',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
 
     return new Response(
       JSON.stringify({

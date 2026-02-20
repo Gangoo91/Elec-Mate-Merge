@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -31,32 +32,38 @@ serve(async (req) => {
       if (jobError) throw jobError;
 
       if (!job) {
-        return new Response(JSON.stringify({
-          success: false,
-          error: 'Job not found'
-        }), {
-          status: 404,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
+        return new Response(
+          JSON.stringify({
+            success: false,
+            error: 'Job not found',
+          }),
+          {
+            status: 404,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
 
       const batchProgress = job.batch_progress?.[0];
 
-      return new Response(JSON.stringify({
-        success: true,
-        job_id: job.id,
-        status: job.status,
-        total: batchProgress?.total_items || 0,
-        processed: batchProgress?.items_processed || 0,
-        errors: batchProgress?.data?.errors || 0,
-        skipped: batchProgress?.data?.skipped || 0,
-        progress_percentage: job.progress_percentage || 0,
-        started_at: job.started_at,
-        completed_at: job.completed_at,
-        error_message: job.error_message
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          job_id: job.id,
+          status: job.status,
+          total: batchProgress?.total_items || 0,
+          processed: batchProgress?.items_processed || 0,
+          errors: batchProgress?.data?.errors || 0,
+          skipped: batchProgress?.data?.skipped || 0,
+          progress_percentage: job.progress_percentage || 0,
+          started_at: job.started_at,
+          completed_at: job.completed_at,
+          error_message: job.error_message,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Otherwise, get latest job for cache_id or supplier
@@ -83,47 +90,55 @@ serve(async (req) => {
         .from('pricing_embeddings')
         .select('*', { count: 'exact', head: true });
 
-      return new Response(JSON.stringify({
-        success: true,
-        job_id: null,
-        status: 'no_job',
-        total: count || 0,
-        processed: count || 0,
-        errors: 0,
-        skipped: 0,
-        progress_percentage: 100
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          job_id: null,
+          status: 'no_job',
+          total: count || 0,
+          processed: count || 0,
+          errors: 0,
+          skipped: 0,
+          progress_percentage: 100,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const job = jobs[0];
     const batchProgress = job.batch_progress?.[0];
 
-    return new Response(JSON.stringify({
-      success: true,
-      job_id: job.id,
-      status: job.status,
-      total: batchProgress?.total_items || 0,
-      processed: batchProgress?.items_processed || 0,
-      errors: batchProgress?.data?.errors || 0,
-      skipped: batchProgress?.data?.skipped || 0,
-      progress_percentage: job.progress_percentage || 0,
-      started_at: job.started_at,
-      completed_at: job.completed_at,
-      error_message: job.error_message
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        job_id: job.id,
+        status: job.status,
+        total: batchProgress?.total_items || 0,
+        processed: batchProgress?.items_processed || 0,
+        errors: batchProgress?.data?.errors || 0,
+        skipped: batchProgress?.data?.skipped || 0,
+        progress_percentage: job.progress_percentage || 0,
+        started_at: job.started_at,
+        completed_at: job.completed_at,
+        error_message: job.error_message,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error checking embeddings status:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to check status',
-      success: false
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to check status',
+        success: false,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

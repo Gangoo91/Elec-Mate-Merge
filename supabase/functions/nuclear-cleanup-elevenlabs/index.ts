@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ELEVENLABS_API_BASE = 'https://api.elevenlabs.io/v1';
@@ -59,10 +60,10 @@ serve(async (req) => {
     const apiKey = Deno.env.get('ELEVENLABS_API_KEY');
 
     if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: 'ELEVENLABS_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'ELEVENLABS_API_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('=== NUCLEAR CLEANUP STARTING ===');
@@ -81,13 +82,13 @@ serve(async (req) => {
       if (success) {
         clearedAgents.push(agent.name);
       }
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
     }
     console.log(`Cleared ${clearedAgents.length} agents`);
 
     // Wait for changes to propagate
     console.log('Waiting for changes to propagate...');
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Step 3: Get all tools
     console.log('Step 3: Getting all tools...');
@@ -131,7 +132,7 @@ serve(async (req) => {
         errors.push(`${toolName}: ${e}`);
       }
 
-      await new Promise(resolve => setTimeout(resolve, 50));
+      await new Promise((resolve) => setTimeout(resolve, 50));
     }
 
     console.log(`Deleted ${deletedCount} tools, ${errors.length} errors`);
@@ -147,31 +148,36 @@ serve(async (req) => {
     console.log('=== CLEANUP COMPLETE ===');
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        steps: {
-          agentsFound: agents.length,
-          agentsCleared: clearedAgents.length,
-          toolsFound: allTools.length,
-          toolsDeleted: deletedCount,
-          errors: errors.length,
-          remaining: remainingTools.length,
+      JSON.stringify(
+        {
+          success: true,
+          steps: {
+            agentsFound: agents.length,
+            agentsCleared: clearedAgents.length,
+            toolsFound: allTools.length,
+            toolsDeleted: deletedCount,
+            errors: errors.length,
+            remaining: remainingTools.length,
+          },
+          clearedAgents,
+          firstErrors: errors.slice(0, 5),
+          remainingTools: remainingTools.map(
+            (t: { id: string; tool_config?: { name?: string } }) => ({
+              id: t.id,
+              name: t.tool_config?.name,
+            })
+          ),
         },
-        clearedAgents,
-        firstErrors: errors.slice(0, 5),
-        remainingTools: remainingTools.map((t: { id: string; tool_config?: { name?: string } }) => ({
-          id: t.id,
-          name: t.tool_config?.name,
-        })),
-      }, null, 2),
+        null,
+        2
+      ),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error:', error);
     return new Response(
       JSON.stringify({
-        error: error instanceof Error ? error.message : 'Internal server error'
+        error: error instanceof Error ? error.message : 'Internal server error',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

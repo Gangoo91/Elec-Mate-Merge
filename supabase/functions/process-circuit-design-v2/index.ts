@@ -1,7 +1,7 @@
 /**
  * Unified Circuit Design Generator V2 (mirrors AI RAMS architecture)
  * Single edge function - no polling, no separate agent jobs, no HTTP overhead
- * 
+ *
  * Based on proven generate-rams pattern:
  * 1. Shared RAG search (run once, use for both agents)
  * 2. Parallel agent execution with Promise.allSettled
@@ -18,7 +18,6 @@ import { checkPartialCache, storePartialCache } from '../_shared/circuit-partial
 import { searchCircuitRegulations } from '../_shared/circuit-rag.ts';
 import { designCircuits } from '../_agents/circuit-designer-core.ts';
 
-
 const VERSION = 'v2.0.0-unified';
 
 Deno.serve(async (req) => {
@@ -28,7 +27,7 @@ Deno.serve(async (req) => {
 
   const requestId = crypto.randomUUID();
   const logger = createLogger(requestId);
-  
+
   let jobId: string | null = null;
 
   try {
@@ -39,7 +38,7 @@ Deno.serve(async (req) => {
 
     const { jobId: requestJobId } = await req.json();
     jobId = requestJobId;
-    
+
     logger.info(`🚀 Circuit Design V2 ${VERSION} - Starting unified generation`, { jobId });
 
     // Fetch job details
@@ -56,10 +55,10 @@ Deno.serve(async (req) => {
     // Check for cancellation
     if (job.status === 'cancelled') {
       logger.info('Job was cancelled', { jobId });
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Validation
@@ -75,11 +74,11 @@ Deno.serve(async (req) => {
       try {
         await supabase
           .from('circuit_design_jobs')
-          .update({ 
-            progress, 
+          .update({
+            progress,
             current_step: step,
             designer_progress: progress,
-            designer_status: progress < 100 ? 'processing' : 'complete'
+            designer_status: progress < 100 ? 'processing' : 'complete',
           })
           .eq('id', jobId);
       } catch (error) {
@@ -99,7 +98,7 @@ Deno.serve(async (req) => {
 
     // ⚡ LAYER 1: Full Design Cache (DISABLED FOR TESTING RING FINAL FIX)
     await safeUpdateProgress(2, 'Checking design cache...');
-    
+
     // TEMPORARILY DISABLED - Force cache miss
     const cacheResult = { hit: false }; // Force cache miss
     // const cacheResult = await checkCircuitDesignCache({
@@ -112,7 +111,7 @@ Deno.serve(async (req) => {
       // This block will never execute while disabled
       logger.info('✅ LAYER 1 CACHE HIT - DISABLED', {
         similarity: cacheResult.similarity,
-        ageSeconds: cacheResult.ageSeconds
+        ageSeconds: cacheResult.ageSeconds,
       });
 
       await supabase
@@ -124,33 +123,32 @@ Deno.serve(async (req) => {
           design_data: cacheResult.data,
           designer_status: 'complete',
           installer_status: 'complete',
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
-      return new Response(
-        JSON.stringify({ success: true, cached: true, version: VERSION }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: true, cached: true, version: VERSION }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
-    
+
     logger.info('🔄 LAYER 1 CACHE DISABLED - forcing fresh generation');
 
     await safeUpdateProgress(5, 'Initializing agents...');
 
     if (await checkCancelled()) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // ⚡ LAYER 2: RAG Cache - Shared search (DISABLED FOR TESTING RING FINAL FIX)
     await safeUpdateProgress(8, 'Searching regulations intelligence (shared)...');
-    
+
     logger.info('🔍 RAG cache disabled - fetching fresh regulations');
     const query = buildCircuitQuery(jobInputs);
-    
+
     // TEMPORARILY DISABLED - Force fresh RAG search
     const ragCacheResult = { hit: false }; // Force cache miss
     // const ragCacheResult = await checkRAGCache({
@@ -176,32 +174,35 @@ Deno.serve(async (req) => {
         logger.error('❌ RAG search failed, using empty array', error);
         sharedRegulations = [];
       }
-      
+
       // Don't store in cache during testing
       // await storeRAGCache({ supabase, query, knowledgeBaseType: 'circuit_regulations', ragResults: sharedRegulations });
     }
 
     logger.info(`✅ Using ${sharedRegulations?.length || 0} shared regulations for both agents`);
 
-    await safeUpdateProgress(10, 'Running Circuit Designer and Installation Planner in parallel...');
+    await safeUpdateProgress(
+      10,
+      'Running Circuit Designer and Installation Planner in parallel...'
+    );
     await supabase
       .from('circuit_design_jobs')
       .update({
         designer_status: 'pending',
-        installer_status: 'pending'
+        installer_status: 'pending',
       })
       .eq('id', jobId);
 
     if (await checkCancelled()) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // ⚡ LAYER 3: Designer Cache Only (DISABLED FOR TESTING RING FINAL FIX)
     logger.info('🔍 Partial cache disabled for designer');
-    
+
     // TEMPORARILY DISABLED - Force fresh generation
     const designerCacheResult = { hit: false }; // Force cache miss
     // const designerCacheResult = await checkPartialCache({
@@ -225,7 +226,7 @@ Deno.serve(async (req) => {
               await safeUpdateProgress(progress, step);
             },
             sharedRegulations
-          )
+          ),
     ]);
 
     // Log cache performance
@@ -235,27 +236,32 @@ Deno.serve(async (req) => {
     }
 
     if (await checkCancelled()) {
-      return new Response(
-        JSON.stringify({ success: false, message: 'Job was cancelled' }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, message: 'Job was cancelled' }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const elapsedMs = Date.now() - startTime;
-    logger.info(`✅ Designer agent completed in ${Math.round(elapsedMs / 1000)}s (includes installation guidance)`);
+    logger.info(
+      `✅ Designer agent completed in ${Math.round(elapsedMs / 1000)}s (includes installation guidance)`
+    );
 
     // Handle designer failure with defensive error checking
     if (designerResult.status === 'rejected') {
       const error = designerResult.reason;
-      const errorMessage = error instanceof Error 
-        ? error.message 
-        : (typeof error === 'string' ? error : JSON.stringify(error));
-      
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : typeof error === 'string'
+            ? error
+            : JSON.stringify(error);
+
       logger.error('Circuit Designer failed:', {
         error: errorMessage,
-        stack: error instanceof Error ? error.stack : undefined
+        stack: error instanceof Error ? error.stack : undefined,
       });
-      
+
       throw new Error(`Circuit Designer failed: ${errorMessage}`);
     }
 
@@ -281,8 +287,8 @@ Deno.serve(async (req) => {
       summary: {
         totalCircuits: (designerData.circuits || []).length,
         generatedAt: new Date().toISOString(),
-        version: VERSION
-      }
+        version: VERSION,
+      },
     };
 
     // Store in full design cache (DISABLED FOR TESTING RING FINAL FIX)
@@ -304,21 +310,19 @@ Deno.serve(async (req) => {
         design_data: mergedData,
         designer_status: 'complete',
         installer_status: 'complete',
-        completed_at: new Date().toISOString()
+        completed_at: new Date().toISOString(),
       })
       .eq('id', jobId);
 
-    logger.info('✅ Circuit design generation complete', { 
+    logger.info('✅ Circuit design generation complete', {
       jobId,
       elapsedSeconds: Math.round(elapsedMs / 1000),
-      version: VERSION
+      version: VERSION,
     });
 
-    return new Response(
-      JSON.stringify({ success: true, version: VERSION }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ success: true, version: VERSION }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     logger.error('Circuit design generation failed', { error: error.message, jobId });
 
@@ -333,15 +337,15 @@ Deno.serve(async (req) => {
         .update({
           status: 'failed',
           error_message: error.message,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
     }
 
-    return new Response(
-      JSON.stringify({ error: error.message, version: VERSION }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message, version: VERSION }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -351,7 +355,7 @@ Deno.serve(async (req) => {
 function buildCircuitQuery(jobInputs: any): string {
   const circuits = jobInputs.circuits || [];
   const supply = jobInputs.supply || {};
-  
+
   return `
     ${circuits.length} electrical circuits
     ${supply.voltage || 230}V ${supply.phases || 'single'} phase

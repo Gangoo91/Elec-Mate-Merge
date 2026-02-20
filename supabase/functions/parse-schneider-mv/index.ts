@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -14,14 +15,14 @@ serve(async (req) => {
 
   try {
     const { fileContent, fileName } = await req.json();
-    
+
     console.log(`📚 Parsing Schneider MV Design Guide: ${fileName}`);
-    
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
-    
+
     if (!lovableApiKey) {
       throw new Error('LOVABLE_API_KEY not configured');
     }
@@ -29,22 +30,22 @@ serve(async (req) => {
     // Split content into lines
     const lines = fileContent.split('\n');
     const chunks: { topic: string; content: string; metadata: any }[] = [];
-    
+
     // Parse with 110 line chunks for MV design guides
     const chunkSize = 110;
     let currentChunk: string[] = [];
     let chunkStart = 0;
-    
+
     for (let i = 0; i < lines.length; i++) {
       currentChunk.push(lines[i]);
-      
+
       if (currentChunk.length >= chunkSize || i === lines.length - 1) {
         const content = currentChunk.join('\n').trim();
-        
+
         if (content.length > 100) {
           // Detect topic based on content
           let topic = detectTopic(content);
-          
+
           chunks.push({
             topic,
             content,
@@ -53,28 +54,28 @@ serve(async (req) => {
               guide_type: 'MV Design Guide',
               voltage_level: 'MV (1-36kV)',
               document_name: fileName,
-              line_range: `${chunkStart}-${i}`
-            }
+              line_range: `${chunkStart}-${i}`,
+            },
           });
         }
-        
+
         currentChunk = [];
         chunkStart = i + 1;
       }
     }
-    
+
     console.log(`✅ Created ${chunks.length} chunks from MV design guide`);
-    
+
     // Store chunks with embeddings
     let storedCount = 0;
-    
+
     for (const chunk of chunks) {
       try {
         // Generate embedding
         const embeddingResponse = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
+            Authorization: `Bearer ${lovableApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -90,17 +91,15 @@ serve(async (req) => {
 
         const embeddingData = await embeddingResponse.json();
         const embedding = embeddingData.data[0].embedding;
-        
+
         // Store in design_knowledge table
-        const { error: insertError } = await supabase
-          .from('design_knowledge')
-          .insert({
-            topic: chunk.topic,
-            content: chunk.content,
-            source: getSourceIdentifier(fileName),
-            embedding,
-            metadata: chunk.metadata
-          });
+        const { error: insertError } = await supabase.from('design_knowledge').insert({
+          topic: chunk.topic,
+          content: chunk.content,
+          source: getSourceIdentifier(fileName),
+          embedding,
+          metadata: chunk.metadata,
+        });
 
         if (insertError) {
           console.error('Failed to insert chunk:', insertError);
@@ -111,33 +110,38 @@ serve(async (req) => {
         console.error('Error processing chunk:', error);
       }
     }
-    
-    console.log(`✅ Stored ${storedCount}/${chunks.length} chunks in design_knowledge`);
-    
-    return new Response(JSON.stringify({
-      success: true,
-      chunks: chunks.length,
-      stored: storedCount,
-      fileName
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
 
+    console.log(`✅ Stored ${storedCount}/${chunks.length} chunks in design_knowledge`);
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        chunks: chunks.length,
+        stored: storedCount,
+        fileName,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error parsing Schneider MV guide:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message,
-      success: false 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        error: error.message,
+        success: false,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 function detectTopic(content: string): string {
   const lower = content.toLowerCase();
-  
+
   // MV Distribution topics
   if (lower.includes('switchgear') || lower.includes('switch-gear')) {
     return 'MV Switchgear Design';
@@ -148,7 +152,7 @@ function detectTopic(content: string): string {
   if (lower.includes('arc flash') || lower.includes('arc-flash')) {
     return 'Arc Flash Analysis';
   }
-  
+
   // Network Design topics
   if (lower.includes('load flow') || lower.includes('power flow')) {
     return 'Load Flow Analysis';
@@ -159,7 +163,7 @@ function detectTopic(content: string): string {
   if (lower.includes('earthing') || lower.includes('grounding')) {
     return 'Earthing & Grounding Systems';
   }
-  
+
   // Equipment Selection topics
   if (lower.includes('circuit breaker') || lower.includes('cb selection')) {
     return 'Circuit Breaker Selection';
@@ -173,7 +177,7 @@ function detectTopic(content: string): string {
   if (lower.includes('cable') && (lower.includes('sizing') || lower.includes('selection'))) {
     return 'MV Cable Sizing & Selection';
   }
-  
+
   // Standards & Calculations
   if (lower.includes('iec') || lower.includes('standard')) {
     return 'MV Standards & Compliance';
@@ -184,7 +188,7 @@ function detectTopic(content: string): string {
   if (lower.includes('harmonic') || lower.includes('power quality')) {
     return 'Power Quality & Harmonics';
   }
-  
+
   // Installation & Maintenance
   if (lower.includes('installation') || lower.includes('commissioning')) {
     return 'MV Installation & Commissioning';
@@ -192,7 +196,7 @@ function detectTopic(content: string): string {
   if (lower.includes('maintenance') || lower.includes('testing')) {
     return 'MV Maintenance & Testing';
   }
-  
+
   return 'MV Network Design';
 }
 

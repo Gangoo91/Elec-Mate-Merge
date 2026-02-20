@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface SearchRequest {
@@ -31,20 +32,26 @@ interface GeocodeResult {
 async function geocodePostcode(postcode: string): Promise<GeocodeResult | null> {
   try {
     const cleanPostcode = postcode.replace(/\s+/g, '').toUpperCase();
-    const response = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`);
+    const response = await fetch(
+      `https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`
+    );
 
     if (!response.ok) {
       // Try outcode only
       const outcode = cleanPostcode.match(/^[A-Z]{1,2}\d{1,2}/)?.[0];
       if (outcode) {
-        const outcodeResponse = await fetch(`https://api.postcodes.io/outcodes/${encodeURIComponent(outcode)}`);
+        const outcodeResponse = await fetch(
+          `https://api.postcodes.io/outcodes/${encodeURIComponent(outcode)}`
+        );
         if (outcodeResponse.ok) {
           const outcodeData = await outcodeResponse.json();
           if (outcodeData.result) {
             return {
               lat: outcodeData.result.latitude,
               lng: outcodeData.result.longitude,
-              region: mapRegion(outcodeData.result.admin_county || outcodeData.result.admin_district),
+              region: mapRegion(
+                outcodeData.result.admin_county || outcodeData.result.admin_district
+              ),
               outcode: outcode,
             };
           }
@@ -58,7 +65,9 @@ async function geocodePostcode(postcode: string): Promise<GeocodeResult | null> 
       return {
         lat: data.result.latitude,
         lng: data.result.longitude,
-        region: mapRegion(data.result.admin_county || data.result.admin_district || data.result.region),
+        region: mapRegion(
+          data.result.admin_county || data.result.admin_district || data.result.region
+        ),
         outcode: data.result.outcode,
       };
     }
@@ -72,16 +81,69 @@ function mapRegion(adminArea: string): string {
   const area = adminArea?.toLowerCase() || '';
 
   if (area.includes('london') || area.includes('greater london')) return 'london';
-  if (area.includes('manchester') || area.includes('merseyside') || area.includes('lancashire') || area.includes('cheshire')) return 'northwest';
-  if (area.includes('birmingham') || area.includes('west midlands') || area.includes('staffordshire') || area.includes('warwickshire')) return 'west_midlands';
-  if (area.includes('leeds') || area.includes('yorkshire') || area.includes('sheffield') || area.includes('hull')) return 'yorkshire';
-  if (area.includes('newcastle') || area.includes('tyne') || area.includes('durham') || area.includes('northumberland')) return 'northeast';
-  if (area.includes('nottingham') || area.includes('leicester') || area.includes('derby') || area.includes('northampton')) return 'east_midlands';
-  if (area.includes('bristol') || area.includes('devon') || area.includes('cornwall') || area.includes('somerset') || area.includes('dorset')) return 'southwest';
-  if (area.includes('cambridge') || area.includes('norfolk') || area.includes('suffolk') || area.includes('essex')) return 'east_england';
-  if (area.includes('oxford') || area.includes('reading') || area.includes('brighton') || area.includes('kent') || area.includes('surrey') || area.includes('hampshire')) return 'southeast';
-  if (area.includes('cardiff') || area.includes('wales') || area.includes('swansea')) return 'wales';
-  if (area.includes('edinburgh') || area.includes('glasgow') || area.includes('scotland')) return 'scotland';
+  if (
+    area.includes('manchester') ||
+    area.includes('merseyside') ||
+    area.includes('lancashire') ||
+    area.includes('cheshire')
+  )
+    return 'northwest';
+  if (
+    area.includes('birmingham') ||
+    area.includes('west midlands') ||
+    area.includes('staffordshire') ||
+    area.includes('warwickshire')
+  )
+    return 'west_midlands';
+  if (
+    area.includes('leeds') ||
+    area.includes('yorkshire') ||
+    area.includes('sheffield') ||
+    area.includes('hull')
+  )
+    return 'yorkshire';
+  if (
+    area.includes('newcastle') ||
+    area.includes('tyne') ||
+    area.includes('durham') ||
+    area.includes('northumberland')
+  )
+    return 'northeast';
+  if (
+    area.includes('nottingham') ||
+    area.includes('leicester') ||
+    area.includes('derby') ||
+    area.includes('northampton')
+  )
+    return 'east_midlands';
+  if (
+    area.includes('bristol') ||
+    area.includes('devon') ||
+    area.includes('cornwall') ||
+    area.includes('somerset') ||
+    area.includes('dorset')
+  )
+    return 'southwest';
+  if (
+    area.includes('cambridge') ||
+    area.includes('norfolk') ||
+    area.includes('suffolk') ||
+    area.includes('essex')
+  )
+    return 'east_england';
+  if (
+    area.includes('oxford') ||
+    area.includes('reading') ||
+    area.includes('brighton') ||
+    area.includes('kent') ||
+    area.includes('surrey') ||
+    area.includes('hampshire')
+  )
+    return 'southeast';
+  if (area.includes('cardiff') || area.includes('wales') || area.includes('swansea'))
+    return 'wales';
+  if (area.includes('edinburgh') || area.includes('glasgow') || area.includes('scotland'))
+    return 'scotland';
   if (area.includes('belfast') || area.includes('northern ireland')) return 'northern_ireland';
 
   return 'uk_wide';
@@ -89,18 +151,124 @@ function mapRegion(adminArea: string): string {
 
 function getRegionFromPostcodePrefix(prefix: string): string {
   const regionMap: Record<string, string> = {
-    'B': 'west_midlands', 'CV': 'west_midlands', 'DY': 'west_midlands', 'WS': 'west_midlands', 'WV': 'west_midlands', 'ST': 'west_midlands', 'HR': 'west_midlands', 'TF': 'west_midlands', 'WR': 'west_midlands',
-    'M': 'northwest', 'L': 'northwest', 'WA': 'northwest', 'WN': 'northwest', 'BL': 'northwest', 'OL': 'northwest', 'PR': 'northwest', 'FY': 'northwest', 'BB': 'northwest', 'SK': 'northwest', 'CW': 'northwest', 'CH': 'northwest', 'CA': 'northwest', 'LA': 'northwest',
-    'LS': 'yorkshire', 'BD': 'yorkshire', 'HX': 'yorkshire', 'HD': 'yorkshire', 'WF': 'yorkshire', 'S': 'yorkshire', 'DN': 'yorkshire', 'HU': 'yorkshire', 'YO': 'yorkshire', 'HG': 'yorkshire',
-    'NE': 'northeast', 'DH': 'northeast', 'SR': 'northeast', 'TS': 'northeast', 'DL': 'northeast',
-    'NG': 'east_midlands', 'DE': 'east_midlands', 'LE': 'east_midlands', 'NN': 'east_midlands', 'LN': 'east_midlands',
-    'BS': 'southwest', 'BA': 'southwest', 'EX': 'southwest', 'PL': 'southwest', 'TQ': 'southwest', 'TR': 'southwest', 'GL': 'southwest', 'TA': 'southwest', 'DT': 'southwest', 'BH': 'southwest', 'SP': 'southwest', 'SN': 'southwest',
-    'CB': 'east_england', 'CO': 'east_england', 'IP': 'east_england', 'NR': 'east_england', 'PE': 'east_england', 'CM': 'east_england', 'SS': 'east_england', 'AL': 'east_england', 'SG': 'east_england', 'LU': 'east_england',
-    'RG': 'southeast', 'SL': 'southeast', 'HP': 'southeast', 'MK': 'southeast', 'OX': 'southeast', 'GU': 'southeast', 'PO': 'southeast', 'BN': 'southeast', 'TN': 'southeast', 'ME': 'southeast', 'CT': 'southeast', 'SO': 'southeast', 'RH': 'southeast',
-    'SW': 'london', 'SE': 'london', 'NW': 'london', 'N': 'london', 'E': 'london', 'W': 'london', 'EC': 'london', 'WC': 'london', 'CR': 'london', 'BR': 'london', 'DA': 'london', 'EN': 'london', 'HA': 'london', 'IG': 'london', 'KT': 'london', 'RM': 'london', 'SM': 'london', 'TW': 'london', 'UB': 'london', 'WD': 'london',
-    'CF': 'wales', 'SA': 'wales', 'LL': 'wales', 'SY': 'wales', 'NP': 'wales', 'LD': 'wales',
-    'G': 'scotland', 'EH': 'scotland', 'AB': 'scotland', 'DD': 'scotland', 'KY': 'scotland', 'FK': 'scotland', 'PA': 'scotland', 'IV': 'scotland', 'PH': 'scotland', 'ML': 'scotland', 'KA': 'scotland', 'DG': 'scotland', 'TD': 'scotland',
-    'BT': 'northern_ireland',
+    B: 'west_midlands',
+    CV: 'west_midlands',
+    DY: 'west_midlands',
+    WS: 'west_midlands',
+    WV: 'west_midlands',
+    ST: 'west_midlands',
+    HR: 'west_midlands',
+    TF: 'west_midlands',
+    WR: 'west_midlands',
+    M: 'northwest',
+    L: 'northwest',
+    WA: 'northwest',
+    WN: 'northwest',
+    BL: 'northwest',
+    OL: 'northwest',
+    PR: 'northwest',
+    FY: 'northwest',
+    BB: 'northwest',
+    SK: 'northwest',
+    CW: 'northwest',
+    CH: 'northwest',
+    CA: 'northwest',
+    LA: 'northwest',
+    LS: 'yorkshire',
+    BD: 'yorkshire',
+    HX: 'yorkshire',
+    HD: 'yorkshire',
+    WF: 'yorkshire',
+    S: 'yorkshire',
+    DN: 'yorkshire',
+    HU: 'yorkshire',
+    YO: 'yorkshire',
+    HG: 'yorkshire',
+    NE: 'northeast',
+    DH: 'northeast',
+    SR: 'northeast',
+    TS: 'northeast',
+    DL: 'northeast',
+    NG: 'east_midlands',
+    DE: 'east_midlands',
+    LE: 'east_midlands',
+    NN: 'east_midlands',
+    LN: 'east_midlands',
+    BS: 'southwest',
+    BA: 'southwest',
+    EX: 'southwest',
+    PL: 'southwest',
+    TQ: 'southwest',
+    TR: 'southwest',
+    GL: 'southwest',
+    TA: 'southwest',
+    DT: 'southwest',
+    BH: 'southwest',
+    SP: 'southwest',
+    SN: 'southwest',
+    CB: 'east_england',
+    CO: 'east_england',
+    IP: 'east_england',
+    NR: 'east_england',
+    PE: 'east_england',
+    CM: 'east_england',
+    SS: 'east_england',
+    AL: 'east_england',
+    SG: 'east_england',
+    LU: 'east_england',
+    RG: 'southeast',
+    SL: 'southeast',
+    HP: 'southeast',
+    MK: 'southeast',
+    OX: 'southeast',
+    GU: 'southeast',
+    PO: 'southeast',
+    BN: 'southeast',
+    TN: 'southeast',
+    ME: 'southeast',
+    CT: 'southeast',
+    SO: 'southeast',
+    RH: 'southeast',
+    SW: 'london',
+    SE: 'london',
+    NW: 'london',
+    N: 'london',
+    E: 'london',
+    W: 'london',
+    EC: 'london',
+    WC: 'london',
+    CR: 'london',
+    BR: 'london',
+    DA: 'london',
+    EN: 'london',
+    HA: 'london',
+    IG: 'london',
+    KT: 'london',
+    RM: 'london',
+    SM: 'london',
+    TW: 'london',
+    UB: 'london',
+    WD: 'london',
+    CF: 'wales',
+    SA: 'wales',
+    LL: 'wales',
+    SY: 'wales',
+    NP: 'wales',
+    LD: 'wales',
+    G: 'scotland',
+    EH: 'scotland',
+    AB: 'scotland',
+    DD: 'scotland',
+    KY: 'scotland',
+    FK: 'scotland',
+    PA: 'scotland',
+    IV: 'scotland',
+    PH: 'scotland',
+    ML: 'scotland',
+    KA: 'scotland',
+    DG: 'scotland',
+    TD: 'scotland',
+    BT: 'northern_ireland',
   };
 
   // Try both single and double letter prefixes
@@ -178,7 +346,14 @@ Deno.serve(async (req) => {
       limit = 20,
     } = body;
 
-    console.log('[SEARCH] Request:', { postcode, radius_miles, categories, min_value, max_value, sector });
+    console.log('[SEARCH] Request:', {
+      postcode,
+      radius_miles,
+      categories,
+      min_value,
+      max_value,
+      sector,
+    });
 
     // Get coordinates
     let searchLat = providedLat;
@@ -191,17 +366,30 @@ Deno.serve(async (req) => {
         searchLat = geocoded.lat;
         searchLng = geocoded.lng;
         userRegion = geocoded.region;
-        console.log('[SEARCH] Geocoded:', { postcode, lat: searchLat, lng: searchLng, region: userRegion });
+        console.log('[SEARCH] Geocoded:', {
+          postcode,
+          lat: searchLat,
+          lng: searchLng,
+          region: userRegion,
+        });
       } else {
         // Instead of returning error, try to extract region from postcode prefix
         // and show UK-wide results filtered by region
-        const postcodePrefix = postcode.replace(/\s+/g, '').toUpperCase().match(/^[A-Z]{1,2}/)?.[0];
+        const postcodePrefix = postcode
+          .replace(/\s+/g, '')
+          .toUpperCase()
+          .match(/^[A-Z]{1,2}/)?.[0];
         if (postcodePrefix) {
           userRegion = getRegionFromPostcodePrefix(postcodePrefix);
-          console.log('[SEARCH] Could not geocode, using region fallback:', { postcode, region: userRegion });
+          console.log('[SEARCH] Could not geocode, using region fallback:', {
+            postcode,
+            region: userRegion,
+          });
         } else {
           // Show all UK opportunities if we can't determine region
-          console.log('[SEARCH] Could not geocode or determine region, showing all UK opportunities');
+          console.log(
+            '[SEARCH] Could not geocode or determine region, showing all UK opportunities'
+          );
         }
       }
     }
@@ -222,7 +410,9 @@ Deno.serve(async (req) => {
       query = query.or(`value_low.gte.${min_value},value_exact.gte.${min_value}`);
     }
     if (max_value !== undefined) {
-      query = query.or(`value_high.lte.${max_value},value_exact.lte.${max_value},value_high.is.null`);
+      query = query.or(
+        `value_high.lte.${max_value},value_exact.lte.${max_value},value_high.is.null`
+      );
     }
 
     // Sector filter
@@ -238,18 +428,20 @@ Deno.serve(async (req) => {
     }
 
     // Calculate distances and filter by radius
-    let opportunities = (allOpportunities || []).map(opp => {
+    let opportunities = (allOpportunities || []).map((opp) => {
       let distance: number | null = null;
 
       if (searchLat && searchLng && opp.lat && opp.lng) {
         // Haversine formula for distance in miles
         const R = 3959; // Earth's radius in miles
-        const dLat = (opp.lat - searchLat) * Math.PI / 180;
-        const dLng = (opp.lng - searchLng) * Math.PI / 180;
+        const dLat = ((opp.lat - searchLat) * Math.PI) / 180;
+        const dLng = ((opp.lng - searchLng) * Math.PI) / 180;
         const a =
           Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-          Math.cos(searchLat * Math.PI / 180) * Math.cos(opp.lat * Math.PI / 180) *
-          Math.sin(dLng / 2) * Math.sin(dLng / 2);
+          Math.cos((searchLat * Math.PI) / 180) *
+            Math.cos((opp.lat * Math.PI) / 180) *
+            Math.sin(dLng / 2) *
+            Math.sin(dLng / 2);
         const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         distance = R * c;
       }
@@ -265,8 +457,8 @@ Deno.serve(async (req) => {
     // Only include opportunities that have valid coordinates AND are within radius
     // Opportunities without coordinates are excluded when searching by location
     if (searchLat && searchLng) {
-      opportunities = opportunities.filter(opp =>
-        opp.distance_miles !== null && opp.distance_miles <= radius_miles
+      opportunities = opportunities.filter(
+        (opp) => opp.distance_miles !== null && opp.distance_miles <= radius_miles
       );
     }
 
@@ -305,22 +497,37 @@ Deno.serve(async (req) => {
     // Get stats
     const stats = {
       total: opportunities.length,
-      live: opportunities.filter(o => o.status === 'live').length,
-      coming_soon: opportunities.filter(o => o.status === 'pipeline').length,
-      avg_value: opportunities.length > 0
-        ? Math.round(opportunities.reduce((sum, o) => sum + (o.value_exact || o.value_high || o.value_low || 0), 0) / opportunities.length)
-        : 0,
-      by_sector: opportunities.reduce((acc, o) => {
-        acc[o.sector || 'other'] = (acc[o.sector || 'other'] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>),
-      by_complexity: opportunities.reduce((acc, o) => {
-        acc[o.estimated_complexity || 'standard'] = (acc[o.estimated_complexity || 'standard'] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>),
+      live: opportunities.filter((o) => o.status === 'live').length,
+      coming_soon: opportunities.filter((o) => o.status === 'pipeline').length,
+      avg_value:
+        opportunities.length > 0
+          ? Math.round(
+              opportunities.reduce(
+                (sum, o) => sum + (o.value_exact || o.value_high || o.value_low || 0),
+                0
+              ) / opportunities.length
+            )
+          : 0,
+      by_sector: opportunities.reduce(
+        (acc, o) => {
+          acc[o.sector || 'other'] = (acc[o.sector || 'other'] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      ),
+      by_complexity: opportunities.reduce(
+        (acc, o) => {
+          acc[o.estimated_complexity || 'standard'] =
+            (acc[o.estimated_complexity || 'standard'] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>
+      ),
     };
 
-    console.log(`[SEARCH] Found ${opportunities.length} opportunities within ${radius_miles} miles`);
+    console.log(
+      `[SEARCH] Found ${opportunities.length} opportunities within ${radius_miles} miles`
+    );
 
     return new Response(
       JSON.stringify({
@@ -330,18 +537,19 @@ Deno.serve(async (req) => {
         page,
         limit,
         total_pages: Math.ceil(opportunities.length / limit),
-        search_location: postcode ? { postcode, lat: searchLat, lng: searchLng, region: userRegion } : null,
+        search_location: postcode
+          ? { postcode, lat: searchLat, lng: searchLng, region: userRegion }
+          : null,
         stats,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[SEARCH] Error:', error);
 
-    return new Response(
-      JSON.stringify({ error: error.message, opportunities: [], total: 0 }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message, opportunities: [], total: 0 }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

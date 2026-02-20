@@ -1,6 +1,6 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from '../_shared/cors.ts';
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -11,25 +11,27 @@ serve(async (req) => {
   }
 
   try {
-    const { keywords = "electrical course", location = "United Kingdom" } = await req.json();
-    
-    console.log(`🚀 Starting enhanced UK electrical course aggregation for: ${keywords} in ${location}`);
-    
+    const { keywords = 'electrical course', location = 'United Kingdom' } = await req.json();
+
+    console.log(
+      `🚀 Starting enhanced UK electrical course aggregation for: ${keywords} in ${location}`
+    );
+
     const supabase = createClient(supabaseUrl, supabaseAnonKey);
-    
+
     // Circuit breaker: Check if external service is available
     const serviceHealthCheck = async () => {
       try {
         const response = await fetch('https://api.firecrawl.dev/', {
           method: 'HEAD',
-          signal: AbortSignal.timeout(5000)
+          signal: AbortSignal.timeout(5000),
         });
         return response.ok;
       } catch {
         return false;
       }
     };
-    
+
     // Progressive response: Send immediate acknowledgment
     const progressiveResponse = {
       courses: [],
@@ -42,31 +44,34 @@ serve(async (req) => {
         searchCriteria: { keywords, location },
         liveCourses: 0,
         lastUpdated: new Date().toISOString(),
-        status: 'processing'
+        status: 'processing',
       },
       sourceResults: [],
       isLiveData: true,
-      processing: true
+      processing: true,
     };
-    
+
     // Early return with processing status
     if (!(await serviceHealthCheck())) {
       console.warn('⚠️ External service unavailable, returning cached fallback');
-      return new Response(JSON.stringify({
-        ...progressiveResponse,
-        error: 'External course data service temporarily unavailable. Using cached data.',
-        processing: false
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 503
-      });
+      return new Response(
+        JSON.stringify({
+          ...progressiveResponse,
+          error: 'External course data service temporarily unavailable. Using cached data.',
+          processing: false,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 503,
+        }
+      );
     }
-    
+
     // Set timeout for the entire operation (2.5 minutes to allow response time)
     const timeoutPromise = new Promise<never>((_, reject) => {
       setTimeout(() => reject(new Error('Operation timed out after 150 seconds')), 150000);
     });
-    
+
     const mainOperation = async () => {
       // Get Firecrawl API key
       const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
@@ -74,70 +79,73 @@ serve(async (req) => {
         console.error('❌ FIRECRAWL_API_KEY not found in environment variables');
         throw new Error('Firecrawl API key not configured - please check Supabase secrets');
       }
-    
+
       console.log('📡 Fetching courses from Reed using Firecrawl v2 API...');
-      
+
       const sourceResults = [];
       let uniqueCourses: any[] = [];
       let originalCount = 0;
       let duplicatesRemoved = 0;
-      
+
       // Helper function for API calls with retry logic
       const makeFirecrawlRequest = async (url: string, body: any, maxRetries = 3) => {
         let lastError;
-        
+
         for (let attempt = 1; attempt <= maxRetries; attempt++) {
           try {
             console.log(`📡 Making Firecrawl API call (attempt ${attempt}/${maxRetries})`);
-            
+
             const response = await fetch(url, {
               method: 'POST',
               headers: {
-                'Authorization': `Bearer ${firecrawlApiKey}`,
-                'Content-Type': 'application/json'
+                Authorization: `Bearer ${firecrawlApiKey}`,
+                'Content-Type': 'application/json',
               },
-              body: JSON.stringify(body)
+              body: JSON.stringify(body),
             });
-            
+
             if (response.ok) {
               return await response.json();
             }
-            
+
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-            
           } catch (error) {
             lastError = error;
-            console.log(`⚠️ API call attempt ${attempt} failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
-            
+            console.log(
+              `⚠️ API call attempt ${attempt} failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+            );
+
             if (attempt < maxRetries) {
               const delay = Math.min(1000 * Math.pow(2, attempt - 1), 5000); // Exponential backoff, max 5s
               console.log(`⏳ Retrying in ${delay}ms...`);
-              await new Promise(resolve => setTimeout(resolve, delay));
+              await new Promise((resolve) => setTimeout(resolve, delay));
             }
           }
         }
-        
-        throw new Error(`Firecrawl API failed after ${maxRetries} attempts: ${lastError instanceof Error ? lastError.message : 'Unknown error'}`);
+
+        throw new Error(
+          `Firecrawl API failed after ${maxRetries} attempts: ${lastError instanceof Error ? lastError.message : 'Unknown error'}`
+        );
       };
-      
+
       try {
         // Enhanced UK electrical course search with multiple providers
         const courseProviders = [
           {
             name: 'Reed.co.uk',
             url: `https://www.reed.co.uk/courses/search?keywords=${encodeURIComponent(keywords)}&location=${encodeURIComponent(location)}`,
-            weight: 1.0
+            weight: 1.0,
           },
           {
             name: 'City & Guilds',
             url: `https://www.cityandguilds.com/qualifications-and-apprenticeships/electrical?location=${encodeURIComponent(location)}`,
-            weight: 0.8
+            weight: 0.8,
           },
           {
             name: 'NICEIC Training',
             url: `https://www.niceic.com/find-a-course?location=${encodeURIComponent(location)}&keyword=${encodeURIComponent(keywords)}`,
-            weight: 0.9
-          }
+            weight: 0.9,
+          },
         ];
 
         // Targeted search keywords for electrical, engineering, tech, and safety
@@ -151,97 +159,103 @@ serve(async (req) => {
           'health safety training UK',
           'PAT testing course UK',
           'electrical inspection testing UK',
-          'engineering apprenticeship UK'
+          'engineering apprenticeship UK',
         ];
 
         let allFoundCourses = [];
-        
+
         // Stage 1: Enhanced multi-provider course search
         for (const provider of courseProviders) {
           try {
             console.log(`🔍 Searching ${provider.name} at: ${provider.url}`);
-            
+
             const searchData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
               url: provider.url,
-          onlyMainContent: true,
-          formats: [{
-            type: "json",
-            schema: {
-              type: "array",
-              items: {
-                type: "object",
-                properties: {
-                  courseTitle: {
-                    type: "string",
-                    description: "Title of the course"
+              onlyMainContent: true,
+              formats: [
+                {
+                  type: 'json',
+                  schema: {
+                    type: 'array',
+                    items: {
+                      type: 'object',
+                      properties: {
+                        courseTitle: {
+                          type: 'string',
+                          description: 'Title of the course',
+                        },
+                        provider: {
+                          type: 'string',
+                          description: 'Training provider name',
+                        },
+                        description: {
+                          type: 'string',
+                          description: 'Short description of the course',
+                        },
+                        duration: {
+                          type: 'string',
+                          description: 'Course duration (e.g., 2 days)',
+                        },
+                        level: {
+                          type: 'string',
+                          description: 'Course difficulty level (e.g., Intermediate)',
+                        },
+                        learningMode: {
+                          type: 'string',
+                          description: 'Learning mode (e.g., Online, In-person)',
+                        },
+                        priceRange: {
+                          type: 'string',
+                          description: 'Price range of the course (e.g., £425 - £525)',
+                        },
+                        detailsUrl: {
+                          type: 'string',
+                          description: 'Direct link to the course details page',
+                        },
+                        category: {
+                          type: 'string',
+                          description: 'The main category or tag of the course',
+                        },
+                        rating: {
+                          type: 'number',
+                          description: 'Star rating of the course',
+                        },
+                      },
+                      required: ['courseTitle', 'provider', 'detailsUrl'],
+                    },
                   },
-                  provider: {
-                    type: "string",
-                    description: "Training provider name"
-                  },
-                  description: {
-                    type: "string",
-                    description: "Short description of the course"
-                  },
-                  duration: {
-                    type: "string",
-                    description: "Course duration (e.g., 2 days)"
-                  },
-                  level: {
-                    type: "string",
-                    description: "Course difficulty level (e.g., Intermediate)"
-                  },
-                  learningMode: {
-                    type: "string",
-                    description: "Learning mode (e.g., Online, In-person)"
-                  },
-                  priceRange: {
-                    type: "string",
-                    description: "Price range of the course (e.g., £425 - £525)"
-                  },
-                  detailsUrl: {
-                    type: "string",
-                    description: "Direct link to the course details page"
-                  },
-                  category: {
-                    type: "string",
-                    description: "The main category or tag of the course"
-                  },
-                  rating: {
-                    type: "number",
-                    description: "Star rating of the course"
-                  }
                 },
-                required: [
-                  "courseTitle",
-                  "provider",
-                  "detailsUrl"
-                ]
-              }
-            }
-              }]
+              ],
             });
 
-            console.log(`✅ ${provider.name} course search completed, found:`, searchData.data?.json?.length || 0, 'courses');
+            console.log(
+              `✅ ${provider.name} course search completed, found:`,
+              searchData.data?.json?.length || 0,
+              'courses'
+            );
 
             if (searchData.success && searchData.data?.json) {
-              const providerCourses = Array.isArray(searchData.data.json) ? searchData.data.json : [searchData.data.json];
+              const providerCourses = Array.isArray(searchData.data.json)
+                ? searchData.data.json
+                : [searchData.data.json];
               // Add provider source to each course
               const coursesWithSource = providerCourses.map((course: any) => ({
                 ...course,
-                sourceProvider: provider.name
+                sourceProvider: provider.name,
               }));
               allFoundCourses.push(...coursesWithSource);
             }
-            
           } catch (error) {
-            console.error(`❌ Error searching ${provider.name}:`, error instanceof Error ? error.message : 'Unknown error');
+            console.error(
+              `❌ Error searching ${provider.name}:`,
+              error instanceof Error ? error.message : 'Unknown error'
+            );
             sourceResults.push({
               source: provider.name,
               courseCount: 0,
               success: false,
               error: error instanceof Error ? error.message : 'Unknown error occurred',
-              lastUpdated: new Date().toISOString()
+              lastUpdated: new Date().toISOString(),
             });
           }
         }
@@ -249,29 +263,66 @@ serve(async (req) => {
         console.log(`📊 Total courses found from all providers: ${allFoundCourses.length}`);
 
         // Filter courses to only include electrical, engineering, tech, and safety related courses
-        const filteredCourses = allFoundCourses.filter(course => {
+        const filteredCourses = allFoundCourses.filter((course) => {
           if (!course.courseTitle && !course.description && !course.category) return false;
-          
+
           const title = (course.courseTitle || '').toLowerCase();
           const description = (course.description || '').toLowerCase();
           const category = (course.category || '').toLowerCase();
           const searchText = `${title} ${description} ${category}`;
-          
+
           // Define keywords for each allowed category
-          const electricalKeywords = ['electrical', 'electric', 'wiring', '18th edition', 'inspection', 'testing', 'pat testing', 'installation'];
-          const engineeringKeywords = ['engineering', 'engineer', 'technical', 'design', 'construction', 'building'];
-          const techKeywords = ['technology', 'tech', 'digital', 'computer', 'software', 'automation', 'smart', 'iot'];
-          const safetyKeywords = ['safety', 'health', 'risk', 'hazard', 'protection', 'compliance', 'regulation'];
-          
-          const hasElectrical = electricalKeywords.some(keyword => searchText.includes(keyword));
-          const hasEngineering = engineeringKeywords.some(keyword => searchText.includes(keyword));
-          const hasTech = techKeywords.some(keyword => searchText.includes(keyword));
-          const hasSafety = safetyKeywords.some(keyword => searchText.includes(keyword));
-          
+          const electricalKeywords = [
+            'electrical',
+            'electric',
+            'wiring',
+            '18th edition',
+            'inspection',
+            'testing',
+            'pat testing',
+            'installation',
+          ];
+          const engineeringKeywords = [
+            'engineering',
+            'engineer',
+            'technical',
+            'design',
+            'construction',
+            'building',
+          ];
+          const techKeywords = [
+            'technology',
+            'tech',
+            'digital',
+            'computer',
+            'software',
+            'automation',
+            'smart',
+            'iot',
+          ];
+          const safetyKeywords = [
+            'safety',
+            'health',
+            'risk',
+            'hazard',
+            'protection',
+            'compliance',
+            'regulation',
+          ];
+
+          const hasElectrical = electricalKeywords.some((keyword) => searchText.includes(keyword));
+          const hasEngineering = engineeringKeywords.some((keyword) =>
+            searchText.includes(keyword)
+          );
+          const hasTech = techKeywords.some((keyword) => searchText.includes(keyword));
+          const hasSafety = safetyKeywords.some((keyword) => searchText.includes(keyword));
+
           return hasElectrical || hasEngineering || hasTech || hasSafety;
         });
-        
-        console.log(`🎯 Filtered to relevant courses: ${filteredCourses.length} out of ${allFoundCourses.length}`);
+
+        console.log(
+          `🎯 Filtered to relevant courses: ${filteredCourses.length} out of ${allFoundCourses.length}`
+        );
         allFoundCourses = filteredCourses;
 
         if (allFoundCourses.length === 0) {
@@ -286,33 +337,193 @@ serve(async (req) => {
               sourceBreakdown: sourceResults,
               searchCriteria: { keywords, location },
               liveCourses: 0,
-              lastUpdated: new Date().toISOString()
+              lastUpdated: new Date().toISOString(),
             },
             sourceResults,
-            isLiveData: true
+            isLiveData: true,
           };
         }
         // Stage 2: Get detailed information for selected courses
-        console.log('🔍 Starting detailed course scraping for', Math.min(allFoundCourses.length, 6), 'courses...');
-      
-      const detailedCourses = [];
-      const maxCoursesToDetail = 6; // Reduced to ensure faster completion
-      let failureCount = 0;
-      const maxFailures = 3; // Circuit breaker threshold
-    
+        console.log(
+          '🔍 Starting detailed course scraping for',
+          Math.min(allFoundCourses.length, 6),
+          'courses...'
+        );
+
+        const detailedCourses = [];
+        const maxCoursesToDetail = 6; // Reduced to ensure faster completion
+        let failureCount = 0;
+        const maxFailures = 3; // Circuit breaker threshold
+
         for (let i = 0; i < Math.min(allFoundCourses.length, maxCoursesToDetail); i++) {
           const course = allFoundCourses[i];
-        
-        if (!course.detailsUrl) {
-          console.log(`⚠️ No details URL for course: ${course.courseTitle}`);
-          detailedCourses.push(course);
-          continue;
-        }
-        
-        try {
-          // Circuit breaker: Skip detailed scraping if too many failures
-          if (failureCount >= maxFailures) {
-            console.log(`⚠️ Circuit breaker activated - skipping detailed scraping for remaining courses`);
+
+          if (!course.detailsUrl) {
+            console.log(`⚠️ No details URL for course: ${course.courseTitle}`);
+            detailedCourses.push(course);
+            continue;
+          }
+
+          try {
+            // Circuit breaker: Skip detailed scraping if too many failures
+            if (failureCount >= maxFailures) {
+              console.log(
+                `⚠️ Circuit breaker activated - skipping detailed scraping for remaining courses`
+              );
+              detailedCourses.push({
+                ...course,
+                prerequisites: [],
+                courseOutline: [],
+                assessmentMethod: [],
+                continuousAssessment: false,
+                accreditations: [],
+                careerOutcomes: [],
+                upcomingDates: [],
+                locations: [],
+                employerSupport: false,
+                futureScope: '',
+                industryDemand: 'Not specified',
+                hasDetailedInfo: false,
+              });
+              continue;
+            }
+
+            console.log(`🔍 Scraping details for course ${i + 1}: ${course.courseTitle}`);
+
+            const detailData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
+              url: course.detailsUrl,
+              onlyMainContent: true,
+              maxAge: 172800000,
+              formats: [
+                {
+                  type: 'json',
+                  schema: {
+                    type: 'object',
+                    properties: {
+                      prerequisites: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description:
+                          'Course entry requirements, prerequisites, qualifications needed, or experience required',
+                      },
+                      courseOutline: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description:
+                          'Course modules, units, topics, curriculum structure, syllabus, or learning outcomes',
+                      },
+                      assessmentMethod: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description:
+                          'How students are assessed - exams, coursework, assignments, practical assessments, quizzes',
+                      },
+                      continuousAssessment: {
+                        type: 'boolean',
+                        description:
+                          'Whether the course uses ongoing assessment throughout or final assessment only',
+                      },
+                      accreditations: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description:
+                          'Professional accreditations, certifications, qualifications awarded, or industry recognition',
+                      },
+                      careerOutcomes: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description:
+                          'Career paths, job roles, employment opportunities, or career progression after completion',
+                      },
+                      upcomingDates: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description:
+                          "Available course start dates, intake dates, scheduled sessions, next available dates, course timetable - look for dates in formats like 'January 15, 2024', '15/01/24', 'Next Monday', 'Weekly starts', etc.",
+                      },
+                      nextStartDate: {
+                        type: 'string',
+                        description: 'Next available start date or intake date for this course',
+                      },
+                      locations: {
+                        type: 'array',
+                        items: {
+                          type: 'string',
+                        },
+                        description: 'Available course locations or delivery methods',
+                      },
+                      employerSupport: {
+                        type: 'boolean',
+                        description: 'Whether employer support or funding is available',
+                      },
+                      futureScope: {
+                        type: 'string',
+                        description: 'Future career outlook or industry growth prospects',
+                      },
+                      industryDemand: {
+                        type: 'string',
+                        description: 'Industry demand level for skills taught',
+                      },
+                      detailedDescription: {
+                        type: 'string',
+                        description: 'Complete detailed course description with all information',
+                      },
+                    },
+                  },
+                },
+              ],
+            });
+
+            let detailedInfo = {};
+
+            if (detailData.success && detailData.data?.json) {
+              detailedInfo = detailData.data.json;
+              console.log(`✅ Successfully extracted details for: ${course.courseTitle}`);
+            } else {
+              console.log(`⚠️ No detailed data extracted for: ${course.courseTitle}`);
+            }
+
+            // Merge basic and detailed information
+            const enhancedCourse = {
+              ...course,
+              prerequisites: (detailedInfo as any)?.prerequisites || [],
+              courseOutline: (detailedInfo as any)?.courseOutline || [],
+              assessmentMethod: (detailedInfo as any)?.assessmentMethod || [],
+              continuousAssessment: (detailedInfo as any)?.continuousAssessment || false,
+              accreditations: (detailedInfo as any)?.accreditations || [],
+              careerOutcomes: (detailedInfo as any)?.careerOutcomes || [],
+              upcomingDates: (detailedInfo as any)?.upcomingDates || [],
+              locations: (detailedInfo as any)?.locations || [],
+              employerSupport: (detailedInfo as any)?.employerSupport || false,
+              futureScope: (detailedInfo as any)?.futureScope || '',
+              industryDemand: (detailedInfo as any)?.industryDemand || 'Not specified',
+              description: (detailedInfo as any)?.detailedDescription || course.description || '',
+              hasDetailedInfo: Object.keys(detailedInfo || {}).length > 0,
+            };
+
+            detailedCourses.push(enhancedCourse);
+
+            // Small delay to be respectful to the API and avoid rate limiting
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          } catch (error) {
+            failureCount++;
+            console.error(
+              `❌ Error scraping details for ${course.courseTitle}:`,
+              error instanceof Error ? error.message : 'Unknown error'
+            );
+            // Add course with basic info only if detail scraping fails
             detailedCourses.push({
               ...course,
               prerequisites: [],
@@ -326,136 +537,14 @@ serve(async (req) => {
               employerSupport: false,
               futureScope: '',
               industryDemand: 'Not specified',
-              hasDetailedInfo: false
+              hasDetailedInfo: false,
             });
-            continue;
           }
-          
-          console.log(`🔍 Scraping details for course ${i + 1}: ${course.courseTitle}`);
-          
-          const detailData = await makeFirecrawlRequest('https://api.firecrawl.dev/v2/scrape', {
-            url: course.detailsUrl,
-            onlyMainContent: true,
-            maxAge: 172800000,
-              formats: [{
-                type: "json",
-                schema: {
-                  type: "object",
-                  properties: {
-                    prerequisites: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "Course entry requirements, prerequisites, qualifications needed, or experience required"
-                    },
-                    courseOutline: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "Course modules, units, topics, curriculum structure, syllabus, or learning outcomes"
-                    },
-                    assessmentMethod: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "How students are assessed - exams, coursework, assignments, practical assessments, quizzes"
-                    },
-                    continuousAssessment: {
-                      type: "boolean",
-                      description: "Whether the course uses ongoing assessment throughout or final assessment only"
-                    },
-                    accreditations: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "Professional accreditations, certifications, qualifications awarded, or industry recognition"
-                    },
-                    careerOutcomes: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "Career paths, job roles, employment opportunities, or career progression after completion"
-                    },
-                    upcomingDates: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "Available course start dates, intake dates, scheduled sessions, next available dates, course timetable - look for dates in formats like 'January 15, 2024', '15/01/24', 'Next Monday', 'Weekly starts', etc."
-                    },
-                    nextStartDate: {
-                      type: "string",
-                      description: "Next available start date or intake date for this course"
-                    },
-                    locations: {
-                      type: "array",
-                      items: {
-                        type: "string"
-                      },
-                      description: "Available course locations or delivery methods"
-                    },
-                    employerSupport: {
-                      type: "boolean",
-                      description: "Whether employer support or funding is available"
-                    },
-                    futureScope: {
-                      type: "string",
-                      description: "Future career outlook or industry growth prospects"
-                    },
-                    industryDemand: {
-                      type: "string",
-                      description: "Industry demand level for skills taught"
-                    },
-                    detailedDescription: {
-                      type: "string",
-                      description: "Complete detailed course description with all information"
-                    }
-                  }
-                }
-              }]
-            });
+        }
 
-          let detailedInfo = {};
-          
-          if (detailData.success && detailData.data?.json) {
-            detailedInfo = detailData.data.json;
-            console.log(`✅ Successfully extracted details for: ${course.courseTitle}`);
-          } else {
-            console.log(`⚠️ No detailed data extracted for: ${course.courseTitle}`);
-          }
-
-          // Merge basic and detailed information
-          const enhancedCourse = {
-            ...course,
-            prerequisites: (detailedInfo as any)?.prerequisites || [],
-            courseOutline: (detailedInfo as any)?.courseOutline || [],
-            assessmentMethod: (detailedInfo as any)?.assessmentMethod || [],
-            continuousAssessment: (detailedInfo as any)?.continuousAssessment || false,
-            accreditations: (detailedInfo as any)?.accreditations || [],
-            careerOutcomes: (detailedInfo as any)?.careerOutcomes || [],
-            upcomingDates: (detailedInfo as any)?.upcomingDates || [],
-            locations: (detailedInfo as any)?.locations || [],
-            employerSupport: (detailedInfo as any)?.employerSupport || false,
-            futureScope: (detailedInfo as any)?.futureScope || '',
-            industryDemand: (detailedInfo as any)?.industryDemand || 'Not specified',
-            description: (detailedInfo as any)?.detailedDescription || course.description || '',
-            hasDetailedInfo: Object.keys(detailedInfo || {}).length > 0
-          };
-
-          detailedCourses.push(enhancedCourse);
-          
-          // Small delay to be respectful to the API and avoid rate limiting
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          
-        } catch (error) {
-          failureCount++;
-          console.error(`❌ Error scraping details for ${course.courseTitle}:`, error instanceof Error ? error.message : 'Unknown error');
-          // Add course with basic info only if detail scraping fails
+        // Add remaining courses without detailed scraping if we hit the limit
+        for (let i = maxCoursesToDetail; i < allFoundCourses.length; i++) {
+          const course = allFoundCourses[i];
           detailedCourses.push({
             ...course,
             prerequisites: [],
@@ -469,83 +558,82 @@ serve(async (req) => {
             employerSupport: false,
             futureScope: '',
             industryDemand: 'Not specified',
-            hasDetailedInfo: false
+            hasDetailedInfo: false,
           });
         }
-      }
 
-        // Add remaining courses without detailed scraping if we hit the limit
-        for (let i = maxCoursesToDetail; i < allFoundCourses.length; i++) {
-          const course = allFoundCourses[i];
-        detailedCourses.push({
-          ...course,
-          prerequisites: [],
-          courseOutline: [],
-          assessmentMethod: [],
-          continuousAssessment: false,
-          accreditations: [],
-          careerOutcomes: [],
-          upcomingDates: [],
-          locations: [],
-          employerSupport: false,
-          futureScope: '',
-          industryDemand: 'Not specified',
-          hasDetailedInfo: false
-        });
-      }
-
-      // Helper function to extract future proofing rating from futureScope string
-      const extractFutureProofing = (futureScope: string): number => {
-        if (!futureScope) return 3; // Default to 3/5 if not specified
-        const match = futureScope.match(/(\d+)\/5/);
-        return match ? parseInt(match[1]) : 3;
-      };
+        // Helper function to extract future proofing rating from futureScope string
+        const extractFutureProofing = (futureScope: string): number => {
+          if (!futureScope) return 3; // Default to 3/5 if not specified
+          const match = futureScope.match(/(\d+)\/5/);
+          return match ? parseInt(match[1]) : 3;
+        };
 
         // Map to final format with UK-specific validation
         const allCourses = detailedCourses.map((course: any) => ({
           id: `uk-${course.sourceProvider?.replace(/\s+/g, '-').toLowerCase() || 'provider'}-${course.courseTitle?.replace(/\s+/g, '-').toLowerCase()}-${course.provider?.replace(/\s+/g, '-').toLowerCase() || 'unknown'}`,
           title: course.courseTitle || 'Untitled Course',
           provider: course.provider || course.sourceProvider || 'UK Training Provider',
-        description: course.description || 'Course description not available',
-        duration: course.duration || 'Duration not specified',
-        level: course.level || 'Level not specified',
-        category: course.category || 'Electrical',
-        rating: course.rating || 0,
-        format: course.learningMode || 'Format not specified',
-        futureProofing: extractFutureProofing(course.futureScope),
-        industryDemand: course.industryDemand || 'Not specified',
-        salaryImpact: 'Contact provider for details', // Not extracting from detail pages
-        careerOutcomes: course.careerOutcomes?.length > 0 ? course.careerOutcomes : ['Contact provider for details'],
-        locations: course.locations?.length > 0 ? course.locations : ['Contact provider for details'],
-        accreditation: course.accreditations?.length > 0 ? course.accreditations : ['Not specified by provider'],
-        nextDates: course.upcomingDates?.length > 0 ? course.upcomingDates : ['Contact provider for dates'],
-        price: course.priceRange || 'Contact for pricing',
-        employerSupport: course.employerSupport || false,
-        detailsUrl: course.detailsUrl || '',
-        // Enhanced fields from detailed scraping
-        prerequisites: course.prerequisites?.length > 0 ? course.prerequisites : ['Not specified by provider'],
-        courseOutline: course.courseOutline?.length > 0 ? course.courseOutline : ['Contact provider for details'],
-        assessmentMethod: course.assessmentMethod?.length > 0 ? course.assessmentMethod : ['Contact provider for details'],
-        continuousAssessment: course.continuousAssessment || false,
+          description: course.description || 'Course description not available',
+          duration: course.duration || 'Duration not specified',
+          level: course.level || 'Level not specified',
+          category: course.category || 'Electrical',
+          rating: course.rating || 0,
+          format: course.learningMode || 'Format not specified',
+          futureProofing: extractFutureProofing(course.futureScope),
+          industryDemand: course.industryDemand || 'Not specified',
+          salaryImpact: 'Contact provider for details', // Not extracting from detail pages
+          careerOutcomes:
+            course.careerOutcomes?.length > 0
+              ? course.careerOutcomes
+              : ['Contact provider for details'],
+          locations:
+            course.locations?.length > 0 ? course.locations : ['Contact provider for details'],
+          accreditation:
+            course.accreditations?.length > 0
+              ? course.accreditations
+              : ['Not specified by provider'],
+          nextDates:
+            course.upcomingDates?.length > 0
+              ? course.upcomingDates
+              : ['Contact provider for dates'],
+          price: course.priceRange || 'Contact for pricing',
+          employerSupport: course.employerSupport || false,
+          detailsUrl: course.detailsUrl || '',
+          // Enhanced fields from detailed scraping
+          prerequisites:
+            course.prerequisites?.length > 0 ? course.prerequisites : ['Not specified by provider'],
+          courseOutline:
+            course.courseOutline?.length > 0
+              ? course.courseOutline
+              : ['Contact provider for details'],
+          assessmentMethod:
+            course.assessmentMethod?.length > 0
+              ? course.assessmentMethod
+              : ['Contact provider for details'],
+          continuousAssessment: course.continuousAssessment || false,
           source: course.sourceProvider || 'UK Training Provider',
           isLive: true,
           hasDetailedInfo: course.hasDetailedInfo || false,
           lastUpdated: new Date().toISOString(),
           // Ensure UK-specific data validation
           isUKProvider: true,
-          locationType: course.locations?.some((loc: any) => loc.toLowerCase().includes('online')) ? 'online' : 'classroom'
+          locationType: course.locations?.some((loc: any) => loc.toLowerCase().includes('online'))
+            ? 'online'
+            : 'classroom',
         }));
 
         // Filter to ensure courses are UK-based
-        const ukCourses = allCourses.filter(course => {
-          const hasUKLocation = course.locations.some((loc: any) => 
-            loc.toLowerCase().includes('uk') || 
-            loc.toLowerCase().includes('united kingdom') ||
-            loc.toLowerCase().includes('london') ||
-            loc.toLowerCase().includes('manchester') ||
-            loc.toLowerCase().includes('birmingham') ||
-            loc.toLowerCase().includes('online') ||
-            loc.toLowerCase().includes('nationwide')
+        const ukCourses = allCourses.filter((course) => {
+          const hasUKLocation = course.locations.some(
+            (loc: any) =>
+              loc.toLowerCase().includes('uk') ||
+              loc.toLowerCase().includes('united kingdom') ||
+              loc.toLowerCase().includes('london') ||
+              loc.toLowerCase().includes('manchester') ||
+              loc.toLowerCase().includes('birmingham') ||
+              loc.toLowerCase().includes('online') ||
+              loc.toLowerCase().includes('nationwide')
           );
           return hasUKLocation || course.isUKProvider;
         });
@@ -555,37 +643,41 @@ serve(async (req) => {
         uniqueCourses = removeDuplicates(ukCourses);
         duplicatesRemoved = originalCount - uniqueCourses.length;
 
-        console.log(`📊 Original UK courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`);
-
-        // Update source results with actual data
-        const successfulSources = courseProviders.filter(provider => 
-          allFoundCourses.some(course => course.sourceProvider === provider.name)
+        console.log(
+          `📊 Original UK courses: ${originalCount}, After deduplication: ${uniqueCourses.length}, Duplicates removed: ${duplicatesRemoved}`
         );
 
-        successfulSources.forEach(provider => {
-          const providerCourses = uniqueCourses.filter(course => 
-            course.source === provider.name
-          );
-          
+        // Update source results with actual data
+        const successfulSources = courseProviders.filter((provider) =>
+          allFoundCourses.some((course) => course.sourceProvider === provider.name)
+        );
+
+        successfulSources.forEach((provider) => {
+          const providerCourses = uniqueCourses.filter((course) => course.source === provider.name);
+
           sourceResults.push({
             source: `${provider.name} (Enhanced)`,
             courseCount: providerCourses.length,
             success: true,
             error: null,
-            lastUpdated: new Date().toISOString()
+            lastUpdated: new Date().toISOString(),
           });
         });
 
-        console.log(`✅ Enhanced UK course aggregation: ${uniqueCourses.length} courses from ${successfulSources.length} providers`);
-
+        console.log(
+          `✅ Enhanced UK course aggregation: ${uniqueCourses.length} courses from ${successfulSources.length} providers`
+        );
       } catch (error) {
-        console.error('❌ Error in enhanced course aggregation:', error instanceof Error ? error.message : 'Unknown error');
+        console.error(
+          '❌ Error in enhanced course aggregation:',
+          error instanceof Error ? error.message : 'Unknown error'
+        );
         sourceResults.push({
           source: 'Enhanced UK Course Search',
           courseCount: 0,
           success: false,
           error: error instanceof Error ? error.message : 'Unknown error occurred',
-          lastUpdated: new Date().toISOString()
+          lastUpdated: new Date().toISOString(),
         });
       }
 
@@ -598,35 +690,40 @@ serve(async (req) => {
           duplicatesRemoved: duplicatesRemoved || 0,
           sourceBreakdown: sourceResults,
           searchCriteria: { keywords, location },
-          liveCourses: uniqueCourses.filter(c => c.isLive).length,
-          lastUpdated: new Date().toISOString()
+          liveCourses: uniqueCourses.filter((c) => c.isLive).length,
+          lastUpdated: new Date().toISOString(),
         },
         sourceResults,
-        isLiveData: true
+        isLiveData: true,
       };
     };
 
     console.log(`📊 Starting course aggregation with ${keywords} in ${location}...`);
-    
+
     // Race the main operation against the timeout
     const result = await Promise.race([mainOperation(), timeoutPromise]);
 
-    console.log(`📊 Aggregation complete: ${result.courses.length} unique courses from ${result.sourceResults.filter((s: any) => s.success).length} sources`);
+    console.log(
+      `📊 Aggregation complete: ${result.courses.length} unique courses from ${result.sourceResults.filter((s: any) => s.success).length} sources`
+    );
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
-    console.error('❌ Error in live course aggregator:', error instanceof Error ? error.message : 'Unknown error');
-    
+    console.error(
+      '❌ Error in live course aggregator:',
+      error instanceof Error ? error.message : 'Unknown error'
+    );
+
     // Provide more specific error messages
     let errorMessage = 'An unexpected error occurred while searching for courses';
     let errorCode = 500;
-    
+
     const errorMsg = error instanceof Error ? error.message : '';
     if (errorMsg.includes('timeout') || errorMsg.includes('timed out')) {
-      errorMessage = 'The search took too long to complete. Please try again with more specific search terms.';
+      errorMessage =
+        'The search took too long to complete. Please try again with more specific search terms.';
       errorCode = 408;
     } else if (errorMsg.includes('API key') || errorMsg.includes('configuration')) {
       errorMessage = 'Service configuration error. Please try again later.';
@@ -638,31 +735,34 @@ serve(async (req) => {
       errorMessage = 'Network connection error. Please check your connection and try again.';
       errorCode = 503;
     }
-    
-    return new Response(JSON.stringify({ 
-      error: errorMessage,
-      technical_error: error instanceof Error ? error.message : 'Unknown error',
-      courses: [],
-      total: 0,
-      summary: null,
-      sourceResults: [],
-      isLiveData: false
-    }), {
-      status: errorCode,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+
+    return new Response(
+      JSON.stringify({
+        error: errorMessage,
+        technical_error: error instanceof Error ? error.message : 'Unknown error',
+        courses: [],
+        total: 0,
+        summary: null,
+        sourceResults: [],
+        isLiveData: false,
+      }),
+      {
+        status: errorCode,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 // Helper function to remove duplicates based on title + provider
 function removeDuplicates(courses: any[]): any[] {
   const seen = new Map();
-  return courses.filter(course => {
+  return courses.filter((course) => {
     // Create a unique key using title + provider for better deduplication
     const normalizedTitle = course.title?.toLowerCase().trim().replace(/\s+/g, ' ') || '';
     const normalizedProvider = course.provider?.toLowerCase().trim().replace(/\s+/g, ' ') || '';
     const key = `${normalizedTitle}-${normalizedProvider}`;
-    
+
     if (seen.has(key)) {
       // Keep the one with more detailed information
       const existing = seen.get(key);

@@ -1,7 +1,7 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from '../_shared/cors.ts';
 
 const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -13,12 +13,12 @@ serve(async (req) => {
   }
 
   try {
-    const { keywords = "electrical course", location = "United Kingdom" } = await req.json();
-    
+    const { keywords = 'electrical course', location = 'United Kingdom' } = await req.json();
+
     console.log(`Starting Reed course search via Firecrawl v2 for: ${keywords} in ${location}`);
-    
+
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
-    
+
     // Check cache first
     const cacheKey = `hybrid-${keywords}-${location}`;
     const { data: cachedData } = await supabase
@@ -39,22 +39,25 @@ serve(async (req) => {
     // Use only Firecrawl v2 API for actual course data
     if (!firecrawlApiKey) {
       console.error('Firecrawl API key not configured');
-      return new Response(JSON.stringify({ 
-        error: "Firecrawl API key not configured",
-        courses: [],
-        total: 0,
-        source: 'reed-hybrid'
-      }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          error: 'Firecrawl API key not configured',
+          courses: [],
+          total: 0,
+          source: 'reed-hybrid',
+        }),
+        {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     console.log('Fetching actual course data from Reed via Firecrawl v2');
     const courses = await scrapeReedCourses(keywords);
-    
+
     console.log(`✅ Firecrawl: ${courses.length} actual courses extracted`);
-    
+
     // Sort by relevance score
     courses.sort((a, b) => (b.relevanceScore || 0) - (a.relevanceScore || 0));
 
@@ -65,184 +68,187 @@ serve(async (req) => {
       searchCriteria: { keywords, location },
       sourceBreakdown: {
         firecrawl: courses.length,
-        total: courses.length
+        total: courses.length,
       },
-      lastUpdated: new Date().toISOString()
+      lastUpdated: new Date().toISOString(),
     };
 
     // Cache the results
-    await supabase
-      .from('live_course_cache')
-      .insert({
-        source: 'reed-hybrid',
-        search_query: cacheKey,
-        course_data: result
-      });
+    await supabase.from('live_course_cache').insert({
+      source: 'reed-hybrid',
+      search_query: cacheKey,
+      course_data: result,
+    });
 
     console.log(`✅ Returning ${courses.length} actual Reed courses from Firecrawl`);
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Error in reed-courses-hybrid:', error);
-    return new Response(JSON.stringify({
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
-      courses: [],
-      total: 0,
-      source: 'reed-hybrid'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        courses: [],
+        total: 0,
+        source: 'reed-hybrid',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 async function scrapeReedCourses(keywords: string): Promise<any[]> {
-  const targetUrl = keywords.toLowerCase().includes('electrical') || keywords.toLowerCase().includes('electrician') 
-    ? 'https://www.reed.co.uk/courses/electrician'
-    : `https://www.reed.co.uk/courses/${encodeURIComponent(keywords.replace(/\s+/g, '-').toLowerCase())}`;
-  
+  const targetUrl =
+    keywords.toLowerCase().includes('electrical') || keywords.toLowerCase().includes('electrician')
+      ? 'https://www.reed.co.uk/courses/electrician'
+      : `https://www.reed.co.uk/courses/${encodeURIComponent(keywords.replace(/\s+/g, '-').toLowerCase())}`;
+
   console.log('Scraping Reed courses from:', targetUrl);
 
   try {
     const response = await fetch('https://api.firecrawl.dev/v2/scrape', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${firecrawlApiKey}`,
+        Authorization: `Bearer ${firecrawlApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         url: 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
         onlyMainContent: true,
         maxAge: 172800000,
-        parsers: ["pdf"],
+        parsers: ['pdf'],
         formats: [
           {
-            type: "json",
+            type: 'json',
             schema: {
-              type: "object",
+              type: 'object',
               properties: {
                 category: {
-                  type: "string",
-                  description: "The main category or tag of the course (e.g., Emerging Technologies)"
+                  type: 'string',
+                  description:
+                    'The main category or tag of the course (e.g., Emerging Technologies)',
                 },
                 rating: {
-                  type: "number",
-                  description: "Star rating of the course"
+                  type: 'number',
+                  description: 'Star rating of the course',
                 },
                 courseTitle: {
-                  type: "string",
-                  description: "Title of the course"
+                  type: 'string',
+                  description: 'Title of the course',
                 },
                 provider: {
-                  type: "string",
-                  description: "Training provider name"
+                  type: 'string',
+                  description: 'Training provider name',
                 },
                 description: {
-                  type: "string",
-                  description: "Short description of the course"
+                  type: 'string',
+                  description: 'Short description of the course',
                 },
                 duration: {
-                  type: "string",
-                  description: "Course duration (e.g., 2 days)"
+                  type: 'string',
+                  description: 'Course duration (e.g., 2 days)',
                 },
                 level: {
-                  type: "string",
-                  description: "Course difficulty level (e.g., Intermediate)"
+                  type: 'string',
+                  description: 'Course difficulty level (e.g., Intermediate)',
                 },
                 learningMode: {
-                  type: "string",
-                  description: "Learning mode (e.g., Blended learning with hands-on practical sessions)"
+                  type: 'string',
+                  description:
+                    'Learning mode (e.g., Blended learning with hands-on practical sessions)',
                 },
                 futureScope: {
-                  type: "string",
-                  description: "Future career outlook or rating (e.g., Future: 5/5)"
+                  type: 'string',
+                  description: 'Future career outlook or rating (e.g., Future: 5/5)',
                 },
                 industryDemand: {
-                  type: "string",
-                  description: "Industry demand level (e.g., High)"
+                  type: 'string',
+                  description: 'Industry demand level (e.g., High)',
                 },
                 salaryImpact: {
-                  type: "object",
+                  type: 'object',
                   properties: {
                     min: {
-                      type: "number",
-                      description: "Minimum salary impact"
+                      type: 'number',
+                      description: 'Minimum salary impact',
                     },
                     max: {
-                      type: "number",
-                      description: "Maximum salary impact"
+                      type: 'number',
+                      description: 'Maximum salary impact',
                     },
                     unit: {
-                      type: "string",
-                      description: "Unit (e.g., annual increase)"
-                    }
-                  }
+                      type: 'string',
+                      description: 'Unit (e.g., annual increase)',
+                    },
+                  },
                 },
                 careerOutcomes: {
-                  type: "array",
+                  type: 'array',
                   items: {
-                    type: "string"
+                    type: 'string',
                   },
-                  description: "List of career outcomes"
+                  description: 'List of career outcomes',
                 },
                 locations: {
-                  type: "array",
+                  type: 'array',
                   items: {
-                    type: "string"
+                    type: 'string',
                   },
-                  description: "Available course locations"
+                  description: 'Available course locations',
                 },
                 accreditations: {
-                  type: "array",
+                  type: 'array',
                   items: {
-                    type: "string"
+                    type: 'string',
                   },
-                  description: "List of accreditations"
+                  description: 'List of accreditations',
                 },
                 upcomingDates: {
-                  type: "array",
+                  type: 'array',
                   items: {
-                    type: "string",
-                    format: "date"
+                    type: 'string',
+                    format: 'date',
                   },
-                  description: "Upcoming course start dates"
+                  description: 'Upcoming course start dates',
                 },
                 priceRange: {
-                  type: "string",
-                  description: "Price range of the course (e.g., £425 - £525)"
+                  type: 'string',
+                  description: 'Price range of the course (e.g., £425 - £525)',
                 },
                 employerSupport: {
-                  type: "boolean",
-                  description: "Whether employer support is available"
+                  type: 'boolean',
+                  description: 'Whether employer support is available',
                 },
                 detailsUrl: {
-                  type: "string",
-                  description: "Direct link to the course details page"
-                }
+                  type: 'string',
+                  description: 'Direct link to the course details page',
+                },
               },
               required: [
-                "category",
-                "courseTitle",
-                "provider",
-                "description",
-                "duration",
-                "level",
-                "learningMode",
-                "industryDemand",
-                "salaryImpact",
-                "careerOutcomes",
-                "locations",
-                "accreditations",
-                "upcomingDates",
-                "priceRange",
-                "detailsUrl"
-              ]
-            }
-          }
-        ]
+                'category',
+                'courseTitle',
+                'provider',
+                'description',
+                'duration',
+                'level',
+                'learningMode',
+                'industryDemand',
+                'salaryImpact',
+                'careerOutcomes',
+                'locations',
+                'accreditations',
+                'upcomingDates',
+                'priceRange',
+                'detailsUrl',
+              ],
+            },
+          },
+        ],
       }),
     });
 
@@ -252,10 +258,10 @@ async function scrapeReedCourses(keywords: string): Promise<any[]> {
 
     const data = await response.json();
     let courses: any[] = [];
-    
+
     if (data.success && data.data?.extract) {
       const extractData = data.data.extract;
-      
+
       // Handle both single course and array of courses
       if (Array.isArray(extractData)) {
         courses = extractData;
@@ -273,28 +279,40 @@ async function scrapeReedCourses(keywords: string): Promise<any[]> {
       level: course.level || 'Various levels',
       price: course.priceRange || 'Contact for pricing',
       format: course.learningMode || 'Contact provider',
-      nextDates: course.upcomingDates && course.upcomingDates.length > 0 ? course.upcomingDates : ['Contact provider'],
+      nextDates:
+        course.upcomingDates && course.upcomingDates.length > 0
+          ? course.upcomingDates
+          : ['Contact provider'],
       rating: course.rating || 4.3,
-      locations: course.locations && course.locations.length > 0 ? course.locations : ['Various locations'],
+      locations:
+        course.locations && course.locations.length > 0 ? course.locations : ['Various locations'],
       category: course.category || 'Professional Development',
-      industryDemand: course.industryDemand || 'High' as const,
+      industryDemand: course.industryDemand || ('High' as const),
       futureProofing: parseFutureScope(course.futureScope) || 4,
       salaryImpact: course.salaryImpact || 'Contact provider',
-      careerOutcomes: course.careerOutcomes && course.careerOutcomes.length > 0 ? course.careerOutcomes : ['Professional certification', 'Career advancement'],
-      accreditation: course.accreditations && course.accreditations.length > 0 ? course.accreditations : ['Industry recognised'],
+      careerOutcomes:
+        course.careerOutcomes && course.careerOutcomes.length > 0
+          ? course.careerOutcomes
+          : ['Professional certification', 'Career advancement'],
+      accreditation:
+        course.accreditations && course.accreditations.length > 0
+          ? course.accreditations
+          : ['Industry recognised'],
       employerSupport: course.employerSupport !== undefined ? course.employerSupport : true,
       prerequisites: ['Contact provider'],
       courseOutline: ['Contact provider for details'],
       assessmentMethod: 'Contact provider',
       continuousAssessment: false,
-      external_url: course.detailsUrl || course.url || 'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
+      external_url:
+        course.detailsUrl ||
+        course.url ||
+        'https://www.reed.co.uk/courses/?keywords=Electrical%20Career%20Courses%20%26%20Training',
       source: 'Reed Courses',
       isLive: true,
       relevanceScore: calculateRelevanceScore(course.courseTitle || course.title || '', keywords),
       learningMode: course.learningMode || null,
-      futureScope: course.futureScope || null
+      futureScope: course.futureScope || null,
     }));
-
   } catch (error) {
     console.error('Firecrawl scraping error:', error);
     return [];
@@ -307,22 +325,31 @@ function calculateRelevanceScore(title: string, keywords: string): number {
   const titleLower = title.toLowerCase();
   const keywordsLower = keywords.toLowerCase();
   let score = 0;
-  
+
   // Direct keyword match
   if (titleLower.includes(keywordsLower)) score += 5;
-  
+
   // Electrical-specific terms
-  const electricalTerms = ['electrical', 'electrician', 'wiring', 'installation', 'city & guilds', 'nvq', '18th edition', 'bs7671'];
-  electricalTerms.forEach(term => {
+  const electricalTerms = [
+    'electrical',
+    'electrician',
+    'wiring',
+    'installation',
+    'city & guilds',
+    'nvq',
+    '18th edition',
+    'bs7671',
+  ];
+  electricalTerms.forEach((term) => {
     if (titleLower.includes(term)) score += 3;
   });
-  
+
   // Course indicators
   const courseTerms = ['course', 'training', 'qualification', 'certificate', 'diploma'];
-  courseTerms.forEach(term => {
+  courseTerms.forEach((term) => {
     if (titleLower.includes(term)) score += 2;
   });
-  
+
   return score;
 }
 
@@ -330,19 +357,19 @@ function calculateRelevanceScore(title: string, keywords: string): number {
 
 function parseFutureScope(futureScope: string = ''): number | null {
   if (!futureScope) return null;
-  
+
   // Extract number from patterns like "Future: 5/5" or "5/5"
   const match = futureScope.match(/(\d+)\/(\d+)/);
   if (match) {
     const [, numerator, denominator] = match;
     return (parseInt(numerator) / parseInt(denominator)) * 5;
   }
-  
+
   // Look for standalone numbers
   const numberMatch = futureScope.match(/\d+/);
   if (numberMatch) {
     return Math.min(5, parseInt(numberMatch[0]));
   }
-  
+
   return null;
 }

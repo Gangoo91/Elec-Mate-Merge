@@ -1,11 +1,12 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface ReportData {
@@ -62,7 +63,9 @@ Generate a complete, professional electrical report using the EXACT data provide
 
   switch (template) {
     case 'eicr':
-      return basePrompt + `
+      return (
+        basePrompt +
+        `
 
 ## EICR SPECIFIC FORMATTING REQUIREMENTS:
 
@@ -105,10 +108,13 @@ Create a detailed table with:
 ### **C3 - Improvement Recommended**
 - [List any C3 items with regulation references]
 
-Include specific ohm readings, RCD trip times, and insulation resistance values in properly formatted tables.`;
+Include specific ohm readings, RCD trip times, and insulation resistance values in properly formatted tables.`
+      );
 
     case 'minor-works':
-      return basePrompt + `
+      return (
+        basePrompt +
+        `
 
 Format as a Minor Works Certificate with:
 - Description of work completed
@@ -119,10 +125,13 @@ Format as a Minor Works Certificate with:
 - Earth fault loop impedance measurements
 - Compliance statement with BS7671 18th Edition
 - Any departures from BS7671 18th Edition (if applicable)
-- Installation schedule and circuit particulars`;
+- Installation schedule and circuit particulars`
+      );
 
     case 'periodic-inspection':
-      return basePrompt + `
+      return (
+        basePrompt +
+        `
 
 Format as a Periodic Inspection Report with:
 - Purpose and scope of inspection
@@ -132,7 +141,8 @@ Format as a Periodic Inspection Report with:
 - Recommended actions with timescales
 - Overall condition assessment
 - Recommended interval to next inspection
-- Summary of inspection findings`;
+- Summary of inspection findings`
+      );
 
     case 'client-explainer':
       return `You are a qualified electrician with expertise in BS7671 18th Edition electrical regulations. You excel at explaining technical electrical work to clients in clear, accessible language whilst maintaining technical accuracy and UK compliance.
@@ -149,7 +159,9 @@ Communication Preferences:
 - Emphasize Safety: ${formData.emphasizeSafety ? 'Yes - highlight safety importance' : 'No - balanced approach'}
 - Include BS7671 References: ${formData.includeBS7671 ? 'Yes - include UK regulation references' : 'No - avoid technical references'}
 
-${formData.includeBS7671 ? `
+${
+  formData.includeBS7671
+    ? `
 REGULATION CONTEXT USAGE:
 You have access to specific BS 7671 regulation intelligence below. Use this to:
 - Reference accurate regulation numbers (e.g., "Regulation 411.3.3 requires...")
@@ -162,7 +174,9 @@ When explaining regulations to ${formData.clientType}:
 - Explain what the regulation means in practical terms
 - Connect it directly to their specific situation
 - Use the provided regulation keywords and topics for accuracy
-` : ''}
+`
+    : ''
+}
 
 CRITICAL FORMATTING REQUIREMENTS:
 - Write in clear, flowing paragraphs - NOT bullet points
@@ -202,7 +216,9 @@ Remember: Write in flowing paragraphs that read naturally, not as a bullet-point
 CRITICAL: Ensure you add TWO line breaks (\n\n) between each paragraph and section for proper formatting.`;
 
     case 'consumer-unit':
-      return basePrompt + `
+      return (
+        basePrompt +
+        `
 
 Format as a Consumer Unit Installation Report with:
 - Pre-installation assessment
@@ -213,10 +229,13 @@ Format as a Consumer Unit Installation Report with:
 - Insulation resistance test results
 - Continuity of protective conductors
 - Polarity verification
-- Installation certification and compliance statement`;
+- Installation certification and compliance statement`
+      );
 
     case 'ev-charger':
-      return basePrompt + `
+      return (
+        basePrompt +
+        `
 
 Format as an EV Charger Installation Report with:
 - Installation assessment and requirements
@@ -227,10 +246,13 @@ Format as an EV Charger Installation Report with:
 - Installation method and cable route
 - Charging point specifications and compliance
 - Mode 3 charging compliance verification
-- Installation certificate and testing results`;
+- Installation certificate and testing results`
+      );
 
     case 'rcd-test':
-      return basePrompt + `
+      return (
+        basePrompt +
+        `
 
 Format as an RCD Test Report with:
 - RCD specifications and location details
@@ -241,7 +263,8 @@ Format as an RCD Test Report with:
 - Half-rated current non-trip test
 - Insulation monitoring (if applicable)
 - Pass/fail assessment against BS EN 61008/61009
-- Recommendations for any remedial action required`;
+- Recommendations for any remedial action required`
+      );
 
     default:
       return basePrompt;
@@ -250,7 +273,7 @@ Format as an RCD Test Report with:
 
 serve(async (req) => {
   console.log('Generate electrical report function called');
-  
+
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -270,33 +293,40 @@ serve(async (req) => {
 
     // ✅ RAG Integration: Fetch relevant BS 7671 regulations for Client Explainer
     let regulationContext = '';
-    
+
     if (template === 'client-explainer' && formData.includeBS7671 && formData.technicalNotes) {
       console.log('🔍 Fetching BS 7671 regulation intelligence for Client Explainer...');
-      
+
       const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const supabase = createClient(supabaseUrl, supabaseKey);
-      
+
       try {
-        const { data: regulationData, error: regError } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-          query_text: formData.technicalNotes,
-          match_count: 5
-        });
-        
+        const { data: regulationData, error: regError } = await supabase.rpc(
+          'search_regulations_intelligence_hybrid',
+          {
+            query_text: formData.technicalNotes,
+            match_count: 5,
+          }
+        );
+
         if (regError) {
           console.error('⚠️ Regulation intelligence search error:', regError);
         } else if (regulationData && regulationData.length > 0) {
           console.log(`✅ Retrieved ${regulationData.length} relevant regulations`);
-          
-          regulationContext = '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n' + 
-            regulationData.map((reg: any, idx: number) => 
-              `${idx + 1}. **Regulation ${reg.regulation_number}** (${reg.category || 'General'})\n` +
-              `   - Topic: ${reg.primary_topic || 'N/A'}\n` +
-              `   - Keywords: ${reg.keywords?.join(', ') || 'N/A'}\n` +
-              `   - Applies to: ${reg.applies_to?.join(', ') || 'All installations'}\n` +
-              `   - Practical application: ${reg.practical_application || 'See regulation details'}`
-            ).join('\n\n');
+
+          regulationContext =
+            '\n\n## RELEVANT BS 7671 REGULATIONS:\n\n' +
+            regulationData
+              .map(
+                (reg: any, idx: number) =>
+                  `${idx + 1}. **Regulation ${reg.regulation_number}** (${reg.category || 'General'})\n` +
+                  `   - Topic: ${reg.primary_topic || 'N/A'}\n` +
+                  `   - Keywords: ${reg.keywords?.join(', ') || 'N/A'}\n` +
+                  `   - Applies to: ${reg.applies_to?.join(', ') || 'All installations'}\n` +
+                  `   - Practical application: ${reg.practical_application || 'See regulation details'}`
+              )
+              .join('\n\n');
         } else {
           console.log('ℹ️ No specific regulations found, AI will use general BS 7671 knowledge');
         }
@@ -306,12 +336,16 @@ serve(async (req) => {
     }
 
     const prompt = createPrompt(template, formData, additionalNotes) + regulationContext;
-    console.log('Generated prompt for template:', template, regulationContext ? '(with regulation context)' : '');
+    console.log(
+      'Generated prompt for template:',
+      template,
+      regulationContext ? '(with regulation context)' : ''
+    );
 
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -319,50 +353,59 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: 'You are a qualified electrical engineer with extensive knowledge of BS7671 18th Edition regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.'
+            content:
+              'You are a qualified electrical engineer with extensive knowledge of BS7671 18th Edition regulations and UK electrical standards. Generate professional, detailed electrical reports that comply with industry standards and regulations.',
           },
           {
             role: 'user',
-            content: prompt
-          }
+            content: prompt,
+          },
         ],
-        max_completion_tokens: 4000
+        max_completion_tokens: 4000,
       }),
     });
 
     if (!response.ok) {
       const errorData = await response.text();
       console.error('OpenAI API error:', response.status, errorData);
-      return new Response(JSON.stringify({ 
-        error: `OpenAI API error: ${response.status}`,
-        details: errorData 
-      }), {
-        status: response.status,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          error: `OpenAI API error: ${response.status}`,
+          details: errorData,
+        }),
+        {
+          status: response.status,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const data = await response.json();
     console.log('OpenAI response received successfully');
-    
+
     const generatedReport = data.choices[0].message.content;
 
-    return new Response(JSON.stringify({ 
-      report: generatedReport,
-      template,
-      timestamp: new Date().toISOString()
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        report: generatedReport,
+        template,
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in generate-electrical-report function:', error);
-    return new Response(JSON.stringify({ 
-      error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error occurred'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

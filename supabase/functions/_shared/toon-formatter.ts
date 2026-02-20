@@ -2,7 +2,7 @@
  * TOON (Token-Optimized Object Notation) Formatter - PHASE 7 ENHANCED
  * Reduces token usage by 40-50% vs JSON while maintaining readability
  * Research shows TOON achieves 86.6% accuracy using 46.3% fewer tokens
- * 
+ *
  * PHASE 7 ENHANCEMENTS:
  * - Formula-specific tags (F, W, T) for better AI parsing
  * - Table data compression for Appendix 4 voltage drop tables
@@ -20,7 +20,7 @@ export interface RegulationTOON {
 
 /**
  * Convert regulations to TOON format with PHASE 7 enhancements
- * 
+ *
  * TOON Rules:
  * - Use indentation (2 spaces) instead of brackets
  * - Omit quotes around keys
@@ -39,61 +39,62 @@ export function formatRegulationsAsTOON(
 
   // Group regulations by section (e.g., Part 4, Part 5)
   const grouped = groupBySection(regulations);
-  
+
   let toon = '';
-  
+
   for (const [section, regs] of Object.entries(grouped)) {
     // Section header (only if multiple sections)
     if (Object.keys(grouped).length > 1) {
       toon += `S ${section}\n`;
     }
-    
+
     // Regulations within section with PHASE 7 enhancements
-    regs.forEach(r => {
+    regs.forEach((r) => {
       const regNum = r.regulation_number || r.topic || 'General';
       const content = r.content || '';
-      
+
       // TOON format: R <number>
       toon += `  R ${regNum}\n`;
-      
+
       // PHASE 7: Extract and format formulas
       const formulas = extractFormulas(content);
       if (formulas.length > 0) {
-        formulas.forEach(f => {
+        formulas.forEach((f) => {
           toon += `    F ${f}\n`;
         });
       }
-      
+
       // PHASE 7: Extract and format worked examples
       const examples = extractWorkedExamples(content);
       if (examples.length > 0) {
-        examples.forEach(ex => {
+        examples.forEach((ex) => {
           toon += `    W ${ex}\n`;
         });
       }
-      
+
       // PHASE 7: Extract and format table data (for Appendix 4, Table 54.7, etc.)
       const tableData = extractTableData(content);
       if (tableData.length > 0) {
-        tableData.forEach(row => {
+        tableData.forEach((row) => {
           toon += `    T ${row}\n`;
         });
       }
-      
+
       // Main content (truncated if no formulas/examples found)
-      const mainContent = formulas.length > 0 || examples.length > 0 || tableData.length > 0
-        ? truncateContent(content, maxLength * 0.6) // Shorter if we have structured data
-        : truncateContent(content, maxLength);
-        
+      const mainContent =
+        formulas.length > 0 || examples.length > 0 || tableData.length > 0
+          ? truncateContent(content, maxLength * 0.6) // Shorter if we have structured data
+          : truncateContent(content, maxLength);
+
       toon += `    C ${mainContent}\n`;
-      
+
       // Optional: Add category if present
       if (r.category) {
         toon += `    Cat ${r.category}\n`;
       }
     });
   }
-  
+
   return toon.trim();
 }
 
@@ -102,15 +103,15 @@ export function formatRegulationsAsTOON(
  */
 function groupBySection(regulations: RegulationTOON[]): Record<string, RegulationTOON[]> {
   const groups: Record<string, RegulationTOON[]> = {};
-  
-  regulations.forEach(r => {
+
+  regulations.forEach((r) => {
     const section = extractSection(r.regulation_number || r.topic || '');
     if (!groups[section]) {
       groups[section] = [];
     }
     groups[section].push(r);
   });
-  
+
   return groups;
 }
 
@@ -122,7 +123,7 @@ function groupBySection(regulations: RegulationTOON[]): Record<string, Regulatio
  */
 function extractSection(regNum: string): string {
   const partNum = regNum.charAt(0);
-  
+
   const partMap: Record<string, string> = {
     '1': 'Scope',
     '2': 'Definitions',
@@ -131,12 +132,11 @@ function extractSection(regNum: string): string {
     '5': 'Selection',
     '6': 'Verification',
     '7': 'Special Locations',
-    '8': 'Reserved'
+    '8': 'Reserved',
   };
-  
+
   return partMap[partNum] || 'General';
 }
-
 
 /**
  * PHASE 7: Extract formulas from regulation content
@@ -144,25 +144,25 @@ function extractSection(regNum: string): string {
  */
 function extractFormulas(content: string): string[] {
   const formulas: string[] = [];
-  
+
   // Match common formula patterns
   const formulaPatterns = [
     /([A-Z][a-z0-9]*)\s*=\s*[^.]+/g, // "Vd = formula"
     /[A-Z]+\s*≤\s*[A-Z]+\s*≤\s*[A-Z]+/g, // "Ib ≤ In ≤ Iz"
     /\([^)]+\)\s*[×÷+\-\/]\s*\([^)]+\)/g, // "(a × b) / (c + d)"
   ];
-  
-  formulaPatterns.forEach(pattern => {
+
+  formulaPatterns.forEach((pattern) => {
     const matches = content.match(pattern);
     if (matches) {
-      matches.forEach(m => {
+      matches.forEach((m) => {
         if (m.length < 80 && !formulas.includes(m.trim())) {
           formulas.push(m.trim());
         }
       });
     }
   });
-  
+
   return formulas;
 }
 
@@ -172,24 +172,24 @@ function extractFormulas(content: string): string[] {
  */
 function extractWorkedExamples(content: string): string[] {
   const examples: string[] = [];
-  
+
   // Match calculation patterns with results
   const examplePatterns = [
     /\([0-9.]+\s*[×÷+\-]\s*[0-9.]+[^=]*\)\s*=\s*[0-9.]+/g, // "(18 × 32) = 576"
     /[Ff]or\s+[0-9.]+[A-Z]*[^.]{5,60}=\s*[0-9.]+/g, // "For 32A: ... = 17.28"
   ];
-  
-  examplePatterns.forEach(pattern => {
+
+  examplePatterns.forEach((pattern) => {
     const matches = content.match(pattern);
     if (matches) {
-      matches.forEach(m => {
+      matches.forEach((m) => {
         if (m.length < 100 && !examples.includes(m.trim())) {
           examples.push(m.trim());
         }
       });
     }
   });
-  
+
   return examples;
 }
 
@@ -199,10 +199,10 @@ function extractWorkedExamples(content: string): string[] {
  */
 function extractTableData(content: string): string[] {
   const tableRows: string[] = [];
-  
+
   // Match table-like patterns (e.g., "1.5mm² | 29 | 26" or "Cable Size: 2.5mm², R1+R2: 7.41")
   const tablePattern = /(\d+\.?\d*mm²)[:\s|]+([0-9.]+)[:\s|]+([0-9.]+)/g;
-  
+
   let match;
   while ((match = tablePattern.exec(content)) !== null) {
     const row = `${match[1]} | ${match[2]} | ${match[3]}`;
@@ -210,7 +210,7 @@ function extractTableData(content: string): string[] {
       tableRows.push(row);
     }
   }
-  
+
   return tableRows;
 }
 
@@ -219,18 +219,18 @@ function extractTableData(content: string): string[] {
  */
 function truncateContent(content: string, maxLength: number): string {
   if (content.length <= maxLength) return content;
-  
+
   // Try to cut at last sentence within limit
   const truncated = content.substring(0, maxLength);
   const lastPeriod = truncated.lastIndexOf('.');
   const lastComma = truncated.lastIndexOf(',');
-  
+
   if (lastPeriod > maxLength * 0.7) {
     return truncated.substring(0, lastPeriod + 1);
   } else if (lastComma > maxLength * 0.8) {
     return truncated.substring(0, lastComma) + '...';
   }
-  
+
   return truncated + '...';
 }
 
@@ -245,11 +245,11 @@ export function estimateTokenSavings(
   const toonTokens = Math.round(toonFormat.length / 4);
   const savings = oldTokens - toonTokens;
   const savingsPercent = ((savings / oldTokens) * 100).toFixed(1);
-  
+
   return {
     oldTokens,
     toonTokens,
     savings,
-    savingsPercent
+    savingsPercent,
   };
 }

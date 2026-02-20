@@ -3,7 +3,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -19,21 +20,22 @@ Deno.serve(async (req) => {
 
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
-    );
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const jobInputs = await req.json();
@@ -46,17 +48,17 @@ Deno.serve(async (req) => {
         job_inputs: jobInputs,
         status: 'pending',
         progress: 0,
-        current_step: 'Initializing commissioning procedures...'
+        current_step: 'Initializing commissioning procedures...',
       })
       .select()
       .single();
 
     if (error) {
       console.error('Failed to create job:', error);
-      return new Response(
-        JSON.stringify({ error: error.message }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`✅ Created commissioning job: ${job.id}`);
@@ -66,28 +68,28 @@ Deno.serve(async (req) => {
     fetch(processUrl, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${Deno.env.get('SUPABASE_ANON_KEY')}`,
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ jobId: job.id })
-    }).catch(err => console.error('Failed to trigger processing:', err));
+      body: JSON.stringify({ jobId: job.id }),
+    }).catch((err) => console.error('Failed to trigger processing:', err));
 
     console.log(`🚀 Triggered background processing for job: ${job.id}`);
 
-    return new Response(
-      JSON.stringify({ jobId: job.id, status: 'pending' }),
-      { 
-        status: 202, // Accepted
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
-    );
-
+    return new Response(JSON.stringify({ jobId: job.id, status: 'pending' }), {
+      status: 202, // Accepted
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('Error in create-commissioning-job:', error);
-    await captureException(error, { functionName: 'create-commissioning-job', requestUrl: req.url, requestMethod: req.method });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    await captureException(error, {
+      functionName: 'create-commissioning-job',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

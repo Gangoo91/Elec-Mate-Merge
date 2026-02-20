@@ -3,7 +3,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -18,10 +19,10 @@ Deno.serve(async (req) => {
     jobId = body.jobId;
 
     if (!jobId) {
-      return new Response(
-        JSON.stringify({ error: 'jobId is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'jobId is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('🚀 Parallel Circuit Design Orchestrator START', { jobId });
@@ -53,7 +54,7 @@ Deno.serve(async (req) => {
         designer_status: 'pending',
         designer_progress: 0,
         installation_agent_status: 'pending',
-        installation_agent_progress: 0
+        installation_agent_progress: 0,
       })
       .eq('id', jobId);
 
@@ -70,25 +71,28 @@ Deno.serve(async (req) => {
     // Designer will trigger Installation Agent when complete
     // ============================================
     console.log('🔌 Launching Circuit Designer (fire-and-forget)...');
-    
+
     // Fire-and-forget: Designer runs in background, triggers installer when done
-    const designerTask = supabase.functions.invoke('designer-agent-v3', {
-      body: {
-        jobId,
-        mode: 'direct-design',
-        projectInfo: job.job_inputs.projectInfo,
-        supply: job.job_inputs.supply,
-        circuits: job.job_inputs.circuits,
-        additionalPrompt: job.job_inputs.additionalPrompt || '',
-        specialRequirements: job.job_inputs.specialRequirements || [],
-        installationConstraints: job.job_inputs.installationConstraints || {}
-      }
-    }).then(() => {
-      console.log('✅ Designer HTTP response received (ignoring status)');
-    }).catch((error) => {
-      console.log('ℹ️ Designer HTTP connection closed:', error.message);
-      // This is expected for long-running jobs - designer updates DB directly
-    });
+    const designerTask = supabase.functions
+      .invoke('designer-agent-v3', {
+        body: {
+          jobId,
+          mode: 'direct-design',
+          projectInfo: job.job_inputs.projectInfo,
+          supply: job.job_inputs.supply,
+          circuits: job.job_inputs.circuits,
+          additionalPrompt: job.job_inputs.additionalPrompt || '',
+          specialRequirements: job.job_inputs.specialRequirements || [],
+          installationConstraints: job.job_inputs.installationConstraints || {},
+        },
+      })
+      .then(() => {
+        console.log('✅ Designer HTTP response received (ignoring status)');
+      })
+      .catch((error) => {
+        console.log('ℹ️ Designer HTTP connection closed:', error.message);
+        // This is expected for long-running jobs - designer updates DB directly
+      });
 
     // Keep function alive until designer completes
     EdgeRuntime.waitUntil(designerTask);
@@ -97,25 +101,24 @@ Deno.serve(async (req) => {
 
     // Return immediately - designer runs in background
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
         jobId,
         message: 'Designer launched (fire-and-forget mode)',
         status: 'processing',
-        executionMode: 'fire-and-forget'
+        executionMode: 'fire-and-forget',
       }),
-      { 
+      {
         status: 202, // Accepted
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error: any) {
     console.error('❌ Orchestrator error:', error);
     await captureException(error, {
       functionName: 'process-circuit-design-parallel',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     // Try to update job with error (jobId already extracted at top of handler)
@@ -131,7 +134,7 @@ Deno.serve(async (req) => {
           .update({
             status: 'failed',
             error_message: error.message,
-            current_step: `Orchestrator failed: ${error.message}`
+            current_step: `Orchestrator failed: ${error.message}`,
           })
           .eq('id', jobId);
       } catch (updateError) {
@@ -139,9 +142,9 @@ Deno.serve(async (req) => {
       }
     }
 
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

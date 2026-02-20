@@ -12,6 +12,7 @@
 ### Issue 1: Stop Command
 
 **Current flow (BROKEN):**
+
 ```
 User says "stop"
   → ElevenLabs agent calls stop_session tool
@@ -21,12 +22,14 @@ User says "stop"
 ```
 
 **Problem:** The `stop_session` client tool in `useInlineVoice.ts` (line 102-105) just returns a string. It doesn't:
+
 - Call `handleToolCall()` to route to component
 - Call `conversation.endSession()`
 
 ### Issue 2: Dropdown Fields
 
 **Potential causes:**
+
 1. Voice command might not be calling the tool at all (agent might be responding without using tools)
 2. Field name resolution might be wrong
 3. Dropdown value resolution might be wrong
@@ -77,6 +80,7 @@ This routes stop_session through handleToolCall to the component, which already 
 **Ensure stop_session is handled BEFORE the fill_schedule_of_tests check:**
 
 The current code at line 143-147 looks correct:
+
 ```typescript
 if (toolName === 'stop_session') {
   setTimeout(() => stopVoiceRef.current?.(), 500);
@@ -91,6 +95,7 @@ But the issue is it's never reached because useInlineVoice handles it internally
 **Add logging to trace dropdown updates:**
 
 In `handleVoiceToolCall`, add more detailed logging:
+
 ```typescript
 case 'update_field': {
   const field = params.field as string;
@@ -114,6 +119,7 @@ case 'update_field': {
 **Check if circuitDefaults is applying correctly:**
 
 The `createCircuitWithDefaults` should set:
+
 - `typeOfWiring: 'A'`
 - `referenceMethod: 'C'`
 
@@ -150,6 +156,7 @@ Already implemented correctly at line 143-147.
 ### Step 4: Update ElevenLabs system prompt
 
 Make sure the prompt is explicit about using tools:
+
 - "ALWAYS use the fill_schedule_of_tests tool for ANY field update"
 - "NEVER respond to field update requests without calling the tool"
 - "When user says stop/finish/done, ALWAYS call stop_session tool - do not just respond verbally"
@@ -169,6 +176,7 @@ Make sure the prompt is explicit about using tools:
 ## Console Log Checklist
 
 When testing, verify these logs appear:
+
 1. `[InlineVoice] stop_session called` - when saying stop
 2. `[Voice] Tool call: stop_session` - in component
 3. `[Voice] Tool call: fill_schedule_of_tests` - for field updates

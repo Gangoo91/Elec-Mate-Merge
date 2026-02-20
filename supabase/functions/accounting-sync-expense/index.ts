@@ -21,26 +21,27 @@ const QUICKBOOKS_CLIENT_SECRET = Deno.env.get('QUICKBOOKS_CLIENT_SECRET');
 
 // QuickBooks environment
 const QUICKBOOKS_ENVIRONMENT = Deno.env.get('QUICKBOOKS_ENVIRONMENT') || 'sandbox';
-const QUICKBOOKS_BASE_URL = QUICKBOOKS_ENVIRONMENT === 'production'
-  ? 'https://quickbooks.api.intuit.com'
-  : 'https://sandbox-quickbooks.api.intuit.com';
+const QUICKBOOKS_BASE_URL =
+  QUICKBOOKS_ENVIRONMENT === 'production'
+    ? 'https://quickbooks.api.intuit.com'
+    : 'https://sandbox-quickbooks.api.intuit.com';
 
 type AccountingProvider = 'xero' | 'quickbooks';
 
 // Xero account codes for expense categories
 const XERO_ACCOUNT_CODES: Record<string, string> = {
-  fuel: '449',        // Motor Vehicle Expenses
-  tools: '429',       // Equipment
-  ppe: '453',         // Protective Clothing
-  materials: '300',   // Cost of Goods Sold
-  hotels: '493',      // Travel - Accommodation
-  mileage: '449',     // Motor Vehicle Expenses
-  training: '404',    // Training Costs
-  vehicle: '449',     // Motor Vehicle Expenses
-  insurance: '461',   // Insurance
+  fuel: '449', // Motor Vehicle Expenses
+  tools: '429', // Equipment
+  ppe: '453', // Protective Clothing
+  materials: '300', // Cost of Goods Sold
+  hotels: '493', // Travel - Accommodation
+  mileage: '449', // Motor Vehicle Expenses
+  training: '404', // Training Costs
+  vehicle: '449', // Motor Vehicle Expenses
+  insurance: '461', // Insurance
   subscriptions: '489', // Subscriptions
-  meals: '493',       // Travel - Meals
-  other: '429',       // General Expenses
+  meals: '493', // Travel - Meals
+  other: '429', // General Expenses
 };
 
 // QuickBooks account types for expense categories
@@ -80,10 +81,10 @@ interface SyncResult {
 
 // Helper to return errors as 200 so frontend can read them
 function errorResponse(error: string, detail?: string, httpStatus = 400) {
-  return new Response(
-    JSON.stringify({ success: false, error, detail, httpStatus }),
-    { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-  );
+  return new Response(JSON.stringify({ success: false, error, detail, httpStatus }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
 }
 
 Deno.serve(async (req: Request) => {
@@ -142,7 +143,11 @@ Deno.serve(async (req: Request) => {
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     for (const expenseId of expenseIds) {
       if (!uuidRegex.test(expenseId)) {
-        return errorResponse('Invalid expense ID format', `Received: "${expenseId}" - expected UUID format`, 400);
+        return errorResponse(
+          'Invalid expense ID format',
+          `Received: "${expenseId}" - expected UUID format`,
+          400
+        );
       }
     }
 
@@ -175,7 +180,11 @@ Deno.serve(async (req: Request) => {
       .single();
 
     if (tokenError || !tokenData) {
-      return errorResponse(`No ${provider} connection found. Please connect your account first.`, tokenError?.message, 400);
+      return errorResponse(
+        `No ${provider} connection found. Please connect your account first.`,
+        tokenError?.message,
+        400
+      );
     }
 
     // Decrypt tokens
@@ -189,7 +198,11 @@ Deno.serve(async (req: Request) => {
       }
     } catch (decryptError) {
       console.error('Token decryption failed:', decryptError);
-      return errorResponse('Token decryption failed', 'Session may be expired. Please reconnect your accounting software.', 500);
+      return errorResponse(
+        'Token decryption failed',
+        'Session may be expired. Please reconnect your accounting software.',
+        500
+      );
     }
 
     const tenantId = tokenData.tenant_id;
@@ -201,7 +214,11 @@ Deno.serve(async (req: Request) => {
     const isExpired = new Date(tokenData.token_expires_at) < new Date();
     if (isExpired) {
       if (!refreshToken) {
-        return errorResponse('Token expired and no refresh token available. Please reconnect.', undefined, 401);
+        return errorResponse(
+          'Token expired and no refresh token available. Please reconnect.',
+          undefined,
+          401
+        );
       }
 
       try {
@@ -265,9 +282,8 @@ Deno.serve(async (req: Request) => {
         results.push(result);
 
         // Record sync in database
-        await supabase
-          .from('accounting_expense_syncs')
-          .upsert({
+        await supabase.from('accounting_expense_syncs').upsert(
+          {
             user_id: user.id,
             expense_id: expense.id,
             provider: provider,
@@ -276,34 +292,36 @@ Deno.serve(async (req: Request) => {
             status: 'synced',
             synced_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
-          }, {
+          },
+          {
             onConflict: 'expense_id,provider',
-          });
+          }
+        );
 
         // Update expense to mark as synced
         await supabase
           .from('sole_trader_expenses')
           .update({ synced_to_accounting: true, updated_at: new Date().toISOString() })
           .eq('id', expense.id);
-
       } catch (syncError) {
         console.error(`Error syncing expense ${expense.id}:`, syncError);
         const errorMsg = syncError instanceof Error ? syncError.message : String(syncError);
         errors.push({ expenseId: expense.id, error: errorMsg });
 
         // Record error in database
-        await supabase
-          .from('accounting_expense_syncs')
-          .upsert({
+        await supabase.from('accounting_expense_syncs').upsert(
+          {
             user_id: user.id,
             expense_id: expense.id,
             provider: provider,
             status: 'error',
             error_message: errorMsg,
             updated_at: new Date().toISOString(),
-          }, {
+          },
+          {
             onConflict: 'expense_id,provider',
-          });
+          }
+        );
       }
     }
 
@@ -335,19 +353,19 @@ Deno.serve(async (req: Request) => {
         success: true,
         synced: results,
         errors: errors,
-        message: errors.length > 0
-          ? `Synced ${results.length} expense(s) with ${errors.length} error(s)`
-          : `Successfully synced ${results.length} expense(s) to ${provider}`,
+        message:
+          errors.length > 0
+            ? `Synced ${results.length} expense(s) with ${errors.length} error(s)`
+            : `Successfully synced ${results.length} expense(s) to ${provider}`,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Unhandled error in accounting-sync-expense:', error);
     await captureException(error, {
       functionName: 'accounting-sync-expense',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     const errorMsg = error instanceof Error ? error.message : String(error);
     return errorResponse('Unexpected server error', errorMsg, 500);
@@ -364,7 +382,10 @@ interface RefreshResult {
   expiresIn: number;
 }
 
-async function refreshAccessToken(provider: AccountingProvider, refreshToken: string): Promise<RefreshResult> {
+async function refreshAccessToken(
+  provider: AccountingProvider,
+  refreshToken: string
+): Promise<RefreshResult> {
   switch (provider) {
     case 'xero':
       return refreshXeroToken(refreshToken);
@@ -452,9 +473,7 @@ async function syncExpenseToXero(
   }
 
   // Calculate net amount if VAT is present (Xero expects net + VAT)
-  const netAmount = expense.vat_amount
-    ? expense.amount - expense.vat_amount
-    : expense.amount;
+  const netAmount = expense.vat_amount ? expense.amount - expense.vat_amount : expense.amount;
 
   // Create bank transaction (SPEND type = expense)
   const bankTransaction: any = {
@@ -463,14 +482,16 @@ async function syncExpenseToXero(
       Name: expense.vendor || 'Unknown Vendor',
     },
     Date: expense.date?.split('T')[0] || new Date().toISOString().split('T')[0],
-    LineItems: [{
-      Description: description,
-      Quantity: 1,
-      UnitAmount: netAmount,  // Net amount (before VAT)
-      AccountCode: XERO_ACCOUNT_CODES[expense.category] || '429',
-      TaxType: expense.vat_amount ? 'INPUT2' : 'NONE',  // INPUT2 = 20% UK VAT on purchases
-      TaxAmount: expense.vat_amount || undefined,  // Explicit VAT amount if known
-    }],
+    LineItems: [
+      {
+        Description: description,
+        Quantity: 1,
+        UnitAmount: netAmount, // Net amount (before VAT)
+        AccountCode: XERO_ACCOUNT_CODES[expense.category] || '429',
+        TaxType: expense.vat_amount ? 'INPUT2' : 'NONE', // INPUT2 = 20% UK VAT on purchases
+        TaxAmount: expense.vat_amount || undefined, // Explicit VAT amount if known
+      },
+    ],
     BankAccount: {
       Code: bankAccountCode,
     },
@@ -480,7 +501,7 @@ async function syncExpenseToXero(
 
   // If we have explicit VAT amount, set line amount type
   if (expense.vat_amount) {
-    bankTransaction.LineAmountTypes = 'Exclusive';  // Amounts are exclusive of tax
+    bankTransaction.LineAmountTypes = 'Exclusive'; // Amounts are exclusive of tax
   }
 
   console.log('Creating Xero bank transaction:', JSON.stringify(bankTransaction));
@@ -519,16 +540,13 @@ async function syncExpenseToXero(
 }
 
 async function getXeroBankAccount(accessToken: string, tenantId: string): Promise<string> {
-  const response = await fetch(
-    'https://api.xero.com/api.xro/2.0/Accounts?where=Type=="BANK"',
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'xero-tenant-id': tenantId,
-        Accept: 'application/json',
-      },
-    }
-  );
+  const response = await fetch('https://api.xero.com/api.xro/2.0/Accounts?where=Type=="BANK"', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'xero-tenant-id': tenantId,
+      Accept: 'application/json',
+    },
+  });
 
   if (response.ok) {
     const data = await response.json();
@@ -559,7 +577,11 @@ async function syncExpenseToQuickBooks(
 
   // Get the bank/cash account (where money comes from) and expense account (where money goes)
   const bankAccountRef = await getQBBankAccount(accessToken, realmId);
-  const expenseAccountRef = await getOrCreateQBExpenseAccount(accessToken, realmId, expense.category);
+  const expenseAccountRef = await getOrCreateQBExpenseAccount(
+    accessToken,
+    realmId,
+    expense.category
+  );
 
   // Build description
   let description = expense.description || getCategoryLabel(expense.category);
@@ -568,9 +590,7 @@ async function syncExpenseToQuickBooks(
   }
 
   // Calculate net amount if VAT is present
-  const netAmount = expense.vat_amount
-    ? expense.amount - expense.vat_amount
-    : expense.amount;
+  const netAmount = expense.vat_amount ? expense.amount - expense.vat_amount : expense.amount;
 
   // Create purchase (expense)
   // AccountRef = bank/cash account the money comes from (required for Cash payment type)
@@ -580,19 +600,23 @@ async function syncExpenseToQuickBooks(
     AccountRef: bankAccountRef,
     TotalAmt: expense.amount,
     TxnDate: expense.date?.split('T')[0] || new Date().toISOString().split('T')[0],
-    EntityRef: expense.vendor ? {
-      name: expense.vendor,
-      type: 'Vendor',
-    } : undefined,
-    Line: [{
-      DetailType: 'AccountBasedExpenseLineDetail',
-      Amount: netAmount,
-      AccountBasedExpenseLineDetail: {
-        AccountRef: expenseAccountRef,
-        TaxCodeRef: expense.vat_amount ? { value: 'TAX' } : { value: 'NON' },
+    EntityRef: expense.vendor
+      ? {
+          name: expense.vendor,
+          type: 'Vendor',
+        }
+      : undefined,
+    Line: [
+      {
+        DetailType: 'AccountBasedExpenseLineDetail',
+        Amount: netAmount,
+        AccountBasedExpenseLineDetail: {
+          AccountRef: expenseAccountRef,
+          TaxCodeRef: expense.vat_amount ? { value: 'TAX' } : { value: 'NON' },
+        },
+        Description: description,
       },
-      Description: description,
-    }],
+    ],
     PrivateNote: `Elec-Mate Expense: ${expense.id.slice(0, 8)}`,
   };
 
@@ -606,18 +630,15 @@ async function syncExpenseToQuickBooks(
 
   console.log('Creating QuickBooks purchase:', JSON.stringify(purchase));
 
-  const response = await fetch(
-    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/purchase`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(purchase),
-    }
-  );
+  const response = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/purchase`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(purchase),
+  });
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -662,9 +683,7 @@ async function getQBBankAccount(
 
     if (accounts && accounts.length > 0) {
       // Prefer active checking account
-      const checking = accounts.find((acc: any) =>
-        acc.Active && acc.AccountSubType === 'Checking'
-      );
+      const checking = accounts.find((acc: any) => acc.Active && acc.AccountSubType === 'Checking');
       if (checking) {
         console.log('Using QB bank account:', checking.Id, checking.Name);
         return { value: String(checking.Id), name: checking.Name };
@@ -700,7 +719,9 @@ async function getQBBankAccount(
     }
   }
 
-  throw new Error('No bank or credit card account found in QuickBooks. Please add a bank account first.');
+  throw new Error(
+    'No bank or credit card account found in QuickBooks. Please add a bank account first.'
+  );
 }
 
 async function getOrCreateQBExpenseAccount(
@@ -727,9 +748,10 @@ async function getOrCreateQBExpenseAccount(
 
     if (accounts && accounts.length > 0) {
       // Try to find an account matching the category type
-      const matchingAccount = accounts.find((acc: any) =>
-        acc.Name?.toLowerCase().includes(accountType.toLowerCase()) ||
-        acc.AccountSubType?.toLowerCase().includes(accountType.toLowerCase().replace(/ /g, ''))
+      const matchingAccount = accounts.find(
+        (acc: any) =>
+          acc.Name?.toLowerCase().includes(accountType.toLowerCase()) ||
+          acc.AccountSubType?.toLowerCase().includes(accountType.toLowerCase().replace(/ /g, ''))
       );
 
       if (matchingAccount) {

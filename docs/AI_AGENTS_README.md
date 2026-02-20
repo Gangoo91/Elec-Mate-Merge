@@ -49,16 +49,16 @@ Generates BS 7671-compliant electrical circuit designs with cable sizing, protec
       cableLength: number;
       installationMethod: string;
     }>;
-  };
+  }
 }
 ```
 
 ### RAG Sources
 
-| Table | Search Method | Purpose |
-|-------|---------------|---------|
+| Table                           | Search Method              | Purpose                                |
+| ------------------------------- | -------------------------- | -------------------------------------- |
 | `design_knowledge_intelligence` | GIN-indexed keyword search | Cable sizing, BS 7671 tables, formulas |
-| `regulations_intelligence` | GIN-indexed keyword search | BS 7671 regulation text |
+| `regulations_intelligence`      | GIN-indexed keyword search | BS 7671 regulation text                |
 
 **Keyword Extraction**: `design-keyword-extractor.ts` generates 50-150+ keywords per job across 12 categories (calculations, cable selection, protection, earthing, diversity, etc.).
 
@@ -94,6 +94,7 @@ Generates BS 7671-compliant electrical circuit designs with cable sizing, protec
 ```
 
 **Execution Characteristics**:
+
 - Model: `gpt-5-mini-2025-08-07`
 - Phase 1 Timeout: 90 seconds
 - Phase 2 Timeout: 300 seconds
@@ -132,11 +133,11 @@ Generates BS 7671-compliant electrical circuit designs with cable sizing, protec
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
-| `DesignReviewEditor.tsx` | Displays design results, handles PDF export |
-| `generate-circuit-design-pdf` | PDF generation from design data |
-| Frontend polling | Uses `status` field to detect completion |
+| Downstream Component          | Dependency                                  |
+| ----------------------------- | ------------------------------------------- |
+| `DesignReviewEditor.tsx`      | Displays design results, handles PDF export |
+| `generate-circuit-design-pdf` | PDF generation from design data             |
+| Frontend polling              | Uses `status` field to detect completion    |
 
 ### Warnings / Accuracy Requirements
 
@@ -185,9 +186,9 @@ Generates detailed cost estimates and quotes for electrical work with pricing ti
 
 ### RAG Sources
 
-| Table | Search Method | Purpose |
-|-------|---------------|---------|
-| `pricing_data` | GIN-indexed keyword search | Material prices, labour rates |
+| Table                         | Search Method              | Purpose                            |
+| ----------------------------- | -------------------------- | ---------------------------------- |
+| `pricing_data`                | GIN-indexed keyword search | Material prices, labour rates      |
 | `practical_work_intelligence` | GIN-indexed keyword search | Task durations, complexity factors |
 
 ### Process Flow
@@ -208,6 +209,7 @@ Generates detailed cost estimates and quotes for electrical work with pricing ti
 ```
 
 **Execution Characteristics**:
+
 - Model: `gpt-5-mini-2025-08-07` (MANDATORY - never change)
 - Timeout: 150 seconds
 - Pattern: **Synchronous** (direct JSON response)
@@ -238,11 +240,11 @@ Generates detailed cost estimates and quotes for electrical work with pricing ti
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
-| `CostEngineerResults.tsx` | Displays cost breakdown |
-| `generate-cost-engineer-pdf` | PDF generation |
-| Quote Builder | Can import cost data |
+| Downstream Component         | Dependency              |
+| ---------------------------- | ----------------------- |
+| `CostEngineerResults.tsx`    | Displays cost breakdown |
+| `generate-cost-engineer-pdf` | PDF generation          |
+| Quote Builder                | Can import cost data    |
 
 **PDF Payload Architecture**: Frontend `buildPdfPayload()` constructs the exact 20-section JSON structure. Edge function passes directly to PDF Monkey without transformation.
 
@@ -287,10 +289,10 @@ Generates detailed method statements with step-by-step installation procedures, 
 
 ### RAG Sources
 
-| Table | Search Method | Purpose |
-|-------|---------------|---------|
+| Table                         | Search Method                    | Purpose                                   |
+| ----------------------------- | -------------------------------- | ----------------------------------------- |
 | `practical_work_intelligence` | GIN-indexed keyword (25 results) | Installation procedures, tools, materials |
-| `regulations_intelligence` | GIN-indexed keyword (15 results) | BS 7671 references |
+| `regulations_intelligence`    | GIN-indexed keyword (15 results) | BS 7671 references                        |
 
 **Keyword Extraction**: 500+ keywords across 12 categories using `installation-keywords.ts`.
 
@@ -315,6 +317,7 @@ Generates detailed method statements with step-by-step installation procedures, 
 ```
 
 **Execution Characteristics**:
+
 - Model: `gpt-5-mini-2025-08-07`
 - Timeout: 180 seconds
 - Cache: 30-day TTL, 85% similarity threshold
@@ -329,9 +332,15 @@ Generates detailed method statements with step-by-step installation procedures, 
   status: 'complete';
   method_data: {
     executiveSummary: {
-      cableType, cableSize, runLength, installationMethod,
-      protectiveDevice, voltageDrop, zsRequirement, purpose
-    };
+      (cableType,
+        cableSize,
+        runLength,
+        installationMethod,
+        protectiveDevice,
+        voltageDrop,
+        zsRequirement,
+        purpose);
+    }
     installationSteps: Array<{
       stepNumber: number;
       title: string;
@@ -340,22 +349,22 @@ Generates detailed method statements with step-by-step installation procedures, 
       toolsRequired: string[];
       materialsNeeded: string[];
       duration: string;
-      linkedHazards: string[];      // 2-4 hazards per step
-      bsReferences: string[];       // 2-4 BS 7671 refs per step
+      linkedHazards: string[]; // 2-4 hazards per step
+      bsReferences: string[]; // 2-4 BS 7671 refs per step
     }>;
-    materialsList: Array<{ description, specification, quantity, unit, notes }>;
-    testingRequirements: Array<{ description, regulation, expectedReading, passRange }>;
-  };
+    materialsList: Array<{ description; specification; quantity; unit; notes }>;
+    testingRequirements: Array<{ description; regulation; expectedReading; passRange }>;
+  }
 }
 ```
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
-| `InstallationResults.tsx` | Displays method statement |
-| `generate-installation-method-pdf` | PDF generation |
-| Frontend polling | Uses `status` field |
+| Downstream Component               | Dependency                |
+| ---------------------------------- | ------------------------- |
+| `InstallationResults.tsx`          | Displays method statement |
+| `generate-installation-method-pdf` | PDF generation            |
+| Frontend polling                   | Uses `status` field       |
 
 ### Warnings / Accuracy Requirements
 
@@ -389,24 +398,24 @@ Generates risk assessments following HSE 5 Steps to Risk Assessment methodology 
   jobId: string;
   userId: string;
   jobInputs: {
-    workType: string;              // e.g., "Consumer Unit Installation"
+    workType: string; // e.g., "Consumer Unit Installation"
     installationType: 'domestic' | 'commercial' | 'industrial';
     projectName: string;
     location: string;
     clientName: string;
     assessmentDate: string;
     reviewDate: string;
-  };
+  }
 }
 ```
 
 ### RAG Sources
 
-| Table | Search Method | Purpose |
-|-------|---------------|---------|
-| `health_safety_hazards` | GIN-indexed keyword | Pre-defined hazard database |
-| `practical_work_intelligence` | GIN-indexed keyword | Work procedures, risks |
-| `regulations_intelligence` | GIN-indexed keyword | HSE regulations, BS 7671 safety |
+| Table                         | Search Method       | Purpose                         |
+| ----------------------------- | ------------------- | ------------------------------- |
+| `health_safety_hazards`       | GIN-indexed keyword | Pre-defined hazard database     |
+| `practical_work_intelligence` | GIN-indexed keyword | Work procedures, risks          |
+| `regulations_intelligence`    | GIN-indexed keyword | HSE regulations, BS 7671 safety |
 
 ### Process Flow
 
@@ -429,6 +438,7 @@ Generates risk assessments following HSE 5 Steps to Risk Assessment methodology 
 ```
 
 **Execution Characteristics**:
+
 - Model: `gpt-5-mini-2025-08-07`
 - Timeout: 240 seconds (4-minute watchdog)
 - Pattern: **Asynchronous job queue**
@@ -467,22 +477,24 @@ Generates risk assessments following HSE 5 Steps to Risk Assessment methodology 
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
-| `HealthSafetyResults.tsx` | Displays risk assessment |
-| `generate-health-safety-pdf` | PDF generation |
-| AI RAMS Module | Orchestrates H&S generation |
+| Downstream Component         | Dependency                  |
+| ---------------------------- | --------------------------- |
+| `HealthSafetyResults.tsx`    | Displays risk assessment    |
+| `generate-health-safety-pdf` | PDF generation              |
+| AI RAMS Module               | Orchestrates H&S generation |
 
 ### Warnings / Accuracy Requirements
 
 ⚠️ **CRITICAL - Do Not Change**:
 
 1. **Control measure format**: MUST use 9-section structured format with headers:
+
    ```
-   PRIMARY ACTION: ... ELIMINATE: ... SUBSTITUTE: ... ENGINEER CONTROLS: ... 
-   ADMINISTRATIVE CONTROLS: ... VERIFICATION: ... COMPETENCY REQUIREMENT: ... 
+   PRIMARY ACTION: ... ELIMINATE: ... SUBSTITUTE: ... ENGINEER CONTROLS: ...
+   ADMINISTRATIVE CONTROLS: ... VERIFICATION: ... COMPETENCY REQUIREMENT: ...
    EQUIPMENT STANDARDS: ... REGULATION: ...
    ```
+
    PDF parser requires this exact format.
 
 2. **Hazard count requirements**:
@@ -524,11 +536,11 @@ Generates maintenance procedures for electrical equipment with schedules, inspec
 
 ### RAG Sources
 
-| Table | Search Method | Purpose |
-|-------|---------------|---------|
-| `maintenance_procedures` | GIN-indexed keyword | Equipment-specific procedures |
-| `practical_work_intelligence` | GIN-indexed keyword | Maintenance tasks |
-| `regulations_intelligence` | GIN-indexed keyword | BS 7671, manufacturer guidelines |
+| Table                         | Search Method       | Purpose                          |
+| ----------------------------- | ------------------- | -------------------------------- |
+| `maintenance_procedures`      | GIN-indexed keyword | Equipment-specific procedures    |
+| `practical_work_intelligence` | GIN-indexed keyword | Maintenance tasks                |
+| `regulations_intelligence`    | GIN-indexed keyword | BS 7671, manufacturer guidelines |
 
 ### Process Flow
 
@@ -547,6 +559,7 @@ Generates maintenance procedures for electrical equipment with schedules, inspec
 ```
 
 **Execution Characteristics**:
+
 - Model: `gpt-4o-mini` (UNIQUE - different from other agents)
 - Timeout: 180 seconds
 - Pattern: **Asynchronous job queue**
@@ -557,27 +570,29 @@ Generates maintenance procedures for electrical equipment with schedules, inspec
 {
   status: 'complete';
   method_data: {
-    equipmentSummary: { type, manufacturer, model, age };
+    equipmentSummary: {
+      (type, manufacturer, model, age);
+    }
     maintenanceSchedule: Array<{
       task: string;
-      frequency: string;       // e.g., "Monthly", "Annually"
+      frequency: string; // e.g., "Monthly", "Annually"
       procedure: string;
-      qualificationRequired: string;  // UK qualification
+      qualificationRequired: string; // UK qualification
       estimatedDuration: string;
     }>;
-    inspectionChecklist: Array<{ item, criteria, passFailCriteria }>;
-    sparePartsRecommendations: Array<{ part, quantity, supplier }>;
+    inspectionChecklist: Array<{ item; criteria; passFailCriteria }>;
+    sparePartsRecommendations: Array<{ part; quantity; supplier }>;
     complianceNotes: string;
-  };
+  }
 }
 ```
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
+| Downstream Component     | Dependency                    |
+| ------------------------ | ----------------------------- |
 | `MaintenanceResults.tsx` | Displays maintenance schedule |
-| PDF generation | Export maintenance plan |
+| PDF generation           | Export maintenance plan       |
 
 ### Warnings / Accuracy Requirements
 
@@ -617,6 +632,7 @@ Orchestrates parallel generation of Risk Assessment and Method Statement (RAMS) 
 ### RAG Sources
 
 Uses RAG sources from subordinate agents:
+
 - Health & Safety agent RAG sources
 - Installation Specialist RAG sources
 
@@ -646,6 +662,7 @@ Uses RAG sources from subordinate agents:
 ```
 
 **Execution Characteristics**:
+
 - Timeout: 300 seconds (accommodates both sub-agents)
 - Cache: 3-layer system with 30-day TTL
 - Pattern: **Parallel orchestration** with graceful degradation
@@ -675,10 +692,10 @@ Uses RAG sources from subordinate agents:
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
-| `RAMSResults.tsx` | Displays combined RAMS |
-| PDF generation | Combined RAMS document |
+| Downstream Component | Dependency             |
+| -------------------- | ---------------------- |
+| `RAMSResults.tsx`    | Displays combined RAMS |
+| PDF generation       | Combined RAMS document |
 
 ### Warnings / Accuracy Requirements
 
@@ -715,11 +732,11 @@ Multi-purpose AI assistant supporting various modes including visual analysis (p
 
 ### RAG Sources
 
-| Table | Search Method | Purpose |
-|-------|---------------|---------|
-| `regulations_intelligence` | Direct lookup by number | BS 7671 regulation text |
-| `practical_work_intelligence` | GIN-indexed keyword | General electrical knowledge |
-| `design_knowledge_intelligence` | GIN-indexed keyword | Design guidance |
+| Table                           | Search Method           | Purpose                      |
+| ------------------------------- | ----------------------- | ---------------------------- |
+| `regulations_intelligence`      | Direct lookup by number | BS 7671 regulation text      |
+| `practical_work_intelligence`   | GIN-indexed keyword     | General electrical knowledge |
+| `design_knowledge_intelligence` | GIN-indexed keyword     | Design guidance              |
 
 ### Process Flow
 
@@ -751,6 +768,7 @@ Multi-purpose AI assistant supporting various modes including visual analysis (p
 ```
 
 **Execution Characteristics**:
+
 - Model: `gpt-4o` (with vision capability for visual mode)
 - Timeout: 60 seconds
 - Pattern: **Synchronous** (direct response)
@@ -776,10 +794,10 @@ Multi-purpose AI assistant supporting various modes including visual analysis (p
 
 ### Integration Notes
 
-| Downstream Component | Dependency |
-|---------------------|------------|
-| `AIAssistantChat.tsx` | Chat interface |
-| `AITooling.tsx` | Tool selector page |
+| Downstream Component  | Dependency         |
+| --------------------- | ------------------ |
+| `AIAssistantChat.tsx` | Chat interface     |
+| `AITooling.tsx`       | Tool selector page |
 
 ### Warnings / Accuracy Requirements
 
@@ -795,84 +813,91 @@ Multi-purpose AI assistant supporting various modes including visual analysis (p
 
 ### Core Agent Tables
 
-| Table | Primary Agent | Key Columns |
-|-------|---------------|-------------|
-| `circuit_design_jobs` | Circuit Designer | `design_data`, `installation_guidance`, `status` |
-| `cost_engineer_jobs` | Cost Engineer | `output_data`, `status` |
-| `installation_method_jobs` | Installation Specialist | `method_data`, `status` |
-| `health_safety_jobs` | Health & Safety | `output_data`, `project_info`, `work_type` |
-| `maintenance_method_jobs` | Maintenance Specialist | `method_data`, `status` |
+| Table                      | Primary Agent           | Key Columns                                      |
+| -------------------------- | ----------------------- | ------------------------------------------------ |
+| `circuit_design_jobs`      | Circuit Designer        | `design_data`, `installation_guidance`, `status` |
+| `cost_engineer_jobs`       | Cost Engineer           | `output_data`, `status`                          |
+| `installation_method_jobs` | Installation Specialist | `method_data`, `status`                          |
+| `health_safety_jobs`       | Health & Safety         | `output_data`, `project_info`, `work_type`       |
+| `maintenance_method_jobs`  | Maintenance Specialist  | `method_data`, `status`                          |
 
 ### RAG Knowledge Tables
 
-| Table | Content | Search Method |
-|-------|---------|---------------|
-| `design_knowledge_intelligence` | Cable sizing, BS 7671 tables | GIN-indexed keywords |
-| `regulations_intelligence` | BS 7671 regulation text | GIN-indexed keywords + direct lookup |
-| `practical_work_intelligence` | Installation procedures, tools | GIN-indexed keywords |
-| `health_safety_hazards` | Pre-defined hazard database | GIN-indexed keywords |
+| Table                           | Content                        | Search Method                        |
+| ------------------------------- | ------------------------------ | ------------------------------------ |
+| `design_knowledge_intelligence` | Cable sizing, BS 7671 tables   | GIN-indexed keywords                 |
+| `regulations_intelligence`      | BS 7671 regulation text        | GIN-indexed keywords + direct lookup |
+| `practical_work_intelligence`   | Installation procedures, tools | GIN-indexed keywords                 |
+| `health_safety_hazards`         | Pre-defined hazard database    | GIN-indexed keywords                 |
 
 ### Cache Tables
 
-| Table | TTL | Purpose |
-|-------|-----|---------|
-| `circuit_design_cache_v4` | 30 days | Full circuit designs |
+| Table                       | TTL     | Purpose                            |
+| --------------------------- | ------- | ---------------------------------- |
+| `circuit_design_cache_v4`   | 30 days | Full circuit designs               |
 | `installation_method_cache` | 30 days | Method statements (85% similarity) |
-| `circuit_rag_cache` | 7 days | RAG search results |
+| `circuit_rag_cache`         | 7 days  | RAG search results                 |
 
 ---
 
 ## 9. Critical Architecture Principles
 
 ### 1. Fire-and-Forget Pattern
+
 Circuit Designer Phase 1 invokes Phase 2 without awaiting response. This prevents HTTP timeout freezes.
 
 ### 2. Direct Pass-Through PDF Architecture
+
 PDF edge functions must NOT recalculate values. Frontend builds exact payload structure; edge function passes directly to PDF Monkey.
 
 ### 3. Job Status Lifecycle
+
 ```
 pending → processing → complete
                     → failed
                     → cancelled
 ```
+
 Only final agent in pipeline sets `status='complete'`.
 
 ### 4. Model Requirements
 
-| Agent | Model | Reason |
-|-------|-------|--------|
-| Circuit Designer | `gpt-5-mini-2025-08-07` | User requirement |
-| Cost Engineer | `gpt-5-mini-2025-08-07` | User requirement - NEVER change |
-| Installation Specialist | `gpt-5-mini-2025-08-07` | User requirement |
-| Health & Safety | `gpt-5-mini-2025-08-07` | User requirement |
-| Maintenance Specialist | `gpt-4o-mini` | Legacy - different model |
-| AI Assistant | `gpt-4o` | Vision capability needed |
+| Agent                   | Model                   | Reason                          |
+| ----------------------- | ----------------------- | ------------------------------- |
+| Circuit Designer        | `gpt-5-mini-2025-08-07` | User requirement                |
+| Cost Engineer           | `gpt-5-mini-2025-08-07` | User requirement - NEVER change |
+| Installation Specialist | `gpt-5-mini-2025-08-07` | User requirement                |
+| Health & Safety         | `gpt-5-mini-2025-08-07` | User requirement                |
+| Maintenance Specialist  | `gpt-4o-mini`           | Legacy - different model        |
+| AI Assistant            | `gpt-4o`                | Vision capability needed        |
 
 ### 5. UK English Requirement
+
 All agents must output UK English spelling and British electrical terminology:
+
 - "earthing" not "grounding"
 - "metres" not "meters"
 - "utilise" not "utilize"
 
 ### 6. Stability Over Optimisation
+
 User prioritises reliability over performance. Avoid architectural refactors. Make incremental changes only.
 
 ---
 
 ## Quick Reference: What NOT to Change
 
-| Component | Protected Element | Reason |
-|-----------|-------------------|--------|
-| Circuit Designer | Fire-and-forget invoke | Prevents 90% freeze |
-| Circuit Designer | Zs Cmin=0.95 | BS 7671 compliance |
-| Cost Engineer | GPT-5 Mini model | User mandate |
-| Cost Engineer | PDF direct pass-through | Data accuracy |
-| Installation Specialist | `method_data` column name | DB schema |
-| Installation Specialist | `'complete'` status value | Frontend polling |
-| Health & Safety | 9-section control measure format | PDF parser requirement |
-| All Agents | UK English output | User requirement |
+| Component               | Protected Element                | Reason                 |
+| ----------------------- | -------------------------------- | ---------------------- |
+| Circuit Designer        | Fire-and-forget invoke           | Prevents 90% freeze    |
+| Circuit Designer        | Zs Cmin=0.95                     | BS 7671 compliance     |
+| Cost Engineer           | GPT-5 Mini model                 | User mandate           |
+| Cost Engineer           | PDF direct pass-through          | Data accuracy          |
+| Installation Specialist | `method_data` column name        | DB schema              |
+| Installation Specialist | `'complete'` status value        | Frontend polling       |
+| Health & Safety         | 9-section control measure format | PDF parser requirement |
+| All Agents              | UK English output                | User requirement       |
 
 ---
 
-*Document maintained by development team. Update when agent behaviour changes.*
+_Document maintained by development team. Update when agent behaviour changes._

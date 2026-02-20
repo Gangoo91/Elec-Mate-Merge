@@ -2,11 +2,12 @@
  * Test Reminder Emails - sends sample overdue reminder emails for preview
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req: Request) => {
@@ -18,18 +19,18 @@ serve(async (req: Request) => {
     const { email, type } = await req.json();
 
     if (!email) {
-      return new Response(
-        JSON.stringify({ error: 'Email required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Email required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {
-      return new Response(
-        JSON.stringify({ error: 'RESEND_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'RESEND_API_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const types = type ? [type] : ['gentle', 'firm', 'final'];
@@ -40,7 +41,7 @@ serve(async (req: Request) => {
         reminderType as 'gentle' | 'firm' | 'final',
         'Ben Moore',
         'INV-2024-0847',
-        1250.00,
+        1250.0,
         reminderType === 'gentle' ? 1 : reminderType === 'firm' ? 7 : 14,
         'Moore Electrical'
       );
@@ -48,7 +49,7 @@ serve(async (req: Request) => {
       const response = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${resendApiKey}`,
+          Authorization: `Bearer ${resendApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -68,19 +69,17 @@ serve(async (req: Request) => {
       }
 
       // Small delay between emails
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 500));
     }
 
-    return new Response(
-      JSON.stringify({ success: true, results }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ success: true, results }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -94,7 +93,7 @@ function generateReminderEmail(
 ): { subject: string; html: string } {
   const formattedTotal = new Intl.NumberFormat('en-GB', {
     style: 'currency',
-    currency: 'GBP'
+    currency: 'GBP',
   }).format(total || 0);
 
   const configs = {
@@ -106,8 +105,8 @@ function generateReminderEmail(
       borderColor: 'rgba(59, 130, 246, 0.2)',
       bgGradient: 'rgba(59, 130, 246, 0.1)',
       message: `Just a friendly reminder that payment for invoice <strong>${invoiceNumber}</strong> was due <strong>${daysOverdue} day${daysOverdue === 1 ? '' : 's'} ago</strong>.`,
-      cta: 'If you\'ve already made the payment, please disregard this message. Otherwise, we\'d appreciate if you could arrange payment at your earliest convenience.',
-      urgency: ''
+      cta: "If you've already made the payment, please disregard this message. Otherwise, we'd appreciate if you could arrange payment at your earliest convenience.",
+      urgency: '',
     },
     firm: {
       emoji: '⚠️',
@@ -117,8 +116,8 @@ function generateReminderEmail(
       borderColor: 'rgba(245, 158, 11, 0.3)',
       bgGradient: 'rgba(245, 158, 11, 0.1)',
       message: `This is a follow-up regarding invoice <strong>${invoiceNumber}</strong>, which is now <strong>${daysOverdue} days overdue</strong>.`,
-      cta: 'Please arrange payment within the next 7 days. If you\'re experiencing any issues, please contact us immediately to discuss payment arrangements.',
-      urgency: 'This matter requires your prompt attention.'
+      cta: "Please arrange payment within the next 7 days. If you're experiencing any issues, please contact us immediately to discuss payment arrangements.",
+      urgency: 'This matter requires your prompt attention.',
     },
     final: {
       emoji: '🚨',
@@ -128,9 +127,9 @@ function generateReminderEmail(
       borderColor: 'rgba(239, 68, 68, 0.3)',
       bgGradient: 'rgba(239, 68, 68, 0.15)',
       message: `Despite previous reminders, invoice <strong>${invoiceNumber}</strong> remains unpaid and is now <strong>${daysOverdue} days overdue</strong>.`,
-      cta: 'To avoid further action, please ensure payment is made within <strong>48 hours</strong>. If you\'re experiencing financial difficulties, please contact us immediately.',
-      urgency: 'This is a final notice before we consider further recovery action.'
-    }
+      cta: "To avoid further action, please ensure payment is made within <strong>48 hours</strong>. If you're experiencing financial difficulties, please contact us immediately.",
+      urgency: 'This is a final notice before we consider further recovery action.',
+    },
   };
 
   const config = configs[type];

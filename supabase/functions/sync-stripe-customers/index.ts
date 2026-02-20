@@ -4,9 +4,9 @@
  * Updates profiles with stripe_customer_id
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
+import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -70,9 +70,7 @@ serve(async (req) => {
 
       // Find user by email in auth.users
       const { data: usersData } = await supabase.auth.admin.listUsers();
-      const authUser = usersData?.users?.find(
-        (u: any) => u.email?.toLowerCase() === email
-      );
+      const authUser = usersData?.users?.find((u: any) => u.email?.toLowerCase() === email);
 
       if (!authUser) {
         console.log(`No auth user found for email: ${email}`);
@@ -128,16 +126,14 @@ serve(async (req) => {
 
     console.log('Sync complete:', summary);
 
-    return new Response(
-      JSON.stringify(summary),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify(summary), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('Sync error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

@@ -117,7 +117,7 @@ export abstract class BaseScraper {
     // Set extra headers
     await page.setExtraHTTPHeaders({
       'Accept-Language': 'en-GB,en;q=0.9',
-      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     });
 
     // Block unnecessary resources for faster loading
@@ -137,11 +137,7 @@ export abstract class BaseScraper {
   /**
    * Navigate to URL with retry logic
    */
-  protected async navigateWithRetry(
-    page: Page,
-    url: string,
-    maxRetries = 3
-  ): Promise<boolean> {
+  protected async navigateWithRetry(page: Page, url: string, maxRetries = 3): Promise<boolean> {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
       try {
         await page.goto(url, {
@@ -154,7 +150,9 @@ export abstract class BaseScraper {
         console.error(`Navigation attempt ${attempt} failed for ${url}: ${errorMessage}`);
 
         if (attempt === maxRetries) {
-          this.errors.push(`Failed to navigate to ${url} after ${maxRetries} attempts: ${errorMessage}`);
+          this.errors.push(
+            `Failed to navigate to ${url} after ${maxRetries} attempts: ${errorMessage}`
+          );
           return false;
         }
 
@@ -168,11 +166,7 @@ export abstract class BaseScraper {
   /**
    * Wait for selector with timeout
    */
-  protected async waitForSelector(
-    page: Page,
-    selector: string,
-    timeout = 10000
-  ): Promise<boolean> {
+  protected async waitForSelector(page: Page, selector: string, timeout = 10000): Promise<boolean> {
     try {
       await page.waitForSelector(selector, { timeout });
       return true;
@@ -207,7 +201,7 @@ export abstract class BaseScraper {
    */
   protected async delay(ms?: number): Promise<void> {
     const delayMs = ms ?? this.config.rateLimit;
-    await new Promise(resolve => setTimeout(resolve, delayMs));
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
   }
 
   /**
@@ -217,11 +211,7 @@ export abstract class BaseScraper {
     if (!priceText) return null;
 
     // Remove currency symbols and clean up
-    const cleaned = priceText
-      .replace(/[£$€]/g, '')
-      .replace(/,/g, '')
-      .replace(/\s+/g, '')
-      .trim();
+    const cleaned = priceText.replace(/[£$€]/g, '').replace(/,/g, '').replace(/\s+/g, '').trim();
 
     const parsed = parseFloat(cleaned);
     return isNaN(parsed) ? null : parsed;
@@ -243,10 +233,7 @@ export abstract class BaseScraper {
   /**
    * Extract text from element
    */
-  protected async extractText(
-    page: Page,
-    selector: string
-  ): Promise<string | null> {
+  protected async extractText(page: Page, selector: string): Promise<string | null> {
     try {
       return await page.$eval(selector, (el) => el.textContent?.trim() || null);
     } catch {
@@ -263,11 +250,7 @@ export abstract class BaseScraper {
     attribute: string
   ): Promise<string | null> {
     try {
-      return await page.$eval(
-        selector,
-        (el, attr) => el.getAttribute(attr),
-        attribute
-      );
+      return await page.$eval(selector, (el, attr) => el.getAttribute(attr), attribute);
     } catch {
       return null;
     }
@@ -291,15 +274,15 @@ export abstract class BaseScraper {
 
     try {
       const [products, deals, coupons] = await Promise.all([
-        this.scrapeProducts().catch(e => {
+        this.scrapeProducts().catch((e) => {
           this.errors.push(`Products scrape failed: ${e.message}`);
           return [];
         }),
-        this.scrapeDeals().catch(e => {
+        this.scrapeDeals().catch((e) => {
           this.errors.push(`Deals scrape failed: ${e.message}`);
           return [];
         }),
-        this.scrapeCoupons().catch(e => {
+        this.scrapeCoupons().catch((e) => {
           this.errors.push(`Coupons scrape failed: ${e.message}`);
           return [];
         }),

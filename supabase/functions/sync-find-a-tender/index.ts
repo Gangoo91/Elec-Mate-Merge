@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -46,8 +47,9 @@ Deno.serve(async (req) => {
 
         const response = await fetch(searchUrl, {
           headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'User-Agent':
+              'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
           },
         });
 
@@ -80,7 +82,7 @@ Deno.serve(async (req) => {
             const noticeResponse = await fetch(noticeUrl, {
               headers: {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-                'Accept': 'text/html',
+                Accept: 'text/html',
               },
             });
 
@@ -99,13 +101,13 @@ Deno.serve(async (req) => {
               }
             }
 
-            await new Promise(r => setTimeout(r, 300));
+            await new Promise((r) => setTimeout(r, 300));
           } catch (e) {
             errors.push(`Error fetching notice ${noticeId}: ${(e as Error).message}`);
           }
         }
 
-        await new Promise(r => setTimeout(r, 500));
+        await new Promise((r) => setTimeout(r, 500));
       } catch (e) {
         errors.push(`Search error for "${searchTerm}": ${(e as Error).message}`);
       }
@@ -132,13 +134,12 @@ Deno.serve(async (req) => {
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[SYNC] Fatal error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -149,14 +150,17 @@ function parseNotice(noticeId: string, html: string): any | null {
     const title = titleMatch ? titleMatch[1].trim() : 'Untitled Notice';
 
     // Extract organisation
-    const orgMatch = html.match(/(?:Contracting authority|Organisation)[:\s]*<[^>]*>([^<]+)</i) ||
-                     html.match(/<dd[^>]*class="[^"]*organisation[^"]*"[^>]*>([^<]+)</i);
+    const orgMatch =
+      html.match(/(?:Contracting authority|Organisation)[:\s]*<[^>]*>([^<]+)</i) ||
+      html.match(/<dd[^>]*class="[^"]*organisation[^"]*"[^>]*>([^<]+)</i);
     const clientName = orgMatch ? orgMatch[1].trim() : 'Unknown Organisation';
 
     // Extract value
     let valueLow: number | null = null;
     let valueHigh: number | null = null;
-    const valueMatch = html.match(/(?:Total value|Estimated value|Value)[:\s]*£?([\d,]+)(?:\s*[-–]\s*£?([\d,]+))?/i);
+    const valueMatch = html.match(
+      /(?:Total value|Estimated value|Value)[:\s]*£?([\d,]+)(?:\s*[-–]\s*£?([\d,]+))?/i
+    );
     if (valueMatch) {
       valueLow = parseInt(valueMatch[1].replace(/,/g, '')) || null;
       valueHigh = valueMatch[2] ? parseInt(valueMatch[2].replace(/,/g, '')) : valueLow;
@@ -164,7 +168,9 @@ function parseNotice(noticeId: string, html: string): any | null {
 
     // Extract deadline
     let deadline: string | null = null;
-    const deadlineMatch = html.match(/(?:Time limit|Deadline|Closing date)[^:]*[:\s]*(\d{1,2}[\s\/\-]\w+[\s\/\-]\d{4}|\d{4}-\d{2}-\d{2})/i);
+    const deadlineMatch = html.match(
+      /(?:Time limit|Deadline|Closing date)[^:]*[:\s]*(\d{1,2}[\s\/\-]\w+[\s\/\-]\d{4}|\d{4}-\d{2}-\d{2})/i
+    );
     if (deadlineMatch) {
       try {
         deadline = new Date(deadlineMatch[1]).toISOString();
@@ -175,21 +181,32 @@ function parseNotice(noticeId: string, html: string): any | null {
     const postcodeMatch = html.match(/([A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2})/i);
     const postcode = postcodeMatch ? postcodeMatch[1].toUpperCase() : null;
 
-    const locationMatch = html.match(/(?:Place of performance|Location|Region|NUTS code)[:\s]*<[^>]*>([^<]+)</i);
+    const locationMatch = html.match(
+      /(?:Place of performance|Location|Region|NUTS code)[:\s]*<[^>]*>([^<]+)</i
+    );
     const locationText = locationMatch ? locationMatch[1].trim() : null;
 
     // Extract description
-    const descMatch = html.match(/(?:Short description|Description)[:\s]*<[^>]*>([\s\S]*?)<\/(?:p|dd|div)/i);
-    let description = descMatch ? descMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() : '';
+    const descMatch = html.match(
+      /(?:Short description|Description)[:\s]*<[^>]*>([\s\S]*?)<\/(?:p|dd|div)/i
+    );
+    let description = descMatch
+      ? descMatch[1]
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+      : '';
 
     // Determine categories
     const text = (title + ' ' + description).toLowerCase();
     const categories: string[] = ['electrical'];
 
-    if (text.includes('fire alarm') || text.includes('fire detection')) categories.push('fire_alarm');
+    if (text.includes('fire alarm') || text.includes('fire detection'))
+      categories.push('fire_alarm');
     if (text.includes('emergency light')) categories.push('emergency_lighting');
     if (text.includes('rewir')) categories.push('rewire');
-    if (text.includes('m&e') || text.includes('mechanical and electrical')) categories.push('m_and_e');
+    if (text.includes('m&e') || text.includes('mechanical and electrical'))
+      categories.push('m_and_e');
     if (text.includes('ev charg')) categories.push('ev_charging');
     if (text.includes('led') || text.includes('lighting')) categories.push('lighting');
     if (text.includes('solar') || text.includes('pv')) categories.push('solar');
@@ -197,11 +214,19 @@ function parseNotice(noticeId: string, html: string): any | null {
     // Determine sector
     const clientLower = clientName.toLowerCase();
     let sector = 'public';
-    if (clientLower.includes('nhs') || clientLower.includes('hospital') || clientLower.includes('health')) {
+    if (
+      clientLower.includes('nhs') ||
+      clientLower.includes('hospital') ||
+      clientLower.includes('health')
+    ) {
       sector = 'healthcare';
     } else if (clientLower.includes('housing')) {
       sector = 'housing';
-    } else if (clientLower.includes('school') || clientLower.includes('university') || clientLower.includes('college')) {
+    } else if (
+      clientLower.includes('school') ||
+      clientLower.includes('university') ||
+      clientLower.includes('college')
+    ) {
       sector = 'education';
     } else if (clientLower.includes('council') || clientLower.includes('borough')) {
       sector = 'local_authority';
@@ -241,21 +266,131 @@ function parseNotice(noticeId: string, html: string): any | null {
 }
 
 function extractRegion(postcode: string): string {
-  const prefix = postcode.replace(/\s+/g, '').match(/^[A-Z]{1,2}/i)?.[0]?.toUpperCase() || '';
+  const prefix =
+    postcode
+      .replace(/\s+/g, '')
+      .match(/^[A-Z]{1,2}/i)?.[0]
+      ?.toUpperCase() || '';
 
   const regionMap: Record<string, string> = {
-    'B': 'west_midlands', 'CV': 'west_midlands', 'DY': 'west_midlands', 'WS': 'west_midlands', 'WV': 'west_midlands', 'ST': 'west_midlands', 'HR': 'west_midlands', 'TF': 'west_midlands', 'WR': 'west_midlands',
-    'M': 'northwest', 'L': 'northwest', 'WA': 'northwest', 'WN': 'northwest', 'BL': 'northwest', 'OL': 'northwest', 'PR': 'northwest', 'FY': 'northwest', 'BB': 'northwest', 'SK': 'northwest', 'CW': 'northwest', 'CH': 'northwest', 'CA': 'northwest', 'LA': 'northwest',
-    'LS': 'yorkshire', 'BD': 'yorkshire', 'HX': 'yorkshire', 'HD': 'yorkshire', 'WF': 'yorkshire', 'S': 'yorkshire', 'DN': 'yorkshire', 'HU': 'yorkshire', 'YO': 'yorkshire', 'HG': 'yorkshire',
-    'NE': 'northeast', 'DH': 'northeast', 'SR': 'northeast', 'TS': 'northeast', 'DL': 'northeast',
-    'NG': 'east_midlands', 'DE': 'east_midlands', 'LE': 'east_midlands', 'NN': 'east_midlands', 'LN': 'east_midlands',
-    'BS': 'southwest', 'BA': 'southwest', 'EX': 'southwest', 'PL': 'southwest', 'TQ': 'southwest', 'TR': 'southwest', 'GL': 'southwest', 'TA': 'southwest', 'DT': 'southwest', 'BH': 'southwest', 'SP': 'southwest', 'SN': 'southwest',
-    'CB': 'east_england', 'CO': 'east_england', 'IP': 'east_england', 'NR': 'east_england', 'PE': 'east_england', 'CM': 'east_england', 'SS': 'east_england', 'AL': 'east_england', 'SG': 'east_england', 'LU': 'east_england',
-    'RG': 'southeast', 'SL': 'southeast', 'HP': 'southeast', 'MK': 'southeast', 'OX': 'southeast', 'GU': 'southeast', 'PO': 'southeast', 'BN': 'southeast', 'TN': 'southeast', 'ME': 'southeast', 'CT': 'southeast', 'SO': 'southeast', 'RH': 'southeast',
-    'SW': 'london', 'SE': 'london', 'NW': 'london', 'N': 'london', 'E': 'london', 'W': 'london', 'EC': 'london', 'WC': 'london', 'CR': 'london', 'BR': 'london', 'DA': 'london', 'EN': 'london', 'HA': 'london', 'IG': 'london', 'KT': 'london', 'RM': 'london', 'SM': 'london', 'TW': 'london', 'UB': 'london', 'WD': 'london',
-    'CF': 'wales', 'SA': 'wales', 'LL': 'wales', 'SY': 'wales', 'NP': 'wales', 'LD': 'wales',
-    'G': 'scotland', 'EH': 'scotland', 'AB': 'scotland', 'DD': 'scotland', 'KY': 'scotland', 'FK': 'scotland', 'PA': 'scotland', 'IV': 'scotland', 'PH': 'scotland', 'ML': 'scotland', 'KA': 'scotland', 'DG': 'scotland', 'TD': 'scotland',
-    'BT': 'northern_ireland',
+    B: 'west_midlands',
+    CV: 'west_midlands',
+    DY: 'west_midlands',
+    WS: 'west_midlands',
+    WV: 'west_midlands',
+    ST: 'west_midlands',
+    HR: 'west_midlands',
+    TF: 'west_midlands',
+    WR: 'west_midlands',
+    M: 'northwest',
+    L: 'northwest',
+    WA: 'northwest',
+    WN: 'northwest',
+    BL: 'northwest',
+    OL: 'northwest',
+    PR: 'northwest',
+    FY: 'northwest',
+    BB: 'northwest',
+    SK: 'northwest',
+    CW: 'northwest',
+    CH: 'northwest',
+    CA: 'northwest',
+    LA: 'northwest',
+    LS: 'yorkshire',
+    BD: 'yorkshire',
+    HX: 'yorkshire',
+    HD: 'yorkshire',
+    WF: 'yorkshire',
+    S: 'yorkshire',
+    DN: 'yorkshire',
+    HU: 'yorkshire',
+    YO: 'yorkshire',
+    HG: 'yorkshire',
+    NE: 'northeast',
+    DH: 'northeast',
+    SR: 'northeast',
+    TS: 'northeast',
+    DL: 'northeast',
+    NG: 'east_midlands',
+    DE: 'east_midlands',
+    LE: 'east_midlands',
+    NN: 'east_midlands',
+    LN: 'east_midlands',
+    BS: 'southwest',
+    BA: 'southwest',
+    EX: 'southwest',
+    PL: 'southwest',
+    TQ: 'southwest',
+    TR: 'southwest',
+    GL: 'southwest',
+    TA: 'southwest',
+    DT: 'southwest',
+    BH: 'southwest',
+    SP: 'southwest',
+    SN: 'southwest',
+    CB: 'east_england',
+    CO: 'east_england',
+    IP: 'east_england',
+    NR: 'east_england',
+    PE: 'east_england',
+    CM: 'east_england',
+    SS: 'east_england',
+    AL: 'east_england',
+    SG: 'east_england',
+    LU: 'east_england',
+    RG: 'southeast',
+    SL: 'southeast',
+    HP: 'southeast',
+    MK: 'southeast',
+    OX: 'southeast',
+    GU: 'southeast',
+    PO: 'southeast',
+    BN: 'southeast',
+    TN: 'southeast',
+    ME: 'southeast',
+    CT: 'southeast',
+    SO: 'southeast',
+    RH: 'southeast',
+    SW: 'london',
+    SE: 'london',
+    NW: 'london',
+    N: 'london',
+    E: 'london',
+    W: 'london',
+    EC: 'london',
+    WC: 'london',
+    CR: 'london',
+    BR: 'london',
+    DA: 'london',
+    EN: 'london',
+    HA: 'london',
+    IG: 'london',
+    KT: 'london',
+    RM: 'london',
+    SM: 'london',
+    TW: 'london',
+    UB: 'london',
+    WD: 'london',
+    CF: 'wales',
+    SA: 'wales',
+    LL: 'wales',
+    SY: 'wales',
+    NP: 'wales',
+    LD: 'wales',
+    G: 'scotland',
+    EH: 'scotland',
+    AB: 'scotland',
+    DD: 'scotland',
+    KY: 'scotland',
+    FK: 'scotland',
+    PA: 'scotland',
+    IV: 'scotland',
+    PH: 'scotland',
+    ML: 'scotland',
+    KA: 'scotland',
+    DG: 'scotland',
+    TD: 'scotland',
+    BT: 'northern_ireland',
   };
 
   return regionMap[prefix] || 'uk_wide';

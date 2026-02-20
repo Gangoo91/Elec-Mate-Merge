@@ -28,14 +28,11 @@ export interface ChallengeResolution {
 // BS 7671 voltage drop limits
 const VOLTAGE_DROP_LIMITS = {
   lighting: 3, // 3% for lighting circuits
-  other: 5     // 5% for other uses
+  other: 5, // 5% for other uses
 };
 
 // Validate Designer output
-export function validateDesignerOutput(
-  output: string,
-  agentContext: any
-): ValidationResult {
+export function validateDesignerOutput(output: string, agentContext: any): ValidationResult {
   const challenges: Challenge[] = [];
   const warnings: string[] = [];
 
@@ -52,7 +49,8 @@ export function validateDesignerOutput(
   const loadMatch = output.match(/([\d.]+)\s*kW/i);
   const loadKw = loadMatch ? parseFloat(loadMatch[1]) : null;
 
-  const izMatch = output.match(/Iz[:\s]*([\d.]+)A/i) || output.match(/(?:capacity|CCC)[:\s]*([\d.]+)A/i);
+  const izMatch =
+    output.match(/Iz[:\s]*([\d.]+)A/i) || output.match(/(?:capacity|CCC)[:\s]*([\d.]+)A/i);
   const cableCcc = izMatch ? parseFloat(izMatch[1]) : null;
 
   const rcdMentioned = /RCD|RCBO|30\s*mA/i.test(output);
@@ -63,17 +61,19 @@ export function validateDesignerOutput(
   if (voltageDrop !== null) {
     const isLighting = /light/i.test(output);
     const limit = isLighting ? VOLTAGE_DROP_LIMITS.lighting : VOLTAGE_DROP_LIMITS.other;
-    
+
     if (voltageDrop > limit) {
       challenges.push({
         id: `vd-${Date.now()}`,
         challenger: 'health-safety',
         target: 'designer',
         issue: `Voltage drop ${voltageDrop}% exceeds BS 7671 limit of ${limit}%`,
-        recommendation: cableSize ? `Increase cable size from ${cableSize}mm² to next larger size` : 'Increase cable size',
+        recommendation: cableSize
+          ? `Increase cable size from ${cableSize}mm² to next larger size`
+          : 'Increase cable size',
         severity: 'critical',
         regulation: 'BS 7671:2018 Appendix 4 Section 6.4',
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
   }
@@ -88,7 +88,7 @@ export function validateDesignerOutput(
       recommendation: `Increase cable size or reduce MCB rating to comply with Iz ≥ In`,
       severity: 'critical',
       regulation: 'BS 7671:2018 Regulation 433.1.1',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -102,7 +102,7 @@ export function validateDesignerOutput(
       recommendation: 'Specify 30mA RCD or RCBO protection',
       severity: 'high',
       regulation: 'BS 7671:2018 Regulation 411.3.3',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -116,7 +116,7 @@ export function validateDesignerOutput(
       recommendation: 'Specify 30mA RCD or RCBO protection for outdoor installation',
       severity: 'high',
       regulation: 'BS 7671:2018 Regulation 411.3.3',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -128,15 +128,12 @@ export function validateDesignerOutput(
   return {
     isValid: challenges.length === 0,
     challenges,
-    warnings
+    warnings,
   };
 }
 
 // Validate Cost Engineer output
-export function validateCostOutput(
-  output: string,
-  designerOutput: string
-): ValidationResult {
+export function validateCostOutput(output: string, designerOutput: string): ValidationResult {
   const challenges: Challenge[] = [];
   const warnings: string[] = [];
 
@@ -157,7 +154,7 @@ export function validateCostOutput(
       issue: `Specified ${costCableSize}mm² cable but designer calculated ${designerCableSize}mm²`,
       recommendation: `Verify ${designerCableSize}mm² is sufficient before upgrading to ${costCableSize}mm²`,
       severity: 'medium',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
@@ -172,15 +169,12 @@ export function validateCostOutput(
   return {
     isValid: challenges.length === 0,
     challenges,
-    warnings
+    warnings,
   };
 }
 
 // Validate Installer practicality
-export function validateInstallerOutput(
-  output: string,
-  designerOutput: string
-): ValidationResult {
+export function validateInstallerOutput(output: string, designerOutput: string): ValidationResult {
   const challenges: Challenge[] = [];
   const warnings: string[] = [];
 
@@ -191,7 +185,9 @@ export function validateInstallerOutput(
   if (length && length > 50) {
     const bendRadiusCheck = /bend\s*radius/i.test(output);
     if (!bendRadiusCheck) {
-      warnings.push('Long cable runs (>50m) should mention bend radius and clip spacing considerations');
+      warnings.push(
+        'Long cable runs (>50m) should mention bend radius and clip spacing considerations'
+      );
     }
   }
 
@@ -209,7 +205,7 @@ export function validateInstallerOutput(
         issue: `Large cable (${cableSize}mm²) requires proper termination guidance`,
         recommendation: 'Specify cable lugs or glands for secure termination',
         severity: 'medium',
-        timestamp: new Date()
+        timestamp: new Date(),
       });
     }
   }
@@ -227,14 +223,14 @@ export function validateInstallerOutput(
       recommendation: 'Use SWA cable for buried installations or provide adequate ducting',
       severity: 'high',
       regulation: 'BS 7671:2018 Regulation 522.8',
-      timestamp: new Date()
+      timestamp: new Date(),
     });
   }
 
   return {
     isValid: challenges.length === 0,
     challenges,
-    warnings
+    warnings,
   };
 }
 
@@ -278,17 +274,21 @@ Respond in JSON format:
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${openAIApiKey}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
-          { role: 'system', content: 'You are a BS 7671 compliant electrical design expert who carefully reviews challenges from other specialists.' },
-          { role: 'user', content: prompt }
+          {
+            role: 'system',
+            content:
+              'You are a BS 7671 compliant electrical design expert who carefully reviews challenges from other specialists.',
+          },
+          { role: 'user', content: prompt },
         ],
-        response_format: { type: 'json_object' }
-      })
+        response_format: { type: 'json_object' },
+      }),
     });
 
     if (!response.ok) {
@@ -304,9 +304,10 @@ Respond in JSON format:
       action: result.action,
       revisedOutput: result.revisedOutput,
       reasoning: result.reasoning,
-      agentResponse: result.agentResponse || `${result.action === 'accepted' ? 'Accepted' : result.action === 'defended' ? 'Maintained' : 'Adjusted'} based on specialist feedback`
+      agentResponse:
+        result.agentResponse ||
+        `${result.action === 'accepted' ? 'Accepted' : result.action === 'defended' ? 'Maintained' : 'Adjusted'} based on specialist feedback`,
     };
-
   } catch (error) {
     console.error('Error reviewing challenge:', error);
     // Default to accepting critical/high severity challenges
@@ -314,13 +315,13 @@ Respond in JSON format:
       return {
         action: 'accepted',
         reasoning: 'Safety-critical issue, accepting recommendation by default',
-        agentResponse: 'Updated design for safety compliance'
+        agentResponse: 'Updated design for safety compliance',
       };
     }
     return {
       action: 'defended',
       reasoning: 'Unable to process challenge, maintaining original design',
-      agentResponse: 'Maintained original design'
+      agentResponse: 'Maintained original design',
     };
   }
 }

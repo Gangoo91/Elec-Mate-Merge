@@ -25,7 +25,9 @@ async function loginIfRequired(page: Page) {
 
 async function waitForContentLoad(page: Page) {
   await page.waitForLoadState('networkidle');
-  await page.waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 }).catch(() => {});
+  await page
+    .waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 })
+    .catch(() => {});
 }
 
 async function verifyPageHasContent(page: Page, pageName: string) {
@@ -36,7 +38,9 @@ async function verifyPageHasContent(page: Page, pageName: string) {
 
   // Must not be error pages
   expect(bodyText, `${pageName} should not be 404`).not.toContain('404');
-  expect(bodyText?.toLowerCase(), `${pageName} should not show "not found"`).not.toContain('page not found');
+  expect(bodyText?.toLowerCase(), `${pageName} should not show "not found"`).not.toContain(
+    'page not found'
+  );
 
   return bodyText;
 }
@@ -57,7 +61,7 @@ const COURSES = {
       5: { sections: 6 },
       6: { sections: 6 },
       7: { sections: 6 },
-    }
+    },
   },
   bs7671: {
     name: 'BS7671',
@@ -75,7 +79,7 @@ const COURSES = {
       7: { sections: 5 },
       8: { sections: 3 },
       9: { sections: 0 },
-    }
+    },
   },
   patTesting: {
     name: 'PAT Testing',
@@ -89,7 +93,7 @@ const COURSES = {
       3: { sections: 5 },
       4: { sections: 6 },
       5: { sections: 5 },
-    }
+    },
   },
   fireAlarm: {
     name: 'Fire Alarm',
@@ -105,7 +109,7 @@ const COURSES = {
       5: { sections: 6 },
       6: { sections: 6 },
       7: { sections: 4 },
-    }
+    },
   },
   inspectionTesting: {
     name: 'Inspection & Testing',
@@ -122,7 +126,7 @@ const COURSES = {
       6: { sections: 5 },
       7: { sections: 5 },
       8: { sections: 5 },
-    }
+    },
   },
   industrialElectrical: {
     name: 'Industrial Electrical',
@@ -136,7 +140,7 @@ const COURSES = {
       3: { sections: 5 },
       4: { sections: 6 },
       5: { sections: 5 },
-    }
+    },
   },
   dataCabling: {
     name: 'Data Cabling',
@@ -151,7 +155,7 @@ const COURSES = {
       4: { sections: 5 },
       5: { sections: 5 },
       6: { sections: 4 },
-    }
+    },
   },
   emergencyLighting: {
     name: 'Emergency Lighting',
@@ -166,7 +170,7 @@ const COURSES = {
       4: { sections: 5 },
       5: { sections: 6 },
       6: { sections: 4 },
-    }
+    },
   },
   fiberOptics: {
     name: 'Fiber Optics',
@@ -182,7 +186,7 @@ const COURSES = {
       5: { sections: 4 },
       6: { sections: 4 },
       7: { sections: 5 },
-    }
+    },
   },
   renewableEnergy: {
     name: 'Renewable Energy',
@@ -201,7 +205,7 @@ const COURSES = {
       8: { sections: 5 },
       9: { sections: 6 },
       10: { sections: 0 },
-    }
+    },
   },
   smartHome: {
     name: 'Smart Home',
@@ -218,7 +222,7 @@ const COURSES = {
       6: { sections: 5 },
       7: { sections: 6 },
       8: { sections: 0 },
-    }
+    },
   },
   evCharging: {
     name: 'EV Charging',
@@ -234,7 +238,7 @@ const COURSES = {
       5: { sections: 5 },
       6: { sections: 6 },
       7: { sections: 4 },
-    }
+    },
   },
   instrumentation: {
     name: 'Instrumentation',
@@ -252,7 +256,7 @@ const COURSES = {
       7: { sections: 7 },
       8: { sections: 6 },
       9: { sections: 0 },
-    }
+    },
   },
   energyEfficiency: {
     name: 'Energy Efficiency',
@@ -267,7 +271,7 @@ const COURSES = {
       4: { sections: 5 },
       5: { sections: 5 },
       6: { sections: 5 },
-    }
+    },
   },
 };
 
@@ -280,7 +284,10 @@ test.describe('BMS (Building Management Systems) - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'BMS Course Hub');
@@ -289,7 +296,10 @@ test.describe('BMS (Building Management Systems) - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -304,7 +314,10 @@ test.describe('BMS (Building Management Systems) - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `BMS Module ${m}`);
@@ -316,7 +329,10 @@ test.describe('BMS (Building Management Systems) - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `BMS M${m}S${s}`);
@@ -334,7 +350,10 @@ test.describe('BS7671 (Wiring Regulations) - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'BS7671 Course Hub');
@@ -343,7 +362,10 @@ test.describe('BS7671 (Wiring Regulations) - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -357,7 +379,10 @@ test.describe('BS7671 (Wiring Regulations) - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `BS7671 Module ${m}`);
@@ -368,7 +393,10 @@ test.describe('BS7671 (Wiring Regulations) - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `BS7671 M${m}S${s}`);
@@ -386,7 +414,10 @@ test.describe('PAT Testing - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'PAT Testing Course Hub');
@@ -395,7 +426,10 @@ test.describe('PAT Testing - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -409,7 +443,10 @@ test.describe('PAT Testing - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `PAT Testing Module ${m}`);
@@ -420,7 +457,10 @@ test.describe('PAT Testing - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `PAT M${m}S${s}`);
@@ -438,7 +478,10 @@ test.describe('Fire Alarm Systems - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Fire Alarm Course Hub');
@@ -447,7 +490,10 @@ test.describe('Fire Alarm Systems - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -461,7 +507,10 @@ test.describe('Fire Alarm Systems - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Fire Alarm Module ${m}`);
@@ -472,7 +521,10 @@ test.describe('Fire Alarm Systems - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Fire Alarm M${m}S${s}`);
@@ -490,7 +542,10 @@ test.describe('Inspection & Testing - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Inspection Testing Course Hub');
@@ -499,7 +554,10 @@ test.describe('Inspection & Testing - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -513,7 +571,10 @@ test.describe('Inspection & Testing - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Inspection Testing Module ${m}`);
@@ -524,7 +585,10 @@ test.describe('Inspection & Testing - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Inspection Testing M${m}S${s}`);
@@ -550,7 +614,10 @@ test.describe('Inspection & Testing - All Pages', () => {
     test(`Guide: ${guide} loads with content`, async ({ page }) => {
       page.setDefaultTimeout(TIMEOUT);
       await page.goto(`/electrician/upskilling/${guide}`);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, guide);
@@ -567,7 +634,10 @@ test.describe('Industrial Electrical - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Industrial Electrical Course Hub');
@@ -576,7 +646,10 @@ test.describe('Industrial Electrical - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -590,7 +663,10 @@ test.describe('Industrial Electrical - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Industrial Electrical Module ${m}`);
@@ -601,7 +677,10 @@ test.describe('Industrial Electrical - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Industrial Electrical M${m}S${s}`);
@@ -619,7 +698,10 @@ test.describe('Data Cabling - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Data Cabling Course Hub');
@@ -628,7 +710,10 @@ test.describe('Data Cabling - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -642,7 +727,10 @@ test.describe('Data Cabling - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Data Cabling Module ${m}`);
@@ -653,7 +741,10 @@ test.describe('Data Cabling - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Data Cabling M${m}S${s}`);
@@ -671,7 +762,10 @@ test.describe('Emergency Lighting - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Emergency Lighting Course Hub');
@@ -680,7 +774,10 @@ test.describe('Emergency Lighting - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -694,7 +791,10 @@ test.describe('Emergency Lighting - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Emergency Lighting Module ${m}`);
@@ -705,7 +805,10 @@ test.describe('Emergency Lighting - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Emergency Lighting M${m}S${s}`);
@@ -723,7 +826,10 @@ test.describe('Fiber Optics - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Fiber Optics Course Hub');
@@ -732,7 +838,10 @@ test.describe('Fiber Optics - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -746,7 +855,10 @@ test.describe('Fiber Optics - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Fiber Optics Module ${m}`);
@@ -757,7 +869,10 @@ test.describe('Fiber Optics - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Fiber Optics M${m}S${s}`);
@@ -775,7 +890,10 @@ test.describe('Renewable Energy - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Renewable Energy Course Hub');
@@ -784,7 +902,10 @@ test.describe('Renewable Energy - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -798,7 +919,10 @@ test.describe('Renewable Energy - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Renewable Energy Module ${m}`);
@@ -809,7 +933,10 @@ test.describe('Renewable Energy - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Renewable Energy M${m}S${s}`);
@@ -827,7 +954,10 @@ test.describe('Smart Home - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Smart Home Course Hub');
@@ -836,7 +966,10 @@ test.describe('Smart Home - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -850,7 +983,10 @@ test.describe('Smart Home - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Smart Home Module ${m}`);
@@ -861,7 +997,10 @@ test.describe('Smart Home - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Smart Home M${m}S${s}`);
@@ -879,7 +1018,10 @@ test.describe('EV Charging - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'EV Charging Course Hub');
@@ -888,7 +1030,10 @@ test.describe('EV Charging - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -902,7 +1047,10 @@ test.describe('EV Charging - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `EV Charging Module ${m}`);
@@ -913,7 +1061,10 @@ test.describe('EV Charging - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `EV Charging M${m}S${s}`);
@@ -931,7 +1082,10 @@ test.describe('Instrumentation - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Instrumentation Course Hub');
@@ -940,7 +1094,10 @@ test.describe('Instrumentation - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -954,7 +1111,10 @@ test.describe('Instrumentation - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Instrumentation Module ${m}`);
@@ -965,7 +1125,10 @@ test.describe('Instrumentation - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Instrumentation M${m}S${s}`);
@@ -983,7 +1146,10 @@ test.describe('Energy Efficiency - All Pages', () => {
   test('Course hub page loads with content', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.courseRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     await verifyPageHasContent(page, 'Energy Efficiency Course Hub');
@@ -992,7 +1158,10 @@ test.describe('Energy Efficiency - All Pages', () => {
   test('Mock exam page loads', async ({ page }) => {
     page.setDefaultTimeout(TIMEOUT);
     await page.goto(course.mockExamRoute);
-    if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+    if (page.url().includes('/auth/signin')) {
+      test.skip(true, 'Auth required');
+      return;
+    }
     await loginIfRequired(page);
     await waitForContentLoad(page);
     const startBtn = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
@@ -1008,7 +1177,10 @@ test.describe('Energy Efficiency - All Pages', () => {
       page.setDefaultTimeout(TIMEOUT);
       const url = course.modulePattern.replace('{m}', m.toString());
       await page.goto(url);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
       await verifyPageHasContent(page, `Energy Efficiency Module ${m}`);
@@ -1020,7 +1192,10 @@ test.describe('Energy Efficiency - All Pages', () => {
         page.setDefaultTimeout(TIMEOUT);
         const url = course.sectionPattern.replace('{m}', m.toString()).replace('{s}', s.toString());
         await page.goto(url);
-        if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+        if (page.url().includes('/auth/signin')) {
+          test.skip(true, 'Auth required');
+          return;
+        }
         await loginIfRequired(page);
         await waitForContentLoad(page);
         await verifyPageHasContent(page, `Module ${m}`);
@@ -1050,12 +1225,17 @@ test.describe('Navigation - Section to Module to Course', () => {
         .replace('{s}', tc.section.toString());
 
       await page.goto(sectionUrl);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
       // Find and click back button
-      const backBtn = page.locator('a:has-text("Back"), button:has-text("Back"), [aria-label*="back"]').first();
+      const backBtn = page
+        .locator('a:has-text("Back"), button:has-text("Back"), [aria-label*="back"]')
+        .first();
       if (await backBtn.isVisible()) {
         await backBtn.click();
         await waitForContentLoad(page);
@@ -1071,7 +1251,10 @@ test.describe('Navigation - Section to Module to Course', () => {
 
       // Navigate: Course -> Module -> Section
       await page.goto(tc.course.courseRoute);
-      if (page.url().includes('/auth/signin')) { test.skip(true, 'Auth required'); return; }
+      if (page.url().includes('/auth/signin')) {
+        test.skip(true, 'Auth required');
+        return;
+      }
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
@@ -1093,7 +1276,9 @@ test.describe('Navigation - Section to Module to Course', () => {
       // Browser back to course
       await page.goBack();
       await waitForContentLoad(page);
-      expect(page.url()).toContain(tc.course.name.toLowerCase().replace(/\s+/g, '-').replace('&', ''));
+      expect(page.url()).toContain(
+        tc.course.name.toLowerCase().replace(/\s+/g, '-').replace('&', '')
+      );
     });
   }
 });

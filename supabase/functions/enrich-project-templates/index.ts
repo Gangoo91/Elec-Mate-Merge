@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ENRICHMENT_VERSION = 'v1';
@@ -16,9 +17,11 @@ serve(async (req) => {
 
   try {
     const { batchSize = 50, startFrom = 0, jobId } = await req.json();
-    
-    console.log(`📋 Starting project templates enrichment batch from ${startFrom}, size ${batchSize}`);
-    
+
+    console.log(
+      `📋 Starting project templates enrichment batch from ${startFrom}, size ${batchSize}`
+    );
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const openAIKey = Deno.env.get('OPENAI_API_KEY')!;
@@ -32,13 +35,16 @@ serve(async (req) => {
 
     if (fetchError) throw fetchError;
     if (!documents || documents.length === 0) {
-      return new Response(JSON.stringify({ 
-        success: true, 
-        processed: 0, 
-        message: 'No more documents' 
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          processed: 0,
+          message: 'No more documents',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     console.log(`📄 Processing ${documents.length} project management documents`);
@@ -49,11 +55,16 @@ serve(async (req) => {
       .eq('job_id', jobId)
       .eq('batch_number', Math.floor(startFrom / batchSize))
       .maybeSingle();
-    
-    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
-    let startIndex = resumeFromId ? documents.findIndex(d => d.id === resumeFromId) + 1 : 0;
 
-    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, totalProcessingTime = 0;
+    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
+    let startIndex = resumeFromId ? documents.findIndex((d) => d.id === resumeFromId) + 1 : 0;
+
+    let processed = 0,
+      failed = 0,
+      qualityPassed = 0,
+      qualityFailed = 0,
+      skipped = 0,
+      totalProcessingTime = 0;
 
     for (let i = startIndex; i < documents.length; i++) {
       const doc = documents[i];
@@ -65,8 +76,11 @@ serve(async (req) => {
           .select('enrichment_version, source_hash')
           .eq('source_id', doc.id)
           .maybeSingle();
-        
-        if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
+
+        if (
+          existing?.enrichment_version === ENRICHMENT_VERSION &&
+          existing?.source_hash === contentHash
+        ) {
           skipped++;
           continue;
         }
@@ -107,7 +121,7 @@ Extract project frameworks and templates. Return JSON array:
         let templates;
         try {
           const parsed = await callOpenAIWithRetry(extractionPrompt, openAIKey, doc.id);
-          templates = Array.isArray(parsed) ? parsed : (parsed.templates || []);
+          templates = Array.isArray(parsed) ? parsed : parsed.templates || [];
         } catch (aiError) {
           console.error(`❌ AI call failed for ${doc.id} after retries:`, aiError);
           failed++;
@@ -122,9 +136,8 @@ Extract project frameworks and templates. Return JSON array:
         qualityPassed++;
 
         for (const template of templates) {
-          await supabase
-            .from('project_templates')
-            .upsert({
+          await supabase.from('project_templates').upsert(
+            {
               source_id: doc.id,
               template_type: template.template_type || 'general',
               title: template.title || '',
@@ -137,15 +150,17 @@ Extract project frameworks and templates. Return JSON array:
               risk_factors: template.risk_factors || [],
               confidence_score: 0.85,
               enrichment_version: ENRICHMENT_VERSION,
-              source_hash: contentHash
-            }, {
-              onConflict: 'source_id,title'
-            });
+              source_hash: contentHash,
+            },
+            {
+              onConflict: 'source_id,title',
+            }
+          );
         }
 
         processed++;
         totalProcessingTime += Date.now() - docStartTime;
-        
+
         if ((i + 1) % 25 === 0 || i === documents.length - 1) {
           await supabase
             .from('batch_progress')
@@ -153,76 +168,97 @@ Extract project frameworks and templates. Return JSON array:
               last_checkpoint: { last_processed_id: doc.id, processed_count: i + 1 },
               items_processed: startFrom + i + 1,
               status: 'processing',
-              data: { quality_passed: qualityPassed, quality_failed: qualityFailed, skipped, avg_processing_time_ms: totalProcessingTime / processed, api_cost_gbp: processed * 0.004 }
+              data: {
+                quality_passed: qualityPassed,
+                quality_failed: qualityFailed,
+                skipped,
+                avg_processing_time_ms: totalProcessingTime / processed,
+                api_cost_gbp: processed * 0.004,
+              },
             })
             .eq('job_id', jobId)
             .eq('batch_number', Math.floor(startFrom / batchSize));
         }
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-
+        await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (error) {
         console.error(`❌ Error processing doc ${doc.id}:`, error);
         failed++;
       }
     }
 
-    console.log(`✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped)`);
+    console.log(
+      `✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped)`
+    );
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      processed,
-      failed,
-      skipped,
-      qualityPassed,
-      qualityFailed,
-      nextStartFrom: startFrom + batchSize,
-      hasMore: documents.length === batchSize
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        processed,
+        failed,
+        skipped,
+        qualityPassed,
+        qualityFailed,
+        nextStartFrom: startFrom + batchSize,
+        hasMore: documents.length === batchSize,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Fatal error:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        error: error.message,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 /**
  * Call OpenAI with timeout (60s) and retry (3 attempts)
  */
-async function callOpenAIWithRetry(prompt: string, apiKey: string, docId: string, attempt = 1): Promise<any> {
+async function callOpenAIWithRetry(
+  prompt: string,
+  apiKey: string,
+  docId: string,
+  attempt = 1
+): Promise<any> {
   const MAX_RETRIES = 3;
   const TIMEOUT_MS = 60000; // 60s per item
-  
+
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), TIMEOUT_MS);
-  
+
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
-        messages: [{
-          role: 'system',
-          content: 'You are a project management expert in electrical contracting. Extract structured project templates. Return valid JSON only.'
-        }, {
-          role: 'user',
-          content: prompt
-        }],
-        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: 'system',
+            content:
+              'You are a project management expert in electrical contracting. Extract structured project templates. Return valid JSON only.',
+          },
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        response_format: { type: 'json_object' },
         max_completion_tokens: 1500,
       }),
-      signal: controller.signal
+      signal: controller.signal,
     });
 
     clearTimeout(timeoutId);
@@ -234,28 +270,34 @@ async function callOpenAIWithRetry(prompt: string, apiKey: string, docId: string
 
     const aiData = await response.json();
     const content = aiData.choices[0].message.content;
-    
+
     try {
       return JSON.parse(content);
     } catch (parseError) {
       if (attempt < MAX_RETRIES) {
         console.warn(`⚠️ Parse error for ${docId}, retry ${attempt}/${MAX_RETRIES}`);
-        await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
+        await new Promise((resolve) => setTimeout(resolve, 1000 * Math.pow(2, attempt - 1)));
         return callOpenAIWithRetry(prompt, apiKey, docId, attempt + 1);
       }
       throw new Error(`JSON parse failed after ${MAX_RETRIES} attempts`);
     }
-    
   } catch (error) {
     clearTimeout(timeoutId);
-    
-    if (attempt < MAX_RETRIES && (error.name === 'AbortError' || error.message.includes('rate limit') || error.message.includes('timeout'))) {
+
+    if (
+      attempt < MAX_RETRIES &&
+      (error.name === 'AbortError' ||
+        error.message.includes('rate limit') ||
+        error.message.includes('timeout'))
+    ) {
       const delay = 1000 * Math.pow(2, attempt - 1);
-      console.warn(`⚠️ Retry ${attempt}/${MAX_RETRIES} for ${docId} after ${delay}ms (${error.message})`);
-      await new Promise(resolve => setTimeout(resolve, delay));
+      console.warn(
+        `⚠️ Retry ${attempt}/${MAX_RETRIES} for ${docId} after ${delay}ms (${error.message})`
+      );
+      await new Promise((resolve) => setTimeout(resolve, delay));
       return callOpenAIWithRetry(prompt, apiKey, docId, attempt + 1);
     }
-    
+
     throw error;
   }
 }
@@ -265,7 +307,7 @@ async function hashContent(content: string): Promise<string> {
   const data = encoder.encode(content);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 function validateQuality(templates: any[]): boolean {

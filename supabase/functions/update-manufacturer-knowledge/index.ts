@@ -1,5 +1,5 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
 const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -8,7 +8,8 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -108,7 +109,7 @@ function analyzeThreePhasePatterns(analyses: TrainingAnalysis[]): {
   frequency: number;
   layout_preference: string | null;
 } {
-  const threePhaseAnalyses = analyses.filter(a => a.is_three_phase);
+  const threePhaseAnalyses = analyses.filter((a) => a.is_three_phase);
   const frequency = threePhaseAnalyses.length / analyses.length;
 
   if (threePhaseAnalyses.length === 0) {
@@ -243,8 +244,11 @@ serve(async (req) => {
       const mergedThreePhase = {
         ...(existing.three_phase_layout || {}),
         frequency_in_training: aggregated.three_phase_info.frequency,
-        layout_preference: aggregated.three_phase_info.layout_preference ||
-          (existing.three_phase_layout as any)?.vertical_layout ? '3P-vertical' : null,
+        layout_preference:
+          aggregated.three_phase_info.layout_preference ||
+          (existing.three_phase_layout as any)?.vertical_layout
+            ? '3P-vertical'
+            : null,
       };
 
       // Update existing record
@@ -265,41 +269,42 @@ serve(async (req) => {
 
       console.log(`Updated knowledge for ${manufacturer}`);
 
-      return new Response(JSON.stringify({
-        success: true,
-        action: 'updated',
-        manufacturer,
-        stats: {
-          abbreviations_count: Object.keys(mergedAbbreviations).length,
-          pictogram_types_count: aggregated.pictogram_types.length,
-          common_ratings: aggregated.common_ratings,
-        },
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
-
+      return new Response(
+        JSON.stringify({
+          success: true,
+          action: 'updated',
+          manufacturer,
+          stats: {
+            abbreviations_count: Object.keys(mergedAbbreviations).length,
+            pictogram_types_count: aggregated.pictogram_types.length,
+            common_ratings: aggregated.common_ratings,
+          },
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     } else {
       // Create new knowledge record
-      const newContent = `${manufacturer} board identification patterns learned from training photos. ` +
+      const newContent =
+        `${manufacturer} board identification patterns learned from training photos. ` +
         `Common ratings: ${aggregated.common_ratings.join(', ')}. ` +
         `Main switch typically on ${aggregated.main_switch_position || 'unknown'} side.`;
 
-      const { error: insertError } = await supabase
-        .from('board_manufacturer_knowledge')
-        .insert({
-          manufacturer,
-          main_switch_position: aggregated.main_switch_position,
-          abbreviations: aggregated.abbreviations,
-          pictogram_guide: { types_seen: aggregated.pictogram_types },
-          three_phase_layout: {
-            frequency_in_training: aggregated.three_phase_info.frequency,
-            layout_preference: aggregated.three_phase_info.layout_preference,
-          },
-          content: newContent,
-          circuit_numbering: 'left-to-right', // Default
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        });
+      const { error: insertError } = await supabase.from('board_manufacturer_knowledge').insert({
+        manufacturer,
+        main_switch_position: aggregated.main_switch_position,
+        abbreviations: aggregated.abbreviations,
+        pictogram_guide: { types_seen: aggregated.pictogram_types },
+        three_phase_layout: {
+          frequency_in_training: aggregated.three_phase_info.frequency,
+          layout_preference: aggregated.three_phase_info.layout_preference,
+        },
+        content: newContent,
+        circuit_numbering: 'left-to-right', // Default
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      });
 
       if (insertError) {
         throw new Error(`Failed to create knowledge: ${insertError.message}`);
@@ -307,29 +312,34 @@ serve(async (req) => {
 
       console.log(`Created new knowledge entry for ${manufacturer}`);
 
-      return new Response(JSON.stringify({
-        success: true,
-        action: 'created',
-        manufacturer,
-        stats: {
-          abbreviations_count: Object.keys(aggregated.abbreviations).length,
-          pictogram_types_count: aggregated.pictogram_types.length,
-          common_ratings: aggregated.common_ratings,
-        },
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          action: 'created',
+          manufacturer,
+          stats: {
+            abbreviations_count: Object.keys(aggregated.abbreviations).length,
+            pictogram_types_count: aggregated.pictogram_types.length,
+            common_ratings: aggregated.common_ratings,
+          },
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
-
   } catch (error) {
     console.error('Error:', error);
 
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

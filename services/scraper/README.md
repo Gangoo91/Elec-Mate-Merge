@@ -17,6 +17,7 @@ Production-ready web scraper for scraping electrical tools from 6 UK suppliers.
 ### 1. Apply Database Migration
 
 Go to **[Supabase SQL Editor](https://supabase.com/dashboard/project/jtwygbeceundfgnkirof/sql/new)** and paste the contents of:
+
 ```
 supabase/migrations/20260115120000_marketplace_tables.sql
 ```
@@ -55,38 +56,38 @@ npm run scrape:coupons
 
 ## Available Commands
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start server with hot reload |
-| `npm start` | Production server |
-| `npm run scrape:all` | Full scrape (~25,000 products) |
-| `npm run scrape:deals` | Deals only from all suppliers |
-| `npm run scrape:coupons` | Coupons from aggregators |
-| `npm run scrape:screwfix` | Screwfix only |
-| `npm run scrape:toolstation` | Toolstation only |
-| `npm run scrape:cef` | CEF only |
-| `npm run scrape:electrical-direct` | ElectricalDirect only |
-| `npm run scrape:rs-components` | RS Components only |
-| `npm run scrape:tlc-electrical` | TLC Electrical only |
-| `npm run test:connection` | Test Supabase connection |
+| Command                            | Description                    |
+| ---------------------------------- | ------------------------------ |
+| `npm run dev`                      | Start server with hot reload   |
+| `npm start`                        | Production server              |
+| `npm run scrape:all`               | Full scrape (~25,000 products) |
+| `npm run scrape:deals`             | Deals only from all suppliers  |
+| `npm run scrape:coupons`           | Coupons from aggregators       |
+| `npm run scrape:screwfix`          | Screwfix only                  |
+| `npm run scrape:toolstation`       | Toolstation only               |
+| `npm run scrape:cef`               | CEF only                       |
+| `npm run scrape:electrical-direct` | ElectricalDirect only          |
+| `npm run scrape:rs-components`     | RS Components only             |
+| `npm run scrape:tlc-electrical`    | TLC Electrical only            |
+| `npm run test:connection`          | Test Supabase connection       |
 
 ## Scraping Schedule
 
 When `ENABLE_CRON=true`:
 
-| Job | Schedule | Description |
-|-----|----------|-------------|
-| Deals | Every 4 hours | Scrapes deal pages, updates prices |
-| Full Catalog | Sunday 2am | Complete product refresh |
+| Job          | Schedule      | Description                        |
+| ------------ | ------------- | ---------------------------------- |
+| Deals        | Every 4 hours | Scrapes deal pages, updates prices |
+| Full Catalog | Sunday 2am    | Complete product refresh           |
 
 ## API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/health` | GET | Health check |
-| `/suppliers` | GET | List available scrapers |
-| `/scrape/:supplier` | POST | Trigger scrape for supplier |
-| `/scrape-all` | POST | Trigger scrape for all suppliers |
+| Endpoint            | Method | Description                      |
+| ------------------- | ------ | -------------------------------- |
+| `/health`           | GET    | Health check                     |
+| `/suppliers`        | GET    | List available scrapers          |
+| `/scrape/:supplier` | POST   | Trigger scrape for supplier      |
+| `/scrape-all`       | POST   | Trigger scrape for all suppliers |
 
 ## Deployment
 
@@ -108,6 +109,7 @@ docker-compose up -d
 ```
 
 Or build manually:
+
 ```bash
 docker build -t elec-mate-scraper .
 docker run -d -p 3001:3001 \
@@ -119,26 +121,30 @@ docker run -d -p 3001:3001 \
 
 ## Product Counts by Supplier
 
-| Supplier | Estimated Products |
-|----------|-------------------|
-| Screwfix | 3,000+ |
-| Toolstation | 2,000+ |
-| CEF | 5,000+ |
-| ElectricalDirect | 3,000+ |
-| RS Components | 10,000+ |
-| TLC Electrical | 2,000+ |
-| **Total** | **~25,000** |
+| Supplier         | Estimated Products |
+| ---------------- | ------------------ |
+| Screwfix         | 3,000+             |
+| Toolstation      | 2,000+             |
+| CEF              | 5,000+             |
+| ElectricalDirect | 3,000+             |
+| RS Components    | 10,000+            |
+| TLC Electrical   | 2,000+             |
+| **Total**        | **~25,000**        |
 
 ## Troubleshooting
 
 ### "Missing SUPABASE_SERVICE_ROLE_KEY"
+
 Get it from: https://supabase.com/dashboard/project/jtwygbeceundfgnkirof/settings/api
 
 ### "Table marketplace_suppliers does not exist"
+
 Apply the migration in Supabase SQL Editor.
 
 ### Puppeteer crashes
+
 Ensure you have enough memory (2GB+ recommended for Docker).
 
 ### Rate limited by supplier
+
 The scraper includes delays between requests. If issues persist, increase `rateLimit` in supplier configs.

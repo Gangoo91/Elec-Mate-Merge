@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ELEVENLABS_API_BASE = 'https://api.elevenlabs.io/v1';
@@ -21,10 +22,10 @@ serve(async (req) => {
     const { agentId }: TokenRequest = await req.json();
 
     if (!agentId) {
-      return new Response(
-        JSON.stringify({ error: 'Agent ID is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Agent ID is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Get API key from environment (Supabase secrets)
@@ -33,7 +34,9 @@ serve(async (req) => {
     if (!apiKey) {
       console.error('ELEVENLABS_API_KEY not configured in Supabase secrets');
       return new Response(
-        JSON.stringify({ error: 'ElevenLabs API key not configured. Please contact administrator.' }),
+        JSON.stringify({
+          error: 'ElevenLabs API key not configured. Please contact administrator.',
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -57,10 +60,10 @@ serve(async (req) => {
 
       // Handle specific error cases
       if (response.status === 401) {
-        return new Response(
-          JSON.stringify({ error: 'Invalid ElevenLabs API key' }),
-          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        return new Response(JSON.stringify({ error: 'Invalid ElevenLabs API key' }), {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
 
       if (response.status === 404) {
@@ -80,24 +83,22 @@ serve(async (req) => {
 
     if (!data.token) {
       console.error('No token in ElevenLabs response:', data);
-      return new Response(
-        JSON.stringify({ error: 'No token received from ElevenLabs' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No token received from ElevenLabs' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Successfully obtained conversation token');
 
-    return new Response(
-      JSON.stringify({ token: data.token }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ token: data.token }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error in elevenlabs-conversation-token function:', error);
     return new Response(
       JSON.stringify({
-        error: error instanceof Error ? error.message : 'Internal server error'
+        error: error instanceof Error ? error.message : 'Internal server error',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

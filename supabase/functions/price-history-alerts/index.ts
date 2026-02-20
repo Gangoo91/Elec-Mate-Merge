@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.7.1';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface PriceHistoryEntry {
@@ -71,19 +72,22 @@ serve(async (req) => {
     }
   } catch (error) {
     console.error('❌ Error in price-history-alerts:', error);
-    return new Response(JSON.stringify({ 
-      error: 'Failed to process request', 
-      details: error instanceof Error ? error.message : 'Unknown error occurred'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Failed to process request',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
 async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
   console.log(`📈 Getting price history for "${productName}" (${days} days)`);
-  
+
   try {
     // Calculate date range
     const endDate = new Date();
@@ -106,10 +110,10 @@ async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
 
     // If no historical data, try to get current prices and create recent entries
     let history: PriceHistoryEntry[] = [];
-    
+
     if (!historicalData || historicalData.length === 0) {
       console.log('⚠️ No historical data found, checking current prices...');
-      
+
       // Try to find current prices for similar products
       const { data: currentData, error: currentError } = await supabase
         .from('current_prices')
@@ -124,7 +128,7 @@ async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
           date: today,
           price: parseFloat(item.price.toString()),
           supplier: item.supplier,
-          productName: item.product_name
+          productName: item.product_name,
         }));
       }
     } else {
@@ -133,82 +137,98 @@ async function getPriceHistory(supabase: any, { productName, days = 30 }: any) {
         date: new Date(item.date_scraped).toISOString().split('T')[0],
         price: parseFloat(item.price.toString()),
         supplier: item.supplier,
-        productName: item.product_name
+        productName: item.product_name,
       }));
     }
 
     // If still no data, return empty response with message
     if (history.length === 0) {
-      return new Response(JSON.stringify({
-        history: [],
-        analysis: null,
-        message: `No price history available for "${productName}". Try searching for a more specific product name.`
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          history: [],
+          analysis: null,
+          message: `No price history available for "${productName}". Try searching for a more specific product name.`,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Calculate trends from real data
-    const allPrices = history.map(h => h.price);
+    const allPrices = history.map((h) => h.price);
     const recentPrices = history.slice(-Math.min(7, Math.floor(history.length / 2))); // Last portion of data
     const olderPrices = history.slice(0, Math.max(1, Math.floor(history.length / 2))); // Earlier portion of data
-    
+
     const recentAvg = recentPrices.reduce((sum, h) => sum + h.price, 0) / recentPrices.length;
     const olderAvg = olderPrices.reduce((sum, h) => sum + h.price, 0) / olderPrices.length;
-    const trendPercent = olderAvg > 0 ? ((recentAvg - olderAvg) / olderAvg * 100).toFixed(1) : '0.0';
+    const trendPercent =
+      olderAvg > 0 ? (((recentAvg - olderAvg) / olderAvg) * 100).toFixed(1) : '0.0';
 
-    return new Response(JSON.stringify({
-      history,
-      analysis: {
-        trend: recentAvg > olderAvg ? 'up' : 'down',
-        trendPercent: `${Math.abs(parseFloat(trendPercent))}%`,
-        lowestPrice: Math.min(...allPrices),
-        highestPrice: Math.max(...allPrices),
-        averagePrice: Math.round((allPrices.reduce((sum, p) => sum + p, 0) / allPrices.length) * 100) / 100,
-        recommendation: recentAvg > olderAvg ? 'Consider buying soon as prices are rising' : 'Prices are falling, might be worth waiting',
-        dataPoints: history.length,
-        dateRange: `${Math.max(1, days)} days`
+    return new Response(
+      JSON.stringify({
+        history,
+        analysis: {
+          trend: recentAvg > olderAvg ? 'up' : 'down',
+          trendPercent: `${Math.abs(parseFloat(trendPercent))}%`,
+          lowestPrice: Math.min(...allPrices),
+          highestPrice: Math.max(...allPrices),
+          averagePrice:
+            Math.round((allPrices.reduce((sum, p) => sum + p, 0) / allPrices.length) * 100) / 100,
+          recommendation:
+            recentAvg > olderAvg
+              ? 'Consider buying soon as prices are rising'
+              : 'Prices are falling, might be worth waiting',
+          dataPoints: history.length,
+          dateRange: `${Math.max(1, days)} days`,
+        },
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    );
   } catch (error) {
     console.error('❌ Error in getPriceHistory:', error);
-    return new Response(JSON.stringify({
-      error: 'Failed to fetch price history',
-      details: error instanceof Error ? error.message : 'Unknown error occurred'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Failed to fetch price history',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 }
 
 async function addPriceAlert(supabase: any, alertData: PriceAlert) {
   console.log(`🔔 Adding price alert for ${alertData.productName}`);
-  
+
   // In a real implementation, this would be stored in the database
   // For now, we'll return a success response with the alert data
   const alert = {
     ...alertData,
     id: `alert_${Date.now()}`,
     createdAt: new Date().toISOString(),
-    isActive: true
+    isActive: true,
   };
 
-  return new Response(JSON.stringify({
-    success: true,
-    alert,
-    message: `Price alert set for ${alertData.productName} when price goes ${alertData.alertType} £${alertData.targetPrice}`
-  }), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  });
+  return new Response(
+    JSON.stringify({
+      success: true,
+      alert,
+      message: `Price alert set for ${alertData.productName} when price goes ${alertData.alertType} £${alertData.targetPrice}`,
+    }),
+    {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    }
+  );
 }
 
 async function getUserAlerts(supabase: any, { userId }: any) {
   console.log(`📱 Getting alerts for user ${userId}`);
-  
+
   try {
     // Mock user alerts with real current prices where possible
     const mockAlerts = [
@@ -216,22 +236,22 @@ async function getUserAlerts(supabase: any, { userId }: any) {
         id: 'alert_1',
         userId,
         productName: 'Twin & Earth Cable 2.5mm',
-        targetPrice: 80.00,
+        targetPrice: 80.0,
         supplier: 'Any',
         alertType: 'below' as const,
         isActive: true,
-        createdAt: '2024-08-30T10:00:00Z'
+        createdAt: '2024-08-30T10:00:00Z',
       },
       {
         id: 'alert_2',
         userId,
         productName: 'MCB 32A',
-        targetPrice: 15.00,
+        targetPrice: 15.0,
         supplier: 'Screwfix',
         alertType: 'below' as const,
         isActive: true,
-        createdAt: '2024-08-29T15:30:00Z'
-      }
+        createdAt: '2024-08-29T15:30:00Z',
+      },
     ];
 
     // Try to get current prices for alert products
@@ -245,19 +265,20 @@ async function getUserAlerts(supabase: any, { userId }: any) {
             .eq('supplier', alert.supplier === 'Any' ? 'Screwfix' : alert.supplier)
             .limit(1);
 
-          const currentPrice = currentPrices && currentPrices.length > 0 
-            ? parseFloat(currentPrices[0].price.toString())
-            : alert.targetPrice + 10; // Fallback price slightly above target
+          const currentPrice =
+            currentPrices && currentPrices.length > 0
+              ? parseFloat(currentPrices[0].price.toString())
+              : alert.targetPrice + 10; // Fallback price slightly above target
 
           return {
             ...alert,
-            currentPrice
+            currentPrice,
           };
         } catch (error) {
           console.error(`Error fetching current price for ${alert.productName}:`, error);
           return {
             ...alert,
-            currentPrice: alert.targetPrice + 10 // Fallback
+            currentPrice: alert.targetPrice + 10, // Fallback
           };
         }
       })
@@ -266,16 +287,18 @@ async function getUserAlerts(supabase: any, { userId }: any) {
     return new Response(JSON.stringify({ alerts: alertsWithCurrentPrices }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('❌ Error in getUserAlerts:', error);
-    return new Response(JSON.stringify({
-      error: 'Failed to fetch user alerts',
-      details: error instanceof Error ? error.message : 'Unknown error occurred'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Failed to fetch user alerts',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 }
 
@@ -285,7 +308,7 @@ async function calculateBulkPricing(data: any) {
 
   const bulkPricingData: BulkPricingData[] = products.map((product: any) => {
     const basePrice = parseFloat(product.price.replace('£', ''));
-    
+
     // Define bulk discount tiers
     const bulkDiscounts = [
       { minQuantity: 1, discountPercent: 0 },
@@ -293,14 +316,15 @@ async function calculateBulkPricing(data: any) {
       { minQuantity: 10, discountPercent: 5 },
       { minQuantity: 25, discountPercent: 8 },
       { minQuantity: 50, discountPercent: 12 },
-      { minQuantity: 100, discountPercent: 15 }
+      { minQuantity: 100, discountPercent: 15 },
     ];
 
     const quantityPricing = quantities.map((qty: number) => {
-      const applicableDiscount = bulkDiscounts
-        .filter(d => qty >= d.minQuantity)
-        .sort((a, b) => b.discountPercent - a.discountPercent)[0] || bulkDiscounts[0];
-      
+      const applicableDiscount =
+        bulkDiscounts
+          .filter((d) => qty >= d.minQuantity)
+          .sort((a, b) => b.discountPercent - a.discountPercent)[0] || bulkDiscounts[0];
+
       const unitPrice = basePrice * (1 - applicableDiscount.discountPercent / 100);
       const totalPrice = unitPrice * qty;
       const savings = (basePrice - unitPrice) * qty;
@@ -309,7 +333,7 @@ async function calculateBulkPricing(data: any) {
         quantity: qty,
         unitPrice: Math.round(unitPrice * 100) / 100,
         totalPrice: Math.round(totalPrice * 100) / 100,
-        savings: Math.round(savings * 100) / 100
+        savings: Math.round(savings * 100) / 100,
       };
     });
 
@@ -318,7 +342,7 @@ async function calculateBulkPricing(data: any) {
       supplier: product.supplier,
       unitPrice: basePrice,
       quantities: quantityPricing,
-      bulkDiscounts
+      bulkDiscounts,
     };
   });
 
@@ -329,33 +353,36 @@ async function calculateBulkPricing(data: any) {
 
 async function getSeasonalPatterns(supabase: any, { productCategory }: any) {
   console.log(`📅 Getting seasonal patterns for ${productCategory}`);
-  
+
   // Mock seasonal data
   const patterns = {
     cables: {
       spring: { trend: 'stable', change: '+1.2%', reason: 'Spring construction projects start' },
       summer: { trend: 'up', change: '+3.5%', reason: 'Peak construction season' },
       autumn: { trend: 'down', change: '-2.1%', reason: 'End of construction season' },
-      winter: { trend: 'stable', change: '+0.8%', reason: 'Indoor electrical work increases' }
+      winter: { trend: 'stable', change: '+0.8%', reason: 'Indoor electrical work increases' },
     },
     components: {
       spring: { trend: 'up', change: '+2.1%', reason: 'New project planning' },
       summer: { trend: 'up', change: '+4.2%', reason: 'High demand season' },
       autumn: { trend: 'down', change: '-1.8%', reason: 'Inventory clearance' },
-      winter: { trend: 'stable', change: '+0.5%', reason: 'Maintenance work' }
-    }
+      winter: { trend: 'stable', change: '+0.5%', reason: 'Maintenance work' },
+    },
   };
 
   const categoryPatterns = patterns[productCategory as keyof typeof patterns] || patterns.cables;
 
-  return new Response(JSON.stringify({
-    category: productCategory,
-    patterns: categoryPatterns,
-    currentSeason: getCurrentSeason(),
-    recommendation: getSeasonalRecommendation(categoryPatterns)
-  }), {
-    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-  });
+  return new Response(
+    JSON.stringify({
+      category: productCategory,
+      patterns: categoryPatterns,
+      currentSeason: getCurrentSeason(),
+      recommendation: getSeasonalRecommendation(categoryPatterns),
+    }),
+    {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    }
+  );
 }
 
 function getCurrentSeason(): string {
@@ -369,7 +396,7 @@ function getCurrentSeason(): string {
 function getSeasonalRecommendation(patterns: any): string {
   const currentSeason = getCurrentSeason();
   const current = patterns[currentSeason];
-  
+
   if (current.trend === 'up') {
     return 'Prices are typically higher this season. Consider buying in bulk or waiting for autumn.';
   } else if (current.trend === 'down') {

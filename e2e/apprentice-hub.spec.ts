@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { loginViaUI } from "./fixtures/auth";
+import { test, expect } from '@playwright/test';
+import { loginViaUI } from './fixtures/auth';
 
 /**
  * End-to-end tests for Apprentice Hub
@@ -15,20 +15,20 @@ import { loginViaUI } from "./fixtures/auth";
 // Configure retries for login timeout resilience during parallel execution
 test.describe.configure({ retries: 2 });
 
-test.describe("Apprentice Hub - Page Loading", () => {
+test.describe('Apprentice Hub - Page Loading', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("apprentice hub loads correctly", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('apprentice hub loads correctly', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("apprentice hub has hero section", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('apprentice hub has hero section', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // Look for "Apprentice Hub" text
@@ -38,33 +38,35 @@ test.describe("Apprentice Hub - Page Loading", () => {
     expect(hubCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("apprentice hub shows user name", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('apprentice hub shows user name', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // User name should be displayed in hero
-    const heroSection = page.locator("h1").first();
+    const heroSection = page.locator('h1').first();
     await expect(heroSection).toBeVisible();
   });
 
-  test("apprentice hub has back to dashboard button", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('apprentice hub has back to dashboard button', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
-    const backButton = page.locator('button:has-text("Back to Dashboard"), a:has-text("Back to Dashboard")').first();
+    const backButton = page
+      .locator('button:has-text("Back to Dashboard"), a:has-text("Back to Dashboard")')
+      .first();
     const buttonCount = await backButton.count();
 
     expect(buttonCount).toBeGreaterThanOrEqual(0);
   });
 });
 
-test.describe("Apprentice Hub - Stats Bar", () => {
+test.describe('Apprentice Hub - Stats Bar', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("stats bar is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('stats bar is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // Look for stats labels
@@ -73,15 +75,15 @@ test.describe("Apprentice Hub - Stats Bar", () => {
     const progress = page.locator('text="Progress"');
 
     const hasStats =
-      await ojtHours.count() > 0 ||
-      await studyStreak.count() > 0 ||
-      await progress.count() > 0;
+      (await ojtHours.count()) > 0 ||
+      (await studyStreak.count()) > 0 ||
+      (await progress.count()) > 0;
 
-    expect(hasStats || await page.locator("body").isVisible()).toBeTruthy();
+    expect(hasStats || (await page.locator('body').isVisible())).toBeTruthy();
   });
 
-  test("study streak stat is displayed", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('study streak stat is displayed', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // Look for "Study Streak" stat card
@@ -91,8 +93,8 @@ test.describe("Apprentice Hub - Stats Bar", () => {
     expect(streakCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("streak shows day count", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('streak shows day count', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // Look for "days" text near streak
@@ -103,8 +105,8 @@ test.describe("Apprentice Hub - Stats Bar", () => {
     expect(daysCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("streak badge shows on hero if active", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('streak badge shows on hero if active', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // Look for streak badge with flame icon
@@ -116,13 +118,13 @@ test.describe("Apprentice Hub - Stats Bar", () => {
   });
 });
 
-test.describe("Apprentice Hub - Essential Tools", () => {
+test.describe('Apprentice Hub - Essential Tools', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("essential tools section exists", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('essential tools section exists', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const essentialTools = page.locator('text="Essential Tools"');
@@ -131,8 +133,8 @@ test.describe("Apprentice Hub - Essential Tools", () => {
     expect(sectionCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("electrical calculators tool card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('electrical calculators tool card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const calculatorsCard = page.locator('text="Electrical Calculators"');
@@ -141,8 +143,8 @@ test.describe("Apprentice Hub - Essential Tools", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("mental health hub tool card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('mental health hub tool card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const mentalHealthCard = page.locator('text="Mental Health Hub"');
@@ -151,8 +153,8 @@ test.describe("Apprentice Hub - Essential Tools", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("inspection and testing tool card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('inspection and testing tool card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const inspectionCard = page.locator('text="Inspection & Testing"');
@@ -161,8 +163,8 @@ test.describe("Apprentice Hub - Essential Tools", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("can navigate to calculators from hub", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('can navigate to calculators from hub', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const calculatorsLink = page.locator('a[href*="calculators"]').first();
@@ -172,12 +174,12 @@ test.describe("Apprentice Hub - Essential Tools", () => {
       await page.waitForTimeout(2000);
 
       const url = page.url();
-      expect(url.includes("calculators") || await page.locator("body").isVisible()).toBeTruthy();
+      expect(url.includes('calculators') || (await page.locator('body').isVisible())).toBeTruthy();
     }
   });
 
-  test("can navigate to mental health hub", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('can navigate to mental health hub', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const mentalHealthLink = page.locator('a[href*="mental-health"]').first();
@@ -187,18 +189,20 @@ test.describe("Apprentice Hub - Essential Tools", () => {
       await page.waitForTimeout(2000);
 
       const url = page.url();
-      expect(url.includes("mental-health") || await page.locator("body").isVisible()).toBeTruthy();
+      expect(
+        url.includes('mental-health') || (await page.locator('body').isVisible())
+      ).toBeTruthy();
     }
   });
 });
 
-test.describe("Apprentice Hub - More Resources", () => {
+test.describe('Apprentice Hub - More Resources', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("more resources section exists", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('more resources section exists', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const moreResources = page.locator('text="More Resources"');
@@ -207,8 +211,8 @@ test.describe("Apprentice Hub - More Resources", () => {
     expect(sectionCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("on the job tools card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('on the job tools card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const onJobCard = page.locator('text="On the Job Tools"');
@@ -217,8 +221,8 @@ test.describe("Apprentice Hub - More Resources", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("guidance area card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('guidance area card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const guidanceCard = page.locator('text="Guidance Area"');
@@ -227,8 +231,8 @@ test.describe("Apprentice Hub - More Resources", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("career development card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('career development card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const careerCard = page.locator('text="Career Development"');
@@ -237,8 +241,8 @@ test.describe("Apprentice Hub - More Resources", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("study centre card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('study centre card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const studyCentreCard = page.locator('text="Study Centre"');
@@ -247,8 +251,8 @@ test.describe("Apprentice Hub - More Resources", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("can navigate to on job tools", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('can navigate to on job tools', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const onJobLink = page.locator('a[href*="on-job-tools"]').first();
@@ -258,12 +262,12 @@ test.describe("Apprentice Hub - More Resources", () => {
       await page.waitForTimeout(2000);
 
       const url = page.url();
-      expect(url.includes("on-job-tools") || await page.locator("body").isVisible()).toBeTruthy();
+      expect(url.includes('on-job-tools') || (await page.locator('body').isVisible())).toBeTruthy();
     }
   });
 
-  test("can navigate to toolbox", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('can navigate to toolbox', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const toolboxLink = page.locator('a[href*="toolbox"]').first();
@@ -273,12 +277,12 @@ test.describe("Apprentice Hub - More Resources", () => {
       await page.waitForTimeout(2000);
 
       const url = page.url();
-      expect(url.includes("toolbox") || await page.locator("body").isVisible()).toBeTruthy();
+      expect(url.includes('toolbox') || (await page.locator('body').isVisible())).toBeTruthy();
     }
   });
 
-  test("can navigate to study centre", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('can navigate to study centre', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const studyLink = page.locator('a[href*="study-centre"]').first();
@@ -288,18 +292,18 @@ test.describe("Apprentice Hub - More Resources", () => {
       await page.waitForTimeout(2000);
 
       const url = page.url();
-      expect(url.includes("study-centre") || await page.locator("body").isVisible()).toBeTruthy();
+      expect(url.includes('study-centre') || (await page.locator('body').isVisible())).toBeTruthy();
     }
   });
 });
 
-test.describe("Apprentice Hub - AI Study Assistant", () => {
+test.describe('Apprentice Hub - AI Study Assistant', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("AI powered learning section exists", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('AI powered learning section exists', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const aiSection = page.locator('text="AI-Powered Learning"');
@@ -308,8 +312,8 @@ test.describe("Apprentice Hub - AI Study Assistant", () => {
     expect(sectionCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("AI study assistant card is visible", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('AI study assistant card is visible', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const aiCard = page.locator('text="AI Study Assistant"');
@@ -318,8 +322,8 @@ test.describe("Apprentice Hub - AI Study Assistant", () => {
     expect(cardCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("can navigate to AI assistant", async ({ page }) => {
-    await page.goto("/apprentice");
+  test('can navigate to AI assistant', async ({ page }) => {
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     const aiLink = page.locator('a[href*="advanced-help"]').first();
@@ -329,24 +333,26 @@ test.describe("Apprentice Hub - AI Study Assistant", () => {
       await page.waitForTimeout(2000);
 
       const url = page.url();
-      expect(url.includes("advanced-help") || await page.locator("body").isVisible()).toBeTruthy();
+      expect(
+        url.includes('advanced-help') || (await page.locator('body').isVisible())
+      ).toBeTruthy();
     }
   });
 });
 
-test.describe("Apprentice Hub - Complete Navigation Flow", () => {
-  test("can navigate through all main sections from hub", async ({ page }) => {
+test.describe('Apprentice Hub - Complete Navigation Flow', () => {
+  test('can navigate through all main sections from hub', async ({ page }) => {
     await loginViaUI(page);
 
     // Start at apprentice hub
-    await page.goto("/apprentice");
+    await page.goto('/apprentice');
     await page.waitForTimeout(2000);
 
     // Verify hub loaded
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
 
     // Check we can access the main page elements
-    const h1 = page.locator("h1").first();
+    const h1 = page.locator('h1').first();
     await expect(h1).toBeVisible();
   });
 });

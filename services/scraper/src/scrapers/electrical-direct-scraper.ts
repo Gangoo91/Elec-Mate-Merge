@@ -43,7 +43,7 @@ export class ElectricalDirectScraper extends BaseScraper {
           '/consumer-units-distribution/rcbos',
           '/consumer-units-distribution/rcds',
         ],
-        'lighting': [
+        lighting: [
           '/lighting',
           '/lighting/led-panels',
           '/lighting/downlights',
@@ -99,14 +99,19 @@ export class ElectricalDirectScraper extends BaseScraper {
     }
 
     // Wait longer for Magento-based sites
-    await new Promise(r => setTimeout(r, 10000));
+    await new Promise((r) => setTimeout(r, 10000));
 
     // Try to detect when page has loaded
     try {
-      await page.waitForFunction(() => {
-        return document.querySelectorAll('[class*="product"]').length > 0 ||
-               document.body.innerText.includes('£');
-      }, { timeout: 10000 });
+      await page.waitForFunction(
+        () => {
+          return (
+            document.querySelectorAll('[class*="product"]').length > 0 ||
+            document.body.innerText.includes('£')
+          );
+        },
+        { timeout: 10000 }
+      );
     } catch {
       // Continue anyway
     }
@@ -131,182 +136,206 @@ export class ElectricalDirectScraper extends BaseScraper {
 
     try {
       extractedProducts = await page.evaluate(() => {
-      const items: Array<{
-        sku: string;
-        name: string;
-        currentPrice: string | null;
-        regularPrice: string | null;
-        imageUrl: string | null;
-        productUrl: string | null;
-        stockStatus?: string;
-        brand?: string | null;
-      }> = [];
+        const items: Array<{
+          sku: string;
+          name: string;
+          currentPrice: string | null;
+          regularPrice: string | null;
+          imageUrl: string | null;
+          productUrl: string | null;
+          stockStatus?: string;
+          brand?: string | null;
+        }> = [];
 
-      const seenSkus = new Set<string>();
+        const seenSkus = new Set<string>();
 
-      // Method 1: Look for JSON-LD structured data (common in e-commerce)
-      const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
-      jsonLdScripts.forEach((script) => {
-        try {
-          const data = JSON.parse(script.textContent || '');
-          if (data['@type'] === 'ItemList' && data.itemListElement) {
-            for (const item of data.itemListElement) {
-              const product = item.item || item;
-              if (product.sku && !seenSkus.has(product.sku)) {
-                seenSkus.add(product.sku);
+        // Method 1: Look for JSON-LD structured data (common in e-commerce)
+        const jsonLdScripts = document.querySelectorAll('script[type="application/ld+json"]');
+        jsonLdScripts.forEach((script) => {
+          try {
+            const data = JSON.parse(script.textContent || '');
+            if (data['@type'] === 'ItemList' && data.itemListElement) {
+              for (const item of data.itemListElement) {
+                const product = item.item || item;
+                if (product.sku && !seenSkus.has(product.sku)) {
+                  seenSkus.add(product.sku);
+                  items.push({
+                    sku: product.sku,
+                    name: product.name || '',
+                    currentPrice: product.offers?.price ? `£${product.offers.price}` : null,
+                    regularPrice: null,
+                    imageUrl: product.image || null,
+                    productUrl: product.url || null,
+                  });
+                }
+              }
+            } else if (data['@type'] === 'Product') {
+              if (data.sku && !seenSkus.has(data.sku)) {
+                seenSkus.add(data.sku);
                 items.push({
-                  sku: product.sku,
-                  name: product.name || '',
-                  currentPrice: product.offers?.price ? `£${product.offers.price}` : null,
+                  sku: data.sku,
+                  name: data.name || '',
+                  currentPrice: data.offers?.price ? `£${data.offers.price}` : null,
                   regularPrice: null,
-                  imageUrl: product.image || null,
-                  productUrl: product.url || null,
+                  imageUrl: data.image || null,
+                  productUrl: window.location.href,
                 });
               }
             }
-          } else if (data['@type'] === 'Product') {
-            if (data.sku && !seenSkus.has(data.sku)) {
-              seenSkus.add(data.sku);
-              items.push({
-                sku: data.sku,
-                name: data.name || '',
-                currentPrice: data.offers?.price ? `£${data.offers.price}` : null,
-                regularPrice: null,
-                imageUrl: data.image || null,
-                productUrl: window.location.href,
-              });
-            }
+          } catch (e) {
+            // Continue
           }
-        } catch (e) {
-          // Continue
-        }
-      });
+        });
 
-      if (items.length > 0) return items;
+        if (items.length > 0) return items;
 
-      // Method 2: Find Magento product cards
-      const cardSelectors = [
-        '.product-item',
-        '.product-items .item',
-        '[class*="products-grid"] .item',
-        '[class*="product-list"] .item',
-        'li.product-item',
-        '.products.list .item',
-        '[data-product-id]',
-      ];
+        // Method 2: Find Magento product cards
+        const cardSelectors = [
+          '.product-item',
+          '.product-items .item',
+          '[class*="products-grid"] .item',
+          '[class*="product-list"] .item',
+          'li.product-item',
+          '.products.list .item',
+          '[data-product-id]',
+        ];
 
-      for (const selector of cardSelectors) {
-        const cards = document.querySelectorAll(selector);
-        if (cards.length > 0) {
-          cards.forEach((card) => {
-            try {
-              const link = card.querySelector('a.product-item-link, a.product-item-photo, a[href*="/p/"]') as HTMLAnchorElement;
-              if (!link?.href) return;
+        for (const selector of cardSelectors) {
+          const cards = document.querySelectorAll(selector);
+          if (cards.length > 0) {
+            cards.forEach((card) => {
+              try {
+                const link = card.querySelector(
+                  'a.product-item-link, a.product-item-photo, a[href*="/p/"]'
+                ) as HTMLAnchorElement;
+                if (!link?.href) return;
 
-              // Get SKU from data attribute or URL
-              const sku = card.getAttribute('data-product-id') ||
-                         card.getAttribute('data-sku') ||
-                         link.href.match(/\/([A-Z0-9-]+)(?:\.html|\/|$)/i)?.[1] ||
-                         `ED-${Math.random().toString(36).substr(2, 8)}`;
+                // Get SKU from data attribute or URL
+                const sku =
+                  card.getAttribute('data-product-id') ||
+                  card.getAttribute('data-sku') ||
+                  link.href.match(/\/([A-Z0-9-]+)(?:\.html|\/|$)/i)?.[1] ||
+                  `ED-${Math.random().toString(36).substr(2, 8)}`;
 
-              if (seenSkus.has(sku)) return;
-              seenSkus.add(sku);
+                if (seenSkus.has(sku)) return;
+                seenSkus.add(sku);
 
-              // Get name
-              const nameEl = card.querySelector('.product-item-name, .product-item-link, h2, h3');
-              const name = nameEl?.textContent?.trim() || '';
-              if (!name || name.length < 3) return;
+                // Get name
+                const nameEl = card.querySelector('.product-item-name, .product-item-link, h2, h3');
+                const name = nameEl?.textContent?.trim() || '';
+                if (!name || name.length < 3) return;
 
-              // Get prices (Magento structure)
-              const priceEl = card.querySelector('.price-box .price, .price-final_price .price, [data-price-amount]');
-              const oldPriceEl = card.querySelector('.old-price .price, .price-was .price');
+                // Get prices (Magento structure)
+                const priceEl = card.querySelector(
+                  '.price-box .price, .price-final_price .price, [data-price-amount]'
+                );
+                const oldPriceEl = card.querySelector('.old-price .price, .price-was .price');
 
-              const currentPrice = priceEl?.textContent?.trim() || priceEl?.getAttribute('data-price-amount') || null;
-              const regularPrice = oldPriceEl?.textContent?.trim() || null;
+                const currentPrice =
+                  priceEl?.textContent?.trim() ||
+                  priceEl?.getAttribute('data-price-amount') ||
+                  null;
+                const regularPrice = oldPriceEl?.textContent?.trim() || null;
 
-              // Get image
-              const img = card.querySelector('img.product-image-photo, img') as HTMLImageElement;
+                // Get image
+                const img = card.querySelector('img.product-image-photo, img') as HTMLImageElement;
 
-              items.push({
-                sku,
-                name,
-                currentPrice: currentPrice?.includes('£') ? currentPrice : (currentPrice ? `£${currentPrice}` : null),
-                regularPrice: regularPrice?.includes('£') ? regularPrice : (regularPrice ? `£${regularPrice}` : null),
-                imageUrl: img?.src || img?.getAttribute('data-src') || null,
-                productUrl: link.href,
-              });
-            } catch (e) {
-              // Continue
-            }
-          });
-          if (items.length > 0) break;
-        }
-      }
-
-      if (items.length > 0) return items;
-
-      // Method 3: Generic fallback - find any product-like content
-      const allLinks = document.querySelectorAll('a[href*="/p/"], a[href*="-p-"], a[href*=".html"]');
-      allLinks.forEach((link) => {
-        try {
-          const anchor = link as HTMLAnchorElement;
-          const href = anchor.href;
-
-          // Skip obvious non-product links
-          if (href.includes('/category') || href.includes('/basket') || href.includes('/account')) return;
-
-          const skuMatch = href.match(/\/([A-Z0-9][A-Z0-9-]{3,})(?:\.html|\/|$)/i);
-          if (!skuMatch) return;
-
-          const sku = skuMatch[1].toUpperCase();
-          if (seenSkus.has(sku)) return;
-          seenSkus.add(sku);
-
-          // Find container
-          let container = anchor.parentElement;
-          for (let i = 0; i < 8 && container; i++) {
-            if (container.textContent?.match(/£\d/)) break;
-            container = container.parentElement;
+                items.push({
+                  sku,
+                  name,
+                  currentPrice: currentPrice?.includes('£')
+                    ? currentPrice
+                    : currentPrice
+                      ? `£${currentPrice}`
+                      : null,
+                  regularPrice: regularPrice?.includes('£')
+                    ? regularPrice
+                    : regularPrice
+                      ? `£${regularPrice}`
+                      : null,
+                  imageUrl: img?.src || img?.getAttribute('data-src') || null,
+                  productUrl: link.href,
+                });
+              } catch (e) {
+                // Continue
+              }
+            });
+            if (items.length > 0) break;
           }
-
-          const name = anchor.textContent?.trim() ||
-                      container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
-          if (!name || name.length < 3) return;
-
-          const text = container?.textContent || '';
-          const priceMatch = text.match(/£(\d+\.?\d*)/);
-
-          items.push({
-            sku,
-            name,
-            currentPrice: priceMatch ? priceMatch[0] : null,
-            regularPrice: null,
-            imageUrl: container?.querySelector('img')?.getAttribute('src') || null,
-            productUrl: href,
-          });
-        } catch (e) {
-          // Continue
         }
-      });
 
-      return items;
-    });
+        if (items.length > 0) return items;
+
+        // Method 3: Generic fallback - find any product-like content
+        const allLinks = document.querySelectorAll(
+          'a[href*="/p/"], a[href*="-p-"], a[href*=".html"]'
+        );
+        allLinks.forEach((link) => {
+          try {
+            const anchor = link as HTMLAnchorElement;
+            const href = anchor.href;
+
+            // Skip obvious non-product links
+            if (href.includes('/category') || href.includes('/basket') || href.includes('/account'))
+              return;
+
+            const skuMatch = href.match(/\/([A-Z0-9][A-Z0-9-]{3,})(?:\.html|\/|$)/i);
+            if (!skuMatch) return;
+
+            const sku = skuMatch[1].toUpperCase();
+            if (seenSkus.has(sku)) return;
+            seenSkus.add(sku);
+
+            // Find container
+            let container = anchor.parentElement;
+            for (let i = 0; i < 8 && container; i++) {
+              if (container.textContent?.match(/£\d/)) break;
+              container = container.parentElement;
+            }
+
+            const name =
+              anchor.textContent?.trim() ||
+              container?.querySelector('h2, h3, h4')?.textContent?.trim() ||
+              '';
+            if (!name || name.length < 3) return;
+
+            const text = container?.textContent || '';
+            const priceMatch = text.match(/£(\d+\.?\d*)/);
+
+            items.push({
+              sku,
+              name,
+              currentPrice: priceMatch ? priceMatch[0] : null,
+              regularPrice: null,
+              imageUrl: container?.querySelector('img')?.getAttribute('src') || null,
+              productUrl: href,
+            });
+          } catch (e) {
+            // Continue
+          }
+        });
+
+        return items;
+      });
     } catch (e) {
-      console.log(`  ElectricalDirect: Extraction failed for ${url} - ${e instanceof Error ? e.message : 'Unknown error'}`);
+      console.log(
+        `  ElectricalDirect: Extraction failed for ${url} - ${e instanceof Error ? e.message : 'Unknown error'}`
+      );
       return products;
     }
 
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
       // Extract brand
       let brand = item.brand;
       if (!brand) {
         const brands = ['Fluke', 'Megger', 'Kewtech', 'Martindale', 'Di-Log', 'Seaward', 'Robin'];
-        brand = brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+        brand = brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
       }
 
       products.push({
@@ -322,7 +351,8 @@ export class ElectricalDirectScraper extends BaseScraper {
         description: null,
         highlights: [],
         imageUrl: item.imageUrl,
-        productUrl: item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
+        productUrl:
+          item.productUrl || `${this.config.baseUrl}/search?q=${encodeURIComponent(item.name)}`,
         stockStatus: item.stockStatus || 'Unknown',
       });
     }
@@ -452,8 +482,18 @@ export class ElectricalDirectScraper extends BaseScraper {
         try {
           if (match[3] && isNaN(parseInt(match[3]))) {
             const months: Record<string, number> = {
-              january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-              july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+              january: 0,
+              february: 1,
+              march: 2,
+              april: 3,
+              may: 4,
+              june: 5,
+              july: 6,
+              august: 7,
+              september: 8,
+              october: 9,
+              november: 10,
+              december: 11,
             };
             const day = parseInt(match[1]);
             const month = months[match[3].toLowerCase()];
@@ -495,7 +535,9 @@ export class ElectricalDirectScraper extends BaseScraper {
       await this.waitForSelector(page, '.voucher-code, .coupon-item, .promo-code', 5000);
 
       const extractedCoupons = await page.evaluate(() => {
-        const items = document.querySelectorAll('.voucher-code, .coupon-item, .promo-code, [data-coupon]');
+        const items = document.querySelectorAll(
+          '.voucher-code, .coupon-item, .promo-code, [data-coupon]'
+        );
         const codes: Array<{
           code: string;
           description: string;
@@ -555,11 +597,17 @@ export class ElectricalDirectScraper extends BaseScraper {
   /**
    * Parse discount from text
    */
-  private parseDiscount(text: string | null): { discountType: 'percentage' | 'fixed' | 'free_delivery'; discountValue: number } {
+  private parseDiscount(text: string | null): {
+    discountType: 'percentage' | 'fixed' | 'free_delivery';
+    discountValue: number;
+  } {
     if (!text) return { discountType: 'percentage', discountValue: 0 };
 
     // Check for free delivery
-    if (text.toLowerCase().includes('free delivery') || text.toLowerCase().includes('free shipping')) {
+    if (
+      text.toLowerCase().includes('free delivery') ||
+      text.toLowerCase().includes('free shipping')
+    ) {
       return { discountType: 'free_delivery', discountValue: 0 };
     }
 

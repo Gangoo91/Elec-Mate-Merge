@@ -3,13 +3,14 @@
  * Creates an Express account for electricians and returns onboarding URL
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -38,12 +39,12 @@ serve(async (req) => {
     const allowedOrigins = [
       'http://localhost:',
       'https://www.elec-mate.com',
-      'https://elec-mate.com'
+      'https://elec-mate.com',
     ];
 
     let finalReturnUrl = 'https://www.elec-mate.com/electrician/invoices';
     if (returnUrl) {
-      const isAllowed = allowedOrigins.some(origin => returnUrl!.startsWith(origin));
+      const isAllowed = allowedOrigins.some((origin) => returnUrl!.startsWith(origin));
       if (isAllowed) {
         finalReturnUrl = returnUrl;
       }
@@ -59,46 +60,47 @@ serve(async (req) => {
       stripeKeyPrefix: stripeKey ? stripeKey.substring(0, 10) + '...' : 'MISSING',
       hasSupabaseUrl: !!supabaseUrl,
       hasSupabaseAnonKey: !!supabaseAnonKey,
-      returnUrl: finalReturnUrl
+      returnUrl: finalReturnUrl,
     });
 
     if (!stripeKey) {
-      return new Response(
-        JSON.stringify({ error: 'STRIPE_SECRET_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'STRIPE_SECRET_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Authenticate user
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('🔐 Auth header present, creating Supabase client...');
 
-    const supabase = createClient(
-      supabaseUrl!,
-      supabaseAnonKey!,
-      { global: { headers: { Authorization: authHeader } } }
-    );
+    const supabase = createClient(supabaseUrl!, supabaseAnonKey!, {
+      global: { headers: { Authorization: authHeader } },
+    });
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
 
     console.log('👤 Auth result:', {
       hasUser: !!user,
       userId: user?.id,
-      authError: authError?.message
+      authError: authError?.message,
     });
 
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized', details: authError?.message }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized', details: authError?.message }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`📱 Fetching profile for user: ${user.id}`);
@@ -114,11 +116,13 @@ serve(async (req) => {
       hasProfiles: !!profiles,
       profileCount: profiles?.length,
       profileError: profileError?.message,
-      firstProfile: profiles?.[0] ? {
-        hasStripeId: !!profiles[0].stripe_account_id,
-        status: profiles[0].stripe_account_status,
-        name: profiles[0].company_name
-      } : null
+      firstProfile: profiles?.[0]
+        ? {
+            hasStripeId: !!profiles[0].stripe_account_id,
+            status: profiles[0].stripe_account_status,
+            name: profiles[0].company_name,
+          }
+        : null,
     });
 
     if (profileError) {
@@ -135,7 +139,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({
           error: 'Please complete your company profile first before connecting Stripe.',
-          action: 'Go to Settings > Company Profile'
+          action: 'Go to Settings > Company Profile',
         }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -145,20 +149,26 @@ serve(async (req) => {
     if (profile.stripe_account_id && profile.stripe_account_status === 'active') {
       console.log('📊 User has active Stripe account, creating login link...');
 
-      const loginResponse = await fetch(`https://api.stripe.com/v1/accounts/${profile.stripe_account_id}/login_links`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${stripeKey}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      });
+      const loginResponse = await fetch(
+        `https://api.stripe.com/v1/accounts/${profile.stripe_account_id}/login_links`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${stripeKey}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
 
       const loginData = await loginResponse.json();
       console.log('🔗 Login link response:', { ok: loginResponse.ok, hasUrl: !!loginData.url });
 
       if (!loginResponse.ok) {
         return new Response(
-          JSON.stringify({ error: 'Failed to create Stripe dashboard link', details: loginData.error?.message }),
+          JSON.stringify({
+            error: 'Failed to create Stripe dashboard link',
+            details: loginData.error?.message,
+          }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -167,7 +177,7 @@ serve(async (req) => {
         JSON.stringify({
           url: loginData.url,
           type: 'dashboard',
-          message: 'Stripe account already connected'
+          message: 'Stripe account already connected',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -186,7 +196,7 @@ serve(async (req) => {
       const linkResponse = await fetch('https://api.stripe.com/v1/account_links', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${stripeKey}`,
+          Authorization: `Bearer ${stripeKey}`,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: linkParams.toString(),
@@ -197,7 +207,10 @@ serve(async (req) => {
 
       if (!linkResponse.ok) {
         return new Response(
-          JSON.stringify({ error: 'Failed to create onboarding link', details: linkData.error?.message }),
+          JSON.stringify({
+            error: 'Failed to create onboarding link',
+            details: linkData.error?.message,
+          }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
@@ -206,7 +219,7 @@ serve(async (req) => {
         JSON.stringify({
           url: linkData.url,
           type: 'onboarding',
-          accountId: profile.stripe_account_id
+          accountId: profile.stripe_account_id,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -232,7 +245,7 @@ serve(async (req) => {
     const accountResponse = await fetch('https://api.stripe.com/v1/accounts', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${stripeKey}`,
+        Authorization: `Bearer ${stripeKey}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: accountParams.toString(),
@@ -242,7 +255,7 @@ serve(async (req) => {
     console.log('💳 Account creation response:', {
       ok: accountResponse.ok,
       accountId: accountData.id,
-      error: accountData.error?.message
+      error: accountData.error?.message,
     });
 
     if (!accountResponse.ok) {
@@ -256,9 +269,10 @@ serve(async (req) => {
       if (isPlatformReviewError) {
         return new Response(
           JSON.stringify({
-            error: 'Card payments coming soon! Our payment system is being set up and will be available shortly.',
+            error:
+              'Card payments coming soon! Our payment system is being set up and will be available shortly.',
             details: 'Platform under review',
-            isPlatformSetup: true
+            isPlatformSetup: true,
           }),
           { status: 503, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
@@ -268,7 +282,7 @@ serve(async (req) => {
         JSON.stringify({
           error: 'Failed to create Stripe account',
           details: accountData.error?.message,
-          stripeError: accountData.error
+          stripeError: accountData.error,
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -301,21 +315,24 @@ serve(async (req) => {
     const onboardingResponse = await fetch('https://api.stripe.com/v1/account_links', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${stripeKey}`,
+        Authorization: `Bearer ${stripeKey}`,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: onboardingParams.toString(),
     });
 
     const onboardingData = await onboardingResponse.json();
-    console.log('🔗 Onboarding link response:', { ok: onboardingResponse.ok, hasUrl: !!onboardingData.url });
+    console.log('🔗 Onboarding link response:', {
+      ok: onboardingResponse.ok,
+      hasUrl: !!onboardingData.url,
+    });
 
     if (!onboardingResponse.ok) {
       return new Response(
         JSON.stringify({
           error: 'Failed to create onboarding link',
           details: onboardingData.error?.message,
-          accountId: accountData.id // Return the account ID so we know it was created
+          accountId: accountData.id, // Return the account ID so we know it was created
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -327,25 +344,24 @@ serve(async (req) => {
       JSON.stringify({
         url: onboardingData.url,
         type: 'onboarding',
-        accountId: accountData.id
+        accountId: accountData.id,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('❌ Unexpected error:', error.message);
     console.error('❌ Stack:', error.stack);
     await captureException(error, {
       functionName: 'create-stripe-connect-account',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     return new Response(
       JSON.stringify({
         error: error.message || 'Unknown error',
         type: error.name,
-        stack: error.stack
+        stack: error.stack,
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

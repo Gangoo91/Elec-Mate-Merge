@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
-}
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+};
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -13,10 +14,10 @@ serve(async (req) => {
 
   try {
     const { postcode, radius = 15000, courseType = 'electrical', lat, lng } = await req.json();
-    
+
     if (!postcode && (!lat || !lng)) {
       return new Response(
-        JSON.stringify({ error: "Either postcode or coordinates (lat, lng) are required" }),
+        JSON.stringify({ error: 'Either postcode or coordinates (lat, lng) are required' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -24,10 +25,10 @@ serve(async (req) => {
     const googleApiKey = Deno.env.get('GoogleAPI');
     if (!googleApiKey) {
       console.error('Google Maps API key not found in environment variables');
-      return new Response(
-        JSON.stringify({ error: "Google Maps API key not configured" }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Google Maps API key not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     let location: { lat: number; lng: number };
@@ -41,17 +42,17 @@ serve(async (req) => {
     } else {
       // Convert postcode → lat/lng
       console.log(`Searching for training providers near: ${postcode} within ${radius}m`);
-      
+
       const geoRes = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(postcode)}&key=${googleApiKey}`
       );
       const geoData = await geoRes.json();
 
       if (!geoData.results?.length) {
-        return new Response(
-          JSON.stringify({ error: "Location not found" }),
-          { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        return new Response(JSON.stringify({ error: 'Location not found' }), {
+          status: 404,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
 
       location = geoData.results[0].geometry.location;
@@ -61,7 +62,7 @@ serve(async (req) => {
 
     // 2. Multiple search strategies for comprehensive results
     let allResults: any[] = [];
-    
+
     const searchQueries = [
       `"electrical training" courses ${searchLocation}`,
       `"electrical qualifications" center ${searchLocation}`,
@@ -77,7 +78,7 @@ serve(async (req) => {
       `"City & Guilds" electrical training ${searchLocation}`,
       `"EAL" electrical qualifications ${searchLocation}`,
       `"NICEIC Training" electrical ${searchLocation}`,
-      `"Pearson BTEC" electrical engineering ${searchLocation}`
+      `"Pearson BTEC" electrical engineering ${searchLocation}`,
     ];
 
     console.log(`Searching with ${searchQueries.length} different queries...`);
@@ -95,7 +96,7 @@ serve(async (req) => {
           // Add results with search context
           const resultsWithContext = placesData.results.map((result: any) => ({
             ...result,
-            search_context: query
+            search_context: query,
           }));
           allResults = [...allResults, ...resultsWithContext];
           console.log(`Found ${placesData.results.length} results for: ${query}`);
@@ -106,32 +107,36 @@ serve(async (req) => {
     }
 
     // Remove duplicates based on place_id
-    const uniqueResults = allResults.filter((result, index, self) => 
-      index === self.findIndex(r => r.place_id === result.place_id)
+    const uniqueResults = allResults.filter(
+      (result, index, self) => index === self.findIndex((r) => r.place_id === result.place_id)
     );
 
     console.log(`Total unique results found: ${uniqueResults.length}`);
 
     if (!uniqueResults.length) {
       return new Response(
-        JSON.stringify({ error: 'No training providers found in your area. Try expanding your search radius or search in a different location.' }),
-        { 
+        JSON.stringify({
+          error:
+            'No training providers found in your area. Try expanding your search radius or search in a different location.',
+        }),
+        {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 404
+          status: 404,
         }
       );
     }
 
     // 3. Enrich results with additional details using Place Details API
     const enrichedProviders = await Promise.all(
-      uniqueResults.slice(0, 20).map(async (place: any) => { // Limit to 20 for performance
+      uniqueResults.slice(0, 20).map(async (place: any) => {
+        // Limit to 20 for performance
         try {
           // Get detailed information for each place
           const detailsRes = await fetch(
             `https://maps.googleapis.com/maps/api/place/details/json?place_id=${place.place_id}&fields=name,formatted_address,geometry,rating,user_ratings_total,formatted_phone_number,website,opening_hours,business_status,types,price_level,photos&key=${googleApiKey}`
           );
           const detailsData = await detailsRes.json();
-          
+
           if (detailsData.status === 'OK' && detailsData.result) {
             const details = detailsData.result;
             return {
@@ -150,13 +155,13 @@ serve(async (req) => {
               photos: details.photos?.slice(0, 3), // First 3 photos
               search_context: place.search_context,
               category: getCategoryFromTypes(details.types || []),
-              quality_score: 0 // Will be calculated later
+              quality_score: 0, // Will be calculated later
             };
           }
         } catch (error) {
           console.warn(`Failed to get details for ${place.name}:`, error);
         }
-        
+
         // Fallback to basic info if details API fails
         return {
           place_id: place.place_id,
@@ -169,7 +174,7 @@ serve(async (req) => {
           business_status: place.business_status,
           search_context: place.search_context,
           category: getCategoryFromTypes(place.types || []),
-          quality_score: 0 // Will be calculated later
+          quality_score: 0, // Will be calculated later
         };
       })
     );
@@ -177,16 +182,31 @@ serve(async (req) => {
     // Helper function to categorize providers and filter out non-educational businesses
     function getCategoryFromTypes(types: string[]): string | null {
       // Exclude commercial electrical businesses
-      const commercialTypes = ['electrician', 'contractor', 'plumber', 'home_goods_store', 'store', 'hardware_store', 'general_contractor'];
-      if (types.some(t => commercialTypes.some(ct => t.includes(ct)))) {
+      const commercialTypes = [
+        'electrician',
+        'contractor',
+        'plumber',
+        'home_goods_store',
+        'store',
+        'hardware_store',
+        'general_contractor',
+      ];
+      if (types.some((t) => commercialTypes.some((ct) => t.includes(ct)))) {
         return null; // Filter out commercial businesses
       }
 
       // Educational institution types
-      if (types.some(t => ['university', 'school'].some(et => t.includes(et)))) return 'University';
-      if (types.some(t => ['school', 'secondary_school', 'primary_school'].some(et => t.includes(et)))) return 'College';
-      if (types.some(t => ['establishment', 'point_of_interest'].some(et => t.includes(et)))) return 'Training Centre';
-      
+      if (types.some((t) => ['university', 'school'].some((et) => t.includes(et))))
+        return 'University';
+      if (
+        types.some((t) =>
+          ['school', 'secondary_school', 'primary_school'].some((et) => t.includes(et))
+        )
+      )
+        return 'College';
+      if (types.some((t) => ['establishment', 'point_of_interest'].some((et) => t.includes(et))))
+        return 'Training Centre';
+
       return 'Educational Institution';
     }
 
@@ -194,67 +214,158 @@ serve(async (req) => {
     function isLegitimateTrainingProvider(place: any): boolean {
       const name = place.name?.toLowerCase() || '';
       const address = place.vicinity?.toLowerCase() || '';
-      
+
       // Educational keywords that indicate legitimate training providers
       const educationalKeywords = [
-        'college', 'university', 'training', 'centre', 'center', 'institute', 'academy', 
-        'school', 'education', 'learning', 'campus', 'city & guilds', 'eal', 'niceic training',
-        'pearson', 'btec', 'nvq', 'apprenticeship', 'qualifications'
+        'college',
+        'university',
+        'training',
+        'centre',
+        'center',
+        'institute',
+        'academy',
+        'school',
+        'education',
+        'learning',
+        'campus',
+        'city & guilds',
+        'eal',
+        'niceic training',
+        'pearson',
+        'btec',
+        'nvq',
+        'apprenticeship',
+        'qualifications',
       ];
-      
+
       // Electrical/Engineering/Tech/Safety specific keywords (MUST have at least one)
       const relevantSubjectKeywords = [
-        'electrical', 'engineering', 'technical', 'technology', 'tech', 'safety', 
-        'health and safety', 'electrical engineering', 'electronic', 'electronics',
-        '18th edition', 'pat testing', 'inspection', 'testing', 'installation',
-        'wiring', 'circuits', 'renewable energy', 'solar', 'automation',
-        'mechanical engineering', 'civil engineering', 'construction', 'building services'
+        'electrical',
+        'engineering',
+        'technical',
+        'technology',
+        'tech',
+        'safety',
+        'health and safety',
+        'electrical engineering',
+        'electronic',
+        'electronics',
+        '18th edition',
+        'pat testing',
+        'inspection',
+        'testing',
+        'installation',
+        'wiring',
+        'circuits',
+        'renewable energy',
+        'solar',
+        'automation',
+        'mechanical engineering',
+        'civil engineering',
+        'construction',
+        'building services',
       ];
-      
+
       // Non-electrical training to exclude
       const irrelevantSubjects = [
-        'beauty', 'hairdressing', 'cosmetology', 'massage', 'beauty therapy',
-        'language', 'english', 'french', 'spanish', 'german', 'chinese',
-        'business studies', 'management', 'accounting', 'finance', 'marketing',
-        'art', 'design', 'creative', 'music', 'drama', 'dance', 'performing arts',
-        'cooking', 'culinary', 'catering', 'hospitality', 'food',
-        'driving school', 'driving instructor', 'motoring',
-        'fitness', 'personal training', 'gym', 'sports', 'yoga',
-        'childcare', 'nursery', 'early years', 'teaching assistant',
-        'healthcare', 'nursing', 'medical', 'dental', 'pharmacy',
-        'law', 'legal', 'solicitor', 'barrister'
+        'beauty',
+        'hairdressing',
+        'cosmetology',
+        'massage',
+        'beauty therapy',
+        'language',
+        'english',
+        'french',
+        'spanish',
+        'german',
+        'chinese',
+        'business studies',
+        'management',
+        'accounting',
+        'finance',
+        'marketing',
+        'art',
+        'design',
+        'creative',
+        'music',
+        'drama',
+        'dance',
+        'performing arts',
+        'cooking',
+        'culinary',
+        'catering',
+        'hospitality',
+        'food',
+        'driving school',
+        'driving instructor',
+        'motoring',
+        'fitness',
+        'personal training',
+        'gym',
+        'sports',
+        'yoga',
+        'childcare',
+        'nursery',
+        'early years',
+        'teaching assistant',
+        'healthcare',
+        'nursing',
+        'medical',
+        'dental',
+        'pharmacy',
+        'law',
+        'legal',
+        'solicitor',
+        'barrister',
       ];
-      
+
       // Commercial electrical business patterns to exclude
       const commercialPatterns = [
-        'electrical services', 'electrical contractor', 'electrical installation', 
-        'electrical repairs', 'electrician', 'electrical solutions', 'electrical maintenance',
-        'electrical testing', 'electrical company', 'electrical ltd', 'electrical limited',
-        'heating', 'plumbing', 'building services', 'property maintenance', 'solar panels'
+        'electrical services',
+        'electrical contractor',
+        'electrical installation',
+        'electrical repairs',
+        'electrician',
+        'electrical solutions',
+        'electrical maintenance',
+        'electrical testing',
+        'electrical company',
+        'electrical ltd',
+        'electrical limited',
+        'heating',
+        'plumbing',
+        'building services',
+        'property maintenance',
+        'solar panels',
       ];
-      
+
       // Check if name contains educational keywords
-      const hasEducationalKeywords = educationalKeywords.some(keyword => 
-        name.includes(keyword) || address.includes(keyword)
+      const hasEducationalKeywords = educationalKeywords.some(
+        (keyword) => name.includes(keyword) || address.includes(keyword)
       );
-      
+
       // Check if it's relevant to electrical/engineering/tech/safety
-      const hasRelevantSubject = relevantSubjectKeywords.some(keyword => 
-        name.includes(keyword) || address.includes(keyword)
+      const hasRelevantSubject = relevantSubjectKeywords.some(
+        (keyword) => name.includes(keyword) || address.includes(keyword)
       );
-      
+
       // Check if it's an irrelevant training provider
-      const hasIrrelevantSubject = irrelevantSubjects.some(subject => 
-        name.includes(subject) || address.includes(subject)
+      const hasIrrelevantSubject = irrelevantSubjects.some(
+        (subject) => name.includes(subject) || address.includes(subject)
       );
-      
+
       // Check if name contains commercial patterns to exclude
-      const hasCommercialPatterns = commercialPatterns.some(pattern => 
-        name.includes(pattern) || address.includes(pattern)
+      const hasCommercialPatterns = commercialPatterns.some(
+        (pattern) => name.includes(pattern) || address.includes(pattern)
       );
-      
+
       // Must have educational keywords AND relevant subject AND not irrelevant AND not commercial
-      return hasEducationalKeywords && hasRelevantSubject && !hasIrrelevantSubject && !hasCommercialPatterns;
+      return (
+        hasEducationalKeywords &&
+        hasRelevantSubject &&
+        !hasIrrelevantSubject &&
+        !hasCommercialPatterns
+      );
     }
 
     // Calculate quality score for ranking electrical/engineering/tech/safety providers
@@ -262,51 +373,73 @@ serve(async (req) => {
       let score = 0;
       const name = place.name?.toLowerCase() || '';
       const types = place.types || [];
-      
+
       // Higher score for educational institution types
-      if (types.some((t: string) => ['university', 'school'].some(et => t.includes(et)))) score += 50;
-      if (types.some((t: string) => ['establishment', 'point_of_interest'].some(et => t.includes(et)))) score += 30;
-      
+      if (types.some((t: string) => ['university', 'school'].some((et) => t.includes(et))))
+        score += 50;
+      if (
+        types.some((t: string) =>
+          ['establishment', 'point_of_interest'].some((et) => t.includes(et))
+        )
+      )
+        score += 30;
+
       // Higher score for educational keywords in name
-      const premiumKeywords = ['college', 'university', 'training center', 'training centre', 'institute'];
-      if (premiumKeywords.some(keyword => name.includes(keyword))) score += 40;
-      
+      const premiumKeywords = [
+        'college',
+        'university',
+        'training center',
+        'training centre',
+        'institute',
+      ];
+      if (premiumKeywords.some((keyword) => name.includes(keyword))) score += 40;
+
       // Bonus for electrical/engineering specific keywords
       const electricalKeywords = ['electrical', 'engineering', 'technical', 'technology'];
-      if (electricalKeywords.some(keyword => name.includes(keyword))) score += 30;
-      
+      if (electricalKeywords.some((keyword) => name.includes(keyword))) score += 30;
+
       // Bonus for specific electrical qualifications
-      const qualificationKeywords = ['18th edition', 'pat testing', 'inspection', 'city & guilds', 'eal'];
-      if (qualificationKeywords.some(keyword => name.includes(keyword))) score += 25;
-      
+      const qualificationKeywords = [
+        '18th edition',
+        'pat testing',
+        'inspection',
+        'city & guilds',
+        'eal',
+      ];
+      if (qualificationKeywords.some((keyword) => name.includes(keyword))) score += 25;
+
       // Higher score for known electrical training providers
       const knownProviders = ['city & guilds', 'eal', 'niceic training', 'pearson', 'btec'];
-      if (knownProviders.some(provider => name.includes(provider))) score += 60;
-      
+      if (knownProviders.some((provider) => name.includes(provider))) score += 60;
+
       // Bonus for engineering colleges/technical colleges
-      const engineeringKeywords = ['engineering college', 'technical college', 'engineering institute'];
-      if (engineeringKeywords.some(keyword => name.includes(keyword))) score += 35;
-      
+      const engineeringKeywords = [
+        'engineering college',
+        'technical college',
+        'engineering institute',
+      ];
+      if (engineeringKeywords.some((keyword) => name.includes(keyword))) score += 35;
+
       // Rating bonus
       if (place.rating >= 4.0) score += 20;
       if (place.rating >= 4.5) score += 10;
-      
+
       // Reviews count bonus
       if (place.user_ratings_total >= 10) score += 10;
       if (place.user_ratings_total >= 50) score += 10;
-      
+
       return score;
     }
 
     // Enhanced filtering and scoring
     const providers = enrichedProviders
-      .filter(p => p !== null && p.category !== null) // Filter out commercial businesses
-      .filter(p => isLegitimateTrainingProvider(p)) // Additional validation
-      .map(p => ({
+      .filter((p) => p !== null && p.category !== null) // Filter out commercial businesses
+      .filter((p) => isLegitimateTrainingProvider(p)) // Additional validation
+      .map((p) => ({
         ...p,
-        quality_score: calculateQualityScore(p)
+        quality_score: calculateQualityScore(p),
       }))
-      .filter(p => p.quality_score >= 30) // Minimum quality threshold
+      .filter((p) => p.quality_score >= 30) // Minimum quality threshold
       .sort((a, b) => {
         // Sort by quality score first, then rating
         if (b.quality_score !== a.quality_score) {
@@ -318,26 +451,28 @@ serve(async (req) => {
     console.log(`Returning ${providers.length} filtered training providers`);
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         providers: providers,
         search_location: {
           postcode: postcode || null,
           coordinates: { lat: location.lat, lng: location.lng },
           lat: location.lat,
           lng: location.lng,
-          radius_km: radius / 1000
-        }
+          radius_km: radius / 1000,
+        },
       }),
-      { 
-        status: 200, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error) {
     console.error('Error in find-training-providers:', error);
     return new Response(
-      JSON.stringify({ error: "Internal server error", details: error instanceof Error ? error.message : 'Unknown error occurred' }),
+      JSON.stringify({
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
@@ -346,12 +481,14 @@ serve(async (req) => {
 // Helper function to calculate distance between two points
 function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
   const R = 3959; // Earth's radius in miles
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = 
-    Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-    Math.sin(dLon/2) * Math.sin(dLon/2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }

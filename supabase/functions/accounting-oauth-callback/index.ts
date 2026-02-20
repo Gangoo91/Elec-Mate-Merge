@@ -27,9 +27,10 @@ const FRONTEND_URL = Deno.env.get('FRONTEND_URL') || 'https://elec-mate.com';
 
 // QuickBooks environment - defaults to sandbox for safety
 const QUICKBOOKS_ENVIRONMENT = Deno.env.get('QUICKBOOKS_ENVIRONMENT') || 'sandbox';
-const QUICKBOOKS_BASE_URL = QUICKBOOKS_ENVIRONMENT === 'production'
-  ? 'https://quickbooks.api.intuit.com'
-  : 'https://sandbox-quickbooks.api.intuit.com';
+const QUICKBOOKS_BASE_URL =
+  QUICKBOOKS_ENVIRONMENT === 'production'
+    ? 'https://quickbooks.api.intuit.com'
+    : 'https://sandbox-quickbooks.api.intuit.com';
 
 type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
 
@@ -93,41 +94,40 @@ serve(async (req: Request) => {
     switch (provider) {
       case 'xero':
         tokenData = await withRetry(
-          () => withTimeout(
-            exchangeXeroCode(code),
-            Timeouts.STANDARD,
-            'Xero token exchange'
-          ),
+          () => withTimeout(exchangeXeroCode(code), Timeouts.STANDARD, 'Xero token exchange'),
           RetryPresets.STANDARD
         );
         // Get Xero tenant info
         tenantInfo = await withRetry(
-          () => withTimeout(
-            getXeroTenants(tokenData.access_token),
-            Timeouts.STANDARD,
-            'Xero tenant fetch'
-          ),
+          () =>
+            withTimeout(
+              getXeroTenants(tokenData.access_token),
+              Timeouts.STANDARD,
+              'Xero tenant fetch'
+            ),
           RetryPresets.STANDARD
         );
         break;
 
       case 'quickbooks':
         tokenData = await withRetry(
-          () => withTimeout(
-            exchangeQuickBooksCode(code),
-            Timeouts.STANDARD,
-            'QuickBooks token exchange'
-          ),
+          () =>
+            withTimeout(
+              exchangeQuickBooksCode(code),
+              Timeouts.STANDARD,
+              'QuickBooks token exchange'
+            ),
           RetryPresets.STANDARD
         );
         // QuickBooks provides realmId in callback
         if (realmId) {
           tenantInfo = await withRetry(
-            () => withTimeout(
-              getQuickBooksCompanyInfo(tokenData.access_token, realmId),
-              Timeouts.STANDARD,
-              'QuickBooks company fetch'
-            ),
+            () =>
+              withTimeout(
+                getQuickBooksCompanyInfo(tokenData.access_token, realmId),
+                Timeouts.STANDARD,
+                'QuickBooks company fetch'
+              ),
             RetryPresets.STANDARD
           );
         }
@@ -136,11 +136,7 @@ serve(async (req: Request) => {
       case 'sage': {
         // Sage token response includes resource_owner_id which is REQUIRED for all API calls
         const sageTokenResponse = await withRetry(
-          () => withTimeout(
-            exchangeSageCode(code),
-            Timeouts.STANDARD,
-            'Sage token exchange'
-          ),
+          () => withTimeout(exchangeSageCode(code), Timeouts.STANDARD, 'Sage token exchange'),
           RetryPresets.STANDARD
         );
         tokenData = sageTokenResponse;
@@ -152,11 +148,12 @@ serve(async (req: Request) => {
         if (resourceOwnerId) {
           // Get business info using the resource_owner_id as X-Site header
           tenantInfo = await withRetry(
-            () => withTimeout(
-              getSageBusinessInfo(tokenData.access_token, resourceOwnerId),
-              Timeouts.STANDARD,
-              'Sage business fetch'
-            ),
+            () =>
+              withTimeout(
+                getSageBusinessInfo(tokenData.access_token, resourceOwnerId),
+                Timeouts.STANDARD,
+                'Sage business fetch'
+              ),
             RetryPresets.STANDARD
           );
           // Ensure we use resource_owner_id as the tenantId
@@ -170,19 +167,21 @@ serve(async (req: Request) => {
 
       case 'freshbooks':
         tokenData = await withRetry(
-          () => withTimeout(
-            exchangeFreshBooksCode(code),
-            Timeouts.STANDARD,
-            'FreshBooks token exchange'
-          ),
+          () =>
+            withTimeout(
+              exchangeFreshBooksCode(code),
+              Timeouts.STANDARD,
+              'FreshBooks token exchange'
+            ),
           RetryPresets.STANDARD
         );
         tenantInfo = await withRetry(
-          () => withTimeout(
-            getFreshBooksIdentity(tokenData.access_token),
-            Timeouts.STANDARD,
-            'FreshBooks identity fetch'
-          ),
+          () =>
+            withTimeout(
+              getFreshBooksIdentity(tokenData.access_token),
+              Timeouts.STANDARD,
+              'FreshBooks identity fetch'
+            ),
           RetryPresets.STANDARD
         );
         break;
@@ -200,9 +199,8 @@ serve(async (req: Request) => {
     const expiresAt = new Date(Date.now() + tokenData.expires_in * 1000);
 
     // Store tokens in database (upsert)
-    const { error: upsertError } = await supabase
-      .from('accounting_oauth_tokens')
-      .upsert({
+    const { error: upsertError } = await supabase.from('accounting_oauth_tokens').upsert(
+      {
         user_id: userId,
         provider,
         encrypted_access_token: encryptedAccessToken,
@@ -211,9 +209,11 @@ serve(async (req: Request) => {
         tenant_id: tenantInfo?.tenantId || realmId || null,
         tenant_name: tenantInfo?.tenantName || null,
         updated_at: new Date().toISOString(),
-      }, {
+      },
+      {
         onConflict: 'user_id,provider',
-      });
+      }
+    );
 
     if (upsertError) {
       console.error('Failed to store accounting tokens:', upsertError);
@@ -270,7 +270,7 @@ serve(async (req: Request) => {
     await captureException(error, {
       functionName: 'accounting-oauth-callback',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     // Redirect with error
     return new Response(null, {
@@ -292,7 +292,7 @@ async function exchangeXeroCode(code: string): Promise<TokenResponse> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${btoa(`${XERO_CLIENT_ID}:${XERO_CLIENT_SECRET}`)}`,
+      Authorization: `Basic ${btoa(`${XERO_CLIENT_ID}:${XERO_CLIENT_SECRET}`)}`,
     },
     body: new URLSearchParams({
       code,
@@ -337,8 +337,8 @@ async function exchangeQuickBooksCode(code: string): Promise<TokenResponse> {
     method: 'POST',
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': `Basic ${btoa(`${QUICKBOOKS_CLIENT_ID}:${QUICKBOOKS_CLIENT_SECRET}`)}`,
-      'Accept': 'application/json',
+      Authorization: `Basic ${btoa(`${QUICKBOOKS_CLIENT_ID}:${QUICKBOOKS_CLIENT_SECRET}`)}`,
+      Accept: 'application/json',
     },
     body: new URLSearchParams({
       code,
@@ -403,7 +403,10 @@ async function exchangeSageCode(code: string): Promise<TokenResponse> {
   return await response.json();
 }
 
-async function getSageBusinessInfo(accessToken: string, resourceOwnerId: string): Promise<TenantInfo> {
+async function getSageBusinessInfo(
+  accessToken: string,
+  resourceOwnerId: string
+): Promise<TenantInfo> {
   // Sage API requires X-Site header with resource_owner_id for all requests
   const response = await fetch('https://api.accounting.sage.com/v3.1/business', {
     headers: {

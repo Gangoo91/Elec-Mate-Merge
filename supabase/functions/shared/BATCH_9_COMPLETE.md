@@ -3,10 +3,12 @@
 ## Files Created:
 
 ### 1. `bs7671SolarPV_RingRadial.ts`
+
 **Section 712: Solar Photovoltaic (PV) Power Supply Systems**
 **Appendix 15: Ring and Radial Final Circuit Arrangements**
 
 #### Solar PV Systems (Section 712):
+
 - ✅ PV system scope (grid-tied, off-grid, hybrid) - Reg 712.1
 - ✅ DC side earthing requirements - Reg 712.312.2
 - ✅ **CRITICAL**: DC side always energized warning - Reg 712.410.101
@@ -23,6 +25,7 @@
 - ✅ Lightning protection guidance (BS EN 62305)
 
 #### Ring and Radial Circuits (Appendix 15):
+
 - ✅ Ring final circuit 32A (2.5mm²) - 100m² guidance - Reg 433.1.204
 - ✅ Ring final circuit 40A (4mm²) - Larger areas
 - ✅ Radial circuit 20A (2.5mm²) - 50m² guidance
@@ -36,6 +39,7 @@
 ## Knowledge Now Available to Agents:
 
 ### Designer Agent:
+
 - **Solar PV Design**:
   - String sizing calculations (Voc, temperature coefficient)
   - DC cable sizing (4mm²-6mm² domestic, 10mm² commercial)
@@ -49,6 +53,7 @@
   - Dedicated circuits for high-power appliances
 
 ### Installer Agent:
+
 - **Solar PV Installation**:
   - ⚠️ **CRITICAL SAFETY**: DC side always energized (even when inverter off)
   - Class II equipment requirement for DC side
@@ -67,6 +72,7 @@
   - Spurs: 1 non-fused spur per socket OR unlimited fused spurs
 
 ### Commissioning Agent:
+
 - **Solar PV Testing**:
   - DC polarity check (critical - reverse polarity damages inverter)
   - DC insulation resistance (≥1MΩ at 500V DC)
@@ -83,6 +89,7 @@
 ## Critical Safety Knowledge Embedded:
 
 🚨 **Solar PV CRITICAL SAFETY** (Reg 712.410.101):
+
 - DC side is **ALWAYS ENERGIZED** when exposed to light
 - Cannot be switched off (only covered/darkness)
 - Installer must use appropriate PPE and procedures
@@ -90,12 +97,14 @@
 - Class II equipment MANDATORY on DC side
 
 🚨 **G99/G98 Grid Connection**:
+
 - **G98** (≤16A/≤3.68kW): Notify DNO only (no approval needed)
 - **G99** (>16A/>3.68kW): DNO approval REQUIRED before connection
 - Loss of mains (LOM) protection mandatory
 - Export limitation if required by DNO
 
 🚨 **Ring Circuit Load Distribution**:
+
 - Load in ANY part must not exceed cable capacity for LONG PERIODS
 - DO NOT supply immersion heaters or comprehensive space heating from ring
 - Cookers >2kW on DEDICATED radial circuit
@@ -116,12 +125,14 @@
 ## Knowledge Extraction: ~90% COMPLETE! 🎉
 
 ### Modern Installation Capabilities Added:
+
 - ✅ Solar PV system design and installation (Section 712)
 - ✅ G99/G98 grid connection compliance
 - ✅ Ring and radial circuit selection and testing (Appendix 15)
 - ✅ DC side safety procedures (critical for installer safety)
 
 ### Remaining High-Value Topics:
+
 - Section 722 (EV Charging) - Growing market
 - Section 551 (Generating Sets/Battery Storage)
 - Appendix 17 (Energy Efficiency) - Building Regulations
@@ -130,6 +141,7 @@
 ## Real-World Application Examples:
 
 ### Example 1: 4kWp Domestic Solar PV System
+
 ```
 - 10× 400W panels (2 strings of 5 panels)
 - String Voc: 240V (5×48V), within inverter max 500V DC
@@ -142,6 +154,7 @@
 ```
 
 ### Example 2: Domestic Ring Final Circuit
+
 ```
 - 32A Type B MCB
 - 2.5mm² T&E cable (line, neutral, CPC)
@@ -152,6 +165,7 @@
 ```
 
 ### Example 3: Kitchen Dedicated Circuits
+
 ```
 - Ring: 32A MCB, 2.5mm² for worktop sockets
 - Radial 1: 32A MCB, 6mm² for cooker (8.5kW)
@@ -162,6 +176,7 @@
 ## System Status: PRODUCTION-READY for Modern UK Installations! ✅
 
 The agents now have comprehensive knowledge for:
+
 - Solar PV system design, installation, and commissioning
 - Ring and radial circuit selection and testing
 - G99/G98 grid connection compliance

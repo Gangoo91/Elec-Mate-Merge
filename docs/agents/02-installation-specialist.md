@@ -6,8 +6,8 @@ The Installation Specialist is a standalone agent that generates comprehensive s
 
 ## Agents Involved
 
-| Agent | Edge Function | Core Logic | Purpose |
-|-------|---------------|------------|---------|
+| Agent                         | Edge Function  | Core Logic                            | Purpose                          |
+| ----------------------------- | -------------- | ------------------------------------- | -------------------------------- |
 | **Installation Method Agent** | `installer-v3` | `_agents/installation-method-core.ts` | Generate installation procedures |
 
 ## Entry Points
@@ -27,10 +27,10 @@ The Installation Specialist is a standalone agent that generates comprehensive s
 
 ### RAG Sources
 
-| Table | Search Function | Results Limit | Purpose |
-|-------|-----------------|---------------|---------|
-| `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | 25 | Installation procedures, timing, tools |
-| `regulations_intelligence` | `searchRegulationsIntelligence()` | 25 | BS 7671 compliance rules |
+| Table                         | Search Function                     | Results Limit | Purpose                                |
+| ----------------------------- | ----------------------------------- | ------------- | -------------------------------------- |
+| `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | 25            | Installation procedures, timing, tools |
+| `regulations_intelligence`    | `searchRegulationsIntelligence()`   | 25            | BS 7671 compliance rules               |
 
 ### Keyword Extraction
 
@@ -61,7 +61,7 @@ sequenceDiagram
     Frontend->>CreateJob: Submit installation request
     CreateJob->>Database: Create job (status: pending)
     CreateJob->>Processor: Trigger processing
-    
+
     Processor->>Cache: Check semantic cache (85% similarity)
     alt Cache Hit
         Cache->>Database: Return cached method
@@ -75,7 +75,7 @@ sequenceDiagram
         Agent->>Cache: Store in cache (30-day TTL)
         Agent->>Database: Save method_data (status: complete)
     end
-    
+
     Frontend->>Database: Poll for completion
     Database->>Frontend: Return installation method
 ```
@@ -84,14 +84,15 @@ sequenceDiagram
 
 ```typescript
 interface InstallationMethodRequest {
-  query: string;                    // Description of installation work
+  query: string; // Description of installation work
   projectDetails?: {
     projectName?: string;
     location?: string;
     buildingType?: 'domestic' | 'commercial' | 'industrial';
     accessConstraints?: string;
   };
-  designerContext?: {               // Optional: from Circuit Designer handoff
+  designerContext?: {
+    // Optional: from Circuit Designer handoff
     circuits?: Array<{
       name: string;
       cableSpec: string;
@@ -130,8 +131,8 @@ interface InstallationMethod {
     toolsRequired: string[];
     materialsNeeded: string[];
     duration: string;
-    linkedHazards: string[];      // 2-4 specific hazards for this step
-    bsReferences: string[];       // 2-4 BS 7671 citations
+    linkedHazards: string[]; // 2-4 specific hazards for this step
+    bsReferences: string[]; // 2-4 BS 7671 citations
   }>;
   materialsList: Array<{
     description: string;
@@ -159,17 +160,17 @@ interface InstallationMethod {
 
 **Table**: `installation_method_jobs`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | UUID | Job identifier |
-| `user_id` | UUID | Owner |
-| `status` | TEXT | pending, processing, complete, failed, cancelled |
-| `progress` | INTEGER | 0-100 |
-| `current_step` | TEXT | Current processing stage |
-| `job_inputs` | JSONB | Original request |
-| `method_data` | JSONB | Generated installation method |
-| `quality_metrics` | JSONB | RAG quality scores |
-| `error_message` | TEXT | Error details if failed |
+| Column            | Type    | Description                                      |
+| ----------------- | ------- | ------------------------------------------------ |
+| `id`              | UUID    | Job identifier                                   |
+| `user_id`         | UUID    | Owner                                            |
+| `status`          | TEXT    | pending, processing, complete, failed, cancelled |
+| `progress`        | INTEGER | 0-100                                            |
+| `current_step`    | TEXT    | Current processing stage                         |
+| `job_inputs`      | JSONB   | Original request                                 |
+| `method_data`     | JSONB   | Generated installation method                    |
+| `quality_metrics` | JSONB   | RAG quality scores                               |
+| `error_message`   | TEXT    | Error details if failed                          |
 
 ## Cache Strategy
 
@@ -231,8 +232,8 @@ timeout = 180  # 3 minutes
 const { data } = await supabase.functions.invoke('installer-v3', {
   body: {
     query: 'Install a 32A shower circuit in bathroom',
-    projectDetails: { buildingType: 'domestic' }
-  }
+    projectDetails: { buildingType: 'domestic' },
+  },
 });
 ```
 

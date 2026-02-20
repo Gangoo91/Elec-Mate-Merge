@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface Chunk {
@@ -24,13 +25,13 @@ serve(async (req) => {
 
   try {
     console.log('📗 Starting City & Guilds Book 1 processing...');
-    
+
     const { fileContent } = await req.json();
-    
+
     if (!fileContent) {
       throw new Error('No file content provided in request body');
     }
-    
+
     const lines = fileContent.split('\n');
     console.log(`📄 Total lines: ${lines.length}`);
 
@@ -43,7 +44,7 @@ serve(async (req) => {
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
       const content = chunkLines.join('\n').trim();
-      
+
       if (content.length < 100) continue;
 
       const chapterMatch = content.match(/(?:Chapter|Unit)\s+(\d+)[:\s-]+([^\n]+)/i);
@@ -56,16 +57,28 @@ serve(async (req) => {
       if (content.toLowerCase().includes('health') && content.toLowerCase().includes('safety')) {
         topic = 'Health & Safety';
         keywords.push('H&S', 'PPE', 'risk assessment');
-      } else if (content.toLowerCase().includes('cable') && (content.toLowerCase().includes('select') || content.toLowerCase().includes('size'))) {
+      } else if (
+        content.toLowerCase().includes('cable') &&
+        (content.toLowerCase().includes('select') || content.toLowerCase().includes('size'))
+      ) {
         topic = 'Cable Selection & Sizing';
         keywords.push('cable sizing', 'current capacity', 'volt drop');
-      } else if (content.toLowerCase().includes('isolat') || content.toLowerCase().includes('switch')) {
+      } else if (
+        content.toLowerCase().includes('isolat') ||
+        content.toLowerCase().includes('switch')
+      ) {
         topic = 'Safe Isolation Procedures';
         keywords.push('isolation', 'switching', 'safety');
-      } else if (content.toLowerCase().includes('test') || content.toLowerCase().includes('inspect')) {
+      } else if (
+        content.toLowerCase().includes('test') ||
+        content.toLowerCase().includes('inspect')
+      ) {
         topic = 'Testing & Inspection Methods';
         keywords.push('testing', 'inspection', 'verification');
-      } else if (content.toLowerCase().includes('earthing') || content.toLowerCase().includes('bonding')) {
+      } else if (
+        content.toLowerCase().includes('earthing') ||
+        content.toLowerCase().includes('bonding')
+      ) {
         topic = 'Earthing & Bonding';
         keywords.push('earthing', 'bonding', 'protection');
       }
@@ -78,28 +91,30 @@ serve(async (req) => {
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
-          keywords
-        }
+          keywords,
+        },
       });
     }
 
     console.log(`✅ Parsed ${chunks.length} chunks from City & Guilds Book 1`);
-    console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
+    console.log(
+      `📊 Topics: ${[...new Set(chunks.map((c) => c.metadata.topic))].slice(0, 5).join(', ')}`
+    );
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${supabaseKey}`,
+        Authorization: `Bearer ${supabaseKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        chunks: chunks.map(chunk => ({
+        chunks: chunks.map((chunk) => ({
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'city-guilds-book-1'
+          source: 'city-guilds-book-1',
         })),
-        source: 'city-guilds-book-1'
+        source: 'city-guilds-book-1',
       }),
     });
 
@@ -110,21 +125,26 @@ serve(async (req) => {
     const result = await response.json();
     console.log('✅ City & Guilds Book 1 embeddings created successfully');
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      chunksProcessed: chunks.length,
-      result 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        chunksProcessed: chunks.length,
+        result,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error processing City & Guilds Book 1:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Processing failed' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Processing failed',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

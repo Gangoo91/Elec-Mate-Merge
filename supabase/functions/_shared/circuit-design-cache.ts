@@ -16,31 +16,30 @@ export interface CircuitCacheKey {
  * Generate semantic cache key from circuit parameters
  * Normalizes to canonical form for better cache hit rate
  */
-export function generateCircuitCacheKey(
-  circuits: CircuitCacheKey[],
-  supplyDetails: any
-): string {
+export function generateCircuitCacheKey(circuits: CircuitCacheKey[], supplyDetails: any): string {
   // Normalize circuits to canonical form
-  const normalized = circuits.map(c => ({
-    type: c.loadType.toLowerCase().trim(),
-    power: Math.round(c.loadPower / 500) * 500, // Round to nearest 500W
-    length: Math.round(c.cableLength / 5) * 5, // Round to nearest 5m
-    voltage: c.voltage,
-    phases: c.phases
-  })).sort((a, b) => {
-    // Sort by type first, then power, for consistent keys
-    if (a.type !== b.type) return a.type.localeCompare(b.type);
-    return a.power - b.power;
-  });
-  
+  const normalized = circuits
+    .map((c) => ({
+      type: c.loadType.toLowerCase().trim(),
+      power: Math.round(c.loadPower / 500) * 500, // Round to nearest 500W
+      length: Math.round(c.cableLength / 5) * 5, // Round to nearest 5m
+      voltage: c.voltage,
+      phases: c.phases,
+    }))
+    .sort((a, b) => {
+      // Sort by type first, then power, for consistent keys
+      if (a.type !== b.type) return a.type.localeCompare(b.type);
+      return a.power - b.power;
+    });
+
   // Include critical supply parameters
   const supply = {
     voltage: supplyDetails.voltage || 230,
     phases: supplyDetails.phases || 'single',
     ze: Math.round((supplyDetails.ze || 0.35) * 100) / 100, // Round to 2 decimal places
-    earthing: supplyDetails.earthingSystem || 'TN-C-S'
+    earthing: supplyDetails.earthingSystem || 'TN-C-S',
   };
-  
+
   return JSON.stringify({ circuits: normalized, supply });
 }
 
@@ -52,7 +51,7 @@ export function generateCacheHash(cacheKey: string): string {
   let hash = 0;
   for (let i = 0; i < cacheKey.length; i++) {
     const char = cacheKey.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
+    hash = (hash << 5) - hash + char;
     hash = hash & hash; // Convert to 32bit integer
   }
   return Math.abs(hash).toString(36);
@@ -69,9 +68,9 @@ export async function checkCircuitDesignCache(
   try {
     const cacheKey = generateCircuitCacheKey(circuits, supplyDetails);
     const cacheHash = generateCacheHash(cacheKey);
-    
+
     console.log('🔍 Checking circuit design cache:', { hash: cacheHash });
-    
+
     // Search cache table (7-day TTL)
     const { data, error } = await supabase
       .from('circuit_design_cache')
@@ -79,25 +78,25 @@ export async function checkCircuitDesignCache(
       .eq('cache_hash', cacheHash)
       .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
       .single();
-      
+
     if (error || !data) {
       console.log('❌ Cache miss');
       return { hit: false };
     }
-    
+
     console.log('✅ Cache hit!', { hitCount: data.hit_count + 1 });
-    
+
     // Increment hit counter asynchronously (fire-and-forget)
     supabase
       .from('circuit_design_cache')
-      .update({ 
+      .update({
         hit_count: (data.hit_count || 0) + 1,
-        last_hit_at: new Date().toISOString()
+        last_hit_at: new Date().toISOString(),
       })
       .eq('id', data.id)
       .then(() => {})
       .catch((err: any) => console.error('Failed to update hit count:', err));
-      
+
     return { hit: true, data: data.design };
   } catch (error) {
     console.error('Cache check error:', error);
@@ -117,23 +116,24 @@ export async function storeCircuitDesign(
   try {
     const cacheKey = generateCircuitCacheKey(circuits, supplyDetails);
     const cacheHash = generateCacheHash(cacheKey);
-    
+
     console.log('💾 Storing circuit design in cache');
-    
-    await supabase
-      .from('circuit_design_cache')
-      .upsert({
+
+    await supabase.from('circuit_design_cache').upsert(
+      {
         cache_hash: cacheHash,
         circuits: circuits,
         supply: supplyDetails,
         design: design,
         hit_count: 1,
         created_at: new Date().toISOString(),
-        last_hit_at: new Date().toISOString()
-      }, {
-        onConflict: 'cache_hash'
-      });
-      
+        last_hit_at: new Date().toISOString(),
+      },
+      {
+        onConflict: 'cache_hash',
+      }
+    );
+
     console.log('✅ Design cached successfully');
   } catch (error) {
     console.error('Failed to cache design:', error);

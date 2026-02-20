@@ -11,12 +11,12 @@ serve(async (req) => {
 
   try {
     const { circuit } = await req.json();
-    
+
     if (!circuit) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Circuit data required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Circuit data required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
@@ -24,7 +24,9 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    logger.info('Regenerating justifications for circuit', { circuitNumber: circuit.circuitNumber });
+    logger.info('Regenerating justifications for circuit', {
+      circuitNumber: circuit.circuitNumber,
+    });
 
     const prompt = `Generate detailed technical justifications for this electrical circuit design:
 
@@ -54,20 +56,21 @@ Provide justifications in this JSON format:
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAiKey}`,
+        Authorization: `Bearer ${openAiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
-          { 
-            role: 'system', 
-            content: 'You are an expert electrical engineer. Generate concise, regulation-compliant justifications for circuit designs per BS 7671:2018+A3:2024.' 
+          {
+            role: 'system',
+            content:
+              'You are an expert electrical engineer. Generate concise, regulation-compliant justifications for circuit designs per BS 7671:2018+A3:2024.',
           },
-          { role: 'user', content: prompt }
+          { role: 'user', content: prompt },
         ],
         max_completion_tokens: 800,
-        response_format: { type: "json_object" }
+        response_format: { type: 'json_object' },
       }),
     });
 
@@ -82,19 +85,17 @@ Provide justifications in this JSON format:
 
     logger.info('✅ Justifications regenerated successfully');
 
-    return new Response(
-      JSON.stringify({ success: true, justifications }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ success: true, justifications }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     logger.error('Regenerate justifications error', { error });
-    
+
     return new Response(
       JSON.stringify({
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error',
-        requestId
+        requestId,
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

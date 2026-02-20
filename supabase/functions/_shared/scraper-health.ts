@@ -42,7 +42,7 @@ export class ScraperHealthTracker {
       .insert({
         scraper_name: this.scraperName,
         status: 'running',
-        metadata: this.metadata
+        metadata: this.metadata,
       })
       .select('id')
       .single();
@@ -72,14 +72,16 @@ export class ScraperHealthTracker {
         items_updated: result.itemsUpdated || 0,
         items_skipped: result.itemsSkipped || 0,
         api_credits_used: result.apiCreditsUsed || null,
-        duration_ms: durationMs
+        duration_ms: durationMs,
       })
       .eq('id', this.runId);
 
     if (error) {
       console.error('Failed to log scraper completion:', error);
     } else {
-      console.log(`[Health] Completed run ${this.runId}: ${result.itemsInserted} inserted in ${durationMs}ms`);
+      console.log(
+        `[Health] Completed run ${this.runId}: ${result.itemsInserted} inserted in ${durationMs}ms`
+      );
     }
   }
 
@@ -94,7 +96,7 @@ export class ScraperHealthTracker {
         status: 'failed',
         run_completed_at: new Date().toISOString(),
         error_message: errorMessage.substring(0, 1000), // Limit error message length
-        duration_ms: durationMs
+        duration_ms: durationMs,
       })
       .eq('id', this.runId);
 
@@ -120,14 +122,16 @@ export class ScraperHealthTracker {
         items_updated: result.itemsUpdated || 0,
         items_skipped: result.itemsSkipped || 0,
         error_message: warningMessage?.substring(0, 1000),
-        duration_ms: durationMs
+        duration_ms: durationMs,
       })
       .eq('id', this.runId);
 
     if (error) {
       console.error('Failed to log partial run:', error);
     } else {
-      console.log(`[Health] Partial run ${this.runId}: ${result.itemsInserted} inserted with warnings`);
+      console.log(
+        `[Health] Partial run ${this.runId}: ${result.itemsInserted} inserted with warnings`
+      );
     }
   }
 }
@@ -135,7 +139,10 @@ export class ScraperHealthTracker {
 /**
  * Helper function to create and start a health tracker
  */
-export async function startScraperRun(scraperName: string, metadata?: Record<string, unknown>): Promise<ScraperHealthTracker> {
+export async function startScraperRun(
+  scraperName: string,
+  metadata?: Record<string, unknown>
+): Promise<ScraperHealthTracker> {
   const tracker = new ScraperHealthTracker({ scraperName, metadata });
   await tracker.startRun();
   return tracker;

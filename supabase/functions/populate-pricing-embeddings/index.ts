@@ -1,46 +1,89 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Intelligent product categorization based on item name
 function categorizeProduct(itemName: string): string {
   const name = itemName.toLowerCase();
-  
+
   // Priority order matters!
-  if (name.includes('ev') || name.includes('electric vehicle') || name.includes('charging') || name.includes('charger')) 
+  if (
+    name.includes('ev') ||
+    name.includes('electric vehicle') ||
+    name.includes('charging') ||
+    name.includes('charger')
+  )
     return 'EV Charging';
-  
-  if (name.includes('mcb') || name.includes('rcd') || name.includes('rcbo') || 
-      name.includes('consumer unit') || name.includes('fuseboard') || 
-      name.includes('spd') || name.includes('surge') || name.includes('isolator'))
+
+  if (
+    name.includes('mcb') ||
+    name.includes('rcd') ||
+    name.includes('rcbo') ||
+    name.includes('consumer unit') ||
+    name.includes('fuseboard') ||
+    name.includes('spd') ||
+    name.includes('surge') ||
+    name.includes('isolator')
+  )
     return 'Protection Equipment';
-  
-  if (name.includes('cable') || name.includes('swa') || name.includes('flex') || 
-      name.includes('wire') || name.includes('twin') || name.includes('earth'))
+
+  if (
+    name.includes('cable') ||
+    name.includes('swa') ||
+    name.includes('flex') ||
+    name.includes('wire') ||
+    name.includes('twin') ||
+    name.includes('earth')
+  )
     return 'Cables';
-  
-  if (name.includes('trunking') || name.includes('conduit') || name.includes('tray') || 
-      name.includes('cable clip') || name.includes('dado') || name.includes('mini trunking'))
+
+  if (
+    name.includes('trunking') ||
+    name.includes('conduit') ||
+    name.includes('tray') ||
+    name.includes('cable clip') ||
+    name.includes('dado') ||
+    name.includes('mini trunking')
+  )
     return 'Cable Management';
-  
-  if (name.includes('led') || name.includes('downlight') || name.includes('batten') || 
-      name.includes('bulb') || name.includes('lamp') || name.includes('lighting'))
+
+  if (
+    name.includes('led') ||
+    name.includes('downlight') ||
+    name.includes('batten') ||
+    name.includes('bulb') ||
+    name.includes('lamp') ||
+    name.includes('lighting')
+  )
     return 'Lighting';
-  
-  if (name.includes('socket') || name.includes('switch') || name.includes('dimmer') || 
-      name.includes('faceplate') || name.includes('accessory'))
+
+  if (
+    name.includes('socket') ||
+    name.includes('switch') ||
+    name.includes('dimmer') ||
+    name.includes('faceplate') ||
+    name.includes('accessory')
+  )
     return 'Accessories';
-  
-  if (name.includes('screw') || name.includes('rawlplug') || name.includes('connector') || 
-      name.includes('terminal') || name.includes('grommet') || name.includes('wago') || 
-      name.includes('crimp') || name.includes('junction'))
+
+  if (
+    name.includes('screw') ||
+    name.includes('rawlplug') ||
+    name.includes('connector') ||
+    name.includes('terminal') ||
+    name.includes('grommet') ||
+    name.includes('wago') ||
+    name.includes('crimp') ||
+    name.includes('junction')
+  )
     return 'Fixings & Consumables';
-  
+
   return 'Components'; // Default fallback
 }
 
@@ -61,7 +104,12 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
     const { cache_id, supplier, worker, resume_from, job_id: existingJobId } = await req.json();
 
-    console.log('🔄 Starting pricing embeddings population...', { cache_id, supplier, worker, resume_from });
+    console.log('🔄 Starting pricing embeddings population...', {
+      cache_id,
+      supplier,
+      worker,
+      resume_from,
+    });
 
     let jobId = existingJobId;
 
@@ -77,7 +125,7 @@ serve(async (req) => {
           failed_batches: 0,
           current_batch: 0,
           progress_percentage: 0,
-          metadata: { cache_id, supplier }
+          metadata: { cache_id, supplier },
         })
         .select()
         .single();
@@ -95,29 +143,32 @@ serve(async (req) => {
       EdgeRuntime.waitUntil(
         fetch(req.url, {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'authorization': req.headers.get('authorization') || '',
-            'apikey': req.headers.get('apikey') || ''
+            authorization: req.headers.get('authorization') || '',
+            apikey: req.headers.get('apikey') || '',
           },
-          body: JSON.stringify({ 
-            cache_id, 
-            supplier, 
-            worker: true, 
+          body: JSON.stringify({
+            cache_id,
+            supplier,
+            worker: true,
             resume_from: 0,
-            job_id: jobId 
-          })
-        }).catch(err => console.error('Background worker failed to start:', err))
+            job_id: jobId,
+          }),
+        }).catch((err) => console.error('Background worker failed to start:', err))
       );
 
       // Return immediately with 200 OK
-      return new Response(JSON.stringify({
-        success: true,
-        job_id: jobId,
-        message: 'Embeddings generation started in background'
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          job_id: jobId,
+          message: 'Embeddings generation started in background',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // ========== WORKER MODE ==========
@@ -125,39 +176,50 @@ serve(async (req) => {
 
     // Fetch materials from cache
     let query = supabase.from('materials_weekly_cache').select('*');
-    
+
     if (cache_id) {
       query = query.eq('id', cache_id);
     } else if (supplier) {
       query = query.ilike('source', `%${supplier}%`);
     }
-    
-    const { data: materials, error: fetchError } = await query.order('created_at', { ascending: false });
+
+    const { data: materials, error: fetchError } = await query.order('created_at', {
+      ascending: false,
+    });
 
     if (fetchError) {
       console.error('Error fetching materials:', fetchError);
-      await supabase.from('batch_jobs').update({
-        status: 'failed',
-        error_message: fetchError.message
-      }).eq('id', jobId);
+      await supabase
+        .from('batch_jobs')
+        .update({
+          status: 'failed',
+          error_message: fetchError.message,
+        })
+        .eq('id', jobId);
       throw fetchError;
     }
 
     if (!materials || materials.length === 0) {
       console.log('⚠️ No materials found');
-      await supabase.from('batch_jobs').update({
-        status: 'completed',
-        progress_percentage: 100
-      }).eq('id', jobId);
-      
-      return new Response(JSON.stringify({ 
-        success: false,
-        message: 'No materials found',
-        job_id: jobId,
-        processed: 0
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      await supabase
+        .from('batch_jobs')
+        .update({
+          status: 'completed',
+          progress_percentage: 100,
+        })
+        .eq('id', jobId);
+
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'No materials found',
+          job_id: jobId,
+          processed: 0,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     console.log(`📦 Found ${materials.length} material cache entries`);
@@ -165,7 +227,9 @@ serve(async (req) => {
     // Count total items
     let totalItems = 0;
     for (const material of materials) {
-      const items = Array.isArray(material.materials_data) ? material.materials_data : [material.materials_data];
+      const items = Array.isArray(material.materials_data)
+        ? material.materials_data
+        : [material.materials_data];
       totalItems += items.length;
     }
 
@@ -177,7 +241,7 @@ serve(async (req) => {
       batch_number: 1,
       status: 'processing',
       items_processed: 0,
-      total_items: totalItems
+      total_items: totalItems,
     });
 
     if (batchError) {
@@ -189,7 +253,7 @@ serve(async (req) => {
     let skippedCount = 0;
 
     // Helper function for chunking arrays into batches
-    const chunkArray = <T,>(array: T[], size: number): T[][] => {
+    const chunkArray = <T>(array: T[], size: number): T[][] => {
       const chunks: T[][] = [];
       for (let i = 0; i < array.length; i += size) {
         chunks.push(array.slice(i, i + size));
@@ -198,13 +262,15 @@ serve(async (req) => {
     };
 
     // Process with exponential backoff for rate limits
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
     let consecutiveErrors = 0;
 
     // Collect all items from all materials with their metadata
     const allItems: Array<{ item: any; material: any }> = [];
     for (const material of materials) {
-      const items = Array.isArray(material.materials_data) ? material.materials_data : [material.materials_data];
+      const items = Array.isArray(material.materials_data)
+        ? material.materials_data
+        : [material.materials_data];
       for (const item of items) {
         if (!item.name && !item.title) {
           skippedCount++;
@@ -222,7 +288,7 @@ serve(async (req) => {
 
     for (const itemData of allItems) {
       const { item, material } = itemData;
-      
+
       // Build content string (same logic used for embeddings)
       const contentStr = [
         item.name || item.title,
@@ -232,9 +298,11 @@ serve(async (req) => {
         item.supplier || material.source,
         `£${item.price}`,
         item.price_per_unit,
-        item.in_stock ? 'in stock' : 'out of stock'
-      ].filter(Boolean).join(' ');
-      
+        item.in_stock ? 'in stock' : 'out of stock',
+      ]
+        .filter(Boolean)
+        .join(' ');
+
       if (uniqueItems.has(contentStr)) {
         duplicatesFound++;
       } else {
@@ -243,30 +311,41 @@ serve(async (req) => {
     }
 
     const deduplicatedItems = Array.from(uniqueItems.values());
-    console.log(`🔍 De-duplication: ${allItems.length} → ${deduplicatedItems.length} (removed ${duplicatesFound} duplicates)`);
+    console.log(
+      `🔍 De-duplication: ${allItems.length} → ${deduplicatedItems.length} (removed ${duplicatesFound} duplicates)`
+    );
 
     // Update totalItems to reflect deduplicated count
     totalItems = deduplicatedItems.length;
 
     // Update batch progress with correct total
-    await supabase.from('batch_progress').update({
-      total_items: totalItems
-    }).eq('job_id', jobId).eq('batch_number', 1);
+    await supabase
+      .from('batch_progress')
+      .update({
+        total_items: totalItems,
+      })
+      .eq('job_id', jobId)
+      .eq('batch_number', 1);
 
     // Worker safety limits to prevent CPU exhaustion
     const BATCH_SIZE = 100;
     const MAX_BATCHES_PER_RUN = 20; // Process max 2,000 items per worker run
     const startIndex = resume_from || 0;
-    const endIndex = Math.min(startIndex + (BATCH_SIZE * MAX_BATCHES_PER_RUN), deduplicatedItems.length);
-    
+    const endIndex = Math.min(
+      startIndex + BATCH_SIZE * MAX_BATCHES_PER_RUN,
+      deduplicatedItems.length
+    );
+
     const itemsThisRun = deduplicatedItems.slice(startIndex, endIndex);
     const batches = chunkArray(itemsThisRun, BATCH_SIZE);
-    
-    console.log(`📦 Worker processing items ${startIndex}-${endIndex} (${itemsThisRun.length} items, ${batches.length} batches)`);
+
+    console.log(
+      `📦 Worker processing items ${startIndex}-${endIndex} (${itemsThisRun.length} items, ${batches.length} batches)`
+    );
 
     for (let batchIndex = 0; batchIndex < batches.length; batchIndex++) {
       const batch = batches[batchIndex];
-      
+
       try {
         // Prepare batch input for OpenAI
         const batchInputs = batch.map(({ item, material }) => {
@@ -278,8 +357,10 @@ serve(async (req) => {
             item.supplier || material.source,
             `£${item.price}`,
             item.price_per_unit,
-            item.in_stock ? 'in stock' : 'out of stock'
-          ].filter(Boolean).join(' ');
+            item.in_stock ? 'in stock' : 'out of stock',
+          ]
+            .filter(Boolean)
+            .join(' ');
         });
 
         // Generate embeddings for entire batch with retry logic
@@ -292,7 +373,7 @@ serve(async (req) => {
             embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
               method: 'POST',
               headers: {
-                'Authorization': `Bearer ${openAIApiKey}`,
+                Authorization: `Bearer ${openAIApiKey}`,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
@@ -309,7 +390,9 @@ serve(async (req) => {
             // Handle rate limits
             if (embeddingResponse.status === 429) {
               const backoffTime = Math.min(1000 * Math.pow(2, retryCount), 10000);
-              console.log(`⏳ Rate limited on batch ${batchIndex + 1}, waiting ${backoffTime}ms...`);
+              console.log(
+                `⏳ Rate limited on batch ${batchIndex + 1}, waiting ${backoffTime}ms...`
+              );
               await sleep(backoffTime);
               retryCount++;
               consecutiveErrors++;
@@ -351,15 +434,15 @@ serve(async (req) => {
             supplier: item.supplier || material.source,
             specifications: item.specifications,
             sku: item.sku,
-            pack_qty: item.pack_qty
-          }
+            pack_qty: item.pack_qty,
+          },
         }));
 
         // Bulk insert into pricing_embeddings
         const { error: insertError } = await supabase
           .from('pricing_embeddings')
           .upsert(insertData, {
-            onConflict: 'content'
+            onConflict: 'content',
           });
 
         if (insertError) {
@@ -371,21 +454,30 @@ serve(async (req) => {
 
         // Update progress after each batch
         const progress = Math.floor((processedCount / totalItems) * 100);
-        await supabase.from('batch_progress').update({
-          items_processed: processedCount,
-          data: { 
-            errors: errorCount, 
-            skipped: skippedCount,
-            batches_completed: batchIndex + 1,
-            total_batches: batches.length
-          }
-        }).eq('job_id', jobId).eq('batch_number', 1);
+        await supabase
+          .from('batch_progress')
+          .update({
+            items_processed: processedCount,
+            data: {
+              errors: errorCount,
+              skipped: skippedCount,
+              batches_completed: batchIndex + 1,
+              total_batches: batches.length,
+            },
+          })
+          .eq('job_id', jobId)
+          .eq('batch_number', 1);
 
-        await supabase.from('batch_jobs').update({
-          progress_percentage: progress
-        }).eq('id', jobId);
+        await supabase
+          .from('batch_jobs')
+          .update({
+            progress_percentage: progress,
+          })
+          .eq('id', jobId);
 
-        console.log(`📈 Progress: ${processedCount}/${totalItems} (${progress}%) - Batch ${batchIndex + 1}/${batches.length}`);
+        console.log(
+          `📈 Progress: ${processedCount}/${totalItems} (${progress}%) - Batch ${batchIndex + 1}/${batches.length}`
+        );
 
         // Small delay between batches to avoid rate limits
         if (consecutiveErrors > 0) {
@@ -393,12 +485,11 @@ serve(async (req) => {
         } else {
           await sleep(100); // Small delay even on success
         }
-
       } catch (error) {
         console.error(`Error processing batch ${batchIndex + 1}:`, error);
         errorCount += batch.length;
         consecutiveErrors++;
-        
+
         // If too many consecutive errors, pause longer
         if (consecutiveErrors > 3) {
           console.log('⚠️ Too many batch errors, pausing for 10 seconds...');
@@ -410,94 +501,118 @@ serve(async (req) => {
 
     // Check if there are more items to process
     const remainingItems = totalItems - endIndex;
-    
+
     if (remainingItems > 0) {
       console.log(`🔄 ${remainingItems} items remaining, scheduling next worker run...`);
-      
+
       // Update progress
       const currentProgress = Math.floor((endIndex / totalItems) * 100);
-      await supabase.from('batch_progress').update({
-        items_processed: endIndex,
-        data: { 
-          errors: errorCount, 
-          skipped: skippedCount,
-          batches_completed: batches.length,
-          resume_from: endIndex
-        }
-      }).eq('job_id', jobId).eq('batch_number', 1);
+      await supabase
+        .from('batch_progress')
+        .update({
+          items_processed: endIndex,
+          data: {
+            errors: errorCount,
+            skipped: skippedCount,
+            batches_completed: batches.length,
+            resume_from: endIndex,
+          },
+        })
+        .eq('job_id', jobId)
+        .eq('batch_number', 1);
 
-      await supabase.from('batch_jobs').update({
-        progress_percentage: currentProgress
-      }).eq('id', jobId);
+      await supabase
+        .from('batch_jobs')
+        .update({
+          progress_percentage: currentProgress,
+        })
+        .eq('id', jobId);
 
       // Schedule next worker run
       // @ts-ignore - EdgeRuntime available
       EdgeRuntime.waitUntil(
         fetch(req.url, {
           method: 'POST',
-          headers: { 
+          headers: {
             'Content-Type': 'application/json',
-            'authorization': req.headers.get('authorization') || '',
-            'apikey': req.headers.get('apikey') || ''
+            authorization: req.headers.get('authorization') || '',
+            apikey: req.headers.get('apikey') || '',
           },
-          body: JSON.stringify({ 
-            cache_id, 
-            supplier, 
-            worker: true, 
+          body: JSON.stringify({
+            cache_id,
+            supplier,
+            worker: true,
             resume_from: endIndex,
-            job_id: jobId 
-          })
-        }).catch(err => console.error('Next worker failed to start:', err))
+            job_id: jobId,
+          }),
+        }).catch((err) => console.error('Next worker failed to start:', err))
       );
 
-      return new Response(JSON.stringify({
-        success: true,
-        job_id: jobId,
-        processed: endIndex,
-        total: totalItems,
-        continuing: true
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          job_id: jobId,
+          processed: endIndex,
+          total: totalItems,
+          continuing: true,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Final update - all items processed
     const finalProgress = Math.floor((processedCount / totalItems) * 100);
-    await supabase.from('batch_progress').update({
-      items_processed: processedCount,
-      status: 'completed',
-      completed_at: new Date().toISOString(),
-      data: { errors: errorCount, skipped: skippedCount }
-    }).eq('job_id', jobId).eq('batch_number', 1);
+    await supabase
+      .from('batch_progress')
+      .update({
+        items_processed: processedCount,
+        status: 'completed',
+        completed_at: new Date().toISOString(),
+        data: { errors: errorCount, skipped: skippedCount },
+      })
+      .eq('job_id', jobId)
+      .eq('batch_number', 1);
 
-    await supabase.from('batch_jobs').update({
-      status: 'completed',
-      completed_batches: 1,
-      progress_percentage: 100,
-      completed_at: new Date().toISOString()
-    }).eq('id', jobId);
+    await supabase
+      .from('batch_jobs')
+      .update({
+        status: 'completed',
+        completed_batches: 1,
+        progress_percentage: 100,
+        completed_at: new Date().toISOString(),
+      })
+      .eq('id', jobId);
 
-    console.log(`✅ All items processed! Total: ${processedCount}, Errors: ${errorCount}, Skipped: ${skippedCount}`);
+    console.log(
+      `✅ All items processed! Total: ${processedCount}, Errors: ${errorCount}, Skipped: ${skippedCount}`
+    );
 
-    return new Response(JSON.stringify({
-      success: true,
-      job_id: jobId,
-      processed: processedCount,
-      errors: errorCount,
-      skipped: skippedCount,
-      total: totalItems
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        job_id: jobId,
+        processed: processedCount,
+        errors: errorCount,
+        skipped: skippedCount,
+        total: totalItems,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in populate-pricing-embeddings:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to populate embeddings',
-      success: false
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to populate embeddings',
+        success: false,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

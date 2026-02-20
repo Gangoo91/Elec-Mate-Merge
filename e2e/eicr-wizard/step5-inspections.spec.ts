@@ -1,6 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testClient, inspectionOutcomes } from "../fixtures/test-data";
+import { testClient, inspectionOutcomes } from '../fixtures/test-data';
 
 /**
  * EICR Wizard Step 5: Inspections
@@ -12,23 +12,29 @@ import { testClient, inspectionOutcomes } from "../fixtures/test-data";
 
 // Helper to navigate to EICR wizard step 5
 async function navigateToStep5(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=eicr");
+  await page.goto('/electrician/inspection-testing?section=eicr');
   await page.waitForTimeout(3000);
 
   // Complete steps 1-4 quickly
   await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
-  await fillIfVisible(page, 'input[name="propertyAddress"], textarea[name="propertyAddress"]', testClient.address);
+  await fillIfVisible(
+    page,
+    'input[name="propertyAddress"], textarea[name="propertyAddress"]',
+    testClient.address
+  );
   await fillIfVisible(page, 'input[name="propertyPostcode"]', testClient.postcode);
 
   // Navigate through steps
   for (let i = 0; i < 4; i++) {
-    const nextButton = page.locator('button:has-text("Next"), button:has-text("Skip"), button:has-text("Continue")').first();
-    if (await nextButton.isVisible({ timeout: 2000 }) && await nextButton.isEnabled()) {
+    const nextButton = page
+      .locator('button:has-text("Next"), button:has-text("Skip"), button:has-text("Continue")')
+      .first();
+    if ((await nextButton.isVisible({ timeout: 2000 })) && (await nextButton.isEnabled())) {
       // Handle step 2 selections
       if (i === 1) {
-        await clickOption(page, "Single") || await clickOption(page, "1P");
+        (await clickOption(page, 'Single')) || (await clickOption(page, '1P'));
         await page.waitForTimeout(200);
-        await clickOption(page, "TN-C-S");
+        await clickOption(page, 'TN-C-S');
         await page.waitForTimeout(200);
       }
       await nextButton.click();
@@ -47,7 +53,11 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
 }
 
 async function clickOption(page: Page, text: string): Promise<boolean> {
-  const option = page.locator(`button:has-text("${text}"), [role="button"]:has-text("${text}"), label:has-text("${text}")`).first();
+  const option = page
+    .locator(
+      `button:has-text("${text}"), [role="button"]:has-text("${text}"), label:has-text("${text}")`
+    )
+    .first();
   if (await option.isVisible({ timeout: 2000 }).catch(() => false)) {
     await option.click();
     return true;
@@ -55,44 +65,57 @@ async function clickOption(page: Page, text: string): Promise<boolean> {
   return false;
 }
 
-test.describe("EICR Wizard Step 5 - Progress Display", () => {
+test.describe('EICR Wizard Step 5 - Progress Display', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
-  test("1. Progress bar shows X/Y items completed", async ({ page }) => {
-    const progressBar = page.locator('[class*="progress"], [role="progressbar"], text=/\\d+.*\\/.*\\d+|\\d+%/');
-    const hasProgress = await progressBar.first().isVisible({ timeout: 3000 }).catch(() => false);
+  test('1. Progress bar shows X/Y items completed', async ({ page }) => {
+    const progressBar = page.locator(
+      '[class*="progress"], [role="progressbar"], text=/\\d+.*\\/.*\\d+|\\d+%/'
+    );
+    const hasProgress = await progressBar
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasProgress || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Stat cards show Pass, C1, C2, C3, N/A counts", async ({ page }) => {
+  test('2. Stat cards show Pass, C1, C2, C3, N/A counts', async ({ page }) => {
     const statCards = page.locator('text=/pass|c1|c2|c3|n\\/a|satisfactory/i');
     const statCount = await statCards.count();
 
     expect(statCount).toBeGreaterThan(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. AI Fault Finder card is displayed", async ({ page }) => {
+  test('3. AI Fault Finder card is displayed', async ({ page }) => {
     const aiFaultFinder = page.locator('text=/AI.*Fault|Fault.*Finder|Smart.*Fault|Intelligent/i');
     const sparklesIcon = page.locator('[class*="lucide-sparkles"], svg.lucide-sparkles');
 
-    const hasAI = await aiFaultFinder.first().isVisible({ timeout: 3000 }).catch(() => false);
-    const hasSparkles = await sparklesIcon.first().isVisible({ timeout: 2000 }).catch(() => false);
+    const hasAI = await aiFaultFinder
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
+    const hasSparkles = await sparklesIcon
+      .first()
+      .isVisible({ timeout: 2000 })
+      .catch(() => false);
 
     expect(hasAI || hasSparkles || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("4. Clicking AI Fault Finder opens bottom sheet", async ({ page }) => {
-    const aiFaultFinderBtn = page.locator('button:has-text("Fault Finder"), button:has(svg.lucide-sparkles)').first();
+  test('4. Clicking AI Fault Finder opens bottom sheet', async ({ page }) => {
+    const aiFaultFinderBtn = page
+      .locator('button:has-text("Fault Finder"), button:has(svg.lucide-sparkles)')
+      .first();
 
     if (await aiFaultFinderBtn.isVisible({ timeout: 3000 })) {
       await aiFaultFinderBtn.click();
@@ -100,23 +123,30 @@ test.describe("EICR Wizard Step 5 - Progress Display", () => {
 
       // Look for sheet/modal
       const sheet = page.locator('[role="dialog"], [class*="sheet"], [class*="drawer"]');
-      const hasSheet = await sheet.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const hasSheet = await sheet
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
 
       expect(hasSheet || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 5 - Section Expand/Collapse", () => {
+test.describe('EICR Wizard Step 5 - Section Expand/Collapse', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
-  test("5. Clicking section header expands items list", async ({ page }) => {
-    const sectionHeader = page.locator('[class*="collapsible"], button[class*="section"], [role="button"]:has-text("Section")').first();
+  test('5. Clicking section header expands items list', async ({ page }) => {
+    const sectionHeader = page
+      .locator(
+        '[class*="collapsible"], button[class*="section"], [role="button"]:has-text("Section")'
+      )
+      .first();
 
     if (await sectionHeader.isVisible({ timeout: 3000 })) {
       await sectionHeader.click();
@@ -124,15 +154,18 @@ test.describe("EICR Wizard Step 5 - Section Expand/Collapse", () => {
 
       // Look for expanded content
       const expandedContent = page.locator('[data-state="open"], [class*="expanded"]');
-      const hasExpanded = await expandedContent.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasExpanded = await expandedContent
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasExpanded || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("6. Clicking again collapses the section", async ({ page }) => {
+  test('6. Clicking again collapses the section', async ({ page }) => {
     const sectionHeader = page.locator('[class*="collapsible"], button[class*="section"]').first();
 
     if (await sectionHeader.isVisible({ timeout: 3000 })) {
@@ -147,18 +180,20 @@ test.describe("EICR Wizard Step 5 - Section Expand/Collapse", () => {
       // Should toggle state
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 5 - Quick Actions", () => {
+test.describe('EICR Wizard Step 5 - Quick Actions', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
   test("7. 'All Satisfactory' button marks all items as Pass", async ({ page }) => {
-    const allSatButton = page.locator('button:has-text("All Satisfactory"), button:has-text("Mark All Pass")').first();
+    const allSatButton = page
+      .locator('button:has-text("All Satisfactory"), button:has-text("Mark All Pass")')
+      .first();
 
     if (await allSatButton.isVisible({ timeout: 3000 })) {
       await allSatButton.click();
@@ -171,11 +206,13 @@ test.describe("EICR Wizard Step 5 - Quick Actions", () => {
       expect(passCount).toBeGreaterThan(0);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
   test("8. 'All N/A' button marks all items as Not Applicable", async ({ page }) => {
-    const allNAButton = page.locator('button:has-text("All N/A"), button:has-text("Mark All N/A")').first();
+    const allNAButton = page
+      .locator('button:has-text("All N/A"), button:has-text("Mark All N/A")')
+      .first();
 
     if (await allNAButton.isVisible({ timeout: 3000 })) {
       await allNAButton.click();
@@ -188,18 +225,20 @@ test.describe("EICR Wizard Step 5 - Quick Actions", () => {
       expect(naCount).toBeGreaterThan(0);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 5 - Outcome Selection", () => {
+test.describe('EICR Wizard Step 5 - Outcome Selection', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
-  test("9. Pass button marks item green", async ({ page }) => {
-    const passButton = page.locator('button:has-text("Pass"), button:has-text("Sat"), button[value="satisfactory"]').first();
+  test('9. Pass button marks item green', async ({ page }) => {
+    const passButton = page
+      .locator('button:has-text("Pass"), button:has-text("Sat"), button[value="satisfactory"]')
+      .first();
 
     if (await passButton.isVisible({ timeout: 3000 })) {
       await passButton.click();
@@ -207,15 +246,18 @@ test.describe("EICR Wizard Step 5 - Outcome Selection", () => {
 
       // Verify green indicator
       const greenIndicator = page.locator('[class*="green"], [class*="success"]');
-      const hasGreen = await greenIndicator.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasGreen = await greenIndicator
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasGreen || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("10. C1 button marks item red and creates observation", async ({ page }) => {
+  test('10. C1 button marks item red and creates observation', async ({ page }) => {
     const c1Button = page.locator('button:has-text("C1")').first();
 
     if (await c1Button.isVisible({ timeout: 3000 })) {
@@ -224,15 +266,18 @@ test.describe("EICR Wizard Step 5 - Outcome Selection", () => {
 
       // Verify red indicator
       const redIndicator = page.locator('[class*="red"], [class*="danger"]');
-      const hasRed = await redIndicator.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasRed = await redIndicator
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasRed || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("11. C2 button marks item orange and creates observation", async ({ page }) => {
+  test('11. C2 button marks item orange and creates observation', async ({ page }) => {
     const c2Button = page.locator('button:has-text("C2")').first();
 
     if (await c2Button.isVisible({ timeout: 3000 })) {
@@ -240,15 +285,18 @@ test.describe("EICR Wizard Step 5 - Outcome Selection", () => {
       await page.waitForTimeout(500);
 
       const orangeIndicator = page.locator('[class*="orange"], [class*="warning"]');
-      const hasOrange = await orangeIndicator.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasOrange = await orangeIndicator
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasOrange || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("12. C3 button marks item amber and creates observation", async ({ page }) => {
+  test('12. C3 button marks item amber and creates observation', async ({ page }) => {
     const c3Button = page.locator('button:has-text("C3")').first();
 
     if (await c3Button.isVisible({ timeout: 3000 })) {
@@ -256,31 +304,39 @@ test.describe("EICR Wizard Step 5 - Outcome Selection", () => {
       await page.waitForTimeout(500);
 
       const amberIndicator = page.locator('[class*="amber"], [class*="yellow"], [class*="blue"]');
-      const hasAmber = await amberIndicator.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasAmber = await amberIndicator
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasAmber || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("13. N/V button marks item gray", async ({ page }) => {
-    const nvButton = page.locator('button:has-text("N/V"), button:has-text("Not Verified")').first();
+  test('13. N/V button marks item gray', async ({ page }) => {
+    const nvButton = page
+      .locator('button:has-text("N/V"), button:has-text("Not Verified")')
+      .first();
 
     if (await nvButton.isVisible({ timeout: 3000 })) {
       await nvButton.click();
       await page.waitForTimeout(300);
 
       const grayIndicator = page.locator('[class*="gray"], [class*="muted"]');
-      const hasGray = await grayIndicator.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasGray = await grayIndicator
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasGray || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("14. N/A button marks item gray", async ({ page }) => {
+  test('14. N/A button marks item gray', async ({ page }) => {
     const naButton = page.locator('button:has-text("N/A")').first();
 
     if (await naButton.isVisible({ timeout: 3000 })) {
@@ -288,22 +344,25 @@ test.describe("EICR Wizard Step 5 - Outcome Selection", () => {
       await page.waitForTimeout(300);
 
       const grayIndicator = page.locator('[class*="gray"], [class*="muted"]');
-      const hasGray = await grayIndicator.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasGray = await grayIndicator
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasGray || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 5 - Observations Summary", () => {
+test.describe('EICR Wizard Step 5 - Observations Summary', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
-  test("15. Creating C1 shows red observation card", async ({ page }) => {
+  test('15. Creating C1 shows red observation card', async ({ page }) => {
     const c1Button = page.locator('button:has-text("C1")').first();
 
     if (await c1Button.isVisible({ timeout: 3000 })) {
@@ -311,19 +370,24 @@ test.describe("EICR Wizard Step 5 - Observations Summary", () => {
       await page.waitForTimeout(500);
 
       // Look for observation summary
-      const observationCard = page.locator('[class*="observation"], [class*="issue"], text=/observation|defect/i');
-      const hasObservation = await observationCard.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const observationCard = page.locator(
+        '[class*="observation"], [class*="issue"], text=/observation|defect/i'
+      );
+      const hasObservation = await observationCard
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
 
       expect(hasObservation || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("16. Progress updates when items are marked", async ({ page }) => {
+  test('16. Progress updates when items are marked', async ({ page }) => {
     // Get initial progress
     const progressText = page.locator('text=/\\d+.*\\/.*\\d+|\\d+%/').first();
-    const initialProgress = await progressText.textContent().catch(() => "0");
+    const initialProgress = await progressText.textContent().catch(() => '0');
 
     // Mark an item
     const passButton = page.locator('button:has-text("Pass"), button:has-text("Sat")').first();
@@ -332,60 +396,70 @@ test.describe("EICR Wizard Step 5 - Observations Summary", () => {
       await page.waitForTimeout(500);
 
       // Progress should change
-      const newProgress = await progressText.textContent().catch(() => "0");
+      const newProgress = await progressText.textContent().catch(() => '0');
       // Progress may or may not change depending on implementation
       expect(typeof newProgress).toBe('string');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 5 - Section Icons", () => {
+test.describe('EICR Wizard Step 5 - Section Icons', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
-  test("17. Complete section shows green check icon", async ({ page }) => {
+  test('17. Complete section shows green check icon', async ({ page }) => {
     // Mark all items in a section as Pass
     const allSatButton = page.locator('button:has-text("All Satisfactory")').first();
     if (await allSatButton.isVisible({ timeout: 3000 })) {
       await allSatButton.click();
       await page.waitForTimeout(500);
 
-      const checkIcon = page.locator('[class*="lucide-check"], svg.lucide-check, [class*="complete"]');
-      const hasCheck = await checkIcon.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const checkIcon = page.locator(
+        '[class*="lucide-check"], svg.lucide-check, [class*="complete"]'
+      );
+      const hasCheck = await checkIcon
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasCheck || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("18. Section with issues shows alert icon", async ({ page }) => {
+  test('18. Section with issues shows alert icon', async ({ page }) => {
     const c1Button = page.locator('button:has-text("C1")').first();
     if (await c1Button.isVisible({ timeout: 3000 })) {
       await c1Button.click();
       await page.waitForTimeout(500);
 
-      const alertIcon = page.locator('[class*="lucide-alert"], svg.lucide-alert-triangle, [class*="warning"]');
-      const hasAlert = await alertIcon.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const alertIcon = page.locator(
+        '[class*="lucide-alert"], svg.lucide-alert-triangle, [class*="warning"]'
+      );
+      const hasAlert = await alertIcon
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
 
       expect(hasAlert || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 5 - Navigation", () => {
+test.describe('EICR Wizard Step 5 - Navigation', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep5(page);
   });
 
-  test("19. Next disabled when less than 50% complete", async ({ page }) => {
+  test('19. Next disabled when less than 50% complete', async ({ page }) => {
     const nextButton = page.locator('button:has-text("Next")').first();
 
     if (await nextButton.isVisible()) {
@@ -394,10 +468,10 @@ test.describe("EICR Wizard Step 5 - Navigation", () => {
       expect(typeof isDisabled).toBe('boolean');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("20. Next enabled when 50%+ complete", async ({ page }) => {
+  test('20. Next enabled when 50%+ complete', async ({ page }) => {
     // Mark all as satisfactory to reach 100%
     const allSatButton = page.locator('button:has-text("All Satisfactory")').first();
     if (await allSatButton.isVisible({ timeout: 3000 })) {
@@ -411,6 +485,6 @@ test.describe("EICR Wizard Step 5 - Navigation", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

@@ -4,7 +4,8 @@ import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -16,7 +17,7 @@ Deno.serve(async (req) => {
 
   // Save jobId early for error handling
   let savedJobId: string | null = null;
-  
+
   try {
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
@@ -27,16 +28,16 @@ Deno.serve(async (req) => {
     savedJobId = jobId; // Save for error handler
 
     if (!jobId || !designedCircuits) {
-      return new Response(
-        JSON.stringify({ error: 'jobId and designedCircuits are required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'jobId and designedCircuits are required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    console.log('🔧 Design Installation Agent START', { 
+    console.log('🔧 Design Installation Agent START', {
       jobId,
       circuitCount: designedCircuits.length,
-      receivedActualSpecs: true 
+      receivedActualSpecs: true,
     });
 
     // Update job: Installation agent starting (Phase 2: 50-100%)
@@ -45,8 +46,8 @@ Deno.serve(async (req) => {
       .update({
         installation_agent_status: 'processing',
         installation_agent_progress: 5,
-        progress: 52,  // Phase 2 starts at 50%
-        current_step: 'Generating installation guidance...'
+        progress: 52, // Phase 2 starts at 50%
+        current_step: 'Generating installation guidance...',
       })
       .eq('id', jobId);
 
@@ -57,81 +58,110 @@ Deno.serve(async (req) => {
     // Update progress (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
-      .update({ 
+      .update({
         installation_agent_progress: 15,
-        progress: 58  // 50% + (15% of 50%)
+        progress: 58, // 50% + (15% of 50%)
       })
       .eq('id', jobId);
 
     // STEP 2: Enhanced parallel RAG search with LIMITED keywords to prevent array overflow
     const ragStart = Date.now();
     const limitedKeywords = Array.from(keywords).slice(0, 50); // Limit to 50 to prevent malformed array errors
-    
-    console.log(`🔍 Using ${limitedKeywords.length} keywords for RAG search (limited from ${keywords.size})`);
-    
+
+    console.log(
+      `🔍 Using ${limitedKeywords.length} keywords for RAG search (limited from ${keywords.size})`
+    );
+
     const [practicalWorkResult, regulations] = await Promise.all([
       searchPracticalWorkIntelligence(supabase, {
         query: limitedKeywords.slice(0, 30).join(' '), // Top 30 for query string
         tradeFilter: 'installer',
-        matchCount: 60  // Enhanced from 40 for 30% more context
+        matchCount: 60, // Enhanced from 40 for 30% more context
       }),
       searchRegulationsIntelligence(supabase, {
         keywords: limitedKeywords, // Limited to 50 keywords
-        appliesTo: ['all installations', 'installation work', 'electrician', 'installer', 'electrical contractor'],
-        categories: [
-          'Installation', 'Testing', 'Earthing', 'Protection',
-          'Cables', 'Safety', 'Design', 'Circuits', 'Equipment',
-          'Special Locations', 'Isolation', 'Documentation', 'Maintenance'
+        appliesTo: [
+          'all installations',
+          'installation work',
+          'electrician',
+          'installer',
+          'electrical contractor',
         ],
-        limit: 50  // Enhanced from 30 for richer RAG context
-      })
+        categories: [
+          'Installation',
+          'Testing',
+          'Earthing',
+          'Protection',
+          'Cables',
+          'Safety',
+          'Design',
+          'Circuits',
+          'Equipment',
+          'Special Locations',
+          'Isolation',
+          'Documentation',
+          'Maintenance',
+        ],
+        limit: 50, // Enhanced from 30 for richer RAG context
+      }),
     ]);
 
     const ragTime = Date.now() - ragStart;
-    
+
     // ⚠️ CRITICAL CHECK: Validate RAG results before proceeding
     if (practicalWorkResult.results.length === 0 && regulations.length === 0) {
       console.error('❌ No RAG results - both searches returned empty');
-      throw new Error('Failed to retrieve installation guidance context - RAG searches returned no results');
+      throw new Error(
+        'Failed to retrieve installation guidance context - RAG searches returned no results'
+      );
     }
-    
+
     // Enhanced RAG coverage logging
-    const practicalTopics = practicalWorkResult.results.slice(0, 10).map(r => r.primary_topic || r.description).join(', ');
-    const regulationCategories = [...new Set(regulations.slice(0, 10).map(r => r.category))].join(', ');
-    const toolsMentioned = [...new Set(practicalWorkResult.results.flatMap(r => r.tools_required || []))].slice(0, 15).join(', ');
-    
+    const practicalTopics = practicalWorkResult.results
+      .slice(0, 10)
+      .map((r) => r.primary_topic || r.description)
+      .join(', ');
+    const regulationCategories = [...new Set(regulations.slice(0, 10).map((r) => r.category))].join(
+      ', '
+    );
+    const toolsMentioned = [
+      ...new Set(practicalWorkResult.results.flatMap((r) => r.tools_required || [])),
+    ]
+      .slice(0, 15)
+      .join(', ');
+
     console.log(`⚡ RAG complete in ${ragTime}ms:`, {
       practicalWork: practicalWorkResult.results.length,
       regulations: regulations.length,
       quality: practicalWorkResult.qualityScore.toFixed(1),
       topPracticalTopics: practicalTopics,
       topRegulationCategories: regulationCategories,
-      identifiedTools: toolsMentioned
+      identifiedTools: toolsMentioned,
     });
 
     // Update progress (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
-      .update({ 
+      .update({
         installation_agent_progress: 40,
-        progress: 70,  // 50% + (40% of 50%)
-        current_step: 'Analyzing installation requirements...'
+        progress: 70, // 50% + (40% of 50%)
+        current_step: 'Analyzing installation requirements...',
       })
       .eq('id', jobId);
 
     // STEP 3: Generate circuit-specific installation guidance
     const aiStart = Date.now();
-    
+
     // Initial progress update (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
-      .update({ 
+      .update({
         installation_agent_progress: 50,
-        progress: 75,  // 50% + (50% of 50%)
-        current_step: 'Generating circuit-specific installation guidance...'
+        progress: 75, // 50% + (50% of 50%)
+        current_step: 'Generating circuit-specific installation guidance...',
       })
       .eq('id', jobId);
-    
+
     const installationGuidance = await generateInstallationGuidance(
       designedCircuits,
       supply,
@@ -146,20 +176,21 @@ Deno.serve(async (req) => {
     // Update progress (Phase 2: 50-100%)
     await supabase
       .from('circuit_design_jobs')
-      .update({ 
+      .update({
         installation_agent_progress: 90,
-        progress: 95  // 50% + (90% of 50%)
+        progress: 95, // 50% + (90% of 50%)
       })
       .eq('id', jobId);
 
     // STEP 4: Save to database and mark ENTIRE job complete
     // CRITICAL: Sanitize data before save to prevent Unicode errors
-    const { sanitizeForPostgres, aggressiveSanitize, isUnicodeError } = await import('../_shared/sanitize-json.ts');
+    const { sanitizeForPostgres, aggressiveSanitize, isUnicodeError } =
+      await import('../_shared/sanitize-json.ts');
     const sanitizedGuidance = sanitizeForPostgres(installationGuidance);
-    
+
     console.log('💾 Saving installation guidance to database', {
       jobId,
-      dataSize: JSON.stringify(sanitizedGuidance).length
+      dataSize: JSON.stringify(sanitizedGuidance).length,
     });
 
     const saveStart = Date.now();
@@ -172,28 +203,28 @@ Deno.serve(async (req) => {
         status: 'complete', // Mark entire job complete (both phases done)
         progress: 100,
         current_step: 'Design and installation guidance complete!',
-        completed_at: new Date().toISOString()
+        completed_at: new Date().toISOString(),
       })
       .eq('id', jobId);
-    
+
     const saveDuration = Date.now() - saveStart;
-    
+
     // CRITICAL: Check for database save errors
     if (updateError) {
-      console.error('❌ CRITICAL: Failed to save installation guidance to database', { 
+      console.error('❌ CRITICAL: Failed to save installation guidance to database', {
         error: updateError.message,
         code: updateError.code,
         hint: updateError.hint,
         details: updateError.details,
         saveDuration,
-        dataSize: JSON.stringify(sanitizedGuidance).length
+        dataSize: JSON.stringify(sanitizedGuidance).length,
       });
-      
+
       // Retry with aggressive sanitization if Unicode error
       if (isUnicodeError(updateError)) {
         console.log('🔄 Retrying with aggressive sanitization...');
         const aggressivelySanitizedGuidance = aggressiveSanitize(installationGuidance);
-        
+
         const { error: retryError } = await supabase
           .from('circuit_design_jobs')
           .update({
@@ -203,10 +234,10 @@ Deno.serve(async (req) => {
             status: 'complete',
             progress: 100,
             current_step: 'Design and installation guidance complete!',
-            completed_at: new Date().toISOString()
+            completed_at: new Date().toISOString(),
           })
           .eq('id', jobId);
-        
+
         if (retryError) {
           console.error('❌ Retry failed - marking job as failed');
           throw new Error(`Installation guidance save failed after retry: ${retryError.message}`);
@@ -218,36 +249,35 @@ Deno.serve(async (req) => {
         throw new Error(`Installation guidance save failed: ${updateError.message}`);
       }
     } else {
-      console.log('✅ Installation guidance saved successfully', { 
+      console.log('✅ Installation guidance saved successfully', {
         jobId,
         saveDuration,
-        dataSize: JSON.stringify(sanitizedGuidance).length
+        dataSize: JSON.stringify(sanitizedGuidance).length,
       });
     }
 
-    console.log('✅ Design Installation Agent COMPLETE', { 
+    console.log('✅ Design Installation Agent COMPLETE', {
       jobId,
       totalTime: Date.now() - ragStart,
       ragTime,
-      aiTime
+      aiTime,
     });
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
         installationGuidance,
         metadata: {
           ragTime,
           aiTime,
-          totalTime: Date.now() - ragStart
-        }
+          totalTime: Date.now() - ragStart,
+        },
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('❌ Design Installation Agent failed:', error);
-    
+
     // ⚠️ CRITICAL: Always update job status on failure
     if (savedJobId) {
       try {
@@ -255,7 +285,7 @@ Deno.serve(async (req) => {
           Deno.env.get('SUPABASE_URL')!,
           Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
         );
-        
+
         await supabase
           .from('circuit_design_jobs')
           .update({
@@ -263,10 +293,10 @@ Deno.serve(async (req) => {
             status: 'failed', // Mark ENTIRE job as failed
             error_message: error.message,
             current_step: `Installation guidance failed: ${error.message}`,
-            completed_at: new Date().toISOString()
+            completed_at: new Date().toISOString(),
           })
           .eq('id', savedJobId);
-          
+
         console.log(`✅ Job ${savedJobId} marked as failed in database`);
       } catch (updateError) {
         console.error('❌ Failed to update job with error:', updateError);
@@ -275,147 +305,877 @@ Deno.serve(async (req) => {
       console.error('⚠️ No savedJobId available to update job status');
     }
 
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
-function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo: any): Set<string> {
+function extractDesignKeywords(
+  designedCircuits: any[],
+  supply: any,
+  projectInfo: any
+): Set<string> {
   const keywords = new Set<string>();
-  
+
   // ============================================================
   // 1️⃣ INSTALLATION ACTIVITY KEYWORDS (50+ keywords)
   // ============================================================
   const INSTALLATION_ACTIVITY = {
-    preparation: ['site survey', 'risk assessment', 'isolation', 'safe isolation', 'proving unit', 'lock off', 'lockout', 'permit to work', 'method statement', 'toolbox talk', 'RAMS', 'isolation procedure'],
-    cable_work: ['cable pulling', 'cable routing', 'cable run', 'containment', 'conduit', 'trunking', 'cable tray', 'cable clips', 'cable ties', 'gland', 'gland plate', 'stuffing gland', 'compression gland', 'CW gland', 'BW gland', 'cable support', 'fixing centres', 'cable management'],
-    termination: ['termination', 'connection', 'crimping', 'ferrule', 'bootlace', 'cable lug', 'terminal', 'connector block', 'wago', 'screw terminal', 'strip length', 'torque setting', 'torque wrench', 'conductor preparation'],
-    mounting: ['mounting', 'fixing', 'back box', 'pattress', 'flush mount', 'surface mount', 'bracket', 'rawl plug', 'wall plug', 'masonry fixing', 'plasterboard fixing', 'cavity fixing'],
-    first_fix: ['first fix', 'carcass', 'back boxes', 'containment', 'cable routes', 'notching', 'drilling', 'cable zones', 'chasing', 'cable runs'],
-    second_fix: ['second fix', 'final connections', 'face plates', 'accessories', 'labelling', 'circuit identification', 'commissioning', 'energising']
+    preparation: [
+      'site survey',
+      'risk assessment',
+      'isolation',
+      'safe isolation',
+      'proving unit',
+      'lock off',
+      'lockout',
+      'permit to work',
+      'method statement',
+      'toolbox talk',
+      'RAMS',
+      'isolation procedure',
+    ],
+    cable_work: [
+      'cable pulling',
+      'cable routing',
+      'cable run',
+      'containment',
+      'conduit',
+      'trunking',
+      'cable tray',
+      'cable clips',
+      'cable ties',
+      'gland',
+      'gland plate',
+      'stuffing gland',
+      'compression gland',
+      'CW gland',
+      'BW gland',
+      'cable support',
+      'fixing centres',
+      'cable management',
+    ],
+    termination: [
+      'termination',
+      'connection',
+      'crimping',
+      'ferrule',
+      'bootlace',
+      'cable lug',
+      'terminal',
+      'connector block',
+      'wago',
+      'screw terminal',
+      'strip length',
+      'torque setting',
+      'torque wrench',
+      'conductor preparation',
+    ],
+    mounting: [
+      'mounting',
+      'fixing',
+      'back box',
+      'pattress',
+      'flush mount',
+      'surface mount',
+      'bracket',
+      'rawl plug',
+      'wall plug',
+      'masonry fixing',
+      'plasterboard fixing',
+      'cavity fixing',
+    ],
+    first_fix: [
+      'first fix',
+      'carcass',
+      'back boxes',
+      'containment',
+      'cable routes',
+      'notching',
+      'drilling',
+      'cable zones',
+      'chasing',
+      'cable runs',
+    ],
+    second_fix: [
+      'second fix',
+      'final connections',
+      'face plates',
+      'accessories',
+      'labelling',
+      'circuit identification',
+      'commissioning',
+      'energising',
+    ],
   };
 
   // ============================================================
   // 2️⃣ TESTING & INSPECTION KEYWORDS (60+ keywords)
   // ============================================================
   const TESTING_KEYWORDS = {
-    dead_tests: ['dead testing', 'continuity', 'R1+R2', 'ring continuity', 'figure of eight', 'CPC continuity', 'end-to-end', 'long lead', 'low resistance ohmmeter', 'protective conductor', 'earth continuity'],
-    insulation: ['insulation resistance', 'IR test', 'megger', '500V test', '250V test', 'between live conductors', 'live to earth', '1 MΩ', '2 MΩ', 'insulation test', 'mega ohm'],
-    polarity: ['polarity', 'polarity check', 'correct polarity', 'phase identification', 'L1 L2 L3', 'polarity testing'],
-    earth_fault_loop: ['Zs', 'Ze', 'earth fault loop', 'loop impedance', 'maximum Zs', 'external earth fault loop', 'Table 41.2', 'Table 41.3', 'disconnection time', '0.4s', '5s', 'fault loop impedance'],
-    rcd_tests: ['RCD test', 'trip time', 'trip current', '30mA test', '0.5 I∆n', 'I∆n', 'no trip', '40ms', '200ms', '300ms', 'ramp test', 'residual current', 'RCD operation'],
-    functional: ['functional test', 'operation test', 'switching', 'interlocks', 'pilot lamp', 'operational testing'],
-    pfc: ['PFC', 'PSCC', 'prospective fault current', 'fault level', 'breaking capacity', 'prospective short circuit current'],
-    verification: ['initial verification', 'periodic inspection', 'EICR', 'EIC', 'schedule of test results', 'schedule of inspections', 'electrical installation certificate', 'minor works certificate']
+    dead_tests: [
+      'dead testing',
+      'continuity',
+      'R1+R2',
+      'ring continuity',
+      'figure of eight',
+      'CPC continuity',
+      'end-to-end',
+      'long lead',
+      'low resistance ohmmeter',
+      'protective conductor',
+      'earth continuity',
+    ],
+    insulation: [
+      'insulation resistance',
+      'IR test',
+      'megger',
+      '500V test',
+      '250V test',
+      'between live conductors',
+      'live to earth',
+      '1 MΩ',
+      '2 MΩ',
+      'insulation test',
+      'mega ohm',
+    ],
+    polarity: [
+      'polarity',
+      'polarity check',
+      'correct polarity',
+      'phase identification',
+      'L1 L2 L3',
+      'polarity testing',
+    ],
+    earth_fault_loop: [
+      'Zs',
+      'Ze',
+      'earth fault loop',
+      'loop impedance',
+      'maximum Zs',
+      'external earth fault loop',
+      'Table 41.2',
+      'Table 41.3',
+      'disconnection time',
+      '0.4s',
+      '5s',
+      'fault loop impedance',
+    ],
+    rcd_tests: [
+      'RCD test',
+      'trip time',
+      'trip current',
+      '30mA test',
+      '0.5 I∆n',
+      'I∆n',
+      'no trip',
+      '40ms',
+      '200ms',
+      '300ms',
+      'ramp test',
+      'residual current',
+      'RCD operation',
+    ],
+    functional: [
+      'functional test',
+      'operation test',
+      'switching',
+      'interlocks',
+      'pilot lamp',
+      'operational testing',
+    ],
+    pfc: [
+      'PFC',
+      'PSCC',
+      'prospective fault current',
+      'fault level',
+      'breaking capacity',
+      'prospective short circuit current',
+    ],
+    verification: [
+      'initial verification',
+      'periodic inspection',
+      'EICR',
+      'EIC',
+      'schedule of test results',
+      'schedule of inspections',
+      'electrical installation certificate',
+      'minor works certificate',
+    ],
   };
 
   // ============================================================
   // 3️⃣ TOOLS & EQUIPMENT KEYWORDS (70+ keywords)
   // ============================================================
   const TOOLS_KEYWORDS = {
-    test_instruments: ['multifunction tester', 'MFT', 'Megger', 'Fluke', 'loop tester', 'insulation tester', 'RCD tester', 'earth fault loop tester', 'low resistance ohmmeter', 'proving unit', 'voltage indicator', 'two-pole tester', 'GS38', 'test leads', 'probes', 'clamp meter', 'multimeter', 'phase rotation meter', 'socket tester', 'earth spike', 'test equipment'],
-    hand_tools: ['screwdriver', 'insulated screwdriver', 'VDE screwdriver', 'side cutters', 'cable cutters', 'wire strippers', 'cable stripper', 'pliers', 'long nose pliers', 'crimping tool', 'ratchet crimper', 'cable knife', 'junior hacksaw', 'tape measure', 'spirit level', 'torch', 'head torch', 'adjustable spanner'],
-    power_tools: ['drill', 'SDS drill', 'impact driver', 'combi drill', 'angle grinder', 'jigsaw', 'chase cutter', 'reciprocating saw', 'hole saw', 'core drill', 'hammer drill'],
-    cable_tools: ['cable rods', 'draw tape', 'fish tape', 'cable puller', 'cable lubricant', 'cable rollers', 'conduit bender', 'conduit threader', 'knockout punch', 'gland spanner', 'cable drum stand'],
-    access_equipment: ['ladder', 'step ladder', 'extension ladder', 'platform', 'podium steps', 'scaffold tower', 'MEWP', 'cherry picker', 'working at height'],
-    safety_equipment: ['PPE', 'safety glasses', 'insulated gloves', 'hard hat', 'safety boots', 'hi-vis', 'ear defenders', 'dust mask', 'knee pads', 'first aid kit', 'fire extinguisher', 'spill kit', 'personal protective equipment']
+    test_instruments: [
+      'multifunction tester',
+      'MFT',
+      'Megger',
+      'Fluke',
+      'loop tester',
+      'insulation tester',
+      'RCD tester',
+      'earth fault loop tester',
+      'low resistance ohmmeter',
+      'proving unit',
+      'voltage indicator',
+      'two-pole tester',
+      'GS38',
+      'test leads',
+      'probes',
+      'clamp meter',
+      'multimeter',
+      'phase rotation meter',
+      'socket tester',
+      'earth spike',
+      'test equipment',
+    ],
+    hand_tools: [
+      'screwdriver',
+      'insulated screwdriver',
+      'VDE screwdriver',
+      'side cutters',
+      'cable cutters',
+      'wire strippers',
+      'cable stripper',
+      'pliers',
+      'long nose pliers',
+      'crimping tool',
+      'ratchet crimper',
+      'cable knife',
+      'junior hacksaw',
+      'tape measure',
+      'spirit level',
+      'torch',
+      'head torch',
+      'adjustable spanner',
+    ],
+    power_tools: [
+      'drill',
+      'SDS drill',
+      'impact driver',
+      'combi drill',
+      'angle grinder',
+      'jigsaw',
+      'chase cutter',
+      'reciprocating saw',
+      'hole saw',
+      'core drill',
+      'hammer drill',
+    ],
+    cable_tools: [
+      'cable rods',
+      'draw tape',
+      'fish tape',
+      'cable puller',
+      'cable lubricant',
+      'cable rollers',
+      'conduit bender',
+      'conduit threader',
+      'knockout punch',
+      'gland spanner',
+      'cable drum stand',
+    ],
+    access_equipment: [
+      'ladder',
+      'step ladder',
+      'extension ladder',
+      'platform',
+      'podium steps',
+      'scaffold tower',
+      'MEWP',
+      'cherry picker',
+      'working at height',
+    ],
+    safety_equipment: [
+      'PPE',
+      'safety glasses',
+      'insulated gloves',
+      'hard hat',
+      'safety boots',
+      'hi-vis',
+      'ear defenders',
+      'dust mask',
+      'knee pads',
+      'first aid kit',
+      'fire extinguisher',
+      'spill kit',
+      'personal protective equipment',
+    ],
   };
 
   // ============================================================
   // 4️⃣ MATERIALS & COMPONENTS KEYWORDS (50+ keywords)
   // ============================================================
   const MATERIALS_KEYWORDS = {
-    cables: ['twin and earth', 'T&E', '6242Y', 'SWA', 'armoured cable', 'flex', 'H07RN-F', 'XLPE', 'singles', 'conduit wire', 'fire resistant', 'FP200', 'data cable', 'Cat6', 'coax', 'LSF', 'LSOH'],
-    cable_sizes: ['1mm²', '1.5mm²', '2.5mm²', '4mm²', '6mm²', '10mm²', '16mm²', '25mm²', '35mm²', '50mm²', '70mm²', '95mm²', '120mm²', '1mm', '1.5mm', '2.5mm', '4mm', '6mm', '10mm', '16mm', '25mm'],
-    containment: ['conduit', 'PVC conduit', 'steel conduit', 'flexible conduit', 'trunking', 'mini trunking', 'dado trunking', 'cable tray', 'cable basket', 'cable ladder', 'galvanised trunking'],
-    accessories: ['socket outlet', 'switch', 'dimmer', 'isolator', 'fused spur', 'connection unit', 'cooker control', 'shaver socket', 'ceiling rose', 'batten holder', 'downlight', 'light fitting'],
-    distribution: ['consumer unit', 'distribution board', 'busbar', 'DIN rail', 'MCB', 'RCBO', 'RCD', 'main switch', 'isolator', 'surge protection', 'SPD', 'fuse board'],
-    earthing: ['earth rod', 'earth clamp', 'earth bar', 'main earthing terminal', 'bonding conductor', 'earth labels', 'earth tape', 'earthing conductor', 'protective conductor', 'CPC']
+    cables: [
+      'twin and earth',
+      'T&E',
+      '6242Y',
+      'SWA',
+      'armoured cable',
+      'flex',
+      'H07RN-F',
+      'XLPE',
+      'singles',
+      'conduit wire',
+      'fire resistant',
+      'FP200',
+      'data cable',
+      'Cat6',
+      'coax',
+      'LSF',
+      'LSOH',
+    ],
+    cable_sizes: [
+      '1mm²',
+      '1.5mm²',
+      '2.5mm²',
+      '4mm²',
+      '6mm²',
+      '10mm²',
+      '16mm²',
+      '25mm²',
+      '35mm²',
+      '50mm²',
+      '70mm²',
+      '95mm²',
+      '120mm²',
+      '1mm',
+      '1.5mm',
+      '2.5mm',
+      '4mm',
+      '6mm',
+      '10mm',
+      '16mm',
+      '25mm',
+    ],
+    containment: [
+      'conduit',
+      'PVC conduit',
+      'steel conduit',
+      'flexible conduit',
+      'trunking',
+      'mini trunking',
+      'dado trunking',
+      'cable tray',
+      'cable basket',
+      'cable ladder',
+      'galvanised trunking',
+    ],
+    accessories: [
+      'socket outlet',
+      'switch',
+      'dimmer',
+      'isolator',
+      'fused spur',
+      'connection unit',
+      'cooker control',
+      'shaver socket',
+      'ceiling rose',
+      'batten holder',
+      'downlight',
+      'light fitting',
+    ],
+    distribution: [
+      'consumer unit',
+      'distribution board',
+      'busbar',
+      'DIN rail',
+      'MCB',
+      'RCBO',
+      'RCD',
+      'main switch',
+      'isolator',
+      'surge protection',
+      'SPD',
+      'fuse board',
+    ],
+    earthing: [
+      'earth rod',
+      'earth clamp',
+      'earth bar',
+      'main earthing terminal',
+      'bonding conductor',
+      'earth labels',
+      'earth tape',
+      'earthing conductor',
+      'protective conductor',
+      'CPC',
+    ],
   };
 
   // ============================================================
   // 5️⃣ SAFETY & COMPLIANCE KEYWORDS (40+ keywords)
   // ============================================================
   const SAFETY_KEYWORDS = {
-    safe_isolation: ['safe isolation', 'isolation procedure', 'lock off', 'lockout tagout', 'LOTO', 'proving dead', 'test for dead', 'adjacent live', 'permit to work', 'voltage indicator', 'isolation points'],
-    ppe: ['PPE', 'personal protective equipment', 'safety glasses', 'eye protection', 'insulated gloves', 'Class 0', 'safety boots', 'hard hat', 'hi-vis', 'hearing protection', 'arc flash protection'],
-    hazards: ['electric shock', 'arc flash', 'fire risk', 'burns', 'working at height', 'manual handling', 'asbestos', 'sharp edges', 'trip hazard', 'confined space', 'live working'],
-    regulations: ['BS 7671', 'Wiring Regulations', 'Part P', 'EAWR', 'Electricity at Work', 'CDM', 'HASWA', 'Health and Safety', 'risk assessment', 'method statement', 'RAMS', 'Building Regulations'],
-    certification: ['EIC', 'EICR', 'Minor Works', 'Part P notification', 'building control', 'competent person', 'self-certification', 'electrical installation certificate']
+    safe_isolation: [
+      'safe isolation',
+      'isolation procedure',
+      'lock off',
+      'lockout tagout',
+      'LOTO',
+      'proving dead',
+      'test for dead',
+      'adjacent live',
+      'permit to work',
+      'voltage indicator',
+      'isolation points',
+    ],
+    ppe: [
+      'PPE',
+      'personal protective equipment',
+      'safety glasses',
+      'eye protection',
+      'insulated gloves',
+      'Class 0',
+      'safety boots',
+      'hard hat',
+      'hi-vis',
+      'hearing protection',
+      'arc flash protection',
+    ],
+    hazards: [
+      'electric shock',
+      'arc flash',
+      'fire risk',
+      'burns',
+      'working at height',
+      'manual handling',
+      'asbestos',
+      'sharp edges',
+      'trip hazard',
+      'confined space',
+      'live working',
+    ],
+    regulations: [
+      'BS 7671',
+      'Wiring Regulations',
+      'Part P',
+      'EAWR',
+      'Electricity at Work',
+      'CDM',
+      'HASWA',
+      'Health and Safety',
+      'risk assessment',
+      'method statement',
+      'RAMS',
+      'Building Regulations',
+    ],
+    certification: [
+      'EIC',
+      'EICR',
+      'Minor Works',
+      'Part P notification',
+      'building control',
+      'competent person',
+      'self-certification',
+      'electrical installation certificate',
+    ],
   };
 
   // ============================================================
   // 6️⃣ SECTOR-SPECIFIC KEYWORDS (40+ keywords)
   // ============================================================
   const SECTOR_KEYWORDS = {
-    domestic: ['domestic', 'dwelling', 'house', 'flat', 'consumer unit', 'ring final', 'radial', 'lighting circuit', 'cooker circuit', 'shower circuit', 'immersion', 'smoke alarm', 'Part P', 'notifiable work', 'residential'],
-    commercial: ['commercial', 'office', 'shop', 'retail', 'distribution board', 'three-phase', 'sub-main', 'busbar', 'emergency lighting', 'fire alarm', 'data', 'structured cabling', 'business premises'],
-    industrial: ['industrial', 'factory', 'warehouse', 'motor circuit', 'star-delta', 'DOL', 'VSD', 'isolation', 'emergency stop', 'interlocks', 'machinery', 'SWA', 'manufacturing', 'plant'],
-    agricultural: ['agricultural', 'farm', 'barn', 'livestock', 'equipotential bonding', 'IP rating', 'moisture', 'corrosion', 'farming'],
-    outdoor: ['outdoor', 'external', 'garden', 'IP65', 'IP66', 'weatherproof', 'UV resistant', 'underground', 'armoured', 'exterior']
+    domestic: [
+      'domestic',
+      'dwelling',
+      'house',
+      'flat',
+      'consumer unit',
+      'ring final',
+      'radial',
+      'lighting circuit',
+      'cooker circuit',
+      'shower circuit',
+      'immersion',
+      'smoke alarm',
+      'Part P',
+      'notifiable work',
+      'residential',
+    ],
+    commercial: [
+      'commercial',
+      'office',
+      'shop',
+      'retail',
+      'distribution board',
+      'three-phase',
+      'sub-main',
+      'busbar',
+      'emergency lighting',
+      'fire alarm',
+      'data',
+      'structured cabling',
+      'business premises',
+    ],
+    industrial: [
+      'industrial',
+      'factory',
+      'warehouse',
+      'motor circuit',
+      'star-delta',
+      'DOL',
+      'VSD',
+      'isolation',
+      'emergency stop',
+      'interlocks',
+      'machinery',
+      'SWA',
+      'manufacturing',
+      'plant',
+    ],
+    agricultural: [
+      'agricultural',
+      'farm',
+      'barn',
+      'livestock',
+      'equipotential bonding',
+      'IP rating',
+      'moisture',
+      'corrosion',
+      'farming',
+    ],
+    outdoor: [
+      'outdoor',
+      'external',
+      'garden',
+      'IP65',
+      'IP66',
+      'weatherproof',
+      'UV resistant',
+      'underground',
+      'armoured',
+      'exterior',
+    ],
   };
 
   // ============================================================
   // 7️⃣ SPECIAL LOCATIONS KEYWORDS (40+ keywords)
   // ============================================================
   const SPECIAL_LOCATIONS_KEYWORDS = {
-    bathroom: ['bathroom', 'Zone 0', 'Zone 1', 'Zone 2', 'outside zones', 'IP rating', 'IPX4', 'IPX5', 'SELV', 'supplementary bonding', '30mA RCD', 'shaver socket', 'extractor fan', 'zones', 'wet room'],
-    kitchen: ['kitchen', 'cooking appliance', 'cooker circuit', 'cooker control', 'hob', 'oven', 'extractor', 'waste disposal', 'food preparation'],
-    garage: ['garage', 'outbuilding', 'shed', 'workshop', 'SWA', 'armoured', 'isolation', 'RCD protection', 'ancillary building'],
-    garden: ['garden', 'outdoor', 'pond pump', 'garden lighting', 'IP65', 'weatherproof', 'underground cable', 'warning tape', 'exterior lighting'],
-    loft: ['loft', 'attic', 'roof space', 'thermal insulation', 'derating', 'junction box', 'maintenance free', 'accessible', 'roof void']
+    bathroom: [
+      'bathroom',
+      'Zone 0',
+      'Zone 1',
+      'Zone 2',
+      'outside zones',
+      'IP rating',
+      'IPX4',
+      'IPX5',
+      'SELV',
+      'supplementary bonding',
+      '30mA RCD',
+      'shaver socket',
+      'extractor fan',
+      'zones',
+      'wet room',
+    ],
+    kitchen: [
+      'kitchen',
+      'cooking appliance',
+      'cooker circuit',
+      'cooker control',
+      'hob',
+      'oven',
+      'extractor',
+      'waste disposal',
+      'food preparation',
+    ],
+    garage: [
+      'garage',
+      'outbuilding',
+      'shed',
+      'workshop',
+      'SWA',
+      'armoured',
+      'isolation',
+      'RCD protection',
+      'ancillary building',
+    ],
+    garden: [
+      'garden',
+      'outdoor',
+      'pond pump',
+      'garden lighting',
+      'IP65',
+      'weatherproof',
+      'underground cable',
+      'warning tape',
+      'exterior lighting',
+    ],
+    loft: [
+      'loft',
+      'attic',
+      'roof space',
+      'thermal insulation',
+      'derating',
+      'junction box',
+      'maintenance free',
+      'accessible',
+      'roof void',
+    ],
   };
 
   // ============================================================
   // 8️⃣ CIRCUIT-SPECIFIC KEYWORDS (60+ keywords)
   // ============================================================
   const CIRCUIT_KEYWORDS = {
-    ring_final: ['ring final', '32A', '2.5mm²', 'socket circuit', 'twin and earth', 'figure of eight', 'ring continuity', 'spurs', 'fused spur', 'unfused spur', '100m² floor area', 'ring circuit'],
-    radial: ['radial circuit', '20A', '32A', '2.5mm²', '4mm²', 'socket circuit', 'end fed', 'radial socket'],
-    lighting: ['lighting circuit', '6A', '1.5mm²', 'loop-in', 'junction box', 'switch wire', 'switch drop', 'three-plate', 'ceiling rose', 'downlight', 'light fitting', 'pendant'],
-    cooker: ['cooker circuit', '32A', '40A', '45A', '6mm²', '10mm²', 'cooker control unit', 'outlet plate', 'diversity', 'Table 4A', 'cooking appliance'],
-    shower: ['shower circuit', '40A', '45A', '50A', '6mm²', '10mm²', 'dedicated circuit', 'pull cord', 'double pole isolator', 'IP rating', 'electric shower', 'shower unit'],
-    ev_charger: ['EV charger', 'EVCP', '32A', '6mm²', '7kW', 'Mode 3', 'PME', 'earthing', 'TT', 'dedicated circuit', 'RCD Type A', 'electric vehicle'],
-    smoke_alarm: ['smoke alarm', 'smoke detection', 'mains powered', 'battery backup', 'interlinked', 'ceiling mounted', 'BS 5839-6', 'fire detection'],
-    immersion: ['immersion heater', '16A', '3kW', '2.5mm²', 'DP switch', 'flex outlet', 'cylinder stat', 'water heating'],
-    boiler: ['boiler', 'central heating', '3A fuse', 'fused spur', 'programmer', 'room stat', 'cylinder stat', 'heating control'],
-    outdoor: ['outdoor circuit', 'garden lighting', 'pond pump', 'armoured cable', 'IP65', 'weatherproof socket', 'RCD protection', 'external circuit']
+    ring_final: [
+      'ring final',
+      '32A',
+      '2.5mm²',
+      'socket circuit',
+      'twin and earth',
+      'figure of eight',
+      'ring continuity',
+      'spurs',
+      'fused spur',
+      'unfused spur',
+      '100m² floor area',
+      'ring circuit',
+    ],
+    radial: [
+      'radial circuit',
+      '20A',
+      '32A',
+      '2.5mm²',
+      '4mm²',
+      'socket circuit',
+      'end fed',
+      'radial socket',
+    ],
+    lighting: [
+      'lighting circuit',
+      '6A',
+      '1.5mm²',
+      'loop-in',
+      'junction box',
+      'switch wire',
+      'switch drop',
+      'three-plate',
+      'ceiling rose',
+      'downlight',
+      'light fitting',
+      'pendant',
+    ],
+    cooker: [
+      'cooker circuit',
+      '32A',
+      '40A',
+      '45A',
+      '6mm²',
+      '10mm²',
+      'cooker control unit',
+      'outlet plate',
+      'diversity',
+      'Table 4A',
+      'cooking appliance',
+    ],
+    shower: [
+      'shower circuit',
+      '40A',
+      '45A',
+      '50A',
+      '6mm²',
+      '10mm²',
+      'dedicated circuit',
+      'pull cord',
+      'double pole isolator',
+      'IP rating',
+      'electric shower',
+      'shower unit',
+    ],
+    ev_charger: [
+      'EV charger',
+      'EVCP',
+      '32A',
+      '6mm²',
+      '7kW',
+      'Mode 3',
+      'PME',
+      'earthing',
+      'TT',
+      'dedicated circuit',
+      'RCD Type A',
+      'electric vehicle',
+    ],
+    smoke_alarm: [
+      'smoke alarm',
+      'smoke detection',
+      'mains powered',
+      'battery backup',
+      'interlinked',
+      'ceiling mounted',
+      'BS 5839-6',
+      'fire detection',
+    ],
+    immersion: [
+      'immersion heater',
+      '16A',
+      '3kW',
+      '2.5mm²',
+      'DP switch',
+      'flex outlet',
+      'cylinder stat',
+      'water heating',
+    ],
+    boiler: [
+      'boiler',
+      'central heating',
+      '3A fuse',
+      'fused spur',
+      'programmer',
+      'room stat',
+      'cylinder stat',
+      'heating control',
+    ],
+    outdoor: [
+      'outdoor circuit',
+      'garden lighting',
+      'pond pump',
+      'armoured cable',
+      'IP65',
+      'weatherproof socket',
+      'RCD protection',
+      'external circuit',
+    ],
   };
 
   // ============================================================
   // 9️⃣ FAULT FINDING KEYWORDS (30+ keywords)
   // ============================================================
   const FAULT_KEYWORDS = {
-    symptoms: ['tripping', 'nuisance tripping', 'intermittent fault', 'no power', 'partial loss', 'overheating', 'burning smell', 'sparking', 'flickering', 'buzzing', 'humming', 'dead circuit'],
-    tests: ['insulation resistance', 'continuity', 'earth fault', 'split load test', 'half split', 'IR test', 'live testing', 'thermal imaging', 'fault finding'],
-    common_faults: ['earth fault', 'short circuit', 'open circuit', 'high resistance joint', 'loose connection', 'damaged cable', 'water ingress', 'rodent damage', 'overload', 'circuit fault']
+    symptoms: [
+      'tripping',
+      'nuisance tripping',
+      'intermittent fault',
+      'no power',
+      'partial loss',
+      'overheating',
+      'burning smell',
+      'sparking',
+      'flickering',
+      'buzzing',
+      'humming',
+      'dead circuit',
+    ],
+    tests: [
+      'insulation resistance',
+      'continuity',
+      'earth fault',
+      'split load test',
+      'half split',
+      'IR test',
+      'live testing',
+      'thermal imaging',
+      'fault finding',
+    ],
+    common_faults: [
+      'earth fault',
+      'short circuit',
+      'open circuit',
+      'high resistance joint',
+      'loose connection',
+      'damaged cable',
+      'water ingress',
+      'rodent damage',
+      'overload',
+      'circuit fault',
+    ],
   };
 
   // ============================================================
   // 🔟 THREE-PHASE & INDUSTRIAL KEYWORDS (30+ keywords)
   // ============================================================
   const THREE_PHASE_KEYWORDS = {
-    basics: ['three-phase', '3-phase', '400V', '415V', 'line voltage', 'phase voltage', 'L1 L2 L3', 'neutral', 'star', 'delta', '√3', '1.732', 'three phase'],
-    distribution: ['three-phase board', 'TP&N', 'busbar', 'balanced load', 'phase rotation', 'phase sequence', 'RYB', 'L1 L2 L3', '3-phase distribution'],
-    motors: ['motor circuit', 'DOL', 'direct on line', 'star-delta', 'soft start', 'VSD', 'VFD', 'inverter', 'overload', 'contactor', 'isolator', 'motor starter'],
-    testing: ['phase rotation meter', 'phase sequence', 'motor rotation', 'current balance', 'voltage balance', 'phase testing']
+    basics: [
+      'three-phase',
+      '3-phase',
+      '400V',
+      '415V',
+      'line voltage',
+      'phase voltage',
+      'L1 L2 L3',
+      'neutral',
+      'star',
+      'delta',
+      '√3',
+      '1.732',
+      'three phase',
+    ],
+    distribution: [
+      'three-phase board',
+      'TP&N',
+      'busbar',
+      'balanced load',
+      'phase rotation',
+      'phase sequence',
+      'RYB',
+      'L1 L2 L3',
+      '3-phase distribution',
+    ],
+    motors: [
+      'motor circuit',
+      'DOL',
+      'direct on line',
+      'star-delta',
+      'soft start',
+      'VSD',
+      'VFD',
+      'inverter',
+      'overload',
+      'contactor',
+      'isolator',
+      'motor starter',
+    ],
+    testing: [
+      'phase rotation meter',
+      'phase sequence',
+      'motor rotation',
+      'current balance',
+      'voltage balance',
+      'phase testing',
+    ],
   };
 
   // ============================================================
   // ADD ALL CATEGORY KEYWORDS
   // ============================================================
-  Object.values(INSTALLATION_ACTIVITY).flat().forEach(kw => keywords.add(kw));
-  Object.values(TESTING_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(TOOLS_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(MATERIALS_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(SAFETY_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(SECTOR_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(SPECIAL_LOCATIONS_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(CIRCUIT_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(FAULT_KEYWORDS).flat().forEach(kw => keywords.add(kw));
-  Object.values(THREE_PHASE_KEYWORDS).flat().forEach(kw => keywords.add(kw));
+  Object.values(INSTALLATION_ACTIVITY)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(TESTING_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(TOOLS_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(MATERIALS_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(SAFETY_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(SECTOR_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(SPECIAL_LOCATIONS_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(CIRCUIT_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(FAULT_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
+  Object.values(THREE_PHASE_KEYWORDS)
+    .flat()
+    .forEach((kw) => keywords.add(kw));
 
   // ============================================================
   // DYNAMIC KEYWORD INFERENCE FROM DESIGNED CIRCUITS
@@ -425,56 +1185,56 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
     if (circuit.name) {
       const circuitName = circuit.name.toLowerCase();
       keywords.add(circuitName);
-      
+
       // Infer circuit type keywords
       if (circuitName.includes('ring')) {
-        CIRCUIT_KEYWORDS.ring_final.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.ring_final.forEach((kw) => keywords.add(kw));
       }
       if (circuitName.includes('cooker')) {
-        CIRCUIT_KEYWORDS.cooker.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.cooker.forEach((kw) => keywords.add(kw));
       }
       if (circuitName.includes('shower')) {
-        CIRCUIT_KEYWORDS.shower.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.shower.forEach((kw) => keywords.add(kw));
       }
       if (circuitName.includes('lighting') || circuitName.includes('lights')) {
-        CIRCUIT_KEYWORDS.lighting.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.lighting.forEach((kw) => keywords.add(kw));
       }
       if (circuitName.includes('immersion')) {
-        CIRCUIT_KEYWORDS.immersion.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.immersion.forEach((kw) => keywords.add(kw));
       }
       if (circuitName.includes('ev') || circuitName.includes('charger')) {
-        CIRCUIT_KEYWORDS.ev_charger.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.ev_charger.forEach((kw) => keywords.add(kw));
       }
       if (circuitName.includes('smoke') || circuitName.includes('alarm')) {
-        CIRCUIT_KEYWORDS.smoke_alarm.forEach(kw => keywords.add(kw));
+        CIRCUIT_KEYWORDS.smoke_alarm.forEach((kw) => keywords.add(kw));
       }
     }
-    
+
     if (circuit.loadType) keywords.add(circuit.loadType.toLowerCase());
-    
+
     // Location-based keywords
     if (circuit.location) {
       const location = circuit.location.toLowerCase();
       keywords.add(location);
-      
+
       if (location.includes('bathroom') || location.includes('bath')) {
-        SPECIAL_LOCATIONS_KEYWORDS.bathroom.forEach(kw => keywords.add(kw));
+        SPECIAL_LOCATIONS_KEYWORDS.bathroom.forEach((kw) => keywords.add(kw));
       }
       if (location.includes('kitchen')) {
-        SPECIAL_LOCATIONS_KEYWORDS.kitchen.forEach(kw => keywords.add(kw));
+        SPECIAL_LOCATIONS_KEYWORDS.kitchen.forEach((kw) => keywords.add(kw));
       }
       if (location.includes('garage') || location.includes('shed')) {
-        SPECIAL_LOCATIONS_KEYWORDS.garage.forEach(kw => keywords.add(kw));
+        SPECIAL_LOCATIONS_KEYWORDS.garage.forEach((kw) => keywords.add(kw));
       }
       if (location.includes('garden') || location.includes('outdoor')) {
-        SPECIAL_LOCATIONS_KEYWORDS.garden.forEach(kw => keywords.add(kw));
-        CIRCUIT_KEYWORDS.outdoor.forEach(kw => keywords.add(kw));
+        SPECIAL_LOCATIONS_KEYWORDS.garden.forEach((kw) => keywords.add(kw));
+        CIRCUIT_KEYWORDS.outdoor.forEach((kw) => keywords.add(kw));
       }
       if (location.includes('loft') || location.includes('attic')) {
-        SPECIAL_LOCATIONS_KEYWORDS.loft.forEach(kw => keywords.add(kw));
+        SPECIAL_LOCATIONS_KEYWORDS.loft.forEach((kw) => keywords.add(kw));
       }
     }
-    
+
     // ACTUAL designed cable specification
     if (circuit.cableType) {
       keywords.add(circuit.cableType.toLowerCase());
@@ -484,12 +1244,12 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
         keywords.add(`${cableSizeMatch[1]}mm² cable`);
       }
     }
-    
+
     if (circuit.cableSize) {
       keywords.add(`${circuit.cableSize}mm cable`);
       keywords.add(`${circuit.cableSize}mm² cable`);
     }
-    
+
     // ACTUAL protection device
     if (circuit.protectionDevice) {
       const device = circuit.protectionDevice;
@@ -500,22 +1260,22 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
       if (device.type) {
         const deviceType = device.type.toLowerCase();
         keywords.add(deviceType);
-        
+
         // If RCD/RCBO, add RCD testing keywords
         if (deviceType.includes('rcd') || deviceType.includes('rcbo')) {
-          TESTING_KEYWORDS.rcd_tests.forEach(kw => keywords.add(kw));
+          TESTING_KEYWORDS.rcd_tests.forEach((kw) => keywords.add(kw));
         }
       }
       if (device.curve) {
         keywords.add(`type ${device.curve}`.toLowerCase());
       }
     }
-    
+
     // Installation method
     if (circuit.installationMethod) {
       keywords.add(circuit.installationMethod.toLowerCase());
     }
-    
+
     // Load details
     if (circuit.loadDetails?.totalPower) {
       keywords.add(`${circuit.loadDetails.totalPower}W load`);
@@ -532,10 +1292,12 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
   if (supply?.phases) {
     keywords.add(`${supply.phases} phase`);
     keywords.add(`${supply.phases}-phase`);
-    
+
     // If three-phase, add all three-phase keywords
     if (supply.phases === 3 || supply.phases === '3' || supply.phases === 'Three') {
-      Object.values(THREE_PHASE_KEYWORDS).flat().forEach(kw => keywords.add(kw));
+      Object.values(THREE_PHASE_KEYWORDS)
+        .flat()
+        .forEach((kw) => keywords.add(kw));
     }
   }
   if (supply?.earthingSystem) {
@@ -548,16 +1310,20 @@ function extractDesignKeywords(designedCircuits: any[], supply: any, projectInfo
   if (projectInfo?.type) {
     const projectType = projectInfo.type.toLowerCase();
     keywords.add(projectType);
-    
+
     // Add sector-specific keywords
     if (projectType.includes('domestic') || projectType.includes('residential')) {
-      SECTOR_KEYWORDS.domestic.forEach(kw => keywords.add(kw));
+      SECTOR_KEYWORDS.domestic.forEach((kw) => keywords.add(kw));
     }
-    if (projectType.includes('commercial') || projectType.includes('office') || projectType.includes('shop')) {
-      SECTOR_KEYWORDS.commercial.forEach(kw => keywords.add(kw));
+    if (
+      projectType.includes('commercial') ||
+      projectType.includes('office') ||
+      projectType.includes('shop')
+    ) {
+      SECTOR_KEYWORDS.commercial.forEach((kw) => keywords.add(kw));
     }
     if (projectType.includes('industrial') || projectType.includes('factory')) {
-      SECTOR_KEYWORDS.industrial.forEach(kw => keywords.add(kw));
+      SECTOR_KEYWORDS.industrial.forEach((kw) => keywords.add(kw));
     }
   }
 
@@ -582,23 +1348,23 @@ function filterRagForCircuit(items: any[], circuit: any): any[] {
   const cableSize = circuit.cableSize || extractCableSizeFromType(circuit.cableType);
   const loadType = (circuit.loadType || '').toLowerCase();
   const circuitName = (circuit.name || '').toLowerCase();
-  
+
   return items.filter((item: any) => {
     const keywords = item.keywords || [];
     const content = (item.content || item.primary_topic || item.description || '').toLowerCase();
-    
+
     // Check cable size relevance
-    const cableSizeMatch = content.includes(`${cableSize}mm`) || 
-                           keywords.some(k => k.includes(`${cableSize}mm`));
-    
+    const cableSizeMatch =
+      content.includes(`${cableSize}mm`) || keywords.some((k) => k.includes(`${cableSize}mm`));
+
     // Check load type relevance
-    const loadTypeMatch = content.includes(loadType) || 
-                          keywords.some(k => k.toLowerCase().includes(loadType));
-    
+    const loadTypeMatch =
+      content.includes(loadType) || keywords.some((k) => k.toLowerCase().includes(loadType));
+
     // Check circuit name relevance
-    const nameMatch = content.includes(circuitName) || 
-                      keywords.some(k => k.toLowerCase().includes(circuitName));
-    
+    const nameMatch =
+      content.includes(circuitName) || keywords.some((k) => k.toLowerCase().includes(circuitName));
+
     return cableSizeMatch || loadTypeMatch || nameMatch;
   });
 }
@@ -620,28 +1386,30 @@ async function generateInstallationGuidancePerCircuit(
   // Filter RAG results for this specific circuit (enhanced limits for 30% more detail)
   const relevantPracticalWork = filterRagForCircuit(allPracticalWork, circuit).slice(0, 15);
   const relevantRegulations = filterRagForCircuit(allRegulations, circuit).slice(0, 12);
-  
-  const protectionStr = circuit.protectionDevice 
+
+  const protectionStr = circuit.protectionDevice
     ? `${circuit.protectionDevice.rating}A Type ${circuit.protectionDevice.curve} ${circuit.protectionDevice.type}`
     : 'Not specified';
-  
+
   const cableSpec = circuit.cableType || `${circuit.cableSize}mm² cable`;
-  
+
   // Determine installation type for workflow selection
   const installationType = projectInfo?.installationType || 'domestic';
   const isCommercial = installationType === 'commercial';
   const isIndustrial = installationType === 'industrial';
   const isDomestic = !isCommercial && !isIndustrial;
-  
+
   // Determine circuit-specific testing requirements
-  const isRingFinal = circuit.name?.toLowerCase().includes('ring') || 
-                      circuit.loadType?.toLowerCase().includes('ring') ||
-                      circuit.justification?.toLowerCase().includes('ring final');
-  
-  const hasRCD = circuit.protectionDevice?.type?.toLowerCase().includes('rcbo') ||
-                 circuit.protectionDevice?.type?.toLowerCase().includes('rcd') ||
-                 circuit.rcdProtected === true;
-  
+  const isRingFinal =
+    circuit.name?.toLowerCase().includes('ring') ||
+    circuit.loadType?.toLowerCase().includes('ring') ||
+    circuit.justification?.toLowerCase().includes('ring final');
+
+  const hasRCD =
+    circuit.protectionDevice?.type?.toLowerCase().includes('rcbo') ||
+    circuit.protectionDevice?.type?.toLowerCase().includes('rcd') ||
+    circuit.rcdProtected === true;
+
   const systemPrompt = `You are an expert Installation Guidance Specialist for UK electrical installations.
 
 ## ⚠️ CRITICAL: USE EXACT SPECIFICATIONS - NO DEVIATIONS ⚠️
@@ -683,14 +1451,17 @@ async function generateInstallationGuidancePerCircuit(
 - ${relevantRegulations.length} relevant BS 7671 regulations
 
 ## PRACTICAL WORK KNOWLEDGE:
-${relevantPracticalWork.map((pw: any) => 
-  `- ${pw.primary_topic}: ${pw.procedure_summary || pw.description || ''}`
-).join('\n')}
+${relevantPracticalWork
+  .map((pw: any) => `- ${pw.primary_topic}: ${pw.procedure_summary || pw.description || ''}`)
+  .join('\n')}
 
 ## BS 7671 REGULATIONS:
-${relevantRegulations.map((reg: any) => 
-  `- ${reg.regulation_number}: ${(reg.content || reg.primary_topic || '').slice(0, 120)}`
-).join('\n')}
+${relevantRegulations
+  .map(
+    (reg: any) =>
+      `- ${reg.regulation_number}: ${(reg.content || reg.primary_topic || '').slice(0, 120)}`
+  )
+  .join('\n')}
 
 ## OUTPUT STRUCTURE (JSON):
 {
@@ -763,20 +1534,28 @@ ${relevantRegulations.map((reg: any) =>
 }
 
 ## CIRCUIT-SPECIFIC TESTING REQUIREMENTS:
-${isRingFinal ? `
+${
+  isRingFinal
+    ? `
 **RING FINAL CIRCUIT TESTING (MANDATORY):**
 - Continuity of ring circuit conductors (line, neutral, CPC)
 - End-to-end resistance of ring (R1, R2, Rn)
 - Cross-connection test (socket outlets)
 - Verification that resistance at each outlet is within acceptable limits
-` : ''}
-${hasRCD ? `
+`
+    : ''
+}
+${
+  hasRCD
+    ? `
 **RCD TESTING (MANDATORY for RCD/RCBO protected circuits):**
 - RCD operation at rated residual current (IΔn)
 - RCD operation at 5× rated residual current (5×IΔn)
 - RCD trip time measurements
 - Manual test button operation
-` : ''}
+`
+    : ''
+}
 
 **STANDARD TESTS (REQUIRED FOR ALL CIRCUITS):**
 1. **Continuity of Protective Conductors (R1+R2)** - BS 7671 Regulation 643.2
@@ -791,14 +1570,20 @@ ${hasRCD ? `
 - Generate 7-10 comprehensive installation steps SPECIFIC to ${cableSpec}
 - Each step must be 150-200 words with exact measurements, torques, stripping lengths, fixing centres
 - MANDATORY: FOLLOW ${installationType.toUpperCase()} INSTALLATION WORKFLOW:
-${isDomestic ? `
+${
+  isDomestic
+    ? `
   * Step 1: Preparation & Planning (isolation procedure, gather tools/materials, route marking, safety checks)
   * Step 2: FIRST FIX - Containment & Cable Routing (install backboxes, drill cable routes through joists/walls, pull T+E cables, clip at 300mm centres, leave cable tails UNSTRIPPED with labels attached)
   * Step 3: SECOND FIX PREPARATION - Cable Prep (measure final lengths at both ends, cut cables to length allowing termination tails, strip outer sheath 50mm, strip insulation 8-10mm for terminals)
   * Step 4: SECOND FIX - Consumer Unit Terminations (terminate CPCs to earth bar, neutrals to neutral bar, lines to MCBs/RCBOs with correct torque)
   * Step 5: SECOND FIX - Accessory Terminations (connect sockets, switches, light fittings with correct torque settings)
   * Final Step(s): Testing & Commissioning (continuity, insulation resistance, polarity, Zs, RCD tests)
-` : ''}${isCommercial ? `
+`
+    : ''
+}${
+    isCommercial
+      ? `
   * Step 1: Site Setup & Planning (isolation, RAMS review, tool/material staging, containment route marking)
   * Step 2: CONTAINMENT INSTALLATION (install cable tray/trunking/dado trunking, fire barriers at penetrations, support brackets at max 1.5m centres)
   * Step 3: FIRST FIX - Cable Installation (draw SWA/FP cables through containment, install glands where required, secure with cleats, label at 3m intervals, leave tails unstripped)
@@ -807,7 +1592,11 @@ ${isDomestic ? `
   * Step 6: CABLE TERMINATIONS - Load Side (terminate at final circuits, switches, FCUs, equipment isolators)
   * Step 7: SPECIALIST SYSTEMS (fire alarm interconnections, emergency lighting, BMS integration if applicable)
   * Final Step(s): Testing & Commissioning (full EICR tests, emergency lighting duration test, handover documentation)
-` : ''}${isIndustrial ? `
+`
+      : ''
+  }${
+    isIndustrial
+      ? `
   * Step 1: Site Setup & Permit System (isolation permit, LOTO procedure, RAMS/method statement review, PPE check, tool inspection)
   * Step 2: CONTAINMENT & SUPPORT SYSTEMS (install cable ladder/heavy-duty tray, unistrut supports, fire barriers, earthing to metallic containment)
   * Step 3: CABLE PULLING - Main Feeders (install SWA/XLPE using cable rollers, maintain bend radius min 12×D, use pulling eyes, apply cable lubricant, leave tails unstripped)
@@ -817,7 +1606,9 @@ ${isDomestic ? `
   * Step 7: TERMINATIONS - Field Devices (motors, isolators, control gear, junction boxes with correct gland sizes)
   * Step 8: CONTROL WIRING (install multicore control cables, terminate at marshalling panels, ring out all cores, comprehensive labelling)
   * Final Step(s): Testing & Pre-Commissioning (megger tests, protection relay settings verification, FAT documentation, handover)
-` : ''}
+`
+      : ''
+  }
 - DO NOT repeat cable stripping/preparation in multiple steps - cable prep must appear in ONE step only
 - Each step must perform DISTINCT actions with no overlap between steps
 - ALL cable installation/routing MUST be completed BEFORE any termination work begins
@@ -868,25 +1659,27 @@ ${isDomestic ? `
     response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt },
         ],
         response_format: { type: 'json_object' },
-        max_completion_tokens: 8000  // Reduced from 12000 to 8000 for 30% faster generation while maintaining comprehensive guidance
+        max_completion_tokens: 8000, // Reduced from 12000 to 8000 for 30% faster generation while maintaining comprehensive guidance
       }),
-      signal: controller.signal
+      signal: controller.signal,
     });
   } catch (fetchError: any) {
     clearTimeout(timeoutId);
     if (fetchError.name === 'AbortError') {
       console.error(`⏱️ Circuit ${circuitIndex + 1} TIMEOUT after 3 minutes`);
-      throw new Error(`Circuit ${circuitIndex + 1} installation guidance timed out after 3 minutes. OpenAI API may be slow or unresponsive.`);
+      throw new Error(
+        `Circuit ${circuitIndex + 1} installation guidance timed out after 3 minutes. OpenAI API may be slow or unresponsive.`
+      );
     }
     console.error(`❌ Circuit ${circuitIndex + 1} fetch failed:`, fetchError.message);
     throw new Error(`Circuit ${circuitIndex + 1} fetch failed: ${fetchError.message}`);
@@ -901,7 +1694,9 @@ ${isDomestic ? `
 
     // Check for rate limiting
     if (response.status === 429) {
-      throw new Error(`Circuit ${circuitIndex + 1} hit OpenAI rate limit. Please try again in a moment.`);
+      throw new Error(
+        `Circuit ${circuitIndex + 1} hit OpenAI rate limit. Please try again in a moment.`
+      );
     }
 
     throw new Error(errorMsg);
@@ -911,50 +1706,57 @@ ${isDomestic ? `
   const finishReason = aiResponse.choices[0].finish_reason;
   const completionTokens = aiResponse.usage?.completion_tokens || 0;
 
-  console.log(`✅ Circuit ${circuitIndex + 1} response: ${completionTokens} tokens, finish_reason: ${finishReason}`);
-  
+  console.log(
+    `✅ Circuit ${circuitIndex + 1} response: ${completionTokens} tokens, finish_reason: ${finishReason}`
+  );
+
   // Check for truncation
   if (finishReason === 'length') {
-    console.warn(`⚠️ Circuit ${circuitIndex + 1} response truncated - output exceeded ${completionTokens} tokens`);
+    console.warn(
+      `⚠️ Circuit ${circuitIndex + 1} response truncated - output exceeded ${completionTokens} tokens`
+    );
   }
-  
+
   let content = aiResponse.choices[0].message.content;
-  
+
   // Attempt to parse JSON, with repair if truncated
   try {
     return JSON.parse(content);
   } catch (parseError) {
     console.error(`⚠️ JSON parse failed for circuit ${circuitIndex + 1}, attempting repair...`);
-    
+
     // Try to close unclosed brackets/braces for truncated JSON
     const openBraces = (content.match(/{/g) || []).length;
     const closeBraces = (content.match(/}/g) || []).length;
     const openBrackets = (content.match(/\[/g) || []).length;
     const closeBrackets = (content.match(/]/g) || []).length;
-    
+
     // Close any unclosed arrays first, then objects
     const missingBrackets = ']'.repeat(Math.max(0, openBrackets - closeBrackets));
     const missingBraces = '}'.repeat(Math.max(0, openBraces - closeBraces));
-    
+
     // Check if content ends mid-string and close it
     const lastQuoteIndex = content.lastIndexOf('"');
-    const hasUnclosedString = lastQuoteIndex > content.lastIndexOf(':') && 
-                              content.substring(lastQuoteIndex).indexOf(',') === -1 &&
-                              content.substring(lastQuoteIndex).indexOf('}') === -1;
-    
+    const hasUnclosedString =
+      lastQuoteIndex > content.lastIndexOf(':') &&
+      content.substring(lastQuoteIndex).indexOf(',') === -1 &&
+      content.substring(lastQuoteIndex).indexOf('}') === -1;
+
     if (hasUnclosedString) {
       content = content + '"';
     }
-    
+
     const repairedContent = content + missingBrackets + missingBraces;
-    
+
     try {
       const repaired = JSON.parse(repairedContent);
       console.log(`✅ JSON repair successful for circuit ${circuitIndex + 1}`);
       return repaired;
     } catch (repairError) {
       console.error(`❌ JSON repair failed for circuit ${circuitIndex + 1}:`, repairError);
-      throw new Error(`Failed to parse installation guidance for circuit ${circuitIndex + 1}: ${parseError instanceof Error ? parseError.message : 'Invalid JSON'} (finish_reason: ${finishReason}, tokens: ${completionTokens})`);
+      throw new Error(
+        `Failed to parse installation guidance for circuit ${circuitIndex + 1}: ${parseError instanceof Error ? parseError.message : 'Invalid JSON'} (finish_reason: ${finishReason}, tokens: ${completionTokens})`
+      );
     }
   }
 }
@@ -966,17 +1768,21 @@ async function generateInstallationGuidance(
   practicalWork: any[],
   regulations: any[]
 ) {
-  console.log(`🔄 Generating circuit-specific guidance for ${designedCircuits.length} circuits in parallel...`);
-  
+  console.log(
+    `🔄 Generating circuit-specific guidance for ${designedCircuits.length} circuits in parallel...`
+  );
+
   // Import safeAll for parallel execution
   const { safeAll } = await import('../_shared/safe-parallel.ts');
-  
+
   // Create parallel tasks for each circuit
   const circuitTasks = designedCircuits.map((circuit, i) => ({
     name: `Circuit ${i + 1}: ${circuit.name}`,
     execute: async () => {
-      console.log(`  📍 Starting Circuit ${i + 1}/${designedCircuits.length}: ${circuit.name} (${circuit.cableType || circuit.cableSize + 'mm²'})`);
-      
+      console.log(
+        `  📍 Starting Circuit ${i + 1}/${designedCircuits.length}: ${circuit.name} (${circuit.cableType || circuit.cableSize + 'mm²'})`
+      );
+
       const guidance = await generateInstallationGuidancePerCircuit(
         circuit,
         i,
@@ -985,53 +1791,55 @@ async function generateInstallationGuidance(
         practicalWork,
         regulations
       );
-      
+
       console.log(`  ✅ Circuit ${i + 1} guidance generated`);
-      
+
       return {
         circuitIndex: i,
         circuitName: circuit.name,
         cableSpec: circuit.cableType || `${circuit.cableSize}mm²`,
         protection: circuit.protectionDevice,
-        guidance: guidance
+        guidance: guidance,
       };
-    }
+    },
   }));
-  
+
   // Execute all circuits in parallel
   const { successes, failures } = await safeAll(circuitTasks);
-  
-  console.log(`✅ Parallel generation complete: ${successes.length} succeeded, ${failures.length} failed`);
-  
+
+  console.log(
+    `✅ Parallel generation complete: ${successes.length} succeeded, ${failures.length} failed`
+  );
+
   // Build result object with all circuits
   const circuitGuidance: any = {};
-  
+
   // Add successful circuits
   successes.forEach(({ result }) => {
     circuitGuidance[`circuit_${result.circuitIndex}`] = {
       circuitName: result.circuitName,
       cableSpec: result.cableSpec,
       protection: result.protection,
-      guidance: result.guidance
+      guidance: result.guidance,
     };
   });
-  
+
   // Add failed circuits with error messages
   failures.forEach(({ name, error }) => {
     // Extract circuit index from name "Circuit X: ..."
     const match = name.match(/Circuit (\d+):/);
     const circuitIndex = match ? parseInt(match[1]) - 1 : -1;
     const circuit = designedCircuits[circuitIndex] || {};
-    
+
     console.error(`  ❌ ${name} failed:`, error);
-    
+
     circuitGuidance[`circuit_${circuitIndex}`] = {
       circuitName: circuit.name || 'Unknown',
       cableSpec: circuit.cableType || `${circuit.cableSize}mm²` || 'Unknown',
       protection: circuit.protectionDevice,
-      error: error instanceof Error ? error.message : String(error)
+      error: error instanceof Error ? error.message : String(error),
     };
   });
-  
+
   return circuitGuidance;
 }

@@ -6,7 +6,19 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY as string
 );
 
-const MATERIALS = ['cables', 'consumer-units', 'circuit-protection', 'wiring-accessories', 'lighting', 'containment', 'earthing', 'fire-security', 'ev-charging', 'data-networking', 'fixings'];
+const MATERIALS = [
+  'cables',
+  'consumer-units',
+  'circuit-protection',
+  'wiring-accessories',
+  'lighting',
+  'containment',
+  'earthing',
+  'fire-security',
+  'ev-charging',
+  'data-networking',
+  'fixings',
+];
 const TOOLS = ['hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'];
 
 async function main() {

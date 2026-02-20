@@ -1,6 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testClient, testCircuit } from "../fixtures/test-data";
+import { testClient, testCircuit } from '../fixtures/test-data';
 
 /**
  * EIC Certificate - Edge Cases Tests
@@ -12,7 +12,7 @@ import { testClient, testCircuit } from "../fixtures/test-data";
 
 // Helper to navigate to EIC form
 async function navigateToEIC(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=eic");
+  await page.goto('/electrician/inspection-testing?section=eic');
   await page.waitForTimeout(3000);
 }
 
@@ -26,14 +26,14 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
   return false;
 }
 
-test.describe("EIC Certificate Edge Cases - Input Validation", () => {
+test.describe('EIC Certificate Edge Cases - Input Validation', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("1. Very long client name is handled", async ({ page }) => {
-    const longName = "A".repeat(200);
+  test('1. Very long client name is handled', async ({ page }) => {
+    const longName = 'A'.repeat(200);
     await fillIfVisible(page, 'input[name="clientName"]', longName);
 
     const input = page.locator('input[name="clientName"]').first();
@@ -42,11 +42,11 @@ test.describe("EIC Certificate Edge Cases - Input Validation", () => {
       expect(value.length).toBeGreaterThan(0);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Special characters in fields are handled", async ({ page }) => {
-    const specialName = "O'Brien & Sons <Test> \"Company\"";
+  test('2. Special characters in fields are handled', async ({ page }) => {
+    const specialName = 'O\'Brien & Sons <Test> "Company"';
     await fillIfVisible(page, 'input[name="clientName"]', specialName);
 
     const input = page.locator('input[name="clientName"]').first();
@@ -55,10 +55,10 @@ test.describe("EIC Certificate Edge Cases - Input Validation", () => {
       expect(value).toContain("O'Brien");
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. Unicode characters are supported", async ({ page }) => {
+  test('3. Unicode characters are supported', async ({ page }) => {
     const unicodeName = "Müller & Søren's Électrique";
     await fillIfVisible(page, 'input[name="clientName"]', unicodeName);
 
@@ -68,29 +68,32 @@ test.describe("EIC Certificate Edge Cases - Input Validation", () => {
       expect(value).toBe(unicodeName);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("4. Invalid email format shows validation", async ({ page }) => {
+  test('4. Invalid email format shows validation', async ({ page }) => {
     const emailInput = page.locator('input[name="clientEmail"], input[type="email"]').first();
     if (await emailInput.isVisible({ timeout: 2000 })) {
-      await emailInput.fill("not-an-email");
+      await emailInput.fill('not-an-email');
       await emailInput.blur();
       await page.waitForTimeout(300);
 
       // Check for validation
       const validation = page.locator('text=/invalid|email|format/i');
-      const hasValidation = await validation.first().isVisible({ timeout: 2000 }).catch(() => false);
+      const hasValidation = await validation
+        .first()
+        .isVisible({ timeout: 2000 })
+        .catch(() => false);
       expect(hasValidation || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Negative test values are handled", async ({ page }) => {
+  test('5. Negative test values are handled', async ({ page }) => {
     const zsInput = page.locator('input[name*="zs" i]').first();
     if (await zsInput.isVisible({ timeout: 2000 })) {
-      await zsInput.fill("-1.5");
+      await zsInput.fill('-1.5');
       await zsInput.blur();
       await page.waitForTimeout(300);
 
@@ -99,17 +102,17 @@ test.describe("EIC Certificate Edge Cases - Input Validation", () => {
       expect(typeof value).toBe('string');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Certificate Edge Cases - Form State", () => {
+test.describe('EIC Certificate Edge Cases - Form State', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("6. Draft save preserves all data", async ({ page }) => {
+  test('6. Draft save preserves all data', async ({ page }) => {
     // Fill various fields
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
     await fillIfVisible(page, 'input[name="clientEmail"]', testClient.email);
@@ -134,10 +137,10 @@ test.describe("EIC Certificate Edge Cases - Form State", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("7. Browser back button is handled", async ({ page }) => {
+  test('7. Browser back button is handled', async ({ page }) => {
     // Fill some data
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
 
@@ -146,40 +149,49 @@ test.describe("EIC Certificate Edge Cases - Form State", () => {
     await page.waitForTimeout(2000);
 
     // Should handle gracefully
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("8. Page refresh preserves data", async ({ page }) => {
+  test('8. Page refresh preserves data', async ({ page }) => {
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
 
     await page.reload();
     await page.waitForTimeout(3000);
 
     // Form should still be functional
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Certificate Edge Cases - Multiple Circuits", () => {
+test.describe('EIC Certificate Edge Cases - Multiple Circuits', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("9. Adding many circuits is handled", async ({ page }) => {
+  test('9. Adding many circuits is handled', async ({ page }) => {
     // Navigate to Testing tab where circuits are managed
-    const testingTab = page.locator('button:has-text("Testing"), [role="tab"]:has-text("Testing")').first();
+    const testingTab = page
+      .locator('button:has-text("Testing"), [role="tab"]:has-text("Testing")')
+      .first();
     if (await testingTab.isVisible({ timeout: 3000 }).catch(() => false)) {
       await testingTab.click();
       await page.waitForTimeout(1000);
     }
 
-    const addButton = page.locator('button:has-text("Add Circuit"), button:has-text("Add Row"), button:has-text("Add"), button:has-text("+")').first();
+    const addButton = page
+      .locator(
+        'button:has-text("Add Circuit"), button:has-text("Add Row"), button:has-text("Add"), button:has-text("+")'
+      )
+      .first();
 
     if (await addButton.isVisible({ timeout: 3000 }).catch(() => false)) {
       // Add a few circuits
       for (let i = 0; i < 3; i++) {
-        if (await addButton.isVisible().catch(() => false) && await addButton.isEnabled().catch(() => false)) {
+        if (
+          (await addButton.isVisible().catch(() => false)) &&
+          (await addButton.isEnabled().catch(() => false))
+        ) {
           await addButton.click();
           await page.waitForTimeout(300);
         }
@@ -187,10 +199,10 @@ test.describe("EIC Certificate Edge Cases - Multiple Circuits", () => {
     }
 
     // Form should still be functional
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("10. Deleting all circuits is handled", async ({ page }) => {
+  test('10. Deleting all circuits is handled', async ({ page }) => {
     // Add a circuit first
     const addButton = page.locator('button:has-text("Add Circuit")').first();
     if (await addButton.isVisible({ timeout: 2000 })) {
@@ -204,24 +216,26 @@ test.describe("EIC Certificate Edge Cases - Multiple Circuits", () => {
         await page.waitForTimeout(300);
 
         // Confirm if needed
-        const confirmButton = page.locator('button:has-text("Confirm"), button:has-text("Yes")').first();
+        const confirmButton = page
+          .locator('button:has-text("Confirm"), button:has-text("Yes")')
+          .first();
         if (await confirmButton.isVisible({ timeout: 1000 })) {
           await confirmButton.click();
         }
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Certificate Edge Cases - Accessibility", () => {
+test.describe('EIC Certificate Edge Cases - Accessibility', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("11. Tab navigation works through form", async ({ page }) => {
+  test('11. Tab navigation works through form', async ({ page }) => {
     // Press Tab multiple times
     for (let i = 0; i < 5; i++) {
       await page.keyboard.press('Tab');
@@ -233,10 +247,10 @@ test.describe("EIC Certificate Edge Cases - Accessibility", () => {
     const hasFocus = await focusedElement.isVisible({ timeout: 1000 }).catch(() => false);
     expect(hasFocus || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("12. Enter key submits focused input", async ({ page }) => {
+  test('12. Enter key submits focused input', async ({ page }) => {
     const clientNameInput = page.locator('input[name="clientName"]').first();
     if (await clientNameInput.isVisible({ timeout: 2000 })) {
       await clientNameInput.fill(testClient.name);
@@ -244,10 +258,10 @@ test.describe("EIC Certificate Edge Cases - Accessibility", () => {
       await page.waitForTimeout(300);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("13. Escape key closes dialogs", async ({ page }) => {
+  test('13. Escape key closes dialogs', async ({ page }) => {
     // Open a dialog
     const emailButton = page.locator('button:has-text("Email")').first();
     if (await emailButton.isVisible({ timeout: 2000 })) {
@@ -264,16 +278,16 @@ test.describe("EIC Certificate Edge Cases - Accessibility", () => {
       expect(dialogVisible).toBeFalsy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Certificate Edge Cases - Performance", () => {
+test.describe('EIC Certificate Edge Cases - Performance', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("14. Form loads within acceptable time", async ({ page }) => {
+  test('14. Form loads within acceptable time', async ({ page }) => {
     const startTime = Date.now();
     await navigateToEIC(page);
     const loadTime = Date.now() - startTime;
@@ -281,14 +295,14 @@ test.describe("EIC Certificate Edge Cases - Performance", () => {
     // Should load within 10 seconds
     expect(loadTime).toBeLessThan(10000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
   test("15. Large data doesn't crash form", async ({ page }) => {
     await navigateToEIC(page);
 
     // Fill with large text
-    const largeText = "A".repeat(1000);
+    const largeText = 'A'.repeat(1000);
     await fillIfVisible(page, 'textarea[name="clientAddress"]', largeText);
     await fillIfVisible(page, 'textarea[name="installationAddress"]', largeText);
 
@@ -300,6 +314,6 @@ test.describe("EIC Certificate Edge Cases - Performance", () => {
       expect(value).toBe(testClient.name);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

@@ -1,12 +1,13 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface PasswordResetRequest {
@@ -21,7 +22,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { email } = await req.json() as PasswordResetRequest;
+    const { email } = (await req.json()) as PasswordResetRequest;
 
     if (!email) {
       throw new Error('Email is required');
@@ -35,8 +36,8 @@ const handler = async (req: Request): Promise<Response> => {
       {
         auth: {
           autoRefreshToken: false,
-          persistSession: false
-        }
+          persistSession: false,
+        },
       }
     );
 
@@ -50,9 +51,15 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Always return success to prevent user enumeration
     if (linkError || !data) {
-      console.log('User not found or error generating link (returning success anyway):', linkError?.message);
+      console.log(
+        'User not found or error generating link (returning success anyway):',
+        linkError?.message
+      );
       return new Response(
-        JSON.stringify({ success: true, message: 'If an account exists, a password reset email has been sent.' }),
+        JSON.stringify({
+          success: true,
+          message: 'If an account exists, a password reset email has been sent.',
+        }),
         {
           status: 200,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -67,7 +74,10 @@ const handler = async (req: Request): Promise<Response> => {
     if (!tokenHash) {
       console.error('No token found in generated link');
       return new Response(
-        JSON.stringify({ success: true, message: 'If an account exists, a password reset email has been sent.' }),
+        JSON.stringify({
+          success: true,
+          message: 'If an account exists, a password reset email has been sent.',
+        }),
         {
           status: 200,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -96,7 +106,10 @@ const handler = async (req: Request): Promise<Response> => {
     if (emailError) {
       console.error('Resend API error:', emailError);
       return new Response(
-        JSON.stringify({ success: true, message: 'If an account exists, a password reset email has been sent.' }),
+        JSON.stringify({
+          success: true,
+          message: 'If an account exists, a password reset email has been sent.',
+        }),
         {
           status: 200,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -107,7 +120,10 @@ const handler = async (req: Request): Promise<Response> => {
     console.log('Password reset email sent successfully:', emailData?.id);
 
     return new Response(
-      JSON.stringify({ success: true, message: 'If an account exists, a password reset email has been sent.' }),
+      JSON.stringify({
+        success: true,
+        message: 'If an account exists, a password reset email has been sent.',
+      }),
       {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -116,7 +132,10 @@ const handler = async (req: Request): Promise<Response> => {
   } catch (error: any) {
     console.error('Error in send-password-reset function:', error);
     return new Response(
-      JSON.stringify({ success: true, message: 'If an account exists, a password reset email has been sent.' }),
+      JSON.stringify({
+        success: true,
+        message: 'If an account exists, a password reset email has been sent.',
+      }),
       {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

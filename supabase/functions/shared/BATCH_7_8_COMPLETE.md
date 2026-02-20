@@ -3,6 +3,7 @@
 ## Files Created:
 
 ### 1. `bs7671Certification.ts`
+
 **Appendix 6: Model Forms for Certification and Reporting**
 
 - ✅ Electrical Installation Certificate (EIC) - Reg 644.1, 644.4
@@ -17,18 +18,21 @@
 ## Knowledge Now Available to Agents:
 
 ### Designer Agent:
+
 - Understand certification requirements for projects
 - Know what must be documented for compliance
 - Design with testability in mind (Zs, insulation, polarity)
 - Ensure SPD, RCD, AFDD requirements documented
 
 ### Installer Agent:
+
 - Complete Schedule of Inspections checklist
 - Know critical inspection items (earthing, bonding, RCD protection)
 - Understand certification sign-off responsibilities
 - Guidance on what installer must verify
 
 ### Commissioning Agent:
+
 - **10-Step Test Sequence (Reg 643)** in correct order:
   1. Continuity of protective conductors (R1+R2)
   2. Ring final circuit continuity
@@ -47,11 +51,13 @@
 ## Critical Certification Knowledge Embedded:
 
 🚨 **EIC vs MEIWC vs EICR**:
+
 - **EIC**: New installation, new circuits, consumer unit replacement
 - **MEIWC**: Minor works (add sockets, relocate switch) - NO new circuits
 - **EICR**: Periodic inspection of existing installation
 
 🚨 **EICR Observation Codes** (CRITICAL FOR SAFETY):
+
 - **C1 (Danger Present)**: IMMEDIATE action required
   - Examples: Live parts accessible, no RCD protection, damaged cables
 - **C2 (Potentially Dangerous)**: URGENT action required
@@ -62,6 +68,7 @@
   - Examples: Unable to access concealed wiring, unknown earth electrode resistance
 
 🚨 **Test Sequence Order MUST be followed** (Reg 643):
+
 - Tests 1-6 performed with supply OFF (dead testing)
 - Tests 7-10 performed with supply ON (live testing)
 - Incorrect sequence = invalid certification
@@ -80,6 +87,7 @@
 ## Knowledge Extraction: ~85% COMPLETE! 🎉
 
 ### What's Been Extracted:
+
 - Cable sizing and derating (Appendix 4)
 - Special locations (Part 7 sections)
 - Installation methods (Chapter 52)
@@ -89,6 +97,7 @@
 - **Certification templates (Appendix 6)** ← NEW!
 
 ### Remaining Opportunities:
+
 - Appendix 15 (PV systems - advanced)
 - Appendix 17 (Energy efficiency - guidance)
 - Part 8 (Prosumer's Electrical Installations - future tech)
@@ -98,6 +107,7 @@
 ## Agent Capabilities Now:
 
 ### Designer Agent CAN NOW:
+
 - Design compliant circuits with full BS 7671 knowledge
 - Specify correct protective devices (MCBs, RCDs, SPDs, AFDDs)
 - Calculate cable sizes with temperature/grouping derating
@@ -106,6 +116,7 @@
 - Generate installation documentation
 
 ### Installer Agent CAN NOW:
+
 - Guide through complete installation process
 - Provide safe zone guidance for concealed cables
 - Specify cable support intervals and methods
@@ -114,6 +125,7 @@
 - Complete Schedule of Inspections checklist
 
 ### Commissioning Agent CAN NOW:
+
 - Perform complete 10-step test sequence in correct order
 - Interpret test results against BS 7671 acceptance criteria
 - Complete Electrical Installation Certificates (EIC)

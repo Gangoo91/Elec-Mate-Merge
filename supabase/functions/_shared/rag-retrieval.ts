@@ -24,7 +24,7 @@ export interface RegulationResult {
  * 3. Keyword fallback if needed
  */
 export async function retrieveRegulations(
-  query: string, 
+  query: string,
   limit = 8,
   openAiKey?: string,
   entities?: ParsedEntities
@@ -35,30 +35,33 @@ export async function retrieveRegulations(
 
   // 1. Extract explicit regulation numbers
   const regNumbers = extractRegulationNumbers(query);
-  
+
   // 2. If specific reg mentioned → keyword search first (fast path)
   if (regNumbers.length > 0) {
     const { data } = await supabase
       .from('bs7671_embeddings')
       .select('*')
-      .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+      .or(regNumbers.map((n) => `regulation_number.ilike.%${n}%`).join(','))
       .limit(limit);
-    
+
     if (data && data.length > 0) {
       console.log(`✅ Explicit regulation lookup: ${data.length} results`);
-      return data.map(d => ({ ...d, similarity: 0.95 })); // High confidence for exact matches
+      return data.map((d) => ({ ...d, similarity: 0.95 })); // High confidence for exact matches
     }
   }
-  
+
   // 3. Intelligence hybrid search (no embedding needed!)
-  const { data: intelligenceResults } = await supabase.rpc('search_regulations_intelligence_hybrid', {
-    query_text: query,
-    match_count: limit
-  });
-  
+  const { data: intelligenceResults } = await supabase.rpc(
+    'search_regulations_intelligence_hybrid',
+    {
+      query_text: query,
+      match_count: limit,
+    }
+  );
+
   if (intelligenceResults && intelligenceResults.length >= 3) {
     console.log(`✅ Intelligence search: ${intelligenceResults.length} results`);
-    
+
     // Enrich with full regulation content
     const enriched = await Promise.all(
       intelligenceResults.map(async (intel: any) => {
@@ -67,7 +70,7 @@ export async function retrieveRegulations(
           .select('content, section, amendment, metadata')
           .eq('id', intel.regulation_id)
           .single();
-        
+
         return {
           id: intel.regulation_id,
           regulation_number: intel.regulation_number,
@@ -79,42 +82,42 @@ export async function retrieveRegulations(
           primary_topic: intel.primary_topic,
           keywords: intel.keywords,
           category: intel.category,
-          practical_application: intel.practical_application
+          practical_application: intel.practical_application,
         };
       })
     );
-    
+
     return enriched;
   }
-  
+
   // 4. Rerank results for better relevance
   const results = intelligenceResults || [];
-  const reranked = entities 
-    ? rerankRegulations(results, entities, query)
-    : results;
-  
+  const reranked = entities ? rerankRegulations(results, entities, query) : results;
+
   // ✅ QUICK WIN #2: Filter out low-relevance results
-  const filteredResults = reranked.filter(reg => {
+  const filteredResults = reranked.filter((reg) => {
     // Keep high-similarity results (strong semantic match)
-    if (reg.similarity && reg.similarity > 0.80) return true;
-    
+    if (reg.similarity && reg.similarity > 0.8) return true;
+
     // Keep core safety regulations (always relevant)
     if (isCoreRegulation(reg.regulation_number)) return true;
-    
+
     // Keep if explicitly mentioned in query
     if (query.toLowerCase().includes(reg.regulation_number.toLowerCase())) return true;
-    
+
     // Keep if matches job context
     if (entities && matchesJobContext(reg, entities)) return true;
-    
+
     // Otherwise, drop it (not relevant enough)
     return false;
   });
-  
+
   // Limit to top 8 most relevant (down from 12) for faster AI processing
   const topResults = filteredResults.slice(0, 8);
-  
-  console.log(`✅ Returning ${topResults.length} highly relevant regulations (filtered from ${reranked.length})`);
+
+  console.log(
+    `✅ Returning ${topResults.length} highly relevant regulations (filtered from ${reranked.length})`
+  );
   return topResults;
 }
 
@@ -123,16 +126,25 @@ export async function retrieveRegulations(
  */
 function isCoreRegulation(regNumber: string): boolean {
   const coreRegs = [
-    '411.3', '411.4', '411.5', // Protection against electric shock
-    '701', '702', '703', '704', '705', '706', // Special locations
+    '411.3',
+    '411.4',
+    '411.5', // Protection against electric shock
+    '701',
+    '702',
+    '703',
+    '704',
+    '705',
+    '706', // Special locations
     '722', // EV charging
     '537.2', // Isolation and switching
     '514', // Earthing and bonding
-    '433', '434', // Overcurrent protection
-    '543', '544', // Earthing arrangements
+    '433',
+    '434', // Overcurrent protection
+    '543',
+    '544', // Earthing arrangements
   ];
-  
-  return coreRegs.some(core => regNumber.startsWith(core));
+
+  return coreRegs.some((core) => regNumber.startsWith(core));
 }
 
 /**
@@ -141,32 +153,35 @@ function isCoreRegulation(regNumber: string): boolean {
 function matchesJobContext(reg: RegulationResult, entities: any): boolean {
   const regNumber = reg.regulation_number;
   const content = reg.content.toLowerCase();
-  
+
   // Bathroom/shower jobs → Section 701
-  if ((entities.loadType === 'shower' || entities.location === 'bathroom') && regNumber.startsWith('701')) {
+  if (
+    (entities.loadType === 'shower' || entities.location === 'bathroom') &&
+    regNumber.startsWith('701')
+  ) {
     return true;
   }
-  
+
   // EV charger jobs → Section 722
   if (entities.loadType === 'ev_charger' && regNumber.startsWith('722')) {
     return true;
   }
-  
+
   // Consumer unit/distribution → Sections 530-537
   if (entities.equipment?.includes('consumer_unit') && regNumber.startsWith('53')) {
     return true;
   }
-  
+
   // Cable sizing → Table 4 series
   if (entities.power && regNumber.startsWith('Table 4')) {
     return true;
   }
-  
+
   // Earthing jobs → Section 540s
   if (content.includes('earth') && regNumber.startsWith('54')) {
     return true;
   }
-  
+
   return false;
 }
 
@@ -178,44 +193,43 @@ function rerankRegulations(
   entities: any,
   query: string
 ): RegulationResult[] {
-  return regulations.map(reg => ({
-    ...reg,
-    relevanceScore: calculateRelevance(reg, entities, query)
-  }))
-  .sort((a, b) => (b.relevanceScore || b.similarity || 0) - (a.relevanceScore || a.similarity || 0));
+  return regulations
+    .map((reg) => ({
+      ...reg,
+      relevanceScore: calculateRelevance(reg, entities, query),
+    }))
+    .sort(
+      (a, b) => (b.relevanceScore || b.similarity || 0) - (a.relevanceScore || a.similarity || 0)
+    );
 }
 
-function calculateRelevance(
-  reg: RegulationResult,
-  entities: any,
-  query: string
-): number {
+function calculateRelevance(reg: RegulationResult, entities: any, query: string): number {
   let score = reg.similarity || 0.5;
-  
+
   // Boost if regulation number mentioned in query
   if (query.includes(reg.regulation_number)) {
     score += 0.3;
   }
-  
+
   // Context-aware boosts based on load type
   if (entities.loadType === 'shower' && reg.regulation_number.startsWith('701')) {
     score += 0.2; // Section 701 = bathrooms
   }
-  
+
   if (entities.loadType === 'ev_charger' && reg.regulation_number.startsWith('722')) {
     score += 0.2; // Section 722 = EV charging
   }
-  
+
   // Core design regulations always relevant
   const coreRegs = ['433.1.1', '525', '533.1', '411.3.2', '543.1.1'];
   if (coreRegs.includes(reg.regulation_number)) {
     score += 0.1;
   }
-  
+
   // Cable sizing tables
   if (reg.regulation_number.startsWith('Table 4') && entities.power) {
     score += 0.15;
   }
-  
+
   return score;
 }

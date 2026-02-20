@@ -3,7 +3,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -14,12 +15,12 @@ serve(async (req) => {
 
   try {
     const { location, jobType, includeNearby = true, maxDistance = 10 } = await req.json();
-    
+
     if (!location) {
-      return new Response(
-        JSON.stringify({ error: 'Location parameter is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Location parameter is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Initialize Supabase client
@@ -31,10 +32,10 @@ serve(async (req) => {
 
     // Extract postcode district if it's a full postcode
     let postcodeDistrict = location.toUpperCase().trim();
-    const { data: extractedDistrict } = await supabase.rpc('extract_postcode_district', { 
-      full_postcode: location 
+    const { data: extractedDistrict } = await supabase.rpc('extract_postcode_district', {
+      full_postcode: location,
     });
-    
+
     if (extractedDistrict) {
       postcodeDistrict = extractedDistrict;
       console.log(`Extracted postcode district: ${postcodeDistrict}`);
@@ -43,7 +44,8 @@ serve(async (req) => {
     // First, try to find exact postcode district matches
     let query = supabase
       .from('enhanced_regional_pricing')
-      .select(`
+      .select(
+        `
         *,
         pricing_data_sources (
           source_name,
@@ -59,7 +61,8 @@ serve(async (req) => {
           contractor_density,
           transport_score
         )
-      `)
+      `
+      )
       .eq('postcode_district', postcodeDistrict)
       .gt('expires_at', new Date().toISOString())
       .order('confidence_score', { ascending: false });
@@ -96,11 +99,12 @@ serve(async (req) => {
           .limit(10);
 
         if (nearbyDistricts && nearbyDistricts.length > 0) {
-          const nearbyDistrictCodes = nearbyDistricts.map(d => d.district_code);
-          
+          const nearbyDistrictCodes = nearbyDistricts.map((d) => d.district_code);
+
           let nearbyQuery = supabase
             .from('enhanced_regional_pricing')
-            .select(`
+            .select(
+              `
               *,
               pricing_data_sources (
                 source_name,
@@ -116,7 +120,8 @@ serve(async (req) => {
                 contractor_density,
                 transport_score
               )
-            `)
+            `
+            )
             .in('postcode_district', nearbyDistrictCodes)
             .gt('expires_at', new Date().toISOString())
             .order('confidence_score', { ascending: false })
@@ -127,17 +132,20 @@ serve(async (req) => {
           }
 
           const { data: nearbyMatches } = await nearbyQuery;
-          
+
           if (nearbyMatches && nearbyMatches.length > 0) {
             // Add nearby results with distance indicator
-            const nearbyWithDistance = nearbyMatches.map(item => ({
+            const nearbyWithDistance = nearbyMatches.map((item) => ({
               ...item,
               is_nearby: true,
-              distance_indicator: 'within_area'
+              distance_indicator: 'within_area',
             }));
-            
+
             results = [...results, ...nearbyWithDistance];
-            searchStrategy = results.length > (exactMatches?.length || 0) ? 'expanded_geographic' : 'exact_postcode';
+            searchStrategy =
+              results.length > (exactMatches?.length || 0)
+                ? 'expanded_geographic'
+                : 'exact_postcode';
             console.log(`Added ${nearbyMatches.length} nearby results`);
           }
         }
@@ -146,7 +154,7 @@ serve(async (req) => {
       // If still no results, try regional fallback
       if (results.length === 0 && postcodeInfo) {
         console.log('No postcode matches, trying regional fallback');
-        
+
         // Use baseline pricing with regional multipliers
         const { data: baselineData } = await supabase
           .from('job_pricing_baseline')
@@ -160,7 +168,7 @@ serve(async (req) => {
           .single();
 
         const multiplier = multiplierData?.multiplier || 1.0;
-        
+
         // Apply demographic adjustments
         let demographicMultiplier = 1.0;
         if (postcodeInfo.avg_household_income) {
@@ -171,8 +179,13 @@ serve(async (req) => {
         const finalMultiplier = multiplier * demographicMultiplier;
 
         results = (baselineData || [])
-          .filter(item => !jobType || jobType === 'all' || item.job_type.toLowerCase().includes(jobType.toLowerCase()))
-          .map(item => ({
+          .filter(
+            (item) =>
+              !jobType ||
+              jobType === 'all' ||
+              item.job_type.toLowerCase().includes(jobType.toLowerCase())
+          )
+          .map((item) => ({
             id: `computed-${item.id}`,
             postcode_district: postcodeDistrict,
             job_type: item.job_type,
@@ -191,7 +204,7 @@ serve(async (req) => {
             market_factors: {
               income_adjustment: demographicMultiplier,
               regional_multiplier: multiplier,
-              postcode_info: postcodeInfo
+              postcode_info: postcodeInfo,
             },
             seasonal_adjustment: 1.0,
             last_verified_at: null,
@@ -201,30 +214,34 @@ serve(async (req) => {
             pricing_data_sources: {
               source_name: 'Computed Baseline',
               source_type: 'computed',
-              reliability_score: 65
+              reliability_score: 65,
             },
             uk_postcode_districts: postcodeInfo,
-            is_computed: true
+            is_computed: true,
           }));
-        
+
         searchStrategy = 'computed_baseline';
         console.log(`Generated ${results.length} computed baseline results`);
       }
     }
 
     // Enhance results with additional metadata
-    const enhancedResults = results.map(result => ({
+    const enhancedResults = results.map((result) => ({
       ...result,
       search_strategy: searchStrategy,
-      confidence_level: result.confidence_score >= 80 ? 'high' : 
-                       result.confidence_score >= 60 ? 'medium' : 'low',
-      data_freshness: result.expires_at ? 
-        Math.max(0, Math.round((new Date(result.expires_at).getTime() - Date.now()) / (24 * 60 * 60 * 1000))) : 0,
+      confidence_level:
+        result.confidence_score >= 80 ? 'high' : result.confidence_score >= 60 ? 'medium' : 'low',
+      data_freshness: result.expires_at
+        ? Math.max(
+            0,
+            Math.round((new Date(result.expires_at).getTime() - Date.now()) / (24 * 60 * 60 * 1000))
+          )
+        : 0,
       market_context: {
         avg_income: result.uk_postcode_districts?.avg_household_income,
         contractor_density: result.uk_postcode_districts?.contractor_density,
-        transport_score: result.uk_postcode_districts?.transport_score
-      }
+        transport_score: result.uk_postcode_districts?.transport_score,
+      },
     }));
 
     // Get community statistics
@@ -234,9 +251,12 @@ serve(async (req) => {
       .eq('postcode_district', postcodeDistrict);
 
     const communitySubmissions = communityStats?.length || 0;
-    const verifiedSubmissions = communityStats?.filter(s => s.verification_status === 'approved').length || 0;
+    const verifiedSubmissions =
+      communityStats?.filter((s) => s.verification_status === 'approved').length || 0;
 
-    console.log(`Returning ${enhancedResults.length} enhanced pricing results for ${postcodeDistrict}`);
+    console.log(
+      `Returning ${enhancedResults.length} enhanced pricing results for ${postcodeDistrict}`
+    );
 
     return new Response(
       JSON.stringify({
@@ -250,17 +270,19 @@ serve(async (req) => {
           job_type: jobType || 'all',
           community_stats: {
             total_submissions: communitySubmissions,
-            verified_submissions: verifiedSubmissions
-          }
-        }
+            verified_submissions: verifiedSubmissions,
+          },
+        },
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error in enhanced-regional-pricing function:', error);
     return new Response(
-      JSON.stringify({ error: 'Internal server error', details: error instanceof Error ? error.message : 'Unknown error occurred' }),
+      JSON.stringify({
+        error: 'Internal server error',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

@@ -49,18 +49,22 @@ serve(async (req: Request) => {
 
     // If query is too short, return empty
     if (!query || query.trim().length < 2) {
-      return new Response(
-        JSON.stringify({ results: [], query, hasMore: false }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ results: [], query, hasMore: false }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const searchQuery = query.trim();
 
     // Fast search using text search with limited fields
-    const { data: products, error, count } = await supabase
+    const {
+      data: products,
+      error,
+      count,
+    } = await supabase
       .from('marketplace_products')
-      .select(`
+      .select(
+        `
         id,
         name,
         brand,
@@ -72,10 +76,12 @@ serve(async (req: Request) => {
         image_url,
         product_url,
         marketplace_suppliers!inner(name, slug)
-      `, { count: 'estimated' })
+      `,
+        { count: 'estimated' }
+      )
       .textSearch('search_vector', searchQuery, {
         type: 'websearch',
-        config: 'english'
+        config: 'english',
       })
       .order('is_on_sale', { ascending: false }) // Prioritize deals
       .limit(limit);
@@ -109,7 +115,6 @@ serve(async (req: Request) => {
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Instant search error:', error);
     return new Response(
@@ -117,7 +122,7 @@ serve(async (req: Request) => {
         results: [],
         query: '',
         hasMore: false,
-        error: error instanceof Error ? error.message : 'Search failed'
+        error: error instanceof Error ? error.message : 'Search failed',
       }),
       {
         status: 500,

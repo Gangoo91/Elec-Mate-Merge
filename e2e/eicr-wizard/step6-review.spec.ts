@@ -1,6 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testClient, testDeclaration } from "../fixtures/test-data";
+import { testClient, testDeclaration } from '../fixtures/test-data';
 
 /**
  * EICR Wizard Step 6: Review & Sign
@@ -12,23 +12,29 @@ import { testClient, testDeclaration } from "../fixtures/test-data";
 
 // Helper to navigate to EICR wizard step 6
 async function navigateToStep6(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=eicr");
+  await page.goto('/electrician/inspection-testing?section=eicr');
   await page.waitForTimeout(3000);
 
   // Complete steps 1-5 quickly
   await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
-  await fillIfVisible(page, 'input[name="propertyAddress"], textarea[name="propertyAddress"]', testClient.address);
+  await fillIfVisible(
+    page,
+    'input[name="propertyAddress"], textarea[name="propertyAddress"]',
+    testClient.address
+  );
   await fillIfVisible(page, 'input[name="propertyPostcode"]', testClient.postcode);
 
   // Navigate through all steps
   for (let i = 0; i < 5; i++) {
-    const nextButton = page.locator('button:has-text("Next"), button:has-text("Skip"), button:has-text("Continue")').first();
-    if (await nextButton.isVisible({ timeout: 2000 }) && await nextButton.isEnabled()) {
+    const nextButton = page
+      .locator('button:has-text("Next"), button:has-text("Skip"), button:has-text("Continue")')
+      .first();
+    if ((await nextButton.isVisible({ timeout: 2000 })) && (await nextButton.isEnabled())) {
       // Handle step 2 selections
       if (i === 1) {
-        await clickOption(page, "Single") || await clickOption(page, "1P");
+        (await clickOption(page, 'Single')) || (await clickOption(page, '1P'));
         await page.waitForTimeout(200);
-        await clickOption(page, "TN-C-S");
+        await clickOption(page, 'TN-C-S');
         await page.waitForTimeout(200);
       }
       // Handle step 5 - mark all satisfactory
@@ -55,7 +61,11 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
 }
 
 async function clickOption(page: Page, text: string): Promise<boolean> {
-  const option = page.locator(`button:has-text("${text}"), [role="button"]:has-text("${text}"), label:has-text("${text}")`).first();
+  const option = page
+    .locator(
+      `button:has-text("${text}"), [role="button"]:has-text("${text}"), label:has-text("${text}")`
+    )
+    .first();
   if (await option.isVisible({ timeout: 2000 }).catch(() => false)) {
     await option.click();
     return true;
@@ -63,102 +73,126 @@ async function clickOption(page: Page, text: string): Promise<boolean> {
   return false;
 }
 
-test.describe("EICR Wizard Step 6 - Status Display", () => {
+test.describe('EICR Wizard Step 6 - Status Display', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep6(page);
   });
 
-  test("1. Satisfactory status shows green card when no C1/C2 issues", async ({ page }) => {
+  test('1. Satisfactory status shows green card when no C1/C2 issues', async ({ page }) => {
     // Look for satisfactory status
-    const satisfactoryStatus = page.locator('text=/satisfactory/i, [class*="green"]:has-text("Satisfactory")');
-    const hasSatisfactory = await satisfactoryStatus.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const satisfactoryStatus = page.locator(
+      'text=/satisfactory/i, [class*="green"]:has-text("Satisfactory")'
+    );
+    const hasSatisfactory = await satisfactoryStatus
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasSatisfactory || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Unsatisfactory status shows red card when has C1/C2 issues", async ({ page }) => {
+  test('2. Unsatisfactory status shows red card when has C1/C2 issues', async ({ page }) => {
     // This would need C1/C2 issues set in previous steps
     // For now, verify the status system exists
     const statusCard = page.locator('[class*="card"]:has-text(/satisfactory|unsatisfactory/i)');
-    const hasStatusCard = await statusCard.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const hasStatusCard = await statusCard
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasStatusCard || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 6 - Summary Display", () => {
+test.describe('EICR Wizard Step 6 - Summary Display', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep6(page);
   });
 
-  test("3. Client summary shows client name and phone", async ({ page }) => {
+  test('3. Client summary shows client name and phone', async ({ page }) => {
     const clientSummary = page.locator(`text=/${testClient.name}/i, text=/client/i`);
-    const hasClientInfo = await clientSummary.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const hasClientInfo = await clientSummary
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasClientInfo || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("4. Property summary shows address and postcode", async ({ page }) => {
-    const propertySummary = page.locator(`text=/${testClient.address.substring(0, 10)}/i, text=/property|address/i`);
-    const hasPropertyInfo = await propertySummary.first().isVisible({ timeout: 3000 }).catch(() => false);
+  test('4. Property summary shows address and postcode', async ({ page }) => {
+    const propertySummary = page.locator(
+      `text=/${testClient.address.substring(0, 10)}/i, text=/property|address/i`
+    );
+    const hasPropertyInfo = await propertySummary
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasPropertyInfo || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Circuits summary shows count and status", async ({ page }) => {
+  test('5. Circuits summary shows count and status', async ({ page }) => {
     const circuitsSummary = page.locator('text=/circuit|\\d+.*complete|\\d+.*tested/i');
-    const hasCircuitsInfo = await circuitsSummary.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const hasCircuitsInfo = await circuitsSummary
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasCircuitsInfo || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("6. Installation summary shows phase and earthing", async ({ page }) => {
+  test('6. Installation summary shows phase and earthing', async ({ page }) => {
     const installationSummary = page.locator('text=/single.*phase|TN-C-S|supply|installation/i');
-    const hasInstallationInfo = await installationSummary.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const hasInstallationInfo = await installationSummary
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasInstallationInfo || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 6 - Declaration Fields", () => {
+test.describe('EICR Wizard Step 6 - Declaration Fields', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep6(page);
   });
 
-  test("7. Comments textarea accepts input", async ({ page }) => {
+  test('7. Comments textarea accepts input', async ({ page }) => {
     const commentsFilled = await fillIfVisible(
       page,
       'textarea[name*="comment" i], textarea[placeholder*="comment" i], textarea[name*="remarks" i]',
-      "Additional comments for the EICR report."
+      'Additional comments for the EICR report.'
     );
 
     if (commentsFilled) {
-      const commentsTextarea = page.locator('textarea[name*="comment" i], textarea[name*="remarks" i]').first();
+      const commentsTextarea = page
+        .locator('textarea[name*="comment" i], textarea[name*="remarks" i]')
+        .first();
       if (await commentsTextarea.isVisible()) {
         const value = await commentsTextarea.inputValue();
-        expect(value).toContain("Additional comments");
+        expect(value).toContain('Additional comments');
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("8. Inspector name field accepts input", async ({ page }) => {
+  test('8. Inspector name field accepts input', async ({ page }) => {
     const nameFilled = await fillIfVisible(
       page,
       'input[name*="inspector" i], input[name*="name" i], input[placeholder*="name" i]',
@@ -173,26 +207,29 @@ test.describe("EICR Wizard Step 6 - Declaration Fields", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 6 - Signature Capture", () => {
+test.describe('EICR Wizard Step 6 - Signature Capture', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep6(page);
   });
 
-  test("9. Signature canvas is available for drawing", async ({ page }) => {
+  test('9. Signature canvas is available for drawing', async ({ page }) => {
     const signatureCanvas = page.locator('canvas, [class*="signature"], [class*="sign-pad"]');
-    const hasCanvas = await signatureCanvas.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const hasCanvas = await signatureCanvas
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasCanvas || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("10. Drawing on canvas captures signature strokes", async ({ page }) => {
+  test('10. Drawing on canvas captures signature strokes', async ({ page }) => {
     const canvas = page.locator('canvas').first();
 
     if (await canvas.isVisible({ timeout: 3000 })) {
@@ -209,10 +246,10 @@ test.describe("EICR Wizard Step 6 - Signature Capture", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("11. Clear signature button resets the canvas", async ({ page }) => {
+  test('11. Clear signature button resets the canvas', async ({ page }) => {
     const canvas = page.locator('canvas').first();
 
     if (await canvas.isVisible({ timeout: 3000 })) {
@@ -226,25 +263,33 @@ test.describe("EICR Wizard Step 6 - Signature Capture", () => {
       }
 
       // Click clear button
-      const clearButton = page.locator('button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="clear" i]').first();
+      const clearButton = page
+        .locator(
+          'button:has-text("Clear"), button:has-text("Reset"), button[aria-label*="clear" i]'
+        )
+        .first();
       if (await clearButton.isVisible({ timeout: 2000 })) {
         await clearButton.click();
         await page.waitForTimeout(300);
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 6 - Complete Button", () => {
+test.describe('EICR Wizard Step 6 - Complete Button', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep6(page);
   });
 
-  test("12. Complete button disabled without signature", async ({ page }) => {
-    const completeButton = page.locator('button:has-text("Complete"), button:has-text("Finish"), button:has-text("Generate")').first();
+  test('12. Complete button disabled without signature', async ({ page }) => {
+    const completeButton = page
+      .locator(
+        'button:has-text("Complete"), button:has-text("Finish"), button:has-text("Generate")'
+      )
+      .first();
 
     if (await completeButton.isVisible({ timeout: 3000 })) {
       const isDisabled = await completeButton.isDisabled();
@@ -252,12 +297,12 @@ test.describe("EICR Wizard Step 6 - Complete Button", () => {
       expect(typeof isDisabled).toBe('boolean');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Step 6 - Complete Flow", () => {
-  test("Complete certificate with signature and name", async ({ page }) => {
+test.describe('EICR Wizard Step 6 - Complete Flow', () => {
+  test('Complete certificate with signature and name', async ({ page }) => {
     // Auth handled by storageState
     await navigateToStep6(page);
 
@@ -284,7 +329,11 @@ test.describe("EICR Wizard Step 6 - Complete Flow", () => {
     }
 
     // Try to complete
-    const completeButton = page.locator('button:has-text("Complete"), button:has-text("Finish"), button:has-text("Generate")').first();
+    const completeButton = page
+      .locator(
+        'button:has-text("Complete"), button:has-text("Finish"), button:has-text("Generate")'
+      )
+      .first();
     if (await completeButton.isVisible({ timeout: 3000 })) {
       const isEnabled = await completeButton.isEnabled();
       if (isEnabled) {
@@ -294,6 +343,6 @@ test.describe("EICR Wizard Step 6 - Complete Flow", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

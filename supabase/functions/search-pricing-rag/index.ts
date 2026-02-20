@@ -1,8 +1,8 @@
-import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
-import { withRetry, RetryPresets } from "../_shared/retry.ts";
-import { withTimeout, Timeouts } from "../_shared/timeout.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -13,7 +13,13 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'search-pricing-rag' });
 
   try {
-    const { query, categoryFilter, supplierFilter, matchThreshold = 0.6, matchCount = 50 } = await req.json();
+    const {
+      query,
+      categoryFilter,
+      supplierFilter,
+      matchThreshold = 0.6,
+      matchCount = 50,
+    } = await req.json();
 
     // Input validation
     if (!query || query.trim().length === 0) {
@@ -26,7 +32,13 @@ serve(async (req) => {
       throw new ValidationError('Match count must be between 1 and 100');
     }
 
-    logger.info('RAG Search initiated', { query, categoryFilter, supplierFilter, matchThreshold, matchCount });
+    logger.info('RAG Search initiated', {
+      query,
+      categoryFilter,
+      supplierFilter,
+      matchThreshold,
+      matchCount,
+    });
 
     // Get embedding from OpenAI directly
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -36,39 +48,44 @@ serve(async (req) => {
 
     const embeddingData = await logger.time(
       'OpenAI embedding generation',
-      async () => await withRetry(
-        () => withTimeout(
-          fetch('https://api.openai.com/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              input: query,
-              model: 'text-embedding-3-small',
-            }),
-          }).then(async (res) => {
-            if (!res.ok) {
-              const errorText = await res.text();
-              if (res.status === 429) throw new ExternalAPIError('OpenAI', 'Rate limit exceeded');
-              if (res.status === 402) throw new ExternalAPIError('OpenAI', 'Payment required');
-              throw new ExternalAPIError('OpenAI', `Status ${res.status}: ${errorText}`);
-            }
-            return res.json();
-          }),
-          Timeouts.STANDARD,
-          'OpenAI embedding API'
-        ),
-        RetryPresets.STANDARD
-      )
+      async () =>
+        await withRetry(
+          () =>
+            withTimeout(
+              fetch('https://api.openai.com/v1/embeddings', {
+                method: 'POST',
+                headers: {
+                  Authorization: `Bearer ${OPENAI_API_KEY}`,
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  input: query,
+                  model: 'text-embedding-3-small',
+                }),
+              }).then(async (res) => {
+                if (!res.ok) {
+                  const errorText = await res.text();
+                  if (res.status === 429)
+                    throw new ExternalAPIError('OpenAI', 'Rate limit exceeded');
+                  if (res.status === 402) throw new ExternalAPIError('OpenAI', 'Payment required');
+                  throw new ExternalAPIError('OpenAI', `Status ${res.status}: ${errorText}`);
+                }
+                return res.json();
+              }),
+              Timeouts.STANDARD,
+              'OpenAI embedding API'
+            ),
+          RetryPresets.STANDARD
+        )
     );
 
     const queryVector = embeddingData.data[0].embedding;
 
     // Validate embedding dimensions
     if (queryVector.length !== 1536) {
-      throw new ValidationError(`Invalid embedding dimensions: expected 1536, got ${queryVector.length}`);
+      throw new ValidationError(
+        `Invalid embedding dimensions: expected 1536, got ${queryVector.length}`
+      );
     }
 
     logger.debug('Query embedding generated', { dimensions: queryVector.length });
@@ -83,22 +100,23 @@ serve(async (req) => {
       query_embedding: queryVector,
       category_filter: categoryFilter || null,
       match_threshold: matchThreshold,
-      match_count: matchCount
+      match_count: matchCount,
     });
 
     // Vector search with 30s timeout (matches DB function timeout)
     const { data: results, error: searchError } = await logger.time(
       'Vector similarity search',
-      async () => await withTimeout(
-        rpcQuery,
-        30000, // 30 seconds to match DB function timeout
-        'Supabase vector search'
-      )
+      async () =>
+        await withTimeout(
+          rpcQuery,
+          30000, // 30 seconds to match DB function timeout
+          'Supabase vector search'
+        )
     );
 
     // Apply supplier filter if provided (client-side filtering)
     let filteredResults = results || [];
-    
+
     // Seamless fallback: if vector search failed or returned nothing, try keyword search
     if (searchError || filteredResults.length === 0) {
       if (searchError) {
@@ -106,7 +124,7 @@ serve(async (req) => {
       } else {
         logger.warn('No vector results found, trying keyword fallback');
       }
-      
+
       const { data: keywordResults, error: keywordError } = await supabase
         .from('pricing_embeddings')
         .select('*')
@@ -117,7 +135,7 @@ serve(async (req) => {
         logger.info('Keyword fallback successful', { resultsCount: keywordResults.length });
         filteredResults = keywordResults.map((item: any) => ({
           ...item,
-          similarity: 0.5 // Mark as keyword match with lower confidence
+          similarity: 0.5, // Mark as keyword match with lower confidence
         }));
       } else if (searchError) {
         // If both vector and keyword searches failed, just return empty results
@@ -127,13 +145,16 @@ serve(async (req) => {
     } else {
       logger.info('Vector search completed', { resultsCount: results?.length || 0 });
     }
-    
+
     // Apply supplier filter to final results
     if (supplierFilter && supplierFilter !== 'all' && filteredResults.length > 0) {
       filteredResults = filteredResults.filter(
-        item => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
+        (item) => item.wholesaler?.toLowerCase() === supplierFilter.toLowerCase()
       );
-      logger.debug('Applied supplier filter', { count: filteredResults.length, supplier: supplierFilter });
+      logger.debug('Applied supplier filter', {
+        count: filteredResults.length,
+        supplier: supplierFilter,
+      });
     }
 
     // Transform results to match expected format
@@ -141,9 +162,10 @@ serve(async (req) => {
       id: item.id,
       name: item.item_name,
       category: item.category || 'Materials',
-      price: typeof item.base_cost === 'number' 
-        ? `£${item.base_cost.toFixed(2)}` 
-        : item.price_per_unit || '£0.00',
+      price:
+        typeof item.base_cost === 'number'
+          ? `£${item.base_cost.toFixed(2)}`
+          : item.price_per_unit || '£0.00',
       supplier: item.wholesaler || 'Unknown',
       image: item.metadata?.image || '/placeholder.svg',
       stockStatus: item.in_stock ? 'In Stock' : 'Out of Stock',
@@ -156,9 +178,9 @@ serve(async (req) => {
       specifications: item.metadata?.specifications,
     }));
 
-    logger.info('RAG search completed successfully', { 
+    logger.info('RAG search completed successfully', {
       materialsCount: materials.length,
-      requestId 
+      requestId,
     });
 
     return new Response(
@@ -170,16 +192,15 @@ serve(async (req) => {
         searchMethod: 'rag',
         filters: {
           category: categoryFilter,
-          supplier: supplierFilter
+          supplier: supplierFilter,
         },
-        requestId
+        requestId,
       }),
-      { 
+      {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
+        status: 200,
       }
     );
-
   } catch (error) {
     logger.error('RAG search failed', { error });
     return handleError(error);

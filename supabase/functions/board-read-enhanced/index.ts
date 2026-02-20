@@ -1,8 +1,8 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { captureException } from "../_shared/sentry.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { captureException } from '../_shared/sentry.ts';
 
 // API keys from environment variables (set in Supabase Dashboard > Edge Functions > Secrets)
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
@@ -40,7 +40,8 @@ interface OCRResult {
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -123,11 +124,7 @@ const parseAIResponse = (content: string, context: string = 'AI response'): any 
   }
 
   // Extraction patterns
-  const patterns = [
-    /```json\s*\n([\s\S]*?)\n```/,
-    /```\s*\n([\s\S]*?)\n```/,
-    /({[\s\S]*})/
-  ];
+  const patterns = [/```json\s*\n([\s\S]*?)\n```/, /```\s*\n([\s\S]*?)\n```/, /({[\s\S]*})/];
 
   for (const pattern of patterns) {
     const match = content.match(pattern);
@@ -160,7 +157,11 @@ const urlToBase64 = async (url: string): Promise<{ mimeType: string; data: strin
   return { mimeType: contentType, data: base64Data };
 };
 
-const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: number): Promise<Response> => {
+const fetchWithTimeout = async (
+  url: string,
+  options: RequestInit,
+  timeoutMs: number
+): Promise<Response> => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -182,7 +183,11 @@ const fetchWithTimeout = async (url: string, options: RequestInit, timeoutMs: nu
  * Call OCR preprocessor to extract text from board images
  * Runs Google Cloud Vision API for high-accuracy text detection
  */
-async function runOCRPreprocessing(images: string[], supabaseUrl: string, supabaseServiceKey: string): Promise<OCRResult | null> {
+async function runOCRPreprocessing(
+  images: string[],
+  supabaseUrl: string,
+  supabaseServiceKey: string
+): Promise<OCRResult | null> {
   try {
     console.log('Running OCR preprocessing on images...');
 
@@ -192,7 +197,7 @@ async function runOCRPreprocessing(images: string[], supabaseUrl: string, supaba
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseServiceKey}`,
+          Authorization: `Bearer ${supabaseServiceKey}`,
         },
         body: JSON.stringify({ images }),
       },
@@ -290,7 +295,10 @@ interface ManufacturerKnowledge {
 /**
  * Query manufacturer knowledge base for brand-specific information
  */
-async function getManufacturerKnowledge(brand: string, supabase: any): Promise<ManufacturerKnowledge | null> {
+async function getManufacturerKnowledge(
+  brand: string,
+  supabase: any
+): Promise<ManufacturerKnowledge | null> {
   try {
     const { data, error } = await supabase
       .from('board_manufacturer_knowledge')
@@ -334,7 +342,7 @@ async function getReferenceImages(brand: string, supabase: any): Promise<string[
     }
 
     console.log(`Found ${data.length} reference images for: ${brand}`);
-    return data.map(d => d.image_url).filter(Boolean);
+    return data.map((d) => d.image_url).filter(Boolean);
   } catch (e) {
     console.error('Error fetching reference images:', e);
     return [];
@@ -361,7 +369,8 @@ async function getTrainingExamples(brand: string, supabase: any): Promise<Traini
   try {
     const { data, error } = await supabase
       .from('board_training_analysis')
-      .select(`
+      .select(
+        `
         circuits,
         ratings_distribution,
         total_ways,
@@ -370,7 +379,8 @@ async function getTrainingExamples(brand: string, supabase: any): Promise<Traini
         rcd_count_devices,
         image_id,
         board_reference_images!inner(image_url)
-      `)
+      `
+      )
       .ilike('manufacturer', `%${brand}%`)
       .eq('human_verified', true)
       .not('circuits', 'is', null)
@@ -383,17 +393,19 @@ async function getTrainingExamples(brand: string, supabase: any): Promise<Traini
 
     console.log(`Found ${data.length} training examples for: ${brand}`);
 
-    return data.map(d => ({
-      image_url: (d.board_reference_images as any)?.image_url || '',
-      circuits: d.circuits || [],
-      ratings_distribution: d.ratings_distribution || {},
-      total_ways: d.total_ways || 0,
-      devices: {
-        mcbs: d.mcb_count || 0,
-        rcbos: d.rcbo_count || 0,
-        rcds: d.rcd_count_devices || 0,
-      },
-    })).filter(e => e.image_url);
+    return data
+      .map((d) => ({
+        image_url: (d.board_reference_images as any)?.image_url || '',
+        circuits: d.circuits || [],
+        ratings_distribution: d.ratings_distribution || {},
+        total_ways: d.total_ways || 0,
+        devices: {
+          mcbs: d.mcb_count || 0,
+          rcbos: d.rcbo_count || 0,
+          rcds: d.rcd_count_devices || 0,
+        },
+      }))
+      .filter((e) => e.image_url);
   } catch (e) {
     console.error('Error fetching training examples:', e);
     return [];
@@ -459,7 +471,9 @@ ${knowledge.visual_cues?.distinctive || 'Standard board design'}
 ${knowledge.afdd_features ? `- AFDD: ${knowledge.afdd_features}` : ''}
 
 **Label Abbreviations (${knowledge.manufacturer} boards):**
-${Object.entries(knowledge.abbreviations || {}).map(([abbr, full]) => `- "${abbr}" = "${full}"`).join('\n')}
+${Object.entries(knowledge.abbreviations || {})
+  .map(([abbr, full]) => `- "${abbr}" = "${full}"`)
+  .join('\n')}
 
 **Three-Phase Layout:**
 ${knowledge.three_phase_layout?.vertical_layout ? 'Vertical: L1 top, L2 middle, L3 bottom' : 'Check busbar labels for phase order'}
@@ -474,9 +488,11 @@ ${knowledge.three_phase_layout?.vertical_layout ? 'Vertical: L1 top, L2 middle, 
 async function detectBrand(images: string[]): Promise<string | null> {
   console.log('Running quick brand detection pass...');
 
-  const parts: any[] = [{
-    text: `Identify the manufacturer/brand of this UK consumer unit/distribution board. Return ONLY the brand name (e.g., "Hager", "MK", "Schneider", "Wylex", "Crabtree", "Contactum"). Look for logo, distinctive colours, or text. Return "Unknown" if unsure. Just the brand name, nothing else.`
-  }];
+  const parts: any[] = [
+    {
+      text: `Identify the manufacturer/brand of this UK consumer unit/distribution board. Return ONLY the brand name (e.g., "Hager", "MK", "Schneider", "Wylex", "Crabtree", "Contactum"). Look for logo, distinctive colours, or text. Return "Unknown" if unsure. Just the brand name, nothing else.`,
+    },
+  ];
 
   // Add first image only for quick detection
   const { mimeType, data } = await urlToBase64(images[0]);
@@ -493,7 +509,7 @@ async function detectBrand(images: string[]): Promise<string | null> {
           generationConfig: {
             maxOutputTokens: 500,
             temperature: 0.1,
-          }
+          },
         }),
       },
       20000 // 20 second timeout for brand detection
@@ -503,7 +519,7 @@ async function detectBrand(images: string[]): Promise<string | null> {
       const errorText = await response.text();
       console.warn('Brand detection failed:', {
         status: response.status,
-        body: errorText.slice(0, 200)
+        body: errorText.slice(0, 200),
       });
       return null;
     }
@@ -599,7 +615,9 @@ JSON format:
         console.log('Failed to load reference image:', refUrl);
       }
     }
-    parts.push({ text: 'Use the reference images above to help identify device types and label styles for this brand.\n' });
+    parts.push({
+      text: 'Use the reference images above to help identify device types and label styles for this brand.\n',
+    });
   }
 
   // Add hints if provided
@@ -621,11 +639,11 @@ JSON format:
         generationConfig: {
           maxOutputTokens: 8000,
           temperature: 0.2,
-          responseMimeType: 'application/json'
-        }
+          responseMimeType: 'application/json',
+        },
       }),
     },
-    120000  // 120 second timeout for Gemini (3-phase boards with many circuits need time)
+    120000 // 120 second timeout for Gemini (3-phase boards with many circuits need time)
   );
 
   if (!response.ok) {
@@ -633,7 +651,7 @@ JSON format:
     console.error('Gemini API error details:', {
       status: response.status,
       statusText: response.statusText,
-      body: errorText.slice(0, 500)
+      body: errorText.slice(0, 500),
     });
     throw new Error(`Gemini API error: ${response.status} - ${errorText.slice(0, 200)}`);
   }
@@ -646,7 +664,7 @@ JSON format:
     candidatesLength: data.candidates?.length,
     hasContent: !!data.candidates?.[0]?.content,
     partsLength: data.candidates?.[0]?.content?.parts?.length,
-    partTypes: data.candidates?.[0]?.content?.parts?.map((p: any) => Object.keys(p)).flat()
+    partTypes: data.candidates?.[0]?.content?.parts?.map((p: any) => Object.keys(p)).flat(),
   });
 
   // Handle potential Gemini 3 thinking output - filter for text parts only
@@ -654,7 +672,10 @@ JSON format:
   const text = textParts?.map((p: any) => p.text).join('\n');
 
   if (!text) {
-    console.error('No text in Gemini response. Full response:', JSON.stringify(data).slice(0, 1000));
+    console.error(
+      'No text in Gemini response. Full response:',
+      JSON.stringify(data).slice(0, 1000)
+    );
     throw new Error('No response from Gemini');
   }
 
@@ -663,7 +684,7 @@ JSON format:
 
   return {
     board: result.board || {},
-    circuits: (result.circuits || []).map((c: any) => ({ ...c, source_model: 'gemini' }))
+    circuits: (result.circuits || []).map((c: any) => ({ ...c, source_model: 'gemini' })),
   };
 }
 
@@ -671,7 +692,10 @@ JSON format:
  * Stage 3: OpenAI - Component Rating Verification
  * OPTIMIZED: Shorter prompt, only return corrections
  */
-async function verifyWithOpenAI(images: string[], circuits: Partial<DetectedCircuit>[]): Promise<{
+async function verifyWithOpenAI(
+  images: string[],
+  circuits: Partial<DetectedCircuit>[]
+): Promise<{
   deviceCorrections: Map<number, Partial<DetectedCircuit['device']>>;
 }> {
   if (!openaiApiKey) {
@@ -685,7 +709,10 @@ async function verifyWithOpenAI(images: string[], circuits: Partial<DetectedCirc
   const systemPrompt = `Electrical device specialist: Verify MCB/RCBO ratings in UK consumer unit. Return JSON only.
 
 Verify these detections:
-${circuits.slice(0, 20).map(c => `${c.index}:${c.device?.category || '?'} ${c.device?.rating_amps || '?'}A`).join(', ')}
+${circuits
+  .slice(0, 20)
+  .map((c) => `${c.index}:${c.device?.category || '?'} ${c.device?.rating_amps || '?'}A`)
+  .join(', ')}
 
 Device ID: MCB=no test button. RCBO=small test button (red/white). RCD=2 modules, large test button. AFDD=marked "AFDD"/"Arc". 3-pole MCB=3 linked toggles, triple width.
 
@@ -699,10 +726,10 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
     images.slice(0, 2).map(async (url) => {
       const { mimeType, data } = await urlToBase64(url);
       return {
-        type: "image_url" as const,
+        type: 'image_url' as const,
         image_url: {
-          url: `data:${mimeType};base64,${data}`
-        }
+          url: `data:${mimeType};base64,${data}`,
+        },
       };
     })
   );
@@ -713,20 +740,19 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${openaiApiKey}`
+        Authorization: `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
         model: 'gpt-4o',
         max_tokens: 2000,
         temperature: 0.2,
-        messages: [{
-          role: 'user',
-          content: [
-            ...imageContents,
-            { type: 'text', text: systemPrompt }
-          ]
-        }],
-        response_format: { type: 'json_object' }
+        messages: [
+          {
+            role: 'user',
+            content: [...imageContents, { type: 'text', text: systemPrompt }],
+          },
+        ],
+        response_format: { type: 'json_object' },
       }),
     },
     30000
@@ -757,7 +783,6 @@ Return ONLY corrections (skip verified): {"device_verifications":[{"position":3,
 
     console.log(`OpenAI verification: ${deviceCorrections.size} device corrections`);
     return { deviceCorrections };
-
   } catch (e) {
     console.error('OpenAI parse error:', e);
     return { deviceCorrections: new Map() };
@@ -793,7 +818,7 @@ function mergeResults(
         type: circuit.device?.type || '',
         rating_amps: circuit.device?.rating_amps || null,
         curve: circuit.device?.curve || null,
-        breaking_capacity_kA: circuit.device?.breaking_capacity_kA || null
+        breaking_capacity_kA: circuit.device?.breaking_capacity_kA || null,
       },
       live_conductor_size_mm2: circuit.live_conductor_size_mm2 || null,
       cpc_size_mm2: circuit.cpc_size_mm2 || null,
@@ -803,7 +828,7 @@ function mergeResults(
       confidence: circuit.confidence || 'medium',
       evidence: circuit.evidence || '',
       notes: circuit.notes || '',
-      source_model: 'gemini'
+      source_model: 'gemini',
     });
   }
 
@@ -815,7 +840,9 @@ function mergeResults(
       circuit.device = { ...circuit.device, ...deviceCorrection };
       const newDevice = `${circuit.device.category} ${circuit.device.rating_amps || '?'}A`;
       if (oldDevice !== newDevice) {
-        decisions.push(`Position ${index}: Device updated from ${oldDevice} to ${newDevice} (OpenAI verify)`);
+        decisions.push(
+          `Position ${index}: Device updated from ${oldDevice} to ${newDevice} (OpenAI verify)`
+        );
         circuit.source_model = 'gemini+openai';
       }
     }
@@ -833,11 +860,11 @@ function mergeResults(
     board_layout: geminiResult.board.board_layout || '1P',
     estimated_total_ways: geminiResult.board.estimated_total_ways || circuits.length,
     ways_per_circuit: geminiResult.board.ways_per_circuit || 1,
-    evidence: geminiResult.board.evidence || ''
+    evidence: geminiResult.board.evidence || '',
   };
 
   // Detect three-phase circuits
-  const threePhaseCircuits = circuits.filter(c => c.phase === '3P');
+  const threePhaseCircuits = circuits.filter((c) => c.phase === '3P');
   if (threePhaseCircuits.length > 0) {
     decisions.push(`Detected ${threePhaseCircuits.length} three-phase circuit group(s)`);
     if (board.board_layout === '1P') {
@@ -848,13 +875,17 @@ function mergeResults(
 
   // Check for missing circuits
   if (hints?.expected_ways && circuits.length < hints.expected_ways * 0.9) {
-    warnings.push(`Expected ${hints.expected_ways} ways but only detected ${circuits.length}. Some circuits may be missing.`);
+    warnings.push(
+      `Expected ${hints.expected_ways} ways but only detected ${circuits.length}. Some circuits may be missing.`
+    );
   }
 
   // Check confidence levels
-  const lowConfidenceCount = circuits.filter(c => c.confidence === 'low').length;
+  const lowConfidenceCount = circuits.filter((c) => c.confidence === 'low').length;
   if (lowConfidenceCount > circuits.length * 0.3) {
-    warnings.push(`${lowConfidenceCount} circuits have low confidence. Consider retaking photos with better lighting.`);
+    warnings.push(
+      `${lowConfidenceCount} circuits have low confidence. Consider retaking photos with better lighting.`
+    );
   }
 
   return {
@@ -864,10 +895,10 @@ function mergeResults(
       boardSize: board.estimated_total_ways,
       analysisTime: 0, // Will be set by caller
       modelsUsed,
-      imageCount: 0 // Will be set by caller
+      imageCount: 0, // Will be set by caller
     },
     warnings,
-    decisions
+    decisions,
   };
 }
 
@@ -896,7 +927,10 @@ serve(async (req) => {
     }
 
     // DIAGNOSTIC: Log masked API key to verify which key is active
-    console.log('GEMINI_API_KEY check:', geminiApiKey.slice(0, 12) + '...' + geminiApiKey.slice(-4));
+    console.log(
+      'GEMINI_API_KEY check:',
+      geminiApiKey.slice(0, 12) + '...' + geminiApiKey.slice(-4)
+    );
 
     // Initialize Supabase client inside request handler (env vars may not be available at module init)
     const supabaseUrl = Deno.env.get('SUPABASE_URL');
@@ -918,7 +952,7 @@ serve(async (req) => {
     console.log(`Processing ${images.length} image(s)`, {
       hints,
       options,
-      fastMode: options?.fast_mode
+      fastMode: options?.fast_mode,
     });
 
     // Stage 0: Run OCR + Brand Detection in parallel
@@ -948,7 +982,9 @@ serve(async (req) => {
       if (detectedBrand) {
         console.log(`[STAGE 0] Fetching manufacturer knowledge for: ${detectedBrand}`);
         manufacturerKnowledge = await getManufacturerKnowledge(detectedBrand, supabase);
-        console.log(`[STAGE 0] Manufacturer knowledge: ${manufacturerKnowledge ? 'found' : 'not found'}`);
+        console.log(
+          `[STAGE 0] Manufacturer knowledge: ${manufacturerKnowledge ? 'found' : 'not found'}`
+        );
       }
     }
 
@@ -964,13 +1000,24 @@ serve(async (req) => {
       ]);
       referenceImageUrls = refImages;
       trainingExamples = trainExamples;
-      console.log(`[STAGE 0] Reference images: ${referenceImageUrls.length}, Training examples: ${trainingExamples.length}`);
+      console.log(
+        `[STAGE 0] Reference images: ${referenceImageUrls.length}, Training examples: ${trainingExamples.length}`
+      );
     }
 
     // Stage 1: Gemini - Board Structure (with RAG context + OCR hints + reference images + training examples)
     console.log('[STAGE 1] Starting Gemini analysis...');
-    const geminiResult = await analyzeWithGemini(images, hints, manufacturerKnowledge, ocrResult, referenceImageUrls, trainingExamples);
-    console.log(`[STAGE 1] Gemini completed, detected ${geminiResult.circuits?.length || 0} circuits`);
+    const geminiResult = await analyzeWithGemini(
+      images,
+      hints,
+      manufacturerKnowledge,
+      ocrResult,
+      referenceImageUrls,
+      trainingExamples
+    );
+    console.log(
+      `[STAGE 1] Gemini completed, detected ${geminiResult.circuits?.length || 0} circuits`
+    );
 
     // Stage 2: OpenAI Verification
     console.log('[STAGE 2] Starting OpenAI verification...');
@@ -992,16 +1039,24 @@ serve(async (req) => {
 
     // Add processing decisions
     if (ocrResult?.success) {
-      result.decisions.unshift(`OCR preprocessing extracted ${ocrResult.board_hints.all_ratings_found.length} ratings, ${ocrResult.board_hints.all_labels_found.length} labels`);
+      result.decisions.unshift(
+        `OCR preprocessing extracted ${ocrResult.board_hints.all_ratings_found.length} ratings, ${ocrResult.board_hints.all_labels_found.length} labels`
+      );
     }
     if (trainingExamples.length > 0) {
-      result.decisions.unshift(`Using ${trainingExamples.length} verified training examples with circuit context`);
+      result.decisions.unshift(
+        `Using ${trainingExamples.length} verified training examples with circuit context`
+      );
     }
     if (referenceImageUrls.length > 0) {
-      result.decisions.unshift(`Using ${referenceImageUrls.length} reference images for few-shot learning`);
+      result.decisions.unshift(
+        `Using ${referenceImageUrls.length} reference images for few-shot learning`
+      );
     }
     if (detectedBrand && manufacturerKnowledge) {
-      result.decisions.unshift(`Detected ${detectedBrand} board - using manufacturer-specific identification rules`);
+      result.decisions.unshift(
+        `Detected ${detectedBrand} board - using manufacturer-specific identification rules`
+      );
     }
 
     console.log(`Analysis complete in ${result.metadata.analysisTime}ms:`, {
@@ -1014,13 +1069,12 @@ serve(async (req) => {
       ocrUsed: ocrResult?.success === true,
       ocrRatings: ocrResult?.board_hints.all_ratings_found.length || 0,
       decisions: result.decisions.length,
-      warnings: result.warnings.length
+      warnings: result.warnings.length,
     });
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     const duration = Date.now() - startTime;
     console.error(`Error after ${duration}ms:`, error);
@@ -1034,21 +1088,24 @@ serve(async (req) => {
         duration,
         hasGeminiKey: !!geminiApiKey,
         hasOpenaiKey: !!openaiApiKey,
-      }
+      },
     });
 
-    return new Response(JSON.stringify({
-      error: error instanceof Error ? error.message : 'Unknown error',
-      circuits: [],
-      warnings: ['Analysis failed. Please try again.'],
-      metadata: {
-        analysisTime: duration,
-        modelsUsed: [],
-        imageCount: 0
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error',
+        circuits: [],
+        warnings: ['Analysis failed. Please try again.'],
+        metadata: {
+          analysisTime: duration,
+          modelsUsed: [],
+          imageCount: 0,
+        },
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    );
   }
 });

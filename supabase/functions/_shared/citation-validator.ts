@@ -22,18 +22,18 @@ export function extractCitations(narrative: string): string[] {
     /\b\d{3}\.\d{1,2}(?:\.\d{1,2})?\b/g, // Standard format: 433.1.1
     /\bTable\s+\d+[A-Z]\d*\b/gi, // Table format: Table 4D5
     /\bAppendix\s+\d+\b/gi, // Appendix format
-    /\bSection\s+\d{3}\b/gi // Section format: Section 701
+    /\bSection\s+\d{3}\b/gi, // Section format: Section 701
   ];
-  
+
   const citations = new Set<string>();
-  
+
   for (const regex of regexPatterns) {
     const matches = narrative.match(regex);
     if (matches) {
-      matches.forEach(m => citations.add(m.trim()));
+      matches.forEach((m) => citations.add(m.trim()));
     }
   }
-  
+
   return Array.from(citations);
 }
 
@@ -45,29 +45,29 @@ export function validateCitations(
   ragResults: RegulationResult[]
 ): CitationValidationResult {
   const citedRegulations = extractCitations(narrative);
-  const ragRegulations = ragResults.map(r => r.regulation_number);
-  
+  const ragRegulations = ragResults.map((r) => r.regulation_number);
+
   // Find hallucinations (cited but not in RAG)
-  const hallucinations = citedRegulations.filter(cited => 
-    !ragRegulations.some(rag => rag.includes(cited) || cited.includes(rag))
+  const hallucinations = citedRegulations.filter(
+    (cited) => !ragRegulations.some((rag) => rag.includes(cited) || cited.includes(rag))
   );
-  
+
   // Find missing citations (top 5 RAG results not cited)
-  const topRagResults = ragResults.slice(0, 5).map(r => r.regulation_number);
-  const missingCitations = topRagResults.filter(rag =>
-    !citedRegulations.some(cited => cited.includes(rag) || rag.includes(cited))
+  const topRagResults = ragResults.slice(0, 5).map((r) => r.regulation_number);
+  const missingCitations = topRagResults.filter(
+    (rag) => !citedRegulations.some((cited) => cited.includes(rag) || rag.includes(cited))
   );
-  
+
   // Calculate citation confidence
   const totalCitations = citedRegulations.length;
   const validCitations = totalCitations - hallucinations.length;
   const citationConfidence = totalCitations > 0 ? validCitations / totalCitations : 1.0;
-  
+
   return {
     isValid: hallucinations.length === 0,
     hallucinations,
     missingCitations,
-    citationConfidence
+    citationConfidence,
   };
 }
 
@@ -80,31 +80,28 @@ export function correctCommonErrors(narrative: string): string {
     '411.3': '411.3.2',
     '525': '525.1',
     '533': '533.1.1',
-    '543.1': '543.1.1'
+    '543.1': '543.1.1',
   };
-  
+
   let corrected = narrative;
   for (const [wrong, right] of Object.entries(corrections)) {
     corrected = corrected.replace(new RegExp(`\\b${wrong}\\b`, 'g'), right);
   }
-  
+
   return corrected;
 }
 
 /**
  * Strip invalid citations and add disclaimer
  */
-export function stripInvalidCitations(
-  narrative: string,
-  hallucinations: string[]
-): string {
+export function stripInvalidCitations(narrative: string, hallucinations: string[]): string {
   let cleaned = narrative;
-  
+
   for (const hallucination of hallucinations) {
     // Remove the regulation number and surrounding context
     const escapedReg = hallucination.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     cleaned = cleaned.replace(new RegExp(`\\b${escapedReg}\\b`, 'g'), '[citation removed]');
   }
-  
+
   return cleaned;
 }

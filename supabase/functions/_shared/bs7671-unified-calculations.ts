@@ -4,8 +4,8 @@
 // Compliant with BS 7671:2018+A3:2024 (18th Edition)
 // ============================================
 
-export type CableType = 
-  | 'pvc-single' 
+export type CableType =
+  | 'pvc-single'
   | 'xlpe-single'
   | 'pvc-twin-earth'
   | 'xlpe-twin-earth'
@@ -54,9 +54,9 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     2.5: { r: 7.41, x: 0.12 },
     4: { r: 4.61, x: 0.11 },
     6: { r: 3.08, x: 0.11 },
-    10: { r: 1.83, x: 0.10 },
+    10: { r: 1.83, x: 0.1 },
     16: { r: 1.15, x: 0.095 },
-    25: { r: 0.727, x: 0.090 },
+    25: { r: 0.727, x: 0.09 },
     35: { r: 0.524, x: 0.085 },
     50: { r: 0.387, x: 0.082 },
     70: { r: 0.268, x: 0.079 },
@@ -66,9 +66,9 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     185: { r: 0.0991, x: 0.073 },
     240: { r: 0.0754, x: 0.072 },
     300: { r: 0.0601, x: 0.071 },
-    400: { r: 0.0470, x: 0.070 },
+    400: { r: 0.047, x: 0.07 },
     500: { r: 0.0366, x: 0.069 },
-    630: { r: 0.0283, x: 0.068 }
+    630: { r: 0.0283, x: 0.068 },
   },
   'xlpe-single': {
     1.0: { r: 18.1, x: 0.14 },
@@ -76,9 +76,9 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     2.5: { r: 7.41, x: 0.12 },
     4: { r: 4.61, x: 0.11 },
     6: { r: 3.08, x: 0.11 },
-    10: { r: 1.83, x: 0.10 },
+    10: { r: 1.83, x: 0.1 },
     16: { r: 1.15, x: 0.095 },
-    25: { r: 0.727, x: 0.090 },
+    25: { r: 0.727, x: 0.09 },
     35: { r: 0.524, x: 0.085 },
     50: { r: 0.387, x: 0.082 },
     70: { r: 0.268, x: 0.079 },
@@ -88,9 +88,9 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     185: { r: 0.0991, x: 0.073 },
     240: { r: 0.0754, x: 0.072 },
     300: { r: 0.0601, x: 0.071 },
-    400: { r: 0.0470, x: 0.070 },
+    400: { r: 0.047, x: 0.07 },
     500: { r: 0.0366, x: 0.069 },
-    630: { r: 0.0283, x: 0.068 }
+    630: { r: 0.0283, x: 0.068 },
   },
   'pvc-twin-earth': {
     1.0: { r: 18.1, x: 0 },
@@ -102,7 +102,7 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     16: { r: 1.15, x: 0 },
     25: { r: 0.727, x: 0 },
     35: { r: 0.524, x: 0 },
-    50: { r: 0.387, x: 0 }
+    50: { r: 0.387, x: 0 },
   },
   'xlpe-twin-earth': {
     1.0: { r: 18.1, x: 0 },
@@ -114,16 +114,16 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     16: { r: 1.15, x: 0 },
     25: { r: 0.727, x: 0 },
     35: { r: 0.524, x: 0 },
-    50: { r: 0.387, x: 0 }
+    50: { r: 0.387, x: 0 },
   },
-  'swa': {
+  swa: {
     1.5: { r: 12.1, x: 0.13 },
     2.5: { r: 7.41, x: 0.12 },
     4: { r: 4.61, x: 0.11 },
     6: { r: 3.08, x: 0.11 },
-    10: { r: 1.83, x: 0.10 },
+    10: { r: 1.83, x: 0.1 },
     16: { r: 1.15, x: 0.095 },
-    25: { r: 0.727, x: 0.090 },
+    25: { r: 0.727, x: 0.09 },
     35: { r: 0.524, x: 0.085 },
     50: { r: 0.387, x: 0.082 },
     70: { r: 0.268, x: 0.079 },
@@ -133,41 +133,44 @@ const resistanceData: Record<string, Record<number, { r: number; x: number }>> =
     185: { r: 0.0991, x: 0.073 },
     240: { r: 0.0754, x: 0.072 },
     300: { r: 0.0601, x: 0.071 },
-    400: { r: 0.0470, x: 0.070 },
+    400: { r: 0.047, x: 0.07 },
     500: { r: 0.0366, x: 0.069 },
-    630: { r: 0.0283, x: 0.068 }
+    630: { r: 0.0283, x: 0.068 },
   },
-  'micc': {
-    1.0: { r: 18.1, x: 0.10 },
-    1.5: { r: 12.1, x: 0.10 },
-    2.5: { r: 7.41, x: 0.10 },
-    4: { r: 4.61, x: 0.10 },
-    6: { r: 3.08, x: 0.10 },
-    10: { r: 1.83, x: 0.10 },
-    16: { r: 1.15, x: 0.10 },
-    25: { r: 0.727, x: 0.10 },
-    35: { r: 0.524, x: 0.10 },
-    50: { r: 0.387, x: 0.10 }
+  micc: {
+    1.0: { r: 18.1, x: 0.1 },
+    1.5: { r: 12.1, x: 0.1 },
+    2.5: { r: 7.41, x: 0.1 },
+    4: { r: 4.61, x: 0.1 },
+    6: { r: 3.08, x: 0.1 },
+    10: { r: 1.83, x: 0.1 },
+    16: { r: 1.15, x: 0.1 },
+    25: { r: 0.727, x: 0.1 },
+    35: { r: 0.524, x: 0.1 },
+    50: { r: 0.387, x: 0.1 },
   },
   'aluminium-xlpe': {
     16: { r: 1.91, x: 0.095 },
-    25: { r: 1.20, x: 0.090 },
+    25: { r: 1.2, x: 0.09 },
     35: { r: 0.868, x: 0.085 },
     50: { r: 0.641, x: 0.082 },
     70: { r: 0.443, x: 0.079 },
-    95: { r: 0.320, x: 0.077 },
+    95: { r: 0.32, x: 0.077 },
     120: { r: 0.253, x: 0.075 },
     150: { r: 0.206, x: 0.074 },
     185: { r: 0.164, x: 0.073 },
     240: { r: 0.125, x: 0.072 },
-    300: { r: 0.100, x: 0.071 },
-    400: { r: 0.0778, x: 0.070 },
+    300: { r: 0.1, x: 0.071 },
+    400: { r: 0.0778, x: 0.07 },
     500: { r: 0.0605, x: 0.069 },
-    630: { r: 0.0469, x: 0.068 }
-  }
+    630: { r: 0.0469, x: 0.068 },
+  },
 };
 
-function getResistanceData(cableType: CableType, size: number): { resistance: number; reactance: number } | null {
+function getResistanceData(
+  cableType: CableType,
+  size: number
+): { resistance: number; reactance: number } | null {
   const data = resistanceData[cableType]?.[size];
   return data ? { resistance: data.r, reactance: data.x } : null;
 }
@@ -182,7 +185,7 @@ export function calculateVoltageDrop(params: VoltageDropParams): VoltageDropResu
     powerFactor,
     phaseConfig,
     temperature,
-    loadType
+    loadType,
   } = params;
 
   const baseData = getResistanceData(cableType, cableSize);
@@ -192,15 +195,15 @@ export function calculateVoltageDrop(params: VoltageDropParams): VoltageDropResu
   const tempCoeff = cableType.includes('aluminium') ? TEMP_COEFF_ALUMINIUM : TEMP_COEFF_COPPER;
   const operatingResistance = baseData.resistance * (1 + tempCoeff * (temperature - 20));
   const reactance = baseData.reactance;
-  
-  // Convert mΩ/m to Ω for calculation 
-  const R = operatingResistance * length / 1000; // Ω (total resistance)
-  const X = reactance * length / 1000; // Ω (total reactance)
-  
+
+  // Convert mΩ/m to Ω for calculation
+  const R = (operatingResistance * length) / 1000; // Ω (total resistance)
+  const X = (reactance * length) / 1000; // Ω (total reactance)
+
   // Calculate voltage drop based on phase configuration
   let voltageDrop: number;
   let equation: string;
-  
+
   if (phaseConfig === 'single') {
     // Single phase: Vd = 2 × I × (R × cos φ + X × sin φ)
     const cosφ = powerFactor;
@@ -220,9 +223,10 @@ export function calculateVoltageDrop(params: VoltageDropParams): VoltageDropResu
 
   // BS 7671 Appendix 4 - Voltage drop limits
   const limit = loadType === 'lighting' ? 3 : 5;
-  const limitType = loadType === 'lighting' 
-    ? '3% (Lighting circuits - BS 7671 Appendix 4)'
-    : '5% (Power circuits - BS 7671 Appendix 4)';
+  const limitType =
+    loadType === 'lighting'
+      ? '3% (Lighting circuits - BS 7671 Appendix 4)'
+      : '5% (Power circuits - BS 7671 Appendix 4)';
   const compliant = voltageDropPercent <= limit;
 
   return {
@@ -234,7 +238,7 @@ export function calculateVoltageDrop(params: VoltageDropParams): VoltageDropResu
     limitType,
     equation,
     resistance: Math.round(operatingResistance * 1000) / 1000,
-    reactance: Math.round(reactance * 1000) / 1000
+    reactance: Math.round(reactance * 1000) / 1000,
   };
 }
 
@@ -272,25 +276,77 @@ export interface EarthFaultResult {
 // BS 7671 Table 41.3 - Maximum Zs values for MCBs (0.4s disconnection, 230V)
 // Using Cmin = 0.95 per BS 7671:2018+A2:2022
 const MAX_ZS_VALUES: Record<string, Record<number, number>> = {
-  'B': { 6: 7.28, 10: 4.37, 16: 2.73, 20: 2.19, 25: 1.75, 32: 1.37, 40: 1.09, 50: 0.87, 63: 0.69, 80: 0.55, 100: 0.44, 125: 0.35 },
-  'C': { 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87, 32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17 },
-  'D': { 6: 1.82, 10: 1.09, 16: 0.68, 20: 0.55, 25: 0.44, 32: 0.34, 40: 0.27, 50: 0.22, 63: 0.17, 80: 0.14, 100: 0.11, 125: 0.09 }
+  B: {
+    6: 7.28,
+    10: 4.37,
+    16: 2.73,
+    20: 2.19,
+    25: 1.75,
+    32: 1.37,
+    40: 1.09,
+    50: 0.87,
+    63: 0.69,
+    80: 0.55,
+    100: 0.44,
+    125: 0.35,
+  },
+  C: {
+    6: 3.64,
+    10: 2.19,
+    16: 1.37,
+    20: 1.09,
+    25: 0.87,
+    32: 0.68,
+    40: 0.55,
+    50: 0.44,
+    63: 0.35,
+    80: 0.27,
+    100: 0.22,
+    125: 0.17,
+  },
+  D: {
+    6: 1.82,
+    10: 1.09,
+    16: 0.68,
+    20: 0.55,
+    25: 0.44,
+    32: 0.34,
+    40: 0.27,
+    50: 0.22,
+    63: 0.17,
+    80: 0.14,
+    100: 0.11,
+    125: 0.09,
+  },
 };
 
 // BS 7671 Table 41.3 - Maximum Zs values for Type D MCBs (5s disconnection, 230V)
 // ONLY Type D has 5s values per BS 7671 - Types B and C do NOT have 5s tables
 // For motors, conveyors, fixed equipment - per Regulation 411.3.2.3
 const MAX_ZS_VALUES_5S: Record<string, Record<number, number>> = {
-  'D': { 6: 3.64, 10: 2.19, 16: 1.37, 20: 1.09, 25: 0.87, 32: 0.68, 40: 0.55, 50: 0.44, 63: 0.35, 80: 0.27, 100: 0.22, 125: 0.17 }
+  D: {
+    6: 3.64,
+    10: 2.19,
+    16: 1.37,
+    20: 1.09,
+    25: 0.87,
+    32: 0.68,
+    40: 0.55,
+    50: 0.44,
+    63: 0.35,
+    80: 0.27,
+    100: 0.22,
+    125: 0.17,
+  },
 };
 
 // Temperature factors for cable resistance at max operating temperature
 // BS 7671 Appendix 14: 1.20 for 70°C PVC, 1.28 for 90°C XLPE
 const TEMP_FACTORS: Record<string, number> = {
-  'pvc': 1.20,
-  'xlpe': 1.28,
-  'swa': 1.20,
-  'micc': 1.20
+  pvc: 1.2,
+  xlpe: 1.28,
+  swa: 1.2,
+  micc: 1.2,
 };
 
 function getConductorResistance(cableType: CableType, size: number): number | null {
@@ -302,31 +358,32 @@ export function calculateEarthFaultLoop(
   params: EarthFaultParams,
   disconnectionTime: 0.4 | 5 = 0.4
 ): EarthFaultResult | null {
-  const { externalZe, cableType, cableSize, cpcSize, length, temperature, protectiveDevice } = params;
-  
+  const { externalZe, cableType, cableSize, cpcSize, length, temperature, protectiveDevice } =
+    params;
+
   // Get conductor resistances
   const lineResistance = getConductorResistance(cableType, cableSize);
   const cpcResistance = getConductorResistance(cableType, cpcSize);
-  
+
   if (!lineResistance || !cpcResistance) return null;
-  
+
   // Get temperature factor based on cable type
   const tempRating = cableType.includes('xlpe') ? 'xlpe' : 'pvc';
-  const tempFactor = TEMP_FACTORS[tempRating] || 1.20;
-  
+  const tempFactor = TEMP_FACTORS[tempRating] || 1.2;
+
   // Calculate R1 + R2 (both at operating temperature)
   // BS 7671 Appendix 14: R = R₂₀ × temperature factor
   const r1 = (lineResistance * length * tempFactor) / 1000; // Convert mΩ to Ω
   const r2 = (cpcResistance * length * tempFactor) / 1000;
   const r1PlusR2 = r1 + r2;
-  
+
   // Calculate Zs: Zs = Ze + (R1 + R2)
   const calculatedZs = externalZe + r1PlusR2;
-  
+
   // Get max Zs from BS 7671 tables based on disconnection time
   // 5s disconnection only valid for Type D (motors/fixed equipment)
   let maxZs: number | undefined;
-  
+
   if (disconnectionTime === 5) {
     // Only Type D has 5s values - Types B and C don't exist
     if (protectiveDevice.type === 'D') {
@@ -339,19 +396,19 @@ export function calculateEarthFaultLoop(
     // 0.4s disconnection (standard for final circuits)
     maxZs = MAX_ZS_VALUES[protectiveDevice.type]?.[protectiveDevice.rating];
   }
-  
+
   if (!maxZs) return null;
-  
+
   // Calculate fault current: If = U₀ / Zs
   const faultCurrent = 230 / calculatedZs; // U₀ = 230V (phase-earth voltage)
-  
+
   // Check compliance
   const compliant = calculatedZs <= maxZs;
   const margin = ((maxZs - calculatedZs) / maxZs) * 100;
-  
+
   const equation = `Zs = Ze + (R1+R2) = ${externalZe}Ω + ${r1PlusR2.toFixed(3)}Ω = ${calculatedZs.toFixed(3)}Ω`;
   const regulation = `BS 7671 Table 41.3 - Type ${protectiveDevice.type} ${protectiveDevice.rating}A: Max Zs = ${maxZs}Ω`;
-  
+
   return {
     calculatedZs: Math.round(calculatedZs * 1000) / 1000,
     maxZs,
@@ -362,7 +419,7 @@ export function calculateEarthFaultLoop(
     r1PlusR2: Math.round(r1PlusR2 * 1000) / 1000,
     faultCurrent: Math.round(faultCurrent),
     equation,
-    regulation
+    regulation,
   };
 }
 
@@ -395,15 +452,15 @@ export interface DiversityResult {
 // Applies diversity to individual circuits for realistic MCB sizing
 // ============================================
 
-export type CircuitType = 
-  | 'lighting' 
-  | 'socket_ring' 
-  | 'socket_radial' 
-  | 'cooker' 
-  | 'shower' 
-  | 'immersion' 
-  | 'heating' 
-  | 'ev' 
+export type CircuitType =
+  | 'lighting'
+  | 'socket_ring'
+  | 'socket_radial'
+  | 'cooker'
+  | 'shower'
+  | 'immersion'
+  | 'heating'
+  | 'ev'
   | 'other';
 
 export interface CircuitDiversityParams {
@@ -424,55 +481,55 @@ export interface CircuitDiversityResult {
 
 export function calculateCircuitDiversity(params: CircuitDiversityParams): CircuitDiversityResult {
   const { circuitType, connectedLoad, voltage, installationType = 'domestic' } = params;
-  
+
   let diversifiedLoad = connectedLoad;
   let diversityFactor = 1.0;
   let maxMcb = 63;
   let justification = '';
-  
+
   // Installation-type-specific diversity factors
   const diversityFactors = {
     domestic: {
       lighting: 0.66,
-      socket_radial: 0.40,  // For excess over 7.36kW
+      socket_radial: 0.4, // For excess over 7.36kW
       cooker: 'formula',
     },
     commercial: {
-      lighting: 0.80,       // Larger areas with more simultaneous use
-      socket_radial: 0.60,  // Office/commercial diversity
-      cooker: 1.0,          // Commercial kitchens - NO diversity!
-      heating: 0.90,        // Zone-controlled commercial heating
+      lighting: 0.8, // Larger areas with more simultaneous use
+      socket_radial: 0.6, // Office/commercial diversity
+      cooker: 1.0, // Commercial kitchens - NO diversity!
+      heating: 0.9, // Zone-controlled commercial heating
     },
     industrial: {
-      lighting: 0.90,       // Factory/warehouse - most lit at once
-      socket_radial: 0.80,  // Equipment running - less diversity
+      lighting: 0.9, // Factory/warehouse - most lit at once
+      socket_radial: 0.8, // Equipment running - less diversity
       cooker: 1.0,
-      heating: 1.0,         // Process heating - no diversity
-    }
+      heating: 1.0, // Process heating - no diversity
+    },
   };
-  
+
   switch (circuitType) {
     case 'lighting':
       // Apply installation-type-specific lighting diversity
       if (installationType === 'commercial') {
-        diversifiedLoad = connectedLoad * 0.80;
-        diversityFactor = 0.80;
+        diversifiedLoad = connectedLoad * 0.8;
+        diversityFactor = 0.8;
         maxMcb = 16;
-        justification = `Lighting: 80% diversity applied (commercial installation - larger areas with simultaneous use). ${(connectedLoad/1000).toFixed(1)}kW × 0.80 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+        justification = `Lighting: 80% diversity applied (commercial installation - larger areas with simultaneous use). ${(connectedLoad / 1000).toFixed(1)}kW × 0.80 = ${(diversifiedLoad / 1000).toFixed(1)}kW`;
       } else if (installationType === 'industrial') {
-        diversifiedLoad = connectedLoad * 0.90;
-        diversityFactor = 0.90;
+        diversifiedLoad = connectedLoad * 0.9;
+        diversityFactor = 0.9;
         maxMcb = 20;
-        justification = `Lighting: 90% diversity applied (industrial installation - warehouse/production area lighting). ${(connectedLoad/1000).toFixed(1)}kW × 0.90 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+        justification = `Lighting: 90% diversity applied (industrial installation - warehouse/production area lighting). ${(connectedLoad / 1000).toFixed(1)}kW × 0.90 = ${(diversifiedLoad / 1000).toFixed(1)}kW`;
       } else {
         // Domestic - BS 7671 Appendix A
         diversifiedLoad = connectedLoad * 0.66;
         diversityFactor = 0.66;
         maxMcb = 16;
-        justification = `Lighting: 66% diversity per BS 7671 Appendix A (domestic installation). ${(connectedLoad/1000).toFixed(1)}kW × 0.66 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+        justification = `Lighting: 66% diversity per BS 7671 Appendix A (domestic installation). ${(connectedLoad / 1000).toFixed(1)}kW × 0.66 = ${(diversifiedLoad / 1000).toFixed(1)}kW`;
       }
       break;
-      
+
     case 'socket_ring':
       // Ring finals: ALWAYS 32A, diversity inherent in ring topology
       diversifiedLoad = connectedLoad; // No reduction - ring handles it
@@ -480,7 +537,7 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
       maxMcb = 32;
       justification = `Ring final: 32A fixed per BS 7671 Appendix 15. Ring topology provides inherent load diversity across two parallel paths.`;
       break;
-      
+
     case 'socket_radial':
       // Radial sockets: Installation-type-specific diversity
       if (installationType === 'commercial') {
@@ -488,38 +545,38 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
         if (connectedLoad <= 7360) {
           diversifiedLoad = connectedLoad;
           diversityFactor = 1.0;
-          justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (commercial - below 7.36kW threshold)`;
+          justification = `Radial socket: 100% of ${(connectedLoad / 1000).toFixed(1)}kW (commercial - below 7.36kW threshold)`;
         } else {
-          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.60;
+          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.6;
           diversityFactor = diversifiedLoad / connectedLoad;
-          justification = `Radial socket: 7.36kW + 60% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW (commercial diversity)`;
+          justification = `Radial socket: 7.36kW + 60% of ${((connectedLoad - 7360) / 1000).toFixed(1)}kW = ${(diversifiedLoad / 1000).toFixed(1)}kW (commercial diversity)`;
         }
       } else if (installationType === 'industrial') {
         // Industrial: 80% diversity - equipment expected to run
         if (connectedLoad <= 7360) {
           diversifiedLoad = connectedLoad;
           diversityFactor = 1.0;
-          justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (industrial - below 7.36kW threshold)`;
+          justification = `Radial socket: 100% of ${(connectedLoad / 1000).toFixed(1)}kW (industrial - below 7.36kW threshold)`;
         } else {
-          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.80;
+          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.8;
           diversityFactor = diversifiedLoad / connectedLoad;
-          justification = `Radial socket: 7.36kW + 80% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW (industrial - conservative)`;
+          justification = `Radial socket: 7.36kW + 80% of ${((connectedLoad - 7360) / 1000).toFixed(1)}kW = ${(diversifiedLoad / 1000).toFixed(1)}kW (industrial - conservative)`;
         }
       } else {
         // Domestic: BS 7671 Appendix A - 40% of remainder
         if (connectedLoad <= 7360) {
           diversifiedLoad = connectedLoad;
           diversityFactor = 1.0;
-          justification = `Radial socket: 100% of ${(connectedLoad/1000).toFixed(1)}kW (below 7.36kW threshold per BS 7671 Appendix A)`;
+          justification = `Radial socket: 100% of ${(connectedLoad / 1000).toFixed(1)}kW (below 7.36kW threshold per BS 7671 Appendix A)`;
         } else {
-          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.40;
+          diversifiedLoad = 7360 + (connectedLoad - 7360) * 0.4;
           diversityFactor = diversifiedLoad / connectedLoad;
-          justification = `Radial socket: 7.36kW + 40% of ${((connectedLoad-7360)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A`;
+          justification = `Radial socket: 7.36kW + 40% of ${((connectedLoad - 7360) / 1000).toFixed(1)}kW = ${(diversifiedLoad / 1000).toFixed(1)}kW per BS 7671 Appendix A`;
         }
       }
       maxMcb = 32;
       break;
-      
+
     case 'cooker':
       // Cooker diversity depends on installation type
       if (installationType === 'commercial' || installationType === 'industrial') {
@@ -527,7 +584,7 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
         diversifiedLoad = connectedLoad;
         diversityFactor = 1.0;
         maxMcb = 63;
-        justification = `Cooker: 100% load - no diversity (${installationType} kitchen assumes simultaneous equipment operation). ${(connectedLoad/1000).toFixed(1)}kW`;
+        justification = `Cooker: 100% load - no diversity (${installationType} kitchen assumes simultaneous equipment operation). ${(connectedLoad / 1000).toFixed(1)}kW`;
       } else {
         // Domestic: BS 7671 Appendix A Table A1: 10A + 30% of first 10A + 60% of remainder
         if (connectedLoad <= 2300) {
@@ -535,18 +592,18 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
           diversityFactor = diversifiedLoad / connectedLoad;
           justification = `Cooker: Minimum 10A (2.3kW) per BS 7671 Appendix A Table A1 (domestic)`;
         } else if (connectedLoad <= 4600) {
-          diversifiedLoad = 2300 + (connectedLoad - 2300) * 0.30;
+          diversifiedLoad = 2300 + (connectedLoad - 2300) * 0.3;
           diversityFactor = diversifiedLoad / connectedLoad;
-          justification = `Cooker: 2.3kW + 30% of ${((connectedLoad-2300)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A (domestic)`;
+          justification = `Cooker: 2.3kW + 30% of ${((connectedLoad - 2300) / 1000).toFixed(1)}kW = ${(diversifiedLoad / 1000).toFixed(1)}kW per BS 7671 Appendix A (domestic)`;
         } else {
-          diversifiedLoad = 2300 + 690 + (connectedLoad - 4600) * 0.60; // 690 = 30% of 2300
+          diversifiedLoad = 2300 + 690 + (connectedLoad - 4600) * 0.6; // 690 = 30% of 2300
           diversityFactor = diversifiedLoad / connectedLoad;
-          justification = `Cooker: 2.3kW + 0.69kW + 60% of ${((connectedLoad-4600)/1000).toFixed(1)}kW = ${(diversifiedLoad/1000).toFixed(1)}kW per BS 7671 Appendix A (domestic)`;
+          justification = `Cooker: 2.3kW + 0.69kW + 60% of ${((connectedLoad - 4600) / 1000).toFixed(1)}kW = ${(diversifiedLoad / 1000).toFixed(1)}kW per BS 7671 Appendix A (domestic)`;
         }
         maxMcb = 50;
       }
       break;
-      
+
     case 'shower':
     case 'immersion':
     case 'ev':
@@ -556,15 +613,15 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
       maxMcb = circuitType === 'ev' ? 40 : 50;
       justification = `${circuitType === 'shower' ? 'Shower' : circuitType === 'immersion' ? 'Immersion heater' : 'EV charger'}: 100% load - no diversity applicable (continuous fixed load)`;
       break;
-      
+
     case 'heating':
       // Heating diversity depends on installation type
       if (installationType === 'commercial') {
         // Commercial: 90% diversity for zone-controlled heating
-        diversifiedLoad = connectedLoad * 0.90;
-        diversityFactor = 0.90;
+        diversifiedLoad = connectedLoad * 0.9;
+        diversityFactor = 0.9;
         maxMcb = 50;
-        justification = `Heating: 90% diversity applied (commercial zone-controlled heating). ${(connectedLoad/1000).toFixed(1)}kW × 0.90 = ${(diversifiedLoad/1000).toFixed(1)}kW`;
+        justification = `Heating: 90% diversity applied (commercial zone-controlled heating). ${(connectedLoad / 1000).toFixed(1)}kW × 0.90 = ${(diversifiedLoad / 1000).toFixed(1)}kW`;
       } else {
         // Domestic/Industrial: No diversity
         diversifiedLoad = connectedLoad;
@@ -573,121 +630,150 @@ export function calculateCircuitDiversity(params: CircuitDiversityParams): Circu
         justification = `Heating: 100% load - no diversity (${installationType === 'industrial' ? 'process heating' : 'thermostatically controlled but assume simultaneous operation'})`;
       }
       break;
-      
+
     default:
       diversifiedLoad = connectedLoad;
       diversityFactor = 1.0;
       maxMcb = 63;
       justification = `General load: 100% (no specific diversity factor in BS 7671 Appendix A)`;
   }
-  
+
   const diversifiedCurrent = diversifiedLoad / voltage;
-  
+
   return {
     connectedLoad: Math.round(connectedLoad),
     diversifiedLoad: Math.round(diversifiedLoad),
     diversityFactor: Math.round(diversityFactor * 100) / 100,
     diversifiedCurrent: Math.round(diversifiedCurrent * 100) / 100,
     maxMcb,
-    justification
+    justification,
   };
 }
 
 export function calculateDiversity(params: DiversityParams): DiversityResult {
   const { circuits, propertyType } = params;
-  
+
   // Group circuits by type
-  const lighting = circuits.filter(c => c.type === 'lighting');
-  const sockets = circuits.filter(c => c.type === 'sockets');
-  const cookers = circuits.filter(c => c.type === 'cooker');
-  const immersion = circuits.filter(c => c.type === 'immersion');
-  const heating = circuits.filter(c => c.type === 'heating');
-  const other = circuits.filter(c => c.type === 'other');
-  
+  const lighting = circuits.filter((c) => c.type === 'lighting');
+  const sockets = circuits.filter((c) => c.type === 'sockets');
+  const cookers = circuits.filter((c) => c.type === 'cooker');
+  const immersion = circuits.filter((c) => c.type === 'immersion');
+  const heating = circuits.filter((c) => c.type === 'heating');
+  const other = circuits.filter((c) => c.type === 'other');
+
   const lightingTotal = lighting.reduce((sum, c) => sum + c.load, 0);
   const socketsTotal = sockets.reduce((sum, c) => sum + c.load, 0);
   const cookersTotal = cookers.reduce((sum, c) => sum + c.load, 0);
   const immersionTotal = immersion.reduce((sum, c) => sum + c.load, 0);
   const heatingTotal = heating.reduce((sum, c) => sum + c.load, 0);
   const otherTotal = other.reduce((sum, c) => sum + c.load, 0);
-  
+
   let lightingDiversified: number;
   let socketsDiversified: number;
   let cookersDiversified: number;
   let heatingDiversified: number;
-  
+
   if (propertyType === 'commercial') {
     // ========== COMMERCIAL DIVERSITY ==========
     // Lighting: 80% (larger areas with simultaneous use)
-    lightingDiversified = lightingTotal * 0.80;
-    
+    lightingDiversified = lightingTotal * 0.8;
+
     // Socket outlets: 100% first 7360W, then 60% of remainder (office/shop diversity)
-    socketsDiversified = socketsTotal <= 7360 
-      ? socketsTotal 
-      : 7360 + (socketsTotal - 7360) * 0.60;
-    
+    socketsDiversified = socketsTotal <= 7360 ? socketsTotal : 7360 + (socketsTotal - 7360) * 0.6;
+
     // Cookers/Kitchen: 100% - NO diversity! (commercial kitchens operate simultaneously)
     cookersDiversified = cookersTotal;
-    
+
     // Heating: 90% (zone-controlled commercial heating)
-    heatingDiversified = heatingTotal * 0.90;
-    
+    heatingDiversified = heatingTotal * 0.9;
   } else if (propertyType === 'industrial') {
     // ========== INDUSTRIAL DIVERSITY ==========
     // Lighting: 90% (warehouse/factory - most areas lit at once)
-    lightingDiversified = lightingTotal * 0.90;
-    
+    lightingDiversified = lightingTotal * 0.9;
+
     // Socket outlets: 100% first 7360W, then 80% of remainder (equipment expected to run)
-    socketsDiversified = socketsTotal <= 7360 
-      ? socketsTotal 
-      : 7360 + (socketsTotal - 7360) * 0.80;
-    
+    socketsDiversified = socketsTotal <= 7360 ? socketsTotal : 7360 + (socketsTotal - 7360) * 0.8;
+
     // Cookers/Process equipment: 100% - NO diversity!
     cookersDiversified = cookersTotal;
-    
+
     // Heating: 100% (process heating - no diversity)
     heatingDiversified = heatingTotal;
-    
   } else {
     // ========== DOMESTIC DIVERSITY (BS 7671 Appendix A) ==========
     // Lighting: 66% of total, minimum 2300W (10A at 230V)
     lightingDiversified = Math.max(lightingTotal * 0.66, lightingTotal > 0 ? 2300 : 0);
-    
+
     // Socket outlets: 100% first 7360W (32A), then 40% of remainder
-    socketsDiversified = socketsTotal <= 7360 
-      ? socketsTotal 
-      : 7360 + (socketsTotal - 7360) * 0.40;
-    
+    socketsDiversified = socketsTotal <= 7360 ? socketsTotal : 7360 + (socketsTotal - 7360) * 0.4;
+
     // Cookers: 10A (2300W) + 30% of first 10A + 60% of remainder (BS 7671 Appendix A Table A1)
-    cookersDiversified = cookersTotal > 0 
-      ? 2300 + Math.min(cookersTotal - 2300, 2300) * 0.30 + Math.max(0, cookersTotal - 4600) * 0.60 
-      : 0;
-    
+    cookersDiversified =
+      cookersTotal > 0
+        ? 2300 + Math.min(cookersTotal - 2300, 2300) * 0.3 + Math.max(0, cookersTotal - 4600) * 0.6
+        : 0;
+
     // Space heating: 100% (no diversity - thermostatically controlled but assume simultaneous)
     heatingDiversified = heatingTotal;
   }
-  
+
   // Immersion heaters: 100% (no diversity across all installation types)
   const immersionDiversified = immersionTotal;
-  
+
   // Other loads: 100% (conservative across all installation types)
   const otherDiversified = otherTotal;
-  
-  const totalConnected = lightingTotal + socketsTotal + cookersTotal + immersionTotal + heatingTotal + otherTotal;
-  const diversifiedDemand = lightingDiversified + socketsDiversified + cookersDiversified + 
-                           immersionDiversified + heatingDiversified + otherDiversified;
-  
+
+  const totalConnected =
+    lightingTotal + socketsTotal + cookersTotal + immersionTotal + heatingTotal + otherTotal;
+  const diversifiedDemand =
+    lightingDiversified +
+    socketsDiversified +
+    cookersDiversified +
+    immersionDiversified +
+    heatingDiversified +
+    otherDiversified;
+
   return {
     totalConnected: Math.round(totalConnected),
     diversifiedDemand: Math.round(diversifiedDemand),
     diversityFactor: Math.round((diversifiedDemand / totalConnected) * 100) / 100,
     breakdown: [
-      { type: 'lighting', connected: lightingTotal, diversified: Math.round(lightingDiversified), factor: lightingTotal > 0 ? lightingDiversified/lightingTotal : 1 },
-      { type: 'sockets', connected: socketsTotal, diversified: Math.round(socketsDiversified), factor: socketsTotal > 0 ? socketsDiversified/socketsTotal : 1 },
-      { type: 'cookers', connected: cookersTotal, diversified: Math.round(cookersDiversified), factor: cookersTotal > 0 ? cookersDiversified/cookersTotal : 1 },
-      { type: 'immersion', connected: immersionTotal, diversified: Math.round(immersionDiversified), factor: 1.0 },
-      { type: 'heating', connected: heatingTotal, diversified: Math.round(heatingDiversified), factor: heatingTotal > 0 ? heatingDiversified/heatingTotal : 1 },
-      { type: 'other', connected: otherTotal, diversified: Math.round(otherDiversified), factor: 1.0 }
-    ].filter(b => b.connected > 0)
+      {
+        type: 'lighting',
+        connected: lightingTotal,
+        diversified: Math.round(lightingDiversified),
+        factor: lightingTotal > 0 ? lightingDiversified / lightingTotal : 1,
+      },
+      {
+        type: 'sockets',
+        connected: socketsTotal,
+        diversified: Math.round(socketsDiversified),
+        factor: socketsTotal > 0 ? socketsDiversified / socketsTotal : 1,
+      },
+      {
+        type: 'cookers',
+        connected: cookersTotal,
+        diversified: Math.round(cookersDiversified),
+        factor: cookersTotal > 0 ? cookersDiversified / cookersTotal : 1,
+      },
+      {
+        type: 'immersion',
+        connected: immersionTotal,
+        diversified: Math.round(immersionDiversified),
+        factor: 1.0,
+      },
+      {
+        type: 'heating',
+        connected: heatingTotal,
+        diversified: Math.round(heatingDiversified),
+        factor: heatingTotal > 0 ? heatingDiversified / heatingTotal : 1,
+      },
+      {
+        type: 'other',
+        connected: otherTotal,
+        diversified: Math.round(otherDiversified),
+        factor: 1.0,
+      },
+    ].filter((b) => b.connected > 0),
   };
 }

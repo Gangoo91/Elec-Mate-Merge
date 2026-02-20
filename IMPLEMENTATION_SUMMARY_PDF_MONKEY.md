@@ -3,11 +3,13 @@
 ## ✅ What Was Implemented
 
 ### 1. **New Edge Function: `generate-design-spec-pdf`**
+
 **Location:** `supabase/functions/generate-design-spec-pdf/index.ts`
 
 **Purpose:** Generate professional Designer Calculations PDF using PDF Monkey API
 
 **Features:**
+
 - ✅ Calls PDF Monkey API with Template ID `8C64318C-A404-4A55-9039-294164C19FB4`
 - ✅ Fetches company profile from database (logo, contact details)
 - ✅ Transforms Designer Agent output to PDF Monkey JSON schema
@@ -16,15 +18,18 @@
 - ✅ Returns fallback flag if PDF Monkey unavailable
 
 **Configuration:**
+
 - Added to `supabase/config.toml` with `verify_jwt = false`
 - Uses `PDF_MONKEY_API_KEY` from Supabase secrets
 
 ---
 
 ### 2. **Updated: `generate-professional-package` Edge Function**
+
 **Location:** `supabase/functions/generate-professional-package/index.ts`
 
 **Changes:**
+
 - ✅ Added `generateDesignSpecWithPDFMonkey()` function
 - ✅ Modified Design Spec generation to try PDF Monkey first
 - ✅ Automatic fallback to jsPDF if PDF Monkey fails
@@ -32,6 +37,7 @@
 - ✅ Adds to ZIP bundle alongside other documents
 
 **Flow:**
+
 ```
 Try PDF Monkey
   ↓ Success → Download PDF → Add to ZIP
@@ -41,23 +47,26 @@ Try PDF Monkey
 ---
 
 ### 3. **Enhanced: Designer Agent Output**
+
 **Location:** `supabase/functions/designer-agent/index.ts`
 
 **Added Circuit Metadata:**
+
 ```typescript
 structuredData.circuit = {
-  name: "Electric Shower Circuit",           // Formatted name
-  circuitType: "shower",                     // Raw type
-  loadType: "Fixed Appliance",               // Category
-  power: 9500,                               // Watts
-  totalLoadKW: "9.50",                       // kW (formatted)
-  cableLength: 15,                           // metres
-  voltage: 230,                              // volts
-  phases: "Single Phase"                     // phase config
-}
+  name: 'Electric Shower Circuit', // Formatted name
+  circuitType: 'shower', // Raw type
+  loadType: 'Fixed Appliance', // Category
+  power: 9500, // Watts
+  totalLoadKW: '9.50', // kW (formatted)
+  cableLength: 15, // metres
+  voltage: 230, // volts
+  phases: 'Single Phase', // phase config
+};
 ```
 
 **Added Helper Functions:**
+
 - `formatCircuitName()` - Converts circuit types to display names
 - `formatLoadType()` - Categorizes circuit types
 
@@ -66,6 +75,7 @@ structuredData.circuit = {
 ## 📋 PDF Monkey JSON Schema Mapping
 
 ### Document Structure
+
 ```json
 {
   "document": {
@@ -176,6 +186,7 @@ Download ZIP package
 ## 🎨 HTML Template Features
 
 Your PDF Monkey template includes:
+
 - ✅ Professional header with company logo
 - ✅ Client and project information boxes
 - ✅ Design parameters in modern card layout
@@ -190,6 +201,7 @@ Your PDF Monkey template includes:
 ## 🛠️ Testing Checklist
 
 ### Test Scenarios:
+
 1. **✅ PDF Monkey Success**
    - Company profile exists
    - Logo URL valid
@@ -219,11 +231,13 @@ Your PDF Monkey template includes:
 ## 📝 Configuration
 
 ### Environment Variables Required:
+
 ```bash
 PDF_MONKEY_API_KEY=your_api_key_here  # ✅ Already set
 ```
 
 ### Supabase Tables Used:
+
 - `company_profiles` - For logo and company details
 - `conversation_memory` - For session data
 - `saved_designs` - For storing design data
@@ -233,12 +247,14 @@ PDF_MONKEY_API_KEY=your_api_key_here  # ✅ Already set
 ## 🚀 Next Steps
 
 ### To Complete Installation Package PDF:
+
 1. Create PDF Monkey template for "Installation Package"
 2. Get Template ID
 3. Create `generate-installation-package-pdf` edge function
 4. Add Combined PDF option to export dialog
 
 ### Optional Enhancements:
+
 - Add custom branding colors from company profile
 - Support for multi-page circuit calculations
 - PDF preview before download
@@ -249,10 +265,12 @@ PDF_MONKEY_API_KEY=your_api_key_here  # ✅ Already set
 ## 📞 Support
 
 **PDF Monkey Documentation:**
+
 - API Docs: https://www.pdfmonkey.io/docs/api
 - Template Builder: https://app.pdfmonkey.io/
 
 **Implementation Files:**
+
 - `supabase/functions/generate-design-spec-pdf/index.ts`
 - `supabase/functions/generate-professional-package/index.ts`
 - `supabase/functions/designer-agent/index.ts`

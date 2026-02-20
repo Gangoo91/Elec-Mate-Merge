@@ -1,4 +1,4 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
@@ -6,7 +6,8 @@ const TEMPLATE_ID = 'B39538E9-8FF1-4882-BC13-70B1C0D30947';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
@@ -18,11 +19,14 @@ interface PDFMonkeyDocument {
   errors?: string[];
 }
 
-async function createPDFMonkeyDocument(formData: any, templateId?: string): Promise<PDFMonkeyDocument> {
+async function createPDFMonkeyDocument(
+  formData: any,
+  templateId?: string
+): Promise<PDFMonkeyDocument> {
   const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${PDFMONKEY_API_KEY}`,
+      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -48,7 +52,7 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
   const response = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${PDFMONKEY_API_KEY}`,
+      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
       'Content-Type': 'application/json',
     },
   });
@@ -63,7 +67,10 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
   return data.document;
 }
 
-async function waitForPDFGeneration(documentId: string, maxAttempts = 30): Promise<PDFMonkeyDocument> {
+async function waitForPDFGeneration(
+  documentId: string,
+  maxAttempts = 30
+): Promise<PDFMonkeyDocument> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const document = await getPDFMonkeyDocument(documentId);
 
@@ -78,7 +85,7 @@ async function waitForPDFGeneration(documentId: string, maxAttempts = 30): Promi
     }
 
     // Wait 1 second before checking again
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   throw new Error('PDF generation timed out');
@@ -101,11 +108,14 @@ Deno.serve(async (req: Request) => {
       throw new Error('No form data provided');
     }
 
-    console.log('[generate-eic-pdf] Creating PDF document with template:', templateId || TEMPLATE_ID);
+    console.log(
+      '[generate-eic-pdf] Creating PDF document with template:',
+      templateId || TEMPLATE_ID
+    );
     console.log('[generate-eic-pdf] Form data top-level keys:', Object.keys(formData));
 
     // Debug flat inspection keys (like EICR does)
-    const flatInspKeys = Object.keys(formData).filter(k => k.startsWith('insp_'));
+    const flatInspKeys = Object.keys(formData).filter((k) => k.startsWith('insp_'));
     console.log('[generate-eic-pdf] Flat inspection keys count:', flatInspKeys.length);
     console.log('[generate-eic-pdf] Flat inspection keys:', flatInspKeys);
 
@@ -118,24 +128,39 @@ Deno.serve(async (req: Request) => {
     // Debug earth electrode fields
     console.log('[generate-eic-pdf] earth_electrode_type =', formData.earth_electrode_type);
     console.log('[generate-eic-pdf] earth_electrode_location =', formData.earth_electrode_location);
-    console.log('[generate-eic-pdf] earth_electrode_resistance =', formData.earth_electrode_resistance);
-    console.log('[generate-eic-pdf] earthing_bonding =', JSON.stringify(formData.earthing_bonding, null, 2));
+    console.log(
+      '[generate-eic-pdf] earth_electrode_resistance =',
+      formData.earth_electrode_resistance
+    );
+    console.log(
+      '[generate-eic-pdf] earthing_bonding =',
+      JSON.stringify(formData.earthing_bonding, null, 2)
+    );
 
     // Debug departures fields
     console.log('[generate-eic-pdf] designer_departures =', formData.designer_departures);
     console.log('[generate-eic-pdf] permitted_exceptions =', formData.permitted_exceptions);
     console.log('[generate-eic-pdf] designer.departures =', formData.designer?.departures);
-    console.log('[generate-eic-pdf] designer.permitted_exceptions =', formData.designer?.permitted_exceptions);
+    console.log(
+      '[generate-eic-pdf] designer.permitted_exceptions =',
+      formData.designer?.permitted_exceptions
+    );
 
     // Debug SPD fields
-    console.log('[generate-eic-pdf] distribution_board_verification =', JSON.stringify(formData.distribution_board_verification, null, 2));
-    console.log('[generate-eic-pdf] distribution_boards count =', formData.distribution_boards?.length);
+    console.log(
+      '[generate-eic-pdf] distribution_board_verification =',
+      JSON.stringify(formData.distribution_board_verification, null, 2)
+    );
+    console.log(
+      '[generate-eic-pdf] distribution_boards count =',
+      formData.distribution_boards?.length
+    );
     if (formData.distribution_boards?.[0]) {
       console.log('[generate-eic-pdf] First board SPD fields:', {
         spd_t1: formData.distribution_boards[0].spd_t1,
         spd_t2: formData.distribution_boards[0].spd_t2,
         spd_t3: formData.distribution_boards[0].spd_t3,
-        spd_na: formData.distribution_boards[0].spd_na
+        spd_na: formData.distribution_boards[0].spd_na,
       });
     }
 
@@ -146,7 +171,10 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-eic-pdf] NESTED OBJECTS:');
     console.log('  earthing_bonding:', JSON.stringify(formData.earthing_bonding, null, 2));
     console.log('  designer:', JSON.stringify(formData.designer, null, 2));
-    console.log('  main_protective_device:', JSON.stringify(formData.main_protective_device, null, 2));
+    console.log(
+      '  main_protective_device:',
+      JSON.stringify(formData.main_protective_device, null, 2)
+    );
 
     // Create the document
     const document = await createPDFMonkeyDocument(formData, templateId);
@@ -172,7 +200,11 @@ Deno.serve(async (req: Request) => {
     );
   } catch (error) {
     console.error('EIC PDF generation error:', error);
-    await captureException(error, { functionName: 'generate-eic-pdf', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'generate-eic-pdf',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(
       JSON.stringify({
         success: false,

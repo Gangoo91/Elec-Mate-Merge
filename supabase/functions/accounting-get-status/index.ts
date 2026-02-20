@@ -28,7 +28,10 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabaseAuth.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
@@ -46,7 +49,9 @@ serve(async (req: Request) => {
     // Get token expiry info for connected providers
     const { data: tokens } = await supabase
       .from('accounting_oauth_tokens')
-      .select('provider, token_expires_at, tenant_id, tenant_name, updated_at, encrypted_refresh_token')
+      .select(
+        'provider, token_expires_at, tenant_id, tenant_name, updated_at, encrypted_refresh_token'
+      )
       .eq('user_id', user.id);
 
     // Build status response
@@ -88,7 +93,7 @@ serve(async (req: Request) => {
     await captureException(error, {
       functionName: 'accounting-get-status',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return handleError(error);
   }

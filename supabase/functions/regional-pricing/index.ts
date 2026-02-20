@@ -2,7 +2,8 @@ import { serve, createClient } from '../_shared/deps.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -13,12 +14,12 @@ serve(async (req) => {
 
   try {
     const { location, jobType, minResults = 10, includeEstimates = true } = await req.json();
-    
+
     if (!location) {
-      return new Response(
-        JSON.stringify({ error: 'Location parameter is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Location parameter is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Initialize Supabase client
@@ -26,16 +27,18 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    console.log(`Fetching regional pricing for location: ${location}, jobType: ${jobType || 'all'}`);
+    console.log(
+      `Fetching regional pricing for location: ${location}, jobType: ${jobType || 'all'}`
+    );
 
     // First, try to geocode the location
     const geocodeResponse = await fetch(`${supabaseUrl}/functions/v1/geocode-location`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseKey}`,
+        Authorization: `Bearer ${supabaseKey}`,
       },
-      body: JSON.stringify({ location })
+      body: JSON.stringify({ location }),
     });
 
     let geocodeData = null;
@@ -47,10 +50,7 @@ serve(async (req) => {
     }
 
     // Build query for regional pricing
-    let query = supabase
-      .from('regional_job_pricing')
-      .select('*')
-      .eq('is_active', true);
+    let query = supabase.from('regional_job_pricing').select('*').eq('is_active', true);
 
     // Add job type filter if specified
     if (jobType && jobType !== 'all') {
@@ -63,14 +63,14 @@ serve(async (req) => {
     // Try exact matches first
     if (geocodeData?.success) {
       const { region, county } = geocodeData.location;
-      
+
       // Try region match
       const { data: regionData } = await query.ilike('region', `%${region}%`);
       if (regionData && regionData.length > 0) {
         results = regionData;
         console.log(`Found ${results.length} results for region: ${region}`);
       }
-      
+
       // Try county match if region didn't work
       if (results.length === 0 && county) {
         const { data: countyData } = await query.ilike('county', `%${county}%`);
@@ -83,7 +83,9 @@ serve(async (req) => {
 
     // If no geocoding or no results, try text search
     if (results.length === 0) {
-      const { data: textSearchData } = await query.or(`region.ilike.%${location}%,county.ilike.%${location}%`);
+      const { data: textSearchData } = await query.or(
+        `region.ilike.%${location}%,county.ilike.%${location}%`
+      );
       if (textSearchData && textSearchData.length > 0) {
         results = textSearchData;
         console.log(`Found ${results.length} results for text search: ${location}`);
@@ -98,11 +100,11 @@ serve(async (req) => {
         .select('*')
         .eq('is_active', true)
         .limit(minResults * 2);
-      
+
       if (broaderData) {
         // Add results that aren't already included
-        const existingIds = new Set(results.map(r => r.id));
-        const additionalResults = broaderData.filter(r => !existingIds.has(r.id));
+        const existingIds = new Set(results.map((r) => r.id));
+        const additionalResults = broaderData.filter((r) => !existingIds.has(r.id));
         results = [...results, ...additionalResults.slice(0, minResults - results.length)];
         console.log(`Broadened search to ${results.length} total results`);
       }
@@ -112,15 +114,15 @@ serve(async (req) => {
     if (results.length === 0 || (includeEstimates && results.length < minResults)) {
       console.log('No exact matches found, providing fallback data using baseline prices');
       isApproximate = true;
-      
+
       // Get baseline job pricing
       let baselineQuery = supabase.from('job_pricing_baseline').select('*');
       if (jobType && jobType !== 'all') {
         baselineQuery = baselineQuery.ilike('job_type', `%${jobType}%`);
       }
-      
+
       const { data: baselineData } = await baselineQuery;
-      
+
       // Get regional multipliers
       let multiplier = 1.0;
       if (geocodeData?.success) {
@@ -130,7 +132,7 @@ serve(async (req) => {
           .select('*')
           .or(`region.ilike.%${region}%,county.ilike.%${county}%`)
           .limit(1);
-        
+
         if (multiplierData && multiplierData.length > 0) {
           multiplier = multiplierData[0].multiplier;
           console.log(`Using regional multiplier: ${multiplier} for ${region}/${county}`);
@@ -138,17 +140,25 @@ serve(async (req) => {
       } else {
         // Fallback multiplier based on location text patterns
         const locationLower = location.toLowerCase();
-        if (locationLower.includes('london') || locationLower.includes('se1') || locationLower.includes('sw1')) {
+        if (
+          locationLower.includes('london') ||
+          locationLower.includes('se1') ||
+          locationLower.includes('sw1')
+        ) {
           multiplier = 1.45; // London premium
-        } else if (locationLower.includes('manchester') || locationLower.includes('birmingham') || locationLower.includes('leeds')) {
+        } else if (
+          locationLower.includes('manchester') ||
+          locationLower.includes('birmingham') ||
+          locationLower.includes('leeds')
+        ) {
           multiplier = 1.1; // Major cities
         } else if (locationLower.includes('scotland') || locationLower.includes('wales')) {
           multiplier = 0.9; // Scotland/Wales adjustment
         }
       }
-      
+
       // Transform baseline data to regional format
-      results = (baselineData || []).map(item => ({
+      results = (baselineData || []).map((item) => ({
         id: `baseline-${item.id}`,
         region: geocodeData?.location?.region || 'UK Average',
         county: geocodeData?.location?.county || null,
@@ -164,17 +174,22 @@ serve(async (req) => {
         data_source: 'computed_from_baseline',
         is_active: true,
         created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       }));
     }
 
     // Add confidence scores and approximation flags
-    results = results.map(result => ({
+    results = results.map((result) => ({
       ...result,
-      confidence_score: result.data_source === 'market_research' ? 85 : 
-                       result.data_source === 'reed_api' ? 90 :
-                       result.data_source === 'computed' ? 60 : 70,
-      is_approximate: result.data_source === 'computed' || result.data_source === 'heuristic'
+      confidence_score:
+        result.data_source === 'market_research'
+          ? 85
+          : result.data_source === 'reed_api'
+            ? 90
+            : result.data_source === 'computed'
+              ? 60
+              : 70,
+      is_approximate: result.data_source === 'computed' || result.data_source === 'heuristic',
     }));
 
     console.log(`Returning ${results.length} pricing results, isApproximate: ${isApproximate}`);
@@ -187,18 +202,18 @@ serve(async (req) => {
         location: geocodeData?.location || null,
         searchLocation: location,
         jobType: jobType || 'all',
-        confidence_notes: results.length > 0 ? 
-          `Data confidence varies by source: Market research (85%), API data (90%), Computed estimates (60%)` :
-          'No data available for this location'
+        confidence_notes:
+          results.length > 0
+            ? `Data confidence varies by source: Market research (85%), API data (90%), Computed estimates (60%)`
+            : 'No data available for this location',
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error in regional-pricing function:', error);
-    return new Response(
-      JSON.stringify({ error: 'Internal server error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

@@ -2,7 +2,8 @@ import { serve } from '../_shared/deps.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const SYSTEM_PROMPT = `You are an expert BS 7671:2018 qualified electrical installation designer. Your role is to have a natural conversation with electricians to design safe, compliant installations.
@@ -61,27 +62,30 @@ When you have complete information, use the set_installation_data tool to struct
 // Input validation function
 function isValidInput(text: string): boolean {
   const trimmed = text.trim();
-  
+
   // Too short
   if (trimmed.length < 3) return false;
-  
+
   // Check for gibberish: High consonant-to-vowel ratio
   const vowels = trimmed.match(/[aeiou]/gi)?.length || 0;
   const consonants = trimmed.match(/[bcdfghjklmnpqrstvwxyz]/gi)?.length || 0;
   const ratio = consonants / Math.max(vowels, 1);
-  
+
   // If ratio > 5, likely gibberish (e.g., "hghfwjkegfh")
   if (ratio > 5 && consonants > 5) return false;
-  
+
   // Check for repeated characters (e.g., "aaaaaaa")
   const repeatedChars = /(.)\1{4,}/;
   if (repeatedChars.test(trimmed)) return false;
-  
+
   // Check for minimum word-like patterns (spaces or common word patterns)
   const hasSpaces = /\s/.test(trimmed);
-  const hasCommonPatterns = /\b(the|is|are|can|how|what|i|my|a|need|install|cable|circuit|wire|amp|volt|meter|shower|cooker|socket)\b/i.test(trimmed);
+  const hasCommonPatterns =
+    /\b(the|is|are|can|how|what|i|my|a|need|install|cable|circuit|wire|amp|volt|meter|shower|cooker|socket)\b/i.test(
+      trimmed
+    );
   const hasNumbers = /\d+/.test(trimmed);
-  
+
   // Valid if has spaces, common words, or numbers (measurements)
   return hasSpaces || hasCommonPatterns || hasNumbers || trimmed.length > 15;
 }
@@ -93,19 +97,23 @@ serve(async (req) => {
 
   try {
     const { messages, currentData } = await req.json();
-    
+
     // Validate last user message
     const lastUserMessage = messages[messages.length - 1]?.content || '';
-    
+
     if (!isValidInput(lastUserMessage)) {
       console.log('Invalid input detected:', lastUserMessage);
-      return new Response(JSON.stringify({ 
-        response: "I'm not quite sure what you mean. Could you rephrase that? For example, you could say:\n\n• 'I need to install a 9.5kW shower'\n• 'How do I calculate cable size for a cooker?'\n• 'What's the best cable for an outdoor socket?'\n• '30 metre cable run for an EV charger'",
-        extractedData: null,
-        validationError: true
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({
+          response:
+            "I'm not quite sure what you mean. Could you rephrase that? For example, you could say:\n\n• 'I need to install a 9.5kW shower'\n• 'How do I calculate cable size for a cooker?'\n• 'What's the best cable for an outdoor socket?'\n• '30 metre cable run for an EV charger'",
+          extractedData: null,
+          validationError: true,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -118,59 +126,79 @@ serve(async (req) => {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-4o',
-        messages: [
-          { role: 'system', content: SYSTEM_PROMPT },
-          ...messages
-        ],
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
         tools: [
           {
-            type: "function",
+            type: 'function',
             function: {
-              name: "set_installation_data",
-              description: "Set installation parameters when you have COMPLETE and VALIDATED information from the conversation",
+              name: 'set_installation_data',
+              description:
+                'Set installation parameters when you have COMPLETE and VALIDATED information from the conversation',
               parameters: {
-                type: "object",
+                type: 'object',
                 properties: {
-                  loadType: { 
-                    type: "string",
-                    enum: ["ring-main", "lighting", "cooker", "shower", "ev-charger", "heat-pump", "immersion", "fire-alarm", "emergency-light", "outdoor-socket", "custom"],
-                    description: "Type of electrical load/circuit"
+                  loadType: {
+                    type: 'string',
+                    enum: [
+                      'ring-main',
+                      'lighting',
+                      'cooker',
+                      'shower',
+                      'ev-charger',
+                      'heat-pump',
+                      'immersion',
+                      'fire-alarm',
+                      'emergency-light',
+                      'outdoor-socket',
+                      'custom',
+                    ],
+                    description: 'Type of electrical load/circuit',
                   },
-                  totalLoad: { 
-                    type: "number",
-                    description: "Total load in watts"
+                  totalLoad: {
+                    type: 'number',
+                    description: 'Total load in watts',
                   },
-                  cableLength: { 
-                    type: "number",
-                    description: "Cable run length in meters"
+                  cableLength: {
+                    type: 'number',
+                    description: 'Cable run length in meters',
                   },
                   installationMethod: {
-                    type: "string",
-                    enum: ["clipped-direct", "trunking-perforated", "trunking-enclosed", "conduit-surface", "conduit-embedded", "cable-tray", "buried-direct", "loft-free", "loft-insulation-contact"],
-                    description: "How the cable will be installed"
+                    type: 'string',
+                    enum: [
+                      'clipped-direct',
+                      'trunking-perforated',
+                      'trunking-enclosed',
+                      'conduit-surface',
+                      'conduit-embedded',
+                      'cable-tray',
+                      'buried-direct',
+                      'loft-free',
+                      'loft-insulation-contact',
+                    ],
+                    description: 'How the cable will be installed',
                   },
                   voltage: {
-                    type: "number",
-                    description: "Supply voltage (230V single phase, 400V three phase)"
+                    type: 'number',
+                    description: 'Supply voltage (230V single phase, 400V three phase)',
                   },
                   phases: {
-                    type: "string",
-                    enum: ["single", "three"],
-                    description: "Number of phases"
-                  }
+                    type: 'string',
+                    enum: ['single', 'three'],
+                    description: 'Number of phases',
+                  },
                 },
-                required: ["loadType", "totalLoad"]
-              }
-            }
-          }
+                required: ['loadType', 'totalLoad'],
+              },
+            },
+          },
         ],
         temperature: 0.7,
-        max_tokens: 500
+        max_tokens: 500,
       }),
     });
 
@@ -184,7 +212,7 @@ serve(async (req) => {
     console.log('OpenAI response:', data);
 
     const assistantMessage = data.choices[0]?.message;
-    
+
     if (!assistantMessage) {
       throw new Error('No response from AI');
     }
@@ -199,20 +227,27 @@ serve(async (req) => {
       }
     }
 
-    return new Response(JSON.stringify({ 
-      response: assistantMessage.content || "I've updated the installation details based on our conversation.",
-      extractedData 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        response:
+          assistantMessage.content ||
+          "I've updated the installation details based on our conversation.",
+        extractedData,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error in conversational-install-planner:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to process conversation' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to process conversation',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

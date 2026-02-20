@@ -1,20 +1,20 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 // 1x1 transparent GIF (smallest valid GIF)
 const TRACKING_PIXEL = new Uint8Array([
-  0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00,
-  0x80, 0x00, 0x00, 0xff, 0xff, 0xff, 0x00, 0x00, 0x00, 0x2c,
-  0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x02,
-  0x02, 0x44, 0x01, 0x00, 0x3b
+  0x47, 0x49, 0x46, 0x38, 0x39, 0x61, 0x01, 0x00, 0x01, 0x00, 0x80, 0x00, 0x00, 0xff, 0xff, 0xff,
+  0x00, 0x00, 0x00, 0x2c, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x02, 0x02, 0x44,
+  0x01, 0x00, 0x3b,
 ]);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
   'Cache-Control': 'no-cache, no-store, must-revalidate',
-  'Pragma': 'no-cache',
-  'Expires': '0',
+  Pragma: 'no-cache',
+  Expires: '0',
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -50,9 +50,10 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`📊 Tracking email open for quote: ${quoteId}, token: ${token.substring(0, 8)}...`);
 
     // Extract request info for analytics
-    const ipAddress = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
-                      req.headers.get('x-real-ip') ||
-                      'unknown';
+    const ipAddress =
+      req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+      req.headers.get('x-real-ip') ||
+      'unknown';
     const userAgent = req.headers.get('user-agent') || 'unknown';
 
     // Initialize Supabase with service role key (tracking needs elevated permissions)
@@ -74,7 +75,10 @@ const handler = async (req: Request): Promise<Response> => {
       .from('quote_views')
       .update({
         email_opened_at: new Date().toISOString(),
-        email_open_count: supabase.rpc('increment_field', { row_id: token, field_name: 'email_open_count' }),
+        email_open_count: supabase.rpc('increment_field', {
+          row_id: token,
+          field_name: 'email_open_count',
+        }),
         last_viewed_at: new Date().toISOString(),
         view_count: supabase.rpc('increment_field', { row_id: token, field_name: 'view_count' }),
       })
@@ -109,25 +113,25 @@ const handler = async (req: Request): Promise<Response> => {
           .eq('public_token', token)
           .eq('quote_id', quoteId);
 
-        console.log(`✅ Updated quote_views: opens=${(currentView.email_open_count || 0) + 1}, first_open=${isFirstOpen}`);
+        console.log(
+          `✅ Updated quote_views: opens=${(currentView.email_open_count || 0) + 1}, first_open=${isFirstOpen}`
+        );
       }
     } else {
       console.log('✅ Quote view tracking updated');
     }
 
     // Record the email event
-    const { error: eventError } = await supabase
-      .from('quote_email_events')
-      .insert({
-        quote_id: quoteId,
-        event_type: 'opened',
-        event_data: {
-          tracking_token: token,
-          is_first_open: !viewData?.email_opened_at,
-        },
-        ip_address: ipAddress,
-        user_agent: userAgent,
-      });
+    const { error: eventError } = await supabase.from('quote_email_events').insert({
+      quote_id: quoteId,
+      event_type: 'opened',
+      event_data: {
+        tracking_token: token,
+        is_first_open: !viewData?.email_opened_at,
+      },
+      ip_address: ipAddress,
+      user_agent: userAgent,
+    });
 
     if (eventError) {
       console.warn('⚠️ Failed to record email event:', eventError);
@@ -165,7 +169,6 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('✅ Email tracking complete');
-
   } catch (error) {
     console.error('❌ Tracking error:', error);
     // Always return the pixel even on error

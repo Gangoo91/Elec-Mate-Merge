@@ -18,16 +18,18 @@ const DEFAULT_CONFIG: Required<RetryConfig> = {
     // Retry on network errors, rate limits, and temporary server errors
     if (error instanceof Error) {
       const message = error.message.toLowerCase();
-      return message.includes('rate limit') || 
-             message.includes('timeout') || 
-             message.includes('network') ||
-             message.includes('econnreset') ||
-             message.includes('502') ||
-             message.includes('503') ||
-             message.includes('429');
+      return (
+        message.includes('rate limit') ||
+        message.includes('timeout') ||
+        message.includes('network') ||
+        message.includes('econnreset') ||
+        message.includes('502') ||
+        message.includes('503') ||
+        message.includes('429')
+      );
     }
     return false;
-  }
+  },
 };
 
 /**
@@ -42,13 +44,10 @@ function calculateDelay(attempt: number, baseDelayMs: number, maxDelayMs: number
 /**
  * Execute a function with retry logic
  */
-export async function withRetry<T>(
-  fn: () => Promise<T>,
-  config: RetryConfig = {}
-): Promise<T> {
+export async function withRetry<T>(fn: () => Promise<T>, config: RetryConfig = {}): Promise<T> {
   const { maxRetries, baseDelayMs, maxDelayMs, shouldRetry } = {
     ...DEFAULT_CONFIG,
-    ...config
+    ...config,
   };
 
   let lastError: unknown;
@@ -76,8 +75,8 @@ export async function withRetry<T>(
         `⚠️ Attempt ${attempt + 1}/${maxRetries + 1} failed, retrying in ${Math.round(delay)}ms...`,
         error
       );
-      
-      await new Promise(resolve => setTimeout(resolve, delay));
+
+      await new Promise((resolve) => setTimeout(resolve, delay));
     }
   }
 
@@ -91,10 +90,10 @@ export async function withRetry<T>(
 export const RetryPresets = {
   /** Fast retry for lightweight operations (3 attempts, 500ms base) */
   FAST: { maxRetries: 3, baseDelayMs: 500, maxDelayMs: 5000 } as RetryConfig,
-  
+
   /** Standard retry for most API calls (3 attempts, 1s base) */
   STANDARD: { maxRetries: 3, baseDelayMs: 1000, maxDelayMs: 10000 } as RetryConfig,
-  
+
   /** Aggressive retry for critical operations (5 attempts, 2s base) */
   AGGRESSIVE: { maxRetries: 5, baseDelayMs: 2000, maxDelayMs: 30000 } as RetryConfig,
 };

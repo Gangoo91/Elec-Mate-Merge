@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -14,7 +15,7 @@ serve(async (req) => {
 
   try {
     const { design } = await req.json();
-    
+
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
       throw new Error('No authorization header');
@@ -28,7 +29,10 @@ serve(async (req) => {
 
     // Extract JWT from Authorization header and pass to getUser
     const jwt = authHeader.replace('Bearer ', '');
-    const { data: { user }, error: userError } = await supabaseClient.auth.getUser(jwt);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabaseClient.auth.getUser(jwt);
     if (userError || !user) {
       throw new Error('Unauthorized');
     }
@@ -41,34 +45,35 @@ serve(async (req) => {
       description: circuit.name,
       loadType: circuit.loadType,
       phases: circuit.phases,
-      
+
       // Cable specifications
       liveSize: String(circuit.cableSize),
       cpcSize: String(circuit.cpcSize),
       cableLength: circuit.cableLength,
       installationMethod: circuit.installationMethod,
-      
+
       // Protection device
       protectiveDeviceType: circuit.protectionDevice?.type || 'MCB',
       protectiveDeviceRating: String(circuit.protectionDevice?.rating || 0),
       protectiveDeviceCurve: circuit.protectionDevice?.curve || 'B',
       protectiveDeviceKaRating: String(circuit.protectionDevice?.kaRating || 6),
-      
+
       // Expected test results (PRE-FILLED for future testing)
       expectedR1R2: circuit.expectedTestResults?.r1r2?.at70C || 'TBD',
       expectedZs: String(circuit.calculations?.zs || 'TBD'),
       expectedMaxZs: String(circuit.calculations?.maxZs || 'TBD'),
-      expectedInsulationResistance: circuit.expectedTestResults?.insulationResistance?.minResistance || '≥1.0 MΩ',
+      expectedInsulationResistance:
+        circuit.expectedTestResults?.insulationResistance?.minResistance || '≥1.0 MΩ',
       expectedPolarity: circuit.expectedTestResults?.polarity || 'Correct',
-      
+
       // RCD data
       rcdProtected: circuit.rcdProtected || false,
       rcdRating: circuit.rcdProtected ? '30mA' : null,
       expectedRcdTripTime: circuit.rcdProtected ? circuit.expectedTestResults?.rcdTest?.at1x : null,
-      
+
       // AFDD
       afddRequired: circuit.afddRequired || false,
-      
+
       // Blank fields for ON-SITE testing (to be filled by inspector)
       actualR1R2: null,
       actualZs: null,
@@ -77,7 +82,7 @@ serve(async (req) => {
       actualRcdTripTime: null,
       testDate: null,
       testedBy: null,
-      remarks: null
+      remarks: null,
     }));
 
     // Create export metadata
@@ -90,7 +95,7 @@ serve(async (req) => {
       incomingPFC: design.consumerUnit.incomingSupply.incomingPFC,
       mainSwitchRating: design.consumerUnit.mainSwitchRating,
       totalLoad: design.totalLoad,
-      diversityApplied: design.diversityApplied
+      diversityApplied: design.diversityApplied,
     };
 
     // Store in design_exports table
@@ -111,8 +116,8 @@ serve(async (req) => {
         design_data: {
           ...design,
           eicCircuits,
-          exportMetadata
-        }
+          exportMetadata,
+        },
       })
       .select()
       .single();
@@ -130,7 +135,7 @@ serve(async (req) => {
       .from('eic-exports')
       .upload(jsonFileName, JSON.stringify(exportRecord.design_data, null, 2), {
         contentType: 'application/json',
-        upsert: false
+        upsert: false,
       });
 
     if (storageError) {
@@ -139,23 +144,28 @@ serve(async (req) => {
       console.log('📦 Backup stored in eic-exports bucket');
     }
 
-    return new Response(JSON.stringify({
-      success: true,
-      exportId: exportRecord.id,
-      circuitsCount: design.circuits.length,
-      status: 'pending',
-      message: `${design.circuits.length} circuits ready for EIC testing`
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        exportId: exportRecord.id,
+        circuitsCount: design.circuits.length,
+        status: 'pending',
+        message: `${design.circuits.length} circuits ready for EIC testing`,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error in prepare-eic-export function:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to prepare EIC export' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to prepare EIC export',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

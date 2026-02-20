@@ -62,27 +62,20 @@ serve(async (req: Request) => {
 
     if (provider === 'gmail') {
       tokenData = await withRetry(
-        () => withTimeout(
-          exchangeGoogleCode(code),
-          Timeouts.STANDARD,
-          'Google token exchange'
-        ),
+        () => withTimeout(exchangeGoogleCode(code), Timeouts.STANDARD, 'Google token exchange'),
         RetryPresets.STANDARD
       );
     } else {
       tokenData = await withRetry(
-        () => withTimeout(
-          exchangeMicrosoftCode(code),
-          Timeouts.STANDARD,
-          'Microsoft token exchange'
-        ),
+        () =>
+          withTimeout(exchangeMicrosoftCode(code), Timeouts.STANDARD, 'Microsoft token exchange'),
         RetryPresets.STANDARD
       );
     }
 
     // Encrypt tokens
     const encryptedAccessToken = await encryptToken(tokenData.access_token);
-    const encryptedRefreshToken = tokenData.refresh_token 
+    const encryptedRefreshToken = tokenData.refresh_token
       ? await encryptToken(tokenData.refresh_token)
       : null;
 
@@ -92,9 +85,8 @@ serve(async (req: Request) => {
     const emailAddress = await getUserEmail(provider, tokenData.access_token);
 
     // Store in database (upsert)
-    const { error: upsertError } = await supabase
-      .from('user_email_configs')
-      .upsert({
+    const { error: upsertError } = await supabase.from('user_email_configs').upsert(
+      {
         user_id: userId,
         email_provider: provider,
         email_address: emailAddress,
@@ -102,9 +94,11 @@ serve(async (req: Request) => {
         encrypted_refresh_token: encryptedRefreshToken,
         token_expires_at: expiresAt.toISOString(),
         is_active: true,
-      }, {
+      },
+      {
         onConflict: 'user_id,email_provider',
-      });
+      }
+    );
 
     if (upsertError) {
       console.error('Failed to store email config:', upsertError);
@@ -114,10 +108,10 @@ serve(async (req: Request) => {
     // Delete used state
     await supabase.from('oauth_states').delete().eq('state', state);
 
-    console.log(`✅ OAuth callback successful`, { 
-      user_id: userId, 
-      provider, 
-      email: emailAddress 
+    console.log(`✅ OAuth callback successful`, {
+      user_id: userId,
+      provider,
+      email: emailAddress,
     });
 
     // Redirect to settings page with success
@@ -143,7 +137,7 @@ serve(async (req: Request) => {
 
 async function exchangeGoogleCode(code: string) {
   const redirectUri = `${SUPABASE_URL}/functions/v1/oauth-email-callback`;
-  
+
   const response = await fetch('https://oauth2.googleapis.com/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -166,7 +160,7 @@ async function exchangeGoogleCode(code: string) {
 
 async function exchangeMicrosoftCode(code: string) {
   const redirectUri = `${SUPABASE_URL}/functions/v1/oauth-email-callback`;
-  
+
   const response = await fetch('https://login.microsoftonline.com/common/oauth2/v2.0/token', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

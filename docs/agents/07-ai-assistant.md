@@ -6,8 +6,8 @@ The AI Assistant is a general-purpose conversational agent for electricians. It 
 
 ## Agents Involved
 
-| Agent | Edge Function | Purpose |
-|-------|---------------|---------|
+| Agent            | Edge Function              | Purpose                                              |
+| ---------------- | -------------------------- | ---------------------------------------------------- |
 | **AI Assistant** | `electrician-ai-assistant` | Conversational AI for regulation lookup and guidance |
 
 ## Entry Points
@@ -31,22 +31,23 @@ Before using RAG, the assistant checks for direct regulation lookups:
 ```typescript
 const isPureRegulationLookup = (query: string): boolean => {
   // Returns true if query is just regulation numbers (e.g., "411.3.3, 522.6")
-}
+};
 ```
 
 If true, directly queries `regulations_intelligence` table without embedding generation.
 
 ### RAG Sources (when `use_rag = true`)
 
-| Table | Purpose |
-|-------|---------|
-| `regulations_intelligence` | BS 7671 regulations with enriched metadata |
-| `bs7671_embeddings` | Full regulation text with vector embeddings |
-| `practical_work_intelligence` | Installation/testing procedures |
+| Table                         | Purpose                                     |
+| ----------------------------- | ------------------------------------------- |
+| `regulations_intelligence`    | BS 7671 regulations with enriched metadata  |
+| `bs7671_embeddings`           | Full regulation text with vector embeddings |
+| `practical_work_intelligence` | Installation/testing procedures             |
 
 ### Keyword-Based Lookup
 
 Extracts keywords from queries:
+
 - Amperage patterns (e.g., "32A")
 - Circuit types (e.g., "ring circuit", "radial")
 - Technical terms (cable sizing, RCD, protection, etc.)
@@ -61,10 +62,10 @@ sequenceDiagram
     participant OpenAI
 
     Frontend->>Agent: Submit query + images
-    
+
     Agent->>Agent: Extract regulation numbers
     Agent->>Agent: Extract query keywords
-    
+
     alt Pure Regulation Lookup
         Agent->>Database: Direct regulation query
         Database->>Agent: Return regulations
@@ -84,15 +85,15 @@ sequenceDiagram
 
 ```typescript
 interface AIAssistantRequest {
-  prompt: string;                   // User query
+  prompt: string; // User query
   type?: 'general' | 'regulation' | 'fault' | 'calculation';
-  primary_image?: string;           // Base64 image for visual analysis
-  additional_images?: string[];     // Additional images
+  primary_image?: string; // Base64 image for visual analysis
+  additional_images?: string[]; // Additional images
   context?: {
     previousMessages?: any[];
     projectContext?: any;
   };
-  use_rag?: boolean;                // Enable RAG retrieval
+  use_rag?: boolean; // Enable RAG retrieval
 }
 ```
 
@@ -117,7 +118,7 @@ interface LookupResponse {
     category: string;
     practical_application: string;
   }>;
-  rag_regulations: any[];           // Same as regulations (for panel)
+  rag_regulations: any[]; // Same as regulations (for panel)
   rag_metadata: {
     search_method: 'direct';
     has_installation: boolean;
@@ -134,10 +135,10 @@ interface LookupResponse {
 ```typescript
 interface GeneralResponse {
   success: boolean;
-  response: string;                 // AI-generated answer
-  rag_regulations?: any[];          // Retrieved regulations
-  rag_installation?: any[];         // Retrieved installation docs
-  rag_testing?: any[];              // Retrieved testing docs
+  response: string; // AI-generated answer
+  rag_regulations?: any[]; // Retrieved regulations
+  rag_installation?: any[]; // Retrieved installation docs
+  rag_testing?: any[]; // Retrieved testing docs
   rag_metadata?: {
     search_method: string;
     has_installation: boolean;
@@ -150,12 +151,12 @@ interface GeneralResponse {
 
 ## Query Types
 
-| Type | Description | RAG Behaviour |
-|------|-------------|---------------|
-| `general` | General electrical questions | Optional RAG |
-| `regulation` | BS 7671 regulation queries | Direct lookup preferred |
-| `fault` | Fault diagnosis | Practical work RAG |
-| `calculation` | Electrical calculations | Design knowledge RAG |
+| Type          | Description                  | RAG Behaviour           |
+| ------------- | ---------------------------- | ----------------------- |
+| `general`     | General electrical questions | Optional RAG            |
+| `regulation`  | BS 7671 regulation queries   | Direct lookup preferred |
+| `fault`       | Fault diagnosis              | Practical work RAG      |
+| `calculation` | Electrical calculations      | Design knowledge RAG    |
 
 ## Regulation Number Extraction
 
@@ -184,6 +185,7 @@ const extractRegulationNumbers = (query: string): string[] => {
 ### Image Analysis
 
 When `primary_image` is provided:
+
 - Sent to GPT-4.1 vision endpoint
 - Used for visual fault diagnosis
 - Supports multiple images via `additional_images`
@@ -191,6 +193,7 @@ When `primary_image` is provided:
 ### RAG Panel Population
 
 The response includes structured RAG data for frontend panels:
+
 - `rag_regulations` - For regulation reference panel
 - `rag_metadata` - For showing search method and coverage
 

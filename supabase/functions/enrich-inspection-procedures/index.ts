@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ENRICHMENT_VERSION = 'v1';
@@ -16,9 +17,11 @@ serve(async (req) => {
 
   try {
     const { batchSize = 50, startFrom = 0, jobId } = await req.json();
-    
-    console.log(`🔍 Starting inspection procedures enrichment batch from ${startFrom}, size ${batchSize}`);
-    
+
+    console.log(
+      `🔍 Starting inspection procedures enrichment batch from ${startFrom}, size ${batchSize}`
+    );
+
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const openAIKey = Deno.env.get('OPENAI_API_KEY')!;
@@ -32,13 +35,16 @@ serve(async (req) => {
 
     if (fetchError) throw fetchError;
     if (!documents || documents.length === 0) {
-      return new Response(JSON.stringify({ 
-        success: true, 
-        processed: 0, 
-        message: 'No more documents' 
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          processed: 0,
+          message: 'No more documents',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     console.log(`📄 Processing ${documents.length} inspection documents`);
@@ -49,11 +55,16 @@ serve(async (req) => {
       .eq('job_id', jobId)
       .eq('batch_number', Math.floor(startFrom / batchSize))
       .maybeSingle();
-    
-    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
-    let startIndex = resumeFromId ? documents.findIndex(d => d.id === resumeFromId) + 1 : 0;
 
-    let processed = 0, failed = 0, qualityPassed = 0, qualityFailed = 0, skipped = 0, totalProcessingTime = 0;
+    const resumeFromId = checkpoint?.last_checkpoint?.last_processed_id;
+    let startIndex = resumeFromId ? documents.findIndex((d) => d.id === resumeFromId) + 1 : 0;
+
+    let processed = 0,
+      failed = 0,
+      qualityPassed = 0,
+      qualityFailed = 0,
+      skipped = 0,
+      totalProcessingTime = 0;
 
     for (let i = startIndex; i < documents.length; i++) {
       const doc = documents[i];
@@ -65,8 +76,11 @@ serve(async (req) => {
           .select('enrichment_version, source_hash')
           .eq('source_id', doc.id)
           .maybeSingle();
-        
-        if (existing?.enrichment_version === ENRICHMENT_VERSION && existing?.source_hash === contentHash) {
+
+        if (
+          existing?.enrichment_version === ENRICHMENT_VERSION &&
+          existing?.source_hash === contentHash
+        ) {
           skipped++;
           continue;
         }
@@ -103,19 +117,23 @@ Extract test procedures with acceptance criteria. Return JSON array:
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${openAIKey}`,
+            Authorization: `Bearer ${openAIKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             model: 'gpt-5-mini-2025-08-07',
-            messages: [{
-              role: 'system',
-              content: 'You are an electrical testing expert. Extract structured test procedures. Return valid JSON only.'
-            }, {
-              role: 'user',
-              content: extractionPrompt
-            }],
-            response_format: { type: "json_object" },
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You are an electrical testing expert. Extract structured test procedures. Return valid JSON only.',
+              },
+              {
+                role: 'user',
+                content: extractionPrompt,
+              },
+            ],
+            response_format: { type: 'json_object' },
             temperature: 0.1,
           }),
         });
@@ -129,10 +147,10 @@ Extract test procedures with acceptance criteria. Return JSON array:
         const aiData = await response.json();
         const content = aiData.choices[0].message.content;
         let procedures;
-        
+
         try {
           const parsed = JSON.parse(content);
-          procedures = Array.isArray(parsed) ? parsed : (parsed.procedures || []);
+          procedures = Array.isArray(parsed) ? parsed : parsed.procedures || [];
         } catch {
           procedures = [];
         }
@@ -145,9 +163,8 @@ Extract test procedures with acceptance criteria. Return JSON array:
         qualityPassed++;
 
         for (const proc of procedures) {
-          await supabase
-            .from('inspection_procedures')
-            .upsert({
+          await supabase.from('inspection_procedures').upsert(
+            {
               source_id: doc.id,
               test_type: proc.test_type || 'general',
               test_name: proc.test_name || '',
@@ -159,15 +176,17 @@ Extract test procedures with acceptance criteria. Return JSON array:
               frequency: proc.frequency,
               confidence_score: 0.85,
               enrichment_version: ENRICHMENT_VERSION,
-              source_hash: contentHash
-            }, {
-              onConflict: 'source_id,test_name'
-            });
+              source_hash: contentHash,
+            },
+            {
+              onConflict: 'source_id,test_name',
+            }
+          );
         }
 
         processed++;
         totalProcessingTime += Date.now() - docStartTime;
-        
+
         if ((i + 1) % 25 === 0 || i === documents.length - 1) {
           await supabase
             .from('batch_progress')
@@ -175,43 +194,55 @@ Extract test procedures with acceptance criteria. Return JSON array:
               last_checkpoint: { last_processed_id: doc.id, processed_count: i + 1 },
               items_processed: startFrom + i + 1,
               status: 'processing',
-              data: { quality_passed: qualityPassed, quality_failed: qualityFailed, skipped, avg_processing_time_ms: totalProcessingTime / processed, api_cost_gbp: processed * 0.004 }
+              data: {
+                quality_passed: qualityPassed,
+                quality_failed: qualityFailed,
+                skipped,
+                avg_processing_time_ms: totalProcessingTime / processed,
+                api_cost_gbp: processed * 0.004,
+              },
             })
             .eq('job_id', jobId)
             .eq('batch_number', Math.floor(startFrom / batchSize));
         }
 
-        await new Promise(resolve => setTimeout(resolve, 500));
-
+        await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (error) {
         console.error(`❌ Error processing doc ${doc.id}:`, error);
         failed++;
       }
     }
 
-    console.log(`✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped)`);
+    console.log(
+      `✅ Processed ${processed}/${documents.length} (${failed} failed, ${skipped} skipped)`
+    );
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      processed,
-      failed,
-      skipped,
-      qualityPassed,
-      qualityFailed,
-      nextStartFrom: startFrom + batchSize,
-      hasMore: documents.length === batchSize
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        processed,
+        failed,
+        skipped,
+        qualityPassed,
+        qualityFailed,
+        nextStartFrom: startFrom + batchSize,
+        hasMore: documents.length === batchSize,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Fatal error:', error);
-    return new Response(JSON.stringify({ 
-      error: error.message 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        error: error.message,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });
 
@@ -220,7 +251,7 @@ async function hashContent(content: string): Promise<string> {
   const data = encoder.encode(content);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
   const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 function validateQuality(procedures: any[]): boolean {

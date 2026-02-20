@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -71,7 +72,12 @@ Deno.serve(async (req) => {
     const cf = await scrapeContractsFinder(supabase);
     results.push({ source: 'contracts_finder', ...cf });
   } catch (e) {
-    results.push({ source: 'contracts_finder', found: 0, inserted: 0, errors: [(e as Error).message] });
+    results.push({
+      source: 'contracts_finder',
+      found: 0,
+      inserted: 0,
+      errors: [(e as Error).message],
+    });
   }
 
   // 2. FIND A TENDER - UK High Value
@@ -80,7 +86,12 @@ Deno.serve(async (req) => {
     const fat = await scrapeFindATender(supabase);
     results.push({ source: 'find_a_tender', ...fat });
   } catch (e) {
-    results.push({ source: 'find_a_tender', found: 0, inserted: 0, errors: [(e as Error).message] });
+    results.push({
+      source: 'find_a_tender',
+      found: 0,
+      inserted: 0,
+      errors: [(e as Error).message],
+    });
   }
 
   // 3. PUBLIC CONTRACTS SCOTLAND
@@ -89,7 +100,12 @@ Deno.serve(async (req) => {
     const pcs = await scrapePublicContractsScotland(supabase);
     results.push({ source: 'public_contracts_scotland', ...pcs });
   } catch (e) {
-    results.push({ source: 'public_contracts_scotland', found: 0, inserted: 0, errors: [(e as Error).message] });
+    results.push({
+      source: 'public_contracts_scotland',
+      found: 0,
+      inserted: 0,
+      errors: [(e as Error).message],
+    });
   }
 
   // 4. SELL2WALES
@@ -125,7 +141,12 @@ Deno.serve(async (req) => {
     const ci = await scrapeConstructionIndex(supabase);
     results.push({ source: 'construction_index', ...ci });
   } catch (e) {
-    results.push({ source: 'construction_index', found: 0, inserted: 0, errors: [(e as Error).message] });
+    results.push({
+      source: 'construction_index',
+      found: 0,
+      inserted: 0,
+      errors: [(e as Error).message],
+    });
   }
 
   // 8. DELTA ESOURCING
@@ -134,7 +155,12 @@ Deno.serve(async (req) => {
     const delta = await scrapeDeltaESourcing(supabase);
     results.push({ source: 'delta_esourcing', ...delta });
   } catch (e) {
-    results.push({ source: 'delta_esourcing', found: 0, inserted: 0, errors: [(e as Error).message] });
+    results.push({
+      source: 'delta_esourcing',
+      found: 0,
+      inserted: 0,
+      errors: [(e as Error).message],
+    });
   }
 
   // 9. IN-TEND
@@ -149,9 +175,11 @@ Deno.serve(async (req) => {
   // Calculate totals
   const totalFound = results.reduce((sum, r) => sum + r.found, 0);
   const totalInserted = results.reduce((sum, r) => sum + r.inserted, 0);
-  const allErrors = results.flatMap(r => r.errors);
+  const allErrors = results.flatMap((r) => r.errors);
 
-  console.log(`[SYNC-ALL] Complete: ${totalFound} found, ${totalInserted} inserted across ${results.length} sources`);
+  console.log(
+    `[SYNC-ALL] Complete: ${totalFound} found, ${totalInserted} inserted across ${results.length} sources`
+  );
 
   // Update sync status for each source
   for (const result of results) {
@@ -180,7 +208,9 @@ Deno.serve(async (req) => {
 
 // ============== SCRAPER FUNCTIONS ==============
 
-async function scrapeContractsFinder(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeContractsFinder(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -202,10 +232,17 @@ async function scrapeContractsFinder(supabase: any): Promise<{ found: number; in
           if (!detailRes.ok) continue;
 
           const detailHtml = await detailRes.text();
-          const opp = parseGenericNotice(noticeId, detailHtml, 'contracts_finder', `https://www.contractsfinder.service.gov.uk/Notice/${noticeId}`);
+          const opp = parseGenericNotice(
+            noticeId,
+            detailHtml,
+            'contracts_finder',
+            `https://www.contractsfinder.service.gov.uk/Notice/${noticeId}`
+          );
 
           if (opp) {
-            const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+            const { error } = await supabase
+              .from('tender_opportunities')
+              .upsert(opp, { onConflict: 'source,external_id' });
             if (!error) inserted++;
           }
           await delay(150);
@@ -222,7 +259,9 @@ async function scrapeContractsFinder(supabase: any): Promise<{ found: number; in
   return { found, inserted, errors };
 }
 
-async function scrapeFindATender(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeFindATender(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -247,7 +286,9 @@ async function scrapeFindATender(supabase: any): Promise<{ found: number; insert
           const opp = parseGenericNotice(`FTS-${noticeId}`, detailHtml, 'find_a_tender', detailUrl);
 
           if (opp) {
-            const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+            const { error } = await supabase
+              .from('tender_opportunities')
+              .upsert(opp, { onConflict: 'source,external_id' });
             if (!error) inserted++;
           }
           await delay(200);
@@ -264,7 +305,9 @@ async function scrapeFindATender(supabase: any): Promise<{ found: number; insert
   return { found, inserted, errors };
 }
 
-async function scrapePublicContractsScotland(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapePublicContractsScotland(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -286,10 +329,17 @@ async function scrapePublicContractsScotland(supabase: any): Promise<{ found: nu
           if (!detailRes.ok) continue;
 
           const detailHtml = await detailRes.text();
-          const opp = parseGenericNotice(`PCS-${noticeId}`, detailHtml, 'public_contracts_scotland', detailUrl);
+          const opp = parseGenericNotice(
+            `PCS-${noticeId}`,
+            detailHtml,
+            'public_contracts_scotland',
+            detailUrl
+          );
           if (opp) {
             opp.region = 'scotland';
-            const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+            const { error } = await supabase
+              .from('tender_opportunities')
+              .upsert(opp, { onConflict: 'source,external_id' });
             if (!error) inserted++;
           }
           await delay(200);
@@ -306,7 +356,9 @@ async function scrapePublicContractsScotland(supabase: any): Promise<{ found: nu
   return { found, inserted, errors };
 }
 
-async function scrapeSell2Wales(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeSell2Wales(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -336,7 +388,9 @@ async function scrapeSell2Wales(supabase: any): Promise<{ found: number; inserte
             status: 'live',
             fetched_at: new Date().toISOString(),
           };
-          const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+          const { error } = await supabase
+            .from('tender_opportunities')
+            .upsert(opp, { onConflict: 'source,external_id' });
           if (!error) inserted++;
         } catch (e) {
           errors.push(`S2W notice ${noticeId}: ${(e as Error).message}`);
@@ -351,7 +405,9 @@ async function scrapeSell2Wales(supabase: any): Promise<{ found: number; inserte
   return { found, inserted, errors };
 }
 
-async function scrapeETendersNI(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeETendersNI(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -380,7 +436,9 @@ async function scrapeETendersNI(supabase: any): Promise<{ found: number; inserte
           status: 'live',
           fetched_at: new Date().toISOString(),
         };
-        const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+        const { error } = await supabase
+          .from('tender_opportunities')
+          .upsert(opp, { onConflict: 'source,external_id' });
         if (!error) inserted++;
       } catch (e) {
         errors.push(`ETNI notice ${noticeId}: ${(e as Error).message}`);
@@ -393,7 +451,9 @@ async function scrapeETendersNI(supabase: any): Promise<{ found: number; inserte
   return { found, inserted, errors };
 }
 
-async function scrapeCompeteFor(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeCompeteFor(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -405,7 +465,9 @@ async function scrapeCompeteFor(supabase: any): Promise<{ found: number; inserte
 
     const html = await response.text();
     // Extract opportunity titles
-    const titleMatches = html.matchAll(/<h[23][^>]*>([^<]*(?:electric|m&e|lighting)[^<]*)<\/h[23]>/gi);
+    const titleMatches = html.matchAll(
+      /<h[23][^>]*>([^<]*(?:electric|m&e|lighting)[^<]*)<\/h[23]>/gi
+    );
 
     let idx = 0;
     for (const match of titleMatches) {
@@ -427,7 +489,9 @@ async function scrapeCompeteFor(supabase: any): Promise<{ found: number; inserte
         fetched_at: new Date().toISOString(),
       };
 
-      const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+      const { error } = await supabase
+        .from('tender_opportunities')
+        .upsert(opp, { onConflict: 'source,external_id' });
       if (!error) inserted++;
     }
   } catch (e) {
@@ -437,7 +501,9 @@ async function scrapeCompeteFor(supabase: any): Promise<{ found: number; inserte
   return { found, inserted, errors };
 }
 
-async function scrapeConstructionIndex(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeConstructionIndex(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -454,7 +520,11 @@ async function scrapeConstructionIndex(supabase: any): Promise<{ found: number; 
     for (const match of tenderMatches) {
       const link = match[1];
       const title = match[2].trim();
-      if (title.length < 15 || (!title.toLowerCase().includes('electric') && !title.toLowerCase().includes('m&e'))) continue;
+      if (
+        title.length < 15 ||
+        (!title.toLowerCase().includes('electric') && !title.toLowerCase().includes('m&e'))
+      )
+        continue;
 
       found++;
       idx++;
@@ -462,7 +532,9 @@ async function scrapeConstructionIndex(supabase: any): Promise<{ found: number; 
       const opp = {
         external_id: `TCI-${Date.now()}-${idx}`,
         source: 'construction_index',
-        source_url: link.startsWith('http') ? link : `https://www.theconstructionindex.co.uk${link}`,
+        source_url: link.startsWith('http')
+          ? link
+          : `https://www.theconstructionindex.co.uk${link}`,
         title: title.substring(0, 300),
         description: 'Construction tender from The Construction Index',
         client_name: 'Construction Index',
@@ -472,7 +544,9 @@ async function scrapeConstructionIndex(supabase: any): Promise<{ found: number; 
         fetched_at: new Date().toISOString(),
       };
 
-      const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+      const { error } = await supabase
+        .from('tender_opportunities')
+        .upsert(opp, { onConflict: 'source,external_id' });
       if (!error) inserted++;
 
       if (idx >= 15) break;
@@ -484,7 +558,9 @@ async function scrapeConstructionIndex(supabase: any): Promise<{ found: number; 
   return { found, inserted, errors };
 }
 
-async function scrapeDeltaESourcing(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeDeltaESourcing(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -512,7 +588,9 @@ async function scrapeDeltaESourcing(supabase: any): Promise<{ found: number; ins
         status: 'live',
         fetched_at: new Date().toISOString(),
       };
-      const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+      const { error } = await supabase
+        .from('tender_opportunities')
+        .upsert(opp, { onConflict: 'source,external_id' });
       if (!error) inserted++;
     }
   } catch (e) {
@@ -522,7 +600,9 @@ async function scrapeDeltaESourcing(supabase: any): Promise<{ found: number; ins
   return { found, inserted, errors };
 }
 
-async function scrapeInTend(supabase: any): Promise<{ found: number; inserted: number; errors: string[] }> {
+async function scrapeInTend(
+  supabase: any
+): Promise<{ found: number; inserted: number; errors: string[] }> {
   const errors: string[] = [];
   let found = 0;
   let inserted = 0;
@@ -550,7 +630,9 @@ async function scrapeInTend(supabase: any): Promise<{ found: number; inserted: n
         status: 'live',
         fetched_at: new Date().toISOString(),
       };
-      const { error } = await supabase.from('tender_opportunities').upsert(opp, { onConflict: 'source,external_id' });
+      const { error } = await supabase
+        .from('tender_opportunities')
+        .upsert(opp, { onConflict: 'source,external_id' });
       if (!error) inserted++;
     }
   } catch (e) {
@@ -564,8 +646,9 @@ async function scrapeInTend(supabase: any): Promise<{ found: number; inserted: n
 
 function browserHeaders(): HeadersInit {
   return {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+    'User-Agent':
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Language': 'en-GB,en;q=0.5',
   };
 }
@@ -581,14 +664,22 @@ function extractNoticeLinks(html: string, pattern: RegExp): string[] {
   return ids;
 }
 
-function parseGenericNotice(externalId: string, html: string, source: string, sourceUrl: string): any | null {
+function parseGenericNotice(
+  externalId: string,
+  html: string,
+  source: string,
+  sourceUrl: string
+): any | null {
   try {
     // Extract title
-    const titleMatch = html.match(/<h1[^>]*>([^<]+)<\/h1>/i) || html.match(/<title[^>]*>([^<]+)<\/title>/i);
+    const titleMatch =
+      html.match(/<h1[^>]*>([^<]+)<\/h1>/i) || html.match(/<title[^>]*>([^<]+)<\/title>/i);
     const title = titleMatch ? titleMatch[1].trim().substring(0, 500) : 'Untitled Notice';
 
     // Extract organisation
-    const orgMatch = html.match(/(?:Organisation|Contracting authority|Buyer)[:\s]*<[^>]*>([^<]+)</i);
+    const orgMatch = html.match(
+      /(?:Organisation|Contracting authority|Buyer)[:\s]*<[^>]*>([^<]+)</i
+    );
     const clientName = orgMatch ? orgMatch[1].trim() : 'Unknown Organisation';
 
     // Extract value
@@ -602,7 +693,9 @@ function parseGenericNotice(externalId: string, html: string, source: string, so
 
     // Extract deadline
     let deadline: string | null = null;
-    const deadlineMatch = html.match(/(?:Closing|Deadline|Due)[^:]*[:\s]*(\d{1,2}[\s\/\-]\w+[\s\/\-]\d{4})/i);
+    const deadlineMatch = html.match(
+      /(?:Closing|Deadline|Due)[^:]*[:\s]*(\d{1,2}[\s\/\-]\w+[\s\/\-]\d{4})/i
+    );
     if (deadlineMatch) {
       try {
         deadline = new Date(deadlineMatch[1]).toISOString();
@@ -614,8 +707,16 @@ function parseGenericNotice(externalId: string, html: string, source: string, so
     const postcode = postcodeMatch ? postcodeMatch[1].toUpperCase() : null;
 
     // Extract description
-    const descMatch = html.match(/(?:Description|Summary|Overview)[:\s]*<[^>]*>([\s\S]*?)<\/(?:p|div|dd)/i);
-    const description = descMatch ? descMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 2000) : '';
+    const descMatch = html.match(
+      /(?:Description|Summary|Overview)[:\s]*<[^>]*>([\s\S]*?)<\/(?:p|div|dd)/i
+    );
+    const description = descMatch
+      ? descMatch[1]
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim()
+          .substring(0, 2000)
+      : '';
 
     // Determine categories
     const text = (title + ' ' + description).toLowerCase();
@@ -631,10 +732,17 @@ function parseGenericNotice(externalId: string, html: string, source: string, so
     // Determine sector
     const clientLower = clientName.toLowerCase();
     let sector = 'public';
-    if (clientLower.includes('nhs') || clientLower.includes('hospital') || clientLower.includes('health')) sector = 'healthcare';
+    if (
+      clientLower.includes('nhs') ||
+      clientLower.includes('hospital') ||
+      clientLower.includes('health')
+    )
+      sector = 'healthcare';
     else if (clientLower.includes('housing')) sector = 'housing';
-    else if (clientLower.includes('school') || clientLower.includes('university')) sector = 'education';
-    else if (clientLower.includes('council') || clientLower.includes('borough')) sector = 'local_authority';
+    else if (clientLower.includes('school') || clientLower.includes('university'))
+      sector = 'education';
+    else if (clientLower.includes('council') || clientLower.includes('borough'))
+      sector = 'local_authority';
 
     return {
       external_id: externalId,
@@ -666,26 +774,65 @@ function parseGenericNotice(externalId: string, html: string, source: string, so
 }
 
 function extractRegion(postcode: string): string {
-  const prefix = postcode.replace(/\s+/g, '').match(/^[A-Z]{1,2}/i)?.[0]?.toUpperCase() || '';
+  const prefix =
+    postcode
+      .replace(/\s+/g, '')
+      .match(/^[A-Z]{1,2}/i)?.[0]
+      ?.toUpperCase() || '';
 
   const regionMap: Record<string, string> = {
-    'B': 'west_midlands', 'CV': 'west_midlands', 'DY': 'west_midlands', 'WS': 'west_midlands', 'WV': 'west_midlands',
-    'M': 'northwest', 'L': 'northwest', 'WA': 'northwest', 'WN': 'northwest', 'BL': 'northwest',
-    'LS': 'yorkshire', 'BD': 'yorkshire', 'S': 'yorkshire', 'DN': 'yorkshire', 'HU': 'yorkshire',
-    'NE': 'northeast', 'DH': 'northeast', 'SR': 'northeast', 'TS': 'northeast',
-    'NG': 'east_midlands', 'DE': 'east_midlands', 'LE': 'east_midlands', 'NN': 'east_midlands',
-    'BS': 'southwest', 'EX': 'southwest', 'PL': 'southwest', 'GL': 'southwest',
-    'CB': 'east_england', 'NR': 'east_england', 'IP': 'east_england',
-    'RG': 'southeast', 'OX': 'southeast', 'SO': 'southeast', 'BN': 'southeast',
-    'SW': 'london', 'SE': 'london', 'NW': 'london', 'N': 'london', 'E': 'london', 'W': 'london',
-    'CF': 'wales', 'SA': 'wales', 'NP': 'wales',
-    'G': 'scotland', 'EH': 'scotland', 'AB': 'scotland',
-    'BT': 'northern_ireland',
+    B: 'west_midlands',
+    CV: 'west_midlands',
+    DY: 'west_midlands',
+    WS: 'west_midlands',
+    WV: 'west_midlands',
+    M: 'northwest',
+    L: 'northwest',
+    WA: 'northwest',
+    WN: 'northwest',
+    BL: 'northwest',
+    LS: 'yorkshire',
+    BD: 'yorkshire',
+    S: 'yorkshire',
+    DN: 'yorkshire',
+    HU: 'yorkshire',
+    NE: 'northeast',
+    DH: 'northeast',
+    SR: 'northeast',
+    TS: 'northeast',
+    NG: 'east_midlands',
+    DE: 'east_midlands',
+    LE: 'east_midlands',
+    NN: 'east_midlands',
+    BS: 'southwest',
+    EX: 'southwest',
+    PL: 'southwest',
+    GL: 'southwest',
+    CB: 'east_england',
+    NR: 'east_england',
+    IP: 'east_england',
+    RG: 'southeast',
+    OX: 'southeast',
+    SO: 'southeast',
+    BN: 'southeast',
+    SW: 'london',
+    SE: 'london',
+    NW: 'london',
+    N: 'london',
+    E: 'london',
+    W: 'london',
+    CF: 'wales',
+    SA: 'wales',
+    NP: 'wales',
+    G: 'scotland',
+    EH: 'scotland',
+    AB: 'scotland',
+    BT: 'northern_ireland',
   };
 
   return regionMap[prefix] || 'uk_wide';
 }
 
 function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

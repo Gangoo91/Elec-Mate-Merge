@@ -29,7 +29,10 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
@@ -45,15 +48,14 @@ serve(async (req: Request) => {
       throw new Error('Failed to disconnect email account');
     }
 
-    console.log(`✅ Email account disconnected`, { 
-      user_id: user.id, 
-      provider 
+    console.log(`✅ Email account disconnected`, {
+      user_id: user.id,
+      provider,
     });
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return handleError(error);
   }

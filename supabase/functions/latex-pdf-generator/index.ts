@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface LaTeXRequest {
@@ -28,33 +29,41 @@ function escapeLatex(text: string): string {
     .replace(/~/g, '\\textasciitilde{}');
 }
 
-function markdownToLatex(markdown: string, title: string, author: string, reportType: string): string {
+function markdownToLatex(
+  markdown: string,
+  title: string,
+  author: string,
+  reportType: string
+): string {
   // Parse markdown content
   let latex = markdown;
-  
+
   // Convert headers
   latex = latex.replace(/^### (.*$)/gm, '\\subsubsection{$1}');
   latex = latex.replace(/^## (.*$)/gm, '\\subsection{$1}');
   latex = latex.replace(/^# (.*$)/gm, '\\section{$1}');
-  
+
   // Convert bold and italic
   latex = latex.replace(/\*\*(.*?)\*\*/g, '\\textbf{$1}');
   latex = latex.replace(/\*(.*?)\*/g, '\\textit{$1}');
-  
+
   // Convert lists
   latex = latex.replace(/^\* (.*$)/gm, '\\item $1');
   latex = latex.replace(/^(\d+)\. (.*$)/gm, '\\item $1');
-  
+
   // Handle tables - basic conversion
   const tableRegex = /\|(.+)\|/g;
   latex = latex.replace(tableRegex, (match, content) => {
-    const cells = content.split('|').map((cell: string) => cell.trim()).filter((cell: string) => cell);
+    const cells = content
+      .split('|')
+      .map((cell: string) => cell.trim())
+      .filter((cell: string) => cell);
     return cells.join(' & ') + ' \\\\';
   });
-  
+
   // Wrap list items in proper environments
   latex = latex.replace(/(\\item.*(?:\n\\item.*)*)/g, '\\begin{itemize}\n$1\n\\end{itemize}');
-  
+
   // Create complete LaTeX document
   const fullLatex = `
 \\documentclass[11pt,a4paper]{article}
@@ -166,7 +175,14 @@ serve(async (req) => {
   }
 
   try {
-    const { markdown, title = "Professional Report", author = "Electrical Inspector", reportType = "Electrical Certificate", includeSignatures = true, watermark = "BS 7671:2018+A3:2024 Compliant" }: LaTeXRequest = await req.json();
+    const {
+      markdown,
+      title = 'Professional Report',
+      author = 'Electrical Inspector',
+      reportType = 'Electrical Certificate',
+      includeSignatures = true,
+      watermark = 'BS 7671:2018+A3:2024 Compliant',
+    }: LaTeXRequest = await req.json();
 
     console.log('Generating LaTeX PDF for:', title);
 
@@ -184,25 +200,27 @@ serve(async (req) => {
       success: true,
       latexSource: latexContent,
       compilationInstructions: {
-        engine: "pdflatex",
-        packages: ["texlive-full", "texlive-fonts-extra"],
-        command: "pdflatex -interaction=nonstopmode document.tex"
+        engine: 'pdflatex',
+        packages: ['texlive-full', 'texlive-fonts-extra'],
+        command: 'pdflatex -interaction=nonstopmode document.tex',
       },
-      message: "LaTeX source generated successfully. Use a LaTeX compiler to generate PDF."
+      message: 'LaTeX source generated successfully. Use a LaTeX compiler to generate PDF.',
     };
 
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('LaTeX generation error:', error);
-    return new Response(JSON.stringify({ 
-      error: 'Failed to generate LaTeX document',
-      details: error instanceof Error ? error.message : 'Unknown error'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: 'Failed to generate LaTeX document',
+        details: error instanceof Error ? error.message : 'Unknown error',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

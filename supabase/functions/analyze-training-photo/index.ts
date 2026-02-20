@@ -1,7 +1,7 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -11,7 +11,8 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -111,11 +112,7 @@ const parseAIResponse = (content: string, context: string = 'AI response'): any 
   }
 
   // Extraction patterns
-  const patterns = [
-    /```json\s*\n([\s\S]*?)\n```/,
-    /```\s*\n([\s\S]*?)\n```/,
-    /({[\s\S]*})/
-  ];
+  const patterns = [/```json\s*\n([\s\S]*?)\n```/, /```\s*\n([\s\S]*?)\n```/, /({[\s\S]*})/];
 
   for (const pattern of patterns) {
     const match = content.match(pattern);
@@ -152,7 +149,10 @@ const urlToBase64 = async (url: string): Promise<{ mimeType: string; data: strin
 // GEMINI ANALYSIS
 // ============================================================================
 
-async function analyzeTrainingPhoto(imageData: { mimeType: string; data: string }): Promise<TrainingAnalysisResult> {
+async function analyzeTrainingPhoto(imageData: {
+  mimeType: string;
+  data: string;
+}): Promise<TrainingAnalysisResult> {
   console.log('Analyzing training photo with Gemini...');
 
   const comprehensivePrompt = `You are a UK electrical expert analyzing a consumer unit/distribution board photo for training data purposes.
@@ -263,18 +263,17 @@ Return ONLY the JSON object, no other text.`;
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        contents: [{
-          role: 'user',
-          parts: [
-            { text: comprehensivePrompt },
-            { inlineData: imageData }
-          ]
-        }],
+        contents: [
+          {
+            role: 'user',
+            parts: [{ text: comprehensivePrompt }, { inlineData: imageData }],
+          },
+        ],
         generationConfig: {
           maxOutputTokens: 8000,
           temperature: 0.1,
-          responseMimeType: 'application/json'
-        }
+          responseMimeType: 'application/json',
+        },
       }),
     }
   );
@@ -392,7 +391,7 @@ async function uploadImageAndCreateReference(
   const filename = `training/${crypto.randomUUID()}.${ext}`;
 
   // Decode base64 and upload
-  const imageBytes = Uint8Array.from(atob(imageBase64), c => c.charCodeAt(0));
+  const imageBytes = Uint8Array.from(atob(imageBase64), (c) => c.charCodeAt(0));
 
   const { error: uploadError } = await supabase.storage
     .from('board-reference-images')
@@ -407,9 +406,9 @@ async function uploadImageAndCreateReference(
   }
 
   // Get public URL
-  const { data: { publicUrl } } = supabase.storage
-    .from('board-reference-images')
-    .getPublicUrl(filename);
+  const {
+    data: { publicUrl },
+  } = supabase.storage.from('board-reference-images').getPublicUrl(filename);
 
   // Create board_reference_images record
   const { data: refImage, error: refError } = await supabase
@@ -429,7 +428,7 @@ async function uploadImageAndCreateReference(
         ...(analysis.devices.afdds > 0 ? ['AFDD'] : []),
         ...(analysis.devices.spd.present ? ['SPD'] : []),
       ],
-      ratings_visible: Object.keys(analysis.ratings).filter(r => analysis.ratings[r] > 0),
+      ratings_visible: Object.keys(analysis.ratings).filter((r) => analysis.ratings[r] > 0),
       lighting_conditions: analysis.image_quality.lighting,
       verified: false,
       metadata: {
@@ -524,7 +523,11 @@ serve(async (req) => {
     if (body.save_to_db !== false) {
       // If we have direct upload (base64), create reference image first
       if (body.image_base64 && !existingImageId) {
-        savedImageId = await uploadImageAndCreateReference(imageData.data, imageData.mimeType, analysis);
+        savedImageId = await uploadImageAndCreateReference(
+          imageData.data,
+          imageData.mimeType,
+          analysis
+        );
       }
 
       // Save the analysis
@@ -534,27 +537,32 @@ serve(async (req) => {
     const processingTime = Date.now() - startTime;
     console.log(`Processing complete in ${processingTime}ms`);
 
-    return new Response(JSON.stringify({
-      success: true,
-      analysis,
-      image_id: savedImageId,
-      analysis_id: savedAnalysisId,
-      processing_time_ms: processingTime,
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        analysis,
+        image_id: savedImageId,
+        analysis_id: savedAnalysisId,
+        processing_time_ms: processingTime,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     const duration = Date.now() - startTime;
     console.error(`Error after ${duration}ms:`, error);
 
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error',
-      processing_time_ms: duration,
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+        processing_time_ms: duration,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

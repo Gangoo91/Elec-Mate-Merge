@@ -43,7 +43,14 @@ const quizTool = {
               },
               acRef: { type: 'string', description: 'Related AC reference' },
             },
-            required: ['question', 'options', 'correctAnswer', 'explanation', 'category', 'difficulty'],
+            required: [
+              'question',
+              'options',
+              'correctAnswer',
+              'explanation',
+              'category',
+              'difficulty',
+            ],
           },
         },
       },
@@ -59,7 +66,10 @@ const quizTool = {
 function buildQualificationStructure(acData: any[], qualificationCode: string): string {
   if (!acData?.length) return '';
 
-  const units = new Map<string, { title: string; los: Map<string, { text: string; acs: { code: string; text: string }[] }> }>();
+  const units = new Map<
+    string,
+    { title: string; los: Map<string, { text: string; acs: { code: string; text: string }[] }> }
+  >();
 
   for (const row of acData) {
     const unitCode = row.unit_code || '';
@@ -125,7 +135,10 @@ serve(async (req: Request) => {
       global: { headers: { Authorization: authHeader } },
     });
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return new Response(JSON.stringify({ error: 'Unauthorised' }), {
         status: 401,
@@ -160,19 +173,25 @@ serve(async (req: Request) => {
           : acData;
         qualificationStructure = buildQualificationStructure(filtered, qualification_code);
       }
-    } catch { /* non-critical */ }
+    } catch {
+      /* non-critical */
+    }
 
     // RAG: regulation context
     let regContext = '';
     try {
       const { data: regData } = await supabase.rpc('search_practical_work_fast', {
-        query_text: 'regulation testing inspection wiring safety standards', match_count: 5,
+        query_text: 'regulation testing inspection wiring safety standards',
+        match_count: 5,
       });
       if (regData?.length) {
-        regContext = '\n\n--- Regulation Context ---\n' +
+        regContext =
+          '\n\n--- Regulation Context ---\n' +
           regData.map((r: any) => `- ${r.title}: ${r.description?.substring(0, 200)}`).join('\n');
       }
-    } catch { /* non-critical */ }
+    } catch {
+      /* non-critical */
+    }
 
     const systemPrompt = `You are creating a knowledge test for a UK electrical apprentice studying the qualification shown below. Generate exactly ${question_count} multiple-choice questions that test the Learning Outcomes and Assessment Criteria from this qualification.
 
@@ -221,7 +240,10 @@ ${regContext}`;
         max_completion_tokens: 8000,
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: `Generate ${question_count} knowledge test questions for qualification ${qualification_code}.` },
+          {
+            role: 'user',
+            content: `Generate ${question_count} knowledge test questions for qualification ${qualification_code}.`,
+          },
         ],
         tools: [quizTool],
         tool_choice: { type: 'function', function: { name: 'epa_knowledge_quiz' } },
@@ -239,14 +261,16 @@ ${regContext}`;
 
     const result = JSON.parse(toolCall.function.arguments);
 
-    return new Response(
-      JSON.stringify({ success: true, ...result }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: true, ...result }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (err) {
     console.error('[epa-knowledge-quiz] Error:', err);
     return new Response(
-      JSON.stringify({ success: false, error: err instanceof Error ? err.message : 'Internal error' }),
+      JSON.stringify({
+        success: false,
+        error: err instanceof Error ? err.message : 'Internal error',
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }

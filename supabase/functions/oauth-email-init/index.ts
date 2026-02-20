@@ -37,7 +37,8 @@ serve(async (req: Request) => {
         client_id: GOOGLE_CLIENT_ID,
         redirect_uri: redirectUri,
         response_type: 'code',
-        scope: 'https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile',
+        scope:
+          'https://www.googleapis.com/auth/gmail.send https://www.googleapis.com/auth/userinfo.email openid https://www.googleapis.com/auth/userinfo.profile',
         state,
         access_type: 'offline',
         prompt: 'consent',
@@ -76,20 +77,21 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
 
     // Store state temporarily
-    const { error: insertError } = await supabase
-      .from('oauth_states')
-      .insert({
-        state,
-        user_id: user.id,
-        provider,
-        expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
-      });
+    const { error: insertError } = await supabase.from('oauth_states').insert({
+      state,
+      user_id: user.id,
+      provider,
+      expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+    });
 
     if (insertError) {
       console.error('Failed to store OAuth state:', insertError);
@@ -98,10 +100,9 @@ serve(async (req: Request) => {
 
     console.log(`✅ OAuth flow initiated for ${provider}`, { user_id: user.id });
 
-    return new Response(
-      JSON.stringify({ authUrl }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ authUrl }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return handleError(error);
   }

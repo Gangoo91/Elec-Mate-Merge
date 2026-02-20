@@ -26,7 +26,9 @@ async function loginIfRequired(page: Page) {
 // Helper to wait for page content to load
 async function waitForContentLoad(page: Page) {
   await page.waitForLoadState('networkidle');
-  await page.waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 }).catch(() => {});
+  await page
+    .waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 })
+    .catch(() => {});
 }
 
 test.describe('Level 3 Apprentice Courses', () => {
@@ -61,7 +63,12 @@ test.describe('Level 3 Apprentice Courses', () => {
       await waitForContentLoad(page);
 
       // Verify Level 3 page loaded
-      await expect(page.locator('h1, h2').filter({ hasText: /Level 3|Apprentice/i }).first()).toBeVisible();
+      await expect(
+        page
+          .locator('h1, h2')
+          .filter({ hasText: /Level 3|Apprentice/i })
+          .first()
+      ).toBeVisible();
     });
 
     test('should display all 8 modules on Level 3 page', async ({ page }) => {
@@ -78,7 +85,7 @@ test.describe('Level 3 Apprentice Courses', () => {
         'Inspection',
         'Design',
         'Career',
-        'Mock'
+        'Mock',
       ];
 
       for (const moduleText of moduleTexts) {
@@ -98,7 +105,9 @@ test.describe('Level 3 Apprentice Courses', () => {
       await expect(page.locator('text=Health and Safety').first()).toBeVisible();
 
       // Check sections are visible (Module 1 has 6 sections)
-      const sectionCount = await page.locator('[data-section], .section-card, a[href*="section"]').count();
+      const sectionCount = await page
+        .locator('[data-section], .section-card, a[href*="section"]')
+        .count();
       expect(sectionCount).toBeGreaterThan(0);
     });
 
@@ -125,7 +134,9 @@ test.describe('Level 3 Apprentice Courses', () => {
       await expect(page.locator('main, .content, article').first()).toBeVisible();
 
       // Find and click back button
-      const backButton = page.locator('button:has-text("Back"), a:has-text("Back"), [aria-label*="back"]').first();
+      const backButton = page
+        .locator('button:has-text("Back"), a:has-text("Back"), [aria-label*="back"]')
+        .first();
       if (await backButton.isVisible()) {
         await backButton.click();
         await waitForContentLoad(page);
@@ -222,7 +233,11 @@ test.describe('Level 3 Apprentice Courses', () => {
       await waitForContentLoad(page);
 
       // Should see exam interface or start screen
-      const examElement = page.locator('text=Mock Exam, text=Start, text=Question, button:has-text("Start"), button:has-text("Begin")').first();
+      const examElement = page
+        .locator(
+          'text=Mock Exam, text=Start, text=Question, button:has-text("Start"), button:has-text("Begin")'
+        )
+        .first();
       await expect(examElement).toBeVisible({ timeout: 10000 });
     });
 
@@ -231,19 +246,25 @@ test.describe('Level 3 Apprentice Courses', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const examElement = page.locator('text=Mock Exam, text=Start, text=Comprehensive, button:has-text("Start")').first();
+      const examElement = page
+        .locator('text=Mock Exam, text=Start, text=Comprehensive, button:has-text("Start")')
+        .first();
       await expect(examElement).toBeVisible({ timeout: 10000 });
     });
   });
 
   test.describe('Mock Exam Full Flow', () => {
-    test('should complete full mock exam flow - start, answer, submit, review', async ({ page }) => {
+    test('should complete full mock exam flow - start, answer, submit, review', async ({
+      page,
+    }) => {
       await page.goto('/study-centre/apprentice/level3-module8-mock-exam1');
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
       // Step 1: Verify exam start screen
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await expect(startButton).toBeVisible({ timeout: 10000 });
 
       // Step 2: Start the exam
@@ -251,55 +272,77 @@ test.describe('Level 3 Apprentice Courses', () => {
       await waitForContentLoad(page);
 
       // Step 3: Verify exam interface loaded
-      await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({ timeout: 10000 });
+      await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({
+        timeout: 10000,
+      });
 
       // Step 4: Answer first question
-      const firstOption = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+      const firstOption = page
+        .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+        .first();
       await expect(firstOption).toBeVisible();
       await firstOption.click();
 
       // Step 5: Navigate to next question
-      const nextButton = page.locator('button:has-text("Next"), button[aria-label*="next"]').first();
+      const nextButton = page
+        .locator('button:has-text("Next"), button[aria-label*="next"]')
+        .first();
       if (await nextButton.isVisible()) {
         await nextButton.click();
         await waitForContentLoad(page);
-        await expect(page.locator('text=Question 2, text=2 of, text=2/')).toBeVisible({ timeout: 5000 });
+        await expect(page.locator('text=Question 2, text=2 of, text=2/')).toBeVisible({
+          timeout: 5000,
+        });
       }
 
       // Step 6: Test flag functionality
-      const flagButton = page.locator('button:has-text("Flag"), button[aria-label*="flag"], .flag-button').first();
+      const flagButton = page
+        .locator('button:has-text("Flag"), button[aria-label*="flag"], .flag-button')
+        .first();
       if (await flagButton.isVisible()) {
         await flagButton.click();
       }
 
       // Step 7: Test previous navigation
-      const prevButton = page.locator('button:has-text("Previous"), button:has-text("Prev")').first();
+      const prevButton = page
+        .locator('button:has-text("Previous"), button:has-text("Prev")')
+        .first();
       if (await prevButton.isVisible()) {
         await prevButton.click();
         await waitForContentLoad(page);
-        await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({ timeout: 5000 });
+        await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({
+          timeout: 5000,
+        });
       }
 
       // Step 8: Answer a few more questions
       for (let i = 0; i < 5; i++) {
-        const option = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+        const option = page
+          .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+          .first();
         if (await option.isVisible()) {
           await option.click();
         }
 
         const next = page.locator('button:has-text("Next")').first();
-        if (await next.isVisible() && await next.isEnabled()) {
+        if ((await next.isVisible()) && (await next.isEnabled())) {
           await next.click();
           await page.waitForTimeout(300);
         }
       }
 
       // Step 9: Look for submit functionality
-      const submitButton = page.locator('button:has-text("Submit"), button:has-text("Finish"), button:has-text("Complete")').first();
+      const submitButton = page
+        .locator(
+          'button:has-text("Submit"), button:has-text("Finish"), button:has-text("Complete")'
+        )
+        .first();
 
       if (!(await submitButton.isVisible())) {
         // Try to navigate to last question via question grid
-        const lastQuestion = page.locator('button:has-text("30"), .question-grid button:last-child').first();
+        const lastQuestion = page
+          .locator('button:has-text("30"), .question-grid button:last-child')
+          .first();
         if (await lastQuestion.isVisible()) {
           await lastQuestion.click();
           await waitForContentLoad(page);
@@ -307,23 +350,31 @@ test.describe('Level 3 Apprentice Courses', () => {
       }
 
       // Answer last question if needed
-      const lastOption = page.locator('input[type="radio"], button[role="radio"], .answer-option').first();
+      const lastOption = page
+        .locator('input[type="radio"], button[role="radio"], .answer-option')
+        .first();
       if (await lastOption.isVisible()) {
         await lastOption.click();
       }
 
       // Submit exam
-      const finalSubmit = page.locator('button:has-text("Submit"), button:has-text("Finish")').first();
+      const finalSubmit = page
+        .locator('button:has-text("Submit"), button:has-text("Finish")')
+        .first();
       if (await finalSubmit.isVisible()) {
         await finalSubmit.click();
         await waitForContentLoad(page);
 
         // Step 10: Verify results screen
-        const resultsIndicator = page.locator('text=Results, text=Score, text=%, text=Correct, text=Complete').first();
+        const resultsIndicator = page
+          .locator('text=Results, text=Score, text=%, text=Correct, text=Complete')
+          .first();
         await expect(resultsIndicator).toBeVisible({ timeout: 10000 });
 
         // Step 11: Test review mode
-        const reviewButton = page.locator('button:has-text("Review"), button:has-text("View Answers")').first();
+        const reviewButton = page
+          .locator('button:has-text("Review"), button:has-text("View Answers")')
+          .first();
         if (await reviewButton.isVisible()) {
           await reviewButton.click();
           await waitForContentLoad(page);
@@ -331,7 +382,11 @@ test.describe('Level 3 Apprentice Courses', () => {
         }
 
         // Step 12: Verify retake option exists
-        const retakeButton = page.locator('button:has-text("Retake"), button:has-text("Try Again"), button:has-text("Restart")').first();
+        const retakeButton = page
+          .locator(
+            'button:has-text("Retake"), button:has-text("Try Again"), button:has-text("Restart")'
+          )
+          .first();
         await expect(retakeButton).toBeVisible();
       }
     });
@@ -341,7 +396,9 @@ test.describe('Level 3 Apprentice Courses', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await startButton.click();
       await waitForContentLoad(page);
 
@@ -355,11 +412,15 @@ test.describe('Level 3 Apprentice Courses', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await startButton.click();
       await waitForContentLoad(page);
 
-      const progress = page.locator('text=1 of 30, text=1/30, .progress, [role="progressbar"]').first();
+      const progress = page
+        .locator('text=1 of 30, text=1/30, .progress, [role="progressbar"]')
+        .first();
       await expect(progress).toBeVisible({ timeout: 10000 });
     });
   });
@@ -370,7 +431,11 @@ test.describe('Level 3 Apprentice Courses', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const backLink = page.locator('a:has-text("Back"), button:has-text("Back"), a:has-text("Module"), [aria-label*="back"]').first();
+      const backLink = page
+        .locator(
+          'a:has-text("Back"), button:has-text("Back"), a:has-text("Module"), [aria-label*="back"]'
+        )
+        .first();
       await expect(backLink).toBeVisible();
       await backLink.click();
       await waitForContentLoad(page);
@@ -383,7 +448,11 @@ test.describe('Level 3 Apprentice Courses', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const backLink = page.locator('a:has-text("Back"), a:has-text("Level 3"), button:has-text("Back"), [aria-label*="back"]').first();
+      const backLink = page
+        .locator(
+          'a:has-text("Back"), a:has-text("Level 3"), button:has-text("Back"), [aria-label*="back"]'
+        )
+        .first();
       await expect(backLink).toBeVisible();
       await backLink.click();
       await waitForContentLoad(page);
@@ -430,7 +499,7 @@ test.describe('Level 3 Apprentice Courses', () => {
 
     test('should not show console errors on page load', async ({ page }) => {
       const consoleErrors: string[] = [];
-      page.on('console', msg => {
+      page.on('console', (msg) => {
         if (msg.type() === 'error') {
           consoleErrors.push(msg.text());
         }
@@ -440,10 +509,9 @@ test.describe('Level 3 Apprentice Courses', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const criticalErrors = consoleErrors.filter(err =>
-        !err.includes('favicon') &&
-        !err.includes('analytics') &&
-        !err.includes('third-party')
+      const criticalErrors = consoleErrors.filter(
+        (err) =>
+          !err.includes('favicon') && !err.includes('analytics') && !err.includes('third-party')
       );
 
       expect(criticalErrors.length).toBe(0);
@@ -459,8 +527,8 @@ test.describe('Level 3 Apprentice Courses', () => {
       await waitForContentLoad(page);
 
       const body = page.locator('body');
-      const scrollWidth = await body.evaluate(el => el.scrollWidth);
-      const clientWidth = await body.evaluate(el => el.clientWidth);
+      const scrollWidth = await body.evaluate((el) => el.scrollWidth);
+      const clientWidth = await body.evaluate((el) => el.clientWidth);
 
       expect(scrollWidth - clientWidth).toBeLessThan(20);
 
@@ -514,7 +582,11 @@ test.describe('All Level 3 Mock Exams Quick Smoke Test', () => {
       await page.waitForLoadState('networkidle');
 
       // Should show exam start button or exam interface
-      const examElement = page.locator('button:has-text("Start"), button:has-text("Begin"), text=Mock Exam, text=Question').first();
+      const examElement = page
+        .locator(
+          'button:has-text("Start"), button:has-text("Begin"), text=Mock Exam, text=Question'
+        )
+        .first();
       await expect(examElement).toBeVisible({ timeout: 10000 });
     });
   }

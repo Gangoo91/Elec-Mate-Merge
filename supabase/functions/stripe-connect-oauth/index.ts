@@ -4,12 +4,13 @@
  * This is MUCH faster than Express account creation
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -19,7 +20,8 @@ serve(async (req) => {
 
   try {
     // Try multiple possible secret names
-    const stripeClientId = Deno.env.get('STRIPE_CLIENT_ID') || Deno.env.get('STRIPE_CONNECT_CLIENT_ID');
+    const stripeClientId =
+      Deno.env.get('STRIPE_CLIENT_ID') || Deno.env.get('STRIPE_CONNECT_CLIENT_ID');
     const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
@@ -33,7 +35,10 @@ serve(async (req) => {
     if (!stripeClientId) {
       console.error('❌ STRIPE_CLIENT_ID not found in env');
       return new Response(
-        JSON.stringify({ error: 'STRIPE_CLIENT_ID not configured. Add it in Supabase Dashboard > Edge Functions > Secrets' }),
+        JSON.stringify({
+          error:
+            'STRIPE_CLIENT_ID not configured. Add it in Supabase Dashboard > Edge Functions > Secrets',
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -41,22 +46,25 @@ serve(async (req) => {
     // Authenticate user
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-      global: { headers: { Authorization: authHeader } }
+      global: { headers: { Authorization: authHeader } },
     });
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Parse request body
@@ -74,7 +82,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({
           error: 'Stripe account already connected',
-          status: 'active'
+          status: 'active',
         }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -92,7 +100,7 @@ serve(async (req) => {
         redirect_uri: `${supabaseUrl}/functions/v1/stripe-connect-oauth-callback`,
         state: JSON.stringify({
           user_id: user.id,
-          return_url: baseUrl
+          return_url: baseUrl,
         }),
       });
 
@@ -103,7 +111,7 @@ serve(async (req) => {
       return new Response(
         JSON.stringify({
           url: oauthUrl,
-          type: 'oauth'
+          type: 'oauth',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -112,10 +120,10 @@ serve(async (req) => {
     // ACTION: Exchange authorization code for account
     if (action === 'exchange_code' && code) {
       if (!stripeSecretKey) {
-        return new Response(
-          JSON.stringify({ error: 'STRIPE_SECRET_KEY not configured' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        return new Response(JSON.stringify({ error: 'STRIPE_SECRET_KEY not configured' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
 
       // Exchange authorization code for access token and account ID
@@ -138,7 +146,7 @@ serve(async (req) => {
         return new Response(
           JSON.stringify({
             error: tokenData.error_description || 'Failed to connect Stripe account',
-            details: tokenData.error
+            details: tokenData.error,
           }),
           { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
@@ -150,7 +158,7 @@ serve(async (req) => {
       // Verify the account has charges enabled
       const accountResponse = await fetch(`https://api.stripe.com/v1/accounts/${stripeAccountId}`, {
         headers: {
-          'Authorization': `Bearer ${stripeSecretKey}`,
+          Authorization: `Bearer ${stripeSecretKey}`,
         },
       });
 
@@ -164,7 +172,7 @@ serve(async (req) => {
       console.log('🏦 Account status:', {
         charges_enabled: accountData.charges_enabled,
         payouts_enabled: accountData.payouts_enabled,
-        status
+        status,
       });
 
       // Save to database
@@ -178,10 +186,10 @@ serve(async (req) => {
 
       if (updateError) {
         console.error('❌ Failed to save account:', updateError);
-        return new Response(
-          JSON.stringify({ error: 'Failed to save Stripe account' }),
-          { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
+        return new Response(JSON.stringify({ error: 'Failed to save Stripe account' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
       }
 
       return new Response(
@@ -196,16 +204,15 @@ serve(async (req) => {
       );
     }
 
-    return new Response(
-      JSON.stringify({ error: 'Invalid action' }),
-      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ error: 'Invalid action' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('❌ Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

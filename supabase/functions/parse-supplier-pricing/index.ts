@@ -1,11 +1,12 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import * as XLSX from 'https://deno.land/x/sheetjs@v0.18.3/xlsx.mjs';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -22,7 +23,7 @@ serve(async (req) => {
 
     const formData = await req.formData();
     const file = formData.get('file') as File;
-    const filename = formData.get('filename') as string || file?.name || 'unknown';
+    const filename = (formData.get('filename') as string) || file?.name || 'unknown';
 
     if (!file) {
       throw new Error('No file provided');
@@ -39,20 +40,20 @@ serve(async (req) => {
     // Read Excel file with memory-efficient approach
     console.log('📥 Reading Excel file with memory optimization...');
     const arrayBuffer = await file.arrayBuffer();
-    
+
     // Use sheetRows to limit initial memory footprint
-    const workbook = XLSX.read(new Uint8Array(arrayBuffer), { 
-      type: 'array', 
-      sheetRows: 100,  // Only read first 100 rows initially
+    const workbook = XLSX.read(new Uint8Array(arrayBuffer), {
+      type: 'array',
+      sheetRows: 100, // Only read first 100 rows initially
       cellDates: false,
       cellNF: false,
-      cellHTML: false
+      cellHTML: false,
     });
-    
+
     // Get first sheet
     const sheetName = workbook.SheetNames[0];
     const worksheet = workbook.Sheets[sheetName];
-    
+
     // Parse just the first row to detect columns
     const headerRow = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as any[][];
     if (headerRow.length === 0) {
@@ -64,32 +65,59 @@ serve(async (req) => {
 
     // Smart column detection - find best match by checking data quality
     const nameHeaders = ['DESCRIPTION', 'Description', 'Product Name', 'Product', 'Item', 'NAME'];
-    const skuHeaders = ['CAT NUMBER', 'Code', 'SKU', 'Part Number', 'Product Code', 'PART NO', 'ITEM CODE'];
+    const skuHeaders = [
+      'CAT NUMBER',
+      'Code',
+      'SKU',
+      'Part Number',
+      'Product Code',
+      'PART NO',
+      'ITEM CODE',
+    ];
     const brandHeaders = ['MANUF', 'MANU', 'Manufacturer', 'Brand', 'BRAND', 'MFG'];
     const packHeaders = ['PACK QTY', 'Pack Qty', 'Pack', 'Quantity', 'QTY'];
     const unitHeaders = ['UNIT', 'PER', 'Unit', 'Per'];
     const discGroupHeaders = ['DISC GROUP', 'Disc Group', 'Group'];
 
     // Find non-price columns first
-    const nameCol = headers.find(h => nameHeaders.some(nh => h.toUpperCase().includes(nh.toUpperCase())));
-    const skuCol = headers.find(h => skuHeaders.some(sh => h.toUpperCase().includes(sh.toUpperCase())));
-    const brandCol = headers.find(h => brandHeaders.some(bh => h.toUpperCase().includes(bh.toUpperCase())));
+    const nameCol = headers.find((h) =>
+      nameHeaders.some((nh) => h.toUpperCase().includes(nh.toUpperCase()))
+    );
+    const skuCol = headers.find((h) =>
+      skuHeaders.some((sh) => h.toUpperCase().includes(sh.toUpperCase()))
+    );
+    const brandCol = headers.find((h) =>
+      brandHeaders.some((bh) => h.toUpperCase().includes(bh.toUpperCase()))
+    );
     // Strict pack column detection - must be exact match, no TRADE columns
-    const packCol = headers.find(h => {
+    const packCol = headers.find((h) => {
       const upper = h.toUpperCase();
       if (upper.includes('TRADE')) return false;
-      return packHeaders.some(ph => upper === ph.toUpperCase() || upper.includes('PACK QTY'));
+      return packHeaders.some((ph) => upper === ph.toUpperCase() || upper.includes('PACK QTY'));
     });
-    const unitCol = headers.find(h => unitHeaders.some(uh => h.toUpperCase().includes(uh.toUpperCase())));
-    const discGroupCol = headers.find(h => discGroupHeaders.some(dh => h.toUpperCase().includes(dh.toUpperCase())));
+    const unitCol = headers.find((h) =>
+      unitHeaders.some((uh) => h.toUpperCase().includes(uh.toUpperCase()))
+    );
+    const discGroupCol = headers.find((h) =>
+      discGroupHeaders.some((dh) => h.toUpperCase().includes(dh.toUpperCase()))
+    );
 
     // Map price columns - we'll use per-row fallback
-    const priceHeaders = ['TRADE2', 'TRADE1', 'TRADE', 'Price', 'Unit Price', 'Trade Price', 'Cost', 'PRICE'];
-    const potentialPriceCols = headers.filter(h => {
+    const priceHeaders = [
+      'TRADE2',
+      'TRADE1',
+      'TRADE',
+      'Price',
+      'Unit Price',
+      'Trade Price',
+      'Cost',
+      'PRICE',
+    ];
+    const potentialPriceCols = headers.filter((h) => {
       const upper = h.toUpperCase();
       // Exclude SPLIT PACK columns from price detection
       if (upper.includes('SPLIT') || upper.includes('PACK')) return false;
-      return priceHeaders.some(ph => upper.includes(ph.toUpperCase()));
+      return priceHeaders.some((ph) => upper.includes(ph.toUpperCase()));
     });
 
     console.log('🔍 Smart column mapping - Found potential price columns:', potentialPriceCols);
@@ -101,7 +129,7 @@ serve(async (req) => {
       brand: brandCol,
       pack: packCol,
       unit: unitCol,
-      discGroup: discGroupCol
+      discGroup: discGroupCol,
     });
 
     if (potentialPriceCols.length === 0 || !nameCol) {
@@ -110,22 +138,22 @@ serve(async (req) => {
 
     // Clear initial workbook from memory
     worksheet['!ref'] = null;
-    
+
     // Now re-read without row limit to get full data
     console.log('📊 Loading full dataset...');
-    const fullWorkbook = XLSX.read(new Uint8Array(arrayBuffer), { 
+    const fullWorkbook = XLSX.read(new Uint8Array(arrayBuffer), {
       type: 'array',
       cellDates: false,
       cellNF: false,
-      cellHTML: false
+      cellHTML: false,
     });
-    
+
     const fullWorksheet = fullWorkbook.Sheets[fullWorkbook.SheetNames[0]];
-    
+
     // Get row count
     const range = XLSX.utils.decode_range(fullWorksheet['!ref'] || 'A1');
     const totalRows = range.e.r;
-    
+
     console.log(`📊 Total rows: ${totalRows}`);
 
     // Process in very small chunks to minimise memory and stream inserts
@@ -138,7 +166,7 @@ serve(async (req) => {
       noSku: 0,
       noPrice: 0,
       invalidPrice: 0,
-      obsolete: 0
+      obsolete: 0,
     };
 
     // Buffer for DB inserts so we never hold all products in memory
@@ -146,7 +174,9 @@ serve(async (req) => {
     const buffer: any[] = [];
     const cacheIds: string[] = [];
 
-    console.log(`🔄 Streaming ${totalRows} rows in chunks of ${CHUNK_SIZE}, inserting every ${INSERT_CHUNK_SIZE} products...`);
+    console.log(
+      `🔄 Streaming ${totalRows} rows in chunks of ${CHUNK_SIZE}, inserting every ${INSERT_CHUNK_SIZE} products...`
+    );
 
     const flushBuffer = async (partLabel?: string) => {
       if (buffer.length === 0) return;
@@ -161,7 +191,7 @@ serve(async (req) => {
           materials_data: page,
           total_products: page.length,
           last_updated: new Date().toISOString(),
-          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+          expires_at: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString(),
         })
         .select()
         .single();
@@ -172,7 +202,9 @@ serve(async (req) => {
       }
 
       cacheIds.push(cacheEntry.id);
-      console.log(`✅ Inserted cache page ${partIndex} with ${page.length} products (total so far: ${totalProcessed})`);
+      console.log(
+        `✅ Inserted cache page ${partIndex} with ${page.length} products (total so far: ${totalProcessed})`
+      );
     };
 
     for (let startRow = 1; startRow <= totalRows; startRow += CHUNK_SIZE) {
@@ -182,12 +214,14 @@ serve(async (req) => {
       const chunk = XLSX.utils.sheet_to_json(fullWorksheet, {
         range: XLSX.utils.encode_range({
           s: { c: 0, r: startRow },
-          e: { c: range.e.c, r: endRow }
+          e: { c: range.e.c, r: endRow },
         }),
-        header: headers
+        header: headers,
       });
 
-      console.log(`📦 Chunk ${Math.floor(startRow / CHUNK_SIZE) + 1}: rows ${startRow}-${endRow} (${chunk.length} rows)`);
+      console.log(
+        `📦 Chunk ${Math.floor(startRow / CHUNK_SIZE) + 1}: rows ${startRow}-${endRow} (${chunk.length} rows)`
+      );
 
       // Process chunk immediately
       for (const row of chunk) {
@@ -244,7 +278,7 @@ serve(async (req) => {
         }
 
         // Parse pack quantity
-        const packQty = packCol ? (parseInt(String(row[packCol]).replace(/\D/g, '')) || 1) : 1;
+        const packQty = packCol ? parseInt(String(row[packCol]).replace(/\D/g, '')) || 1 : 1;
 
         // Get unit type
         const unit = unitCol ? String(row[unitCol] || 'EA').trim() : 'EA';
@@ -256,10 +290,12 @@ serve(async (req) => {
 
         const productName = String(name).trim();
         const productSku = String(sku).trim();
-        
+
         // Final validation before adding to buffer
         if (!productName || !productSku || !brand) {
-          console.warn(`⚠️ Skipping invalid product: name=${productName}, sku=${productSku}, brand=${brand}`);
+          console.warn(
+            `⚠️ Skipping invalid product: name=${productName}, sku=${productSku}, brand=${brand}`
+          );
           continue;
         }
 
@@ -267,15 +303,16 @@ serve(async (req) => {
           name: productName,
           sku: productSku,
           price: price.toFixed(2),
-          price_per_unit: packQty > 1
-            ? `£${unitPrice.toFixed(2)} per ${unit} (£${price.toFixed(2)} per pack of ${packQty})`
-            : `£${price.toFixed(2)} per ${unit}`,
+          price_per_unit:
+            packQty > 1
+              ? `£${unitPrice.toFixed(2)} per ${unit} (£${price.toFixed(2)} per pack of ${packQty})`
+              : `£${price.toFixed(2)} per ${unit}`,
           brand: brand,
           supplier: supplier,
           pack_qty: packQty,
           in_stock: true,
           category: 'Electrical Components',
-          specifications: packQty > 1 ? `Pack of ${packQty} ${unit}` : `Single ${unit}`
+          specifications: packQty > 1 ? `Pack of ${packQty} ${unit}` : `Single ${unit}`,
         });
         totalProcessed++;
 
@@ -293,7 +330,9 @@ serve(async (req) => {
     await flushBuffer();
 
     const totalSkipped = Object.values(skippedReasons).reduce((a, b) => a + b, 0);
-    console.log(`✅ Completed: ${totalProcessed} products | Skipped: ${totalSkipped} (${JSON.stringify(skippedReasons)})`);
+    console.log(
+      `✅ Completed: ${totalProcessed} products | Skipped: ${totalSkipped} (${JSON.stringify(skippedReasons)})`
+    );
 
     // Clear workbook from memory before triggering embeddings
     fullWorksheet['!ref'] = null;
@@ -303,9 +342,12 @@ serve(async (req) => {
     // Trigger embeddings generation by supplier (picks up all chunks)
     console.log('🧠 Triggering embeddings generation in background...');
 
-    const { data: embedData, error: embedError } = await supabase.functions.invoke('populate-pricing-embeddings', {
-      body: { supplier }
-    });
+    const { data: embedData, error: embedError } = await supabase.functions.invoke(
+      'populate-pricing-embeddings',
+      {
+        body: { supplier },
+      }
+    );
 
     const jobId = embedData?.job_id || null;
     if (embedError) {
@@ -314,42 +356,48 @@ serve(async (req) => {
       console.log('✅ Embeddings generation started with job_id:', jobId);
     }
 
-    return new Response(JSON.stringify({
-      success: true,
-      supplier: supplier,
-      cache_ids: cacheIds,
-      job_id: jobId,
-      products_found: totalProcessed,
-      products_skipped: totalSkipped,
-      total_rows: totalRows,
-      chunks_created: cacheIds.length,
-      message: `Successfully processed ${totalProcessed} products from ${supplier} in ${cacheIds.length} chunk(s). Embeddings generating in background.`
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        supplier: supplier,
+        cache_ids: cacheIds,
+        job_id: jobId,
+        products_found: totalProcessed,
+        products_skipped: totalSkipped,
+        total_rows: totalRows,
+        chunks_created: cacheIds.length,
+        message: `Successfully processed ${totalProcessed} products from ${supplier} in ${cacheIds.length} chunk(s). Embeddings generating in background.`,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error in parse-supplier-pricing:', error);
-    
+
     // Better error messages for users
     let errorMessage = 'Failed to process Excel file';
     if (error instanceof Error) {
       if (error.message.includes('CPU')) {
-        errorMessage = 'File too large - processing exceeded CPU limits. Try splitting into smaller files.';
+        errorMessage =
+          'File too large - processing exceeded CPU limits. Try splitting into smaller files.';
       } else if (error.message.includes('memory')) {
         errorMessage = 'File too large - exceeded memory limits. Try splitting into smaller files.';
       } else {
         errorMessage = error.message;
       }
     }
-    
-    return new Response(JSON.stringify({ 
-      error: errorMessage,
-      details: error instanceof Error ? error.message : String(error),
-      success: false
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+
+    return new Response(
+      JSON.stringify({
+        error: errorMessage,
+        details: error instanceof Error ? error.message : String(error),
+        success: false,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

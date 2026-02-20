@@ -36,7 +36,7 @@ interface VerificationRequest {
   issueDate?: string;
   expiryDate?: string;
   profileId: string;
-  documentId?: string;  // Document ID for reliable UPDATE
+  documentId?: string; // Document ID for reliable UPDATE
 }
 
 interface ExtractedData {
@@ -64,7 +64,7 @@ interface ExtractionConfidence {
 }
 
 interface VerificationResult {
-  status: "verified" | "needs_review" | "rejected";
+  status: 'verified' | 'needs_review' | 'rejected';
   confidence: number;
   extractedData: ExtractedData;
   extractionConfidence: ExtractionConfidence;
@@ -172,7 +172,7 @@ Look for:
 - Certificate of Insurance
 - Public Liability coverage
 - Professional Indemnity coverage
-- Employers Liability (if applicable)`
+- Employers Liability (if applicable)`,
 };
 
 serve(async (req) => {
@@ -182,7 +182,17 @@ serve(async (req) => {
 
   try {
     const body: VerificationRequest = await req.json();
-    const { fileUrl, documentType, documentName, profileId, documentId, issuingBody, documentNumber, issueDate, expiryDate } = body;
+    const {
+      fileUrl,
+      documentType,
+      documentName,
+      profileId,
+      documentId,
+      issuingBody,
+      documentNumber,
+      issueDate,
+      expiryDate,
+    } = body;
 
     console.log('[verify-document] Handler invoked', {
       documentId,
@@ -197,7 +207,7 @@ serve(async (req) => {
         JSON.stringify({
           error: 'Missing required fields: fileUrl, documentType, profileId',
           status: 'rejected',
-          confidence: 0
+          confidence: 0,
         }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -242,14 +252,18 @@ serve(async (req) => {
     const base64Image = arrayBufferToBase64(imageBuffer);
 
     // Determine MIME type from URL or default to jpeg
-    const mimeType = fileUrl.toLowerCase().includes('.png') ? 'image/png' :
-                     fileUrl.toLowerCase().includes('.pdf') ? 'application/pdf' :
-                     'image/jpeg';
+    const mimeType = fileUrl.toLowerCase().includes('.png')
+      ? 'image/png'
+      : fileUrl.toLowerCase().includes('.pdf')
+        ? 'application/pdf'
+        : 'image/jpeg';
 
     console.log(`📐 Image size: ${imageBuffer.byteLength} bytes`);
 
     // Get document-specific prompt or use generic
-    const documentPrompt = DOCUMENT_PROMPTS[documentType] || `You are analyzing a document. Extract all relevant identifying information including names, numbers, dates, and issuing organizations.`;
+    const documentPrompt =
+      DOCUMENT_PROMPTS[documentType] ||
+      `You are analyzing a document. Extract all relevant identifying information including names, numbers, dates, and issuing organizations.`;
 
     // Build the analysis prompt
     const systemPrompt = `${documentPrompt}
@@ -307,23 +321,29 @@ Respond with ONLY valid JSON in this exact format:
           headers: { 'Content-Type': 'application/json' },
           signal: abortController.signal,
           body: JSON.stringify({
-            contents: [{
-              role: 'user',
-              parts: [
-                { text: systemPrompt + `\n\nPlease analyze this ${documentType.replace('_', ' ')} document and extract all relevant information. The user provided document name: "${documentName}"${issuingBody ? `, issuing body: "${issuingBody}"` : ''}${documentNumber ? `, document number: "${documentNumber}"` : ''}.` },
-                {
-                  inlineData: {
-                    mimeType: mimeType,
-                    data: base64Image
-                  }
-                }
-              ]
-            }],
+            contents: [
+              {
+                role: 'user',
+                parts: [
+                  {
+                    text:
+                      systemPrompt +
+                      `\n\nPlease analyze this ${documentType.replace('_', ' ')} document and extract all relevant information. The user provided document name: "${documentName}"${issuingBody ? `, issuing body: "${issuingBody}"` : ''}${documentNumber ? `, document number: "${documentNumber}"` : ''}.`,
+                  },
+                  {
+                    inlineData: {
+                      mimeType: mimeType,
+                      data: base64Image,
+                    },
+                  },
+                ],
+              },
+            ],
             generationConfig: {
               maxOutputTokens: 2000,
               temperature: 0.1,
-              responseMimeType: 'application/json'
-            }
+              responseMimeType: 'application/json',
+            },
           }),
         }
       );
@@ -363,7 +383,7 @@ Respond with ONLY valid JSON in this exact format:
         confidence: 0.5,
         extractedData: {},
         extractionConfidence: {},
-        suggestions: ['AI response parsing failed. Please try uploading again or contact support.']
+        suggestions: ['AI response parsing failed. Please try uploading again or contact support.'],
       };
     }
 
@@ -387,23 +407,27 @@ Respond with ONLY valid JSON in this exact format:
       result.extractionConfidence.expiryDate = 1.0;
     }
 
-    console.log(`✅ Verification complete - Status: ${result.status}, Confidence: ${result.confidence}`);
+    console.log(
+      `✅ Verification complete - Status: ${result.status}, Confidence: ${result.confidence}`
+    );
 
     // Update the document record in the database
     // Use documentId if provided (preferred), otherwise fall back to file_path match
-    let updateQuery = supabase
-      .from('elec_id_documents')
-      .update({
-        verification_status: result.status === 'verified' ? 'verified' :
-                            result.status === 'needs_review' ? 'needs_review' : 'rejected',
-        verification_confidence: result.confidence,
-        extracted_data: result.extractedData,
-        extraction_confidence: result.extractionConfidence,
-        verified_at: result.status === 'verified' ? new Date().toISOString() : null,
-        verification_method: 'ai_vision',
-        rejection_reason: result.rejectionReason || null,
-        updated_at: new Date().toISOString()
-      });
+    let updateQuery = supabase.from('elec_id_documents').update({
+      verification_status:
+        result.status === 'verified'
+          ? 'verified'
+          : result.status === 'needs_review'
+            ? 'needs_review'
+            : 'rejected',
+      verification_confidence: result.confidence,
+      extracted_data: result.extractedData,
+      extraction_confidence: result.extractionConfidence,
+      verified_at: result.status === 'verified' ? new Date().toISOString() : null,
+      verification_method: 'ai_vision',
+      rejection_reason: result.rejectionReason || null,
+      updated_at: new Date().toISOString(),
+    });
 
     if (documentId) {
       // Preferred: Update by document ID (reliable)
@@ -434,7 +458,7 @@ Respond with ONLY valid JSON in this exact format:
           verified_at: new Date().toISOString(),
           verification_tier: 'verified',
           tier_updated_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+          updated_at: new Date().toISOString(),
         })
         .eq('id', profileId);
 
@@ -445,20 +469,19 @@ Respond with ONLY valid JSON in this exact format:
       }
     }
 
-    return new Response(
-      JSON.stringify(result),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
-    );
-
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
   } catch (error) {
     console.error('[verify-document] Error:', error);
 
     // Error recovery: mark the document as needs_review + flagged so it doesn't stay stuck
     try {
-      const body = await req.clone().json().catch(() => null);
+      const body = await req
+        .clone()
+        .json()
+        .catch(() => null);
       const docId = body?.documentId;
       if (docId) {
         const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -489,11 +512,14 @@ Respond with ONLY valid JSON in this exact format:
         extractedData: {},
         extractionConfidence: {},
         rejectionReason: error instanceof Error ? error.message : 'Unknown error occurred',
-        suggestions: ['Please try uploading the document again', 'Ensure the image is clear and well-lit']
+        suggestions: [
+          'Please try uploading the document again',
+          'Ensure the image is clear and well-lit',
+        ],
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

@@ -37,9 +37,7 @@ serve(async (req: Request) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     );
 
-    let invoiceQuery = supabase
-      .from('quotes')
-      .select(`
+    let invoiceQuery = supabase.from('quotes').select(`
         id,
         invoice_number,
         invoice_total,
@@ -62,9 +60,10 @@ serve(async (req: Request) => {
     }
 
     // Parse client data
-    const clientData = typeof invoice.client_data === 'string'
-      ? JSON.parse(invoice.client_data)
-      : invoice.client_data;
+    const clientData =
+      typeof invoice.client_data === 'string'
+        ? JSON.parse(invoice.client_data)
+        : invoice.client_data;
 
     // Fetch company profile for contact details
     let companyName: string | null = null;
@@ -99,10 +98,9 @@ serve(async (req: Request) => {
 
     console.log(`Public invoice data requested for: ${publicData.invoice_number}`);
 
-    return new Response(
-      JSON.stringify({ data: publicData }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ data: publicData }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return handleError(error);
   }

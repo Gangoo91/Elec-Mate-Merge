@@ -1,4 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { corsHeaders } from '../_shared/cors.ts';
@@ -11,12 +11,25 @@ const OPENAI_MODEL = Deno.env.get('OPENAI_MODEL') || 'gpt-5-mini';
 function shouldEnrichChunk(item: any): boolean {
   const content = (item.content || '').toLowerCase();
   if (content.length < 200) return false; // Min 200 chars for design content
-  
+
   // Design-specific terms
-  const designTerms = ['voltage', 'current', 'cable', 'circuit', 'load', 'amp', 'volt', 
-    'calculation', 'formula', 'regulation', 'bs 7671', 'design', 'install'];
-  const termCount = designTerms.filter(term => content.includes(term)).length;
-  
+  const designTerms = [
+    'voltage',
+    'current',
+    'cable',
+    'circuit',
+    'load',
+    'amp',
+    'volt',
+    'calculation',
+    'formula',
+    'regulation',
+    'bs 7671',
+    'design',
+    'install',
+  ];
+  const termCount = designTerms.filter((term) => content.includes(term)).length;
+
   return termCount >= 3; // Must have at least 3 design terms
 }
 
@@ -34,7 +47,7 @@ function validateDesignFacet(facet: any): boolean {
 // ==================== TYPE HELPERS ====================
 function ensureArrayOfStrings(value: any): string[] {
   if (!value) return [];
-  if (Array.isArray(value)) return value.map(v => String(v));
+  if (Array.isArray(value)) return value.map((v) => String(v));
   if (typeof value === 'string') return [value];
   return [];
 }
@@ -49,7 +62,7 @@ function toJsonOrNull(value: any): any {
 function ensureJsonArray(value: any): any[] {
   if (!value) return [];
   if (Array.isArray(value)) {
-    return value.map(v => {
+    return value.map((v) => {
       if (typeof v === 'object') return v;
       if (typeof v === 'string') return { step: v };
       return { value: String(v) };
@@ -60,9 +73,15 @@ function ensureJsonArray(value: any): any[] {
 }
 
 // ==================== GPT ENRICHMENT ====================
-async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0): Promise<any> {
+async function callGPTForFacets(
+  id: string,
+  title: string,
+  content: string,
+  logger: any,
+  retryCount = 0
+): Promise<any> {
   let processedContent = content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
-  
+
   // Remove TOC/header noise
   processedContent = processedContent
     .replace(/^table of contents[\s\S]{0,500}/gim, '')
@@ -71,7 +90,7 @@ async function callGPTForFacets(id: string, title: string, content: string, logg
     .replace(/^figure \d+\.\s*$/gim, '')
     .replace(/^page \d+\s*$/gim, '')
     .trim();
-  
+
   const systemPrompt = `You are a precision parser extracting structured electrical design knowledge from UK regulatory and guidance documents (BS 7671, Guidance Notes, design guides).
 
 PRIMARY DIRECTIVE: EXTRACT FORMULAS > REGULATIONS > EXAMPLES > CONCEPTS
@@ -161,18 +180,21 @@ CRITICAL REQUIREMENT: Count your output. Return EXACTLY 8 facets.
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: OPENAI_MODEL,
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: `Source: ${title}\n\n${processedContent}\n\nExtract EXACTLY 8 facets.` }
+          {
+            role: 'user',
+            content: `Source: ${title}\n\n${processedContent}\n\nExtract EXACTLY 8 facets.`,
+          },
         ],
         max_completion_tokens: 10000,
-        temperature: undefined
-      })
+        temperature: undefined,
+      }),
     });
 
     clearTimeout(timeout);
@@ -183,7 +205,7 @@ CRITICAL REQUIREMENT: Count your output. Return EXACTLY 8 facets.
 
     const data = await response.json();
     const responseText = data.choices[0].message.content.trim();
-    
+
     // Extract JSON from response
     const jsonMatch = responseText.match(/\{[\s\S]*"facets"[\s\S]*\}/);
     if (!jsonMatch) {
@@ -195,7 +217,7 @@ CRITICAL REQUIREMENT: Count your output. Return EXACTLY 8 facets.
     }
 
     const parsedResponse = JSON.parse(jsonMatch[0]);
-    
+
     if (!parsedResponse?.facets || !Array.isArray(parsedResponse.facets)) {
       if (retryCount === 0) {
         logger.info('Retrying due to invalid structure...');
@@ -203,9 +225,9 @@ CRITICAL REQUIREMENT: Count your output. Return EXACTLY 8 facets.
       }
       return null;
     }
-    
+
     const validFacets = parsedResponse.facets.filter(validateDesignFacet);
-    
+
     if (validFacets.length === 0) {
       if (retryCount === 0) {
         logger.info('Retrying due to 0 valid facets...');
@@ -213,18 +235,18 @@ CRITICAL REQUIREMENT: Count your output. Return EXACTLY 8 facets.
       }
       return null;
     }
-    
+
     logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`);
     return { facets: validFacets };
   } catch (error) {
     clearTimeout(timeout);
     logger.error('GPT call failed:', error);
-    
+
     if (retryCount === 0) {
       logger.info('Retrying after error...');
       return callGPTForFacets(id, title, content, logger, 1);
     }
-    
+
     return null;
   }
 }
@@ -234,68 +256,77 @@ function computeFacetHash(facet: any): string {
   const canonical = [
     (facet.primary_topic || '').toLowerCase().trim(),
     (facet.design_category || '').toLowerCase().trim(),
-    (facet.keywords || []).map((k: string) => k.toLowerCase().trim()).sort().join('|'),
-    (facet.bs7671_regulations || []).map((r: string) => r.toLowerCase().trim()).sort().join('|')
+    (facet.keywords || [])
+      .map((k: string) => k.toLowerCase().trim())
+      .sort()
+      .join('|'),
+    (facet.bs7671_regulations || [])
+      .map((r: string) => r.toLowerCase().trim())
+      .sort()
+      .join('|'),
   ].join('::');
-  
+
   const encoder = new TextEncoder();
   const data = encoder.encode(canonical);
-  return Array.from(data).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+  return Array.from(data)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
+    .substring(0, 32);
 }
 
 function scoreFacetQuality(facet: any): number {
   let score = 0;
-  
+
   // Formula presence (3 points - highest priority)
   if (facet.formulas && facet.formulas.length > 0) score += 3;
-  
+
   // BS 7671 regulations (2 points)
   if (facet.bs7671_regulations && facet.bs7671_regulations.length > 0) score += 2;
-  
+
   // Worked examples (2 points)
   if (facet.worked_examples && facet.worked_examples.length > 0) score += 2;
-  
+
   // Table references (1 point)
   if (facet.table_refs && facet.table_refs.length > 0) score += 1;
-  
+
   // Calculation steps (1 point)
   if (facet.calculation_steps && facet.calculation_steps.length >= 3) score += 1;
-  
+
   // Required parameters (1 point)
   if (facet.required_parameters && facet.required_parameters.length >= 3) score += 1;
-  
+
   return score;
 }
 
 function selectTop8WithDiversity(facets: any[]): any[] {
   if (facets.length <= 8) return facets;
-  
-  const scored = facets.map(f => ({
+
+  const scored = facets.map((f) => ({
     facet: f,
     score: scoreFacetQuality(f),
     category: f.design_category || 'unknown',
-    type: f.facet_type || 'unknown'
+    type: f.facet_type || 'unknown',
   }));
-  
+
   // Apply light diversity penalty
   const categoryCounts: Record<string, number> = {};
-  scored.forEach(s => {
+  scored.forEach((s) => {
     const key = `${s.category}:${s.type}`;
     categoryCounts[key] = (categoryCounts[key] || 0) + 1;
     if (categoryCounts[key] > 1) {
       s.score -= 0.5;
     }
   });
-  
+
   scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, 8).map(s => s.facet);
+  return scored.slice(0, 8).map((s) => s.facet);
 }
 
 // ==================== ENRICHMENT ====================
 async function enrichDesignKnowledge(supabase: any, item: any, logger: any): Promise<number> {
   const content = item.content || '';
   const title = item.topic || 'Untitled';
-  
+
   if (!content || content.length < 200) {
     logger.warn('Content too short', { id: item.id, length: content.length });
     return 0;
@@ -306,35 +337,42 @@ async function enrichDesignKnowledge(supabase: any, item: any, logger: any): Pro
     .from('design_knowledge_intelligence')
     .select('*', { count: 'exact', head: true })
     .eq('design_knowledge_id', item.id);
-  
+
   if (existingCount && existingCount >= 8) {
     logger.info(`⏭️ Already enriched (${existingCount} facets)`, { id: item.id });
     return 0;
   }
-  
+
   const maxNewFacets = 8 - (existingCount || 0);
-  logger.info(`🔍 Extracting (need ${maxNewFacets} more facets, ${existingCount || 0} exist)`, { id: item.id });
+  logger.info(`🔍 Extracting (need ${maxNewFacets} more facets, ${existingCount || 0} exist)`, {
+    id: item.id,
+  });
 
   const intelligence = await callGPTForFacets(item.id, title, content, logger);
-  
+
   if (!intelligence || !intelligence.facets || intelligence.facets.length === 0) {
     logger.warn('No facets extracted', { id: item.id });
     return 0;
   }
 
   if (intelligence.facets.length > 10) {
-    logger.warn(`⚠️ GPT generated ${intelligence.facets.length} facets (expected 8), applying quality filter`, { id: item.id });
+    logger.warn(
+      `⚠️ GPT generated ${intelligence.facets.length} facets (expected 8), applying quality filter`,
+      { id: item.id }
+    );
   }
 
   const facetsWithHash = intelligence.facets.map((facet: any) => ({
     ...facet,
     facet_hash: computeFacetHash(facet),
-    quality_score: scoreFacetQuality(facet)
+    quality_score: scoreFacetQuality(facet),
   }));
-  
+
   const top8Facets = selectTop8WithDiversity(facetsWithHash).slice(0, maxNewFacets);
-  
-  logger.info(`✅ Selected ${top8Facets.length}/${intelligence.facets.length} facets (avg quality: ${(top8Facets.reduce((sum, f) => sum + (f.quality_score || 0), 0) / top8Facets.length).toFixed(1)})`);
+
+  logger.info(
+    `✅ Selected ${top8Facets.length}/${intelligence.facets.length} facets (avg quality: ${(top8Facets.reduce((sum, f) => sum + (f.quality_score || 0), 0) / top8Facets.length).toFixed(1)})`
+  );
 
   const facetsToInsert = top8Facets.map((facet: any) => ({
     design_knowledge_id: item.id,
@@ -367,7 +405,7 @@ async function enrichDesignKnowledge(supabase: any, item: any, logger: any): Pro
     facet_hash: facet.facet_hash,
     quality_score: facet.quality_score || 0,
     source: item.source || 'design-guide',
-    enrichment_version: 'v1'
+    enrichment_version: 'v1',
   }));
 
   const { data: insertedData, error: insertError } = await supabase
@@ -376,10 +414,10 @@ async function enrichDesignKnowledge(supabase: any, item: any, logger: any): Pro
     .select();
 
   if (insertError) {
-    logger.error('❌ Insert failed', { 
+    logger.error('❌ Insert failed', {
       error: insertError.message,
       code: insertError.code,
-      id: item.id
+      id: item.id,
     });
     return 0;
   }
@@ -389,9 +427,11 @@ async function enrichDesignKnowledge(supabase: any, item: any, logger: any): Pro
     return 0;
   }
 
-  logger.info(`✅ Inserted ${insertedData.length} facets`, { 
+  logger.info(`✅ Inserted ${insertedData.length} facets`, {
     id: item.id,
-    avgConfidence: (insertedData.reduce((sum, f) => sum + f.confidence_score, 0) / insertedData.length).toFixed(2)
+    avgConfidence: (
+      insertedData.reduce((sum, f) => sum + f.confidence_score, 0) / insertedData.length
+    ).toFixed(2),
   });
 
   return insertedData.length;
@@ -408,7 +448,9 @@ serve(async (req) => {
 
   try {
     const { batchId, batchSize, startFrom } = await req.json();
-    logger.info(`🚀 Design knowledge enrichment batch ${batchId}: ${batchSize} items from ${startFrom}`);
+    logger.info(
+      `🚀 Design knowledge enrichment batch ${batchId}: ${batchSize} items from ${startFrom}`
+    );
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -428,7 +470,7 @@ serve(async (req) => {
     if (!items || items.length === 0) {
       logger.info(`No items found for batch ${batchId}`);
       return new Response(JSON.stringify({ success: true, total_facets: 0 }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
@@ -437,10 +479,13 @@ serve(async (req) => {
     const qualityItems = items.filter(shouldEnrichChunk);
     logger.info(`📊 Filtered ${items.length} → ${qualityItems.length} quality items`);
 
-    await supabase.from('batch_progress').update({
-      status: 'processing',
-      started_at: new Date().toISOString()
-    }).eq('id', batchId);
+    await supabase
+      .from('batch_progress')
+      .update({
+        status: 'processing',
+        started_at: new Date().toISOString(),
+      })
+      .eq('id', batchId);
 
     let totalFacets = 0;
     let lastHeartbeat = Date.now();
@@ -448,13 +493,16 @@ serve(async (req) => {
     // Process with concurrency limit (2 at a time)
     for (let i = 0; i < qualityItems.length; i += 2) {
       const batch = qualityItems.slice(i, Math.min(i + 2, qualityItems.length));
-      
+
       if (Date.now() - lastHeartbeat > 15000) {
-        await supabase.from('batch_progress').update({
-          items_processed: i,
-          updated_at: new Date().toISOString(),
-          data: { last_heartbeat: new Date().toISOString(), total_facets: totalFacets }
-        }).eq('id', batchId);
+        await supabase
+          .from('batch_progress')
+          .update({
+            items_processed: i,
+            updated_at: new Date().toISOString(),
+            data: { last_heartbeat: new Date().toISOString(), total_facets: totalFacets },
+          })
+          .eq('id', batchId);
         lastHeartbeat = Date.now();
       }
 
@@ -477,31 +525,39 @@ serve(async (req) => {
       }
     }
 
-    await supabase.from('batch_progress').update({
-      status: 'completed',
-      items_processed: qualityItems.length,
-      completed_at: new Date().toISOString(),
-      data: { total_facets: totalFacets }
-    }).eq('id', batchId);
+    await supabase
+      .from('batch_progress')
+      .update({
+        status: 'completed',
+        items_processed: qualityItems.length,
+        completed_at: new Date().toISOString(),
+        data: { total_facets: totalFacets },
+      })
+      .eq('id', batchId);
 
     logger.info(`✅ Batch ${batchId} completed: ${totalFacets} facets created`);
 
-    return new Response(JSON.stringify({ 
-      success: true, 
-      items_processed: qualityItems.length,
-      total_facets: totalFacets 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        items_processed: qualityItems.length,
+        total_facets: totalFacets,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error: any) {
     logger.error('Batch failed', { error: error.message });
-    return new Response(JSON.stringify({ 
-      success: false, 
-      error: error.message 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

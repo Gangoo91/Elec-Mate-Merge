@@ -1,26 +1,27 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import postgres from "https://deno.land/x/postgresjs@v3.4.5/mod.js";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import postgres from 'https://deno.land/x/postgresjs@v3.4.5/mod.js';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
-  const databaseUrl = Deno.env.get("SUPABASE_DB_URL");
+  const databaseUrl = Deno.env.get('SUPABASE_DB_URL');
 
   if (!databaseUrl) {
-    return new Response(
-      JSON.stringify({ success: false, error: "Database URL not available" }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
-    );
+    return new Response(JSON.stringify({ success: false, error: 'Database URL not available' }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 500,
+    });
   }
 
-  const sql = postgres(databaseUrl, { ssl: "require" });
+  const sql = postgres(databaseUrl, { ssl: 'require' });
   const results: string[] = [];
 
   try {
@@ -50,9 +51,9 @@ serve(async (req) => {
           updated_at TIMESTAMPTZ DEFAULT NOW()
         )
       `;
-      results.push("Created marketplace_suppliers table");
+      results.push('Created marketplace_suppliers table');
     } else {
-      results.push("marketplace_suppliers already exists");
+      results.push('marketplace_suppliers already exists');
     }
 
     // 2. Create marketplace_products table
@@ -92,7 +93,7 @@ serve(async (req) => {
           CONSTRAINT unique_supplier_sku UNIQUE (supplier_id, sku)
         )
       `;
-      results.push("Created marketplace_products table");
+      results.push('Created marketplace_products table');
 
       // Add search_vector column
       await sql`
@@ -105,9 +106,9 @@ serve(async (req) => {
           setweight(to_tsvector('english', COALESCE(category, '')), 'C')
         ) STORED
       `;
-      results.push("Added search_vector column");
+      results.push('Added search_vector column');
     } else {
-      results.push("marketplace_products already exists");
+      results.push('marketplace_products already exists');
     }
 
     // 3. Create marketplace_coupon_codes table
@@ -139,9 +140,9 @@ serve(async (req) => {
           CONSTRAINT unique_supplier_code UNIQUE (supplier_id, code)
         )
       `;
-      results.push("Created marketplace_coupon_codes table");
+      results.push('Created marketplace_coupon_codes table');
     } else {
-      results.push("marketplace_coupon_codes already exists");
+      results.push('marketplace_coupon_codes already exists');
     }
 
     // 4. Create marketplace_deals table
@@ -172,9 +173,9 @@ serve(async (req) => {
           created_at TIMESTAMPTZ DEFAULT NOW()
         )
       `;
-      results.push("Created marketplace_deals table");
+      results.push('Created marketplace_deals table');
     } else {
-      results.push("marketplace_deals already exists");
+      results.push('marketplace_deals already exists');
     }
 
     // 5. Create marketplace_scrape_jobs table
@@ -203,9 +204,9 @@ serve(async (req) => {
           created_at TIMESTAMPTZ DEFAULT NOW()
         )
       `;
-      results.push("Created marketplace_scrape_jobs table");
+      results.push('Created marketplace_scrape_jobs table');
     } else {
-      results.push("marketplace_scrape_jobs already exists");
+      results.push('marketplace_scrape_jobs already exists');
     }
 
     // 6. Create indexes
@@ -219,7 +220,7 @@ serve(async (req) => {
       await sql`CREATE INDEX IF NOT EXISTS idx_marketplace_coupons_supplier ON public.marketplace_coupon_codes(supplier_id)`;
       await sql`CREATE INDEX IF NOT EXISTS idx_marketplace_deals_active ON public.marketplace_deals(is_active, expires_at) WHERE is_active = TRUE`;
       await sql`CREATE INDEX IF NOT EXISTS idx_marketplace_deals_supplier ON public.marketplace_deals(supplier_id)`;
-      results.push("Created indexes");
+      results.push('Created indexes');
     } catch (e: any) {
       results.push(`Index creation note: ${e.message}`);
     }
@@ -231,7 +232,7 @@ serve(async (req) => {
       await sql`ALTER TABLE public.marketplace_coupon_codes ENABLE ROW LEVEL SECURITY`;
       await sql`ALTER TABLE public.marketplace_deals ENABLE ROW LEVEL SECURITY`;
       await sql`ALTER TABLE public.marketplace_scrape_jobs ENABLE ROW LEVEL SECURITY`;
-      results.push("Enabled RLS on all tables");
+      results.push('Enabled RLS on all tables');
     } catch (e: any) {
       results.push(`RLS note: ${e.message}`);
     }
@@ -247,7 +248,7 @@ serve(async (req) => {
       await sql`CREATE POLICY IF NOT EXISTS "Service role full access coupons" ON public.marketplace_coupon_codes FOR ALL USING (auth.role() = 'service_role')`;
       await sql`CREATE POLICY IF NOT EXISTS "Service role full access deals" ON public.marketplace_deals FOR ALL USING (auth.role() = 'service_role')`;
       await sql`CREATE POLICY IF NOT EXISTS "Service role full access scrape jobs" ON public.marketplace_scrape_jobs FOR ALL USING (auth.role() = 'service_role')`;
-      results.push("Created RLS policies");
+      results.push('Created RLS policies');
     } catch (e: any) {
       results.push(`RLS policies note: ${e.message}`);
     }
@@ -270,7 +271,7 @@ serve(async (req) => {
           coupons_page_url = EXCLUDED.coupons_page_url,
           updated_at = NOW()
       `;
-      results.push("Seeded suppliers data");
+      results.push('Seeded suppliers data');
     } catch (e: any) {
       results.push(`Suppliers seed note: ${e.message}`);
     }
@@ -280,21 +281,21 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Marketplace migration completed",
-        results
+        message: 'Marketplace migration completed',
+        results,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (err: any) {
     await sql.end();
-    console.error("Migration error:", err);
+    console.error('Migration error:', err);
     return new Response(
       JSON.stringify({
         success: false,
         error: err.message,
-        results
+        results,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
 });

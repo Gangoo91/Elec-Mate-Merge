@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface GenerateElecIdRequest {
@@ -46,7 +47,7 @@ serve(async (req: Request): Promise<Response> => {
         JSON.stringify({
           success: true,
           elec_id_number: existingProfile.elec_id_number,
-          message: 'Elec-ID already exists'
+          message: 'Elec-ID already exists',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -84,15 +85,15 @@ serve(async (req: Request): Promise<Response> => {
       JSON.stringify({
         success: true,
         elec_id_number: elecIdNumber,
-        message: 'Elec-ID generated successfully'
+        message: 'Elec-ID generated successfully',
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: any) {
     console.error('Error generating Elec-ID:', error);
-    return new Response(
-      JSON.stringify({ error: error.message || 'Failed to generate Elec-ID' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message || 'Failed to generate Elec-ID' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

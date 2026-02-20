@@ -17,25 +17,25 @@ interface TenderProject {
 }
 
 async function fetchTenders(): Promise<TenderProject[]> {
-  const baseUrl = "https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search";
+  const baseUrl = 'https://www.contractsfinder.service.gov.uk/Published/Notices/OCDS/Search';
 
   const params = new URLSearchParams({
-    stages: "award", // only awarded contracts
-    q: "latest major electrical infrastructure", // ✅ keyword filter
-    size: "20", // results per page
-    page: "1", // page number
+    stages: 'award', // only awarded contracts
+    q: 'latest major electrical infrastructure', // ✅ keyword filter
+    size: '20', // results per page
+    page: '1', // page number
   });
 
   const url = `${baseUrl}?${params.toString()}`;
 
   try {
     console.log(`Fetching from URL: ${url}`);
-    
+
     const res = await fetch(url, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        Accept: "application/json",
-        "User-Agent": "Supabase-Edge-Function/1.0",
+        Accept: 'application/json',
+        'User-Agent': 'Supabase-Edge-Function/1.0',
       },
     });
 
@@ -48,7 +48,7 @@ async function fetchTenders(): Promise<TenderProject[]> {
     console.log(`Found ${data.releases?.length || 0} releases`);
 
     if (!data.releases || !Array.isArray(data.releases)) {
-      console.warn("No releases found in response");
+      console.warn('No releases found in response');
       return [];
     }
 
@@ -56,30 +56,34 @@ async function fetchTenders(): Promise<TenderProject[]> {
       const tender = tenderData.tender || {};
       const buyer = tenderData.buyer || {};
       const award = (tenderData.awards && tenderData.awards[0]) || {};
-      const supplierNames = award.suppliers ? award.suppliers.map((s: any) => s.name).join(", ") : "";
+      const supplierNames = award.suppliers
+        ? award.suppliers.map((s: any) => s.name).join(', ')
+        : '';
       const isAwarded = award.suppliers && award.suppliers.length > 0;
 
       return {
-        status: tender.status || "",
-        category: tender.classification?.description || "",
-        project_name: tender.title || "",
-        description: tender.description || "",
-        client: buyer.name || "",
-        contract_value: award.value ? `${award.value.amount} ${award.value.currency}` : "",
-        duration: award.contractPeriod ? `${award.contractPeriod.startDate} to ${award.contractPeriod.endDate}` : "",
+        status: tender.status || '',
+        category: tender.classification?.description || '',
+        project_name: tender.title || '',
+        description: tender.description || '',
+        client: buyer.name || '',
+        contract_value: award.value ? `${award.value.amount} ${award.value.currency}` : '',
+        duration: award.contractPeriod
+          ? `${award.contractPeriod.startDate} to ${award.contractPeriod.endDate}`
+          : '',
         location: `${tenderData?.parties?.[0]?.address?.locality}, ${tenderData?.parties?.[0]?.address?.countryName}`,
         contractors: supplierNames,
-        start_date: award.contractPeriod?.startDate || "",
-        details_link: award.documents?.[0]?.url || "",
-        project_link: buyer.details?.url || "",
-        awarded: isAwarded
+        start_date: award.contractPeriod?.startDate || '',
+        details_link: award.documents?.[0]?.url || '',
+        project_link: buyer.details?.url || '',
+        awarded: isAwarded,
       };
     });
 
     console.log(`Processed ${awardedContracts.length} contracts`);
     return awardedContracts;
   } catch (err) {
-    console.error("Error fetching data:", err);
+    console.error('Error fetching data:', err);
     return [];
   }
 }
@@ -91,11 +95,11 @@ Deno.serve(async (req) => {
   }
 
   try {
-    console.log("Fetching major projects...");
+    console.log('Fetching major projects...');
     const projects = await fetchTenders();
-    
+
     console.log(`Returning ${projects.length} projects`);
-    
+
     return new Response(JSON.stringify({ projects }), {
       headers: {
         ...corsHeaders,
@@ -104,9 +108,12 @@ Deno.serve(async (req) => {
     });
   } catch (error) {
     console.error('Error in fetch-projects function:', error);
-    
+
     return new Response(
-      JSON.stringify({ error: 'Failed to fetch projects', details: error instanceof Error ? error.message : 'Unknown error occurred' }),
+      JSON.stringify({
+        error: 'Failed to fetch projects',
+        details: error instanceof Error ? error.message : 'Unknown error occurred',
+      }),
       {
         headers: {
           ...corsHeaders,

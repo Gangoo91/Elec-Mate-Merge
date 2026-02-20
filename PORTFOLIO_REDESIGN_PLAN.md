@@ -10,32 +10,32 @@ This document outlines the complete redesign of the portfolio system to make it 
 
 ### What You Already Have (Database)
 
-| Resource | Count | Status |
-|----------|-------|--------|
-| Qualifications requiring portfolio | 15 | Defined |
-| Portfolio categories with criteria | 63 | Defined |
-| Learning outcomes mapped | ~250+ | Defined |
-| Assessment criteria defined | ~300+ | Defined |
+| Resource                           | Count | Status  |
+| ---------------------------------- | ----- | ------- |
+| Qualifications requiring portfolio | 15    | Defined |
+| Portfolio categories with criteria | 63    | Defined |
+| Learning outcomes mapped           | ~250+ | Defined |
+| Assessment criteria defined        | ~300+ | Defined |
 
 ### Qualifications in Your System
 
-| Awarding Body | Qualification | Code | Categories |
-|---------------|---------------|------|------------|
-| **City & Guilds** | Electrotechnical (Apprenticeship) | 5357 | 3 |
-| **City & Guilds** | NVQ Installing Electrotechnical | 2357 | 2 |
-| **City & Guilds** | Experienced Worker | 2346-03 | 1 |
-| **City & Guilds** | T Level BSE Electrical | 8202 | 5 |
-| **City & Guilds** | BSE Installer Apprenticeship | 3529 | 10 |
-| **City & Guilds** | MOET Apprenticeship | MOET | 5 |
-| **EAL** | Installation/Maintenance Apprenticeship | 603/3895/8 | 3 |
-| **EAL** | Electrotechnical (Installation) NVQ | 603/3929/9 | 4 |
-| **EAL** | Electrotechnical (Maintenance) NVQ | 603/3928/7 | 4 |
-| **EAL** | Experienced Worker | 603/4027/6 | 4 |
-| **EAL** | T Level BSE Electrical | 603/5933/7 | 5 |
-| **EAL** | BSE Installer Apprenticeship | 603/5806/9 | 4 |
-| **EAL** | BSE Craftsperson | 603/0149/3 | 4 |
-| **EAL** | AM2 Gateway | 600/4337/4 | 4 |
-| **ECS** | Experienced Worker | ELEC-EXP-WORKER | 8 |
+| Awarding Body     | Qualification                           | Code            | Categories |
+| ----------------- | --------------------------------------- | --------------- | ---------- |
+| **City & Guilds** | Electrotechnical (Apprenticeship)       | 5357            | 3          |
+| **City & Guilds** | NVQ Installing Electrotechnical         | 2357            | 2          |
+| **City & Guilds** | Experienced Worker                      | 2346-03         | 1          |
+| **City & Guilds** | T Level BSE Electrical                  | 8202            | 5          |
+| **City & Guilds** | BSE Installer Apprenticeship            | 3529            | 10         |
+| **City & Guilds** | MOET Apprenticeship                     | MOET            | 5          |
+| **EAL**           | Installation/Maintenance Apprenticeship | 603/3895/8      | 3          |
+| **EAL**           | Electrotechnical (Installation) NVQ     | 603/3929/9      | 4          |
+| **EAL**           | Electrotechnical (Maintenance) NVQ      | 603/3928/7      | 4          |
+| **EAL**           | Experienced Worker                      | 603/4027/6      | 4          |
+| **EAL**           | T Level BSE Electrical                  | 603/5933/7      | 5          |
+| **EAL**           | BSE Installer Apprenticeship            | 603/5806/9      | 4          |
+| **EAL**           | BSE Craftsperson                        | 603/0149/3      | 4          |
+| **EAL**           | AM2 Gateway                             | 600/4337/4      | 4          |
+| **ECS**           | Experienced Worker                      | ELEC-EXP-WORKER | 8          |
 
 ### Critical Gaps Identified
 
@@ -321,12 +321,14 @@ CREATE TABLE college_student_assignments (
 ### Replace CollegeContext Mock Data
 
 **Current (Mock):**
+
 ```typescript
 // src/contexts/CollegeContext.tsx
 const [portfolios, setPortfolios] = useState<CollegePortfolio[]>(mockPortfolios);
 ```
 
 **New (Supabase):**
+
 ```typescript
 // Create new hooks:
 // src/hooks/college/useCollegePortfolios.ts
@@ -503,54 +505,54 @@ src/components/college/portfolio-review/
 
 ### Sprint 1: Database & Core Infrastructure (Week 1-2)
 
-| Task | Priority | Est. Hours |
-|------|----------|------------|
-| Create all new database tables | Critical | 4 |
-| Set up RLS policies | Critical | 4 |
-| Create college_student_assignments seeding | High | 2 |
-| Build useCollegePortfolios hook | Critical | 4 |
-| Build usePortfolioSubmissions hook | Critical | 4 |
-| Connect PortfolioSection to real data | Critical | 4 |
+| Task                                       | Priority | Est. Hours |
+| ------------------------------------------ | -------- | ---------- |
+| Create all new database tables             | Critical | 4          |
+| Set up RLS policies                        | Critical | 4          |
+| Create college_student_assignments seeding | High     | 2          |
+| Build useCollegePortfolios hook            | Critical | 4          |
+| Build usePortfolioSubmissions hook         | Critical | 4          |
+| Connect PortfolioSection to real data      | Critical | 4          |
 
 ### Sprint 2: Student Submission Flow (Week 3-4)
 
-| Task | Priority | Est. Hours |
-|------|----------|------------|
-| Build CoverageMatrixView component | Critical | 6 |
-| Build SubmitForReviewDialog | Critical | 4 |
-| Build FeedbackPanel (view feedback) | High | 3 |
-| Add submission workflow to existing UI | Critical | 4 |
-| Build unit_coverage_matrix calculations | High | 4 |
+| Task                                    | Priority | Est. Hours |
+| --------------------------------------- | -------- | ---------- |
+| Build CoverageMatrixView component      | Critical | 6          |
+| Build SubmitForReviewDialog             | Critical | 4          |
+| Build FeedbackPanel (view feedback)     | High     | 3          |
+| Add submission workflow to existing UI  | Critical | 4          |
+| Build unit_coverage_matrix calculations | High     | 4          |
 
 ### Sprint 3: Assessor Review Flow (Week 5-6)
 
-| Task | Priority | Est. Hours |
-|------|----------|------------|
-| Build ReviewQueueList component | Critical | 4 |
-| Build AssessmentPanel | Critical | 6 |
-| Build FeedbackForm | Critical | 4 |
-| Build SignOffDialog with signature | High | 4 |
-| Add real-time updates (subscription) | Medium | 4 |
+| Task                                 | Priority | Est. Hours |
+| ------------------------------------ | -------- | ---------- |
+| Build ReviewQueueList component      | Critical | 4          |
+| Build AssessmentPanel                | Critical | 6          |
+| Build FeedbackForm                   | Critical | 4          |
+| Build SignOffDialog with signature   | High     | 4          |
+| Add real-time updates (subscription) | Medium   | 4          |
 
 ### Sprint 4: IQA & Gateway (Week 7-8)
 
-| Task | Priority | Est. Hours |
-|------|----------|------------|
-| Build IQASamplingQueue | High | 4 |
-| Build IQAVerificationForm | High | 4 |
-| Build GatewayChecklist component | Critical | 6 |
-| Build DeclarationForm | High | 4 |
-| Build EPABookingPanel | Medium | 3 |
+| Task                             | Priority | Est. Hours |
+| -------------------------------- | -------- | ---------- |
+| Build IQASamplingQueue           | High     | 4          |
+| Build IQAVerificationForm        | High     | 4          |
+| Build GatewayChecklist component | Critical | 6          |
+| Build DeclarationForm            | High     | 4          |
+| Build EPABookingPanel            | Medium   | 3          |
 
 ### Sprint 5: Polish & Export (Week 9-10)
 
-| Task | Priority | Est. Hours |
-|------|----------|------------|
-| Improve PortfolioExport for assessment | High | 6 |
-| Build comprehensive reports | Medium | 4 |
-| Mobile responsiveness | Medium | 4 |
-| Testing & bug fixes | Critical | 8 |
-| Documentation | Medium | 4 |
+| Task                                   | Priority | Est. Hours |
+| -------------------------------------- | -------- | ---------- |
+| Improve PortfolioExport for assessment | High     | 6          |
+| Build comprehensive reports            | Medium   | 4          |
+| Mobile responsiveness                  | Medium   | 4          |
+| Testing & bug fixes                    | Critical | 8          |
+| Documentation                          | Medium   | 4          |
 
 ---
 
@@ -561,6 +563,7 @@ src/components/college/portfolio-review/
 Based on [Skills England](https://skillsengland.education.gov.uk/apprenticeship-standards/installation-electrician-maintenance-electrician/):
 
 **Knowledge (K):**
+
 - K1: Termination and connection of conductors, cables, and cords
 - K2: Preparation and installation of wiring systems
 - K3: Inspection, testing, commissioning, and certification
@@ -573,6 +576,7 @@ Based on [Skills England](https://skillsengland.education.gov.uk/apprenticeship-
 - K10: Building Safety Act requirements
 
 **Skills (S):**
+
 - S1: Install wiring systems safely and correctly
 - S2: Terminate and connect cables/conductors
 - S3: Inspect, test, and commission installations
@@ -582,6 +586,7 @@ Based on [Skills England](https://skillsengland.education.gov.uk/apprenticeship-
 - S7: Organize work environment and resources
 
 **Behaviours (B):**
+
 - B1: Work reliably without close supervision
 - B2: Accept responsibility for own work
 - B3: Use effective communication methods
@@ -594,17 +599,17 @@ Based on [Skills England](https://skillsengland.education.gov.uk/apprenticeship-
 
 ### Minimum Evidence Requirements (Based on Research)
 
-| Category | Min. Evidence Items | Evidence Types Required |
-|----------|--------------------|-----------------------|
-| Health & Safety | 5 | Risk assessments, toolbox talks, safe isolation |
-| Job Evidence | 8-10 | Photos, descriptions across domestic/commercial |
-| Test & Inspection | 5 | Test sheets, certificates, instrument evidence |
-| Witness Statements | 5 | Signed supervisor confirmations |
-| Reflective Accounts | 4 | Written reflections on learning |
-| Drawings & Planning | 4 | Calculations, schematics, drawings |
-| CPD/Progress Log | 3 | Training records, review meetings |
-| Communication | 3 | Team work, customer interaction evidence |
-| Evidence Mapping | 1 | Complete KSB mapping document |
+| Category            | Min. Evidence Items | Evidence Types Required                         |
+| ------------------- | ------------------- | ----------------------------------------------- |
+| Health & Safety     | 5                   | Risk assessments, toolbox talks, safe isolation |
+| Job Evidence        | 8-10                | Photos, descriptions across domestic/commercial |
+| Test & Inspection   | 5                   | Test sheets, certificates, instrument evidence  |
+| Witness Statements  | 5                   | Signed supervisor confirmations                 |
+| Reflective Accounts | 4                   | Written reflections on learning                 |
+| Drawings & Planning | 4                   | Calculations, schematics, drawings              |
+| CPD/Progress Log    | 3                   | Training records, review meetings               |
+| Communication       | 3                   | Team work, customer interaction evidence        |
+| Evidence Mapping    | 1                   | Complete KSB mapping document                   |
 
 ---
 

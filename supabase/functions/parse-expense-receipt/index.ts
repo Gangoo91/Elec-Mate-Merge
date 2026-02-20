@@ -3,9 +3,9 @@
  * Uses Gemini Vision for receipt OCR - extracts vendor, amount, date, category
  */
 
-import { serve, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { serve, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 interface ParseExpenseRequest {
   image_base64: string;
@@ -28,8 +28,18 @@ interface ParseExpenseResponse {
 
 // Expense categories for sole traders
 const EXPENSE_CATEGORIES = [
-  'fuel', 'tools', 'ppe', 'materials', 'hotels', 'mileage',
-  'training', 'vehicle', 'insurance', 'subscriptions', 'meals', 'other'
+  'fuel',
+  'tools',
+  'ppe',
+  'materials',
+  'hotels',
+  'mileage',
+  'training',
+  'vehicle',
+  'insurance',
+  'subscriptions',
+  'meals',
+  'other',
 ];
 
 serve(async (req) => {
@@ -48,8 +58,13 @@ serve(async (req) => {
       throw new ValidationError('image_base64 is required and must be a string');
     }
 
-    if (!image_type || !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)) {
-      throw new ValidationError('image_type must be one of: image/jpeg, image/png, image/heic, image/webp');
+    if (
+      !image_type ||
+      !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)
+    ) {
+      throw new ValidationError(
+        'image_type must be one of: image/jpeg, image/png, image/heic, image/webp'
+      );
     }
 
     // Check image size (rough estimate - base64 is ~4/3 of original size)
@@ -60,7 +75,7 @@ serve(async (req) => {
 
     logger.info('Processing expense receipt', {
       imageType: image_type,
-      estimatedSizeMB: estimatedSizeMB.toFixed(2)
+      estimatedSizeMB: estimatedSizeMB.toFixed(2),
     });
 
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
@@ -185,30 +200,34 @@ Rate your confidence (0.0 to 1.0) based on:
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `Extract expense details from this receipt. Return JSON only.`,
+                  },
+                  {
+                    inline_data: {
+                      mime_type: image_type,
+                      data: image_base64,
+                    },
+                  },
+                ],
+              },
+            ],
+            systemInstruction: {
               parts: [
                 {
-                  text: `Extract expense details from this receipt. Return JSON only.`
+                  text: systemPrompt,
                 },
-                {
-                  inline_data: {
-                    mime_type: image_type,
-                    data: image_base64
-                  }
-                }
-              ]
-            }],
-            systemInstruction: {
-              parts: [{
-                text: systemPrompt
-              }]
+              ],
             },
             generationConfig: {
               responseMimeType: 'application/json',
               maxOutputTokens: 2000,
-              temperature: 0.1 // Low temperature for accuracy
-            }
-          })
+              temperature: 0.1, // Low temperature for accuracy
+            },
+          }),
         }
       );
 
@@ -216,7 +235,7 @@ Rate your confidence (0.0 to 1.0) based on:
         const errorText = await response.text();
         throw new ExternalAPIError('Gemini', {
           status: response.status,
-          error: errorText
+          error: errorText,
         });
       }
 
@@ -229,7 +248,7 @@ Rate your confidence (0.0 to 1.0) based on:
     if (!candidate?.content?.parts?.[0]?.text) {
       logger.warn('Empty response from Gemini', {
         finishReason: candidate?.finishReason,
-        safetyRatings: candidate?.safetyRatings
+        safetyRatings: candidate?.safetyRatings,
       });
 
       return new Response(
@@ -243,11 +262,11 @@ Rate your confidence (0.0 to 1.0) based on:
           description: null,
           confidence: 0,
           requestId,
-          error: 'Could not extract details from receipt. Please try a clearer photo.'
+          error: 'Could not extract details from receipt. Please try a clearer photo.',
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
+          status: 200,
         }
       );
     }
@@ -260,7 +279,7 @@ Rate your confidence (0.0 to 1.0) based on:
       parsedData = JSON.parse(extractedText);
     } catch (parseError) {
       logger.error('Failed to parse Gemini JSON response', {
-        rawResponse: extractedText.substring(0, 500)
+        rawResponse: extractedText.substring(0, 500),
       });
 
       return new Response(
@@ -274,11 +293,11 @@ Rate your confidence (0.0 to 1.0) based on:
           description: null,
           confidence: 0,
           requestId,
-          error: 'Failed to parse receipt data. Please try a clearer photo.'
+          error: 'Failed to parse receipt data. Please try a clearer photo.',
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
+          status: 200,
         }
       );
     }
@@ -316,15 +335,16 @@ Rate your confidence (0.0 to 1.0) based on:
       }
     }
 
-    const confidence = typeof parsedData.confidence === 'number'
-      ? Math.min(1, Math.max(0, parsedData.confidence))
-      : 0.5;
+    const confidence =
+      typeof parsedData.confidence === 'number'
+        ? Math.min(1, Math.max(0, parsedData.confidence))
+        : 0.5;
 
     logger.info('Receipt parsed successfully', {
       vendor: parsedData.vendor,
       amount: validAmount,
       category: validCategory,
-      confidence
+      confidence,
     });
 
     const result: ParseExpenseResponse = {
@@ -336,17 +356,13 @@ Rate your confidence (0.0 to 1.0) based on:
       vat_amount: validVat,
       description: parsedData.description ? String(parsedData.description).trim() : null,
       confidence,
-      requestId
+      requestId,
     };
 
-    return new Response(
-      JSON.stringify(result),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
-    );
-
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
   } catch (error) {
     logger.error('Failed to parse expense receipt', { error });
     return handleError(error);

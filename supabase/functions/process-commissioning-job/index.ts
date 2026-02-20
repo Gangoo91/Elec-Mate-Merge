@@ -4,7 +4,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Graceful shutdown logging
@@ -36,10 +37,10 @@ Deno.serve(async (req) => {
 
     if (fetchError || !job) {
       console.error('[PROCESS-COMMISSIONING] Job not found:', jobId);
-      return new Response(
-        JSON.stringify({ error: 'Job not found' }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Job not found' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Update status to processing
@@ -49,7 +50,7 @@ Deno.serve(async (req) => {
         status: 'processing',
         started_at: new Date().toISOString(),
         progress: 5,
-        current_step: 'Analyzing project requirements...'
+        current_step: 'Analyzing project requirements...',
       })
       .eq('id', jobId);
 
@@ -61,23 +62,23 @@ Deno.serve(async (req) => {
           .from('commissioning_jobs')
           .update({
             progress: 25,
-            current_step: 'Searching commissioning knowledge base...'
+            current_step: 'Searching commissioning knowledge base...',
           })
           .eq('id', jobId);
 
-      // Call the core commissioning logic directly
-      console.log('[PROCESS-COMMISSIONING] Generating commissioning procedures...');
-      const result = await generateCommissioningProcedures(supabase, {
-        ...job.job_inputs,
-        queryMode: job.job_inputs.queryMode
-      });
+        // Call the core commissioning logic directly
+        console.log('[PROCESS-COMMISSIONING] Generating commissioning procedures...');
+        const result = await generateCommissioningProcedures(supabase, {
+          ...job.job_inputs,
+          queryMode: job.job_inputs.queryMode,
+        });
 
         // Progress: 70% - Processing results
         await supabase
           .from('commissioning_jobs')
           .update({
             progress: 70,
-            current_step: 'Processing results...'
+            current_step: 'Processing results...',
           })
           .eq('id', jobId);
 
@@ -90,12 +91,11 @@ Deno.serve(async (req) => {
             current_step: 'Commissioning procedures complete',
             result_data: result,
             error_message: null, // Clear any error messages on success
-            completed_at: new Date().toISOString()
+            completed_at: new Date().toISOString(),
           })
           .eq('id', jobId);
 
         console.log(`[PROCESS-COMMISSIONING] ✅ Job completed: ${jobId}`);
-
       } catch (processingError: any) {
         console.error('[PROCESS-COMMISSIONING] Error processing job:', processingError);
 
@@ -105,7 +105,7 @@ Deno.serve(async (req) => {
           .update({
             status: 'failed',
             error_message: processingError.message,
-            completed_at: new Date().toISOString()
+            completed_at: new Date().toISOString(),
           })
           .eq('id', jobId);
       }
@@ -119,16 +119,19 @@ Deno.serve(async (req) => {
           .select('progress, status')
           .eq('id', jobId)
           .single();
-        
+
         // ONLY mark as failed if job is still processing - don't overwrite completed jobs
         if (currentJob?.status === 'processing') {
-          console.error(`[PROCESS-COMMISSIONING] ⏱️ Watchdog timeout for job ${jobId} at ${currentJob.progress}%`);
+          console.error(
+            `[PROCESS-COMMISSIONING] ⏱️ Watchdog timeout for job ${jobId} at ${currentJob.progress}%`
+          );
           await supabase
             .from('commissioning_jobs')
             .update({
               status: 'failed',
-              error_message: 'Request timed out. Please try again with a simpler query or contact support.',
-              completed_at: new Date().toISOString()
+              error_message:
+                'Request timed out. Please try again with a simpler query or contact support.',
+              completed_at: new Date().toISOString(),
             })
             .eq('id', jobId);
         }
@@ -146,21 +149,20 @@ Deno.serve(async (req) => {
 
     // Return immediately
     console.log(`[PROCESS-COMMISSIONING] HTTP response sent immediately for job: ${jobId}`);
-    return new Response(
-      JSON.stringify({ success: true, jobId }),
-      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ success: true, jobId }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('[PROCESS-COMMISSIONING] Fatal error:', error);
     await captureException(error, {
       functionName: 'process-commissioning-job',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

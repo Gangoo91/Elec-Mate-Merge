@@ -1,14 +1,21 @@
 /**
  * Design Pipeline - Simplified Architecture
  * Form → RAG → AI → Results (with minimal safety checks)
- * 
+ *
  * Trust the AI to reason with RAG context. No correcting the AI after the fact.
  */
 
 import { ConsistencyValidator } from './consistency-validator.ts';
-import { validateCableCapacity, validateIndustrialProtection, validateProtectionSizing } from './cable-capacity-validator.ts';
+import {
+  validateCableCapacity,
+  validateIndustrialProtection,
+  validateProtectionSizing,
+} from './cable-capacity-validator.ts';
 import { CacheManager } from './cache-manager.ts';
-import { searchDesignIntelligence, searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
+import {
+  searchDesignIntelligence,
+  searchRegulationsIntelligence,
+} from '../_shared/intelligence-search.ts';
 import { AIDesigner } from './ai-designer.ts';
 import { MinimalSafetyChecks } from './minimal-safety-checks.ts';
 import { ensureExpectedTestValues } from './test-value-calculator.ts';
@@ -25,7 +32,11 @@ export class DesignPipeline {
     private logger: any,
     private requestId: string,
     private progressCallback?: (msg: string) => void,
-    private circuitProgressCallback?: (completed: number, total: number, circuitName: string) => void
+    private circuitProgressCallback?: (
+      completed: number,
+      total: number,
+      circuitName: string
+    ) => void
   ) {
     this.normalizer = new FormNormalizer();
     this.cache = new CacheManager(logger);
@@ -43,7 +54,7 @@ export class DesignPipeline {
     this.logger.info('Form normalized', {
       circuits: normalized.circuits.length,
       voltage: normalized.supply.voltage,
-      phases: normalized.supply.phases
+      phases: normalized.supply.phases,
     });
 
     // ========================================
@@ -56,7 +67,7 @@ export class DesignPipeline {
       this.logger.info('Cache HIT', {
         key: cacheKey.slice(0, 12),
         ageSeconds: cached.ageSeconds,
-        hitCount: cached.hitCount
+        hitCount: cached.hitCount,
       });
       return {
         ...cached.design,
@@ -64,13 +75,13 @@ export class DesignPipeline {
         cacheHit: true, // METRICS: Track cache hits for optimization
         processingTime: Date.now() - startTime,
         cacheAgeSeconds: cached.ageSeconds,
-        cacheHitCount: cached.hitCount
+        cacheHitCount: cached.hitCount,
       };
     }
 
     this.logger.info('Cache MISS', {
       key: cacheKey.slice(0, 12),
-      circuitCount: normalized.circuits.length
+      circuitCount: normalized.circuits.length,
     });
 
     // ========================================
@@ -81,7 +92,7 @@ export class DesignPipeline {
     this.logger.info('RAG search complete', {
       designKnowledge: ragContext.designKnowledge.length,
       regulations: ragContext.regulations.length,
-      totalResults: ragContext.totalResults
+      totalResults: ragContext.totalResults,
     });
 
     // ========================================
@@ -90,7 +101,7 @@ export class DesignPipeline {
     const design = await this.ai.generate(normalized, ragContext);
 
     this.logger.info('AI generation complete', {
-      circuits: design.circuits.length
+      circuits: design.circuits.length,
     });
 
     // ========================================
@@ -99,29 +110,30 @@ export class DesignPipeline {
     design.circuits = this.safetyChecks.apply(design.circuits);
 
     this.logger.info('Safety checks applied', {
-      circuits: design.circuits.length
+      circuits: design.circuits.length,
     });
 
     // ========================================
     // PHASE 6: Ensure Expected Test Values
     // ========================================
     const ze = normalized.supply.ze || 0.35;
-    design.circuits = design.circuits.map(circuit => 
+    design.circuits = design.circuits.map((circuit) =>
       ensureExpectedTestValues(circuit, ze, this.logger)
     );
 
     this.logger.info('Expected test values calculated', {
-      circuits: design.circuits.length
+      circuits: design.circuits.length,
     });
 
     // ========================================
     // PHASE 6.5: Consistency Validation (CRITICAL SAFETY)
     // ========================================
-    const { validateCircuitConsistency, validateMaxZs } = await import('./consistency-validator.ts');
-    design.circuits = design.circuits.map(circuit => {
+    const { validateCircuitConsistency, validateMaxZs } =
+      await import('./consistency-validator.ts');
+    design.circuits = design.circuits.map((circuit) => {
       // Validate and fix protection device consistency
       const consistentCircuit = validateCircuitConsistency(circuit, this.logger);
-      
+
       // Validate max Zs for all device types (MCB, RCBO, BS88, BS1361, BS3036)
       const zsValidation = validateMaxZs(consistentCircuit, this.logger);
       if (!zsValidation.isValid && zsValidation.correctedMaxZs) {
@@ -129,18 +141,18 @@ export class DesignPipeline {
           ...consistentCircuit,
           calculations: {
             ...consistentCircuit.calculations,
-            maxZs: zsValidation.correctedMaxZs
-          }
+            maxZs: zsValidation.correctedMaxZs,
+          },
         };
       }
-      
+
       return consistentCircuit;
     });
 
     this.logger.info('Consistency validation complete', {
-      circuits: design.circuits.length
+      circuits: design.circuits.length,
     });
-    
+
     // ========================================
     // PHASE 6.6 + 6.7: PARALLELIZED VALIDATION (OPTIMIZED)
     // Both phases are read-only, so they can run concurrently
@@ -153,89 +165,90 @@ export class DesignPipeline {
     // Run validations in parallel - both are read-only operations
     const [breakingCapacityIssues, cableValidationResults] = await Promise.all([
       // PHASE 6.6: Breaking Capacity Validation
-      Promise.resolve(validateBreakingCapacity(
-        design.circuits,
-        normalized.supply,
-        this.logger
-      )),
+      Promise.resolve(validateBreakingCapacity(design.circuits, normalized.supply, this.logger)),
 
       // PHASE 6.7: Cable Capacity Validation (all three checks)
-      Promise.resolve((() => {
-        const cableCapacityErrors: any[] = [];
-        const industrialProtectionErrors: any[] = [];
-        const protectionSizingErrors: any[] = [];
+      Promise.resolve(
+        (() => {
+          const cableCapacityErrors: any[] = [];
+          const industrialProtectionErrors: any[] = [];
+          const protectionSizingErrors: any[] = [];
 
-        design.circuits.forEach((circuit, index) => {
-          // Validate cable capacity against BS 7671 tables
-          const capacityValidation = validateCableCapacity(circuit, this.logger);
-          if (!capacityValidation.valid) {
-            cableCapacityErrors.push({
-              circuitNumber: circuit.circuitNumber || index + 1,
-              circuitName: circuit.name,
-              error: capacityValidation.error,
-              recommendation: capacityValidation.recommendation,
-              severity: capacityValidation.recommendation?.includes('CRITICAL') ? 'error' : 'warning'
-            });
-          }
+          design.circuits.forEach((circuit, index) => {
+            // Validate cable capacity against BS 7671 tables
+            const capacityValidation = validateCableCapacity(circuit, this.logger);
+            if (!capacityValidation.valid) {
+              cableCapacityErrors.push({
+                circuitNumber: circuit.circuitNumber || index + 1,
+                circuitName: circuit.name,
+                error: capacityValidation.error,
+                recommendation: capacityValidation.recommendation,
+                severity: capacityValidation.recommendation?.includes('CRITICAL')
+                  ? 'error'
+                  : 'warning',
+              });
+            }
 
-          // Validate industrial protection device selection (BS88/MCCB for >63A)
-          const protectionValidation = validateIndustrialProtection(
-            circuit,
-            normalized.supply.installationType || 'commercial',
-            this.logger
-          );
-          if (!protectionValidation.valid) {
-            industrialProtectionErrors.push({
-              circuitNumber: circuit.circuitNumber || index + 1,
-              circuitName: circuit.name,
-              error: protectionValidation.error,
-              recommendation: protectionValidation.recommendation,
-              severity: 'error'
-            });
-          }
+            // Validate industrial protection device selection (BS88/MCCB for >63A)
+            const protectionValidation = validateIndustrialProtection(
+              circuit,
+              normalized.supply.installationType || 'commercial',
+              this.logger
+            );
+            if (!protectionValidation.valid) {
+              industrialProtectionErrors.push({
+                circuitNumber: circuit.circuitNumber || index + 1,
+                circuitName: circuit.name,
+                error: protectionValidation.error,
+                recommendation: protectionValidation.recommendation,
+                severity: 'error',
+              });
+            }
 
-          // Validate protection sizing (Ib ≤ In ≤ Iz) - DO NOT correct here, just log
-          const sizingValidation = validateProtectionSizing(circuit, this.logger);
-          if (!sizingValidation.valid) {
-            protectionSizingErrors.push({
-              circuitNumber: circuit.circuitNumber || index + 1,
-              circuitName: circuit.name,
-              reason: sizingValidation.reason,
-              correctedRating: sizingValidation.correctedRating,
-              severity: 'warning'
-            });
-          }
-        });
+            // Validate protection sizing (Ib ≤ In ≤ Iz) - DO NOT correct here, just log
+            const sizingValidation = validateProtectionSizing(circuit, this.logger);
+            if (!sizingValidation.valid) {
+              protectionSizingErrors.push({
+                circuitNumber: circuit.circuitNumber || index + 1,
+                circuitName: circuit.name,
+                reason: sizingValidation.reason,
+                correctedRating: sizingValidation.correctedRating,
+                severity: 'warning',
+              });
+            }
+          });
 
-        return { cableCapacityErrors, industrialProtectionErrors, protectionSizingErrors };
-      })())
+          return { cableCapacityErrors, industrialProtectionErrors, protectionSizingErrors };
+        })()
+      ),
     ]);
 
     const validationDuration = Date.now() - validationStart;
     this.logger.info('Parallel validation complete', { durationMs: validationDuration });
 
     // Extract cable validation results
-    const { cableCapacityErrors, industrialProtectionErrors, protectionSizingErrors } = cableValidationResults;
+    const { cableCapacityErrors, industrialProtectionErrors, protectionSizingErrors } =
+      cableValidationResults;
 
     // Log breaking capacity results
     if (breakingCapacityIssues.length > 0) {
-      const errorCount = breakingCapacityIssues.filter(i => i.severity === 'error').length;
-      const warningCount = breakingCapacityIssues.filter(i => i.severity === 'warning').length;
+      const errorCount = breakingCapacityIssues.filter((i) => i.severity === 'error').length;
+      const warningCount = breakingCapacityIssues.filter((i) => i.severity === 'warning').length;
 
       this.logger.warn('Breaking capacity issues detected', {
         errors: errorCount,
         warnings: warningCount,
-        issues: breakingCapacityIssues.map(i => ({
+        issues: breakingCapacityIssues.map((i) => ({
           circuit: i.circuitName,
           severity: i.severity,
-          message: i.message
-        }))
+          message: i.message,
+        })),
       });
 
       (design as any).breakingCapacityIssues = breakingCapacityIssues;
     } else {
       this.logger.info('Breaking capacity validation passed', {
-        circuits: design.circuits.length
+        circuits: design.circuits.length,
       });
     }
 
@@ -243,36 +256,36 @@ export class DesignPipeline {
     if (cableCapacityErrors.length > 0) {
       this.logger.error('🔴 Cable capacity validation FAILED', {
         errorCount: cableCapacityErrors.length,
-        errors: cableCapacityErrors
+        errors: cableCapacityErrors,
       });
       (design as any).cableCapacityErrors = cableCapacityErrors;
     } else {
       this.logger.info('✅ Cable capacity validation passed', {
-        circuits: design.circuits.length
+        circuits: design.circuits.length,
       });
     }
 
     if (industrialProtectionErrors.length > 0) {
       this.logger.error('🔴 Industrial protection validation FAILED', {
         errorCount: industrialProtectionErrors.length,
-        errors: industrialProtectionErrors
+        errors: industrialProtectionErrors,
       });
       (design as any).industrialProtectionErrors = industrialProtectionErrors;
     } else {
       this.logger.info('✅ Industrial protection validation passed', {
-        circuits: design.circuits.length
+        circuits: design.circuits.length,
       });
     }
 
     if (protectionSizingErrors.length > 0) {
       this.logger.warn('🟡 Protection sizing issues detected', {
         issueCount: protectionSizingErrors.length,
-        issues: protectionSizingErrors
+        issues: protectionSizingErrors,
       });
       (design as any).protectionSizingWarnings = protectionSizingErrors;
     } else {
       this.logger.info('✅ Protection sizing validation passed', {
-        circuits: design.circuits.length
+        circuits: design.circuits.length,
       });
     }
 
@@ -280,42 +293,41 @@ export class DesignPipeline {
     // PHASE 6.8: Protection Sizing Auto-Correction (Ib ≤ In ≤ Iz)
     // ========================================
     let correctionCount = 0;
-    
-    design.circuits = design.circuits.map(circuit => {
+
+    design.circuits = design.circuits.map((circuit) => {
       const validation = validateProtectionSizing(circuit, this.logger);
-      
+
       if (!validation.valid && validation.correctedRating) {
         correctionCount++;
         this.logger.info('🔧 Auto-correcting protection device', {
           circuit: circuit.name,
           originalRating: circuit.protectionDevice?.rating,
           correctedRating: validation.correctedRating,
-          reason: validation.reason
+          reason: validation.reason,
         });
-        
+
         return {
           ...circuit,
           protectionDevice: {
             ...circuit.protectionDevice,
-            rating: validation.correctedRating
+            rating: validation.correctedRating,
           },
           calculations: {
             ...circuit.calculations,
-            In: validation.correctedRating
-          }
+            In: validation.correctedRating,
+          },
         };
       }
-      
+
       return circuit;
     });
-    
+
     if (correctionCount > 0) {
       this.logger.info('✅ Protection sizing auto-correction complete', {
         corrected: correctionCount,
-        total: design.circuits.length
+        total: design.circuits.length,
       });
     }
-
 
     // ========================================
     // PHASE 7: Cache Store
@@ -326,7 +338,7 @@ export class DesignPipeline {
       ...design,
       fromCache: false,
       cacheHit: false, // METRICS: Track cache misses for optimization
-      processingTime: Date.now() - startTime
+      processingTime: Date.now() - startTime,
     };
 
     return result;
@@ -358,7 +370,7 @@ export class DesignPipeline {
     this.logger.info('Keywords extracted', {
       keywordCount: keywords.size,
       loadTypes: Array.from(loadTypes),
-      cableSizes: Array.from(cableSizes)
+      cableSizes: Array.from(cableSizes),
     });
 
     // Parallel RAG searches with CORRECT database categories
@@ -367,27 +379,35 @@ export class DesignPipeline {
         keywords: Array.from(keywords),
         loadTypes: Array.from(loadTypes),
         // cableSizes removed - only 1.6% database coverage causes near-zero results
-        limit: 30  // 30 design knowledge items (formulas, tables, examples)
+        limit: 30, // 30 design knowledge items (formulas, tables, examples)
       }),
       searchRegulationsIntelligence(supabase, {
         keywords: Array.from(keywords),
-        categories: ['Cables', 'Protection', 'Earthing', 'Design', 'Circuits', 'Safety', 'Special Locations'],
-        limit: 15  // 15 regulation items (BS 7671 compliance)
-      })
+        categories: [
+          'Cables',
+          'Protection',
+          'Earthing',
+          'Design',
+          'Circuits',
+          'Safety',
+          'Special Locations',
+        ],
+        limit: 15, // 15 regulation items (BS 7671 compliance)
+      }),
     ]);
 
     const ragDuration = Date.now() - ragStart;
     this.logger.info('RAG search complete', {
       duration: ragDuration,
       designKnowledge: designKnowledge.length,
-      regulations: regulations.length
+      regulations: regulations.length,
     });
 
     return {
       designKnowledge,
       regulations,
       totalResults: designKnowledge.length + regulations.length,
-      searchDuration: ragDuration
+      searchDuration: ragDuration,
     };
   }
 }

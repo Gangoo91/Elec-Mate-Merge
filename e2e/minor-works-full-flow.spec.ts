@@ -1,5 +1,5 @@
-import { test, expect, Page } from "@playwright/test";
-import { loginViaUI } from "./fixtures/auth";
+import { test, expect, Page } from '@playwright/test';
+import { loginViaUI } from './fixtures/auth';
 
 /**
  * Comprehensive End-to-End Tests for Minor Works Certificate
@@ -17,17 +17,17 @@ import { loginViaUI } from "./fixtures/auth";
 
 // Test data
 const TEST_CLIENT = {
-  name: "E2E Minor Works Test Client",
-  email: "minor-works-test@example.com",
-  phone: "07700 900789",
-  address: "123 Minor Works Street, London",
-  installationAddress: "456 Minor Works Road, Leeds, LS1 2AB",
+  name: 'E2E Minor Works Test Client',
+  email: 'minor-works-test@example.com',
+  phone: '07700 900789',
+  address: '123 Minor Works Street, London',
+  installationAddress: '456 Minor Works Road, Leeds, LS1 2AB',
 };
 
 const TEST_WORK_DETAILS = {
-  description: "Installation of additional socket outlet",
-  location: "Kitchen",
-  workType: "Addition",
+  description: 'Installation of additional socket outlet',
+  location: 'Kitchen',
+  workType: 'Addition',
 };
 
 // Helper to fill a field if visible
@@ -50,33 +50,33 @@ async function clickIfVisible(page: Page, selector: string) {
   return false;
 }
 
-test.describe("Minor Works Full Flow - Form Loading and Navigation", () => {
+test.describe('Minor Works Full Flow - Form Loading and Navigation', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Minor Works form loads correctly", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('Minor Works form loads correctly', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
 
     // Check for form elements
-    const formElements = page.locator("input, textarea, select, button");
+    const formElements = page.locator('input, textarea, select, button');
     const count = await formElements.count();
     expect(count).toBeGreaterThan(5);
 
     // Check for Minor Works-specific content
-    const pageContent = await page.textContent("body");
+    const pageContent = await page.textContent('body');
     expect(
-      pageContent?.toLowerCase().includes("minor") ||
-      pageContent?.toLowerCase().includes("works") ||
-      pageContent?.toLowerCase().includes("certificate")
+      pageContent?.toLowerCase().includes('minor') ||
+        pageContent?.toLowerCase().includes('works') ||
+        pageContent?.toLowerCase().includes('certificate')
     ).toBeTruthy();
   });
 
-  test("Minor Works form has step navigation", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('Minor Works form has step navigation', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for step indicators or tabs
@@ -87,11 +87,11 @@ test.describe("Minor Works Full Flow - Form Loading and Navigation", () => {
     const stepCount = await stepElements.count();
     expect(stepCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("Minor Works form has progress indicator", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('Minor Works form has progress indicator', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for progress elements
@@ -99,17 +99,17 @@ test.describe("Minor Works Full Flow - Form Loading and Navigation", () => {
       '[class*="progress"], [class*="indicator"], text=/step|progress|1.*of|2.*of/i'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Work Details Entry", () => {
+test.describe('Minor Works Full Flow - Work Details Entry', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("can fill client details", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill client details', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Fill client name
@@ -129,11 +129,11 @@ test.describe("Minor Works Full Flow - Work Details Entry", () => {
       expect(value).toBe(TEST_CLIENT.name);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill work description", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill work description', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Fill work description
@@ -150,44 +150,46 @@ test.describe("Minor Works Full Flow - Work Details Entry", () => {
       TEST_WORK_DETAILS.location
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill postcode", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill postcode', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Fill postcode
-    await fillIfVisible(page, 'input[name="postcode"]', "LS1 2AB");
+    await fillIfVisible(page, 'input[name="postcode"]', 'LS1 2AB');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Circuit Details", () => {
+test.describe('Minor Works Full Flow - Circuit Details', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("can access circuit details section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can access circuit details section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to circuit tab if exists
-    const circuitTab = page.locator(
-      'button:has-text("Circuit"), [role="tab"]:has-text("Circuit"), button:has-text("Next")'
-    ).first();
+    const circuitTab = page
+      .locator(
+        'button:has-text("Circuit"), [role="tab"]:has-text("Circuit"), button:has-text("Next")'
+      )
+      .first();
 
     if (await circuitTab.isVisible()) {
       await circuitTab.click();
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill circuit designation", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill circuit designation', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to circuit section
@@ -201,14 +203,14 @@ test.describe("Minor Works Full Flow - Circuit Details", () => {
     await fillIfVisible(
       page,
       'input[name="circuitDesignation"], input[name="circuit"]',
-      "Kitchen sockets"
+      'Kitchen sockets'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can set protective device details", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can set protective device details', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to circuit section
@@ -223,11 +225,11 @@ test.describe("Minor Works Full Flow - Circuit Details", () => {
       'input[name*="protective" i], input[name*="device" i], input[name*="rating" i], select[name*="type" i]'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can set earthing arrangement", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can set earthing arrangement', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for earthing arrangement selector
@@ -238,90 +240,96 @@ test.describe("Minor Works Full Flow - Circuit Details", () => {
       await page.waitForTimeout(300);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Testing Results", () => {
+test.describe('Minor Works Full Flow - Testing Results', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("can access testing section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can access testing section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to testing tab
-    const testingTab = page.locator(
-      'button:has-text("Testing"), button:has-text("Test"), [role="tab"]:has-text("Test")'
-    ).first();
+    const testingTab = page
+      .locator('button:has-text("Testing"), button:has-text("Test"), [role="tab"]:has-text("Test")')
+      .first();
 
     if (await testingTab.isVisible()) {
       await testingTab.click();
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill continuity test results", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill continuity test results', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to testing section (click Next twice)
     for (let i = 0; i < 2; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
     }
 
     // Fill continuity test
-    await fillIfVisible(page, 'input[name*="continuity" i], input[name*="r1r2" i]', "0.15");
+    await fillIfVisible(page, 'input[name*="continuity" i], input[name*="r1r2" i]', '0.15');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill earth fault loop impedance", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill earth fault loop impedance', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to testing section
     for (let i = 0; i < 2; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
     }
 
     // Fill Zs value
-    await fillIfVisible(page, 'input[name*="zs" i], input[name*="loop" i], input[name*="impedance" i]', "0.35");
+    await fillIfVisible(
+      page,
+      'input[name*="zs" i], input[name*="loop" i], input[name*="impedance" i]',
+      '0.35'
+    );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can mark polarity test", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can mark polarity test', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to testing section
     for (let i = 0; i < 2; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
     }
 
     // Look for polarity checkbox or select
-    const polarityField = page.locator(
-      'input[name*="polarity" i], select[name*="polarity" i], [type="checkbox"][name*="polarity" i]'
-    ).first();
+    const polarityField = page
+      .locator(
+        'input[name*="polarity" i], select[name*="polarity" i], [type="checkbox"][name*="polarity" i]'
+      )
+      .first();
 
     if (await polarityField.isVisible()) {
-      const tagName = await polarityField.evaluate(el => el.tagName.toLowerCase());
+      const tagName = await polarityField.evaluate((el) => el.tagName.toLowerCase());
       if (tagName === 'input') {
         const inputType = await polarityField.getAttribute('type');
         if (inputType === 'checkbox') {
@@ -330,99 +338,103 @@ test.describe("Minor Works Full Flow - Testing Results", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill RCD test results", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill RCD test results', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to testing section
     for (let i = 0; i < 2; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
     }
 
     // Fill RCD trip time
-    await fillIfVisible(page, 'input[name*="rcd" i], input[name*="trip" i]', "25");
+    await fillIfVisible(page, 'input[name*="rcd" i], input[name*="trip" i]', '25');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Declaration and Signatures", () => {
+test.describe('Minor Works Full Flow - Declaration and Signatures', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("can access declaration section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can access declaration section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to declaration tab
-    const declarationTab = page.locator(
-      'button:has-text("Declaration"), button:has-text("Sign"), [role="tab"]:has-text("Declaration")'
-    ).first();
+    const declarationTab = page
+      .locator(
+        'button:has-text("Declaration"), button:has-text("Sign"), [role="tab"]:has-text("Declaration")'
+      )
+      .first();
 
     if (await declarationTab.isVisible()) {
       await declarationTab.click();
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can fill electrician details", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('can fill electrician details', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to declaration section (click Next 3 times)
     for (let i = 0; i < 3; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
     }
 
     // Fill electrician name
-    await fillIfVisible(page, 'input[name*="electrician" i], input[name*="name" i]', "Test Electrician");
+    await fillIfVisible(
+      page,
+      'input[name*="electrician" i], input[name*="name" i]',
+      'Test Electrician'
+    );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("signature pad available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('signature pad available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to declaration section
     for (let i = 0; i < 3; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
     }
 
     // Look for signature elements
-    const signatureElements = page.locator(
-      'canvas, [class*="signature"], button:has-text("Sign")'
-    );
+    const signatureElements = page.locator('canvas, [class*="signature"], button:has-text("Sign")');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("compliance declaration checkbox available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('compliance declaration checkbox available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Navigate to declaration section
     for (let i = 0; i < 3; i++) {
       const nextBtn = page.locator('button:has-text("Next")').first();
-      if (await nextBtn.isVisible() && await nextBtn.isEnabled()) {
+      if ((await nextBtn.isVisible()) && (await nextBtn.isEnabled())) {
         await nextBtn.click();
         await page.waitForTimeout(1000);
       }
@@ -433,17 +445,17 @@ test.describe("Minor Works Full Flow - Declaration and Signatures", () => {
       'input[type="checkbox"], [role="checkbox"], text=/comply|compliance|BS 7671/i'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - PDF Generation", () => {
+test.describe('Minor Works Full Flow - PDF Generation', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("PDF generation button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('PDF generation button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for PDF/generate buttons
@@ -454,11 +466,11 @@ test.describe("Minor Works Full Flow - PDF Generation", () => {
     const buttonCount = await pdfButtons.count();
     expect(buttonCount).toBeGreaterThan(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("save draft functionality available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('save draft functionality available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for save buttons
@@ -469,17 +481,17 @@ test.describe("Minor Works Full Flow - PDF Generation", () => {
     const buttonCount = await saveButtons.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Email Sending", () => {
+test.describe('Minor Works Full Flow - Email Sending', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("email button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('email button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for email buttons
@@ -490,17 +502,17 @@ test.describe("Minor Works Full Flow - Email Sending", () => {
     const buttonCount = await emailButtons.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Quote and Invoice Actions", () => {
+test.describe('Minor Works Full Flow - Quote and Invoice Actions', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("Quote button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('Quote button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Scroll to bottom
@@ -512,11 +524,11 @@ test.describe("Minor Works Full Flow - Quote and Invoice Actions", () => {
     const buttonCount = await quoteButton.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("Invoice button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+  test('Invoice button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Scroll to bottom
@@ -528,63 +540,65 @@ test.describe("Minor Works Full Flow - Quote and Invoice Actions", () => {
     const buttonCount = await invoiceButton.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Complete End-to-End Flow", () => {
-  test("complete Minor Works workflow: fill form -> verify actions", async ({ page }) => {
+test.describe('Minor Works Complete End-to-End Flow', () => {
+  test('complete Minor Works workflow: fill form -> verify actions', async ({ page }) => {
     await loginViaUI(page);
 
     // Step 1: Navigate to Minor Works form
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(5000);
 
     // Step 2: Fill client details
-    await fillIfVisible(page, 'input[name="clientName"]', "Complete MW Test Client");
+    await fillIfVisible(page, 'input[name="clientName"]', 'Complete MW Test Client');
     await fillIfVisible(
       page,
       'input[name="installationAddress"], textarea[name="installationAddress"]',
-      "Complete MW Address, Bristol, BS1 2AB"
+      'Complete MW Address, Bristol, BS1 2AB'
     );
-    await fillIfVisible(page, 'input[name="postcode"]', "BS1 2AB");
+    await fillIfVisible(page, 'input[name="postcode"]', 'BS1 2AB');
 
     // Step 3: Fill work description
     await fillIfVisible(
       page,
       'input[name="workDescription"], textarea[name="workDescription"]',
-      "Installation of additional socket outlet"
+      'Installation of additional socket outlet'
     );
 
     // Step 4: Verify form captured data
     const clientNameInput = page.locator('input[name="clientName"]').first();
     if (await clientNameInput.isVisible()) {
       const value = await clientNameInput.inputValue();
-      expect(value).toBe("Complete MW Test Client");
+      expect(value).toBe('Complete MW Test Client');
     }
 
     // Step 5: Scroll to see actions
     await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     await page.waitForTimeout(500);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("complete flow: Minor Works -> Quote button -> Quote builder with data", async ({ page }) => {
+  test('complete flow: Minor Works -> Quote button -> Quote builder with data', async ({
+    page,
+  }) => {
     await loginViaUI(page);
 
     // Step 1: Navigate to Minor Works form
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(5000);
 
     // Step 2: Fill client details
-    await fillIfVisible(page, 'input[name="clientName"]', "MW Quote Flow Client");
-    await fillIfVisible(page, 'input[name="clientEmail"]', "mw-quote@test.com");
-    await fillIfVisible(page, 'input[name="clientPhone"]', "07700 900333");
+    await fillIfVisible(page, 'input[name="clientName"]', 'MW Quote Flow Client');
+    await fillIfVisible(page, 'input[name="clientEmail"]', 'mw-quote@test.com');
+    await fillIfVisible(page, 'input[name="clientPhone"]', '07700 900333');
     await fillIfVisible(
       page,
       'input[name="installationAddress"], textarea[name="installationAddress"]',
-      "MW Quote Address, Cardiff, CF1 2AB"
+      'MW Quote Address, Cardiff, CF1 2AB'
     );
 
     await page.waitForTimeout(1000);
@@ -610,31 +624,33 @@ test.describe("Minor Works Complete End-to-End Flow", () => {
         const quoteClientName = page.locator('input[name="clientName"]').first();
         if (await quoteClientName.isVisible()) {
           const value = await quoteClientName.inputValue();
-          expect(value).toBe("MW Quote Flow Client");
+          expect(value).toBe('MW Quote Flow Client');
         }
       } catch (e) {
         // Navigation may not happen depending on form state
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("complete flow: Minor Works -> Invoice button -> Invoice builder with data", async ({ page }) => {
+  test('complete flow: Minor Works -> Invoice button -> Invoice builder with data', async ({
+    page,
+  }) => {
     await loginViaUI(page);
 
     // Step 1: Navigate to Minor Works form
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(5000);
 
     // Step 2: Fill client details
-    await fillIfVisible(page, 'input[name="clientName"]', "MW Invoice Flow Client");
-    await fillIfVisible(page, 'input[name="clientEmail"]', "mw-invoice@test.com");
-    await fillIfVisible(page, 'input[name="clientPhone"]', "07700 900444");
+    await fillIfVisible(page, 'input[name="clientName"]', 'MW Invoice Flow Client');
+    await fillIfVisible(page, 'input[name="clientEmail"]', 'mw-invoice@test.com');
+    await fillIfVisible(page, 'input[name="clientPhone"]', '07700 900444');
     await fillIfVisible(
       page,
       'input[name="installationAddress"], textarea[name="installationAddress"]',
-      "MW Invoice Address, Edinburgh, EH1 2AB"
+      'MW Invoice Address, Edinburgh, EH1 2AB'
     );
 
     await page.waitForTimeout(1000);
@@ -660,26 +676,28 @@ test.describe("Minor Works Complete End-to-End Flow", () => {
         const invoiceClientName = page.locator('input[name="clientName"]').first();
         if (await invoiceClientName.isVisible()) {
           const value = await invoiceClientName.inputValue();
-          expect(value).toBe("MW Invoice Flow Client");
+          expect(value).toBe('MW Invoice Flow Client');
         }
       } catch (e) {
         // Navigation may not happen depending on form state
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - DEV Tools", () => {
-  test("DEV fill button works in development mode", async ({ page }) => {
+test.describe('Minor Works Full Flow - DEV Tools', () => {
+  test('DEV fill button works in development mode', async ({ page }) => {
     await loginViaUI(page);
 
-    await page.goto("/electrician/inspection-testing?form=minor-works");
+    await page.goto('/electrician/inspection-testing?form=minor-works');
     await page.waitForTimeout(3000);
 
     // Look for DEV fill button
-    const devFillBtn = page.locator('button:has-text("DEV"), button:has-text("Fill All"), button:has-text("Test Data")').first();
+    const devFillBtn = page
+      .locator('button:has-text("DEV"), button:has-text("Fill All"), button:has-text("Test Data")')
+      .first();
 
     if (await devFillBtn.isVisible()) {
       await devFillBtn.click();
@@ -693,20 +711,20 @@ test.describe("Minor Works Full Flow - DEV Tools", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Full Flow - Certificates List", () => {
+test.describe('Minor Works Full Flow - Certificates List', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
   });
 
-  test("can view certificates list", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing");
+  test('can view certificates list', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing');
     await page.waitForTimeout(5000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
 
     // Check for certificate list content
     const listContent = page.locator('text=/certificate|minor|works|inspection|new|create/i');
@@ -714,14 +732,16 @@ test.describe("Minor Works Full Flow - Certificates List", () => {
     expect(contentCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("can create new Minor Works from list", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing");
+  test('can create new Minor Works from list', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing');
     await page.waitForTimeout(3000);
 
     // Look for create/new button
-    const createButton = page.locator(
-      'button:has-text("New"), button:has-text("Create"), button:has-text("Add"), a:has-text("New")'
-    ).first();
+    const createButton = page
+      .locator(
+        'button:has-text("New"), button:has-text("Create"), button:has-text("Add"), a:has-text("New")'
+      )
+      .first();
 
     if (await createButton.isVisible()) {
       await createButton.click();
@@ -733,6 +753,6 @@ test.describe("Minor Works Full Flow - Certificates List", () => {
       expect(optionCount).toBeGreaterThanOrEqual(0);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

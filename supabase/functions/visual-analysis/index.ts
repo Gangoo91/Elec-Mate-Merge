@@ -1,7 +1,7 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
-import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
@@ -13,14 +13,15 @@ const supabaseAdmin = createClient(
   {
     auth: {
       autoRefreshToken: false,
-      persistSession: false
-    }
+      persistSession: false,
+    },
   }
 );
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 // Enhanced JSON parser with better error recovery and comprehensive logging
@@ -30,7 +31,10 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
     throw new Error(`${context} is empty`);
   }
 
-  console.log(`🔍 Parsing ${context}:`, content.slice(0, 200) + (content.length > 200 ? '...' : ''));
+  console.log(
+    `🔍 Parsing ${context}:`,
+    content.slice(0, 200) + (content.length > 200 ? '...' : '')
+  );
 
   // Try direct JSON parse first
   try {
@@ -52,33 +56,40 @@ const parseAIResponse = (content: string, context: string = 'AI response') => {
     // First complete JSON object anywhere in text
     /{[^{}]*(?:{[^{}]*}[^{}]*)*}/s,
     // Greedy fallback
-    /({[\s\S]*})/
+    /({[\s\S]*})/,
   ];
-  
+
   for (let i = 0; i < patterns.length; i++) {
     const pattern = patterns[i];
     const match = content.match(pattern);
     if (match) {
       const extracted = (match[1] || match[0]).trim();
-      console.log(`🔍 Pattern ${i + 1} matched, length: ${extracted.length}, preview: ${extracted.slice(0, 150)}...`);
-      
+      console.log(
+        `🔍 Pattern ${i + 1} matched, length: ${extracted.length}, preview: ${extracted.slice(0, 150)}...`
+      );
+
       try {
         const parsed = JSON.parse(extracted);
         console.log(`✅ Successfully parsed with pattern ${i + 1}`);
         return parsed;
       } catch (parseError) {
-        console.log(`⚠️ Pattern ${i + 1} extraction failed:`, parseError instanceof Error ? parseError.message : 'Unknown error');
+        console.log(
+          `⚠️ Pattern ${i + 1} extraction failed:`,
+          parseError instanceof Error ? parseError.message : 'Unknown error'
+        );
         continue;
       }
     }
   }
-  
+
   // Complete failure - log full response for debugging
   console.error(`❌ ALL PARSING ATTEMPTS FAILED for ${context}`);
   console.error(`Full response (truncated to 500 chars):`, content.slice(0, 500));
   console.error(`Response length: ${content.length} characters`);
-  
-  throw new Error(`Could not parse ${context} as JSON. Check edge function logs for full response.`);
+
+  throw new Error(
+    `Could not parse ${context} as JSON. Check edge function logs for full response.`
+  );
 };
 
 /**
@@ -99,13 +110,14 @@ async function fetchPracticalWorkRAG(keywords: string[]): Promise<{
     const startTime = Date.now();
 
     // Call fast keyword search function
-    const { data: ragData, error } = await supabaseAdmin
-      .rpc('search_practical_work_fast', {
-        keywords: limitedKeywords
-      });
+    const { data: ragData, error } = await supabaseAdmin.rpc('search_practical_work_fast', {
+      keywords: limitedKeywords,
+    });
 
     const fetchTime = Date.now() - startTime;
-    console.log(`✅ RAG fetch completed in ${fetchTime}ms, returned ${ragData?.length || 0} results`);
+    console.log(
+      `✅ RAG fetch completed in ${fetchTime}ms, returned ${ragData?.length || 0} results`
+    );
 
     if (error) {
       console.error('❌ RAG fetch error:', error);
@@ -123,9 +135,9 @@ async function fetchPracticalWorkRAG(keywords: string[]): Promise<{
     ragData.slice(0, 15).forEach((doc: any, idx: number) => {
       contextParts.push(
         `[${idx + 1}] ${doc.title}\n` +
-        `Category: ${doc.category || 'General'}\n` +
-        `${doc.content}\n` +
-        `Difficulty: ${doc.difficulty_level || 'Standard'} | Tags: ${doc.tags?.join(', ') || 'N/A'}\n`
+          `Category: ${doc.category || 'General'}\n` +
+          `${doc.content}\n` +
+          `Difficulty: ${doc.difficulty_level || 'Standard'} | Tags: ${doc.tags?.join(', ') || 'N/A'}\n`
       );
     });
 
@@ -134,9 +146,8 @@ async function fetchPracticalWorkRAG(keywords: string[]): Promise<{
     return {
       sources: ragData.slice(0, 20), // Keep top 20 for metadata
       contextText,
-      sourceCount: ragData.length
+      sourceCount: ragData.length,
     };
-
   } catch (error) {
     console.error('❌ Exception in fetchPracticalWorkRAG:', error);
     return { sources: [], contextText: '', sourceCount: 0 };
@@ -147,10 +158,7 @@ async function fetchPracticalWorkRAG(keywords: string[]): Promise<{
  * Extract relevant keywords from analysis settings and mode
  * Used to query practical work intelligence database
  */
-function extractKeywordsFromSettings(
-  mode: string,
-  analysisSettings: any
-): string[] {
+function extractKeywordsFromSettings(mode: string, analysisSettings: any): string[] {
   const keywords: string[] = [];
 
   // Add mode-specific base keywords
@@ -173,7 +181,8 @@ function extractKeywordsFromSettings(
   if (analysisSettings.focus_areas && Array.isArray(analysisSettings.focus_areas)) {
     analysisSettings.focus_areas.forEach((area: string) => {
       // Extract meaningful words (lowercase, remove special chars)
-      const words = area.toLowerCase()
+      const words = area
+        .toLowerCase()
         .replace(/[^a-z0-9\s]/g, ' ')
         .split(/\s+/)
         .filter((w: string) => w.length > 3); // Only words > 3 chars
@@ -189,7 +198,11 @@ function extractKeywordsFromSettings(
   return [...new Set(keywords)];
 }
 
-type AnalysisMode = 'fault_diagnosis' | 'component_identify' | 'wiring_instruction' | 'installation_verify';
+type AnalysisMode =
+  | 'fault_diagnosis'
+  | 'component_identify'
+  | 'wiring_instruction'
+  | 'installation_verify';
 
 interface AnalysisSettings {
   mode: AnalysisMode;
@@ -208,14 +221,19 @@ interface AnalysisRequest {
 }
 
 // Timeout wrapper for fetch calls
-const fetchWithTimeout = async (url: string, options: any, timeoutMs: number, signal?: AbortSignal) => {
+const fetchWithTimeout = async (
+  url: string,
+  options: any,
+  timeoutMs: number,
+  signal?: AbortSignal
+) => {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-  
+
   try {
     const response = await fetch(url, {
       ...options,
-      signal: signal || controller.signal
+      signal: signal || controller.signal,
     });
     clearTimeout(timeoutId);
     return response;
@@ -234,25 +252,27 @@ const urlToInlineData = async (url: string): Promise<{ mimeType: string; data: s
     const [, mimeType, base64Data] = match;
     return { mimeType, data: base64Data };
   }
-  
+
   // Fetch image from URL (Supabase Storage or external)
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`Failed to fetch image from ${url}: ${response.status}`);
   }
-  
+
   const contentType = response.headers.get('content-type') || 'image/jpeg';
   const arrayBuffer = await response.arrayBuffer();
   const base64Data = base64Encode(new Uint8Array(arrayBuffer));
-  
-  console.log(`🖼️ Converted image: ${url.substring(0, 60)}... | ${contentType} | ${arrayBuffer.byteLength} bytes`);
-  
+
+  console.log(
+    `🖼️ Converted image: ${url.substring(0, 60)}... | ${contentType} | ${arrayBuffer.byteLength} bytes`
+  );
+
   return { mimeType: contentType, data: base64Data };
 };
 
 serve(async (req) => {
   console.log('🔧 Visual Analysis | inlineData casing fix | ' + new Date().toISOString());
-  
+
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
@@ -260,7 +280,11 @@ serve(async (req) => {
   const startTime = Date.now();
 
   try {
-    const { primary_image, additional_images = [], analysis_settings }: AnalysisRequest = await req.json();
+    const {
+      primary_image,
+      additional_images = [],
+      analysis_settings,
+    }: AnalysisRequest = await req.json();
 
     if (!geminiApiKey) {
       throw new Error('Gemini API key not configured');
@@ -280,13 +304,19 @@ serve(async (req) => {
     console.log(`⚡ Starting ${analysis_settings.fast_mode ? 'FAST' : 'FULL'} visual analysis v2`, {
       mode: analysis_settings.mode,
       images: 1 + additional_images.length,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
-    const getSystemPrompt = (mode: AnalysisMode, fast: boolean, ragContext: { contextText: string; sourceCount: number }): string => {
+    const getSystemPrompt = (
+      mode: AnalysisMode,
+      fast: boolean,
+      ragContext: { contextText: string; sourceCount: number }
+    ): string => {
       const baseContext = `You are a UK electrical expert specialising in BS 7671 18th Edition.
 
-${ragContext.contextText ? `
+${
+  ragContext.contextText
+    ? `
 ## Practical Work Intelligence Database
 
 You have access to verified, real-world UK electrical installation data, best practices, and practical guidance from ${ragContext.sourceCount} professional sources:
@@ -303,7 +333,9 @@ CRITICAL INSTRUCTIONS FOR USING RAG DATA:
 7. Prioritise practical, real-world advice over generic information
 
 The more detailed and aligned with practical work intelligence your response, the better.
-` : ''}
+`
+    : ''
+}
 
 Today's date: ${new Date().toISOString().split('T')[0]}
 Analysis confidence must reflect clarity of image and certainty of identification.`;
@@ -615,7 +647,10 @@ COMPREHENSIVE VERIFICATION CHECKS:
    - Shower/cooker circuits: Isolation and sizing
    - Outdoor circuits: RCD + IP rating
 
-${fast ? '' : `
+${
+  fast
+    ? ''
+    : `
 8. IMPROVEMENT RECOMMENDATIONS:
    - Priority 1 (Critical): Immediate safety concerns
    - Priority 2 (Important): Compliance improvements
@@ -631,7 +666,8 @@ ${fast ? '' : `
    - "What Good Looks Like" examples
    - Common mistakes leading to issues
    - Long-term implications
-`}
+`
+}
 
 10. TESTING LIMITATIONS:
     - Clearly state which checks REQUIRE physical testing
@@ -700,10 +736,7 @@ RESPONSE REQUIREMENTS:
     };
 
     // Extract keywords for RAG search
-    const ragKeywords = extractKeywordsFromSettings(
-      analysis_settings.mode,
-      analysis_settings
-    );
+    const ragKeywords = extractKeywordsFromSettings(analysis_settings.mode, analysis_settings);
 
     // Fetch practical work intelligence
     const ragContext = await fetchPracticalWorkRAG(ragKeywords);
@@ -711,14 +744,18 @@ RESPONSE REQUIREMENTS:
     console.log('📚 RAG Context:', {
       sourceCount: ragContext.sourceCount,
       contextLength: ragContext.contextText.length,
-      keywords: ragKeywords.slice(0, 5)
+      keywords: ragKeywords.slice(0, 5),
     });
 
-    const systemPrompt = getSystemPrompt(analysis_settings.mode, analysis_settings.fast_mode || false, ragContext);
+    const systemPrompt = getSystemPrompt(
+      analysis_settings.mode,
+      analysis_settings.fast_mode || false,
+      ragContext
+    );
 
     const getUserPrompt = (mode: AnalysisMode, fast: boolean): string => {
       const focusAreas = analysis_settings.focus_areas?.join(', ') || 'general';
-      
+
       switch (mode) {
         case 'fault_diagnosis':
           return `Analyse for EICR compliance. Focus: ${focusAreas}. ${fast ? 'Report critical issues only.' : 'Detailed analysis with BS 7671 references.'}`;
@@ -743,22 +780,22 @@ RESPONSE REQUIREMENTS:
 
     // Convert images to Gemini inlineData format (camelCase for REST API)
     const parts: any[] = [{ text: systemPrompt + '\n\n' + userPrompt }];
-    
+
     // Add primary image
     const primaryInlineData = await urlToInlineData(primary_image);
     parts.push({ inlineData: primaryInlineData });
-    
+
     // Add additional images (respecting fast mode limit)
     const imageLimit = analysis_settings.fast_mode ? 2 : additional_images.length;
     if (additional_images.length > 0) {
       const additionalInlineData = await Promise.all(
-        additional_images.slice(0, imageLimit).map(url => urlToInlineData(url))
+        additional_images.slice(0, imageLimit).map((url) => urlToInlineData(url))
       );
-      additionalInlineData.forEach(inlineData => {
+      additionalInlineData.forEach((inlineData) => {
         parts.push({ inlineData: inlineData });
       });
     }
-    
+
     const geminiContents = [{ role: 'user', parts }];
 
     const aiResponse = await fetchWithTimeout(
@@ -773,8 +810,8 @@ RESPONSE REQUIREMENTS:
           generationConfig: {
             maxOutputTokens: maxTokens,
             temperature: 0.3,
-            responseMimeType: 'application/json'
-          }
+            responseMimeType: 'application/json',
+          },
         }),
       },
       timeout
@@ -794,62 +831,77 @@ RESPONSE REQUIREMENTS:
       }
 
       if (aiResponse.status === 429) {
-        return new Response(JSON.stringify({
-          error: 'Rate limit exceeded',
-          code: 429,
-          message: 'Too many requests. Please wait a moment.'
-        }), {
-          status: 429,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'Rate limit exceeded',
+            code: 429,
+            message: 'Too many requests. Please wait a moment.',
+          }),
+          {
+            status: 429,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
 
       if (aiResponse.status === 400) {
-        return new Response(JSON.stringify({
-          error: 'Bad request',
-          code: 400,
-          message: `Gemini API error: ${errorDetails}`,
-          details: errorText.slice(0, 500)
-        }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'Bad request',
+            code: 400,
+            message: `Gemini API error: ${errorDetails}`,
+            details: errorText.slice(0, 500),
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
 
       if (aiResponse.status === 401 || aiResponse.status === 403) {
-        return new Response(JSON.stringify({
-          error: 'API key error',
-          code: aiResponse.status,
-          message: `Gemini API authentication failed. Please check your GEMINI_API_KEY is valid.`,
-          details: errorDetails
-        }), {
-          status: aiResponse.status,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'API key error',
+            code: aiResponse.status,
+            message: `Gemini API authentication failed. Please check your GEMINI_API_KEY is valid.`,
+            details: errorDetails,
+          }),
+          {
+            status: aiResponse.status,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
 
       // Check for image format errors
       if (errorText.includes('Invalid InlineData') || errorText.includes('inline_data')) {
-        return new Response(JSON.stringify({
-          error: 'Image format error',
-          code: 400,
-          message: 'Image could not be processed. Try re-uploading or use Quick mode.'
-        }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'Image format error',
+            code: 400,
+            message: 'Image could not be processed. Try re-uploading or use Quick mode.',
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
 
       // Return full error details for debugging
-      return new Response(JSON.stringify({
-        error: 'Gemini API error',
-        code: aiResponse.status,
-        message: `Analysis failed: ${errorDetails}`,
-        details: errorText.slice(0, 1000)
-      }), {
-        status: aiResponse.status,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          error: 'Gemini API error',
+          code: aiResponse.status,
+          message: `Analysis failed: ${errorDetails}`,
+          details: errorText.slice(0, 1000),
+        }),
+        {
+          status: aiResponse.status,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const data = await aiResponse.json();
@@ -863,49 +915,59 @@ RESPONSE REQUIREMENTS:
 
     if (!text) {
       console.error('❌ No text in response:', JSON.stringify(data).substring(0, 500));
-      
+
       // Check for MAX_TOKENS finish reason
       if (candidate?.finishReason === 'MAX_TOKENS') {
         console.error('❌ Response truncated due to token limit', {
           finishReason: candidate.finishReason,
-          usageMetadata: data.usageMetadata
+          usageMetadata: data.usageMetadata,
         });
-        return new Response(JSON.stringify({
-          error: 'Response too long',
-          code: 502,
-          message: 'Analysis response was truncated. Please try Quick mode or reduce image complexity.'
-        }), {
-          status: 502,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'Response too long',
+            code: 502,
+            message:
+              'Analysis response was truncated. Please try Quick mode or reduce image complexity.',
+          }),
+          {
+            status: 502,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
-      
+
       // Check for safety blocks
       if (data.promptFeedback?.blockReason || candidate?.finishReason === 'SAFETY') {
-        return new Response(JSON.stringify({
-          error: 'Content blocked',
-          code: 400,
-          message: 'Content blocked by safety filter. Please try a different image.'
-        }), {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-        });
+        return new Response(
+          JSON.stringify({
+            error: 'Content blocked',
+            code: 400,
+            message: 'Content blocked by safety filter. Please try a different image.',
+          }),
+          {
+            status: 400,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          }
+        );
       }
-      
-      return new Response(JSON.stringify({
-        error: 'Empty response',
-        code: 502,
-        message: 'AI returned empty response. Please try again.'
-      }), {
-        status: 502,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+
+      return new Response(
+        JSON.stringify({
+          error: 'Empty response',
+          code: 502,
+          message: 'AI returned empty response. Please try again.',
+        }),
+        {
+          status: 502,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     let analysisResult;
     try {
       analysisResult = parseAIResponse(text, 'Analysis');
-      
+
       if (!analysisResult || typeof analysisResult !== 'object') {
         throw new Error('Invalid analysis result');
       }
@@ -938,21 +1000,23 @@ RESPONSE REQUIREMENTS:
           analysisResult.analysis.findings = [];
         }
 
-        analysisResult.analysis.findings = analysisResult.analysis.findings.map((finding: any, index: number) => ({
-          description: finding.description || `Finding ${index + 1}`,
-          eicr_code: finding.eicr_code || finding.severity || 'FI',
-          confidence: typeof finding.confidence === 'number' ? finding.confidence : 0.5,
-          bs7671_clauses: finding.bs7671_clauses || finding.regulation_reference || ['N/A'],
-          fix_guidance: finding.fix_guidance || finding.remedial_action || 'Consult qualified electrician',
-          ...finding
-        }));
+        analysisResult.analysis.findings = analysisResult.analysis.findings.map(
+          (finding: any, index: number) => ({
+            description: finding.description || `Finding ${index + 1}`,
+            eicr_code: finding.eicr_code || finding.severity || 'FI',
+            confidence: typeof finding.confidence === 'number' ? finding.confidence : 0.5,
+            bs7671_clauses: finding.bs7671_clauses || finding.regulation_reference || ['N/A'],
+            fix_guidance:
+              finding.fix_guidance || finding.remedial_action || 'Consult qualified electrician',
+            ...finding,
+          })
+        );
 
         // Apply confidence threshold
         analysisResult.analysis.findings = analysisResult.analysis.findings.filter(
           (finding: any) => (finding.confidence || 0) >= analysis_settings.confidence_threshold
         );
       }
-
     } catch (parseError) {
       console.error('❌ Parse error:', parseError);
       console.error('❌ Raw content:', content);
@@ -965,46 +1029,52 @@ RESPONSE REQUIREMENTS:
               name: 'Identification Failed',
               type: 'Parse Error',
               confidence: 0,
-              plain_english: 'The AI response could not be processed. This usually happens when the image is unclear or the component is not clearly visible.',
+              plain_english:
+                'The AI response could not be processed. This usually happens when the image is unclear or the component is not clearly visible.',
               notes: [
                 'Technical issue: AI response could not be parsed',
                 'Try: Retake photo in better lighting',
                 'Try: Get closer to the component',
                 'Try: Ensure labels and markings are visible',
-                'Try: Use Quick mode for faster processing'
+                'Try: Use Quick mode for faster processing',
               ],
-              error_details: String(parseError).substring(0, 200)
-            }
-          }
+              error_details: String(parseError).substring(0, 200),
+            },
+          },
         };
       } else {
         // Existing fault_diagnosis fallback
         analysisResult = {
           analysis: {
-            findings: [{
-              description: "Unable to complete analysis - image may be too complex or unclear. The AI response couldn't be processed properly.",
-              eicr_code: "FI",
-              confidence: 0.3,
-              bs7671_clauses: ["Manual inspection required"],
-              fix_guidance: "Try: 1) Retake photo in better lighting, 2) Focus on a specific area, 3) Use fewer images, or 4) Enable Quick mode for faster processing"
-            }],
+            findings: [
+              {
+                description:
+                  "Unable to complete analysis - image may be too complex or unclear. The AI response couldn't be processed properly.",
+                eicr_code: 'FI',
+                confidence: 0.3,
+                bs7671_clauses: ['Manual inspection required'],
+                fix_guidance:
+                  'Try: 1) Retake photo in better lighting, 2) Focus on a specific area, 3) Use fewer images, or 4) Enable Quick mode for faster processing',
+              },
+            ],
             helpful_tips: [
-              "✓ Ensure images are well-lit and in focus",
-              "✓ Capture equipment from multiple angles if complex",
-              "✓ Avoid reflections or obstructions in photos",
-              "✓ Try Quick mode for simpler, faster analysis"
+              '✓ Ensure images are well-lit and in focus',
+              '✓ Capture equipment from multiple angles if complex',
+              '✓ Avoid reflections or obstructions in photos',
+              '✓ Try Quick mode for simpler, faster analysis',
             ],
             compliance_summary: {
-              overall_assessment: "unsatisfactory",
+              overall_assessment: 'unsatisfactory',
               c1_count: 0,
               c2_count: 0,
               c3_count: 0,
               fi_count: 1,
-              safety_rating: 5.0
+              safety_rating: 5.0,
             },
-            summary: "Analysis could not be completed due to processing error. Please review image quality and try again.",
-            parse_error: true
-          }
+            summary:
+              'Analysis could not be completed due to processing error. Please review image quality and try again.',
+            parse_error: true,
+          },
         };
       }
     }
@@ -1015,79 +1085,118 @@ RESPONSE REQUIREMENTS:
       let conf = comp.confidence || 0;
       if (conf > 0 && conf <= 1) conf = conf * 100;
       conf = Math.max(0, Math.min(100, conf));
-      
+
       return {
         name: comp.name || 'Unknown Component',
         type: comp.type || 'Unknown Type',
-        plain_english: comp.plain_english || comp.description || 'Component identification incomplete',
+        plain_english:
+          comp.plain_english || comp.description || 'Component identification incomplete',
         manufacturer: comp.manufacturer || 'Unknown',
         model: comp.model || 'Unknown',
         confidence: conf,
-        specifications: typeof comp.specifications === 'object' ? comp.specifications : {
-          voltage_rating: comp.voltage_rating || comp.specifications?.voltage_rating || 'Not specified',
-          current_rating: comp.current_rating || comp.specifications?.current_rating || 'Not specified',
-          breaking_capacity: comp.breaking_capacity || comp.specifications?.breaking_capacity || 'Not specified',
-          poles: comp.poles || comp.specifications?.poles || 'Not specified',
-          throws: comp.throws || comp.specifications?.throws || 'Not specified',
-          contact_material: comp.contact_material || comp.specifications?.contact_material || 'Not specified',
-          insulation_material: comp.insulation_material || comp.specifications?.insulation_material || 'Not specified',
-          protection_type: comp.protection_type || comp.specifications?.protection_type || 'Not specified',
-          ip_rating: comp.ip_rating || comp.specifications?.ip_rating || 'Not specified'
-        },
+        specifications:
+          typeof comp.specifications === 'object'
+            ? comp.specifications
+            : {
+                voltage_rating:
+                  comp.voltage_rating || comp.specifications?.voltage_rating || 'Not specified',
+                current_rating:
+                  comp.current_rating || comp.specifications?.current_rating || 'Not specified',
+                breaking_capacity:
+                  comp.breaking_capacity ||
+                  comp.specifications?.breaking_capacity ||
+                  'Not specified',
+                poles: comp.poles || comp.specifications?.poles || 'Not specified',
+                throws: comp.throws || comp.specifications?.throws || 'Not specified',
+                contact_material:
+                  comp.contact_material || comp.specifications?.contact_material || 'Not specified',
+                insulation_material:
+                  comp.insulation_material ||
+                  comp.specifications?.insulation_material ||
+                  'Not specified',
+                protection_type:
+                  comp.protection_type || comp.specifications?.protection_type || 'Not specified',
+                ip_rating: comp.ip_rating || comp.specifications?.ip_rating || 'Not specified',
+              },
         visual_identifiers: Array.isArray(comp.visual_identifiers) ? comp.visual_identifiers : [],
         age_estimate: comp.age_estimate || 'Unknown',
         current_compliance: comp.current_compliance || comp.compliance_status || 'Unknown',
-        typical_applications: Array.isArray(comp.typical_applications) ? comp.typical_applications : 
-                             Array.isArray(comp.applications) ? comp.applications : [],
-        bs7671_requirements: Array.isArray(comp.bs7671_requirements) ? comp.bs7671_requirements : [],
+        typical_applications: Array.isArray(comp.typical_applications)
+          ? comp.typical_applications
+          : Array.isArray(comp.applications)
+            ? comp.applications
+            : [],
+        bs7671_requirements: Array.isArray(comp.bs7671_requirements)
+          ? comp.bs7671_requirements
+          : [],
         installation_notes: comp.installation_notes || '',
         replacement_notes: comp.replacement_notes || comp.replacement_info || '',
         common_issues: comp.common_issues || comp.known_issues || '',
-        where_found: comp.where_found || comp.typical_location || ''
+        where_found: comp.where_found || comp.typical_location || '',
       };
     };
 
     // CRITICAL: Restructure component_identify responses to match expected format
     if (analysis_settings.mode === 'component_identify' && analysisResult.analysis) {
       const ana = analysisResult.analysis;
-      
+
       // If component already exists and is valid, just normalize it
       if (ana.component && typeof ana.component === 'object') {
         console.log('✅ Component already nested correctly');
         ana.component = normalizeComponent(ana.component);
-      } 
+      }
       // Check for candidate lists (components, component_candidates, candidate_components, matches)
-      else if (ana.components || ana.component_candidates || ana.candidate_components || ana.matches) {
-        const candidates = ana.components || ana.component_candidates || ana.candidate_components || ana.matches;
+      else if (
+        ana.components ||
+        ana.component_candidates ||
+        ana.candidate_components ||
+        ana.matches
+      ) {
+        const candidates =
+          ana.components || ana.component_candidates || ana.candidate_components || ana.matches;
         if (Array.isArray(candidates) && candidates.length > 0) {
           // Pick the highest confidence candidate
           const best = candidates.reduce((prev: any, curr: any) => {
             const prevConf = prev.confidence || 0;
             const currConf = curr.confidence || 0;
-            return (currConf > prevConf) ? curr : prev;
+            return currConf > prevConf ? curr : prev;
           });
           console.log(`⚠️ Wrapping best candidate component (confidence ${best.confidence || 0}%)`);
           analysisResult.analysis = {
             component: normalizeComponent(best),
-            summary: ana.summary || 'Component identified from candidates'
+            summary: ana.summary || 'Component identified from candidates',
           };
         }
       }
       // Check for flat component fields at analysis root
-      else if (ana.type || ana.manufacturer || ana.model || ana.plain_english || 
-               ana.specifications || ana.voltage_rating || ana.current_rating || 
-               ana.name || ana.breaking_capacity || ana.poles || 
-               ana.throws || ana.contact_material || ana.insulation_material || 
-               ana.protection_type || ana.ip_rating) {
+      else if (
+        ana.type ||
+        ana.manufacturer ||
+        ana.model ||
+        ana.plain_english ||
+        ana.specifications ||
+        ana.voltage_rating ||
+        ana.current_rating ||
+        ana.name ||
+        ana.breaking_capacity ||
+        ana.poles ||
+        ana.throws ||
+        ana.contact_material ||
+        ana.insulation_material ||
+        ana.protection_type ||
+        ana.ip_rating
+      ) {
         console.log('⚠️ Wrapping flat component fields into analysis.component');
         analysisResult.analysis = {
           component: normalizeComponent(ana),
-          summary: ana.summary || 'Component identified'
+          summary: ana.summary || 'Component identified',
         };
       }
       // Last resort: check for any specification fields
       else {
-        console.log(`⚠️ Still no component after restructure — keys present: ${Object.keys(ana).join(', ')}`);
+        console.log(
+          `⚠️ Still no component after restructure — keys present: ${Object.keys(ana).join(', ')}`
+        );
 
         // Create minimal fallback component from available data
         console.warn('⚠️ Creating minimal fallback component from available fields');
@@ -1100,13 +1209,15 @@ RESPONSE REQUIREMENTS:
           name: componentType || 'Electrical Component',
           type: componentType || 'Unknown Type',
           confidence: 30,
-          plain_english: summary || 'Component could not be fully identified from the image. Try retaking the photo in better lighting with visible labels.',
+          plain_english:
+            summary ||
+            'Component could not be fully identified from the image. Try retaking the photo in better lighting with visible labels.',
           notes: [
             'Limited identification: AI response did not contain complete component data',
-            'Suggestion: Retake photo ensuring all labels and markings are clearly visible'
+            'Suggestion: Retake photo ensuring all labels and markings are clearly visible',
           ],
           identification_quality: 'low',
-          raw_response_keys: Object.keys(ana).join(', ')
+          raw_response_keys: Object.keys(ana).join(', '),
         };
       }
     }
@@ -1122,13 +1233,20 @@ RESPONSE REQUIREMENTS:
     if (analysis_settings.mode === 'component_identify') {
       if (!analysisResult.analysis?.component) {
         console.error('❌ No component in response for component_identify mode');
-        console.error('❌ Response structure:', JSON.stringify(analysisResult, null, 2).substring(0, 500));
+        console.error(
+          '❌ Response structure:',
+          JSON.stringify(analysisResult, null, 2).substring(0, 500)
+        );
 
-        throw new Error('Component identification failed: No component data in AI response. Please try again with a clearer image showing component labels and markings.');
+        throw new Error(
+          'Component identification failed: No component data in AI response. Please try again with a clearer image showing component labels and markings.'
+        );
       }
 
       // Log successful component identification
-      console.log(`✅ Component identified: ${analysisResult.analysis.component.name} (confidence: ${analysisResult.analysis.component.confidence}%)`);
+      console.log(
+        `✅ Component identified: ${analysisResult.analysis.component.name} (confidence: ${analysisResult.analysis.component.confidence}%)`
+      );
     }
 
     // Add RAG metadata to response
@@ -1141,15 +1259,14 @@ RESPONSE REQUIREMENTS:
         top_sources: ragContext.sources.slice(0, 5).map((s: any) => ({
           title: s.title,
           category: s.category,
-          tags: s.tags
-        }))
-      }
+          tags: s.tags,
+        })),
+      },
     };
 
     return new Response(JSON.stringify(responseWithRAG), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);
@@ -1157,15 +1274,16 @@ RESPONSE REQUIREMENTS:
     await captureException(error, {
       functionName: 'visual-analysis',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     const errorResponse = {
       error: error instanceof Error ? error.message : 'Unknown error',
       code: error.name === 'AbortError' ? 'TIMEOUT' : 'ERROR',
-      message: error.name === 'AbortError'
-        ? 'Analysis timed out. Try fast mode or fewer images.'
-        : 'Analysis failed. Please try again.'
+      message:
+        error.name === 'AbortError'
+          ? 'Analysis timed out. Try fast mode or fewer images.'
+          : 'Analysis failed. Please try again.',
     };
 
     return new Response(JSON.stringify(errorResponse), {

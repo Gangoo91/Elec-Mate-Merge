@@ -1,12 +1,13 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const CATEGORY_MAPPING: Record<string, string> = {
@@ -28,60 +29,136 @@ const CATEGORY_MAPPING: Record<string, string> = {
   'Access Tools & Equipment - Toolstation': 'Access Tools & Equipment',
 };
 
-function intelligentlyCategorize(toolName: string, toolDescription: string, category: string, batchCategory: string): string {
+function intelligentlyCategorize(
+  toolName: string,
+  toolDescription: string,
+  category: string,
+  batchCategory: string
+): string {
   const name = toolName.toLowerCase();
   const cat = category.toLowerCase();
   const desc = (toolDescription || '').toLowerCase();
-  
-  if (name.includes('multimeter') || name.includes('tester') || name.includes('test lead') || 
-      name.includes('meter') || name.includes('clamp meter') || name.includes('voltage') ||
-      name.includes('socket tester') || name.includes('proving unit') || name.includes('test lamp') || cat.includes("test")) {
+
+  if (
+    name.includes('multimeter') ||
+    name.includes('tester') ||
+    name.includes('test lead') ||
+    name.includes('meter') ||
+    name.includes('clamp meter') ||
+    name.includes('voltage') ||
+    name.includes('socket tester') ||
+    name.includes('proving unit') ||
+    name.includes('test lamp') ||
+    cat.includes('test')
+  ) {
     return 'Test Equipment';
   }
-  
-  if (name.includes('plier') || name.includes('screwdriver') || name.includes('wire stripper') ||
-      name.includes('cable cutter') || name.includes('spanner') || name.includes('wrench') ||
-      name.includes('crimper') || name.includes('vde') || name.includes('side cutter') ||
-      name.includes('stripping') || name.includes('snips') || name.includes('knife') || cat.includes("hand")) {
+
+  if (
+    name.includes('plier') ||
+    name.includes('screwdriver') ||
+    name.includes('wire stripper') ||
+    name.includes('cable cutter') ||
+    name.includes('spanner') ||
+    name.includes('wrench') ||
+    name.includes('crimper') ||
+    name.includes('vde') ||
+    name.includes('side cutter') ||
+    name.includes('stripping') ||
+    name.includes('snips') ||
+    name.includes('knife') ||
+    cat.includes('hand')
+  ) {
     return 'Hand Tools';
   }
-  
-  if (name.includes('drill') || name.includes('cordless') || name.includes('18v') || 
-      name.includes('impact driver') || name.includes('grinder') || name.includes('saw') ||
-      name.includes('sds') || name.includes('battery pack') || name.includes('combi') ||
-      name.includes('makita') || name.includes('dewalt') || name.includes('brushless') || cat.includes("power")) {
+
+  if (
+    name.includes('drill') ||
+    name.includes('cordless') ||
+    name.includes('18v') ||
+    name.includes('impact driver') ||
+    name.includes('grinder') ||
+    name.includes('saw') ||
+    name.includes('sds') ||
+    name.includes('battery pack') ||
+    name.includes('combi') ||
+    name.includes('makita') ||
+    name.includes('dewalt') ||
+    name.includes('brushless') ||
+    cat.includes('power')
+  ) {
     return 'Power Tools';
   }
-  
-  if (name.includes('tool bag') || name.includes('tool box') || name.includes('case') ||
-      name.includes('storage') || name.includes('organiser') || name.includes('toughsystem') ||
-      name.includes('key safe') || name.includes('with wheels') || name.includes('toolbox') ||
-      name.includes('tote') || name.includes('organizer') || cat.includes("storage")) {
+
+  if (
+    name.includes('tool bag') ||
+    name.includes('tool box') ||
+    name.includes('case') ||
+    name.includes('storage') ||
+    name.includes('organiser') ||
+    name.includes('toughsystem') ||
+    name.includes('key safe') ||
+    name.includes('with wheels') ||
+    name.includes('toolbox') ||
+    name.includes('tote') ||
+    name.includes('organizer') ||
+    cat.includes('storage')
+  ) {
     return 'Tool Storage';
   }
-  
-  if (name.includes('helmet') || name.includes('gloves') || name.includes('safety') ||
-      name.includes('protective') || name.includes('harness') || name.includes('glasses') ||
-      name.includes('boots') || name.includes('hi-vis') || name.includes('vest') || cat.includes("safety")) {
+
+  if (
+    name.includes('helmet') ||
+    name.includes('gloves') ||
+    name.includes('safety') ||
+    name.includes('protective') ||
+    name.includes('harness') ||
+    name.includes('glasses') ||
+    name.includes('boots') ||
+    name.includes('hi-vis') ||
+    name.includes('vest') ||
+    cat.includes('safety')
+  ) {
     return 'Safety Tools';
   }
 
-  if (name.includes('helmet') || name.includes('gloves') || name.includes('workwear') ||
-      name.includes('glasses') ||
-      name.includes('boots') || name.includes('vest') || name.includes('personal protective equipment') || cat.includes("PPE")) {
+  if (
+    name.includes('helmet') ||
+    name.includes('gloves') ||
+    name.includes('workwear') ||
+    name.includes('glasses') ||
+    name.includes('boots') ||
+    name.includes('vest') ||
+    name.includes('personal protective equipment') ||
+    cat.includes('PPE')
+  ) {
     return 'Safety Tools';
   }
-  
-  if (name.includes('ladder') || name.includes('steps') || name.includes('platform') ||
-      name.includes('scaffold') || name.includes('stepladder') || name.includes('extension ladder') || cat.includes("access")) {
+
+  if (
+    name.includes('ladder') ||
+    name.includes('steps') ||
+    name.includes('platform') ||
+    name.includes('scaffold') ||
+    name.includes('stepladder') ||
+    name.includes('extension ladder') ||
+    cat.includes('access')
+  ) {
     return 'Access Tools & Equipment';
   }
-  
-  if (name.includes('cable puller') || name.includes('fish tape') || name.includes('bender') ||
-      name.includes('cable rod') || name.includes('conduit') || name.includes('knockout') || cat.includes("specialist")) {
+
+  if (
+    name.includes('cable puller') ||
+    name.includes('fish tape') ||
+    name.includes('bender') ||
+    name.includes('cable rod') ||
+    name.includes('conduit') ||
+    name.includes('knockout') ||
+    cat.includes('specialist')
+  ) {
     return 'Specialist Tools';
   }
-  
+
   return batchCategory;
 }
 
@@ -93,13 +170,13 @@ serve(async (req) => {
   try {
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
     const webhook = await req.json();
-    
+
     console.log('🔔 Webhook received:', webhook);
 
     if (webhook.status !== 'completed') {
       console.log(`⏳ Job status: ${webhook.status}`);
       return new Response(JSON.stringify({ success: true, status: webhook.status }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
@@ -114,7 +191,7 @@ serve(async (req) => {
       console.error('❌ Queue entry not found for job:', webhook.id);
       return new Response(JSON.stringify({ success: false, error: 'Queue entry not found' }), {
         status: 404,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
@@ -125,7 +202,7 @@ serve(async (req) => {
 
     // Group tools by intelligently categorized categories
     const toolsByCategory: Record<string, any[]> = {};
-    
+
     webhook.data?.forEach((result: any, index: number) => {
       const urlName = urls[index]?.name || 'Unknown';
       const batchCategory = CATEGORY_MAPPING[urlName] || urlName;
@@ -135,7 +212,7 @@ serve(async (req) => {
 
       products.forEach((product: any) => {
         const intelligentCategory = intelligentlyCategorize(
-          product.name || '', 
+          product.name || '',
           product.description || '',
           product.category || '',
           batchCategory
@@ -150,7 +227,7 @@ serve(async (req) => {
           category: intelligentCategory,
           supplier: urlName.includes('Screwfix') ? 'Screwfix' : 'Toolstation',
           view_product_url: product.view_product_url || product.productUrl,
-          id: Math.floor(Math.random() * 1000000)
+          id: Math.floor(Math.random() * 1000000),
         });
       });
     });
@@ -177,25 +254,31 @@ serve(async (req) => {
         return acc;
       }, []);
 
-      await supabase.from('tools_weekly_cache').upsert({
-        category,
-        tools_data: uniqueTools,
-        total_products: uniqueTools.length,
-        expires_at: expiresAt,
-        update_status: 'completed',
-        last_updated: new Date().toISOString()
-      }, { onConflict: 'category' });
+      await supabase.from('tools_weekly_cache').upsert(
+        {
+          category,
+          tools_data: uniqueTools,
+          total_products: uniqueTools.length,
+          expires_at: expiresAt,
+          update_status: 'completed',
+          last_updated: new Date().toISOString(),
+        },
+        { onConflict: 'category' }
+      );
 
       totalTools += tools.length;
-      console.log(`💾 Stored ${tools.length} tools for ${category} (Total: ${uniqueTools.length} unique)`);
+      console.log(
+        `💾 Stored ${tools.length} tools for ${category} (Total: ${uniqueTools.length} unique)`
+      );
     }
 
     // Update queue status
-    await supabase.from('tools_scrape_queue')
+    await supabase
+      .from('tools_scrape_queue')
       .update({
         status: 'completed',
         tools_found: totalTools,
-        completed_at: new Date().toISOString()
+        completed_at: new Date().toISOString(),
       })
       .eq('firecrawl_job_id', webhook.id);
 
@@ -204,30 +287,32 @@ serve(async (req) => {
     // Auto-trigger next batch if not the last one
     if (batchNumber < 4) {
       console.log(`🚀 Auto-triggering batch ${batchNumber + 1}...`);
-      
+
       await fetch(`${SUPABASE_URL}/functions/v1/firecrawl-v2-tools-batch`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
-          'Content-Type': 'application/json'
+          Authorization: `Bearer ${SUPABASE_SERVICE_ROLE_KEY}`,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ batchNumber: batchNumber + 1 })
+        body: JSON.stringify({ batchNumber: batchNumber + 1 }),
       });
     }
 
-    return new Response(JSON.stringify({ 
-      success: true, 
-      toolsStored: totalTools,
-      batchNumber 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        toolsStored: totalTools,
+        batchNumber,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Webhook error:', error);
-    return new Response(
-      JSON.stringify({ success: false, error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: false, error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

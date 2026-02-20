@@ -1,11 +1,12 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const googleCloudApiKey = Deno.env.get('GOOGLE_CLOUD_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -65,19 +66,19 @@ interface OCRResult {
 
 // UK electrical ratings patterns
 const RATING_PATTERNS = [
-  /\b(\d{1,3})\s*[Aa]\b/,           // "32A", "32 A", "6a"
-  /\b[Bb](\d{1,3})\b/,              // "B32", "B6"
-  /\b[Cc](\d{1,3})\b/,              // "C32", "C16"
-  /\b[Dd](\d{1,3})\b/,              // "D63"
+  /\b(\d{1,3})\s*[Aa]\b/, // "32A", "32 A", "6a"
+  /\b[Bb](\d{1,3})\b/, // "B32", "B6"
+  /\b[Cc](\d{1,3})\b/, // "C32", "C16"
+  /\b[Dd](\d{1,3})\b/, // "D63"
   /\b(\d{1,3})\s*[Aa][Mm][Pp][Ss]?\b/, // "32 Amps"
 ];
 
 // Curve type patterns
 const CURVE_PATTERNS = [
-  /\b[Bb]\s*\d/,                    // "B32"
-  /\b[Cc]\s*\d/,                    // "C16"
-  /\b[Dd]\s*\d/,                    // "D63"
-  /\bType\s*[BCD]\b/i,             // "Type B"
+  /\b[Bb]\s*\d/, // "B32"
+  /\b[Cc]\s*\d/, // "C16"
+  /\b[Dd]\s*\d/, // "D63"
+  /\bType\s*[BCD]\b/i, // "Type B"
 ];
 
 // Common circuit label patterns
@@ -127,10 +128,10 @@ const BRAND_PATTERNS = [
 // Device marking patterns (on the device itself)
 const DEVICE_MARKING_PATTERNS = [
   /\b(MCB|RCBO|RCD|AFDD|SPD)\b/i,
-  /\b(\d+)\s*kA\b/i,                // Breaking capacity "6kA"
-  /\b(\d+)\s*mA\b/i,                // RCD sensitivity "30mA"
+  /\b(\d+)\s*kA\b/i, // Breaking capacity "6kA"
+  /\b(\d+)\s*mA\b/i, // RCD sensitivity "30mA"
   /\bI[Δ∆]n\s*=?\s*(\d+)\s*mA\b/i, // RCD marking "IΔn=30mA"
-  /\bIn\s*=?\s*(\d+)\s*A\b/i,      // Rated current
+  /\bIn\s*=?\s*(\d+)\s*A\b/i, // Rated current
 ];
 
 function classifyText(text: string): ExtractedText['type'] {
@@ -239,22 +240,23 @@ function groupTextsByPosition(texts: ExtractedText[]): CircuitOCRHint[] {
 
   // Convert columns to circuit hints
   return columns.map((column, index) => {
-    const rawTexts = column.map(t => t.text);
+    const rawTexts = column.map((t) => t.text);
     const fullText = rawTexts.join(' ');
 
     // Find label (look for descriptive text)
-    const labelTexts = column.filter(t => t.type === 'label');
+    const labelTexts = column.filter((t) => t.type === 'label');
     const detectedLabel = labelTexts.length > 0 ? labelTexts[0].text : null;
 
     // Find rating
-    const ratingTexts = column.filter(t => t.type === 'rating');
-    const detectedRating = ratingTexts.length > 0 ? extractRating(ratingTexts[0].text) : extractRating(fullText);
+    const ratingTexts = column.filter((t) => t.type === 'rating');
+    const detectedRating =
+      ratingTexts.length > 0 ? extractRating(ratingTexts[0].text) : extractRating(fullText);
 
     // Find curve
     const detectedCurve = extractCurve(fullText);
 
     // Find device marking
-    const deviceTexts = column.filter(t => t.type === 'device_marking');
+    const deviceTexts = column.filter((t) => t.type === 'device_marking');
     const detectedDeviceMarking = deviceTexts.length > 0 ? deviceTexts[0].text : null;
 
     return {
@@ -338,12 +340,12 @@ function parseVisionAnnotations(annotations: TextAnnotation[]): ExtractedText[] 
   // First annotation is the full text, skip it
   const individualAnnotations = annotations.slice(1);
 
-  return individualAnnotations.map(annotation => {
+  return individualAnnotations.map((annotation) => {
     const vertices = annotation.boundingPoly?.vertices || [];
-    const x = Math.min(...vertices.map(v => v.x || 0));
-    const y = Math.min(...vertices.map(v => v.y || 0));
-    const maxX = Math.max(...vertices.map(v => v.x || 0));
-    const maxY = Math.max(...vertices.map(v => v.y || 0));
+    const x = Math.min(...vertices.map((v) => v.x || 0));
+    const y = Math.min(...vertices.map((v) => v.y || 0));
+    const maxX = Math.max(...vertices.map((v) => v.x || 0));
+    const maxY = Math.max(...vertices.map((v) => v.y || 0));
 
     return {
       text: annotation.description,
@@ -375,17 +377,17 @@ serve(async (req) => {
     const { images }: OCRRequest = await req.json();
 
     if (!images || images.length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'No images provided' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No images provided' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log(`Processing ${images.length} images for OCR`);
 
     // Process all images in parallel
     const allAnnotations: TextAnnotation[][] = await Promise.all(
-      images.map(image => callGoogleVisionOCR(image))
+      images.map((image) => callGoogleVisionOCR(image))
     );
 
     // Combine and parse all annotations
@@ -447,13 +449,13 @@ serve(async (req) => {
       processing_time_ms: Date.now() - startTime,
     };
 
-    console.log(`OCR completed in ${result.processing_time_ms}ms. Found ${allExtractedTexts.length} text elements.`);
-
-    return new Response(
-      JSON.stringify(result),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    console.log(
+      `OCR completed in ${result.processing_time_ms}ms. Found ${allExtractedTexts.length} text elements.`
     );
 
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('OCR processing error:', error);
     return new Response(

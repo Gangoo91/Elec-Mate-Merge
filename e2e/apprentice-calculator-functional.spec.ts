@@ -1,5 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { loginViaUI } from "./fixtures/auth";
+import { test, expect } from '@playwright/test';
+import { loginViaUI } from './fixtures/auth';
 
 /**
  * FUNCTIONAL End-to-end tests for Apprentice Calculators
@@ -15,14 +15,14 @@ import { loginViaUI } from "./fixtures/auth";
 // Configure retries for login timeout resilience during parallel execution
 test.describe.configure({ retries: 2 });
 
-test.describe("Calculator Functional Tests - Energy Cost", () => {
+test.describe('Calculator Functional Tests - Energy Cost', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("can select calculator from list", async ({ page }) => {
+  test('can select calculator from list', async ({ page }) => {
     // Find and click on Energy Cost Calculator
     const energyCalc = page.locator('text="Energy"').first();
 
@@ -31,10 +31,10 @@ test.describe("Calculator Functional Tests - Energy Cost", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("calculator has input fields for rates", async ({ page }) => {
+  test('calculator has input fields for rates', async ({ page }) => {
     // Navigate to energy calculator
     const energyCalc = page.locator('text="Energy"').first();
     if (await energyCalc.isVisible()) {
@@ -49,7 +49,7 @@ test.describe("Calculator Functional Tests - Energy Cost", () => {
     expect(inputCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("can enter values in calculator inputs", async ({ page }) => {
+  test('can enter values in calculator inputs', async ({ page }) => {
     const energyCalc = page.locator('text="Energy"').first();
     if (await energyCalc.isVisible()) {
       await energyCalc.click();
@@ -60,15 +60,15 @@ test.describe("Calculator Functional Tests - Energy Cost", () => {
     const input = page.locator('input[type="text"], input[inputmode="decimal"]').first();
 
     if (await input.isVisible()) {
-      await input.fill("100");
+      await input.fill('100');
       const value = await input.inputValue();
-      expect(value).toBe("100");
+      expect(value).toBe('100');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("calculate button is present", async ({ page }) => {
+  test('calculate button is present', async ({ page }) => {
     const energyCalc = page.locator('text="Energy"').first();
     if (await energyCalc.isVisible()) {
       await energyCalc.click();
@@ -82,7 +82,7 @@ test.describe("Calculator Functional Tests - Energy Cost", () => {
     expect(buttonCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("reset button clears inputs", async ({ page }) => {
+  test('reset button clears inputs', async ({ page }) => {
     const energyCalc = page.locator('text="Energy"').first();
     if (await energyCalc.isVisible()) {
       await energyCalc.click();
@@ -90,21 +90,23 @@ test.describe("Calculator Functional Tests - Energy Cost", () => {
     }
 
     // Look for reset button
-    const resetButton = page.locator('button:has-text("Reset"), button:has([class*="RotateCcw"])').first();
+    const resetButton = page
+      .locator('button:has-text("Reset"), button:has([class*="RotateCcw"])')
+      .first();
 
     if (await resetButton.isVisible()) {
       await resetButton.click();
       await page.waitForTimeout(500);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
 test.describe("Calculator Functional Tests - Ohm's Law", () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
@@ -116,10 +118,10 @@ test.describe("Calculator Functional Tests - Ohm's Law", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can input voltage value", async ({ page }) => {
+  test('can input voltage value', async ({ page }) => {
     const ohmsCalc = page.locator('text="Ohm"').first();
     if (await ohmsCalc.isVisible()) {
       await ohmsCalc.click();
@@ -127,18 +129,22 @@ test.describe("Calculator Functional Tests - Ohm's Law", () => {
     }
 
     // Look for voltage input
-    const voltageInput = page.locator('input[placeholder*="Voltage" i], label:has-text("Voltage") + input, label:has-text("Voltage") ~ input').first();
+    const voltageInput = page
+      .locator(
+        'input[placeholder*="Voltage" i], label:has-text("Voltage") + input, label:has-text("Voltage") ~ input'
+      )
+      .first();
 
     if (await voltageInput.isVisible()) {
-      await voltageInput.fill("230");
+      await voltageInput.fill('230');
       const value = await voltageInput.inputValue();
-      expect(value).toBe("230");
+      expect(value).toBe('230');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can input current value", async ({ page }) => {
+  test('can input current value', async ({ page }) => {
     const ohmsCalc = page.locator('text="Ohm"').first();
     if (await ohmsCalc.isVisible()) {
       await ohmsCalc.click();
@@ -146,18 +152,20 @@ test.describe("Calculator Functional Tests - Ohm's Law", () => {
     }
 
     // Look for current input
-    const currentInput = page.locator('input[placeholder*="Current" i], input[placeholder*="Amps" i]').first();
+    const currentInput = page
+      .locator('input[placeholder*="Current" i], input[placeholder*="Amps" i]')
+      .first();
 
     if (await currentInput.isVisible()) {
-      await currentInput.fill("10");
+      await currentInput.fill('10');
       const value = await currentInput.inputValue();
-      expect(value).toBe("10");
+      expect(value).toBe('10');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can calculate and display result", async ({ page }) => {
+  test('can calculate and display result', async ({ page }) => {
     const ohmsCalc = page.locator('text="Ohm"').first();
     if (await ohmsCalc.isVisible()) {
       await ohmsCalc.click();
@@ -169,8 +177,8 @@ test.describe("Calculator Functional Tests - Ohm's Law", () => {
     const inputCount = await inputs.count();
 
     if (inputCount >= 2) {
-      await inputs.nth(0).fill("230");
-      await inputs.nth(1).fill("10");
+      await inputs.nth(0).fill('230');
+      await inputs.nth(1).fill('10');
     }
 
     // Click calculate
@@ -181,18 +189,18 @@ test.describe("Calculator Functional Tests - Ohm's Law", () => {
     }
 
     // Results should be displayed
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Calculator Functional Tests - Cable Sizing", () => {
+test.describe('Calculator Functional Tests - Cable Sizing', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("Cable Sizing calculator accessible", async ({ page }) => {
+  test('Cable Sizing calculator accessible', async ({ page }) => {
     const cableCalc = page.locator('text="Cable"').first();
 
     if (await cableCalc.isVisible()) {
@@ -200,10 +208,10 @@ test.describe("Calculator Functional Tests - Cable Sizing", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can select cable type", async ({ page }) => {
+  test('can select cable type', async ({ page }) => {
     const cableCalc = page.locator('text="Cable"').first();
     if (await cableCalc.isVisible()) {
       await cableCalc.click();
@@ -218,10 +226,10 @@ test.describe("Calculator Functional Tests - Cable Sizing", () => {
       await page.waitForTimeout(500);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can input load current", async ({ page }) => {
+  test('can input load current', async ({ page }) => {
     const cableCalc = page.locator('text="Cable"').first();
     if (await cableCalc.isVisible()) {
       await cableCalc.click();
@@ -229,26 +237,28 @@ test.describe("Calculator Functional Tests - Cable Sizing", () => {
     }
 
     // Look for current input
-    const currentInput = page.locator('input[placeholder*="current" i], input[placeholder*="amps" i]').first();
+    const currentInput = page
+      .locator('input[placeholder*="current" i], input[placeholder*="amps" i]')
+      .first();
 
     if (await currentInput.isVisible()) {
-      await currentInput.fill("32");
+      await currentInput.fill('32');
       const value = await currentInput.inputValue();
-      expect(value).toBe("32");
+      expect(value).toBe('32');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Calculator Functional Tests - Voltage Drop", () => {
+test.describe('Calculator Functional Tests - Voltage Drop', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("Voltage Drop calculator accessible", async ({ page }) => {
+  test('Voltage Drop calculator accessible', async ({ page }) => {
     const vdCalc = page.locator('text="Voltage Drop"').first();
 
     if (await vdCalc.isVisible()) {
@@ -256,10 +266,10 @@ test.describe("Calculator Functional Tests - Voltage Drop", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can input cable length", async ({ page }) => {
+  test('can input cable length', async ({ page }) => {
     const vdCalc = page.locator('text="Voltage Drop"').first();
     if (await vdCalc.isVisible()) {
       await vdCalc.click();
@@ -267,18 +277,20 @@ test.describe("Calculator Functional Tests - Voltage Drop", () => {
     }
 
     // Look for length input
-    const lengthInput = page.locator('input[placeholder*="length" i], input[placeholder*="metres" i]').first();
+    const lengthInput = page
+      .locator('input[placeholder*="length" i], input[placeholder*="metres" i]')
+      .first();
 
     if (await lengthInput.isVisible()) {
-      await lengthInput.fill("25");
+      await lengthInput.fill('25');
       const value = await lengthInput.inputValue();
-      expect(value).toBe("25");
+      expect(value).toBe('25');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("shows percentage drop result", async ({ page }) => {
+  test('shows percentage drop result', async ({ page }) => {
     const vdCalc = page.locator('text="Voltage Drop"').first();
     if (await vdCalc.isVisible()) {
       await vdCalc.click();
@@ -293,14 +305,14 @@ test.describe("Calculator Functional Tests - Voltage Drop", () => {
   });
 });
 
-test.describe("Calculator Functional Tests - Power Factor", () => {
+test.describe('Calculator Functional Tests - Power Factor', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("Power Factor calculator accessible", async ({ page }) => {
+  test('Power Factor calculator accessible', async ({ page }) => {
     const pfCalc = page.locator('text="Power Factor"').first();
 
     if (await pfCalc.isVisible()) {
@@ -308,10 +320,10 @@ test.describe("Calculator Functional Tests - Power Factor", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can input active power (kW)", async ({ page }) => {
+  test('can input active power (kW)', async ({ page }) => {
     const pfCalc = page.locator('text="Power Factor"').first();
     if (await pfCalc.isVisible()) {
       await pfCalc.click();
@@ -319,26 +331,28 @@ test.describe("Calculator Functional Tests - Power Factor", () => {
     }
 
     // Look for power input
-    const powerInput = page.locator('input[placeholder*="kW" i], input[placeholder*="power" i]').first();
+    const powerInput = page
+      .locator('input[placeholder*="kW" i], input[placeholder*="power" i]')
+      .first();
 
     if (await powerInput.isVisible()) {
-      await powerInput.fill("10");
+      await powerInput.fill('10');
       const value = await powerInput.inputValue();
-      expect(value).toBe("10");
+      expect(value).toBe('10');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Calculator Functional Tests - RCD Calculator", () => {
+test.describe('Calculator Functional Tests - RCD Calculator', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("RCD calculator accessible", async ({ page }) => {
+  test('RCD calculator accessible', async ({ page }) => {
     const rcdCalc = page.locator('text="RCD"').first();
 
     if (await rcdCalc.isVisible()) {
@@ -346,10 +360,10 @@ test.describe("Calculator Functional Tests - RCD Calculator", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can select RCD rating", async ({ page }) => {
+  test('can select RCD rating', async ({ page }) => {
     const rcdCalc = page.locator('text="RCD"').first();
     if (await rcdCalc.isVisible()) {
       await rcdCalc.click();
@@ -365,7 +379,7 @@ test.describe("Calculator Functional Tests - RCD Calculator", () => {
     expect(selectCount + textCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("shows trip time result", async ({ page }) => {
+  test('shows trip time result', async ({ page }) => {
     const rcdCalc = page.locator('text="RCD"').first();
     if (await rcdCalc.isVisible()) {
       await rcdCalc.click();
@@ -380,14 +394,14 @@ test.describe("Calculator Functional Tests - RCD Calculator", () => {
   });
 });
 
-test.describe("Calculator Functional Tests - Three Phase", () => {
+test.describe('Calculator Functional Tests - Three Phase', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("Three Phase calculator accessible", async ({ page }) => {
+  test('Three Phase calculator accessible', async ({ page }) => {
     const threePhaseCalc = page.locator('text="Three Phase"').first();
 
     if (await threePhaseCalc.isVisible()) {
@@ -395,10 +409,10 @@ test.describe("Calculator Functional Tests - Three Phase", () => {
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can input line voltage", async ({ page }) => {
+  test('can input line voltage', async ({ page }) => {
     const threePhaseCalc = page.locator('text="Three Phase"').first();
     if (await threePhaseCalc.isVisible()) {
       await threePhaseCalc.click();
@@ -406,18 +420,20 @@ test.describe("Calculator Functional Tests - Three Phase", () => {
     }
 
     // Look for voltage input (400V typical)
-    const voltageInput = page.locator('input[placeholder*="400" i], input[placeholder*="voltage" i]').first();
+    const voltageInput = page
+      .locator('input[placeholder*="400" i], input[placeholder*="voltage" i]')
+      .first();
 
     if (await voltageInput.isVisible()) {
-      await voltageInput.fill("400");
+      await voltageInput.fill('400');
       const value = await voltageInput.inputValue();
-      expect(value).toBe("400");
+      expect(value).toBe('400');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("calculates three phase power correctly", async ({ page }) => {
+  test('calculates three phase power correctly', async ({ page }) => {
     const threePhaseCalc = page.locator('text="Three Phase"').first();
     if (await threePhaseCalc.isVisible()) {
       await threePhaseCalc.click();
@@ -429,8 +445,8 @@ test.describe("Calculator Functional Tests - Three Phase", () => {
     const inputCount = await inputs.count();
 
     if (inputCount >= 2) {
-      await inputs.nth(0).fill("400");
-      await inputs.nth(1).fill("10");
+      await inputs.nth(0).fill('400');
+      await inputs.nth(1).fill('10');
     }
 
     // Click calculate
@@ -448,14 +464,14 @@ test.describe("Calculator Functional Tests - Three Phase", () => {
   });
 });
 
-test.describe("Calculator Environment Selection", () => {
+test.describe('Calculator Environment Selection', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("can switch between environment types", async ({ page }) => {
+  test('can switch between environment types', async ({ page }) => {
     // Navigate to energy cost calculator
     const energyCalc = page.locator('text="Energy"').first();
     if (await energyCalc.isVisible()) {
@@ -484,18 +500,18 @@ test.describe("Calculator Environment Selection", () => {
       await page.waitForTimeout(500);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Calculator Results Display", () => {
+test.describe('Calculator Results Display', () => {
   test.beforeEach(async ({ page }) => {
     await loginViaUI(page);
-    await page.goto("/apprentice/calculators");
+    await page.goto('/apprentice/calculators');
     await page.waitForTimeout(2000);
   });
 
-  test("results section appears after calculation", async ({ page }) => {
+  test('results section appears after calculation', async ({ page }) => {
     // Find any calculator
     const calc = page.locator('[class*="card"]').first();
     if (await calc.isVisible()) {
@@ -510,7 +526,7 @@ test.describe("Calculator Results Display", () => {
     for (let i = 0; i < Math.min(inputCount, 3); i++) {
       const input = inputs.nth(i);
       if (await input.isVisible()) {
-        await input.fill("10");
+        await input.fill('10');
       }
     }
 
@@ -522,10 +538,10 @@ test.describe("Calculator Results Display", () => {
     }
 
     // Results should be visible (or page should still work)
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("guidance/reference sections expandable", async ({ page }) => {
+  test('guidance/reference sections expandable', async ({ page }) => {
     // Navigate to a calculator
     const calc = page.locator('[class*="card"]').first();
     if (await calc.isVisible()) {
@@ -534,7 +550,9 @@ test.describe("Calculator Results Display", () => {
     }
 
     // Look for expandable sections
-    const expandable = page.locator('[class*="Collapsible"], button:has-text("Tips"), button:has-text("Reference")');
+    const expandable = page.locator(
+      '[class*="Collapsible"], button:has-text("Tips"), button:has-text("Reference")'
+    );
     const expandableCount = await expandable.count();
 
     if (expandableCount > 0) {
@@ -542,6 +560,6 @@ test.describe("Calculator Results Display", () => {
       await page.waitForTimeout(500);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

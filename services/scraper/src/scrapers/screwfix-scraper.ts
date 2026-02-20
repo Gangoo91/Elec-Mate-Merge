@@ -60,7 +60,7 @@ export class ScrewfixScraper extends BaseScraper {
     if (!success) return products;
 
     // Wait for page to load
-    await new Promise(r => setTimeout(r, 5000));
+    await new Promise((r) => setTimeout(r, 5000));
 
     // Scroll to load all content
     await this.scrollToLoadAll(page);
@@ -148,12 +148,26 @@ export class ScrewfixScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
       // Extract brand from product name
-      const brands = ['DeWalt', 'Makita', 'Bosch', 'Milwaukee', 'Fluke', 'Stanley', 'Knipex', 'Wera', 'Bahco', 'Irwin', 'Magnusson', 'Forge Steel'];
-      const brand = brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+      const brands = [
+        'DeWalt',
+        'Makita',
+        'Bosch',
+        'Milwaukee',
+        'Fluke',
+        'Stanley',
+        'Knipex',
+        'Wera',
+        'Bahco',
+        'Irwin',
+        'Magnusson',
+        'Forge Steel',
+      ];
+      const brand = brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
 
       products.push({
         sku: item.sku,
@@ -194,7 +208,7 @@ export class ScrewfixScraper extends BaseScraper {
       const success = await this.navigateWithRetry(page, dealsUrl);
       if (!success) return deals;
 
-      await new Promise(r => setTimeout(r, 5000));
+      await new Promise((r) => setTimeout(r, 5000));
       await this.scrollToLoadAll(page);
 
       const extractedDeals = await page.evaluate(() => {

@@ -2,11 +2,12 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
@@ -14,34 +15,34 @@ Deno.serve(async (req) => {
     console.log('[CANCEL-COMMISSIONING] Function started');
 
     const supabaseClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? ""
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? ''
     );
 
-    const authHeader = req.headers.get("Authorization");
-    if (!authHeader) throw new Error("No authorization header provided");
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) throw new Error('No authorization header provided');
 
-    const token = authHeader.replace("Bearer ", "");
+    const token = authHeader.replace('Bearer ', '');
     const { data: userData, error: userError } = await supabaseClient.auth.getUser(token);
     if (userError) throw new Error(`Authentication error: ${userError.message}`);
     const user = userData.user;
-    if (!user?.id) throw new Error("User not authenticated");
+    if (!user?.id) throw new Error('User not authenticated');
 
     console.log('[CANCEL-COMMISSIONING] User authenticated:', user.id);
 
     const authenticatedClient = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
       {
         global: {
-          headers: { Authorization: authHeader }
-        }
+          headers: { Authorization: authHeader },
+        },
       }
     );
 
     const body = await req.json();
     const jobId = body.jobId;
-    if (!jobId) throw new Error("No job ID provided");
+    if (!jobId) throw new Error('No job ID provided');
 
     console.log('[CANCEL-COMMISSIONING] Cancelling job:', jobId);
 
@@ -53,42 +54,51 @@ Deno.serve(async (req) => {
       .single();
 
     if (jobError || !job) {
-      throw new Error("Job not found");
+      throw new Error('Job not found');
     }
 
     if (job.user_id !== user.id) {
-      throw new Error("Unauthorized: You do not own this job");
+      throw new Error('Unauthorized: You do not own this job');
     }
 
     // Check if job can be cancelled
     if (job.status === 'complete') {
-      return new Response(JSON.stringify({ 
-        success: false,
-        message: "Job already completed" 
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Job already completed',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        }
+      );
     }
 
     if (job.status === 'failed') {
-      return new Response(JSON.stringify({ 
-        success: false,
-        message: "Job already failed" 
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Job already failed',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        }
+      );
     }
 
     if (job.status === 'cancelled') {
-      return new Response(JSON.stringify({ 
-        success: false,
-        message: "Job already cancelled" 
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 400,
-      });
+      return new Response(
+        JSON.stringify({
+          success: false,
+          message: 'Job already cancelled',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        }
+      );
     }
 
     // Cancel the job
@@ -98,7 +108,7 @@ Deno.serve(async (req) => {
         status: 'cancelled',
         completed_at: new Date().toISOString(),
         current_step: 'Generation cancelled by user',
-        error_message: 'User cancelled generation'
+        error_message: 'User cancelled generation',
       })
       .eq('id', jobId);
 
@@ -108,24 +118,29 @@ Deno.serve(async (req) => {
 
     console.log('[CANCEL-COMMISSIONING] Job cancelled successfully:', jobId);
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      message: "Job cancelled successfully" 
-    }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        message: 'Job cancelled successfully',
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      }
+    );
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
     console.error('[CANCEL-COMMISSIONING] ERROR:', errorMessage);
-    
-    return new Response(JSON.stringify({ 
-      success: false,
-      error: errorMessage
-    }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 500,
-    });
+
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: errorMessage,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 500,
+      }
+    );
   }
 });

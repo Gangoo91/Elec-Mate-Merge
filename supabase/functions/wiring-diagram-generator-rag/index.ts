@@ -1,11 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, handleError } from "../_shared/errors.ts";
-import { withRetry, RetryPresets } from "../_shared/retry.ts";
-import { withTimeout, Timeouts } from "../_shared/timeout.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
-import { safeAll } from "../_shared/safe-parallel.ts";
-import { retrieveRegulations } from "../_shared/rag-retrieval.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, handleError } from '../_shared/errors.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { safeAll } from '../_shared/safe-parallel.ts';
+import { retrieveRegulations } from '../_shared/rag-retrieval.ts';
 
 // JSON extraction and repair helpers to handle occasional malformed outputs
 function extractJSON(text: string): string | null {
@@ -61,12 +61,12 @@ serve(async (req) => {
 
     // Step 1: Identify component from image
     logger.info('Analyzing component image');
-    
+
     // Fetch and convert image to base64
     let imageBase64: string;
     let mimeType = 'image/jpeg'; // default
     let imageSize = 0;
-    
+
     if (component_image_url.startsWith('data:')) {
       // Already base64
       const parts = component_image_url.split(',');
@@ -83,24 +83,24 @@ serve(async (req) => {
       if (!imageResponse.ok) {
         throw new Error(`Failed to fetch image: ${imageResponse.status}`);
       }
-      
+
       // Detect content type
       const contentType = imageResponse.headers.get('content-type');
       if (contentType) {
         mimeType = contentType;
       }
-      
+
       const imageBuffer = await imageResponse.arrayBuffer();
       imageSize = imageBuffer.byteLength;
-      
+
       // Validate image size (20MB limit)
       const maxSize = 20 * 1024 * 1024; // 20MB
       if (imageSize > maxSize) {
         throw new Error(`Image too large: ${(imageSize / 1024 / 1024).toFixed(2)}MB (max 20MB)`);
       }
-      
+
       logger.info('Image fetched', { size: `${(imageSize / 1024).toFixed(2)}KB`, mimeType });
-      
+
       // Convert to base64 in chunks to avoid stack overflow
       const bytes = new Uint8Array(imageBuffer);
       let binary = '';
@@ -111,106 +111,123 @@ serve(async (req) => {
       }
       imageBase64 = btoa(binary);
     }
-    
+
     const imageAnalysisData = await withRetry(
-      () => withTimeout(
-        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [{
-              role: 'user',
-              parts: [
-                {
-                  text: `Identify this electrical component CONCISELY (max 10 bullet points):
+      () =>
+        withTimeout(
+          fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                contents: [
+                  {
+                    role: 'user',
+                    parts: [
+                      {
+                        text: `Identify this electrical component CONCISELY (max 10 bullet points):
 • Component type (e.g., "Electric Shower", "Consumer Unit", "Socket Outlet")
 • Key ratings (amps/watts/volts)
 • Main terminal labels (L, N, E, COM, L1, L2, etc.)
 • Manufacturer/model if clearly visible
 
-Keep it brief - list facts only, no explanations.`
+Keep it brief - list facts only, no explanations.`,
+                      },
+                      {
+                        inlineData: {
+                          mimeType: mimeType,
+                          data: imageBase64,
+                        },
+                      },
+                    ],
+                  },
+                ],
+                generationConfig: {
+                  maxOutputTokens: 2048,
+                  temperature: 0.2,
                 },
-                {
-                  inlineData: {
-                    mimeType: mimeType,
-                    data: imageBase64
-                  }
-                }
-              ]
-            }],
-            generationConfig: {
-              maxOutputTokens: 2048,
-              temperature: 0.2
+              }),
             }
+          ).then(async (res) => {
+            if (!res.ok) {
+              const errorText = await res.text();
+              logger.error('Gemini API error', { status: res.status, error: errorText });
+              throw new Error(`Image analysis failed: ${res.status}`);
+            }
+            return res.json();
           }),
-        }).then(async (res) => {
-          if (!res.ok) {
-            const errorText = await res.text();
-            logger.error('Gemini API error', { status: res.status, error: errorText });
-            throw new Error(`Image analysis failed: ${res.status}`);
-          }
-          return res.json();
-        }),
-        Timeouts.STANDARD,
-        'Image analysis'
-      ),
+          Timeouts.STANDARD,
+          'Image analysis'
+        ),
       RetryPresets.STANDARD
     );
-    
+
     // Log full response for debugging
-    logger.info('Gemini API response', { 
+    logger.info('Gemini API response', {
       hasError: !!imageAnalysisData.error,
       hasCandidates: !!imageAnalysisData.candidates,
       candidatesLength: imageAnalysisData.candidates?.length,
-      responseKeys: Object.keys(imageAnalysisData)
+      responseKeys: Object.keys(imageAnalysisData),
     });
-    
+
     // Validate response structure
     if (imageAnalysisData.error) {
       logger.error('Gemini API returned error', { error: imageAnalysisData.error });
-      throw new Error(`Image analysis error: ${imageAnalysisData.error.message || 'Unknown error'}`);
+      throw new Error(
+        `Image analysis error: ${imageAnalysisData.error.message || 'Unknown error'}`
+      );
     }
-    
+
     if (!imageAnalysisData.candidates || imageAnalysisData.candidates.length === 0) {
-      logger.error('No candidates in response', { 
+      logger.error('No candidates in response', {
         response: JSON.stringify(imageAnalysisData).substring(0, 500),
-        promptBlockReason: imageAnalysisData.promptFeedback?.blockReason
+        promptBlockReason: imageAnalysisData.promptFeedback?.blockReason,
       });
-      
+
       if (imageAnalysisData.promptFeedback?.blockReason) {
-        throw new Error(`Image analysis blocked: ${imageAnalysisData.promptFeedback.blockReason}. The image may contain unsafe content or the request was filtered.`);
+        throw new Error(
+          `Image analysis blocked: ${imageAnalysisData.promptFeedback.blockReason}. The image may contain unsafe content or the request was filtered.`
+        );
       }
-      
-      throw new Error('No analysis results returned. The image may not contain recognizable electrical components or may be invalid.');
+
+      throw new Error(
+        'No analysis results returned. The image may not contain recognizable electrical components or may be invalid.'
+      );
     }
-    
+
     const firstCandidate = imageAnalysisData.candidates[0];
-    
+
     // Check if response was truncated due to token limits
     if (firstCandidate?.finishReason === 'MAX_TOKENS') {
-      logger.error('Response truncated - token limit exceeded', { 
+      logger.error('Response truncated - token limit exceeded', {
         finishReason: firstCandidate.finishReason,
-        candidate: JSON.stringify(firstCandidate).substring(0, 300)
-      });
-      throw new Error('Image analysis response was too long. Please try with a simpler image or contact support.');
-    }
-    
-    if (!firstCandidate?.content?.parts || firstCandidate.content.parts.length === 0) {
-      logger.error('Invalid candidate structure', { 
         candidate: JSON.stringify(firstCandidate).substring(0, 300),
-        finishReason: firstCandidate?.finishReason
+      });
+      throw new Error(
+        'Image analysis response was too long. Please try with a simpler image or contact support.'
+      );
+    }
+
+    if (!firstCandidate?.content?.parts || firstCandidate.content.parts.length === 0) {
+      logger.error('Invalid candidate structure', {
+        candidate: JSON.stringify(firstCandidate).substring(0, 300),
+        finishReason: firstCandidate?.finishReason,
       });
       throw new Error('Invalid response structure from image analysis');
     }
-    
+
     const componentDetails = firstCandidate.content.parts[0].text;
     logger.info('Component identified', { componentDetails: componentDetails.substring(0, 100) });
 
     // Step 2: Intelligent component-specific RAG retrieval
-    const componentType = componentDetails.split('\n')[0].replace(/^\d+\.\s*/, '').trim();
-    
+    const componentType = componentDetails
+      .split('\n')[0]
+      .replace(/^\d+\.\s*/, '')
+      .trim();
+
     logger.info('Using intelligent RAG for component-specific regulations', { componentType });
 
     const openAiKey = Deno.env.get('OPENAI_API_KEY');
@@ -220,104 +237,111 @@ Keep it brief - list facts only, no explanations.`
 
     const { successes, failures } = await logger.time(
       'Smart RAG searches',
-      async () => await safeAll([
-        {
-          name: 'installation',
-          execute: () => withTimeout(
-            supabase
-              .from('installation_knowledge')
-              .select('*')
-              .or(`topic.ilike.%${componentType}%,content.ilike.%${componentType}%,content.ilike.%terminal%,content.ilike.%wiring%`)
-              .limit(10),
-            Timeouts.STANDARD,
-            'Installation manuals'
-          )
-        },
-        {
-          name: 'wiring_regs',
-          execute: async () => {
-            if (!openAiKey) return { data: [], error: null };
-            const results = await retrieveRegulations(
-              `${componentType} wiring requirements: terminal connections, cable colors, protection requirements`,
-              8,
-              openAiKey
-            );
-            return { data: results, error: null };
-          }
-        },
-        {
-          name: 'safety_regs',
-          execute: async () => {
-            if (!openAiKey) return { data: [], error: null };
-            const results = await retrieveRegulations(
-              `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation`,
-              5,
-              openAiKey
-            );
-            return { data: results, error: null };
-          }
-        },
-        {
-          name: 'installation_regs',
-          execute: async () => {
-            if (!openAiKey) return { data: [], error: null };
-            const results = await retrieveRegulations(
-              `${componentType} installation method: cable sizing, mounting, earthing, bonding`,
-              5,
-              openAiKey
-            );
-            return { data: results, error: null };
-          }
-        }
-      ])
+      async () =>
+        await safeAll([
+          {
+            name: 'installation',
+            execute: () =>
+              withTimeout(
+                supabase
+                  .from('installation_knowledge')
+                  .select('*')
+                  .or(
+                    `topic.ilike.%${componentType}%,content.ilike.%${componentType}%,content.ilike.%terminal%,content.ilike.%wiring%`
+                  )
+                  .limit(10),
+                Timeouts.STANDARD,
+                'Installation manuals'
+              ),
+          },
+          {
+            name: 'wiring_regs',
+            execute: async () => {
+              if (!openAiKey) return { data: [], error: null };
+              const results = await retrieveRegulations(
+                `${componentType} wiring requirements: terminal connections, cable colors, protection requirements`,
+                8,
+                openAiKey
+              );
+              return { data: results, error: null };
+            },
+          },
+          {
+            name: 'safety_regs',
+            execute: async () => {
+              if (!openAiKey) return { data: [], error: null };
+              const results = await retrieveRegulations(
+                `${componentType} safety requirements: RCD protection, IP ratings, zones, isolation`,
+                5,
+                openAiKey
+              );
+              return { data: results, error: null };
+            },
+          },
+          {
+            name: 'installation_regs',
+            execute: async () => {
+              if (!openAiKey) return { data: [], error: null };
+              const results = await retrieveRegulations(
+                `${componentType} installation method: cable sizing, mounting, earthing, bonding`,
+                5,
+                openAiKey
+              );
+              return { data: results, error: null };
+            },
+          },
+        ])
     );
 
     if (failures.length > 0) {
       logger.warn('Some RAG searches failed', { failures });
     }
 
-    const installationDocs = successes.find(s => s.name === 'installation')?.result?.data || [];
-    const wiringRegs = successes.find(s => s.name === 'wiring_regs')?.result?.data || [];
-    const safetyRegs = successes.find(s => s.name === 'safety_regs')?.result?.data || [];
-    const installRegs = successes.find(s => s.name === 'installation_regs')?.result?.data || [];
-    
+    const installationDocs = successes.find((s) => s.name === 'installation')?.result?.data || [];
+    const wiringRegs = successes.find((s) => s.name === 'wiring_regs')?.result?.data || [];
+    const safetyRegs = successes.find((s) => s.name === 'safety_regs')?.result?.data || [];
+    const installRegs = successes.find((s) => s.name === 'installation_regs')?.result?.data || [];
+
     // Merge and deduplicate regulations
     const allRegulations = [...wiringRegs, ...safetyRegs, ...installRegs];
-    const regulations = Array.from(
-      new Map(allRegulations.map(reg => [reg.id, reg])).values()
-    );
+    const regulations = Array.from(new Map(allRegulations.map((reg) => [reg.id, reg])).values());
 
-    logger.info('Smart RAG retrieval completed', { 
+    logger.info('Smart RAG retrieval completed', {
       installationCount: installationDocs.length,
       regulationsCount: regulations.length,
       wiringRegsCount: wiringRegs.length,
       safetyRegsCount: safetyRegs.length,
-      installRegsCount: installRegs.length
+      installRegsCount: installRegs.length,
     });
 
     // Step 3: Generate wiring guidance using AI + enhanced RAG context
     const ragContext = `
 Installation Manuals (${installationDocs.length} sources):
-${installationDocs.map(doc => `- ${doc.topic}: ${doc.content.substring(0, 200)}`).join('\n')}
+${installationDocs.map((doc) => `- ${doc.topic}: ${doc.content.substring(0, 200)}`).join('\n')}
 
 BS 7671 Wiring Regulations (${regulations.length} relevant regulations):
-${regulations.map(reg => `- [${reg.regulation_number}] ${reg.similarity ? `(relevance: ${(reg.similarity * 100).toFixed(0)}%)` : ''} ${reg.content.substring(0, 250)}`).join('\n\n')}
+${regulations.map((reg) => `- [${reg.regulation_number}] ${reg.similarity ? `(relevance: ${(reg.similarity * 100).toFixed(0)}%)` : ''} ${reg.content.substring(0, 250)}`).join('\n\n')}
 `;
 
     logger.info('Generating wiring guidance with AI');
 
     const guidanceData = await withRetry(
-      () => withTimeout(
-        fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            contents: [{
-              role: 'user',
-              parts: [{
-                text: `You are an experienced UK electrician providing BS 7671:2018 compliant wiring guidance.
+      () =>
+        withTimeout(
+          fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                contents: [
+                  {
+                    role: 'user',
+                    parts: [
+                      {
+                        text: `You are an experienced UK electrician providing BS 7671:2018 compliant wiring guidance.
 
 CRITICAL UK CABLE COLOUR STANDARDS:
 - Brown = Line (Live) - permanent live or switched live
@@ -354,13 +378,15 @@ DISTRIBUTION BOARDS – ENHANCED GUIDANCE REQUIRED:
 4. DETAILED WIRING SEQUENCE (wiring_sequence_strategy):
    - Order with rationale; routing/strain relief; tightening torques; staged testing
 5. PRACTICAL TIPS & COMMON MISTAKES (arrays)
-   - Cable management; documentation; markers; longer earth tails; typical pitfalls`
-              }]
-            },
-            {
-              role: 'user',
-              parts: [{
-                text: `Component identified: ${componentDetails}
+   - Cable management; documentation; markers; longer earth tails; typical pitfalls`,
+                      },
+                    ],
+                  },
+                  {
+                    role: 'user',
+                    parts: [
+                      {
+                        text: `Component identified: ${componentDetails}
 
 Using this technical knowledge:
 ${ragContext}
@@ -446,50 +472,54 @@ Format:
     "key_differences": ["Difference 1", "Difference 2"],
     "decision_factors": ["Factor 1 to consider", "Factor 2"]
   }
-}`
-              }]
-            },
-          ],
-          generationConfig: {
-            maxOutputTokens: 16384,
-            temperature: 0.3
-          }
+}`,
+                      },
+                    ],
+                  },
+                ],
+                generationConfig: {
+                  maxOutputTokens: 16384,
+                  temperature: 0.3,
+                },
+              }),
+            }
+          ).then(async (res) => {
+            if (!res.ok) {
+              throw new Error(`Guidance generation failed: ${res.status}`);
+            }
+            return res.json();
           }),
-        }).then(async (res) => {
-          if (!res.ok) {
-            throw new Error(`Guidance generation failed: ${res.status}`);
-          }
-          return res.json();
-        }),
-        Timeouts.EXTENDED,
-        'Guidance generation'
-      ),
+          Timeouts.EXTENDED,
+          'Guidance generation'
+        ),
       RetryPresets.STANDARD
     );
 
     // Validate guidance generation response structure
-    logger.info('Guidance generation response', { 
+    logger.info('Guidance generation response', {
       hasError: !!guidanceData.error,
       hasCandidates: !!guidanceData.candidates,
       candidatesLength: guidanceData.candidates?.length,
-      responseKeys: Object.keys(guidanceData)
+      responseKeys: Object.keys(guidanceData),
     });
 
     if (guidanceData.error) {
       logger.error('Gemini API returned error for guidance', { error: guidanceData.error });
-      throw new Error(`Guidance generation error: ${guidanceData.error.message || 'Unknown error'}`);
+      throw new Error(
+        `Guidance generation error: ${guidanceData.error.message || 'Unknown error'}`
+      );
     }
 
     if (!guidanceData.candidates || guidanceData.candidates.length === 0) {
-      logger.error('No candidates in guidance response', { 
+      logger.error('No candidates in guidance response', {
         response: JSON.stringify(guidanceData).substring(0, 500),
-        promptBlockReason: guidanceData.promptFeedback?.blockReason
+        promptBlockReason: guidanceData.promptFeedback?.blockReason,
       });
-      
+
       if (guidanceData.promptFeedback?.blockReason) {
         throw new Error(`Guidance generation blocked: ${guidanceData.promptFeedback.blockReason}`);
       }
-      
+
       throw new Error('No guidance results returned from AI');
     }
 
@@ -497,23 +527,25 @@ Format:
 
     // Check if response was truncated
     if (guidanceCandidate?.finishReason === 'MAX_TOKENS') {
-      logger.error('Guidance response truncated - token limit exceeded', { 
+      logger.error('Guidance response truncated - token limit exceeded', {
         finishReason: guidanceCandidate.finishReason,
-        maxTokens: 16384
+        maxTokens: 16384,
       });
-      throw new Error('Guidance response was too long. The component may be too complex. Please try again or contact support.');
+      throw new Error(
+        'Guidance response was too long. The component may be too complex. Please try again or contact support.'
+      );
     }
 
     if (!guidanceCandidate?.content?.parts || guidanceCandidate.content.parts.length === 0) {
-      logger.error('Invalid guidance candidate structure', { 
+      logger.error('Invalid guidance candidate structure', {
         candidate: JSON.stringify(guidanceCandidate).substring(0, 300),
-        finishReason: guidanceCandidate?.finishReason
+        finishReason: guidanceCandidate?.finishReason,
       });
       throw new Error('Invalid response structure from guidance generation');
     }
 
     const guidanceText = guidanceCandidate.content.parts[0].text;
-    
+
     // Extract and repair JSON
     let jsonMatch = guidanceText.match(/\{[\s\S]*\}/);
     let guidance = null;
@@ -523,62 +555,68 @@ Format:
       jsonText = repairJSON(jsonText);
       guidance = JSON.parse(jsonText);
 
-      
       // Validate required fields
-      if (!guidance?.component_name || !guidance?.wiring_scenarios || !Array.isArray(guidance.wiring_scenarios)) {
+      if (
+        !guidance?.component_name ||
+        !guidance?.wiring_scenarios ||
+        !Array.isArray(guidance.wiring_scenarios)
+      ) {
         throw new Error('Invalid JSON structure: missing required fields');
       }
-      
+
       // Validate each scenario has required fields
       for (const scenario of guidance.wiring_scenarios) {
         if (!scenario.scenario_id || !scenario.wiring_steps || !scenario.terminal_connections) {
           throw new Error(`Invalid scenario structure: ${scenario.scenario_id || 'unknown'}`);
         }
       }
-      
+
       logger.info('JSON validation passed', { scenarioCount: guidance.wiring_scenarios.length });
-      
     } catch (parseError) {
-      logger.error('JSON parsing failed', { 
+      logger.error('JSON parsing failed', {
         error: parseError.message,
         responsePreview: guidanceText.substring(0, 500),
-        responseLength: guidanceText.length
+        responseLength: guidanceText.length,
       });
-      throw new Error(`Failed to parse AI response: ${parseError.message}. The AI returned invalid JSON.`);
+      throw new Error(
+        `Failed to parse AI response: ${parseError.message}. The AI returned invalid JSON.`
+      );
     }
 
     logger.info('Wiring guidance generated successfully');
 
-    return new Response(JSON.stringify({
-      component_name: guidance.component_name,
-      component_details: componentDetails,
-      pre_installation_tasks: guidance.pre_installation_tasks || [],
-      board_layout_guide: guidance.board_layout_guide,
-      wiring_sequence_strategy: guidance.wiring_sequence_strategy,
-      practical_tips: guidance.practical_tips || [],
-      common_mistakes: guidance.common_mistakes || [],
-      wiring_scenarios: guidance.wiring_scenarios || [
-        {
-          scenario_id: 'default',
-          scenario_name: 'Standard Installation',
-          use_case: 'Standard BS 7671 compliant installation',
-          complexity: 'simple',
-          recommended: true,
-          wiring_steps: guidance.wiring_steps,
-          terminal_connections: guidance.terminal_connections,
-          safety_warnings: guidance.safety_warnings,
-          required_tests: guidance.required_tests
-        }
-      ],
-      comparison: guidance.comparison,
-      rag_sources: {
-        installation_docs_count: installationDocs.length,
-        regulations_count: regulations.length
+    return new Response(
+      JSON.stringify({
+        component_name: guidance.component_name,
+        component_details: componentDetails,
+        pre_installation_tasks: guidance.pre_installation_tasks || [],
+        board_layout_guide: guidance.board_layout_guide,
+        wiring_sequence_strategy: guidance.wiring_sequence_strategy,
+        practical_tips: guidance.practical_tips || [],
+        common_mistakes: guidance.common_mistakes || [],
+        wiring_scenarios: guidance.wiring_scenarios || [
+          {
+            scenario_id: 'default',
+            scenario_name: 'Standard Installation',
+            use_case: 'Standard BS 7671 compliant installation',
+            complexity: 'simple',
+            recommended: true,
+            wiring_steps: guidance.wiring_steps,
+            terminal_connections: guidance.terminal_connections,
+            safety_warnings: guidance.safety_warnings,
+            required_tests: guidance.required_tests,
+          },
+        ],
+        comparison: guidance.comparison,
+        rag_sources: {
+          installation_docs_count: installationDocs.length,
+          regulations_count: regulations.length,
+        },
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    );
   } catch (error) {
     logger.error('Wiring guidance generator failed', { error });
     return handleError(error);

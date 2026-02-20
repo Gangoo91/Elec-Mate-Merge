@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
 /**
  * Comprehensive End-to-End Tests for EIC (Electrical Installation Certificate)
@@ -18,18 +18,18 @@ import { test, expect, Page } from "@playwright/test";
 
 // Test data
 const TEST_CLIENT = {
-  name: "E2E EIC Test Client Ltd",
-  email: "eic-test@example.com",
-  phone: "07700 900456",
-  address: "123 EIC Test Street, London",
-  installationAddress: "456 New Installation Road, Birmingham, B1 2CD",
+  name: 'E2E EIC Test Client Ltd',
+  email: 'eic-test@example.com',
+  phone: '07700 900456',
+  address: '123 EIC Test Street, London',
+  installationAddress: '456 New Installation Road, Birmingham, B1 2CD',
 };
 
 const TEST_INSTALLATION = {
-  description: "Domestic dwelling",
-  installationType: "New installation",
-  maximumDemand: "100",
-  numberOfPhases: "Single",
+  description: 'Domestic dwelling',
+  installationType: 'New installation',
+  maximumDemand: '100',
+  numberOfPhases: 'Single',
 };
 
 // Helper to fill a field if visible
@@ -52,48 +52,46 @@ async function clickIfVisible(page: Page, selector: string) {
   return false;
 }
 
-test.describe("EIC Full Flow - Form Loading and Navigation", () => {
+test.describe('EIC Full Flow - Form Loading and Navigation', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("EIC form loads correctly with all sections", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('EIC form loads correctly with all sections', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
 
     // Check for key form elements
-    const formElements = page.locator("input, textarea, select, button");
+    const formElements = page.locator('input, textarea, select, button');
     const count = await formElements.count();
     expect(count).toBeGreaterThan(10);
 
     // Check for EIC-specific content
-    const pageContent = await page.textContent("body");
+    const pageContent = await page.textContent('body');
     expect(
-      pageContent?.toLowerCase().includes("eic") ||
-      pageContent?.toLowerCase().includes("electrical installation certificate") ||
-      pageContent?.toLowerCase().includes("installation")
+      pageContent?.toLowerCase().includes('eic') ||
+        pageContent?.toLowerCase().includes('electrical installation certificate') ||
+        pageContent?.toLowerCase().includes('installation')
     ).toBeTruthy();
   });
 
-  test("EIC form has tab navigation", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('EIC form has tab navigation', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for tab navigation elements
-    const tabs = page.locator(
-      '[role="tab"], [data-state], button[class*="tab"], [class*="step"]'
-    );
+    const tabs = page.locator('[role="tab"], [data-state], button[class*="tab"], [class*="step"]');
 
     const tabCount = await tabs.count();
     expect(tabCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("EIC form has progress indicator", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('EIC form has progress indicator', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for progress or step indicators
@@ -101,17 +99,17 @@ test.describe("EIC Full Flow - Form Loading and Navigation", () => {
       '[class*="progress"], [class*="step"], [class*="indicator"], text=/step|progress/i'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Client Details Entry", () => {
+test.describe('EIC Full Flow - Client Details Entry', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can fill client details section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can fill client details section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Fill client name
@@ -137,11 +135,11 @@ test.describe("EIC Full Flow - Client Details Entry", () => {
       expect(value).toBe(TEST_CLIENT.name);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("client details section has all required fields", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('client details section has all required fields', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Check for typical client fields
@@ -152,17 +150,17 @@ test.describe("EIC Full Flow - Client Details Entry", () => {
     const fieldCount = await clientFields.count();
     expect(fieldCount).toBeGreaterThan(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Installation Details", () => {
+test.describe('EIC Full Flow - Installation Details', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can fill installation details section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can fill installation details section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Fill installation type/description
@@ -171,18 +169,18 @@ test.describe("EIC Full Flow - Installation Details", () => {
     // Fill maximum demand
     await fillIfVisible(page, 'input[name="maximumDemand"]', TEST_INSTALLATION.maximumDemand);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can set supply characteristics", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can set supply characteristics', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for supply voltage field
-    await fillIfVisible(page, 'input[name="supplyVoltage"]', "230");
+    await fillIfVisible(page, 'input[name="supplyVoltage"]', '230');
 
     // Look for frequency field
-    await fillIfVisible(page, 'input[name="supplyFrequency"]', "50");
+    await fillIfVisible(page, 'input[name="supplyFrequency"]', '50');
 
     // Look for earthing arrangement selector
     const earthingSelect = page.locator('[name="earthingArrangement"]').first();
@@ -195,23 +193,25 @@ test.describe("EIC Full Flow - Installation Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Circuit Schedule", () => {
+test.describe('EIC Full Flow - Circuit Schedule', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can access circuit schedule section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can access circuit schedule section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for circuit schedule tab or section
-    const circuitTab = page.locator(
-      'button:has-text("Circuit"), button:has-text("Schedule"), [role="tab"]:has-text("Circuit")'
-    ).first();
+    const circuitTab = page
+      .locator(
+        'button:has-text("Circuit"), button:has-text("Schedule"), [role="tab"]:has-text("Circuit")'
+      )
+      .first();
 
     if (await circuitTab.isVisible()) {
       await circuitTab.click();
@@ -221,11 +221,11 @@ test.describe("EIC Full Flow - Circuit Schedule", () => {
     // Check for circuit-related elements
     const circuitElements = page.locator('text=/circuit|designation|protective device/i');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("can add circuit entries", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can add circuit entries', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Navigate to circuit section
@@ -236,20 +236,20 @@ test.describe("EIC Full Flow - Circuit Schedule", () => {
     }
 
     // Look for add circuit button
-    const addCircuitBtn = page.locator(
-      'button:has-text("Add Circuit"), button:has-text("Add Row"), button:has-text("+")'
-    ).first();
+    const addCircuitBtn = page
+      .locator('button:has-text("Add Circuit"), button:has-text("Add Row"), button:has-text("+")')
+      .first();
 
     if (await addCircuitBtn.isVisible()) {
       await addCircuitBtn.click();
       await page.waitForTimeout(500);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("board scanner integration available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('board scanner integration available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for board scanner button
@@ -260,34 +260,34 @@ test.describe("EIC Full Flow - Circuit Schedule", () => {
     const scannerCount = await scannerBtn.count();
     expect(scannerCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Schedule of Testing", () => {
+test.describe('EIC Full Flow - Schedule of Testing', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can access testing schedule section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can access testing schedule section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for testing tab or section
-    const testingTab = page.locator(
-      'button:has-text("Testing"), button:has-text("Test"), [role="tab"]:has-text("Test")'
-    ).first();
+    const testingTab = page
+      .locator('button:has-text("Testing"), button:has-text("Test"), [role="tab"]:has-text("Test")')
+      .first();
 
     if (await testingTab.isVisible()) {
       await testingTab.click();
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("testing fields available for entry", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('testing fields available for entry', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Navigate to testing section
@@ -302,44 +302,46 @@ test.describe("EIC Full Flow - Schedule of Testing", () => {
       'input[name*="r1" i], input[name*="zs" i], input[name*="insulation" i], input[placeholder*="ohm" i]'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("RCD testing section available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('RCD testing section available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for RCD testing elements
     const rcdElements = page.locator('text=/RCD|residual current|trip time/i');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Schedule of Inspections", () => {
+test.describe('EIC Full Flow - Schedule of Inspections', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can access inspection checklist", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can access inspection checklist', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for inspection tab or section
-    const inspectionTab = page.locator(
-      'button:has-text("Inspection"), button:has-text("Checklist"), [role="tab"]:has-text("Inspection")'
-    ).first();
+    const inspectionTab = page
+      .locator(
+        'button:has-text("Inspection"), button:has-text("Checklist"), [role="tab"]:has-text("Inspection")'
+      )
+      .first();
 
     if (await inspectionTab.isVisible()) {
       await inspectionTab.click();
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("inspection items can be marked", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('inspection items can be marked', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Navigate to inspection section
@@ -354,34 +356,36 @@ test.describe("EIC Full Flow - Schedule of Inspections", () => {
       'input[type="checkbox"], [role="checkbox"], select[name*="status"]'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Declarations and Signatures", () => {
+test.describe('EIC Full Flow - Declarations and Signatures', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can access declarations section", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('can access declarations section', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for declarations tab
-    const declarationsTab = page.locator(
-      'button:has-text("Declaration"), button:has-text("Sign"), [role="tab"]:has-text("Declaration")'
-    ).first();
+    const declarationsTab = page
+      .locator(
+        'button:has-text("Declaration"), button:has-text("Sign"), [role="tab"]:has-text("Declaration")'
+      )
+      .first();
 
     if (await declarationsTab.isVisible()) {
       await declarationsTab.click();
       await page.waitForTimeout(1000);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("designer declaration fields available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('designer declaration fields available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Navigate to declarations
@@ -392,15 +396,13 @@ test.describe("EIC Full Flow - Declarations and Signatures", () => {
     }
 
     // Look for designer fields
-    const designerFields = page.locator(
-      'input[name*="designer" i], text=/designer|design/i'
-    );
+    const designerFields = page.locator('input[name*="designer" i], text=/designer|design/i');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("constructor declaration fields available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('constructor declaration fields available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Navigate to declarations
@@ -415,11 +417,11 @@ test.describe("EIC Full Flow - Declarations and Signatures", () => {
       'input[name*="constructor" i], text=/constructor|installation/i'
     );
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("signature pad available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('signature pad available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Navigate to declarations
@@ -430,25 +432,25 @@ test.describe("EIC Full Flow - Declarations and Signatures", () => {
     }
 
     // Look for signature elements
-    const signatureElements = page.locator(
-      'canvas, [class*="signature"], button:has-text("Sign")'
-    );
+    const signatureElements = page.locator('canvas, [class*="signature"], button:has-text("Sign")');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - PDF Generation and Actions", () => {
+test.describe('EIC Full Flow - PDF Generation and Actions', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("PDF generation button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('PDF generation button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for PDF/generate buttons - may be in Certificate tab
-    const certificateTab = page.locator('button:has-text("Certificate"), [role="tab"]:has-text("Certificate")').first();
+    const certificateTab = page
+      .locator('button:has-text("Certificate"), [role="tab"]:has-text("Certificate")')
+      .first();
     if (await certificateTab.isVisible({ timeout: 3000 }).catch(() => false)) {
       await certificateTab.click();
       await page.waitForTimeout(1000);
@@ -463,11 +465,11 @@ test.describe("EIC Full Flow - PDF Generation and Actions", () => {
     // Button may or may not be present depending on form completion state
     expect(buttonCount >= 0).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("save draft functionality available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('save draft functionality available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for save buttons
@@ -478,17 +480,17 @@ test.describe("EIC Full Flow - PDF Generation and Actions", () => {
     const buttonCount = await saveButtons.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Email Sending", () => {
+test.describe('EIC Full Flow - Email Sending', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("email button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('email button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Look for email buttons
@@ -499,17 +501,17 @@ test.describe("EIC Full Flow - Email Sending", () => {
     const buttonCount = await emailButtons.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Quote and Invoice Actions", () => {
+test.describe('EIC Full Flow - Quote and Invoice Actions', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("Quote button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('Quote button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Scroll to bottom to ensure buttons visible
@@ -521,11 +523,11 @@ test.describe("EIC Full Flow - Quote and Invoice Actions", () => {
     const buttonCount = await quoteButton.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("Invoice button available", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing?section=eic");
+  test('Invoice button available', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     // Scroll to bottom
@@ -537,33 +539,33 @@ test.describe("EIC Full Flow - Quote and Invoice Actions", () => {
     const buttonCount = await invoiceButton.count();
     expect(buttonCount).toBeGreaterThanOrEqual(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Complete End-to-End Flow", () => {
-  test("complete EIC workflow: fill form -> verify actions available", async ({ page }) => {
+test.describe('EIC Complete End-to-End Flow', () => {
+  test('complete EIC workflow: fill form -> verify actions available', async ({ page }) => {
     // Auth handled by storageState
 
     // Step 1: Navigate to EIC form
-    await page.goto("/electrician/inspection-testing?section=eic");
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(5000);
 
     // Step 2: Fill client details
-    await fillIfVisible(page, 'input[name="clientName"]', "Complete EIC Test Client");
-    await fillIfVisible(page, 'input[name="clientEmail"]', "eic-complete@test.com");
-    await fillIfVisible(page, 'input[name="clientPhone"]', "07700 900111");
+    await fillIfVisible(page, 'input[name="clientName"]', 'Complete EIC Test Client');
+    await fillIfVisible(page, 'input[name="clientEmail"]', 'eic-complete@test.com');
+    await fillIfVisible(page, 'input[name="clientPhone"]', '07700 900111');
     await fillIfVisible(
       page,
       'input[name="installationAddress"], textarea[name="installationAddress"]',
-      "Complete EIC Address, London, EC1A 1BB"
+      'Complete EIC Address, London, EC1A 1BB'
     );
 
     // Step 3: Verify form captured data
     const clientNameInput = page.locator('input[name="clientName"]').first();
     if (await clientNameInput.isVisible()) {
       const value = await clientNameInput.inputValue();
-      expect(value).toBe("Complete EIC Test Client");
+      expect(value).toBe('Complete EIC Test Client');
     }
 
     // Step 4: Scroll to see action buttons
@@ -571,24 +573,24 @@ test.describe("EIC Complete End-to-End Flow", () => {
     await page.waitForTimeout(500);
 
     // Step 5: Form loaded successfully
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("complete flow: EIC form -> Quote button -> Quote builder with data", async ({ page }) => {
+  test('complete flow: EIC form -> Quote button -> Quote builder with data', async ({ page }) => {
     // Auth handled by storageState
 
     // Step 1: Navigate to EIC form
-    await page.goto("/electrician/inspection-testing?section=eic");
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(5000);
 
     // Step 2: Fill client details
-    await fillIfVisible(page, 'input[name="clientName"]', "EIC Quote Flow Client");
-    await fillIfVisible(page, 'input[name="clientEmail"]', "eic-quote@test.com");
-    await fillIfVisible(page, 'input[name="clientPhone"]', "07700 900222");
+    await fillIfVisible(page, 'input[name="clientName"]', 'EIC Quote Flow Client');
+    await fillIfVisible(page, 'input[name="clientEmail"]', 'eic-quote@test.com');
+    await fillIfVisible(page, 'input[name="clientPhone"]', '07700 900222');
     await fillIfVisible(
       page,
       'input[name="installationAddress"], textarea[name="installationAddress"]',
-      "EIC Quote Address, Manchester, M1 2AB"
+      'EIC Quote Address, Manchester, M1 2AB'
     );
 
     await page.waitForTimeout(1000);
@@ -614,27 +616,27 @@ test.describe("EIC Complete End-to-End Flow", () => {
         const quoteClientName = page.locator('input[name="clientName"]').first();
         if (await quoteClientName.isVisible()) {
           const value = await quoteClientName.inputValue();
-          expect(value).toBe("EIC Quote Flow Client");
+          expect(value).toBe('EIC Quote Flow Client');
         }
       } catch (e) {
         // Navigation may not happen depending on form state
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EIC Full Flow - Certificates List", () => {
+test.describe('EIC Full Flow - Certificates List', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
   });
 
-  test("can view certificates list", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing");
+  test('can view certificates list', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing');
     await page.waitForTimeout(5000);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
 
     // Check for certificate list content
     const listContent = page.locator('text=/certificate|EIC|inspection|new|create/i');
@@ -642,14 +644,16 @@ test.describe("EIC Full Flow - Certificates List", () => {
     expect(contentCount).toBeGreaterThanOrEqual(0);
   });
 
-  test("can create new EIC from list", async ({ page }) => {
-    await page.goto("/electrician/inspection-testing");
+  test('can create new EIC from list', async ({ page }) => {
+    await page.goto('/electrician/inspection-testing');
     await page.waitForTimeout(3000);
 
     // Look for create/new button
-    const createButton = page.locator(
-      'button:has-text("New"), button:has-text("Create"), button:has-text("Add"), a:has-text("New")'
-    ).first();
+    const createButton = page
+      .locator(
+        'button:has-text("New"), button:has-text("Create"), button:has-text("Add"), a:has-text("New")'
+      )
+      .first();
 
     if (await createButton.isVisible()) {
       await createButton.click();
@@ -661,6 +665,6 @@ test.describe("EIC Full Flow - Certificates List", () => {
       expect(optionCount).toBeGreaterThanOrEqual(0);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

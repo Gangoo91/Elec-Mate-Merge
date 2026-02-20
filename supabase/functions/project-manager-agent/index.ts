@@ -1,4 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { handleError, ValidationError } from '../_shared/errors.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
@@ -38,9 +38,20 @@ Deno.serve(async (req) => {
   const logger = createLogger(requestId, { function: 'project-manager-agent' });
 
   try {
-    const { userInput, bulkData, conversationSummary, previousAgentOutputs, requestSuggestions, messages } = await req.json();
-    
-    logger.info('Project Manager Agent processing', { userInput, bulkDataLength: bulkData?.length, requestSuggestions });
+    const {
+      userInput,
+      bulkData,
+      conversationSummary,
+      previousAgentOutputs,
+      requestSuggestions,
+      messages,
+    } = await req.json();
+
+    logger.info('Project Manager Agent processing', {
+      userInput,
+      bulkDataLength: bulkData?.length,
+      requestSuggestions,
+    });
 
     const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
     if (!OPENAI_API_KEY) {
@@ -50,7 +61,7 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     // Prepend conversation context if available
     let contextPrefix = '';
     if (conversationSummary) {
@@ -60,37 +71,38 @@ Deno.serve(async (req) => {
       }
     }
     if (previousAgentOutputs && previousAgentOutputs.length > 0) {
-      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${previousAgentOutputs.map((a: any) => 
-        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
-      ).join('\n\n')}\n`;
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${previousAgentOutputs
+        .map((a: any) => `[${a.agent}]: ${a.response?.substring(0, 200)}...`)
+        .join('\n\n')}\n`;
     }
 
     // Generate RAG query from user input and bulk data
-    const ragQuery = bulkData && bulkData.length > 0
-      ? `Project phasing ${bulkData.length} circuits dependencies resource planning critical path scheduling electrical installation`
-      : `${userInput} electrical project management phasing dependencies scheduling risk identification resource planning`;
+    const ragQuery =
+      bulkData && bulkData.length > 0
+        ? `Project phasing ${bulkData.length} circuits dependencies resource planning critical path scheduling electrical installation`
+        : `${userInput} electrical project management phasing dependencies scheduling risk identification resource planning`;
 
     logger.debug('RAG query', { query: ragQuery });
 
     // Get embedding for RAG search with retry + timeout
-    const embeddingResponse = await logger.time(
-      'OpenAI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://api.openai.com/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${OPENAI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'text-embedding-3-small',
-              input: ragQuery,
+    const embeddingResponse = await logger.time('OpenAI embedding generation', () =>
+      withRetry(
+        () =>
+          withTimeout(
+            fetch('https://api.openai.com/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${OPENAI_API_KEY}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-small',
+                input: ragQuery,
+              }),
             }),
-          }),
-          Timeouts.STANDARD,
-          'OpenAI embedding generation'
-        ),
+            Timeouts.STANDARD,
+            'OpenAI embedding generation'
+          ),
         RetryPresets.STANDARD
       )
     );
@@ -106,23 +118,27 @@ Deno.serve(async (req) => {
     // Search project management knowledge base with timeout
     const { data: pmKnowledge, error: ragError } = await logger.time(
       'Project management vector search',
-      () => withTimeout(
-        supabase.rpc('search_project_mgmt', {
-          query_embedding: embedding,
-          match_threshold: 0.7,
-          match_count: 10
-        }),
-        Timeouts.STANDARD,
-        'Project management vector search'
-      )
+      () =>
+        withTimeout(
+          supabase.rpc('search_project_mgmt', {
+            query_embedding: embedding,
+            match_threshold: 0.7,
+            match_count: 10,
+          }),
+          Timeouts.STANDARD,
+          'Project management vector search'
+        )
     );
 
     let ragContext = '';
     if (!ragError && pmKnowledge && pmKnowledge.length > 0) {
-      ragContext = `\n\nRELEVANT PROJECT MANAGEMENT KNOWLEDGE FROM 784 REAL PROJECTS:\n${pmKnowledge.map((k: any) => 
-        `• ${k.topic} (${k.source}): ${k.content}`
-      ).join('\n')}`;
-      logger.info('Found project management guides', { count: pmKnowledge.length, topSimilarity: pmKnowledge[0]?.similarity?.toFixed(2) });
+      ragContext = `\n\nRELEVANT PROJECT MANAGEMENT KNOWLEDGE FROM 784 REAL PROJECTS:\n${pmKnowledge
+        .map((k: any) => `• ${k.topic} (${k.source}): ${k.content}`)
+        .join('\n')}`;
+      logger.info('Found project management guides', {
+        count: pmKnowledge.length,
+        topSimilarity: pmKnowledge[0]?.similarity?.toFixed(2),
+      });
     } else {
       logger.warn('No project management knowledge found', { ragError });
     }
@@ -160,14 +176,14 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: analysisPrompt }
+          { role: 'user', content: analysisPrompt },
         ],
         tools: [
           {
@@ -196,29 +212,42 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
                               load: { type: 'number' },
                               voltage: { type: 'number' },
                               phases: { type: 'string', enum: ['single', 'three'] },
-                              quantity: { type: 'number' }
+                              quantity: { type: 'number' },
                             },
-                            required: ['name', 'loadType', 'load', 'voltage', 'phases', 'quantity']
-                          }
+                            required: ['name', 'loadType', 'load', 'voltage', 'phases', 'quantity'],
+                          },
                         },
                         dependencies: { type: 'array', items: { type: 'string' } },
                         estimatedDuration: { type: 'string' },
-                        priority: { type: 'string', enum: ['critical', 'high', 'medium', 'low'] }
+                        priority: { type: 'string', enum: ['critical', 'high', 'medium', 'low'] },
                       },
-                      required: ['phaseName', 'circuits', 'dependencies', 'estimatedDuration', 'priority']
-                    }
+                      required: [
+                        'phaseName',
+                        'circuits',
+                        'dependencies',
+                        'estimatedDuration',
+                        'priority',
+                      ],
+                    },
                   },
                   estimatedTotalDuration: { type: 'string' },
                   keyRisks: { type: 'array', items: { type: 'string' } },
-                  recommendations: { type: 'array', items: { type: 'string' } }
+                  recommendations: { type: 'array', items: { type: 'string' } },
                 },
-                required: ['projectName', 'totalCircuits', 'phases', 'estimatedTotalDuration', 'keyRisks', 'recommendations']
-              }
-            }
-          }
+                required: [
+                  'projectName',
+                  'totalCircuits',
+                  'phases',
+                  'estimatedTotalDuration',
+                  'keyRisks',
+                  'recommendations',
+                ],
+              },
+            },
+          },
         ],
         tool_choice: { type: 'function', function: { name: 'create_project_breakdown' } },
-        max_completion_tokens: 4000
+        max_completion_tokens: 4000,
       }),
     });
 
@@ -244,27 +273,32 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
     const summaryResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
-          { role: 'system', content: 'You are a helpful project manager explaining a project breakdown to an electrician.' },
-          { role: 'user', content: summaryPrompt }
+          {
+            role: 'system',
+            content:
+              'You are a helpful project manager explaining a project breakdown to an electrician.',
+          },
+          { role: 'user', content: summaryPrompt },
         ],
-        max_completion_tokens: 500
+        max_completion_tokens: 500,
       }),
     });
 
     const summaryData = await summaryResponse.json();
-    const naturalLanguageResponse = summaryData.choices[0]?.message?.content || 'Project breakdown complete.';
+    const naturalLanguageResponse =
+      summaryData.choices[0]?.message?.content || 'Project breakdown complete.';
 
     console.log('[PROJECT-MANAGER] Analysis complete');
 
     // No suggestions after PM - they're typically the final step
     const suggestedNextAgents: any[] = [];
-    
+
     return new Response(
       JSON.stringify({
         agent: 'project-manager',
@@ -273,19 +307,18 @@ IMPORTANT: Use the real-world project knowledge above to inform your phasing str
         activeAgents: ['project-manager'],
         suggestedNextAgents,
         isComplete: true,
-        exportReady: true
+        exportReady: true,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error) {
     console.error('[PROJECT-MANAGER] Error:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error instanceof Error ? error.message : 'Unknown error',
-        agent: 'project-manager'
+        agent: 'project-manager',
       }),
       {
         status: 500,

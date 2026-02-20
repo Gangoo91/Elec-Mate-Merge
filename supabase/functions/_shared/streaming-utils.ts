@@ -121,7 +121,7 @@ export function createStreamingResponse(
       } finally {
         builder.close();
       }
-    }
+    },
   });
 
   return new Response(stream, {
@@ -129,7 +129,7 @@ export function createStreamingResponse(
       ...corsHeaders,
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
-    }
+      Connection: 'keep-alive',
+    },
   });
 }

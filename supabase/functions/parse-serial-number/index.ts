@@ -4,9 +4,9 @@
  * Optimized for fire alarm panel labels, equipment nameplates, etc.
  */
 
-import { serve, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { serve, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 interface ParseSerialRequest {
   image_base64: string;
@@ -37,8 +37,13 @@ serve(async (req) => {
       throw new ValidationError('image_base64 is required and must be a string');
     }
 
-    if (!image_type || !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)) {
-      throw new ValidationError('image_type must be one of: image/jpeg, image/png, image/heic, image/webp');
+    if (
+      !image_type ||
+      !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)
+    ) {
+      throw new ValidationError(
+        'image_type must be one of: image/jpeg, image/png, image/heic, image/webp'
+      );
     }
 
     // Check image size (rough estimate - base64 is ~4/3 of original size)
@@ -49,7 +54,7 @@ serve(async (req) => {
 
     logger.info('Processing serial number photo', {
       imageType: image_type,
-      estimatedSizeMB: estimatedSizeMB.toFixed(2)
+      estimatedSizeMB: estimatedSizeMB.toFixed(2),
     });
 
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
@@ -115,30 +120,34 @@ Return ONLY valid JSON:
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `Extract the serial number from this equipment label/nameplate. Be precise - extract the exact characters visible.`,
+                  },
+                  {
+                    inline_data: {
+                      mime_type: image_type,
+                      data: image_base64,
+                    },
+                  },
+                ],
+              },
+            ],
+            systemInstruction: {
               parts: [
                 {
-                  text: `Extract the serial number from this equipment label/nameplate. Be precise - extract the exact characters visible.`
+                  text: systemPrompt,
                 },
-                {
-                  inline_data: {
-                    mime_type: image_type,
-                    data: image_base64
-                  }
-                }
-              ]
-            }],
-            systemInstruction: {
-              parts: [{
-                text: systemPrompt
-              }]
+              ],
             },
             generationConfig: {
               responseMimeType: 'application/json',
               maxOutputTokens: 1000,
-              temperature: 0.05 // Very low temperature for maximum accuracy
-            }
-          })
+              temperature: 0.05, // Very low temperature for maximum accuracy
+            },
+          }),
         }
       );
 
@@ -146,7 +155,7 @@ Return ONLY valid JSON:
         const errorText = await response.text();
         throw new ExternalAPIError('Gemini', {
           status: response.status,
-          error: errorText
+          error: errorText,
         });
       }
 
@@ -189,18 +198,17 @@ Return ONLY valid JSON:
       serial_number: serialNumber || null,
       confidence: (parsed.confidence as 'high' | 'medium' | 'low') || 'low',
       all_text_found: parsed.all_text_found || [],
-      requestId
+      requestId,
     };
 
     logger.info('Serial number extraction complete', {
       found: !!result.serial_number,
-      confidence: result.confidence
+      confidence: result.confidence,
     });
 
     return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     return handleError(error, requestId);
   }

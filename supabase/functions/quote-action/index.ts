@@ -3,13 +3,14 @@
  * Handles seamless quote acceptance/rejection from email buttons
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -50,7 +51,7 @@ const handler = async (req: Request): Promise<Response> => {
         token: token.substring(0, 8) + '...',
         error: viewError?.message,
         found: !!quoteView,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
       return errorPage('Invalid Link', 'This quote link is invalid or has expired.');
     }
@@ -59,17 +60,20 @@ const handler = async (req: Request): Promise<Response> => {
       quoteId: quoteView.quote_id,
       isActive: quoteView.is_active,
       expiresAt: quoteView.expires_at,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     });
 
     // Check if token already used
     if (!quoteView.is_active) {
-      return errorPage('Link Already Used', 'This quote has already been responded to. If you need to make changes, please contact us directly.');
+      return errorPage(
+        'Link Already Used',
+        'This quote has already been responded to. If you need to make changes, please contact us directly.'
+      );
     }
 
     // Check if expired (warn but still allow)
     const isExpired = new Date(quoteView.expires_at) < new Date();
-    
+
     // Fetch quote details
     const { data: quote, error: quoteError } = await supabase
       .from('quotes')
@@ -86,15 +90,14 @@ const handler = async (req: Request): Promise<Response> => {
     if (quote.acceptance_status === 'accepted' || quote.acceptance_status === 'rejected') {
       const previousAction = quote.acceptance_status === 'accepted' ? 'accepted' : 'declined';
       return errorPage(
-        'Already Responded', 
+        'Already Responded',
         `This quote has already been ${previousAction}. If you need to make changes, please contact us directly.`
       );
     }
 
     // Parse client data
-    const clientData = typeof quote.client_data === 'string' 
-      ? JSON.parse(quote.client_data) 
-      : quote.client_data;
+    const clientData =
+      typeof quote.client_data === 'string' ? JSON.parse(quote.client_data) : quote.client_data;
 
     const clientName = clientData?.name || 'Client';
     const clientEmail = clientData?.email || '';
@@ -120,50 +123,53 @@ const handler = async (req: Request): Promise<Response> => {
         accepted_by_email: clientEmail,
         accepted_ip: clientIp,
         accepted_user_agent: userAgent,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
       .eq('id', quoteView.quote_id);
 
     if (updateError) {
       console.error('Quote update failed:', updateError);
-      return errorPage('Update Failed', 'Unable to process your response. Please try again or contact us directly.');
+      return errorPage(
+        'Update Failed',
+        'Unable to process your response. Please try again or contact us directly.'
+      );
     }
 
     // Mark token as used (one-time use protection)
     await supabase
       .from('quote_views')
-      .update({ 
+      .update({
         is_active: false,
-        last_viewed_at: new Date().toISOString()
+        last_viewed_at: new Date().toISOString(),
       })
       .eq('public_token', token);
 
     // Create in-app notification for the electrician
-    const notificationTitle = action === 'accept' 
-      ? `Quote ${quote.quote_number} Accepted!`
-      : `Quote ${quote.quote_number} Declined`;
-    
-    const notificationMessage = action === 'accept'
-      ? `${clientName} accepted your quote for £${(quote.total || 0).toFixed(2)}`
-      : `${clientName} declined quote ${quote.quote_number}`;
+    const notificationTitle =
+      action === 'accept'
+        ? `Quote ${quote.quote_number} Accepted!`
+        : `Quote ${quote.quote_number} Declined`;
 
-    await supabase
-      .from('ojt_notifications')
-      .insert({
-        user_id: quote.user_id,
-        type: 'quote_action',
-        title: notificationTitle,
-        message: notificationMessage,
-        data: {
-          quote_id: quote.id,
-          quote_number: quote.quote_number,
-          action: action,
-          client_name: clientName,
-          total: quote.total
-        },
-        priority: 'high',
-        is_read: false
-      });
+    const notificationMessage =
+      action === 'accept'
+        ? `${clientName} accepted your quote for £${(quote.total || 0).toFixed(2)}`
+        : `${clientName} declined quote ${quote.quote_number}`;
+
+    await supabase.from('ojt_notifications').insert({
+      user_id: quote.user_id,
+      type: 'quote_action',
+      title: notificationTitle,
+      message: notificationMessage,
+      data: {
+        quote_id: quote.id,
+        quote_number: quote.quote_number,
+        action: action,
+        client_name: clientName,
+        total: quote.total,
+      },
+      priority: 'high',
+      is_read: false,
+    });
 
     // Send push notification to electrician
     try {
@@ -177,9 +183,9 @@ const handler = async (req: Request): Promise<Response> => {
             quoteId: quote.id,
             quoteNumber: quote.quote_number,
             action: action,
-            clientName: clientName
-          }
-        }
+            clientName: clientName,
+          },
+        },
       });
     } catch (pushError) {
       console.error('Push notification error (non-critical):', pushError);
@@ -213,7 +219,6 @@ const handler = async (req: Request): Promise<Response> => {
     } else {
       return rejectSuccessPage(quote.quote_number, clientName);
     }
-
   } catch (error: any) {
     console.error('Quote action error:', error);
 
@@ -221,10 +226,13 @@ const handler = async (req: Request): Promise<Response> => {
     await captureException(error, {
       functionName: 'quote-action',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
-    return errorPage('Something Went Wrong', 'An unexpected error occurred. Please contact us directly to confirm your response.');
+    return errorPage(
+      'Something Went Wrong',
+      'An unexpected error occurred. Please contact us directly to confirm your response.'
+    );
   }
 };
 
@@ -254,11 +262,14 @@ async function sendEmailNotification(
   const companyName = company?.company_name || 'ElecMate';
   const toEmail = company?.email || quote.user_email || 'support@elec-mate.com';
 
-  const subject = action === 'accept'
-    ? `✓ Quote ${quote.quote_number} Accepted - ${clientName}`
-    : `Quote ${quote.quote_number} Declined - ${clientName}`;
+  const subject =
+    action === 'accept'
+      ? `✓ Quote ${quote.quote_number} Accepted - ${clientName}`
+      : `Quote ${quote.quote_number} Declined - ${clientName}`;
 
-  const html = action === 'accept' ? `
+  const html =
+    action === 'accept'
+      ? `
     <!DOCTYPE html>
     <html>
     <head>
@@ -287,12 +298,16 @@ async function sendEmailNotification(
               <span style="color: #6b7280; font-size: 14px;">Client:</span>
               <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clientName}</span>
             </div>
-            ${clientEmail ? `
+            ${
+              clientEmail
+                ? `
             <div style="display: flex; justify-content: space-between;">
               <span style="color: #6b7280; font-size: 14px;">Email:</span>
               <span style="color: #1f2937; font-weight: 600; font-size: 14px;">${clientEmail}</span>
             </div>
-            ` : ''}
+            `
+                : ''
+            }
           </div>
 
           <div style="background: #fef3c7; border-left: 4px solid #f59e0b; padding: 16px; border-radius: 6px; margin: 24px 0;">
@@ -311,7 +326,8 @@ async function sendEmailNotification(
       </div>
     </body>
     </html>
-  ` : `
+  `
+      : `
     <!DOCTYPE html>
     <html>
     <head>
@@ -347,7 +363,7 @@ async function sendEmailNotification(
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${resendApiKey}`,
+      Authorization: `Bearer ${resendApiKey}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -427,7 +443,7 @@ async function sendAcceptanceConfirmationEmail(
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
+        Authorization: `Bearer ${resendApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -452,11 +468,7 @@ async function sendAcceptanceConfirmationEmail(
 /**
  * Send thank you email to client after declining quote
  */
-async function sendRejectionThankYouEmail(
-  quote: any,
-  clientEmail: string,
-  clientName: string
-) {
+async function sendRejectionThankYouEmail(quote: any, clientEmail: string, clientName: string) {
   const resendApiKey = Deno.env.get('RESEND_API_KEY');
   if (!resendApiKey) {
     console.warn('RESEND_API_KEY not configured, skipping client thank you email');
@@ -506,7 +518,7 @@ async function sendRejectionThankYouEmail(
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
+        Authorization: `Bearer ${resendApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

@@ -103,6 +103,8 @@ export const SiteVisitCaptureStep = ({
           onAddRoom={onAddRoom}
           onSetActiveRoom={onSetActiveRoom}
           onAddItem={onAddItem}
+          onUpdateItem={onUpdateItem}
+          onRemoveItem={onRemoveItem}
           setPromptResponse={setPromptResponse}
           onAddPhoto={onAddPhoto}
         />

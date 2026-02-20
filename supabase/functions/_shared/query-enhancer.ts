@@ -1,7 +1,7 @@
 /**
  * PHASE 1: Query Enhancement System
  * Enriches vague follow-up questions with conversation context
- * 
+ *
  * Example transformations:
  * "What about longer?" → "What about longer cable run? 9.5kW shower, 230V, bathroom location"
  * "And in a bathroom?" → "And in a bathroom? 10kW circuit, single-phase installation"
@@ -30,14 +30,14 @@ export interface EnhancedQuery {
  */
 export function extractContextFromHistory(messages: any[]): EnhancementContext {
   const context: EnhancementContext = {};
-  
+
   // Process messages in reverse (most recent first)
   for (let i = messages.length - 1; i >= Math.max(0, messages.length - 5); i--) {
     const msg = messages[i];
     if (!msg?.content) continue;
-    
+
     const text = msg.content.toLowerCase();
-    
+
     // Extract power
     if (!context.power) {
       const powerMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:kw|kilowatt)/i);
@@ -48,19 +48,19 @@ export function extractContextFromHistory(messages: any[]): EnhancementContext {
         if (wattMatch) context.power = parseFloat(wattMatch[1]);
       }
     }
-    
+
     // Extract voltage
     if (!context.voltage) {
       const voltageMatch = text.match(/(\d+)\s*v(?:olt)?/i);
       if (voltageMatch) context.voltage = parseInt(voltageMatch[1]);
     }
-    
+
     // Extract distance/cable length
     if (!context.distance) {
       const distanceMatch = text.match(/(\d+(?:\.\d+)?)\s*(?:m|metre|meter)/i);
       if (distanceMatch) context.distance = parseFloat(distanceMatch[1]);
     }
-    
+
     // Extract location
     if (!context.location) {
       if (/bathroom/i.test(text)) context.location = 'bathroom';
@@ -68,7 +68,7 @@ export function extractContextFromHistory(messages: any[]): EnhancementContext {
       else if (/kitchen/i.test(text)) context.location = 'kitchen';
       else if (/garage/i.test(text)) context.location = 'garage';
     }
-    
+
     // Extract circuit type
     if (!context.circuitType) {
       if (/shower/i.test(text)) context.circuitType = 'shower';
@@ -78,31 +78,31 @@ export function extractContextFromHistory(messages: any[]): EnhancementContext {
       else if (/ev|electric vehicle|car charg/i.test(text)) context.circuitType = 'ev';
       else if (/immersion/i.test(text)) context.circuitType = 'immersion';
     }
-    
+
     // Extract phases
     if (!context.phases) {
       if (/three.?phase|3.?phase|400v/i.test(text)) context.phases = 'three';
       else if (/single.?phase|1.?phase|230v/i.test(text)) context.phases = 'single';
     }
-    
+
     // Extract cable size from previous responses
     if (!context.cableSize && msg.role === 'assistant') {
       const cableSizeMatch = text.match(/(\d+(?:\.\d+)?)\s*mm[²2]/i);
       if (cableSizeMatch) context.cableSize = `${cableSizeMatch[1]}mm²`;
     }
-    
+
     // Extract MCB rating
     if (!context.currentRating && msg.role === 'assistant') {
       const mcbMatch = text.match(/(\d+)\s*a\s+(?:mcb|breaker|type\s+[bcd])/i);
       if (mcbMatch) context.currentRating = parseInt(mcbMatch[1]);
     }
   }
-  
+
   // Set defaults
   if (!context.voltage && context.phases === 'three') context.voltage = 400;
   if (!context.voltage && context.phases === 'single') context.voltage = 230;
   if (!context.voltage) context.voltage = 230; // UK standard
-  
+
   return context;
 }
 
@@ -114,7 +114,7 @@ function isVagueQuery(query: string): boolean {
   if (!query || typeof query !== 'string') {
     return false;
   }
-  
+
   const vaguePatterns = [
     /^what about/i,
     /^and if/i,
@@ -125,86 +125,85 @@ function isVagueQuery(query: string): boolean {
     /longer|shorter|bigger|smaller|higher|lower/i,
     /different (location|size|rating)/i,
   ];
-  
-  return vaguePatterns.some(p => p.test(query.trim()));
+
+  return vaguePatterns.some((p) => p.test(query.trim()));
 }
 
 /**
  * Main enhancement function
  */
-export function enhanceQuery(
-  query: string,
-  messages: any[]
-): EnhancedQuery {
+export function enhanceQuery(query: string, messages: any[]): EnhancedQuery {
   // Check if enhancement is needed
   if (!isVagueQuery(query) || messages.length < 2) {
     return {
       original: query,
       enhanced: query,
       addedContext: [],
-      confidence: 1.0
+      confidence: 1.0,
     };
   }
-  
+
   // Extract context from history
   const context = extractContextFromHistory(messages);
   const addedContext: string[] = [];
-  
+
   // Build context additions
   if (context.power) {
-    addedContext.push(`${context.power >= 1000 ? (context.power / 1000).toFixed(1) + 'kW' : context.power + 'W'} load`);
+    addedContext.push(
+      `${context.power >= 1000 ? (context.power / 1000).toFixed(1) + 'kW' : context.power + 'W'} load`
+    );
   }
-  
+
   if (context.circuitType) {
     const typeNames: Record<string, string> = {
-      'shower': 'electric shower',
-      'cooker': 'cooker circuit',
-      'socket': 'socket circuit',
-      'lighting': 'lighting circuit',
-      'ev': 'EV charger',
-      'immersion': 'immersion heater'
+      shower: 'electric shower',
+      cooker: 'cooker circuit',
+      socket: 'socket circuit',
+      lighting: 'lighting circuit',
+      ev: 'EV charger',
+      immersion: 'immersion heater',
     };
     addedContext.push(typeNames[context.circuitType] || context.circuitType);
   }
-  
+
   if (context.voltage && context.voltage !== 230) {
     addedContext.push(`${context.voltage}V`);
   }
-  
+
   if (context.phases === 'three') {
     addedContext.push('three-phase');
   }
-  
+
   if (context.distance) {
     addedContext.push(`${context.distance}m cable run`);
   }
-  
+
   if (context.location) {
     addedContext.push(`${context.location} location`);
   }
-  
+
   if (context.cableSize) {
     addedContext.push(`currently ${context.cableSize} cable`);
   }
-  
+
   if (context.currentRating) {
     addedContext.push(`${context.currentRating}A MCB`);
   }
-  
+
   // Build enhanced query
   let enhanced = query;
   if (addedContext.length > 0) {
     enhanced = `${query} [Context: ${addedContext.join(', ')}]`;
   }
-  
+
   // Calculate confidence (based on how much context we added)
-  const confidence = Math.min(0.95, 0.5 + (addedContext.length * 0.1));
-  
+  const confidence = Math.min(0.95, 0.5 + addedContext.length * 0.1);
+
   return {
     original: query,
     enhanced,
     addedContext,
-    confidence
+    confidence,
   };
 }
 
@@ -213,11 +212,11 @@ export function enhanceQuery(
  */
 export function logEnhancement(enhancement: EnhancedQuery, logger?: any): void {
   if (!enhancement.addedContext.length) return;
-  
+
   const log = logger || console;
   log.info?.('🔍 Query Enhanced', {
     original: enhancement.original.slice(0, 50),
     contextAdded: enhancement.addedContext.length,
-    confidence: enhancement.confidence
+    confidence: enhancement.confidence,
   });
 }

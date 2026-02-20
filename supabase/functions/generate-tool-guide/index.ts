@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -17,12 +18,12 @@ serve(async (req) => {
 
   try {
     const { guideType, userProfile = {}, forceRefresh = false } = await req.json();
-    
+
     console.log(`🔧 Processing guide request for: ${guideType}`);
 
     // Create Supabase client
     const supabase = createClient(supabaseUrl!, supabaseServiceKey!);
-    
+
     // Check cache first (unless force refresh is requested)
     if (!forceRefresh) {
       const { data: cachedGuide } = await supabase
@@ -31,22 +32,27 @@ serve(async (req) => {
         .eq('guide_type', guideType)
         .gt('expires_at', new Date().toISOString())
         .single();
-      
+
       if (cachedGuide) {
-        console.log(`✅ Returning cached guide for ${guideType} (cached until ${cachedGuide.expires_at})`);
-        
+        console.log(
+          `✅ Returning cached guide for ${guideType} (cached until ${cachedGuide.expires_at})`
+        );
+
         // Include cache metadata in response
-        return new Response(JSON.stringify({ 
-          guide: cachedGuide.guide_data,
-          cacheInfo: {
-            lastRefreshed: cachedGuide.last_refreshed,
-            expiresAt: cachedGuide.expires_at,
-            nextRefresh: cachedGuide.refresh_scheduled_for,
-            cacheVersion: cachedGuide.cache_version
+        return new Response(
+          JSON.stringify({
+            guide: cachedGuide.guide_data,
+            cacheInfo: {
+              lastRefreshed: cachedGuide.last_refreshed,
+              expiresAt: cachedGuide.expires_at,
+              nextRefresh: cachedGuide.refresh_scheduled_for,
+              cacheVersion: cachedGuide.cache_version,
+            },
+          }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
-        }), {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        });
+        );
       }
     }
 
@@ -55,14 +61,12 @@ serve(async (req) => {
     if (!openAIApiKey) {
       throw new Error('OpenAI API key not configured');
     }
-    
+
     // Get current tool data from Firecrawl scraper
     let liveToolData = [];
     try {
-      const { data: tools } = await supabase
-        .functions
-        .invoke('firecrawl-tools-scraper');
-      
+      const { data: tools } = await supabase.functions.invoke('firecrawl-tools-scraper');
+
       if (tools?.tools) {
         liveToolData = tools.tools.slice(0, 10); // Limit for prompt size
       }
@@ -121,14 +125,14 @@ serve(async (req) => {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-4.1-2025-04-14',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt },
         ],
         max_completion_tokens: 3000,
       }),
@@ -142,7 +146,7 @@ serve(async (req) => {
 
     const data = await response.json();
     const aiContent = data.choices[0].message.content;
-    
+
     console.log('Raw AI response:', aiContent);
 
     // Parse the AI response
@@ -159,15 +163,15 @@ serve(async (req) => {
           {
             title: 'Essential Tools',
             content: 'AI-generated content temporarily unavailable. Please try again.',
-            recommendations: []
-          }
+            recommendations: [],
+          },
         ],
         quickTips: ['Prioritise quality over quantity', 'Check BS7671 compliance'],
         budgetBreakdown: {
           starter: '£50-150',
           professional: '£200-500',
-          premium: '£500+'
-        }
+          premium: '£500+',
+        },
       };
     }
 
@@ -177,22 +181,29 @@ serve(async (req) => {
     try {
       // Calculate next Sunday at 2 AM for cache expiration
       const { data: nextSunday } = await supabase.rpc('get_next_sunday_refresh');
-      
-      await supabase
-        .from('tool_guide_cache')
-        .upsert({
+
+      await supabase.from('tool_guide_cache').upsert(
+        {
           guide_type: guideType,
           guide_data: guide,
           expires_at: nextSunday,
           refresh_scheduled_for: nextSunday,
           last_refreshed: new Date().toISOString(),
-          cache_version: (forceRefresh ? 
-            (await supabase.from('tool_guide_cache').select('cache_version').eq('guide_type', guideType).single()).data?.cache_version + 1 || 1 
-            : 1),
-          refresh_status: 'completed'
-        }, {
-          onConflict: 'guide_type'
-        });
+          cache_version: forceRefresh
+            ? (
+                await supabase
+                  .from('tool_guide_cache')
+                  .select('cache_version')
+                  .eq('guide_type', guideType)
+                  .single()
+              ).data?.cache_version + 1 || 1
+            : 1,
+          refresh_status: 'completed',
+        },
+        {
+          onConflict: 'guide_type',
+        }
+      );
       console.log(`💾 Cached guide for ${guideType} until next Sunday (${nextSunday})`);
     } catch (cacheError) {
       console.error('Failed to cache guide:', cacheError);
@@ -202,22 +213,24 @@ serve(async (req) => {
     return new Response(JSON.stringify({ guide }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Error generating guide:', error);
-    
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
-      guide: {
-        title: 'Guide Generation Error',
-        summary: 'Unable to generate guide at this time',
-        sections: [],
-        quickTips: [],
-        budgetBreakdown: {}
+
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        guide: {
+          title: 'Guide Generation Error',
+          summary: 'Unable to generate guide at this time',
+          sections: [],
+          quickTips: [],
+          budgetBreakdown: {},
+        },
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    );
   }
 });

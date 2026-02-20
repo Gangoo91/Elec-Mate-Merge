@@ -1,5 +1,5 @@
-import { test, expect, Page } from "@playwright/test";
-import { testClient, testClient2 } from "../fixtures/test-data";
+import { test, expect, Page } from '@playwright/test';
+import { testClient, testClient2 } from '../fixtures/test-data';
 
 /**
  * EICR Wizard Step 1: Client & Property Details
@@ -14,11 +14,13 @@ import { testClient, testClient2 } from "../fixtures/test-data";
 
 // Helper to navigate to EICR form
 async function navigateToEICRWizard(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=eicr");
+  await page.goto('/electrician/inspection-testing?section=eicr');
   await page.waitForTimeout(3000);
 
   // Navigate to Details tab (tabbed interface)
-  const detailsTab = page.locator('button:has-text("Details"), [role="tab"]:has-text("Details")').first();
+  const detailsTab = page
+    .locator('button:has-text("Details"), [role="tab"]:has-text("Details")')
+    .first();
   if (await detailsTab.isVisible({ timeout: 3000 }).catch(() => false)) {
     await detailsTab.click();
     await page.waitForTimeout(1000);
@@ -35,13 +37,13 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
   return false;
 }
 
-test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
+test.describe('EICR Wizard Step 1 - Client & Property Details', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState from setup project
     await navigateToEICRWizard(page);
   });
 
-  test("1. Client Name field accepts input and stores value", async ({ page }) => {
+  test('1. Client Name field accepts input and stores value', async ({ page }) => {
     // Find and fill client name field
     const clientNameFilled = await fillIfVisible(
       page,
@@ -58,12 +60,14 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Client Name empty - Next button should be disabled", async ({ page }) => {
+  test('2. Client Name empty - Next button should be disabled', async ({ page }) => {
     // Leave client name empty and try to proceed
-    const nextButton = page.locator('button:has-text("Next"), button[type="submit"]:has-text("Continue")').first();
+    const nextButton = page
+      .locator('button:has-text("Next"), button[type="submit"]:has-text("Continue")')
+      .first();
 
     if (await nextButton.isVisible()) {
       // Check if next button is disabled when required field is empty
@@ -82,10 +86,10 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. Phone Number field accepts telephone input", async ({ page }) => {
+  test('3. Phone Number field accepts telephone input', async ({ page }) => {
     const phoneFilled = await fillIfVisible(
       page,
       'input[name="clientPhone"], input[type="tel"], input[placeholder*="phone" i], input[placeholder*="telephone" i]',
@@ -100,10 +104,10 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("4. Email Address field accepts email input", async ({ page }) => {
+  test('4. Email Address field accepts email input', async ({ page }) => {
     const emailFilled = await fillIfVisible(
       page,
       'input[name="clientEmail"], input[type="email"], input[placeholder*="email" i]',
@@ -118,10 +122,10 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Address Line 1 accepts and stores address", async ({ page }) => {
+  test('5. Address Line 1 accepts and stores address', async ({ page }) => {
     const addressFilled = await fillIfVisible(
       page,
       'input[name="propertyAddress"], textarea[name="propertyAddress"], input[placeholder*="address" i]',
@@ -129,27 +133,29 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
     );
 
     if (addressFilled) {
-      const addressInput = page.locator('input[name="propertyAddress"], textarea[name="propertyAddress"]').first();
+      const addressInput = page
+        .locator('input[name="propertyAddress"], textarea[name="propertyAddress"]')
+        .first();
       if (await addressInput.isVisible()) {
         const value = await addressInput.inputValue();
         expect(value).toBe(testClient.address);
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("6. Form has input fields", async ({ page }) => {
+  test('6. Form has input fields', async ({ page }) => {
     // Verify the form has input fields
     const inputs = page.locator('input, textarea, select');
     const inputCount = await inputs.count();
 
     expect(inputCount).toBeGreaterThan(0);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("7. Address Line 2 (optional) accepts flat/suite number", async ({ page }) => {
+  test('7. Address Line 2 (optional) accepts flat/suite number', async ({ page }) => {
     const address2Filled = await fillIfVisible(
       page,
       'input[name="propertyAddress2"], input[placeholder*="line 2" i], input[placeholder*="flat" i], input[placeholder*="suite" i]',
@@ -164,10 +170,10 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("8. City field accepts city name", async ({ page }) => {
+  test('8. City field accepts city name', async ({ page }) => {
     const cityFilled = await fillIfVisible(
       page,
       'input[name="propertyCity"], input[name="city"], input[placeholder*="city" i], input[placeholder*="town" i]',
@@ -182,10 +188,10 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("9. Postcode field accepts UK postcode format", async ({ page }) => {
+  test('9. Postcode field accepts UK postcode format', async ({ page }) => {
     const postcodeFilled = await fillIfVisible(
       page,
       'input[name="propertyPostcode"], input[name="postcode"], input[placeholder*="postcode" i]',
@@ -193,17 +199,19 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
     );
 
     if (postcodeFilled) {
-      const postcodeInput = page.locator('input[name="propertyPostcode"], input[name="postcode"]').first();
+      const postcodeInput = page
+        .locator('input[name="propertyPostcode"], input[name="postcode"]')
+        .first();
       if (await postcodeInput.isVisible()) {
         const value = await postcodeInput.inputValue();
         expect(value).toBe(testClient.postcode);
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("10. Property Description textarea accepts multi-line text", async ({ page }) => {
+  test('10. Property Description textarea accepts multi-line text', async ({ page }) => {
     const descriptionFilled = await fillIfVisible(
       page,
       'textarea[name="propertyDescription"], textarea[placeholder*="description" i], textarea[placeholder*="property" i]',
@@ -218,22 +226,24 @@ test.describe("EICR Wizard Step 1 - Client & Property Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Form - Tab Interaction Tests", () => {
+test.describe('EICR Form - Tab Interaction Tests', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState from setup project
     await navigateToEICRWizard(page);
   });
 
-  test("All tabs are accessible", async ({ page }) => {
+  test('All tabs are accessible', async ({ page }) => {
     // Check all tabs are present
     const tabs = ['Details', 'Inspection', 'Testing', 'Inspector', 'Certificate'];
 
     for (const tabName of tabs) {
-      const tab = page.locator(`button:has-text("${tabName}"), [role="tab"]:has-text("${tabName}")`).first();
+      const tab = page
+        .locator(`button:has-text("${tabName}"), [role="tab"]:has-text("${tabName}")`)
+        .first();
       const isVisible = await tab.isVisible({ timeout: 2000 }).catch(() => false);
       // At least some tabs should be visible
       if (isVisible) {
@@ -242,21 +252,25 @@ test.describe("EICR Form - Tab Interaction Tests", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("Data persists after switching tabs", async ({ page }) => {
+  test('Data persists after switching tabs', async ({ page }) => {
     // Fill client name
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
 
     // Switch to Inspection tab
-    const inspectionTab = page.locator('button:has-text("Inspection"), [role="tab"]:has-text("Inspection")').first();
+    const inspectionTab = page
+      .locator('button:has-text("Inspection"), [role="tab"]:has-text("Inspection")')
+      .first();
     if (await inspectionTab.isVisible({ timeout: 3000 })) {
       await inspectionTab.click();
       await page.waitForTimeout(1000);
 
       // Switch back to Details tab
-      const detailsTab = page.locator('button:has-text("Details"), [role="tab"]:has-text("Details")').first();
+      const detailsTab = page
+        .locator('button:has-text("Details"), [role="tab"]:has-text("Details")')
+        .first();
       if (await detailsTab.isVisible({ timeout: 3000 })) {
         await detailsTab.click();
         await page.waitForTimeout(1000);
@@ -270,6 +284,6 @@ test.describe("EICR Form - Tab Interaction Tests", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

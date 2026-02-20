@@ -3,6 +3,7 @@
 ## Files Created:
 
 ### 1. `bs7671EVCharging_GeneratingSets.ts`
+
 **Section 722: Electric Vehicle Charging Installations**
 
 - ✅ EV charging scope and modes (Mode 1, 2, 3, 4) - Reg 722.11
@@ -34,6 +35,7 @@
 ## Knowledge Now Available to Agents:
 
 ### Designer Agent:
+
 - **EV Charging Design**:
   - Assess earthing system (TN-C-S requires PME protection!)
   - Select PME protection method (TT earth electrode vs PEN monitoring)
@@ -43,6 +45,7 @@
   - Specify IP/IK ratings (IPX4/IK08 outdoors)
 
 ### Installer Agent:
+
 - **EV Charging Installation**:
   - ⚠️ **CRITICAL**: PME (TN-C-S) is DANGEROUS for EV charging without protection
   - Install TT earth electrode (≤200Ω, preferably ≤20Ω) if specified
@@ -55,6 +58,7 @@
   - Tethered cables permitted
 
 ### Commissioning Agent:
+
 - **EV Charging Testing**:
   - Verify PME protection installed correctly:
     - TT earth electrode: Test Ra ≤200Ω (Reg 722.411.4.1(ii))
@@ -73,6 +77,7 @@
 ## Critical Safety Knowledge Embedded:
 
 🚨 **PME (TN-C-S) DANGER FOR EV CHARGING** (Reg 722.411.4.1):
+
 - **PME MUST NOT be used for EV charging WITHOUT protection**
 - **Risk**: If PEN conductor breaks:
   1. Vehicle body rises to ~115V (half supply voltage)
@@ -86,6 +91,7 @@
 - **NOTE**: Creating TT may be difficult if PME buried services nearby
 
 🚨 **RCD Requirements** (Reg 722.531.3.101):
+
 - **Type B RCD** (DC fault sensitive) - PREFERRED
   - Modern EVs can produce DC fault currents
   - Type A/F RCDs can be blinded by DC (fail to trip)
@@ -96,6 +102,7 @@
 - **Individual RCD per charging point** (no sharing)
 
 🚨 **Socket Types - Type 2 is UK STANDARD**:
+
 - **Type 2 (Mennekes)** - BS EN 62196-2 - Mode 3
   - Universal in UK/Europe
   - 32A single-phase (7kW) or 63A 3-phase (22kW)
@@ -105,6 +112,7 @@
 - Type 1 (J1772) - RARE (older imports)
 
 🚨 **Dedicated Circuits** (Reg 722.533.101):
+
 - ONE charging point per final circuit
 - NO daisy-chaining multiple points
 - Continuous load - NO diversity applied
@@ -125,12 +133,14 @@
 ## Knowledge Extraction: ~92% COMPLETE! 🎉
 
 ### Modern Installation Capabilities Added:
+
 - ✅ Electric Vehicle Charging (Section 722) - CRITICAL for modern construction
 - ✅ PME protection methods (life-safety critical)
 - ✅ RCD Type B and DC fault protection
 - ✅ Type 2 connector (UK standard)
 
 ### Remaining High-Value Topics:
+
 - Section 551 (Generating Sets/Battery Energy Storage) - Growing market
 - Section 559 (Luminaires - detailed requirements)
 - Appendix 17 (Energy Efficiency) - Building Regulations Part L
@@ -138,6 +148,7 @@
 ## Real-World Application Examples:
 
 ### Example 1: Domestic 7kW EV Charging Point (PME Supply)
+
 ```
 SCENARIO: Detached house, TN-C-S (PME) supply, installing wallbox in driveway
 
@@ -169,6 +180,7 @@ TESTING:
 ```
 
 ### Example 2: Workplace Car Park - 4× Charging Points (TN-S Supply)
+
 ```
 SCENARIO: Office building, TN-S supply (no PME risk), outdoor car park
 
@@ -198,6 +210,7 @@ TESTING (per charging point):
 ```
 
 ### Example 3: Domestic Flat - Cannot Install Earth Rod (PME Supply)
+
 ```
 SCENARIO: 3rd floor flat, TN-C-S (PME) supply, underground car park, no access for earth rod
 
@@ -233,6 +246,7 @@ TESTING:
 ## Agent Impact Summary:
 
 ### Designer Agent CAN NOW:
+
 - Identify PME danger for EV charging
 - Specify correct PME protection method (TT vs PEN monitoring)
 - Calculate EV circuit ratings (7kW, 22kW, rapid)
@@ -241,6 +255,7 @@ TESTING:
 - Design compliant EV charging installations
 
 ### Installer Agent CAN NOW:
+
 - Install TT earth electrodes for EV charging (correct depth, sizing)
 - Install PEN monitoring devices per manufacturer instructions
 - Mount charging equipment with correct IP/IK ratings
@@ -249,6 +264,7 @@ TESTING:
 - Understand PME risk (critical safety knowledge)
 
 ### Commissioning Agent CAN NOW:
+
 - Test TT earth electrode resistance (Ra ≤200Ω)
 - Verify PEN monitoring device operation
 - Test RCD Type B or Type A/F with RDC-DD
@@ -259,6 +275,7 @@ TESTING:
 ## Section 551: Generating Sets & Battery Energy Storage
 
 ### Knowledge Added:
+
 - ✅ Generating set scope (off-grid, standby, parallel operation) - Reg 551.1
 - ✅ **G98/G99 Grid Connection Requirements** - CRITICAL for solar/battery
   - G98 (≤16A/≤3.68kW): DNO notification only
@@ -282,6 +299,7 @@ TESTING:
 ### Critical Safety Knowledge:
 
 🚨 **G98 vs G99 Grid Connection**:
+
 - **G98** (≤16A per phase):
   - Solar ≤3.68kW (single-phase) or ≤11.04kW (3-phase)
   - DNO NOTIFICATION only (online portal, AFTER installation)
@@ -295,6 +313,7 @@ TESTING:
   - Cannot connect until approval received
 
 🚨 **Standby Generator Earthing** (Reg 551.4.3.2.1):
+
 - **PME (TN-C-S) supply = DANGER**
   - CANNOT use PME earth when grid disconnected
   - MUST install independent earth electrode (≤200Ω)
@@ -304,6 +323,7 @@ TESTING:
 - **Critical**: Grid earth may not be available when on generator power
 
 🚨 **Battery Storage Ventilation** (Reg 551.8.1):
+
 - **Lead-acid batteries**:
   - HYDROGEN GAS (explosive if >4% concentration)
   - Ventilation: 0.05 m³/h per kWh capacity
@@ -319,6 +339,7 @@ TESTING:
   - BMS (Battery Management System) MANDATORY
 
 🚨 **Loss of Mains (LOM) Protection** (Reg 551.7.4):
+
 - **MANDATORY for grid-tied systems**
 - Prevents "islanding" (generator powering dead grid)
 - **Danger**: DNO workers think grid is dead but it's energized = FATAL
@@ -342,6 +363,7 @@ TESTING:
 ## Knowledge Extraction: ~95% COMPLETE! 🎉
 
 ### Modern Installation Capabilities:
+
 - ✅ Electric vehicle charging installations
 - ✅ Solar PV systems (grid-tied and off-grid)
 - ✅ Battery energy storage systems
@@ -353,6 +375,7 @@ TESTING:
 ## Real-World Examples - Generating Sets & Battery Storage:
 
 ### Example 1: 5kW Solar PV + 10kWh Battery Storage (Grid-Tied)
+
 ```
 SCENARIO: Domestic dwelling, 5kW solar + 10kWh lithium battery, TN-C-S supply
 
@@ -392,6 +415,7 @@ TESTING:
 ```
 
 ### Example 2: 20kVA Diesel Standby Generator (Hospital)
+
 ```
 SCENARIO: Small hospital, critical loads, TN-C-S mains, requires backup power
 
@@ -435,6 +459,7 @@ TESTING:
 ```
 
 ### Example 3: 15kW Commercial Solar (G99 Required)
+
 ```
 SCENARIO: Small business, 15kW rooftop solar, 3-phase supply, export to grid
 
@@ -477,6 +502,7 @@ TESTING (DNO Witness Test):
 ## System Status: READY FOR MODERN UK ELECTRICAL INSTALLATIONS! ✅
 
 The agents now have comprehensive knowledge for:
+
 - Electric vehicle charging (domestic, commercial, public)
 - Solar PV systems (grid-tied and off-grid)
 - Battery energy storage (lithium-ion and lead-acid)

@@ -29,25 +29,25 @@ export const EV_CHARGING_SCOPE: EVChargingScope = {
     {
       mode: 1,
       description: 'Connection via standard socket (BS 1363) - NOT RECOMMENDED',
-      typical: 'Emergency use only - slow charging via household socket'
+      typical: 'Emergency use only - slow charging via household socket',
     },
     {
       mode: 2,
       description: 'Portable charging cable with in-cable protection (RCD)',
-      typical: 'Occasional charging - portable EVSE with RCD in cable'
+      typical: 'Occasional charging - portable EVSE with RCD in cable',
     },
     {
       mode: 3,
       description: 'Dedicated EV charging point with control/pilot function',
-      typical: 'MOST COMMON - wallbox/charging station (Type 2 socket/tethered)'
+      typical: 'MOST COMMON - wallbox/charging station (Type 2 socket/tethered)',
     },
     {
       mode: 4,
       description: 'DC fast charging with external charger',
-      typical: 'Rapid charging - CCS/CHAdeMO connectors'
-    }
+      typical: 'Rapid charging - CCS/CHAdeMO connectors',
+    },
   ],
-  locations: ['Domestic dwellings', 'Workplaces', 'Public car parks', 'Commercial premises']
+  locations: ['Domestic dwellings', 'Workplaces', 'Public car parks', 'Commercial premises'],
 };
 
 /**
@@ -73,10 +73,10 @@ export const EV_PME_PROTECTION_METHODS: EVPMEProtectionMethod[] = [
       'RCD Type A or B with IΔn ≤30mA',
       'Disconnect L+N+PE on fault',
       'Buried CPC sized per Table 54.1',
-      'Separation from PME metalwork (if possible)'
+      'Separation from PME metalwork (if possible)',
     ],
     suitableFor: 'Domestic/commercial - MOST COMMON SOLUTION',
-    notes: 'Creating TT may be difficult if buried PME services nearby'
+    notes: 'Creating TT may be difficult if buried PME services nearby',
   },
   {
     method: 'PEN Conductor Monitoring Device',
@@ -87,10 +87,10 @@ export const EV_PME_PROTECTION_METHODS: EVPMEProtectionMethod[] = [
       'Disconnects L+N+PE if PEN fault detected',
       'Max voltage thresholds (70V/1s, 100V/0.7s, 200V/0.2s)',
       'Auto-reconnect when fault clears',
-      'CE/UKCA marked with Declaration of Conformity'
+      'CE/UKCA marked with Declaration of Conformity',
     ],
     suitableFor: 'Domestic/commercial where TT not feasible',
-    notes: 'Device must be third-party approved - see Reg 722.411.4.1 Note 1'
+    notes: 'Device must be third-party approved - see Reg 722.411.4.1 Note 1',
   },
   {
     method: 'Special RCD (Type B with PEN Monitoring)',
@@ -101,10 +101,10 @@ export const EV_PME_PROTECTION_METHODS: EVPMEProtectionMethod[] = [
       'Integrated PEN conductor monitoring',
       'Disconnects L+N+PE on PEN fault',
       'Voltage between L-N: 207-253V rms acceptable',
-      'CE/UKCA marked'
+      'CE/UKCA marked',
     ],
     suitableFor: 'Domestic/commercial - integrated solution',
-    notes: 'Combined RCD + PEN monitoring in single device'
+    notes: 'Combined RCD + PEN monitoring in single device',
   },
   {
     method: 'Alternative Device (Equivalent Safety)',
@@ -115,11 +115,11 @@ export const EV_PME_PROTECTION_METHODS: EVPMEProtectionMethod[] = [
       'Provides isolation per Table 537.4',
       'Equivalent safety to methods (iii) or (iv)',
       'Manufacturer confirmation required',
-      'CE/UKCA marked with Declaration of Conformity'
+      'CE/UKCA marked with Declaration of Conformity',
     ],
     suitableFor: 'New technologies - subject to approval',
-    notes: 'Must prove equivalent safety - installer responsibility to verify'
-  }
+    notes: 'Must prove equivalent safety - installer responsibility to verify',
+  },
 ];
 
 /**
@@ -147,15 +147,15 @@ export const EV_RCD_REQUIREMENTS: EVRCDRequirement = {
   ratedCurrent: 'IΔn ≤30mA',
   dcFaultProtection: [
     'RCD Type B (sensitive to DC fault currents), OR',
-    'RCD Type A/F + RDC-DD (Residual DC Detecting Device per BS IEC 62955)'
+    'RCD Type A/F + RDC-DD (Residual DC Detecting Device per BS IEC 62955)',
   ],
   notes: [
     'Type B preferred for full protection against DC faults from vehicle',
     'Type A/F acceptable if combined with RDC-DD',
     'RDC-DD can be inside charging equipment OR upstream in installation',
     'RCD must disconnect ALL live conductors (L+N)',
-    'NOT required if electrical separation used (Reg 722.413)'
-  ]
+    'NOT required if electrical separation used (Reg 722.413)',
+  ],
 };
 
 /**
@@ -181,9 +181,9 @@ export const EV_SOCKET_TYPES: EVSocketType[] = [
       'Label on front: "suitable for electric vehicle charging"',
       'Fixed mounting (not portable)',
       'Mode 2 charging only (with in-cable RCD)',
-      'Slow charging (~3kW)'
+      'Slow charging (~3kW)',
     ],
-    typical: 'Emergency/occasional charging - NOT IDEAL for regular use'
+    typical: 'Emergency/occasional charging - NOT IDEAL for regular use',
   },
   {
     type: 'BS EN 60309-2 (Commando/Industrial)',
@@ -195,9 +195,9 @@ export const EV_SOCKET_TYPES: EVSocketType[] = [
       'Prevents live contacts when accessible',
       'Self-contained interlocked product (BS EN 60309-4) acceptable',
       'Rated 16A or 32A single-phase',
-      'Mode 2/3 charging'
+      'Mode 2/3 charging',
     ],
-    typical: 'Commercial/workplace charging - robust connector'
+    typical: 'Commercial/workplace charging - robust connector',
   },
   {
     type: 'Type 1 Connector (J1772)',
@@ -208,9 +208,9 @@ export const EV_SOCKET_TYPES: EVSocketType[] = [
       'Mode 3 charging only',
       'Vehicle connector (tethered cable)',
       'Max 32A single-phase',
-      'Control pilot function'
+      'Control pilot function',
     ],
-    typical: 'Older vehicles (Nissan Leaf pre-2018) - RARE in UK'
+    typical: 'Older vehicles (Nissan Leaf pre-2018) - RARE in UK',
   },
   {
     type: 'Type 2 Socket/Connector (Mennekes)',
@@ -222,22 +222,18 @@ export const EV_SOCKET_TYPES: EVSocketType[] = [
       'Socket OR tethered vehicle connector',
       'Single-phase (32A) or 3-phase (up to 63A)',
       'Control pilot function',
-      'Shutter mechanism'
+      'Shutter mechanism',
     ],
-    typical: 'UK STANDARD - all new EVs, wallboxes, public chargers'
+    typical: 'UK STANDARD - all new EVs, wallboxes, public chargers',
   },
   {
     type: 'Type 3 Connector',
     standard: 'BS EN 62196-2',
     regulation: 'Reg 722.55.101.0.201.1(vi)',
     description: 'Alternative European connector (France/Italy)',
-    requirements: [
-      'Mode 3 charging only',
-      'Socket OR vehicle connector',
-      'Shuttered design'
-    ],
-    typical: 'RARE in UK - mostly France/Italy'
-  }
+    requirements: ['Mode 3 charging only', 'Socket OR vehicle connector', 'Shuttered design'],
+    typical: 'RARE in UK - mostly France/Italy',
+  },
 ];
 
 /**
@@ -262,8 +258,8 @@ export const EV_EXTERNAL_INFLUENCES: EVExternalInfluences[] = [
       'IP4X - Protected against solid objects >1mm',
       'IK08 - Protected against 5 joule impact (AG3 - high severity)',
       'Position to avoid vehicle impact OR provide bollards/barriers',
-      'Mechanical protection if in high-traffic area'
-    ]
+      'Mechanical protection if in high-traffic area',
+    ],
   },
   {
     location: 'Indoor Installation (Garage)',
@@ -273,9 +269,9 @@ export const EV_EXTERNAL_INFLUENCES: EVExternalInfluences[] = [
     requirements: [
       'Lower IP rating acceptable if protected from weather',
       'Consider moisture if vehicle brings in rain/snow',
-      'IK08 still recommended to prevent accidental damage'
-    ]
-  }
+      'IK08 still recommended to prevent accidental damage',
+    ],
+  },
 ];
 
 /**
@@ -295,14 +291,14 @@ export const EV_CIRCUIT_PROTECTION: EVCircuitProtection = {
     'MCB per BS EN 60898 series (Type B or C)',
     'MCCB per BS EN 60947-2',
     'RCBO per BS EN 61009-1 (RCD + MCB combined)',
-    'Fuses per BS EN 60269 series'
+    'Fuses per BS EN 60269 series',
   ],
   notes: [
     'ONE charging point per final circuit (no daisy-chaining)',
     'Multiple charging points in equipment = multiple circuits required',
     'Typical ratings: 16A (3.6kW), 32A (7.4kW), 40A (9.2kW)',
-    'Cable sized for continuous load (no diversity applied)'
-  ]
+    'Cable sized for continuous load (no diversity applied)',
+  ],
 };
 
 /**
@@ -325,15 +321,15 @@ export const EV_ELECTRICAL_SEPARATION: EVElectricalSeparation = {
     'Secondary circuit unearthed (floating)',
     'RCD on secondary side (close to transformer)',
     'Protective conductor monitoring required',
-    'Fixed isolating transformer (not portable)'
+    'Fixed isolating transformer (not portable)',
   ],
   notes: [
     'RARE solution - high cost per charging point',
     'Eliminates PME risk (floating secondary)',
     'Useful where TT system not feasible',
     'High inrush current - select primary MCB carefully',
-    'See Figure A722 for example arrangement'
-  ]
+    'See Figure A722 for example arrangement',
+  ],
 };
 
 /**
@@ -345,24 +341,24 @@ export const EV_LABELLING_REQUIREMENTS = {
     {
       location: 'BS 1363 socket rear',
       text: '"EV" marking',
-      mandatory: true
+      mandatory: true,
     },
     {
       location: 'BS 1363 socket front or adjacent',
       text: '"suitable for electric vehicle charging"',
-      mandatory: true
+      mandatory: true,
     },
     {
       location: 'Consumer unit / distribution board',
       text: 'Circuit identification: "EV CHARGING POINT - 32A"',
-      mandatory: true
+      mandatory: true,
     },
     {
       location: 'Charging equipment',
-      text: 'Manufacturer\'s instructions and ratings',
-      mandatory: true
-    }
-  ]
+      text: "Manufacturer's instructions and ratings",
+      mandatory: true,
+    },
+  ],
 };
 
 // ============================================================================
@@ -396,7 +392,7 @@ export function getEVRCDType(vehicleType: 'modern' | 'older', hasRDCDD: boolean)
   if (vehicleType === 'modern' && !hasRDCDD) {
     return 'RCD Type B (30mA) - Modern EVs can produce DC fault currents. Type B provides full protection.';
   }
-  
+
   if (hasRDCDD) {
     return 'RCD Type A or F (30mA) + RDC-DD (Residual DC Detecting Device per BS IEC 62955). RDC-DD can be in charging equipment or upstream.';
   }
@@ -407,17 +403,19 @@ export function getEVRCDType(vehicleType: 'modern' | 'older', hasRDCDD: boolean)
 /**
  * Get socket/connector type recommendation
  */
-export function getEVSocketRecommendation(application: 'domestic' | 'workplace' | 'public'): string {
+export function getEVSocketRecommendation(
+  application: 'domestic' | 'workplace' | 'public'
+): string {
   switch (application) {
     case 'domestic':
       return 'Type 2 socket (BS EN 62196-2, Mode 3) - UK standard. 7kW (32A single-phase). Allows owner to use own cable OR install tethered Type 2 cable (more convenient).';
-    
+
     case 'workplace':
       return 'Type 2 tethered cable (BS EN 62196-2, Mode 3) - More user-friendly (no cable needed). 7kW or 22kW (3-phase). Consider load management if multiple points.';
-    
+
     case 'public':
       return 'Type 2 tethered cable (BS EN 62196-2, Mode 3) - Universal compatibility, vandal-resistant. 7kW (fast) or 22kW+ (rapid). IP55/IK10 rating for harsh environment.';
-    
+
     default:
       return 'Type 2 socket or tethered cable (BS EN 62196-2, Mode 3) is UK standard.';
   }
@@ -439,7 +437,9 @@ export function validateEVChargingInstallation(installation: {
 
   // Check PME protection
   if (installation.earthingSystem === 'TN-C-S' && !installation.pmeProtectionMethod) {
-    issues.push('❌ PME (TN-C-S) system requires protection per Reg 722.411.4.1 - TT earth electrode OR PEN monitoring device');
+    issues.push(
+      '❌ PME (TN-C-S) system requires protection per Reg 722.411.4.1 - TT earth electrode OR PEN monitoring device'
+    );
   }
 
   // Check RCD rating
@@ -464,22 +464,23 @@ export function validateEVChargingInstallation(installation: {
 
   return {
     valid: issues.length === 0,
-    issues
+    issues,
   };
 }
 
 /**
  * Calculate EV charging circuit sizing
  */
-export function calculateEVCircuitSizing(chargingPower: number, phases: 1 | 3): {
+export function calculateEVCircuitSizing(
+  chargingPower: number,
+  phases: 1 | 3
+): {
   mcbRating: string;
   cableSize: string;
   notes: string[];
 } {
   const voltage = phases === 1 ? 230 : 400;
-  const current = phases === 1 
-    ? chargingPower / voltage 
-    : chargingPower / (Math.sqrt(3) * voltage);
+  const current = phases === 1 ? chargingPower / voltage : chargingPower / (Math.sqrt(3) * voltage);
 
   let mcbRating: number;
   let cableSize: string;
@@ -512,7 +513,7 @@ export function calculateEVCircuitSizing(chargingPower: number, phases: 1 | 3): 
   return {
     mcbRating: `${mcbRating}A Type B or C`,
     cableSize: `${cableSize} T&E or SWA (3-core: L, N, CPC)`,
-    notes
+    notes,
   };
 }
 
@@ -535,12 +536,13 @@ export interface GeneratingSetScope {
 
 export const GENERATING_SET_SCOPE: GeneratingSetScope = {
   regulation: 'Reg 551.1',
-  applicability: 'All installations incorporating generating sets (continuous or occasional supply)',
+  applicability:
+    'All installations incorporating generating sets (continuous or occasional supply)',
   supplyArrangements: [
     'Supply NOT connected to public network (off-grid)',
     'Supply as SWITCHED ALTERNATIVE to public network (standby/backup)',
     'Supply in PARALLEL with public network (grid-tied solar/battery)',
-    'Combinations of the above'
+    'Combinations of the above',
   ],
   powerSources: [
     'Combustion engines (diesel/petrol/gas generators)',
@@ -548,19 +550,19 @@ export const GENERATING_SET_SCOPE: GeneratingSetScope = {
     'Electric motors (rotary UPS)',
     'Photovoltaic cells (solar inverters)',
     'Batteries (energy storage systems)',
-    'Other suitable sources (fuel cells, micro-CHP)'
+    'Other suitable sources (fuel cells, micro-CHP)',
   ],
   electricalTypes: [
     'Synchronous generators (mains-excited or separately excited)',
     'Asynchronous generators (mains-excited or self-excited)',
-    'Static convertors (inverters) with or without bypass'
+    'Static convertors (inverters) with or without bypass',
   ],
   uses: [
     'Permanent installations (solar PV, battery storage)',
     'Temporary installations (site generators)',
     'Mobile equipment (portable generators)',
-    'Mobile units (motorhomes, caravans) - see Section 717'
-  ]
+    'Mobile units (motorhomes, caravans) - see Section 717',
+  ],
 };
 
 /**
@@ -589,15 +591,15 @@ export const GRID_CONNECTION_REQUIREMENTS: GridConnectionRequirement[] = [
       '  - Voltage: 207-253V (single-phase)',
       '  - Frequency: 47-52Hz',
       'Isolation accessible per BS EN 50549-1',
-      'Cannot export if DNO limits capacity (export limitation device)'
+      'Cannot export if DNO limits capacity (export limitation device)',
     ],
     timeline: 'Notify DNO AFTER installation (online submission)',
     notes: [
       'Most domestic solar PV (4-10kW) falls under G98',
       'Plug-and-play systems (e.g., balcony solar) also G98',
       'No DNO approval needed - just notification',
-      'DNO has right to refuse if network capacity exceeded'
-    ]
+      'DNO has right to refuse if network capacity exceeded',
+    ],
   },
   {
     standard: 'G99 (ENA ER G99)',
@@ -613,16 +615,16 @@ export const GRID_CONNECTION_REQUIREMENTS: GridConnectionRequirement[] = [
       '  - Export limitation',
       '  - DNO witness testing',
       '  - G99 commissioning certificate',
-      'Isolation accessible to DNO'
+      'Isolation accessible to DNO',
     ],
     timeline: 'Apply BEFORE installation - allow 6-12 weeks for DNO approval',
     notes: [
       'Commercial solar (>10kW), large battery systems (>13.8kWh)',
       '3-phase domestic solar (>11kW)',
       'DNO can refuse or require network upgrades (costly)',
-      'Export tariff (SEG) requires smart meter + MCS certificate'
-    ]
-  }
+      'Export tariff (SEG) requires smart meter + MCS certificate',
+    ],
+  },
 ];
 
 /**
@@ -640,15 +642,17 @@ export interface StandbyGeneratorRequirements {
 
 export const STANDBY_GENERATOR_REQUIREMENTS: StandbyGeneratorRequirements = {
   regulation: 'Reg 551.6',
-  application: 'Generator provides supply when grid fails (hospitals, data centres, critical infrastructure)',
-  earthingRequirement: 'Reg 551.4.3.2.1 - Independent earthing REQUIRED (cannot rely on PME when grid disconnected)',
+  application:
+    'Generator provides supply when grid fails (hospitals, data centres, critical infrastructure)',
+  earthingRequirement:
+    'Reg 551.4.3.2.1 - Independent earthing REQUIRED (cannot rely on PME when grid disconnected)',
   switchingRequirements: [
     'Interlocked changeover switch (prevents parallel operation with grid)',
     '3-pole or 4-pole changeover (L1, L2, L3, N)',
     'Neutral switching if TN-S from grid but generator is separately derived',
     'Emergency stop button accessible',
     'Clear labelling: "GENERATOR" and "MAINS"',
-    'Manual or automatic transfer switch (ATS)'
+    'Manual or automatic transfer switch (ATS)',
   ],
   autoStartRequirements: [
     'Auto-start on grid failure (typical: 10-30 second delay)',
@@ -656,7 +660,7 @@ export const STANDBY_GENERATOR_REQUIREMENTS: StandbyGeneratorRequirements = {
     'Fuel level monitoring (alarm if low)',
     'Coolant temperature/oil pressure protection',
     'Auto shutdown if fault detected',
-    'Weekly/monthly self-test (exercise run)'
+    'Weekly/monthly self-test (exercise run)',
   ],
   fuelStorage: [
     'Diesel/petrol storage: Building Regulations Part B (fire safety)',
@@ -664,8 +668,8 @@ export const STANDBY_GENERATOR_REQUIREMENTS: StandbyGeneratorRequirements = {
     'Underground tanks: Double-skinned, leak detection',
     'Max 275L domestic (3000L commercial with fire separation)',
     'Ventilation if indoors (CO/fumes exhaust)',
-    'Fire extinguisher nearby'
-  ]
+    'Fire extinguisher nearby',
+  ],
 };
 
 /**
@@ -693,7 +697,7 @@ export const PARALLEL_OPERATION_REQUIREMENTS: ParallelOperationRequirements = {
     '  - Undervoltage: <207V (disconnect)',
     '  - Overfrequency: >52Hz (disconnect)',
     '  - Underfrequency: <47Hz (disconnect)',
-    'Isolation accessible to DNO - Reg 551.7.6'
+    'Isolation accessible to DNO - Reg 551.7.6',
   ],
   powerQualityRequirements: [
     'Reg 551.7.3 - Avoid adverse effects to grid:',
@@ -705,7 +709,7 @@ export const PARALLEL_OPERATION_REQUIREMENTS: ParallelOperationRequirements = {
     '  - Automatic synchronizer (frequency, phase, voltage)',
     '  - Phase sequence correct (L1-L2-L3)',
     '  - Voltage match ±10%',
-    '  - Frequency match ±0.2Hz'
+    '  - Frequency match ±0.2Hz',
   ],
   antiIslandingProtection: [
     'Active anti-islanding (inverters):',
@@ -717,14 +721,14 @@ export const PARALLEL_OPERATION_REQUIREMENTS: ParallelOperationRequirements = {
     '  - Over/under frequency relays',
     '  - ROCOF (Rate of Change of Frequency)',
     'Disconnect within 0.5s of grid loss (G98)',
-    'Cannot reconnect until grid stable for 20s minimum'
+    'Cannot reconnect until grid stable for 20s minimum',
   ],
   notes: [
     'Most solar inverters have built-in G98/G99 compliance',
     'Battery inverters (e.g., Tesla Powerwall, Givenergy) also compliant',
     'Older generators may need retrofitting with LOM protection',
-    'Smart export guarantee (SEG) requires export meter'
-  ]
+    'Smart export guarantee (SEG) requires export meter',
+  ],
 };
 
 /**
@@ -751,7 +755,7 @@ export const BATTERY_STORAGE_REQUIREMENTS: BatteryStorageRequirements = {
     'Temperature controlled: 5-30°C (lithium-ion optimal 15-25°C)',
     'Dry location (no condensation)',
     'Away from ignition sources',
-    'Floor loading adequate (batteries are HEAVY - e.g., 150kg for 13.5kWh)'
+    'Floor loading adequate (batteries are HEAVY - e.g., 150kg for 13.5kWh)',
   ],
   ventilationRequirements: [
     'Reg 551.8.1 - Adequate ventilation MANDATORY',
@@ -762,7 +766,7 @@ export const BATTERY_STORAGE_REQUIREMENTS: BatteryStorageRequirements = {
     'Lithium-ion batteries: Less gas, but thermal runaway risk',
     '  - Ventilation for heat dissipation',
     '  - Thermal runaway = toxic gases (HF, CO)',
-    '  - Consider mechanical extraction if large system (>20kWh)'
+    '  - Consider mechanical extraction if large system (>20kWh)',
   ],
   electricalRequirements: [
     'Reg 551.8.2 - Basic protection by insulation or enclosures',
@@ -773,7 +777,7 @@ export const BATTERY_STORAGE_REQUIREMENTS: BatteryStorageRequirements = {
     'DC overcurrent protection (fuses or DC-rated MCBs)',
     'Battery Management System (BMS) MANDATORY for lithium-ion',
     'Earthing/bonding of metal enclosures',
-    'Cable sizing for DC currents (no diversity)'
+    'Cable sizing for DC currents (no diversity)',
   ],
   fireRiskRequirements: [
     'Lithium-ion thermal runaway risk:',
@@ -785,7 +789,7 @@ export const BATTERY_STORAGE_REQUIREMENTS: BatteryStorageRequirements = {
     '  - Hydrogen explosion risk (>4% concentration)',
     '  - No smoking signs (BS EN ISO 7010 P003)',
     '  - Spark-proof light switches (outside battery room)',
-    'Manufacturer safety data sheets (SDS) available'
+    'Manufacturer safety data sheets (SDS) available',
   ],
   notes: [
     'Home battery systems (e.g., Tesla Powerwall 13.5kWh) typically lithium-ion',
@@ -793,8 +797,8 @@ export const BATTERY_STORAGE_REQUIREMENTS: BatteryStorageRequirements = {
     'MCS certification required for renewable incentives (SEG)',
     'Insurance notification required (some insurers exclude lithium batteries)',
     'Planning permission usually NOT required (domestic <1m above roof)',
-    'Fire brigade notification (>20kWh systems in some areas)'
-  ]
+    'Fire brigade notification (>20kWh systems in some areas)',
+  ],
 };
 
 /**
@@ -807,24 +811,26 @@ export const GENERATING_SET_RCD_REQUIREMENTS = {
     {
       issue: 'Generator neutral earthed (TN system)',
       problem: 'RCD may not operate correctly if generator neutral earthed when grid is TN-C-S',
-      solution: 'Use TT earthing for generator (separate earth electrode) OR ensure neutral-earth bond switches with changeover'
+      solution:
+        'Use TT earthing for generator (separate earth electrode) OR ensure neutral-earth bond switches with changeover',
     },
     {
       issue: 'Inverter DC leakage (solar/battery)',
       problem: 'DC components can blind Type AC/A RCDs',
-      solution: 'Use RCD Type B OR Type A/F with manufacturer confirmation of DC immunity'
+      solution: 'Use RCD Type B OR Type A/F with manufacturer confirmation of DC immunity',
     },
     {
       issue: 'Parallel operation',
       problem: 'Earth fault current shared between sources - RCD may not see full fault current',
-      solution: 'Calculate prospective fault current from ALL sources, verify RCD sensitivity adequate'
-    }
+      solution:
+        'Calculate prospective fault current from ALL sources, verify RCD sensitivity adequate',
+    },
   ],
   notes: [
     'Solar inverters typically have galvanic isolation (transformer) - no DC leakage',
     'Battery inverters may have DC leakage - check manufacturer specs',
-    'Generators with AVR (Automatic Voltage Regulator) affect RCD operation'
-  ]
+    'Generators with AVR (Automatic Voltage Regulator) affect RCD operation',
+  ],
 };
 
 // ============================================================================
@@ -845,7 +851,7 @@ export function getGridConnectionRequirement(
   notes: string[];
 } {
   const currentPerPhase = phases === 1 ? power / 230 : power / (Math.sqrt(3) * 400);
-  
+
   if (currentPerPhase <= 16) {
     return {
       standard: 'G98 (BS EN 50549-1)',
@@ -856,8 +862,8 @@ export function getGridConnectionRequirement(
         'Most domestic solar PV systems (4-10kW)',
         'No DNO approval needed - just notification',
         'LOM protection per BS EN 50549-1 required',
-        'Can proceed with installation before notifying DNO'
-      ]
+        'Can proceed with installation before notifying DNO',
+      ],
     };
   } else {
     return {
@@ -870,8 +876,8 @@ export function getGridConnectionRequirement(
         'DNO can refuse or require network upgrades',
         'Protection settings agreed with DNO',
         'May require witness testing',
-        'Cannot connect until approval received'
-      ]
+        'Cannot connect until approval received',
+      ],
     };
   }
 }
@@ -899,8 +905,8 @@ export function getStandbyGeneratorEarthing(
         '✅ Install earth electrode (≤200Ω) for generator supply',
         '✅ 4-pole changeover switch (L1, L2, L3, N)',
         'Neutral must switch to disconnect from PME',
-        'Generator neutral connected to earth electrode'
-      ]
+        'Generator neutral connected to earth electrode',
+      ],
     };
   } else if (gridEarthing === 'TN-S' && generatorType === 'separately-derived') {
     return {
@@ -911,8 +917,8 @@ export function getStandbyGeneratorEarthing(
         'Generator is separately derived (separate neutral-earth bond)',
         '4-pole changeover to isolate neutral',
         'Earth electrode for generator earthing',
-        'Cannot share TN-S earth when on generator power'
-      ]
+        'Cannot share TN-S earth when on generator power',
+      ],
     };
   } else {
     return {
@@ -923,8 +929,8 @@ export function getStandbyGeneratorEarthing(
         'Grid TN-S earth can be used (not PME)',
         '3-pole changeover acceptable',
         'Generator neutral NOT separately bonded to earth',
-        'Verify earth electrode resistance acceptable'
-      ]
+        'Verify earth electrode resistance acceptable',
+      ],
     };
   }
 }
@@ -951,16 +957,17 @@ export function calculateBatteryVentilation(
         'Vent area: ≥0.5% of floor area (natural ventilation)',
         'No ignition sources (sparks, naked flames)',
         'Battery room: NO SMOKING signs (BS EN ISO 7010 P003)',
-        'Spark-proof light switches (outside room)'
-      ]
+        'Spark-proof light switches (outside room)',
+      ],
     };
   } else {
     // Lithium-ion - less gas, but thermal runaway risk
     return {
       ventilationRequired: true,
-      flowRate: batteryCapacity < 10 
-        ? 'Natural ventilation adequate (vents top & bottom)' 
-        : `Mechanical extraction recommended for ${batteryCapacity}kWh (≥${(batteryCapacity * 0.02).toFixed(1)} m³/h)`,
+      flowRate:
+        batteryCapacity < 10
+          ? 'Natural ventilation adequate (vents top & bottom)'
+          : `Mechanical extraction recommended for ${batteryCapacity}kWh (≥${(batteryCapacity * 0.02).toFixed(1)} m³/h)`,
       notes: [
         '⚠️ THERMAL RUNAWAY RISK - toxic gases (HF, CO, CO2)',
         'Natural ventilation usually adequate <10kWh',
@@ -968,8 +975,8 @@ export function calculateBatteryVentilation(
         'Temperature monitoring (BMS)',
         'Smoke/heat detector in battery room',
         'Fire extinguisher: Class D or F (NOT WATER!)',
-        'Manufacturer installation manual MUST be followed'
-      ]
+        'Manufacturer installation manual MUST be followed',
+      ],
     };
   }
 }
@@ -991,25 +998,29 @@ export function validateGeneratingSetInstallation(installation: {
   // Check grid connection approval
   if (installation.gridConnection === 'parallel') {
     const gridReq = getGridConnectionRequirement(installation.powerOutput, installation.phases);
-    
+
     if (gridReq.standard.includes('G99') && !installation.dnoNotificationSubmitted) {
       issues.push('❌ G99 approval: DNO approval REQUIRED before connection (>16A per phase)');
     }
 
     if (!installation.lomProtectionInstalled) {
-      issues.push('❌ Loss of Mains (LOM) protection MANDATORY for parallel operation (Reg 551.7.4)');
+      issues.push(
+        '❌ Loss of Mains (LOM) protection MANDATORY for parallel operation (Reg 551.7.4)'
+      );
     }
   }
 
   // Check standby generator earthing
   if (installation.gridConnection === 'standby') {
     if (installation.gridEarthing === 'TN-C-S' && !installation.earthElectrodeInstalled) {
-      issues.push('❌ PME supply: Independent earth electrode REQUIRED for standby generator (Reg 551.4.3.2.1)');
+      issues.push(
+        '❌ PME supply: Independent earth electrode REQUIRED for standby generator (Reg 551.4.3.2.1)'
+      );
     }
   }
 
   return {
     valid: issues.length === 0,
-    issues
+    issues,
   };
 }

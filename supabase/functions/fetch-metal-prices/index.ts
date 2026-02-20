@@ -8,33 +8,34 @@ import { createLogger, generateRequestId } from '../_shared/logger.ts';
 // Updated: 2025-10-10T12:05:00Z
 
 // MetalPriceAPI configuration
-const METAL_PRICE_API_BASE = 'https://api.metalpriceapi.com/v1'
+const METAL_PRICE_API_BASE = 'https://api.metalpriceapi.com/v1';
 
 // Function to fetch live metal prices from MetalPriceAPI
 async function fetchLiveMetalPrices(logger: any) {
-  const METAL_PRICE_API_KEY = Deno.env.get('METAL_PRICE_API_KEY')
-  
+  const METAL_PRICE_API_KEY = Deno.env.get('METAL_PRICE_API_KEY');
+
   if (!METAL_PRICE_API_KEY) {
     throw new ValidationError('METAL_PRICE_API_KEY environment variable not set');
   }
-  
+
   logger.info('Fetching live metal prices from MetalPriceAPI');
-  
+
   const apiUrl = `${METAL_PRICE_API_BASE}/latest?api_key=${METAL_PRICE_API_KEY}&base=USD&currencies=XCU,ALU,XPB,ZNC`;
-  
+
   // MetalPriceAPI uses specific symbols and returns rates as USDXXX format
   // XCU = Copper, ALU = Aluminum, XPB = Lead, ZNC = Zinc
   const response = await withRetry(
-    () => withTimeout(
-      fetch(apiUrl, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        }
-      }),
-      Timeouts.STANDARD,
-      'MetalPriceAPI fetch'
-    ),
+    () =>
+      withTimeout(
+        fetch(apiUrl, {
+          method: 'GET',
+          headers: {
+            Accept: 'application/json',
+          },
+        }),
+        Timeouts.STANDARD,
+        'MetalPriceAPI fetch'
+      ),
     RetryPresets.STANDARD
   );
 
@@ -46,105 +47,110 @@ async function fetchLiveMetalPrices(logger: any) {
 
   const data = await response.json();
   logger.debug('MetalPriceAPI raw response', { data });
-  
+
   // Some APIs don't use success field, check for rates directly
   if (data.success === false) {
     logger.error('MetalPriceAPI returned success: false', { error: data.error });
     throw new Error(`MetalPriceAPI error: ${JSON.stringify(data.error)}`);
   }
-  
+
   // If no success field but has rates, consider it successful
   if (!('success' in data) && data.rates) {
     logger.info('No success field but rates found - treating as successful');
     data.success = true;
   }
-  
-  logger.info('MetalPriceAPI response received successfully', { ratesCount: Object.keys(data.rates || {}).length });
-  
+
+  logger.info('MetalPriceAPI response received successfully', {
+    ratesCount: Object.keys(data.rates || {}).length,
+  });
+
   return data;
 }
 
 // Function to convert metal symbols to display names and calculate per kg prices
 function transformMetalData(apiData: any) {
   if (!apiData || !apiData.rates || !apiData.success) {
-    console.log('No valid rates data from MetalPriceAPI, using fallback')
-    return []
+    console.log('No valid rates data from MetalPriceAPI, using fallback');
+    return [];
   }
-  
-  const rates = apiData.rates
-  const metals = []
-  
+
+  const rates = apiData.rates;
+  const metals = [];
+
   // Convert from USD to GBP (approximate rate - should ideally fetch live rate)
-  const usdToGbp = 0.79 // Approximate conversion rate
-  
-  console.log('Parsing MetalPriceAPI rates:', Object.keys(rates))
-  
+  const usdToGbp = 0.79; // Approximate conversion rate
+
+  console.log('Parsing MetalPriceAPI rates:', Object.keys(rates));
+
   // Copper (kg) - MetalPriceAPI returns rates as USDXCU (USD to Copper per oz)
-  const copperRate = rates.USDXCU || rates.XCU
+  const copperRate = rates.USDXCU || rates.XCU;
   if (copperRate) {
     // MetalPriceAPI gives price per troy ounce, convert to per kg in GBP
-    const copperPricePerKg = (copperRate * 32.15 * usdToGbp) // 1 kg = ~32.15 troy ounces
+    const copperPricePerKg = copperRate * 32.15 * usdToGbp; // 1 kg = ~32.15 troy ounces
     metals.push({
       metal_type: 'Copper',
       price_per_kg: copperPricePerKg.toFixed(2),
-      daily_change_percent: (Math.random() * 4 - 2).toFixed(1) // API doesn't provide change, simulate
-    })
-    console.log(`Copper: $${copperRate}/oz -> £${copperPricePerKg.toFixed(2)}/kg`)
+      daily_change_percent: (Math.random() * 4 - 2).toFixed(1), // API doesn't provide change, simulate
+    });
+    console.log(`Copper: $${copperRate}/oz -> £${copperPricePerKg.toFixed(2)}/kg`);
   }
-  
+
   // Aluminium (kg) - MetalPriceAPI returns as USDALU or ALU
-  const aluRate = rates.USDALU || rates.ALU
+  const aluRate = rates.USDALU || rates.ALU;
   if (aluRate) {
-    const aluPricePerKg = (aluRate * 32.15 * usdToGbp)
+    const aluPricePerKg = aluRate * 32.15 * usdToGbp;
     metals.push({
-      metal_type: 'Aluminium', 
+      metal_type: 'Aluminium',
       price_per_kg: aluPricePerKg.toFixed(2),
-      daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
-    })
-    console.log(`Aluminium: $${aluRate}/oz -> £${aluPricePerKg.toFixed(2)}/kg`)
+      daily_change_percent: (Math.random() * 4 - 2).toFixed(1),
+    });
+    console.log(`Aluminium: $${aluRate}/oz -> £${aluPricePerKg.toFixed(2)}/kg`);
   }
-  
+
   // Lead (kg) - MetalPriceAPI returns as USDXPB or XPB
-  const leadRate = rates.USDXPB || rates.XPB
+  const leadRate = rates.USDXPB || rates.XPB;
   if (leadRate) {
-    const leadPricePerKg = (leadRate * 32.15 * usdToGbp)
+    const leadPricePerKg = leadRate * 32.15 * usdToGbp;
     metals.push({
       metal_type: 'Lead',
       price_per_kg: leadPricePerKg.toFixed(2),
-      daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
-    })
-    console.log(`Lead: $${leadRate}/oz -> £${leadPricePerKg.toFixed(2)}/kg`)
+      daily_change_percent: (Math.random() * 4 - 2).toFixed(1),
+    });
+    console.log(`Lead: $${leadRate}/oz -> £${leadPricePerKg.toFixed(2)}/kg`);
   }
-  
+
   // Zinc (kg) - MetalPriceAPI returns as USDZNC or ZNC
-  const zincRate = rates.USDZNC || rates.ZNC
-  
+  const zincRate = rates.USDZNC || rates.ZNC;
+
   // Brass (kg) - estimate based on copper and zinc if available
   if (copperRate && zincRate) {
-    const brassPricePerKg = ((copperRate * 0.65 + zincRate * 0.35) * 32.15 * usdToGbp)
+    const brassPricePerKg = (copperRate * 0.65 + zincRate * 0.35) * 32.15 * usdToGbp;
     metals.push({
       metal_type: 'Brass',
       price_per_kg: brassPricePerKg.toFixed(2),
-      daily_change_percent: (Math.random() * 4 - 2).toFixed(1)
-    })
-    console.log(`Brass (calculated from Cu: $${copperRate}, Zn: $${zincRate}): £${brassPricePerKg.toFixed(2)}/kg`)
+      daily_change_percent: (Math.random() * 4 - 2).toFixed(1),
+    });
+    console.log(
+      `Brass (calculated from Cu: $${copperRate}, Zn: $${zincRate}): £${brassPricePerKg.toFixed(2)}/kg`
+    );
   }
-  
+
   // Steel - not available from MetalPriceAPI, add reasonable estimate based on other metals
   if (metals.length > 0) {
     // Steel is typically much cheaper than other metals - use a fraction of aluminum price
-    const avgMetalPrice = metals.reduce((sum, metal) => sum + parseFloat(metal.price_per_kg), 0) / metals.length
-    const steelEstimate = Math.max(0.15, avgMetalPrice * 0.08) // Steel typically 8% of average metal price
+    const avgMetalPrice =
+      metals.reduce((sum, metal) => sum + parseFloat(metal.price_per_kg), 0) / metals.length;
+    const steelEstimate = Math.max(0.15, avgMetalPrice * 0.08); // Steel typically 8% of average metal price
     metals.push({
       metal_type: 'Steel',
       price_per_kg: steelEstimate.toFixed(2),
-      daily_change_percent: (Math.random() * 2 - 1).toFixed(1) // Less volatile
-    })
-    console.log(`Steel (estimated): £${steelEstimate.toFixed(2)}/kg`)
+      daily_change_percent: (Math.random() * 2 - 1).toFixed(1), // Less volatile
+    });
+    console.log(`Steel (estimated): £${steelEstimate.toFixed(2)}/kg`);
   }
-  
-  console.log(`Transformed ${metals.length} metals from MetalPriceAPI`)
-  return metals
+
+  console.log(`Transformed ${metals.length} metals from MetalPriceAPI`);
+  return metals;
 }
 
 serve(async (req) => {
@@ -155,12 +161,12 @@ serve(async (req) => {
   try {
     const requestId = generateRequestId();
     const logger = createLogger(requestId);
-    
+
     logger.info('🔋 Metal prices fetch started');
     // Parse request body to get parameters
     let forceLive = false;
     let cacheBuster = '';
-    
+
     if (req.method === 'POST') {
       try {
         const body = await req.json();
@@ -180,31 +186,29 @@ serve(async (req) => {
     let commodityData = [];
     let dataSource = 'live_api';
     let lastUpdated = new Date().toISOString();
-    
+
     try {
       logger.info('Attempting to fetch live data from MetalPriceAPI');
       const liveApiData = await fetchLiveMetalPrices(logger);
       if (liveApiData && liveApiData.rates) {
         commodityData = transformMetalData(liveApiData);
         logger.info(`Successfully fetched ${commodityData.length} metals from live API`);
-        
+
         // Update database with live prices for caching (with timeout)
         for (const metal of commodityData) {
-            // Store in database - use insert and silently handle duplicates
-            await withTimeout(
-              supabase
-              .from('commodity_prices')
-              .insert({
-                metal_type: metal.metal_type,
-                price_per_kg: parseFloat(metal.price_per_kg),
-                daily_change_percent: metal.daily_change_percent,
-                currency: 'GBP',
-                data_source: 'live_api',
-                last_updated: new Date().toISOString()
-              }),
+          // Store in database - use insert and silently handle duplicates
+          await withTimeout(
+            supabase.from('commodity_prices').insert({
+              metal_type: metal.metal_type,
+              price_per_kg: parseFloat(metal.price_per_kg),
+              daily_change_percent: metal.daily_change_percent,
+              currency: 'GBP',
+              data_source: 'live_api',
+              last_updated: new Date().toISOString(),
+            }),
             Timeouts.QUICK,
             `database insert for ${metal.metal_type}`
-          ).catch(err => {
+          ).catch((err) => {
             // Silently ignore duplicate errors
             if (!err?.message?.includes('duplicate') && !err?.message?.includes('unique')) {
               logger.warn(`Failed to cache ${metal.metal_type} price`, { error: err });
@@ -216,13 +220,10 @@ serve(async (req) => {
       }
     } catch (apiError) {
       logger.warn('MetalPriceAPI failed, falling back to database', { error: apiError });
-      
+
       // Fallback to database if API fails (with timeout)
       const { data: dbData, error: commodityError } = await withTimeout(
-        supabase
-          .from('commodity_prices')
-          .select('*')
-          .order('last_updated', { ascending: false }),
+        supabase.from('commodity_prices').select('*').order('last_updated', { ascending: false }),
         Timeouts.QUICK,
         'database fallback fetch'
       );
@@ -230,11 +231,11 @@ serve(async (req) => {
       if (commodityError) {
         logger.error('Error fetching commodity prices from database', { error: commodityError });
       }
-      
+
       commodityData = dbData || [];
       dataSource = commodityData?.[0]?.data_source || 'mock_fallback';
       lastUpdated = commodityData?.[0]?.last_updated || new Date().toISOString();
-      
+
       if (commodityData.length === 0) {
         logger.warn('No database data either, will use static fallback data');
         dataSource = 'static_fallback';
@@ -273,10 +274,13 @@ serve(async (req) => {
     logger.info(`Fetched ${regionalPricing?.length || 0} regional job pricing records`);
 
     // Debug: Log commodity data to see what metals we have
-    console.log('Commodity data:', commodityData?.map(item => ({ 
-      metal_type: item.metal_type, 
-      price: item.price_per_kg 
-    })));
+    console.log(
+      'Commodity data:',
+      commodityData?.map((item) => ({
+        metal_type: item.metal_type,
+        price: item.price_per_kg,
+      }))
+    );
 
     // Transform commodity data to UI format with copper grades
     const metalPrices = (commodityData || []).map((item, index) => {
@@ -284,14 +288,21 @@ serve(async (req) => {
         id: index + 1,
         name: `${item.metal_type} (kg)`,
         value: `£${item.price_per_kg}`,
-        change: item.daily_change_percent ? `${item.daily_change_percent > 0 ? '+' : ''}${item.daily_change_percent}%` : '0%',
-        trend: item.daily_change_percent > 0 ? 'up' as const : item.daily_change_percent < 0 ? 'down' as const : 'neutral' as const
+        change: item.daily_change_percent
+          ? `${item.daily_change_percent > 0 ? '+' : ''}${item.daily_change_percent}%`
+          : '0%',
+        trend:
+          item.daily_change_percent > 0
+            ? ('up' as const)
+            : item.daily_change_percent < 0
+              ? ('down' as const)
+              : ('neutral' as const),
       };
 
       // Add metal grades based on type
       const metalType = item.metal_type.toLowerCase();
       const baseValue = parseFloat(item.price_per_kg);
-      
+
       if (metalType.includes('copper')) {
         console.log(`Adding copper grades for ${item.metal_type} at £${baseValue}`);
         (basePrice as any).subItems = [
@@ -300,22 +311,22 @@ serve(async (req) => {
             name: 'Bright Copper Wire',
             value: `£${(baseValue * 1.15).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-mixed`,
             name: 'Mixed Copper Cable',
             value: `£${(baseValue * 0.85).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-dirty`,
             name: 'Dirty/Greasy Copper',
             value: `£${(baseValue * 0.65).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
-          }
+            trend: basePrice.trend,
+          },
         ];
       } else if (metalType.includes('aluminium') || metalType.includes('aluminum')) {
         console.log(`Adding aluminum grades for ${item.metal_type} at £${baseValue}`);
@@ -325,22 +336,22 @@ serve(async (req) => {
             name: 'Clean Aluminum Wire',
             value: `£${(baseValue * 1.12).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-cable`,
             name: 'Aluminum Cable (ACSR)',
             value: `£${(baseValue * 0.75).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-mixed`,
             name: 'Mixed Aluminum Scrap',
-            value: `£${(baseValue * 0.60).toFixed(2)}`,
+            value: `£${(baseValue * 0.6).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
-          }
+            trend: basePrice.trend,
+          },
         ];
       } else if (metalType.includes('steel')) {
         console.log(`Adding steel grades for ${item.metal_type} at £${baseValue}`);
@@ -348,24 +359,24 @@ serve(async (req) => {
           {
             id: `${index + 1}-clean`,
             name: 'Clean Steel',
-            value: `£${(baseValue * 1.10).toFixed(2)}`,
+            value: `£${(baseValue * 1.1).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-galvanized`,
             name: 'Galvanized Steel',
             value: `£${(baseValue * 0.85).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-mixed`,
             name: 'Mixed Steel Scrap',
-            value: `£${(baseValue * 0.70).toFixed(2)}`,
+            value: `£${(baseValue * 0.7).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
-          }
+            trend: basePrice.trend,
+          },
         ];
       } else if (metalType.includes('brass')) {
         console.log(`Adding brass grades for ${item.metal_type} at £${baseValue}`);
@@ -375,22 +386,22 @@ serve(async (req) => {
             name: 'Clean Brass Fittings',
             value: `£${(baseValue * 1.08).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-mixed`,
             name: 'Mixed Brass',
-            value: `£${(baseValue * 0.90).toFixed(2)}`,
+            value: `£${(baseValue * 0.9).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-turnings`,
             name: 'Brass Turnings',
             value: `£${(baseValue * 0.75).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
-          }
+            trend: basePrice.trend,
+          },
         ];
       } else if (metalType.includes('lead')) {
         console.log(`Adding lead grades for ${item.metal_type} at £${baseValue}`);
@@ -400,22 +411,22 @@ serve(async (req) => {
             name: 'Clean Lead',
             value: `£${(baseValue * 1.05).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-cable`,
             name: 'Lead Cable Sheathing',
-            value: `£${(baseValue * 0.80).toFixed(2)}`,
+            value: `£${(baseValue * 0.8).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
+            trend: basePrice.trend,
           },
           {
             id: `${index + 1}-mixed`,
             name: 'Mixed Lead Scrap',
-            value: `£${(baseValue * 0.70).toFixed(2)}`,
+            value: `£${(baseValue * 0.7).toFixed(2)}`,
             change: basePrice.change,
-            trend: basePrice.trend
-          }
+            trend: basePrice.trend,
+          },
         ];
       }
 
@@ -423,14 +434,14 @@ serve(async (req) => {
     });
 
     // Add fallback metal data if not found in database
-    const hasCopper = metalPrices.some(price => price.name.toLowerCase().includes('copper'));
-    const hasAluminum = metalPrices.some(price => price.name.toLowerCase().includes('alumin'));
-    const hasSteel = metalPrices.some(price => price.name.toLowerCase().includes('steel'));
-    const hasBrass = metalPrices.some(price => price.name.toLowerCase().includes('brass'));
-    
+    const hasCopper = metalPrices.some((price) => price.name.toLowerCase().includes('copper'));
+    const hasAluminum = metalPrices.some((price) => price.name.toLowerCase().includes('alumin'));
+    const hasSteel = metalPrices.some((price) => price.name.toLowerCase().includes('steel'));
+    const hasBrass = metalPrices.some((price) => price.name.toLowerCase().includes('brass'));
+
     if (!hasCopper) {
       console.log('No copper found in database, adding fallback copper data');
-      metalPrices.unshift(({
+      metalPrices.unshift({
         id: 999,
         name: 'Copper (kg)',
         value: '£8.45',
@@ -442,29 +453,29 @@ serve(async (req) => {
             name: 'Bright Copper Wire',
             value: '£9.72',
             change: '+2.3%',
-            trend: 'up' as const
+            trend: 'up' as const,
           },
           {
             id: '999-mixed',
             name: 'Mixed Copper Cable',
             value: '£7.18',
             change: '+2.3%',
-            trend: 'up' as const
+            trend: 'up' as const,
           },
           {
             id: '999-dirty',
             name: 'Dirty/Greasy Copper',
             value: '£5.49',
             change: '+2.3%',
-            trend: 'up' as const
-          }
-        ]
-      }) as any);
+            trend: 'up' as const,
+          },
+        ],
+      } as any);
     }
-    
+
     if (!hasAluminum) {
       console.log('No aluminum found in database, adding fallback aluminum data');
-      metalPrices.push(({
+      metalPrices.push({
         id: 998,
         name: 'Aluminium (kg)',
         value: '£1.85',
@@ -476,29 +487,29 @@ serve(async (req) => {
             name: 'Clean Aluminum Wire',
             value: '£2.07',
             change: '+1.8%',
-            trend: 'up' as const
+            trend: 'up' as const,
           },
           {
             id: '998-cable',
             name: 'Aluminum Cable (ACSR)',
             value: '£1.39',
             change: '+1.8%',
-            trend: 'up' as const
+            trend: 'up' as const,
           },
           {
             id: '998-mixed',
             name: 'Mixed Aluminum Scrap',
             value: '£1.11',
             change: '+1.8%',
-            trend: 'up' as const
-          }
-        ]
-      }) as any);
+            trend: 'up' as const,
+          },
+        ],
+      } as any);
     }
-    
+
     if (!hasSteel) {
       console.log('No steel found in database, adding fallback steel data');
-      metalPrices.push(({
+      metalPrices.push({
         id: 997,
         name: 'Steel (kg)',
         value: '£0.15',
@@ -510,29 +521,29 @@ serve(async (req) => {
             name: 'Clean Steel',
             value: '£0.17',
             change: '-0.5%',
-            trend: 'down' as const
+            trend: 'down' as const,
           },
           {
             id: '997-galvanized',
             name: 'Galvanized Steel',
             value: '£0.13',
             change: '-0.5%',
-            trend: 'down' as const
+            trend: 'down' as const,
           },
           {
             id: '997-mixed',
             name: 'Mixed Steel Scrap',
             value: '£0.11',
             change: '-0.5%',
-            trend: 'down' as const
-          }
-        ]
-      }) as any);
+            trend: 'down' as const,
+          },
+        ],
+      } as any);
     }
-    
+
     if (!hasBrass) {
       console.log('No brass found in database, adding fallback brass data');
-      metalPrices.push(({
+      metalPrices.push({
         id: 996,
         name: 'Brass (kg)',
         value: '£5.20',
@@ -544,159 +555,243 @@ serve(async (req) => {
             name: 'Clean Brass Fittings',
             value: '£5.62',
             change: '+0.8%',
-            trend: 'up' as const
+            trend: 'up' as const,
           },
           {
             id: '996-mixed',
             name: 'Mixed Brass',
             value: '£4.68',
             change: '+0.8%',
-            trend: 'up' as const
+            trend: 'up' as const,
           },
           {
             id: '996-turnings',
             name: 'Brass Turnings',
             value: '£3.90',
             change: '+0.8%',
-            trend: 'up' as const
-          }
-        ]
-      }) as any);
+            trend: 'up' as const,
+          },
+        ],
+      } as any);
     }
 
     // Enhanced cable data with normalized pricing and variants
-    const cableData = (supplierData || []).filter(item => item.category === 'Cable');
-    const cablePrices = cableData.length > 0 ? cableData.map((item, index) => ({
-      id: index + 6,
-      name: item.product_name,
-      value: `£${item.price}/m`,
-      change: '+2.1%',
-      trend: 'up' as const,
-      badge: 'normalized',
-      subItems: [
-        {
-          id: `${index + 6}-50m`,
-          name: `${item.product_name} - 50m reel`,
-          value: `£${(parseFloat(item.price) * 50 * 0.95).toFixed(2)}`,
-          change: '+2.1%',
-          trend: 'up' as const
-        },
-        {
-          id: `${index + 6}-100m`,
-          name: `${item.product_name} - 100m reel`,
-          value: `£${(parseFloat(item.price) * 100 * 0.90).toFixed(2)}`,
-          change: '+2.1%',
-          trend: 'up' as const
-        }
-      ]
-    })) : [
-      // Fallback cable data with better structure
-      {
-        id: 1001,
-        name: 'Twin & Earth Cable',
-        value: '£1.45/m',
-        change: '+2.1%',
-        trend: 'up' as const,
-        badge: 'normalized',
-        subItems: [
-          { id: '1001-1', name: '1.0mm² T&E - 50m', value: '£69.50', change: '+2.1%', trend: 'up' as const },
-          { id: '1001-2', name: '1.5mm² T&E - 50m', value: '£89.50', change: '+2.1%', trend: 'up' as const },
-          { id: '1001-3', name: '2.5mm² T&E - 50m', value: '£135.00', change: '+2.1%', trend: 'up' as const }
-        ]
-      },
-      {
-        id: 1002,
-        name: 'SWA Cable',
-        value: '£3.20/m',
-        change: '+1.8%',
-        trend: 'up' as const,
-        badge: 'normalized',
-        subItems: [
-          { id: '1002-1', name: '2.5mm² 3 Core SWA - 50m', value: '£295.00', change: '+1.8%', trend: 'up' as const },
-          { id: '1002-2', name: '4.0mm² 3 Core SWA - 50m', value: '£425.00', change: '+1.8%', trend: 'up' as const }
-        ]
-      },
-      {
-        id: 1003,
-        name: 'Data Cable',
-        value: '£0.85/m',
-        change: '+0.5%',
-        trend: 'up' as const,
-        badge: 'normalized',
-        subItems: [
-          { id: '1003-1', name: 'Cat6 UTP - 305m box', value: '£185.00', change: '+0.5%', trend: 'up' as const },
-          { id: '1003-2', name: 'Cat6a STP - 305m box', value: '£285.00', change: '+0.5%', trend: 'up' as const }
-        ]
-      }
-    ];
+    const cableData = (supplierData || []).filter((item) => item.category === 'Cable');
+    const cablePrices =
+      cableData.length > 0
+        ? cableData.map((item, index) => ({
+            id: index + 6,
+            name: item.product_name,
+            value: `£${item.price}/m`,
+            change: '+2.1%',
+            trend: 'up' as const,
+            badge: 'normalized',
+            subItems: [
+              {
+                id: `${index + 6}-50m`,
+                name: `${item.product_name} - 50m reel`,
+                value: `£${(parseFloat(item.price) * 50 * 0.95).toFixed(2)}`,
+                change: '+2.1%',
+                trend: 'up' as const,
+              },
+              {
+                id: `${index + 6}-100m`,
+                name: `${item.product_name} - 100m reel`,
+                value: `£${(parseFloat(item.price) * 100 * 0.9).toFixed(2)}`,
+                change: '+2.1%',
+                trend: 'up' as const,
+              },
+            ],
+          }))
+        : [
+            // Fallback cable data with better structure
+            {
+              id: 1001,
+              name: 'Twin & Earth Cable',
+              value: '£1.45/m',
+              change: '+2.1%',
+              trend: 'up' as const,
+              badge: 'normalized',
+              subItems: [
+                {
+                  id: '1001-1',
+                  name: '1.0mm² T&E - 50m',
+                  value: '£69.50',
+                  change: '+2.1%',
+                  trend: 'up' as const,
+                },
+                {
+                  id: '1001-2',
+                  name: '1.5mm² T&E - 50m',
+                  value: '£89.50',
+                  change: '+2.1%',
+                  trend: 'up' as const,
+                },
+                {
+                  id: '1001-3',
+                  name: '2.5mm² T&E - 50m',
+                  value: '£135.00',
+                  change: '+2.1%',
+                  trend: 'up' as const,
+                },
+              ],
+            },
+            {
+              id: 1002,
+              name: 'SWA Cable',
+              value: '£3.20/m',
+              change: '+1.8%',
+              trend: 'up' as const,
+              badge: 'normalized',
+              subItems: [
+                {
+                  id: '1002-1',
+                  name: '2.5mm² 3 Core SWA - 50m',
+                  value: '£295.00',
+                  change: '+1.8%',
+                  trend: 'up' as const,
+                },
+                {
+                  id: '1002-2',
+                  name: '4.0mm² 3 Core SWA - 50m',
+                  value: '£425.00',
+                  change: '+1.8%',
+                  trend: 'up' as const,
+                },
+              ],
+            },
+            {
+              id: 1003,
+              name: 'Data Cable',
+              value: '£0.85/m',
+              change: '+0.5%',
+              trend: 'up' as const,
+              badge: 'normalized',
+              subItems: [
+                {
+                  id: '1003-1',
+                  name: 'Cat6 UTP - 305m box',
+                  value: '£185.00',
+                  change: '+0.5%',
+                  trend: 'up' as const,
+                },
+                {
+                  id: '1003-2',
+                  name: 'Cat6a STP - 305m box',
+                  value: '£285.00',
+                  change: '+0.5%',
+                  trend: 'up' as const,
+                },
+              ],
+            },
+          ];
 
     // Enhanced equipment data with normalized pricing
-    const equipmentData = (supplierData || []).filter(item => item.category === 'Equipment');
-    const equipmentPrices = equipmentData.length > 0 ? equipmentData.map((item, index) => ({
-      id: index + 11,
-      name: item.product_name,
-      value: `£${item.price}`,
-      change: '+1.5%',
-      trend: 'up' as const,
-      badge: 'unit',
-      suppliers: ['RS Components', 'CEF', 'Screwfix']
-    })) : [
-      // Fallback equipment data with better structure
-      {
-        id: 2001,
-        name: 'RCD Consumer Units',
-        value: '£185/unit',
-        change: '+3.2%',
-        trend: 'up' as const,
-        badge: 'unit',
-        suppliers: ['RS Components', 'CEF', 'Screwfix'],
-        subItems: [
-          { id: '2001-1', name: '8-way Dual RCD', value: '£185.00', change: '+3.2%', trend: 'up' as const },
-          { id: '2001-2', name: '12-way Dual RCD', value: '£235.00', change: '+3.2%', trend: 'up' as const }
-        ]
-      },
-      {
-        id: 2002,
-        name: 'LED Downlights',
-        value: '£12/unit',
-        change: '-1.5%',
-        trend: 'down' as const,
-        badge: 'unit',
-        suppliers: ['City Electrical', 'Screwfix', 'Amazon'],
-        subItems: [
-          { id: '2002-1', name: '6W Fire-rated LED', value: '£12.50', change: '-1.5%', trend: 'down' as const },
-          { id: '2002-2', name: '9W Dimmable LED', value: '£18.50', change: '-1.5%', trend: 'down' as const }
-        ]
-      },
-      {
-        id: 2003,
-        name: 'RCBO Breakers',
-        value: '£45/unit',
-        change: '+2.8%',
-        trend: 'up' as const,
-        badge: 'unit',
-        suppliers: ['CEF', 'RS Components', 'TLC Direct'],
-        subItems: [
-          { id: '2003-1', name: '32A Type B RCBO', value: '£45.00', change: '+2.8%', trend: 'up' as const },
-          { id: '2003-2', name: '40A Type B RCBO', value: '£52.00', change: '+2.8%', trend: 'up' as const }
-        ]
-      }
-    ];
+    const equipmentData = (supplierData || []).filter((item) => item.category === 'Equipment');
+    const equipmentPrices =
+      equipmentData.length > 0
+        ? equipmentData.map((item, index) => ({
+            id: index + 11,
+            name: item.product_name,
+            value: `£${item.price}`,
+            change: '+1.5%',
+            trend: 'up' as const,
+            badge: 'unit',
+            suppliers: ['RS Components', 'CEF', 'Screwfix'],
+          }))
+        : [
+            // Fallback equipment data with better structure
+            {
+              id: 2001,
+              name: 'RCD Consumer Units',
+              value: '£185/unit',
+              change: '+3.2%',
+              trend: 'up' as const,
+              badge: 'unit',
+              suppliers: ['RS Components', 'CEF', 'Screwfix'],
+              subItems: [
+                {
+                  id: '2001-1',
+                  name: '8-way Dual RCD',
+                  value: '£185.00',
+                  change: '+3.2%',
+                  trend: 'up' as const,
+                },
+                {
+                  id: '2001-2',
+                  name: '12-way Dual RCD',
+                  value: '£235.00',
+                  change: '+3.2%',
+                  trend: 'up' as const,
+                },
+              ],
+            },
+            {
+              id: 2002,
+              name: 'LED Downlights',
+              value: '£12/unit',
+              change: '-1.5%',
+              trend: 'down' as const,
+              badge: 'unit',
+              suppliers: ['City Electrical', 'Screwfix', 'Amazon'],
+              subItems: [
+                {
+                  id: '2002-1',
+                  name: '6W Fire-rated LED',
+                  value: '£12.50',
+                  change: '-1.5%',
+                  trend: 'down' as const,
+                },
+                {
+                  id: '2002-2',
+                  name: '9W Dimmable LED',
+                  value: '£18.50',
+                  change: '-1.5%',
+                  trend: 'down' as const,
+                },
+              ],
+            },
+            {
+              id: 2003,
+              name: 'RCBO Breakers',
+              value: '£45/unit',
+              change: '+2.8%',
+              trend: 'up' as const,
+              badge: 'unit',
+              suppliers: ['CEF', 'RS Components', 'TLC Direct'],
+              subItems: [
+                {
+                  id: '2003-1',
+                  name: '32A Type B RCBO',
+                  value: '£45.00',
+                  change: '+2.8%',
+                  trend: 'up' as const,
+                },
+                {
+                  id: '2003-2',
+                  name: '40A Type B RCBO',
+                  value: '£52.00',
+                  change: '+2.8%',
+                  trend: 'up' as const,
+                },
+              ],
+            },
+          ];
 
     // UK Market Alerts
     const marketAlerts = [
       {
         id: 1,
-        message: "Copper prices rising due to global supply constraints - consider bulk purchasing",
+        message: 'Copper prices rising due to global supply constraints - consider bulk purchasing',
         date: new Date().toLocaleDateString('en-GB'),
-        type: "warning" as const
+        type: 'warning' as const,
       },
       {
         id: 2,
-        message: "New BS 7671:2018+A3:2024 compliance requirements affecting equipment pricing",
+        message: 'New BS 7671:2018+A3:2024 compliance requirements affecting equipment pricing',
         date: new Date().toLocaleDateString('en-GB'),
-        type: "info" as const
-      }
+        type: 'info' as const,
+      },
     ];
 
     // Determine data freshness
@@ -706,7 +801,7 @@ serve(async (req) => {
       month: '2-digit',
       year: 'numeric',
       hour: '2-digit',
-      minute: '2-digit'
+      minute: '2-digit',
     });
 
     const metalPricesData = {
@@ -719,8 +814,8 @@ serve(async (req) => {
       dataSource,
       isLive: dataSource === 'live_api',
       // Debug information
-      apiProvider: 'metalpriceapi.com'
-    }
+      apiProvider: 'metalpriceapi.com',
+    };
 
     console.log('Successfully aggregated pricing data:', {
       metalPricesCount: metalPrices.length,
@@ -731,21 +826,20 @@ serve(async (req) => {
       dataSource,
       lastUpdated: formattedLastUpdated,
       // Debug: Show which metal prices have subItems
-      metalPricesWithSubItems: metalPrices.filter((p: any) => p.subItems).map((p: any) => ({ name: p.name, subItemsCount: p.subItems?.length }))
+      metalPricesWithSubItems: metalPrices
+        .filter((p: any) => p.subItems)
+        .map((p: any) => ({ name: p.name, subItemsCount: p.subItems?.length })),
     });
 
-    return new Response(
-      JSON.stringify(metalPricesData),
-      {
-        headers: { 
-          ...corsHeaders, 
-          'Content-Type': 'application/json',
-          'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-          'Pragma': 'no-cache',
-          'Expires': '0'
-        },
+    return new Response(JSON.stringify(metalPricesData), {
+      headers: {
+        ...corsHeaders,
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        Pragma: 'no-cache',
+        Expires: '0',
       },
-    )
+    });
   } catch (error) {
     return handleError(error);
   }

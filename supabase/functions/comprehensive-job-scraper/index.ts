@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 /**
@@ -27,65 +28,187 @@ const corsHeaders = {
 const UK_LOCATIONS = {
   // London & Greater London
   london: [
-    "London", "Central London", "East London", "West London", "North London", "South London",
-    "Croydon", "Bromley", "Enfield", "Barnet", "Hounslow", "Ealing", "Hillingdon",
-    "Harrow", "Brent", "Waltham Forest", "Redbridge", "Havering"
+    'London',
+    'Central London',
+    'East London',
+    'West London',
+    'North London',
+    'South London',
+    'Croydon',
+    'Bromley',
+    'Enfield',
+    'Barnet',
+    'Hounslow',
+    'Ealing',
+    'Hillingdon',
+    'Harrow',
+    'Brent',
+    'Waltham Forest',
+    'Redbridge',
+    'Havering',
   ],
   // Southeast
   southeast: [
-    "Brighton", "Southampton", "Portsmouth", "Reading", "Oxford", "Milton Keynes",
-    "Guildford", "Maidstone", "Canterbury", "Crawley", "Slough", "Basingstoke",
-    "Woking", "Tunbridge Wells", "Hastings", "Eastbourne", "Worthing", "Chelmsford"
+    'Brighton',
+    'Southampton',
+    'Portsmouth',
+    'Reading',
+    'Oxford',
+    'Milton Keynes',
+    'Guildford',
+    'Maidstone',
+    'Canterbury',
+    'Crawley',
+    'Slough',
+    'Basingstoke',
+    'Woking',
+    'Tunbridge Wells',
+    'Hastings',
+    'Eastbourne',
+    'Worthing',
+    'Chelmsford',
   ],
   // Southwest
   southwest: [
-    "Bristol", "Plymouth", "Exeter", "Bath", "Bournemouth", "Swindon", "Gloucester",
-    "Cheltenham", "Taunton", "Torquay", "Poole", "Salisbury", "Yeovil", "Truro"
+    'Bristol',
+    'Plymouth',
+    'Exeter',
+    'Bath',
+    'Bournemouth',
+    'Swindon',
+    'Gloucester',
+    'Cheltenham',
+    'Taunton',
+    'Torquay',
+    'Poole',
+    'Salisbury',
+    'Yeovil',
+    'Truro',
   ],
   // Midlands
   midlands: [
-    "Birmingham", "Nottingham", "Leicester", "Coventry", "Derby", "Wolverhampton",
-    "Stoke-on-Trent", "Walsall", "Dudley", "Solihull", "Northampton", "Worcester",
-    "Telford", "Hereford", "Shrewsbury", "Lincoln", "Peterborough", "Kettering"
+    'Birmingham',
+    'Nottingham',
+    'Leicester',
+    'Coventry',
+    'Derby',
+    'Wolverhampton',
+    'Stoke-on-Trent',
+    'Walsall',
+    'Dudley',
+    'Solihull',
+    'Northampton',
+    'Worcester',
+    'Telford',
+    'Hereford',
+    'Shrewsbury',
+    'Lincoln',
+    'Peterborough',
+    'Kettering',
   ],
   // North West
   northwest: [
-    "Manchester", "Liverpool", "Preston", "Blackpool", "Bolton", "Stockport",
-    "Warrington", "Wigan", "Oldham", "Rochdale", "Salford", "Bury", "Burnley",
-    "Blackburn", "Chester", "Crewe", "Macclesfield", "Lancaster"
+    'Manchester',
+    'Liverpool',
+    'Preston',
+    'Blackpool',
+    'Bolton',
+    'Stockport',
+    'Warrington',
+    'Wigan',
+    'Oldham',
+    'Rochdale',
+    'Salford',
+    'Bury',
+    'Burnley',
+    'Blackburn',
+    'Chester',
+    'Crewe',
+    'Macclesfield',
+    'Lancaster',
   ],
   // Yorkshire & Humber
   yorkshire: [
-    "Leeds", "Sheffield", "Bradford", "Hull", "York", "Huddersfield", "Doncaster",
-    "Wakefield", "Rotherham", "Barnsley", "Halifax", "Harrogate", "Scarborough",
-    "Grimsby", "Scunthorpe"
+    'Leeds',
+    'Sheffield',
+    'Bradford',
+    'Hull',
+    'York',
+    'Huddersfield',
+    'Doncaster',
+    'Wakefield',
+    'Rotherham',
+    'Barnsley',
+    'Halifax',
+    'Harrogate',
+    'Scarborough',
+    'Grimsby',
+    'Scunthorpe',
   ],
   // North East
   northeast: [
-    "Newcastle upon Tyne", "Sunderland", "Middlesbrough", "Durham", "Darlington",
-    "Gateshead", "Hartlepool", "Stockton-on-Tees", "South Shields"
+    'Newcastle upon Tyne',
+    'Sunderland',
+    'Middlesbrough',
+    'Durham',
+    'Darlington',
+    'Gateshead',
+    'Hartlepool',
+    'Stockton-on-Tees',
+    'South Shields',
   ],
   // East of England
   east: [
-    "Norwich", "Cambridge", "Ipswich", "Colchester", "Luton", "Southend-on-Sea",
-    "Peterborough", "Bedford", "Stevenage", "Watford", "St Albans", "Hertford",
-    "Harlow", "Basildon", "Braintree"
+    'Norwich',
+    'Cambridge',
+    'Ipswich',
+    'Colchester',
+    'Luton',
+    'Southend-on-Sea',
+    'Peterborough',
+    'Bedford',
+    'Stevenage',
+    'Watford',
+    'St Albans',
+    'Hertford',
+    'Harlow',
+    'Basildon',
+    'Braintree',
   ],
   // Scotland
   scotland: [
-    "Edinburgh", "Glasgow", "Aberdeen", "Dundee", "Inverness", "Stirling",
-    "Perth", "Paisley", "East Kilbride", "Livingston", "Cumbernauld", "Falkirk",
-    "Ayr", "Kilmarnock"
+    'Edinburgh',
+    'Glasgow',
+    'Aberdeen',
+    'Dundee',
+    'Inverness',
+    'Stirling',
+    'Perth',
+    'Paisley',
+    'East Kilbride',
+    'Livingston',
+    'Cumbernauld',
+    'Falkirk',
+    'Ayr',
+    'Kilmarnock',
   ],
   // Wales
   wales: [
-    "Cardiff", "Swansea", "Newport", "Wrexham", "Barry", "Neath", "Bridgend",
-    "Cwmbran", "Llanelli", "Merthyr Tydfil", "Aberystwyth", "Bangor"
+    'Cardiff',
+    'Swansea',
+    'Newport',
+    'Wrexham',
+    'Barry',
+    'Neath',
+    'Bridgend',
+    'Cwmbran',
+    'Llanelli',
+    'Merthyr Tydfil',
+    'Aberystwyth',
+    'Bangor',
   ],
   // Northern Ireland
-  northernIreland: [
-    "Belfast", "Derry", "Lisburn", "Newry", "Bangor", "Craigavon"
-  ],
+  northernIreland: ['Belfast', 'Derry', 'Lisburn', 'Newry', 'Bangor', 'Craigavon'],
 };
 
 // Batch configurations - EXPANDED for maximum coverage
@@ -93,152 +216,337 @@ const UK_LOCATIONS = {
 const BATCHES = [
   {
     batch: 1,
-    region: "London & Greater London",
+    region: 'London & Greater London',
     reedLocations: [
-      "London", "Central London", "East London", "West London", "North London", "South London",
-      "Croydon", "Bromley", "Enfield", "Barnet", "Hounslow", "Ealing", "Hillingdon",
-      "Harrow", "Brent", "Waltham Forest", "Redbridge", "Havering", "Kingston upon Thames"
+      'London',
+      'Central London',
+      'East London',
+      'West London',
+      'North London',
+      'South London',
+      'Croydon',
+      'Bromley',
+      'Enfield',
+      'Barnet',
+      'Hounslow',
+      'Ealing',
+      'Hillingdon',
+      'Harrow',
+      'Brent',
+      'Waltham Forest',
+      'Redbridge',
+      'Havering',
+      'Kingston upon Thames',
     ],
-    gumtreeLocations: ["london"],
+    gumtreeLocations: ['london'],
   },
   {
     batch: 2,
-    region: "Southeast",
+    region: 'Southeast',
     reedLocations: [
-      "Brighton", "Southampton", "Portsmouth", "Reading", "Oxford", "Milton Keynes",
-      "Guildford", "Maidstone", "Canterbury", "Crawley", "Slough", "Basingstoke",
-      "Woking", "Tunbridge Wells", "Hastings", "Eastbourne", "Worthing", "Chelmsford",
-      "High Wycombe", "Aylesbury", "Margate", "Dover", "Folkestone"
+      'Brighton',
+      'Southampton',
+      'Portsmouth',
+      'Reading',
+      'Oxford',
+      'Milton Keynes',
+      'Guildford',
+      'Maidstone',
+      'Canterbury',
+      'Crawley',
+      'Slough',
+      'Basingstoke',
+      'Woking',
+      'Tunbridge Wells',
+      'Hastings',
+      'Eastbourne',
+      'Worthing',
+      'Chelmsford',
+      'High Wycombe',
+      'Aylesbury',
+      'Margate',
+      'Dover',
+      'Folkestone',
     ],
-    gumtreeLocations: ["brighton", "southampton", "portsmouth"],
+    gumtreeLocations: ['brighton', 'southampton', 'portsmouth'],
   },
   {
     batch: 3,
-    region: "Midlands",
+    region: 'Midlands',
     reedLocations: [
-      "Birmingham", "Nottingham", "Leicester", "Coventry", "Derby", "Wolverhampton",
-      "Stoke-on-Trent", "Walsall", "Dudley", "Solihull", "Northampton", "Worcester",
-      "Telford", "Hereford", "Shrewsbury", "Lincoln", "Kettering", "Corby",
-      "Stafford", "Burton upon Trent", "Mansfield", "Chesterfield", "Loughborough"
+      'Birmingham',
+      'Nottingham',
+      'Leicester',
+      'Coventry',
+      'Derby',
+      'Wolverhampton',
+      'Stoke-on-Trent',
+      'Walsall',
+      'Dudley',
+      'Solihull',
+      'Northampton',
+      'Worcester',
+      'Telford',
+      'Hereford',
+      'Shrewsbury',
+      'Lincoln',
+      'Kettering',
+      'Corby',
+      'Stafford',
+      'Burton upon Trent',
+      'Mansfield',
+      'Chesterfield',
+      'Loughborough',
     ],
-    gumtreeLocations: ["birmingham", "nottingham", "leicester"],
+    gumtreeLocations: ['birmingham', 'nottingham', 'leicester'],
   },
   {
     batch: 4,
-    region: "Northwest & Lancashire",
+    region: 'Northwest & Lancashire',
     reedLocations: [
-      "Manchester", "Liverpool", "Preston", "Blackpool", "Bolton", "Stockport",
-      "Warrington", "Wigan", "Oldham", "Rochdale", "Salford", "Bury", "Burnley",
-      "Blackburn", "Chester", "Crewe", "Macclesfield", "Lancaster", "Morecambe",
-      "St Helens", "Southport", "Chorley", "Accrington", "Nelson"
+      'Manchester',
+      'Liverpool',
+      'Preston',
+      'Blackpool',
+      'Bolton',
+      'Stockport',
+      'Warrington',
+      'Wigan',
+      'Oldham',
+      'Rochdale',
+      'Salford',
+      'Bury',
+      'Burnley',
+      'Blackburn',
+      'Chester',
+      'Crewe',
+      'Macclesfield',
+      'Lancaster',
+      'Morecambe',
+      'St Helens',
+      'Southport',
+      'Chorley',
+      'Accrington',
+      'Nelson',
     ],
-    gumtreeLocations: ["manchester", "liverpool", "preston"],
+    gumtreeLocations: ['manchester', 'liverpool', 'preston'],
   },
   {
     batch: 5,
-    region: "Yorkshire & Humber",
+    region: 'Yorkshire & Humber',
     reedLocations: [
-      "Leeds", "Sheffield", "Bradford", "Hull", "York", "Huddersfield", "Doncaster",
-      "Wakefield", "Rotherham", "Barnsley", "Halifax", "Harrogate", "Scarborough",
-      "Grimsby", "Scunthorpe", "Dewsbury", "Keighley", "Skipton", "Bridlington",
-      "Selby", "Goole", "Pontefract", "Castleford"
+      'Leeds',
+      'Sheffield',
+      'Bradford',
+      'Hull',
+      'York',
+      'Huddersfield',
+      'Doncaster',
+      'Wakefield',
+      'Rotherham',
+      'Barnsley',
+      'Halifax',
+      'Harrogate',
+      'Scarborough',
+      'Grimsby',
+      'Scunthorpe',
+      'Dewsbury',
+      'Keighley',
+      'Skipton',
+      'Bridlington',
+      'Selby',
+      'Goole',
+      'Pontefract',
+      'Castleford',
     ],
-    gumtreeLocations: ["leeds", "sheffield", "hull"],
+    gumtreeLocations: ['leeds', 'sheffield', 'hull'],
   },
   {
     batch: 6,
-    region: "Scotland",
+    region: 'Scotland',
     reedLocations: [
-      "Edinburgh", "Glasgow", "Aberdeen", "Dundee", "Inverness", "Stirling",
-      "Perth", "Paisley", "East Kilbride", "Livingston", "Cumbernauld", "Falkirk",
-      "Ayr", "Kilmarnock", "Greenock", "Dunfermline", "Kirkcaldy", "Hamilton",
-      "Motherwell", "Coatbridge", "Dumfries", "Elgin", "Fort William"
+      'Edinburgh',
+      'Glasgow',
+      'Aberdeen',
+      'Dundee',
+      'Inverness',
+      'Stirling',
+      'Perth',
+      'Paisley',
+      'East Kilbride',
+      'Livingston',
+      'Cumbernauld',
+      'Falkirk',
+      'Ayr',
+      'Kilmarnock',
+      'Greenock',
+      'Dunfermline',
+      'Kirkcaldy',
+      'Hamilton',
+      'Motherwell',
+      'Coatbridge',
+      'Dumfries',
+      'Elgin',
+      'Fort William',
     ],
-    gumtreeLocations: ["glasgow", "edinburgh", "aberdeen"],
+    gumtreeLocations: ['glasgow', 'edinburgh', 'aberdeen'],
   },
   {
     batch: 7,
-    region: "Wales & Southwest",
+    region: 'Wales & Southwest',
     reedLocations: [
-      "Cardiff", "Swansea", "Newport", "Bristol", "Plymouth", "Exeter", "Bath",
-      "Bournemouth", "Swindon", "Gloucester", "Cheltenham", "Taunton", "Torquay",
-      "Poole", "Salisbury", "Yeovil", "Truro", "Penzance", "Barnstaple",
-      "Wrexham", "Barry", "Neath", "Bridgend", "Cwmbran", "Llanelli", "Merthyr Tydfil"
+      'Cardiff',
+      'Swansea',
+      'Newport',
+      'Bristol',
+      'Plymouth',
+      'Exeter',
+      'Bath',
+      'Bournemouth',
+      'Swindon',
+      'Gloucester',
+      'Cheltenham',
+      'Taunton',
+      'Torquay',
+      'Poole',
+      'Salisbury',
+      'Yeovil',
+      'Truro',
+      'Penzance',
+      'Barnstaple',
+      'Wrexham',
+      'Barry',
+      'Neath',
+      'Bridgend',
+      'Cwmbran',
+      'Llanelli',
+      'Merthyr Tydfil',
     ],
-    gumtreeLocations: ["cardiff", "bristol", "plymouth"],
+    gumtreeLocations: ['cardiff', 'bristol', 'plymouth'],
   },
   {
     batch: 8,
-    region: "East Anglia & Northeast",
+    region: 'East Anglia & Northeast',
     reedLocations: [
-      "Norwich", "Cambridge", "Ipswich", "Newcastle upon Tyne", "Sunderland", "Middlesbrough",
-      "Peterborough", "Luton", "Colchester", "Southend-on-Sea", "Bedford", "Stevenage",
-      "Watford", "St Albans", "Hertford", "Harlow", "Basildon", "Braintree",
-      "Gateshead", "Hartlepool", "Stockton-on-Tees", "South Shields", "Durham", "Darlington"
+      'Norwich',
+      'Cambridge',
+      'Ipswich',
+      'Newcastle upon Tyne',
+      'Sunderland',
+      'Middlesbrough',
+      'Peterborough',
+      'Luton',
+      'Colchester',
+      'Southend-on-Sea',
+      'Bedford',
+      'Stevenage',
+      'Watford',
+      'St Albans',
+      'Hertford',
+      'Harlow',
+      'Basildon',
+      'Braintree',
+      'Gateshead',
+      'Hartlepool',
+      'Stockton-on-Tees',
+      'South Shields',
+      'Durham',
+      'Darlington',
     ],
-    gumtreeLocations: ["cambridge", "newcastle", "norwich"],
+    gumtreeLocations: ['cambridge', 'newcastle', 'norwich'],
   },
   {
     batch: 9,
-    region: "Cumbria & Rural North",
+    region: 'Cumbria & Rural North',
     reedLocations: [
       // CUMBRIA - Full coverage
-      "Carlisle", "Kendal", "Penrith", "Barrow-in-Furness", "Whitehaven", "Workington",
-      "Ulverston", "Windermere", "Keswick", "Cockermouth", "Maryport", "Wigton",
+      'Carlisle',
+      'Kendal',
+      'Penrith',
+      'Barrow-in-Furness',
+      'Whitehaven',
+      'Workington',
+      'Ulverston',
+      'Windermere',
+      'Keswick',
+      'Cockermouth',
+      'Maryport',
+      'Wigton',
       // Lake District catchment
-      "Ambleside", "Grange-over-Sands",
+      'Ambleside',
+      'Grange-over-Sands',
       // Surrounding areas
-      "Lancaster", "Morecambe", "Dumfries", "Hexham", "Haltwhistle",
+      'Lancaster',
+      'Morecambe',
+      'Dumfries',
+      'Hexham',
+      'Haltwhistle',
       // Isle of Man
-      "Douglas",
+      'Douglas',
       // Other rural North
-      "Appleby", "Kirkby Stephen", "Sedbergh"
+      'Appleby',
+      'Kirkby Stephen',
+      'Sedbergh',
     ],
-    gumtreeLocations: ["carlisle"],
+    gumtreeLocations: ['carlisle'],
   },
   {
     batch: 10,
-    region: "Northern Ireland & Islands",
+    region: 'Northern Ireland & Islands',
     reedLocations: [
       // Northern Ireland
-      "Belfast", "Derry", "Lisburn", "Newry", "Bangor", "Craigavon", "Ballymena",
-      "Newtownabbey", "Carrickfergus", "Coleraine", "Omagh", "Enniskillen", "Armagh",
+      'Belfast',
+      'Derry',
+      'Lisburn',
+      'Newry',
+      'Bangor',
+      'Craigavon',
+      'Ballymena',
+      'Newtownabbey',
+      'Carrickfergus',
+      'Coleraine',
+      'Omagh',
+      'Enniskillen',
+      'Armagh',
       // Channel Islands
-      "Jersey", "Guernsey",
+      'Jersey',
+      'Guernsey',
       // Isle of Wight
-      "Newport Isle of Wight", "Ryde", "Cowes"
+      'Newport Isle of Wight',
+      'Ryde',
+      'Cowes',
     ],
-    gumtreeLocations: ["belfast"],
+    gumtreeLocations: ['belfast'],
   },
   {
     batch: 11,
-    region: "Specialist Nationwide",
-    reedLocations: ["United Kingdom"],
+    region: 'Specialist Nationwide',
+    reedLocations: ['United Kingdom'],
     reedKeywords: [
-      "solar pv electrician",
-      "ev charger installer",
-      "industrial electrician",
-      "data centre electrician",
-      "commissioning engineer electrical",
-      "electrical project manager",
-      "fire alarm engineer",
-      "security systems engineer",
-      "building services electrician",
-      "marine electrician",
+      'solar pv electrician',
+      'ev charger installer',
+      'industrial electrician',
+      'data centre electrician',
+      'commissioning engineer electrical',
+      'electrical project manager',
+      'fire alarm engineer',
+      'security systems engineer',
+      'building services electrician',
+      'marine electrician',
     ],
     gumtreeLocations: [],
   },
   {
     batch: 12,
-    region: "Apprenticeships & Training",
-    reedLocations: ["United Kingdom"],
+    region: 'Apprenticeships & Training',
+    reedLocations: ['United Kingdom'],
     reedKeywords: [
-      "electrical apprentice",
-      "trainee electrician",
-      "electrical improver",
-      "electrician mate",
-      "junior electrician",
-      "electrical labourer",
+      'electrical apprentice',
+      'trainee electrician',
+      'electrical improver',
+      'electrician mate',
+      'junior electrician',
+      'electrical labourer',
     ],
     gumtreeLocations: [],
   },
@@ -246,16 +554,16 @@ const BATCHES = [
 
 // Multiple search keywords to maximize results
 const ELECTRICIAN_KEYWORDS = [
-  "electrician",
-  "electrical engineer",
-  "electrical technician",
-  "electrical installer",
-  "electrical maintenance",
-  "spark", // Trade slang
-  "18th edition",
-  "2391 electrician",
-  "approved electrician",
-  "JIB electrician",
+  'electrician',
+  'electrical engineer',
+  'electrical technician',
+  'electrical installer',
+  'electrical maintenance',
+  'spark', // Trade slang
+  '18th edition',
+  '2391 electrician',
+  'approved electrician',
+  'JIB electrician',
 ];
 
 /**
@@ -268,12 +576,12 @@ async function fetchReedJobs(
   customKeywords?: string[]
 ): Promise<any[]> {
   if (!reedApiKey) {
-    console.log("⚠️ No Reed API key");
+    console.log('⚠️ No Reed API key');
     return [];
   }
 
   const allJobs: any[] = [];
-  const keywords = customKeywords || ["electrician", "electrical engineer"]; // 2 keywords for speed
+  const keywords = customKeywords || ['electrician', 'electrical engineer']; // 2 keywords for speed
 
   // Process locations in parallel batches of 5
   const batchSize = 5;
@@ -289,20 +597,17 @@ async function fetchReedJobs(
           const params = new URLSearchParams({
             keywords: keyword,
             locationName: location,
-            distanceFromLocation: "15", // Tighter radius for more specific results
-            resultsToTake: "100",
-            resultsToSkip: "0",
+            distanceFromLocation: '15', // Tighter radius for more specific results
+            resultsToTake: '100',
+            resultsToSkip: '0',
           });
 
-          const response = await fetch(
-            `https://www.reed.co.uk/api/1.0/search?${params}`,
-            {
-              headers: {
-                Authorization: `Basic ${btoa(reedApiKey + ":")}`,
-                Accept: "application/json",
-              },
-            }
-          );
+          const response = await fetch(`https://www.reed.co.uk/api/1.0/search?${params}`, {
+            headers: {
+              Authorization: `Basic ${btoa(reedApiKey + ':')}`,
+              Accept: 'application/json',
+            },
+          });
 
           if (response.ok) {
             const data = await response.json();
@@ -311,11 +616,13 @@ async function fetchReedJobs(
               company: job.employerName,
               location: job.locationName,
               salary: formatReedSalary(job),
-              jobType: job.contractType || (job.fullTime ? "Full-time" : job.partTime ? "Part-time" : "Permanent"),
-              description: job.jobDescription?.substring(0, 500) || "",
-              postedDate: job.datePosted?.split("T")[0] || new Date().toISOString().split("T")[0],
+              jobType:
+                job.contractType ||
+                (job.fullTime ? 'Full-time' : job.partTime ? 'Part-time' : 'Permanent'),
+              description: job.jobDescription?.substring(0, 500) || '',
+              postedDate: job.datePosted?.split('T')[0] || new Date().toISOString().split('T')[0],
               applyUrl: job.jobUrl,
-              source: "reed",
+              source: 'reed',
               expiryDate: job.expirationDate,
             }));
             locationJobs.push(...jobs);
@@ -359,24 +666,21 @@ function formatReedSalary(job: any): string {
   if (job.minimumSalary) {
     return `£${job.minimumSalary.toLocaleString()}+`;
   }
-  return job.salaryString || "Competitive";
+  return job.salaryString || 'Competitive';
 }
 
 /**
  * Fetch jobs from Adzuna API - FREE OFFICIAL API
  * Get API key from: https://developer.adzuna.com/
  */
-async function fetchAdzunaJobs(
-  adzunaAppId: string,
-  adzunaApiKey: string
-): Promise<any[]> {
+async function fetchAdzunaJobs(adzunaAppId: string, adzunaApiKey: string): Promise<any[]> {
   if (!adzunaAppId || !adzunaApiKey) {
-    console.log("⚠️ No Adzuna API credentials");
+    console.log('⚠️ No Adzuna API credentials');
     return [];
   }
 
   const allJobs: any[] = [];
-  const keywords = ["electrician", "electrical engineer", "electrical installer"];
+  const keywords = ['electrician', 'electrical engineer', 'electrical installer'];
 
   for (const keyword of keywords) {
     try {
@@ -385,11 +689,11 @@ async function fetchAdzunaJobs(
         const params = new URLSearchParams({
           app_id: adzunaAppId,
           app_key: adzunaApiKey,
-          results_per_page: "50",
+          results_per_page: '50',
           what: keyword,
-          where: "uk",
-          sort_by: "date",
-          max_days_old: "14",
+          where: 'uk',
+          sort_by: 'date',
+          max_days_old: '14',
         });
 
         const response = await fetch(
@@ -400,18 +704,19 @@ async function fetchAdzunaJobs(
           const data = await response.json();
           const jobs = (data.results || []).map((job: any) => ({
             title: job.title,
-            company: job.company?.display_name || "Not specified",
-            location: job.location?.display_name || "UK",
-            salary: job.salary_min && job.salary_max
-              ? `£${Math.round(job.salary_min).toLocaleString()} - £${Math.round(job.salary_max).toLocaleString()}`
-              : job.salary_is_predicted
-                ? `~£${Math.round(job.salary_min || job.salary_max || 0).toLocaleString()}`
-                : "Competitive",
-            jobType: job.contract_type || job.contract_time || "Permanent",
-            description: job.description?.substring(0, 500) || "",
-            postedDate: job.created?.split("T")[0] || new Date().toISOString().split("T")[0],
+            company: job.company?.display_name || 'Not specified',
+            location: job.location?.display_name || 'UK',
+            salary:
+              job.salary_min && job.salary_max
+                ? `£${Math.round(job.salary_min).toLocaleString()} - £${Math.round(job.salary_max).toLocaleString()}`
+                : job.salary_is_predicted
+                  ? `~£${Math.round(job.salary_min || job.salary_max || 0).toLocaleString()}`
+                  : 'Competitive',
+            jobType: job.contract_type || job.contract_time || 'Permanent',
+            description: job.description?.substring(0, 500) || '',
+            postedDate: job.created?.split('T')[0] || new Date().toISOString().split('T')[0],
             applyUrl: job.redirect_url,
-            source: "adzuna",
+            source: 'adzuna',
           }));
           allJobs.push(...jobs);
 
@@ -432,10 +737,7 @@ async function fetchAdzunaJobs(
 /**
  * Scrape Gumtree Jobs - Works with Firecrawl
  */
-async function scrapeGumtreeJobs(
-  locations: string[],
-  firecrawlApiKey: string
-): Promise<any[]> {
+async function scrapeGumtreeJobs(locations: string[], firecrawlApiKey: string): Promise<any[]> {
   if (!firecrawlApiKey || locations.length === 0) {
     return [];
   }
@@ -446,38 +748,39 @@ async function scrapeGumtreeJobs(
     try {
       const url = `https://www.gumtree.com/jobs/${location}/electrician`;
 
-      const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
-        method: "POST",
+      const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${firecrawlApiKey}`,
         },
         body: JSON.stringify({
           url,
-          formats: ["extract"],
+          formats: ['extract'],
           extract: {
             schema: {
-              type: "object",
+              type: 'object',
               properties: {
                 jobs: {
-                  type: "array",
+                  type: 'array',
                   items: {
-                    type: "object",
+                    type: 'object',
                     properties: {
-                      title: { type: "string" },
-                      company: { type: "string" },
-                      location: { type: "string" },
-                      salary: { type: "string" },
-                      jobType: { type: "string" },
-                      description: { type: "string" },
-                      postedDate: { type: "string" },
-                      applyUrl: { type: "string" },
+                      title: { type: 'string' },
+                      company: { type: 'string' },
+                      location: { type: 'string' },
+                      salary: { type: 'string' },
+                      jobType: { type: 'string' },
+                      description: { type: 'string' },
+                      postedDate: { type: 'string' },
+                      applyUrl: { type: 'string' },
                     },
                   },
                 },
               },
             },
-            prompt: "Extract all electrician job listings. Get title, company, location, salary, job type, description, posting date, and apply URL for each job.",
+            prompt:
+              'Extract all electrician job listings. Get title, company, location, salary, job type, description, posting date, and apply URL for each job.',
           },
           timeout: 30000,
         }),
@@ -487,7 +790,7 @@ async function scrapeGumtreeJobs(
         const data = await response.json();
         const jobs = (data.data?.extract?.jobs || []).map((job: any) => ({
           ...job,
-          source: "gumtree",
+          source: 'gumtree',
           postedDate: normalizeDate(job.postedDate),
         }));
         allJobs.push(...jobs);
@@ -506,50 +809,49 @@ async function scrapeGumtreeJobs(
 /**
  * Scrape Indeed UK - Partial extraction via Firecrawl
  */
-async function scrapeIndeedJobs(
-  locations: string[],
-  firecrawlApiKey: string
-): Promise<any[]> {
+async function scrapeIndeedJobs(locations: string[], firecrawlApiKey: string): Promise<any[]> {
   if (!firecrawlApiKey || locations.length === 0) {
     return [];
   }
 
   const allJobs: any[] = [];
 
-  for (const location of locations.slice(0, 3)) { // Limit to 3 locations
+  for (const location of locations.slice(0, 3)) {
+    // Limit to 3 locations
     try {
       const url = `https://uk.indeed.com/jobs?q=electrician&l=${encodeURIComponent(location)}&sort=date`;
 
-      const response = await fetch("https://api.firecrawl.dev/v1/scrape", {
-        method: "POST",
+      const response = await fetch('https://api.firecrawl.dev/v1/scrape', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${firecrawlApiKey}`,
         },
         body: JSON.stringify({
           url,
-          formats: ["extract"],
+          formats: ['extract'],
           extract: {
             schema: {
-              type: "object",
+              type: 'object',
               properties: {
                 jobs: {
-                  type: "array",
+                  type: 'array',
                   items: {
-                    type: "object",
+                    type: 'object',
                     properties: {
-                      title: { type: "string" },
-                      company: { type: "string" },
-                      location: { type: "string" },
-                      salary: { type: "string" },
-                      jobType: { type: "string" },
-                      postedDate: { type: "string" },
+                      title: { type: 'string' },
+                      company: { type: 'string' },
+                      location: { type: 'string' },
+                      salary: { type: 'string' },
+                      jobType: { type: 'string' },
+                      postedDate: { type: 'string' },
                     },
                   },
                 },
               },
             },
-            prompt: "Extract all job listings shown on this Indeed search results page. For each job get the title, company name, location, salary if shown, job type, and when it was posted.",
+            prompt:
+              'Extract all job listings shown on this Indeed search results page. For each job get the title, company name, location, salary if shown, job type, and when it was posted.',
           },
           timeout: 30000,
         }),
@@ -559,9 +861,9 @@ async function scrapeIndeedJobs(
         const data = await response.json();
         const jobs = (data.data?.extract?.jobs || []).map((job: any) => ({
           ...job,
-          source: "indeed",
+          source: 'indeed',
           postedDate: normalizeDate(job.postedDate),
-          applyUrl: `https://uk.indeed.com/jobs?q=${encodeURIComponent(job.title || "electrician")}&l=${encodeURIComponent(location)}`,
+          applyUrl: `https://uk.indeed.com/jobs?q=${encodeURIComponent(job.title || 'electrician')}&l=${encodeURIComponent(location)}`,
         }));
         allJobs.push(...jobs);
         console.log(`✅ Indeed ${location}: ${jobs.length} jobs`);
@@ -577,44 +879,44 @@ async function scrapeIndeedJobs(
 }
 
 function normalizeDate(dateStr: string | undefined): string {
-  if (!dateStr) return new Date().toISOString().split("T")[0];
+  if (!dateStr) return new Date().toISOString().split('T')[0];
 
   const lower = dateStr.toLowerCase();
   const today = new Date();
 
-  if (lower.includes("today") || lower.includes("just") || lower.includes("now")) {
-    return today.toISOString().split("T")[0];
+  if (lower.includes('today') || lower.includes('just') || lower.includes('now')) {
+    return today.toISOString().split('T')[0];
   }
-  if (lower.includes("yesterday")) {
+  if (lower.includes('yesterday')) {
     today.setDate(today.getDate() - 1);
-    return today.toISOString().split("T")[0];
+    return today.toISOString().split('T')[0];
   }
 
   const daysMatch = lower.match(/(\d+)\s*day/i);
   if (daysMatch) {
     today.setDate(today.getDate() - parseInt(daysMatch[1]));
-    return today.toISOString().split("T")[0];
+    return today.toISOString().split('T')[0];
   }
 
   const weeksMatch = lower.match(/(\d+)\s*week/i);
   if (weeksMatch) {
     today.setDate(today.getDate() - parseInt(weeksMatch[1]) * 7);
-    return today.toISOString().split("T")[0];
+    return today.toISOString().split('T')[0];
   }
 
   const hoursMatch = lower.match(/(\d+)\s*hour/i);
   if (hoursMatch) {
-    return today.toISOString().split("T")[0];
+    return today.toISOString().split('T')[0];
   }
 
   try {
     const parsed = new Date(dateStr);
     if (!isNaN(parsed.getTime())) {
-      return parsed.toISOString().split("T")[0];
+      return parsed.toISOString().split('T')[0];
     }
   } catch {}
 
-  return new Date().toISOString().split("T")[0];
+  return new Date().toISOString().split('T')[0];
 }
 
 // Deduplicate jobs by title + company
@@ -640,11 +942,11 @@ function sortByFreshness(jobs: any[]): any[] {
 // Check cache freshness
 async function checkCache(supabase: any, region: string) {
   const { data } = await supabase
-    .from("jobs_weekly_cache")
-    .select("*")
-    .eq("region", region)
-    .gt("expires_at", new Date().toISOString())
-    .order("created_at", { ascending: false })
+    .from('jobs_weekly_cache')
+    .select('*')
+    .eq('region', region)
+    .gt('expires_at', new Date().toISOString())
+    .order('created_at', { ascending: false })
     .limit(1)
     .single();
 
@@ -652,28 +954,23 @@ async function checkCache(supabase: any, region: string) {
 }
 
 // Save to cache
-async function saveToCache(
-  supabase: any,
-  region: string,
-  jobs: any[],
-  batchNumber: number
-) {
+async function saveToCache(supabase: any, region: string, jobs: any[], batchNumber: number) {
   const expiresAt = new Date();
   expiresAt.setHours(expiresAt.getHours() + 12); // 12 hour cache
 
   // Delete old cache for this region
-  await supabase.from("jobs_weekly_cache").delete().eq("region", region);
+  await supabase.from('jobs_weekly_cache').delete().eq('region', region);
 
-  const { error } = await supabase.from("jobs_weekly_cache").insert({
+  const { error } = await supabase.from('jobs_weekly_cache').insert({
     batch_number: batchNumber,
     region,
     jobs_data: jobs,
-    source: "comprehensive-v2",
+    source: 'comprehensive-v2',
     expires_at: expiresAt.toISOString(),
   });
 
   if (error) {
-    console.error("Cache save error:", error);
+    console.error('Cache save error:', error);
   } else {
     console.log(`💾 Cached ${jobs.length} jobs for ${region}`);
   }
@@ -682,13 +979,13 @@ async function saveToCache(
 // Merge all cached regions
 async function mergeAllRegions(supabase: any) {
   const { data: allCached, error } = await supabase
-    .from("jobs_weekly_cache")
-    .select("*")
-    .gt("expires_at", new Date().toISOString())
-    .order("created_at", { ascending: false });
+    .from('jobs_weekly_cache')
+    .select('*')
+    .gt('expires_at', new Date().toISOString())
+    .order('created_at', { ascending: false });
 
   if (error) {
-    console.error("Merge error:", error);
+    console.error('Merge error:', error);
     return { success: false, jobs: [], totalJobs: 0 };
   }
 
@@ -725,7 +1022,7 @@ async function mergeAllRegions(supabase: any) {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
@@ -733,13 +1030,13 @@ Deno.serve(async (req) => {
     const body = await req.json().catch(() => ({}));
     const { batch, forceRefresh, mergeAll } = body;
 
-    const reedApiKey = Deno.env.get("REED_API_KEY");
-    const firecrawlApiKey = Deno.env.get("FIRECRAWL_API_KEY");
-    const adzunaAppId = Deno.env.get("ADZUNA_APP_ID");
-    const adzunaApiKey = Deno.env.get("ADZUNA_API_KEY");
+    const reedApiKey = Deno.env.get('REED_API_KEY');
+    const firecrawlApiKey = Deno.env.get('FIRECRAWL_API_KEY');
+    const adzunaAppId = Deno.env.get('ADZUNA_APP_ID');
+    const adzunaApiKey = Deno.env.get('ADZUNA_API_KEY');
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Handle merge request
@@ -750,10 +1047,10 @@ Deno.serve(async (req) => {
       if (merged.jobs.length > 0) {
         // Clear old scraped jobs
         await supabase
-          .from("job_listings")
+          .from('job_listings')
           .delete()
-          .not("source", "is", null)
-          .neq("source", "internal");
+          .not('source', 'is', null)
+          .neq('source', 'internal');
 
         // Insert top 2000 jobs with proper UUIDs (12 batches × ~150 unique per region)
         // Filter out invalid jobs and provide defaults for NOT NULL columns
@@ -762,20 +1059,20 @@ Deno.serve(async (req) => {
           .filter((job) => job.title && job.company) // Must have title and company
           .map((job) => ({
             id: crypto.randomUUID(),
-            title: job.title || "Electrician Position",
-            company: job.company || "Company",
-            location: job.location || "UK",
+            title: job.title || 'Electrician Position',
+            company: job.company || 'Company',
+            location: job.location || 'UK',
             salary: job.salary || null,
-            type: job.jobType || "Permanent",
-            description: job.description || "",
-            posted_date: job.postedDate || new Date().toISOString().split("T")[0],
-            external_url: job.applyUrl || "https://www.reed.co.uk",
-            source: job.source || "reed",
+            type: job.jobType || 'Permanent',
+            description: job.description || '',
+            posted_date: job.postedDate || new Date().toISOString().split('T')[0],
+            external_url: job.applyUrl || 'https://www.reed.co.uk',
+            source: job.source || 'reed',
           }));
 
-        const { error: insertError } = await supabase.from("job_listings").insert(topJobs);
+        const { error: insertError } = await supabase.from('job_listings').insert(topJobs);
         if (insertError) {
-          console.error("❌ Insert error:", insertError);
+          console.error('❌ Insert error:', insertError);
         } else {
           console.log(`✅ Inserted ${topJobs.length} jobs into job_listings`);
         }
@@ -790,9 +1087,9 @@ Deno.serve(async (req) => {
           totalRegions: merged.totalRegions,
           sourceStats: merged.sourceStats,
           allComplete: merged.allComplete,
-          mode: "merge",
+          mode: 'merge',
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -819,7 +1116,7 @@ Deno.serve(async (req) => {
             cached: true,
             expiresAt: cached.expires_at,
           }),
-          { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
     }
@@ -829,14 +1126,12 @@ Deno.serve(async (req) => {
 
     // Fetch from all sources in parallel
     const [reedJobs, adzunaJobs, gumtreeJobs, indeedJobs] = await Promise.all([
-      fetchReedJobs(
-        config.reedLocations,
-        reedApiKey || "",
-        (config as any).reedKeywords
-      ),
-      batchNumber === 1 ? fetchAdzunaJobs(adzunaAppId || "", adzunaApiKey || "") : Promise.resolve([]),
-      scrapeGumtreeJobs(config.gumtreeLocations || [], firecrawlApiKey || ""),
-      scrapeIndeedJobs(config.gumtreeLocations || [], firecrawlApiKey || ""),
+      fetchReedJobs(config.reedLocations, reedApiKey || '', (config as any).reedKeywords),
+      batchNumber === 1
+        ? fetchAdzunaJobs(adzunaAppId || '', adzunaApiKey || '')
+        : Promise.resolve([]),
+      scrapeGumtreeJobs(config.gumtreeLocations || [], firecrawlApiKey || ''),
+      scrapeIndeedJobs(config.gumtreeLocations || [], firecrawlApiKey || ''),
     ]);
 
     // Combine all jobs
@@ -874,18 +1169,18 @@ Deno.serve(async (req) => {
           indeed: indeedJobs.length,
         },
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    console.error("❌ Scraper error:", error);
+    console.error('❌ Scraper error:', error);
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

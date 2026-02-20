@@ -1,14 +1,14 @@
 /**
  * Consistency Validator - Ensures Overview Matches Design Justification
- * 
+ *
  * CRITICAL SAFETY ISSUE FIX:
  * The AI sometimes generates inconsistent values between:
  * - protectionDevice.rating (numeric field shown in "At a Glance")
  * - The protection rating mentioned in the design justification prose
- * 
+ *
  * This validator treats the justification as the SINGLE SOURCE OF TRUTH
  * and corrects any mismatches in the structured data.
- * 
+ *
  * PHASE 2: Industrial protective device support
  * - Validates max Zs for BS88, BS1361, BS3036 fuses
  * - Validates breaking capacity against PSCC
@@ -19,22 +19,18 @@ import { getMaxZsForDevice } from '../shared/bs7671ProtectionData.ts';
 
 /**
  * Validate and correct consistency between overview and justification
- * 
+ *
  * @param circuit - The designed circuit to validate
  * @param logger - Logger instance for debugging
  * @returns Corrected circuit with consistent values
  */
-export function validateCircuitConsistency(
-  circuit: DesignedCircuit, 
-  logger: any
-): DesignedCircuit {
-  
+export function validateCircuitConsistency(circuit: DesignedCircuit, logger: any): DesignedCircuit {
   // Extract all justification text sections
   const justificationSections = [
     circuit.structuredOutput?.sections?.cableSelectionBreakdown || '',
     circuit.structuredOutput?.sections?.protectiveDeviceSelection || '',
     circuit.structuredOutput?.sections?.designJustification || '',
-    circuit.justifications?.protection || ''
+    circuit.justifications?.protection || '',
   ].join(' ');
 
   // === DEVICE TYPE VALIDATION ===
@@ -61,18 +57,18 @@ export function validateCircuitConsistency(
   for (const pattern of bs88Patterns) {
     if (pattern.test(justificationSections)) {
       justificationDeviceType = 'BS88';
-      
+
       // Try to detect fuse class (gG or aM)
       if (/\bgG\b/i.test(justificationSections)) {
         justificationFuseCurve = 'gG';
       } else if (/\baM\b/i.test(justificationSections)) {
         justificationFuseCurve = 'aM';
       }
-      
+
       logger.info('Detected BS88 fuse in justification', {
         circuit: circuit.name,
         detectedType: 'BS88',
-        fuseCurve: justificationFuseCurve || 'gG (default)'
+        fuseCurve: justificationFuseCurve || 'gG (default)',
       });
       break;
     }
@@ -82,25 +78,30 @@ export function validateCircuitConsistency(
   let consistentCircuit = circuit;
 
   // If justification says BS88 but structured data says MCB/RCBO, correct it
-  if (justificationDeviceType === 'BS88' && 
-      circuit.protectionDevice?.type && 
-      ['MCB', 'RCBO'].includes(circuit.protectionDevice.type)) {
-    
-    logger.warn('🔴 DEVICE TYPE MISMATCH: Justification says BS88 but structured data says ' + circuit.protectionDevice.type, {
-      circuit: circuit.name,
-      justificationSays: 'BS88 fuse',
-      structuredDataSays: circuit.protectionDevice.type,
-      correction: 'Updating to BS88'
-    });
-    
+  if (
+    justificationDeviceType === 'BS88' &&
+    circuit.protectionDevice?.type &&
+    ['MCB', 'RCBO'].includes(circuit.protectionDevice.type)
+  ) {
+    logger.warn(
+      '🔴 DEVICE TYPE MISMATCH: Justification says BS88 but structured data says ' +
+        circuit.protectionDevice.type,
+      {
+        circuit: circuit.name,
+        justificationSays: 'BS88 fuse',
+        structuredDataSays: circuit.protectionDevice.type,
+        correction: 'Updating to BS88',
+      }
+    );
+
     // Correct device type and curve - store in consistentCircuit
     consistentCircuit = {
       ...circuit,
       protectionDevice: {
         ...circuit.protectionDevice,
         type: 'BS88',
-        curve: justificationFuseCurve || circuit.protectionDevice.curve || 'gG'
-      }
+        curve: justificationFuseCurve || circuit.protectionDevice.curve || 'gG',
+      },
     };
   }
 
@@ -109,18 +110,18 @@ export function validateCircuitConsistency(
   const patterns = [
     // "protective device rating (20 A)" or "protective device rating of 20A"
     /protective\s+device\s+rating\s*(?:of|\()\s*(\d+)\s*A/i,
-    
+
     // "20A MCB" or "20A RCBO" or "20 A Type B MCB" or "20A BS88"
     /(\d+)\s*A\s+(?:Type\s+[A-D]\s+)?(?:MCB|RCBO|BS\s*88|BS88|HRC)/i,
-    
+
     // "protected by a 20A" or "protected by 20 A"
     /protected\s+by\s+(?:a\s+)?(\d+)\s*A/i,
-    
+
     // "requires a 20A protective device"
     /requires?\s+(?:a\s+)?(\d+)\s*A\s+protective\s+device/i,
-    
+
     // "selected 20A" or "using 20A"
-    /(?:selected|using)\s+(?:a\s+)?(\d+)\s*A/i
+    /(?:selected|using)\s+(?:a\s+)?(\d+)\s*A/i,
   ];
 
   let justificationRating: number | null = null;
@@ -144,7 +145,7 @@ export function validateCircuitConsistency(
         overviewRating: `${structuredRating}A (WRONG - shown in "At a Glance")`,
         justificationRating: `${justificationRating}A (CORRECT - from design justification)`,
         action: `Correcting overview from ${structuredRating}A to ${justificationRating}A`,
-        safetyImpact: 'CRITICAL - Could lead to incorrect protection device installation'
+        safetyImpact: 'CRITICAL - Could lead to incorrect protection device installation',
       });
 
       // Override with justification value - use consistentCircuit to preserve BS88 fix
@@ -152,12 +153,12 @@ export function validateCircuitConsistency(
         ...consistentCircuit,
         protectionDevice: {
           ...consistentCircuit.protectionDevice,
-          rating: justificationRating
+          rating: justificationRating,
         },
         calculations: {
           ...consistentCircuit.calculations,
-          In: justificationRating // Also fix In (nominal current of protective device)
-        }
+          In: justificationRating, // Also fix In (nominal current of protective device)
+        },
       };
     }
 
@@ -165,14 +166,14 @@ export function validateCircuitConsistency(
     logger.info('✅ Consistency check passed', {
       circuit: consistentCircuit.name,
       rating: `${structuredRating}A`,
-      status: 'Overview and justification match'
+      status: 'Overview and justification match',
     });
   } else {
     // Could not extract rating from justification - log warning
     logger.warn('⚠️ Could not extract protection rating from justification', {
       circuit: consistentCircuit.name,
       structuredRating: consistentCircuit.protectionDevice?.rating,
-      note: 'Manual review recommended'
+      note: 'Manual review recommended',
     });
   }
 
@@ -185,7 +186,7 @@ export function validateCircuitConsistency(
  * - Final circuits ≤32A (sockets, lighting): 0.4s (Table 41.3)
  * - Motors, conveyors, fixed equipment with Type D: 5s (Table 41.3)
  * - Distribution circuits: 5s (Table 41.6)
- * 
+ *
  * CRITICAL: Only Type D MCBs have 5s disconnection values in BS 7671
  */
 function getDisconnectionTime(circuit: DesignedCircuit): 0.4 | 5 {
@@ -193,16 +194,28 @@ function getDisconnectionTime(circuit: DesignedCircuit): 0.4 | 5 {
   const name = circuit.name?.toLowerCase() || '';
   const deviceType = circuit.protectionDevice?.type;
   const deviceCurve = circuit.protectionDevice?.curve;
-  
+
   // Motor/fixed equipment circuits = 5s (ONLY if Type D)
   const motorKeywords = [
-    'motor', 'compressor', 'chiller', 'conveyor', 'pump', 'fan',
-    'auger', 'three-phase', 'machine', 'production', 'hvac',
-    'air handler', 'ventilation', 'extraction', 'cooling tower'
+    'motor',
+    'compressor',
+    'chiller',
+    'conveyor',
+    'pump',
+    'fan',
+    'auger',
+    'three-phase',
+    'machine',
+    'production',
+    'hvac',
+    'air handler',
+    'ventilation',
+    'extraction',
+    'cooling tower',
   ];
-  
-  const isMotorCircuit = motorKeywords.some(kw => circuitType.includes(kw) || name.includes(kw));
-  
+
+  const isMotorCircuit = motorKeywords.some((kw) => circuitType.includes(kw) || name.includes(kw));
+
   if (isMotorCircuit) {
     // Type D MCBs have 5s values
     if (deviceCurve === 'D' || (deviceType === 'MCB' && deviceCurve === 'D')) {
@@ -215,13 +228,17 @@ function getDisconnectionTime(circuit: DesignedCircuit): 0.4 | 5 {
     // Type B or C motor circuit - must use 0.4s (no 5s table exists)
     return 0.4;
   }
-  
+
   // Distribution circuits = 5s (if Type D, otherwise 0.4s)
-  if (circuitType.includes('distribution') || circuitType.includes('sub-main') || 
-      name.includes('distribution') || name.includes('sub-main')) {
+  if (
+    circuitType.includes('distribution') ||
+    circuitType.includes('sub-main') ||
+    name.includes('distribution') ||
+    name.includes('sub-main')
+  ) {
     return deviceCurve === 'D' ? 5 : 0.4;
   }
-  
+
   // Final circuits (sockets, lighting) = 0.4s (always)
   return 0.4;
 }
@@ -235,14 +252,14 @@ export function validateMaxZs(
   logger: any
 ): { isValid: boolean; message?: string; correctedMaxZs?: number } {
   const { protectionDevice, calculations } = circuit;
-  
+
   if (!protectionDevice || !calculations) {
     return { isValid: true };
   }
-  
+
   // Determine device type for max Zs lookup
   let deviceTypeForLookup: 'B' | 'C' | 'D' | 'BS88' | 'BS1361' | 'BS3036' | null = null;
-  
+
   if (protectionDevice.type === 'MCB' || protectionDevice.type === 'RCBO') {
     // Use curve if set, otherwise infer from circuit type
     if (protectionDevice.curve) {
@@ -251,70 +268,84 @@ export function validateMaxZs(
       // Infer curve from circuit type: motors = D, commercial = C, domestic = B
       const circuitType = circuit.loadType?.toLowerCase() || '';
       const name = circuit.name?.toLowerCase() || '';
-      
-      if (circuitType.includes('motor') || circuitType.includes('compressor') || 
-          name.includes('motor') || name.includes('compressor')) {
+
+      if (
+        circuitType.includes('motor') ||
+        circuitType.includes('compressor') ||
+        name.includes('motor') ||
+        name.includes('compressor')
+      ) {
         deviceTypeForLookup = 'D';
-      } else if (circuitType.includes('commercial') || circuitType.includes('hvac') ||
-                 circuitType.includes('industrial')) {
+      } else if (
+        circuitType.includes('commercial') ||
+        circuitType.includes('hvac') ||
+        circuitType.includes('industrial')
+      ) {
         deviceTypeForLookup = 'C';
       } else {
         deviceTypeForLookup = 'B'; // Default for domestic/lighting/sockets
       }
-      
+
       logger.warn('Curve not set, inferred from circuit type', {
         circuit: circuit.name,
         inferredCurve: deviceTypeForLookup,
-        circuitType
+        circuitType,
       });
     }
   } else if (['BS88', 'BS1361', 'BS3036', 'MCCB'].includes(protectionDevice.type)) {
     // Use device type directly for fuses
     deviceTypeForLookup = protectionDevice.type as 'BS88' | 'BS1361' | 'BS3036';
   }
-  
+
   if (!deviceTypeForLookup) {
     logger.warn('Unknown device type for max Zs validation', {
       circuit: circuit.name,
-      deviceType: protectionDevice.type
+      deviceType: protectionDevice.type,
     });
     return { isValid: true };
   }
-  
+
   // Skip MCCB as they don't have standard Zs tables (electronic trip)
   if (protectionDevice.type === 'MCCB') {
     logger.info('MCCB detected - skipping max Zs validation (electronic trip)', {
-      circuit: circuit.name
+      circuit: circuit.name,
     });
     return { isValid: true };
   }
-  
+
   // Determine disconnection time based on circuit type
   const disconnectionTime = getDisconnectionTime(circuit);
-  
+
   logger.info('Zs validation with disconnection time', {
     circuit: circuit.name,
     disconnectionTime: disconnectionTime + 's',
     circuitType: circuit.loadType,
-    reason: disconnectionTime === 5 ? 'Motor/distribution circuit (Table 41.6)' : 'Final circuit (Table 41.3)'
+    reason:
+      disconnectionTime === 5
+        ? 'Motor/distribution circuit (Table 41.6)'
+        : 'Final circuit (Table 41.3)',
   });
-  
+
   // Get correct max Zs from BS 7671 tables with appropriate disconnection time
-  const zsLookup = getMaxZsForDevice(deviceTypeForLookup, protectionDevice.rating, disconnectionTime);
-  
+  const zsLookup = getMaxZsForDevice(
+    deviceTypeForLookup,
+    protectionDevice.rating,
+    disconnectionTime
+  );
+
   if (!zsLookup) {
     logger.warn('No max Zs data available', {
       circuit: circuit.name,
       deviceType: deviceTypeForLookup,
       rating: protectionDevice.rating,
-      disconnectionTime
+      disconnectionTime,
     });
     return { isValid: true };
   }
-  
+
   const correctMaxZs = zsLookup.maxZs;
   const currentMaxZs = calculations.maxZs;
-  
+
   // Check if max Zs is correct (allow 0.01Ω tolerance for rounding)
   if (currentMaxZs && Math.abs(currentMaxZs - correctMaxZs) > 0.01) {
     logger.warn('Max Zs correction applied', {
@@ -323,16 +354,16 @@ export function validateMaxZs(
       rating: protectionDevice.rating,
       incorrectMaxZs: currentMaxZs,
       correctMaxZs,
-      regulation: zsLookup.regulation
+      regulation: zsLookup.regulation,
     });
-    
+
     return {
       isValid: false,
       message: `Max Zs corrected: ${currentMaxZs}Ω → ${correctMaxZs}Ω (${zsLookup.regulation})`,
-      correctedMaxZs: correctMaxZs
+      correctedMaxZs: correctMaxZs,
     };
   }
-  
+
   // Check Zs compliance
   const calculatedZs = calculations.zs;
   if (calculatedZs > correctMaxZs) {
@@ -340,19 +371,19 @@ export function validateMaxZs(
       circuit: circuit.name,
       calculatedZs,
       maxZs: correctMaxZs,
-      exceedance: ((calculatedZs - correctMaxZs) / correctMaxZs * 100).toFixed(1) + '%',
-      regulation: zsLookup.regulation
+      exceedance: (((calculatedZs - correctMaxZs) / correctMaxZs) * 100).toFixed(1) + '%',
+      regulation: zsLookup.regulation,
     });
   }
-  
+
   logger.info('Max Zs validation passed', {
     circuit: circuit.name,
     deviceType: deviceTypeForLookup,
     rating: protectionDevice.rating,
     maxZs: correctMaxZs,
     calculatedZs,
-    margin: ((correctMaxZs - calculatedZs) / correctMaxZs * 100).toFixed(1) + '%'
+    margin: (((correctMaxZs - calculatedZs) / correctMaxZs) * 100).toFixed(1) + '%',
   });
-  
+
   return { isValid: true };
 }

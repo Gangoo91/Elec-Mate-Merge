@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -44,7 +45,7 @@ const NHS_SOURCES = [
     tendersUrl: 'https://www.supplychain.nhs.uk/suppliers/sell-to-us/current-opportunities/',
     framework: 'NHS Supply Chain',
     regions: ['uk_wide'],
-    typicalValueRange: [100000, 2000000]
+    typicalValueRange: [100000, 2000000],
   },
   {
     name: 'noe_cpc',
@@ -52,7 +53,7 @@ const NHS_SOURCES = [
     tendersUrl: 'https://www.noecpc.nhs.uk/tenders/',
     framework: 'NOE CPC Framework',
     regions: ['east_midlands', 'east_england', 'yorkshire'],
-    typicalValueRange: [50000, 500000]
+    typicalValueRange: [50000, 500000],
   },
   {
     name: 'lpp_nhs',
@@ -60,7 +61,7 @@ const NHS_SOURCES = [
     tendersUrl: 'https://www.lpp.nhs.uk/frameworks-contracts/',
     framework: 'LPP Framework',
     regions: ['london', 'southeast'],
-    typicalValueRange: [75000, 1500000]
+    typicalValueRange: [75000, 1500000],
   },
   {
     name: 'atamis_nhs',
@@ -68,34 +69,89 @@ const NHS_SOURCES = [
     tendersUrl: 'https://health-family.force.com/s/',
     framework: null,
     regions: ['uk_wide'],
-    typicalValueRange: [25000, 300000]
-  }
+    typicalValueRange: [25000, 300000],
+  },
 ];
 
 const NHS_TRUSTS = [
-  { name: 'University Hospitals Birmingham NHS Foundation Trust', region: 'west_midlands', postcode: 'B15' },
+  {
+    name: 'University Hospitals Birmingham NHS Foundation Trust',
+    region: 'west_midlands',
+    postcode: 'B15',
+  },
   { name: 'Manchester University NHS Foundation Trust', region: 'northwest', postcode: 'M13' },
   { name: 'Leeds Teaching Hospitals NHS Trust', region: 'yorkshire', postcode: 'LS9' },
   { name: 'Barts Health NHS Trust', region: 'london', postcode: 'E1' },
   { name: "Guy's and St Thomas' NHS Foundation Trust", region: 'london', postcode: 'SE1' },
-  { name: 'Newcastle upon Tyne Hospitals NHS Foundation Trust', region: 'northeast', postcode: 'NE7' },
+  {
+    name: 'Newcastle upon Tyne Hospitals NHS Foundation Trust',
+    region: 'northeast',
+    postcode: 'NE7',
+  },
   { name: 'Nottingham University Hospitals NHS Trust', region: 'east_midlands', postcode: 'NG7' },
-  { name: 'Oxford University Hospitals NHS Foundation Trust', region: 'southeast', postcode: 'OX3' },
-  { name: 'Cambridge University Hospitals NHS Foundation Trust', region: 'east_england', postcode: 'CB2' },
-  { name: 'University Hospital Southampton NHS Foundation Trust', region: 'southeast', postcode: 'SO16' }
+  {
+    name: 'Oxford University Hospitals NHS Foundation Trust',
+    region: 'southeast',
+    postcode: 'OX3',
+  },
+  {
+    name: 'Cambridge University Hospitals NHS Foundation Trust',
+    region: 'east_england',
+    postcode: 'CB2',
+  },
+  {
+    name: 'University Hospital Southampton NHS Foundation Trust',
+    region: 'southeast',
+    postcode: 'SO16',
+  },
 ];
 
 const NHS_ELECTRICAL_WORKS = [
-  { type: 'Planned Electrical Maintenance Term Contract', category: 'electrical', multiplier: 2.0, framework: true },
-  { type: 'Emergency Lighting Compliance Works', category: 'emergency_lighting', multiplier: 0.8, framework: false },
-  { type: 'Fire Detection System Upgrade', category: 'fire_alarm', multiplier: 1.5, framework: true },
-  { type: 'Medical Gas Pendant Electrical Works', category: 'electrical', multiplier: 1.2, framework: true },
+  {
+    type: 'Planned Electrical Maintenance Term Contract',
+    category: 'electrical',
+    multiplier: 2.0,
+    framework: true,
+  },
+  {
+    type: 'Emergency Lighting Compliance Works',
+    category: 'emergency_lighting',
+    multiplier: 0.8,
+    framework: false,
+  },
+  {
+    type: 'Fire Detection System Upgrade',
+    category: 'fire_alarm',
+    multiplier: 1.5,
+    framework: true,
+  },
+  {
+    type: 'Medical Gas Pendant Electrical Works',
+    category: 'electrical',
+    multiplier: 1.2,
+    framework: true,
+  },
   { type: 'EICR Testing Programme', category: 'testing', multiplier: 0.5, framework: false },
-  { type: 'Generator Installation & Commissioning', category: 'electrical', multiplier: 2.5, framework: true },
-  { type: 'Theatre Electrical Infrastructure', category: 'electrical', multiplier: 3.0, framework: true },
-  { type: 'LED Lighting Retrofit Programme', category: 'electrical', multiplier: 1.0, framework: false },
+  {
+    type: 'Generator Installation & Commissioning',
+    category: 'electrical',
+    multiplier: 2.5,
+    framework: true,
+  },
+  {
+    type: 'Theatre Electrical Infrastructure',
+    category: 'electrical',
+    multiplier: 3.0,
+    framework: true,
+  },
+  {
+    type: 'LED Lighting Retrofit Programme',
+    category: 'electrical',
+    multiplier: 1.0,
+    framework: false,
+  },
   { type: 'UPS System Replacement', category: 'electrical', multiplier: 1.8, framework: true },
-  { type: 'Ward Rewiring Programme', category: 'rewire', multiplier: 2.2, framework: true }
+  { type: 'Ward Rewiring Programme', category: 'rewire', multiplier: 2.2, framework: true },
 ];
 
 Deno.serve(async (req) => {
@@ -130,7 +186,6 @@ Deno.serve(async (req) => {
 
         opportunities.push(...sourceOpps);
         console.log(`[NHS-SYNC] ${source.displayName}: ${sourceOpps.length} opportunities`);
-
       } catch (sourceError: any) {
         console.error(`[NHS-SYNC] Error with ${source.name}:`, sourceError);
         errors.push(`${source.name}: ${sourceError.message}`);
@@ -149,9 +204,8 @@ Deno.serve(async (req) => {
     let inserted = 0;
 
     for (const opp of opportunities) {
-      const { error } = await supabase
-        .from('tender_opportunities')
-        .upsert({
+      const { error } = await supabase.from('tender_opportunities').upsert(
+        {
           external_id: opp.external_id,
           source: opp.source,
           title: opp.title,
@@ -170,11 +224,13 @@ Deno.serve(async (req) => {
           contact_email: opp.contact_email,
           source_url: opp.source_url,
           status: opp.status,
-          fetched_at: new Date().toISOString()
-        }, {
+          fetched_at: new Date().toISOString(),
+        },
+        {
           onConflict: 'source,external_id',
-          ignoreDuplicates: false
-        });
+          ignoreDuplicates: false,
+        }
+      );
 
       if (!error) {
         inserted++;
@@ -185,8 +241,8 @@ Deno.serve(async (req) => {
     for (const source of NHS_SOURCES) {
       await supabase.rpc('update_source_sync_status', {
         p_source_name: source.name,
-        p_sync_count: opportunities.filter(o => o.source === source.name).length,
-        p_error_count: errors.filter(e => e.startsWith(source.name)).length
+        p_sync_count: opportunities.filter((o) => o.source === source.name).length,
+        p_error_count: errors.filter((e) => e.startsWith(source.name)).length,
       });
     }
 
@@ -198,31 +254,30 @@ Deno.serve(async (req) => {
         total_found: opportunities.length,
         inserted,
         sources_processed: NHS_SOURCES.length,
-        errors
+        errors,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[NHS-SYNC] Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
 /**
  * Attempt to scrape NHS procurement portals
  */
-async function scrapeNHSTenders(source: typeof NHS_SOURCES[0]): Promise<NHSOpportunity[]> {
+async function scrapeNHSTenders(source: (typeof NHS_SOURCES)[0]): Promise<NHSOpportunity[]> {
   try {
     const response = await fetch(source.tendersUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
-        'Accept': 'text/html,application/xhtml+xml',
-        'Accept-Language': 'en-GB,en;q=0.9'
-      }
+        Accept: 'text/html,application/xhtml+xml',
+        'Accept-Language': 'en-GB,en;q=0.9',
+      },
     });
 
     if (!response.ok) {
@@ -235,8 +290,15 @@ async function scrapeNHSTenders(source: typeof NHS_SOURCES[0]): Promise<NHSOppor
 
     // Search for electrical-related tender listings
     const electricalKeywords = [
-      'electrical', 'rewire', 'fire alarm', 'emergency light',
-      'generator', 'ups', 'lighting', 'm&e', 'estates'
+      'electrical',
+      'rewire',
+      'fire alarm',
+      'emergency light',
+      'generator',
+      'ups',
+      'lighting',
+      'm&e',
+      'estates',
     ];
 
     for (const keyword of electricalKeywords) {
@@ -268,11 +330,11 @@ async function scrapeNHSTenders(source: typeof NHS_SOURCES[0]): Promise<NHSOppor
                 niceic: true,
                 insurance: 10000000,
                 dbs_check: true,
-                bafe: category === 'fire_alarm'
+                bafe: category === 'fire_alarm',
               },
               framework_required: source.framework,
               source_url: source.tendersUrl,
-              status: 'live'
+              status: 'live',
             });
           }
         }
@@ -289,7 +351,7 @@ async function scrapeNHSTenders(source: typeof NHS_SOURCES[0]): Promise<NHSOppor
 /**
  * Generate realistic NHS opportunities
  */
-function generateNHSOpportunities(source: typeof NHS_SOURCES[0]): NHSOpportunity[] {
+function generateNHSOpportunities(source: (typeof NHS_SOURCES)[0]): NHSOpportunity[] {
   const opportunities: NHSOpportunity[] = [];
   const count = 2 + Math.floor(Math.random() * 3);
 
@@ -318,12 +380,12 @@ function generateNHSOpportunities(source: typeof NHS_SOURCES[0]): NHSOpportunity
         insurance: adjustedValue > 250000 ? 10000000 : 5000000,
         dbs_check: true,
         asbestos_awareness: true,
-        bafe: work.category === 'fire_alarm'
+        bafe: work.category === 'fire_alarm',
       },
       framework_required: work.framework ? source.framework : null,
       contact_email: `procurement@${source.name.replace('_', '')}.nhs.uk`,
       source_url: source.tendersUrl,
-      status: 'live'
+      status: 'live',
     });
   }
 
@@ -337,9 +399,10 @@ function generateTrustOpportunities(): NHSOpportunity[] {
   const opportunities: NHSOpportunity[] = [];
 
   // Select 3-5 random trusts
-  const selectedTrusts = NHS_TRUSTS
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 3 + Math.floor(Math.random() * 3));
+  const selectedTrusts = NHS_TRUSTS.sort(() => Math.random() - 0.5).slice(
+    0,
+    3 + Math.floor(Math.random() * 3)
+  );
 
   for (const trust of selectedTrusts) {
     const work = NHS_ELECTRICAL_WORKS[Math.floor(Math.random() * NHS_ELECTRICAL_WORKS.length)];
@@ -365,11 +428,11 @@ function generateTrustOpportunities(): NHSOpportunity[] {
         insurance: 10000000,
         dbs_check: true,
         asbestos_awareness: true,
-        bafe: work.category === 'fire_alarm'
+        bafe: work.category === 'fire_alarm',
       },
       framework_required: work.framework ? 'NHS Framework (various)' : null,
       source_url: `https://www.${trust.name.toLowerCase().replace(/[^a-z]/g, '')}.nhs.uk/suppliers`,
-      status: 'live'
+      status: 'live',
     });
   }
 
@@ -386,7 +449,11 @@ function detectCategory(title: string): string {
   return 'electrical';
 }
 
-function generateNHSDescription(workType: string, client: string, framework: string | null): string {
+function generateNHSDescription(
+  workType: string,
+  client: string,
+  framework: string | null
+): string {
   const frameworkText = framework ? ` Access via ${framework}.` : '';
 
   const descriptions: Record<string, string> = {
@@ -399,40 +466,43 @@ function generateNHSDescription(workType: string, client: string, framework: str
     'Theatre Electrical Infrastructure': `Specialist electrical infrastructure for operating theatre environment. Including IPS panels, UPS, and isolated power supplies.${frameworkText}`,
     'LED Lighting Retrofit Programme': `Energy efficiency programme to retrofit existing lighting with LED technology. Includes design, supply, installation, and commissioning.${frameworkText}`,
     'UPS System Replacement': `Replacement of uninterruptible power supply systems for critical healthcare equipment. Design, supply, install, commission, and maintain.${frameworkText}`,
-    'Ward Rewiring Programme': `Full rewiring of ward areas including patient beds, nurse stations, and support areas. Works to be phased to maintain operational continuity.${frameworkText}`
+    'Ward Rewiring Programme': `Full rewiring of ward areas including patient beds, nurse stations, and support areas. Works to be phased to maintain operational continuity.${frameworkText}`,
   };
 
-  return descriptions[workType] || `${workType} for ${client}.${frameworkText} Contact procurement for full specification.`;
+  return (
+    descriptions[workType] ||
+    `${workType} for ${client}.${frameworkText} Contact procurement for full specification.`
+  );
 }
 
 function regionToLocation(region: string): string {
   const locations: Record<string, string> = {
-    'london': 'Greater London',
-    'southeast': 'South East England',
-    'east_england': 'East of England',
-    'east_midlands': 'East Midlands',
-    'west_midlands': 'West Midlands',
-    'northwest': 'North West England',
-    'northeast': 'North East England',
-    'yorkshire': 'Yorkshire & Humber',
-    'southwest': 'South West England',
-    'uk_wide': 'United Kingdom'
+    london: 'Greater London',
+    southeast: 'South East England',
+    east_england: 'East of England',
+    east_midlands: 'East Midlands',
+    west_midlands: 'West Midlands',
+    northwest: 'North West England',
+    northeast: 'North East England',
+    yorkshire: 'Yorkshire & Humber',
+    southwest: 'South West England',
+    uk_wide: 'United Kingdom',
   };
   return locations[region] || 'England';
 }
 
 function regionToPostcode(region: string): string {
   const postcodes: Record<string, string[]> = {
-    'london': ['E1', 'SE1', 'SW1', 'W1', 'NW1'],
-    'southeast': ['RG1', 'OX1', 'SO1', 'BN1'],
-    'east_england': ['CB1', 'NR1', 'IP1'],
-    'east_midlands': ['NG1', 'LE1', 'DE1'],
-    'west_midlands': ['B1', 'CV1', 'WV1'],
-    'northwest': ['M1', 'L1', 'PR1'],
-    'northeast': ['NE1', 'SR1', 'TS1'],
-    'yorkshire': ['LS1', 'S1', 'BD1'],
-    'southwest': ['BS1', 'EX1', 'PL1'],
-    'uk_wide': ['SW1', 'B1', 'M1', 'LS1']
+    london: ['E1', 'SE1', 'SW1', 'W1', 'NW1'],
+    southeast: ['RG1', 'OX1', 'SO1', 'BN1'],
+    east_england: ['CB1', 'NR1', 'IP1'],
+    east_midlands: ['NG1', 'LE1', 'DE1'],
+    west_midlands: ['B1', 'CV1', 'WV1'],
+    northwest: ['M1', 'L1', 'PR1'],
+    northeast: ['NE1', 'SR1', 'TS1'],
+    yorkshire: ['LS1', 'S1', 'BD1'],
+    southwest: ['BS1', 'EX1', 'PL1'],
+    uk_wide: ['SW1', 'B1', 'M1', 'LS1'],
   };
   const codes = postcodes[region] || ['SW1'];
   return codes[Math.floor(Math.random() * codes.length)];

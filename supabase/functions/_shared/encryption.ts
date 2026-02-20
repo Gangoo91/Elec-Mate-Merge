@@ -23,7 +23,7 @@ function hexToBytes(hex: string): Uint8Array {
 // Convert Uint8Array to hex string
 function bytesToHex(bytes: Uint8Array): string {
   return Array.from(bytes)
-    .map(b => b.toString(16).padStart(2, '0'))
+    .map((b) => b.toString(16).padStart(2, '0'))
     .join('');
 }
 
@@ -46,20 +46,16 @@ export async function encryptToken(plaintext: string): Promise<string> {
     false,
     ['encrypt']
   );
-  
+
   // Encrypt
-  const encrypted = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    data
-  );
-  
+  const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, data);
+
   const encryptedBytes = new Uint8Array(encrypted);
-  
+
   // GCM provides authentication tag in last 16 bytes
   const ciphertext = encryptedBytes.slice(0, -16);
   const authTag = encryptedBytes.slice(-16);
-  
+
   // Return: iv:authTag:ciphertext
   return `${bytesToHex(iv)}:${bytesToHex(authTag)}:${bytesToHex(ciphertext)}`;
 }
@@ -70,20 +66,20 @@ export async function encryptToken(plaintext: string): Promise<string> {
  */
 export async function decryptToken(encrypted: string): Promise<string> {
   const [ivHex, authTagHex, ciphertextHex] = encrypted.split(':');
-  
+
   if (!ivHex || !authTagHex || !ciphertextHex) {
     throw new Error('Invalid encrypted token format');
   }
-  
+
   const iv = hexToBytes(ivHex);
   const authTag = hexToBytes(authTagHex);
   const ciphertext = hexToBytes(ciphertextHex);
-  
+
   // Combine ciphertext + authTag for GCM
   const combined = new Uint8Array(ciphertext.length + authTag.length);
   combined.set(ciphertext);
   combined.set(authTag, ciphertext.length);
-  
+
   // Import key
   const key = await crypto.subtle.importKey(
     'raw',
@@ -92,14 +88,10 @@ export async function decryptToken(encrypted: string): Promise<string> {
     false,
     ['decrypt']
   );
-  
+
   // Decrypt
-  const decrypted = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    combined
-  );
-  
+  const decrypted = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, combined);
+
   const decoder = new TextDecoder();
   return decoder.decode(decrypted);
 }

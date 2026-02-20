@@ -1,12 +1,13 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { encode as base64Encode } from "https://deno.land/std@0.168.0/encoding/base64.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { encode as base64Encode } from 'https://deno.land/std@0.168.0/encoding/base64.ts';
 
 const geminiApiKey = Deno.env.get('GEMINI_API_KEY');
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // ============================================================================
@@ -333,11 +334,7 @@ const parseAIResponse = (content: string, context: string = 'AI response'): any 
     // Continue with extraction
   }
 
-  const patterns = [
-    /```json\s*\n([\s\S]*?)\n```/,
-    /```\s*\n([\s\S]*?)\n```/,
-    /({[\s\S]*})/
-  ];
+  const patterns = [/```json\s*\n([\s\S]*?)\n```/, /```\s*\n([\s\S]*?)\n```/, /({[\s\S]*})/];
 
   for (const pattern of patterns) {
     const match = content.match(pattern);
@@ -376,7 +373,11 @@ async function urlToBase64(url: string): Promise<{ mimeType: string; data: strin
   return { mimeType: contentType, data: base64 };
 }
 
-async function fetchWithTimeout(url: string, options: RequestInit, timeoutMs: number): Promise<Response> {
+async function fetchWithTimeout(
+  url: string,
+  options: RequestInit,
+  timeoutMs: number
+): Promise<Response> {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -467,8 +468,8 @@ async function analyzeWithGemini(
         generationConfig: {
           maxOutputTokens: 8000,
           temperature: 0.1,
-          responseMimeType: 'application/json'
-        }
+          responseMimeType: 'application/json',
+        },
       }),
     },
     60000 // 60 second timeout for comprehensive analysis
@@ -496,7 +497,7 @@ async function analyzeWithGemini(
     const phaseType = result.board.is_three_phase ? 'three-phase' : 'single-phase';
     sendEvent({
       type: 'decision',
-      message: `Detected ${result.board.brand || 'unknown'} ${phaseType} board with ${result.board.estimated_total_ways || '?'} ways`
+      message: `Detected ${result.board.brand || 'unknown'} ${phaseType} board with ${result.board.estimated_total_ways || '?'} ways`,
     });
   }
 
@@ -507,14 +508,14 @@ async function analyzeWithGemini(
   for (let i = 0; i < circuits.length; i += batchSize) {
     const batch = circuits.slice(i, i + batchSize).map((c: any) => ({
       ...c,
-      source_model: 'gemini-2.0-flash'
+      source_model: 'gemini-2.0-flash',
     }));
 
     sendEvent({ type: 'circuits_batch', circuits: batch });
 
     // Small delay between batches for smooth UI animation
     if (i + batchSize < circuits.length) {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
   }
 
@@ -522,12 +523,21 @@ async function analyzeWithGemini(
   const uncertainCircuits = circuits.filter((c: any) => c.confidence !== 'high');
 
   if (uncertainCircuits.length > 0 && parts.length >= 2) {
-    sendEvent({ type: 'stage', stage: 'validating', message: `Verifying ${uncertainCircuits.length} uncertain circuits...` });
+    sendEvent({
+      type: 'stage',
+      stage: 'validating',
+      message: `Verifying ${uncertainCircuits.length} uncertain circuits...`,
+    });
 
     try {
       const validationParts = [
-        { text: VALIDATION_PROMPT + '\n\nCircuits to validate:\n' + JSON.stringify(uncertainCircuits, null, 2) },
-        ...parts.slice(1) // Include images for reference
+        {
+          text:
+            VALIDATION_PROMPT +
+            '\n\nCircuits to validate:\n' +
+            JSON.stringify(uncertainCircuits, null, 2),
+        },
+        ...parts.slice(1), // Include images for reference
       ];
 
       const validationResponse = await fetchWithTimeout(
@@ -540,8 +550,8 @@ async function analyzeWithGemini(
             generationConfig: {
               maxOutputTokens: 4000,
               temperature: 0.1, // Lower temp for more consistent corrections
-              responseMimeType: 'application/json'
-            }
+              responseMimeType: 'application/json',
+            },
           }),
         },
         30000 // 30 second timeout for validation
@@ -549,14 +559,16 @@ async function analyzeWithGemini(
 
       if (validationResponse.ok) {
         const validationData = await validationResponse.json();
-        const validationText = validationData.candidates?.[0]?.content?.parts?.find((p: any) => p.text)?.text;
+        const validationText = validationData.candidates?.[0]?.content?.parts?.find(
+          (p: any) => p.text
+        )?.text;
 
         if (validationText) {
           const validations = parseAIResponse(validationText, 'Validation');
           let correctedCount = 0;
 
           // Apply corrections
-          for (const v of (validations.validations || [])) {
+          for (const v of validations.validations || []) {
             if (v.status === 'corrected' && v.corrections) {
               const circuitIndex = circuits.findIndex((c: any) => c.index === v.index);
               if (circuitIndex >= 0) {
@@ -588,7 +600,10 @@ async function analyzeWithGemini(
           }
 
           if (correctedCount > 0) {
-            sendEvent({ type: 'decision', message: `Validation corrected ${correctedCount} circuits` });
+            sendEvent({
+              type: 'decision',
+              message: `Validation corrected ${correctedCount} circuits`,
+            });
           }
         }
       }
@@ -614,13 +629,13 @@ async function analyzeWithGemini(
   if (estimatedWays > 0 && circuits.length < estimatedWays - 2) {
     sendEvent({
       type: 'warning',
-      message: `Board has ${estimatedWays} ways but only ${circuits.length} circuits detected - some may be missing`
+      message: `Board has ${estimatedWays} ways but only ${circuits.length} circuits detected - some may be missing`,
     });
   }
 
   return {
     board: result.board || {},
-    circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini-2.0-flash' }))
+    circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini-2.0-flash' })),
   };
 }
 
@@ -655,7 +670,11 @@ serve(async (req) => {
         return;
       }
 
-      sendEvent({ type: 'stage', stage: 'connecting', message: `Processing ${images.length} image(s)...` });
+      sendEvent({
+        type: 'stage',
+        stage: 'connecting',
+        message: `Processing ${images.length} image(s)...`,
+      });
 
       // Single comprehensive Gemini analysis
       const result = await analyzeWithGemini(images, hints, sendEvent);
@@ -669,15 +688,14 @@ serve(async (req) => {
           imageCount: images.length,
           circuitCount: result.circuits.length,
           boardSize: result.board.estimated_total_ways || result.circuits.length,
-          isThreePhase: result.board.is_three_phase || false
-        }
+          isThreePhase: result.board.is_three_phase || false,
+        },
       });
-
     } catch (error) {
       console.error('Stream error:', error);
       sendEvent({
         type: 'error',
-        message: error instanceof Error ? error.message : 'Analysis failed'
+        message: error instanceof Error ? error.message : 'Analysis failed',
       });
     } finally {
       close();
@@ -690,7 +708,7 @@ serve(async (req) => {
       ...corsHeaders,
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
-      'Connection': 'keep-alive'
-    }
+      Connection: 'keep-alive',
+    },
   });
 });

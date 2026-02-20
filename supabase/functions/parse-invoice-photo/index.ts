@@ -3,9 +3,9 @@
  * Uses Gemini 3 Flash Preview for vision-based invoice line item extraction
  */
 
-import { serve, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
+import { serve, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 interface ParseInvoiceRequest {
   image_base64: string;
@@ -46,8 +46,13 @@ serve(async (req) => {
       throw new ValidationError('image_base64 is required and must be a string');
     }
 
-    if (!image_type || !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)) {
-      throw new ValidationError('image_type must be one of: image/jpeg, image/png, image/heic, image/webp');
+    if (
+      !image_type ||
+      !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)
+    ) {
+      throw new ValidationError(
+        'image_type must be one of: image/jpeg, image/png, image/heic, image/webp'
+      );
     }
 
     // Check image size (rough estimate - base64 is ~4/3 of original size)
@@ -58,7 +63,7 @@ serve(async (req) => {
 
     logger.info('Processing invoice photo', {
       imageType: image_type,
-      estimatedSizeMB: estimatedSizeMB.toFixed(2)
+      estimatedSizeMB: estimatedSizeMB.toFixed(2),
     });
 
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
@@ -157,30 +162,34 @@ Line: "Milk 2L    £1.50"
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            contents: [{
+            contents: [
+              {
+                parts: [
+                  {
+                    text: `Extract all line items from this invoice/receipt. Be thorough - scan the entire image. Return JSON only.`,
+                  },
+                  {
+                    inline_data: {
+                      mime_type: image_type,
+                      data: image_base64,
+                    },
+                  },
+                ],
+              },
+            ],
+            systemInstruction: {
               parts: [
                 {
-                  text: `Extract all line items from this invoice/receipt. Be thorough - scan the entire image. Return JSON only.`
+                  text: systemPrompt,
                 },
-                {
-                  inline_data: {
-                    mime_type: image_type,
-                    data: image_base64
-                  }
-                }
-              ]
-            }],
-            systemInstruction: {
-              parts: [{
-                text: systemPrompt
-              }]
+              ],
             },
             generationConfig: {
               responseMimeType: 'application/json',
               maxOutputTokens: 8000,
-              temperature: 0.05 // Very low temperature for maximum accuracy
-            }
-          })
+              temperature: 0.05, // Very low temperature for maximum accuracy
+            },
+          }),
         }
       );
 
@@ -188,7 +197,7 @@ Line: "Milk 2L    £1.50"
         const errorText = await response.text();
         throw new ExternalAPIError('Gemini', {
           status: response.status,
-          error: errorText
+          error: errorText,
         });
       }
 
@@ -201,7 +210,7 @@ Line: "Milk 2L    £1.50"
     if (!candidate?.content?.parts?.[0]?.text) {
       logger.warn('Empty response from Gemini', {
         finishReason: candidate?.finishReason,
-        safetyRatings: candidate?.safetyRatings
+        safetyRatings: candidate?.safetyRatings,
       });
 
       return new Response(
@@ -212,11 +221,11 @@ Line: "Milk 2L    £1.50"
           invoice_date: null,
           items: [],
           requestId,
-          error: 'Could not extract items from image. Please try a clearer photo.'
+          error: 'Could not extract items from image. Please try a clearer photo.',
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
+          status: 200,
         }
       );
     }
@@ -229,7 +238,7 @@ Line: "Milk 2L    £1.50"
       parsedData = JSON.parse(extractedText);
     } catch (parseError) {
       logger.error('Failed to parse Gemini JSON response', {
-        rawResponse: extractedText.substring(0, 500)
+        rawResponse: extractedText.substring(0, 500),
       });
 
       return new Response(
@@ -240,11 +249,11 @@ Line: "Milk 2L    £1.50"
           invoice_date: null,
           items: [],
           requestId,
-          error: 'Failed to parse invoice data. Please try a clearer photo.'
+          error: 'Failed to parse invoice data. Please try a clearer photo.',
         }),
         {
           headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 200
+          status: 200,
         }
       );
     }
@@ -255,15 +264,17 @@ Line: "Milk 2L    £1.50"
       .map((item: any) => ({
         description: String(item.description).trim(),
         quantity: typeof item.quantity === 'number' && item.quantity > 0 ? item.quantity : 1,
-        unit_price: typeof item.unit_price === 'number' ? Math.round(item.unit_price * 100) / 100 : null,
-        total_price: typeof item.total_price === 'number' ? Math.round(item.total_price * 100) / 100 : null,
+        unit_price:
+          typeof item.unit_price === 'number' ? Math.round(item.unit_price * 100) / 100 : null,
+        total_price:
+          typeof item.total_price === 'number' ? Math.round(item.total_price * 100) / 100 : null,
         product_code: item.product_code ? String(item.product_code).trim() : null,
-        category: validateCategory(item.category)
+        category: validateCategory(item.category),
       }));
 
     logger.info('Invoice parsed successfully', {
       supplierName: parsedData.supplier_name,
-      itemCount: validatedItems.length
+      itemCount: validatedItems.length,
     });
 
     const result: ParseInvoiceResponse = {
@@ -272,17 +283,13 @@ Line: "Milk 2L    £1.50"
       invoice_number: parsedData.invoice_number || null,
       invoice_date: parsedData.invoice_date || null,
       items: validatedItems,
-      requestId
+      requestId,
     };
 
-    return new Response(
-      JSON.stringify(result),
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200
-      }
-    );
-
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 200,
+    });
   } catch (error) {
     logger.error('Failed to parse invoice photo', { error });
     return handleError(error);
@@ -294,9 +301,20 @@ Line: "Milk 2L    £1.50"
  */
 function validateCategory(category: unknown): string {
   const validCategories = [
-    'cables', 'accessories', 'distribution', 'lighting', 'containment',
-    'heating', 'fire-safety', 'security', 'ev-charging', 'renewable-energy',
-    'industrial', 'data-comms', 'specialist', 'other'
+    'cables',
+    'accessories',
+    'distribution',
+    'lighting',
+    'containment',
+    'heating',
+    'fire-safety',
+    'security',
+    'ev-charging',
+    'renewable-energy',
+    'industrial',
+    'data-comms',
+    'specialist',
+    'other',
   ];
 
   if (typeof category === 'string' && validCategories.includes(category.toLowerCase())) {

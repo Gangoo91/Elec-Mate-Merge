@@ -6,10 +6,10 @@ The Circuit Designer is a multi-agent system that generates BS 7671:2018+A2:2024
 
 ## Agents Involved
 
-| Agent | Edge Function | Core Logic | Purpose |
-|-------|---------------|------------|---------|
-| **Designer Agent** | `designer-agent-v3` | `design-pipeline.ts` | Circuit calculations, cable sizing, protection selection |
-| **Design Installation Agent** | `design-installation-agent` | Direct in function | Installation guidance for designed circuits |
+| Agent                         | Edge Function               | Core Logic           | Purpose                                                  |
+| ----------------------------- | --------------------------- | -------------------- | -------------------------------------------------------- |
+| **Designer Agent**            | `designer-agent-v3`         | `design-pipeline.ts` | Circuit calculations, cable sizing, protection selection |
+| **Design Installation Agent** | `design-installation-agent` | Direct in function   | Installation guidance for designed circuits              |
 
 ## Entry Points
 
@@ -28,21 +28,22 @@ The Circuit Designer is a multi-agent system that generates BS 7671:2018+A2:2024
 
 ### Designer Agent RAG Sources
 
-| Table | Search Function | Purpose |
-|-------|-----------------|---------|
-| `design_knowledge_intelligence` | `searchDesignIntelligence()` | Cable sizing tables, BS 7671 calculations, formulas |
-| `regulations_intelligence` | `searchRegulationsIntelligence()` | BS 7671 compliance rules, Zs limits, disconnection times |
+| Table                           | Search Function                   | Purpose                                                  |
+| ------------------------------- | --------------------------------- | -------------------------------------------------------- |
+| `design_knowledge_intelligence` | `searchDesignIntelligence()`      | Cable sizing tables, BS 7671 calculations, formulas      |
+| `regulations_intelligence`      | `searchRegulationsIntelligence()` | BS 7671 compliance rules, Zs limits, disconnection times |
 
 ### Installation Agent RAG Sources
 
-| Table | Search Function | Purpose |
-|-------|-----------------|---------|
+| Table                         | Search Function                     | Purpose                                |
+| ----------------------------- | ----------------------------------- | -------------------------------------- |
 | `practical_work_intelligence` | `searchPracticalWorkIntelligence()` | Installation procedures, tools, safety |
-| `regulations_intelligence` | `searchRegulationsIntelligence()` | Verification/testing regulations |
+| `regulations_intelligence`    | `searchRegulationsIntelligence()`   | Verification/testing regulations       |
 
 ### Keyword Extraction
 
 The `design-keyword-extractor.ts` generates 50-150+ targeted keywords across 12 categories:
+
 - Calculations (Ib, In, Iz, Zs, R1+R2, mV/A/m)
 - Cable Selection (sizing tables, installation methods)
 - Protection (MCB/RCBO/RCD devices)
@@ -66,18 +67,18 @@ sequenceDiagram
     Frontend->>CreateJob: Submit circuit requirements
     CreateJob->>Database: Create job (status: pending)
     CreateJob->>Orchestrator: Trigger processing
-    
+
     Orchestrator->>Designer: Phase 1: Design circuits
     Designer->>Designer: RAG search (design_knowledge + regulations)
     Designer->>Designer: AI generation (GPT-5 Mini)
     Designer->>Database: Save design_data (progress: 50%)
     Designer->>InstallationAgent: Fire-and-forget trigger
-    
+
     InstallationAgent->>Database: Read designed circuits
     InstallationAgent->>InstallationAgent: RAG search (practical_work + regulations)
     InstallationAgent->>InstallationAgent: AI generation (GPT-5 Mini)
     InstallationAgent->>Database: Save installation_guidance (status: complete)
-    
+
     Frontend->>Database: Poll for completion
     Database->>Frontend: Return complete design + guidance
 ```
@@ -92,16 +93,16 @@ interface CircuitDesignInput {
     location?: string;
   };
   supply: {
-    voltage: number;      // 230 or 400
+    voltage: number; // 230 or 400
     phases: '1' | '3';
     earthingSystem: 'TN-S' | 'TN-C-S' | 'TT';
     Ze?: number;
   };
   circuits: Array<{
     name: string;
-    loadType: string;     // socket, cooker, shower, lighting, etc.
-    loadPower: number;    // Watts
-    cableLength: number;  // metres
+    loadType: string; // socket, cooker, shower, lighting, etc.
+    loadPower: number; // Watts
+    cableLength: number; // metres
     installationMethod?: string;
   }>;
   additionalPrompt?: string;
@@ -117,24 +118,24 @@ interface CircuitDesignInput {
 interface CircuitDesign {
   name: string;
   loadType: string;
-  cableSpec: string;           // e.g., "2.5mm² twin and earth"
-  cableType: string;           // e.g., "twin and earth", "SWA", "LSZH singles"
-  protectionDevice: string;    // e.g., "32A Type B MCB"
-  installationMethod: string;  // e.g., "Reference method C"
-  enclosureType: string;       // e.g., "pvc-conduit", "steel-trunking", "none"
+  cableSpec: string; // e.g., "2.5mm² twin and earth"
+  cableType: string; // e.g., "twin and earth", "SWA", "LSZH singles"
+  protectionDevice: string; // e.g., "32A Type B MCB"
+  installationMethod: string; // e.g., "Reference method C"
+  enclosureType: string; // e.g., "pvc-conduit", "steel-trunking", "none"
   calculations: {
-    Ib: number;                // Design current (A)
-    In: number;                // Nominal rating (A)
-    Iz: number;                // Current-carrying capacity (A)
-    voltageDrop: number;       // mV
+    Ib: number; // Design current (A)
+    In: number; // Nominal rating (A)
+    Iz: number; // Current-carrying capacity (A)
+    voltageDrop: number; // mV
     voltageDropPercent: number;
-    Zs: number;                // Earth fault loop impedance (Ω)
-    maxZs: number;             // Maximum permissible Zs (Ω)
+    Zs: number; // Earth fault loop impedance (Ω)
+    maxZs: number; // Maximum permissible Zs (Ω)
     disconnectionTime: string; // e.g., "0.4s"
     diversityFactor: number;
     diversifiedLoad: number;
   };
-  justification: string;       // BS 7671 compliance reasoning
+  justification: string; // BS 7671 compliance reasoning
   complianceStatus: 'pass' | 'warning' | 'fail';
   expectedTests?: {
     continuity: number;
@@ -177,20 +178,20 @@ interface InstallationGuidance {
 
 **Table**: `circuit_design_jobs`
 
-| Column | Type | Description |
-|--------|------|-------------|
-| `id` | UUID | Job identifier |
-| `user_id` | UUID | Owner |
-| `status` | TEXT | pending, processing, complete, failed |
-| `progress` | INTEGER | 0-100 overall progress |
-| `designer_status` | TEXT | Designer agent status |
-| `designer_progress` | INTEGER | Designer agent progress |
-| `installation_agent_status` | TEXT | Installation agent status |
-| `installation_agent_progress` | INTEGER | Installation agent progress |
-| `job_inputs` | JSONB | Original request |
-| `design_data` | JSONB | Designer output |
-| `installation_guidance` | JSONB | Installation agent output |
-| `error_message` | TEXT | Error details if failed |
+| Column                        | Type    | Description                           |
+| ----------------------------- | ------- | ------------------------------------- |
+| `id`                          | UUID    | Job identifier                        |
+| `user_id`                     | UUID    | Owner                                 |
+| `status`                      | TEXT    | pending, processing, complete, failed |
+| `progress`                    | INTEGER | 0-100 overall progress                |
+| `designer_status`             | TEXT    | Designer agent status                 |
+| `designer_progress`           | INTEGER | Designer agent progress               |
+| `installation_agent_status`   | TEXT    | Installation agent status             |
+| `installation_agent_progress` | INTEGER | Installation agent progress           |
+| `job_inputs`                  | JSONB   | Original request                      |
+| `design_data`                 | JSONB   | Designer output                       |
+| `installation_guidance`       | JSONB   | Installation agent output             |
+| `error_message`               | TEXT    | Error details if failed               |
 
 ## Cache Strategy
 

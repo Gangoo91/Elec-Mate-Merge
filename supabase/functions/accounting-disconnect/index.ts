@@ -38,7 +38,10 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabaseAuth.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabaseAuth.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
@@ -89,7 +92,7 @@ serve(async (req: Request) => {
     await captureException(error, {
       functionName: 'accounting-disconnect',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return handleError(error);
   }

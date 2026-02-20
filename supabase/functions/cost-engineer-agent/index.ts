@@ -18,41 +18,51 @@ serve(async (req) => {
   const logger = createLogger(requestId, { function: 'cost-engineer-agent' });
 
   try {
-    const { messages, context, currentDesign, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json();
+    const {
+      messages,
+      context,
+      currentDesign,
+      conversationSummary,
+      previousAgentOutputs,
+      requestSuggestions,
+    } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
-    logger.info('Cost Engineer Agent processing', { messageCount: messages?.length, requestSuggestions });
+    logger.info('Cost Engineer Agent processing', {
+      messageCount: messages?.length,
+      requestSuggestions,
+    });
 
     // RAG - Get pricing data from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     const userMessage = messages[messages.length - 1]?.content || '';
     const ragQuery = `${userMessage} electrical materials cable MCB accessories`;
-    
+
     console.log(`🔍 RAG: Searching pricing data for: ${ragQuery} `);
-    
+
     // Generate embedding for pricing search with retry + timeout
-    const embeddingResponse = await logger.time(
-      'Lovable AI embedding generation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'text-embedding-3-small',
-              input: ragQuery,
+    const embeddingResponse = await logger.time('Lovable AI embedding generation', () =>
+      withRetry(
+        () =>
+          withTimeout(
+            fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${lovableApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'text-embedding-3-small',
+                input: ragQuery,
+              }),
             }),
-          }),
-          Timeouts.STANDARD,
-          'Lovable AI embedding generation'
-        ),
+            Timeouts.STANDARD,
+            'Lovable AI embedding generation'
+          ),
         RetryPresets.STANDARD
       )
     );
@@ -61,25 +71,29 @@ serve(async (req) => {
     if (embeddingResponse.ok) {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
-      
+
       const { data: pricingResults, error: ragError } = await logger.time(
         'Pricing vector search',
-        () => withTimeout(
-          supabase.rpc('search_pricing', {
-            query_embedding: embedding,
-            match_threshold: 0.7,
-            match_count: 15
-          }),
-          Timeouts.STANDARD,
-          'Pricing vector search'
-        )
+        () =>
+          withTimeout(
+            supabase.rpc('search_pricing', {
+              query_embedding: embedding,
+              match_threshold: 0.7,
+              match_count: 15,
+            }),
+            Timeouts.STANDARD,
+            'Pricing vector search'
+          )
       );
 
       if (!ragError && pricingResults && pricingResults.length > 0) {
         logger.info('Found pricing items', { count: pricingResults.length });
-        pricingData = pricingResults.map((p: any) => 
-          `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '⚠ Out of Stock'}`
-        ).join('\n');
+        pricingData = pricingResults
+          .map(
+            (p: any) =>
+              `${p.item_name} - £${p.base_cost} (${p.price_per_unit}) at ${p.wholesaler} ${p.in_stock ? '✓ In Stock' : '⚠ Out of Stock'}`
+          )
+          .join('\n');
       } else {
         logger.warn('No relevant pricing data found', { query: ragQuery });
       }
@@ -89,7 +103,7 @@ serve(async (req) => {
     const previousAgents = agentOutputs.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
-    
+
     // Prepend conversation context if available
     let contextPrefix = '';
     if (conversationSummary) {
@@ -99,15 +113,18 @@ serve(async (req) => {
       }
     }
     if (agentOutputs.length > 0) {
-      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
-        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
-      ).join('\n\n')}\n`;
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs
+        .map((a: any) => `[${a.agent}]: ${a.response?.substring(0, 200)}...`)
+        .join('\n\n')}\n`;
     }
 
     const lowerMsg = userMessage.toLowerCase();
-    const isOutdoor = lowerMsg.includes('outside') || lowerMsg.includes('outdoor') || 
-                      lowerMsg.includes('external') || lowerMsg.includes('tray');
-    
+    const isOutdoor =
+      lowerMsg.includes('outside') ||
+      lowerMsg.includes('outdoor') ||
+      lowerMsg.includes('external') ||
+      lowerMsg.includes('tray');
+
     let systemPrompt = `You are a cost estimator providing itemised UK electrical installation pricing (2025 rates).
 
 CRITICAL RULES:
@@ -201,47 +218,62 @@ PRICING NOTES
 
     systemPrompt += `\n\nCURRENT PRICING DATABASE (use these actual prices):\n${pricingData || 'No specific pricing found in database - estimate typical 2025 UK wholesale prices from CEF/Screwfix/TLC'}\n\nYou MUST end your response with the structured breakdown format above. Include all components needed for the installation.`;
 
-    const response = await logger.time(
-      'Lovable AI cost estimation',
-      () => withRetry(
-        () => withTimeout(
-          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${lovableApiKey}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              model: 'google/gemini-2.5-flash',
-              messages: [
-                { role: 'system', content: systemPrompt }, 
-                ...messages,
-                ...(agentContext?.structuredKnowledge ? [{
-                  role: 'system',
-                  content: agentContext.structuredKnowledge
-                }] : [])
-              ],
-              max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
+    const response = await logger.time('Lovable AI cost estimation', () =>
+      withRetry(
+        () =>
+          withTimeout(
+            fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${lovableApiKey}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                model: 'google/gemini-2.5-flash',
+                messages: [
+                  { role: 'system', content: systemPrompt },
+                  ...messages,
+                  ...(agentContext?.structuredKnowledge
+                    ? [
+                        {
+                          role: 'system',
+                          content: agentContext.structuredKnowledge,
+                        },
+                      ]
+                    : []),
+                ],
+                max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)),
+              }),
             }),
-          }),
-          Timeouts.STANDARD,
-          'Lovable AI cost estimation'
-        ),
+            Timeouts.STANDARD,
+            'Lovable AI cost estimation'
+          ),
         RetryPresets.STANDARD
       )
     );
 
     const data = await response.json();
     let responseContent = data.choices[0]?.message?.content || 'Cost estimate complete.';
-    
+
     // Strip any design-related crossover content
     const designKeywords = [
-      'circuit specification', 'voltage drop calculation', 'bs 7671 compliance', 
-      'cable specification:', 'design current', 'protection device:', 'correction factors',
-      'derated capacity', 'safety margin', 'tabulated capacity', 'load:', 'distance from board:',
-      'installation:', 'supply:', 'calculations'
+      'circuit specification',
+      'voltage drop calculation',
+      'bs 7671 compliance',
+      'cable specification:',
+      'design current',
+      'protection device:',
+      'correction factors',
+      'derated capacity',
+      'safety margin',
+      'tabulated capacity',
+      'load:',
+      'distance from board:',
+      'installation:',
+      'supply:',
+      'calculations',
     ];
-    
+
     // Find where MATERIALS BREAKDOWN starts and only keep from there onwards
     const materialsIndex = responseContent.indexOf('MATERIALS BREAKDOWN');
     if (materialsIndex > 0) {
@@ -253,28 +285,30 @@ PRICING NOTES
     const design = currentDesign || context?.currentDesign || {};
     const cableLength = design?.cableLength || 25;
     const cableSize = design?.cableSize || 2.5;
-    
+
     const reasoningSteps = [
       {
         step: 'Material quantity calculation',
         reasoning: `Calculated materials required based on ${cableLength}m cable run and ${cableSize}mm² cable specification`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
       {
         step: 'Pricing strategy',
-        reasoning: 'Applied current market rates with 15% markup for materials and standard labour rates',
-        timestamp: new Date().toISOString()
+        reasoning:
+          'Applied current market rates with 15% markup for materials and standard labour rates',
+        timestamp: new Date().toISOString(),
       },
       {
         step: 'Labour time estimation',
         reasoning: 'Estimated installation hours based on installation complexity and method',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       },
       {
         step: 'Contingency allowance',
-        reasoning: 'Added 10% contingency for unforeseen issues typical in electrical installations',
-        timestamp: new Date().toISOString()
-      }
+        reasoning:
+          'Added 10% contingency for unforeseen issues typical in electrical installations',
+        timestamp: new Date().toISOString(),
+      },
     ];
 
     const assumptionsMade = [
@@ -282,14 +316,14 @@ PRICING NOTES
         parameter: 'Labour rate',
         assumed: '£50/hour',
         reason: 'UK average for qualified electrician (2025)',
-        impact: 'Directly affects total project cost'
+        impact: 'Directly affects total project cost',
       },
       {
         parameter: 'Material markup',
         assumed: '15%',
         reason: 'Standard electrical contractor markup',
-        impact: 'Covers procurement, storage, and wastage'
-      }
+        impact: 'Covers procurement, storage, and wastage',
+      },
     ];
 
     // Build citations from pricing RAG
@@ -298,56 +332,60 @@ PRICING NOTES
       // pricingResults is defined earlier from the RAG search
       const pricingResults = []; // Define if needed, or reference from earlier scope
       if (pricingResults && pricingResults.length > 0) {
-        citations.push(...pricingResults.slice(0, 5).map((item: any) => ({
-          source: item.wholesaler || 'Pricing Database',
-          section: item.category,
-          title: item.item_name,
-          content: `£${item.base_cost} ${item.price_per_unit}`,
-          relevance: item.similarity,
-          type: 'pricing'
-        })));
+        citations.push(
+          ...pricingResults.slice(0, 5).map((item: any) => ({
+            source: item.wholesaler || 'Pricing Database',
+            section: item.category,
+            title: item.item_name,
+            content: `£${item.base_cost} ${item.price_per_unit}`,
+            relevance: item.similarity,
+            type: 'pricing',
+          }))
+        );
       }
     }
 
     const structuredData = {
       reasoningSteps,
       assumptionsMade,
-      citations
+      citations,
     };
-    
+
     // Generate suggestions for next agents
-    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
-    
+    const suggestedNextAgents: Array<{ agent: string; reason: string; priority?: string }> = [];
+
     if (requestSuggestions) {
       if (!previousAgents.includes('installer')) {
         suggestedNextAgents.push({
           agent: 'installer',
           reason: 'Get practical installation guidance and method statements',
-          priority: 'high'
+          priority: 'high',
         });
       }
       if (!previousAgents.includes('project-manager') && cableLength > 50) {
         suggestedNextAgents.push({
           agent: 'project-manager',
           reason: 'Large installation - coordinate scheduling and phasing',
-          priority: 'medium'
+          priority: 'medium',
         });
       }
     }
-    
+
     logger.info('Cost estimate generated successfully', { requestId });
 
-    return new Response(JSON.stringify({
-      response: responseContent,
-      structuredData,
-      confidence: 0.85,
-      suggestedNextAgents,
-      isComplete: true,
-      exportReady: true
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        response: responseContent,
+        structuredData,
+        confidence: 0.85,
+        suggestedNextAgents,
+        isComplete: true,
+        exportReady: true,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     logger.error('Cost engineer agent error', { error: getErrorMessage(error) });
     return handleError(error);
@@ -358,15 +396,15 @@ PRICING NOTES
 function calculateTokenLimit(circuitCount: number): number {
   const baseTokens = 2000;
   const perCircuitTokens = 300;
-  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 8000);
+  return Math.min(baseTokens + circuitCount * perCircuitTokens, 8000);
 }
 
 function extractCircuitCount(message: string): number {
   const wayMatch = message.match(/(\d+)[\s-]?way/i);
   if (wayMatch) return parseInt(wayMatch[1]);
-  
+
   const circuitMatch = message.match(/(\d+)\s+circuits?/i);
   if (circuitMatch) return parseInt(circuitMatch[1]);
-  
+
   return 6;
 }

@@ -44,7 +44,7 @@ export class RSComponentsScraper extends BaseScraper {
           '/web/c/power-tools/impact-drivers/',
           '/web/c/power-tools/grinders/',
         ],
-        'cables': [
+        cables: [
           '/web/c/cables-wires/',
           '/web/c/cables-wires/single-core-cable/',
           '/web/c/cables-wires/multi-core-cable/',
@@ -56,7 +56,7 @@ export class RSComponentsScraper extends BaseScraper {
           '/web/c/circuit-protection/rcds/',
           '/web/c/circuit-protection/fuses/',
         ],
-        'connectors': [
+        connectors: [
           '/web/c/connectors/',
           '/web/c/connectors/terminal-blocks/',
           '/web/c/connectors/plugs-sockets/',
@@ -101,14 +101,19 @@ export class RSComponentsScraper extends BaseScraper {
     if (!success) return products;
 
     // Wait for React hydration
-    await new Promise(r => setTimeout(r, 8000));
+    await new Promise((r) => setTimeout(r, 8000));
 
     // Try to wait for products to render
     try {
-      await page.waitForFunction(() => {
-        return document.body.innerText.includes('£') ||
-               document.querySelectorAll('a[href*="/web/p/"]').length > 3;
-      }, { timeout: 15000 });
+      await page.waitForFunction(
+        () => {
+          return (
+            document.body.innerText.includes('£') ||
+            document.querySelectorAll('a[href*="/web/p/"]').length > 3
+          );
+        },
+        { timeout: 15000 }
+      );
     } catch {
       // Continue anyway
     }
@@ -136,9 +141,15 @@ export class RSComponentsScraper extends BaseScraper {
         try {
           const content = script.textContent || '';
           // Look for product data patterns in JSON
-          if (content.includes('"displayPrice"') || content.includes('"stockNumber"') || content.includes('"products"')) {
+          if (
+            content.includes('"displayPrice"') ||
+            content.includes('"stockNumber"') ||
+            content.includes('"products"')
+          ) {
             // Try to find product arrays
-            const productMatches = content.matchAll(/"stockNumber"\s*:\s*"?(\d+)"?\s*,[\s\S]*?"displayPrice"\s*:\s*"([^"]+)"[\s\S]*?"title"\s*:\s*"([^"]+)"/g);
+            const productMatches = content.matchAll(
+              /"stockNumber"\s*:\s*"?(\d+)"?\s*,[\s\S]*?"displayPrice"\s*:\s*"([^"]+)"[\s\S]*?"title"\s*:\s*"([^"]+)"/g
+            );
             for (const match of productMatches) {
               const sku = match[1];
               if (!seenSkus.has(sku)) {
@@ -156,7 +167,9 @@ export class RSComponentsScraper extends BaseScraper {
             }
 
             // Alternative format
-            const altMatches = content.matchAll(/"id"\s*:\s*"?(\d{6,})"?[\s\S]*?"name"\s*:\s*"([^"]+)"[\s\S]*?"price"\s*:\s*"?([0-9.]+)"?/g);
+            const altMatches = content.matchAll(
+              /"id"\s*:\s*"?(\d{6,})"?[\s\S]*?"name"\s*:\s*"([^"]+)"[\s\S]*?"price"\s*:\s*"?([0-9.]+)"?/g
+            );
             for (const match of altMatches) {
               const sku = match[1];
               if (!seenSkus.has(sku)) {
@@ -206,7 +219,9 @@ export class RSComponentsScraper extends BaseScraper {
               seenSkus.add(sku);
 
               // Get name
-              const nameEl = card.querySelector('h2, h3, h4, [class*="title"], [class*="name"], [class*="Title"]');
+              const nameEl = card.querySelector(
+                'h2, h3, h4, [class*="title"], [class*="name"], [class*="Title"]'
+              );
               const name = nameEl?.textContent?.trim() || link.textContent?.trim() || '';
               if (!name || name.length < 3) return;
 
@@ -263,8 +278,11 @@ export class RSComponentsScraper extends BaseScraper {
             container = container.parentElement;
           }
 
-          const name = anchor.textContent?.trim() || anchor.title ||
-                      container?.querySelector('h2, h3, h4')?.textContent?.trim() || '';
+          const name =
+            anchor.textContent?.trim() ||
+            anchor.title ||
+            container?.querySelector('h2, h3, h4')?.textContent?.trim() ||
+            '';
           if (!name || name.length < 3) return;
 
           const text = container?.textContent || '';
@@ -290,14 +308,29 @@ export class RSComponentsScraper extends BaseScraper {
     for (const item of extractedProducts) {
       const currentPrice = this.parsePrice(item.currentPrice);
       const regularPrice = this.parsePrice(item.regularPrice);
-      const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+      const isOnSale =
+        regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
       const discount = this.calculateDiscount(currentPrice, regularPrice);
 
       // RS has lots of brands
       let brand = item.brand;
       if (!brand) {
-        const brands = ['Fluke', 'Megger', 'Wago', 'Phoenix Contact', 'Schneider', 'ABB', 'Siemens', 'Bosch', 'DeWalt', 'Makita', 'Wera', 'Knipex', 'Stanley'];
-        brand = brands.find(b => item.name.toLowerCase().includes(b.toLowerCase())) || null;
+        const brands = [
+          'Fluke',
+          'Megger',
+          'Wago',
+          'Phoenix Contact',
+          'Schneider',
+          'ABB',
+          'Siemens',
+          'Bosch',
+          'DeWalt',
+          'Makita',
+          'Wera',
+          'Knipex',
+          'Stanley',
+        ];
+        brand = brands.find((b) => item.name.toLowerCase().includes(b.toLowerCase())) || null;
       }
 
       products.push({
@@ -343,7 +376,9 @@ export class RSComponentsScraper extends BaseScraper {
       await this.scrollToLoadAll(page);
 
       const extractedDeals = await page.evaluate(() => {
-        const cards = document.querySelectorAll('.product-tile, .offer-tile, [data-testid="product-tile"]');
+        const cards = document.querySelectorAll(
+          '.product-tile, .offer-tile, [data-testid="product-tile"]'
+        );
         const items: Array<{
           sku: string | null;
           name: string;
@@ -431,13 +466,37 @@ export class RSComponentsScraper extends BaseScraper {
         try {
           if (match[3] && isNaN(parseInt(match[3]))) {
             const months: Record<string, number> = {
-              january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-              july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+              january: 0,
+              february: 1,
+              march: 2,
+              april: 3,
+              may: 4,
+              june: 5,
+              july: 6,
+              august: 7,
+              september: 8,
+              october: 9,
+              november: 10,
+              december: 11,
             };
-            return new Date(new Date().getFullYear(), months[match[3].toLowerCase()], parseInt(match[1]), 23, 59, 59);
+            return new Date(
+              new Date().getFullYear(),
+              months[match[3].toLowerCase()],
+              parseInt(match[1]),
+              23,
+              59,
+              59
+            );
           }
           if (match[3] && !isNaN(parseInt(match[3]))) {
-            return new Date(parseInt(match[3]), parseInt(match[2]) - 1, parseInt(match[1]), 23, 59, 59);
+            return new Date(
+              parseInt(match[3]),
+              parseInt(match[2]) - 1,
+              parseInt(match[1]),
+              23,
+              59,
+              59
+            );
           }
         } catch {
           continue;

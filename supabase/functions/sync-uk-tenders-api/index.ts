@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -75,52 +76,133 @@ interface OCDSRelease {
 
 // Electrical-related CPV codes
 const ELECTRICAL_CPV_CODES = new Set([
-  '45310000', '45311000', '45311100', '45311200', '45312000',
-  '45312100', '45312200', '45312310', '45314000', '45315000',
-  '45315100', '45315300', '45315600', '45315700', '45316000', '45317000',
+  '45310000',
+  '45311000',
+  '45311100',
+  '45311200',
+  '45312000',
+  '45312100',
+  '45312200',
+  '45312310',
+  '45314000',
+  '45315000',
+  '45315100',
+  '45315300',
+  '45315600',
+  '45315700',
+  '45316000',
+  '45317000',
   // Broader construction that often includes electrical
-  '45000000', '45200000', '45210000', '45220000', '45300000',
+  '45000000',
+  '45200000',
+  '45210000',
+  '45220000',
+  '45300000',
 ]);
 
 // Keywords to identify electrical opportunities - comprehensive list
 const ELECTRICAL_KEYWORDS = [
   // Core electrical terms
-  'electrical', 'electric', 'electrician', 'wiring', 'rewire', 'rewiring',
-  'cable', 'cabling', 'cables',
+  'electrical',
+  'electric',
+  'electrician',
+  'wiring',
+  'rewire',
+  'rewiring',
+  'cable',
+  'cabling',
+  'cables',
   // Lighting
-  'lighting', 'light fitting', 'luminaire', 'lamp', 'led',
-  'emergency lighting', 'exit sign', 'lux',
+  'lighting',
+  'light fitting',
+  'luminaire',
+  'lamp',
+  'led',
+  'emergency lighting',
+  'exit sign',
+  'lux',
   // Fire safety
-  'fire alarm', 'fire detection', 'smoke alarm', 'smoke detector',
-  'intruder alarm', 'burglar alarm', 'security alarm', 'access control',
+  'fire alarm',
+  'fire detection',
+  'smoke alarm',
+  'smoke detector',
+  'intruder alarm',
+  'burglar alarm',
+  'security alarm',
+  'access control',
   // Testing and inspection
-  'eicr', 'electrical inspection', 'periodic inspection', 'fixed wire testing',
-  'portable appliance', 'pat testing', 'electrical testing', 'test and inspect',
+  'eicr',
+  'electrical inspection',
+  'periodic inspection',
+  'fixed wire testing',
+  'portable appliance',
+  'pat testing',
+  'electrical testing',
+  'test and inspect',
   // Distribution
-  'consumer unit', 'distribution board', 'switchgear', 'switchboard',
-  'main panel', 'circuit breaker', 'rcd', 'rcbo', 'mccb',
+  'consumer unit',
+  'distribution board',
+  'switchgear',
+  'switchboard',
+  'main panel',
+  'circuit breaker',
+  'rcd',
+  'rcbo',
+  'mccb',
   // Infrastructure
-  'ev charging', 'ev charger', 'electric vehicle', 'charge point',
-  'solar pv', 'solar panel', 'photovoltaic', 'renewable energy',
-  'battery storage', 'ups', 'uninterruptible power',
+  'ev charging',
+  'ev charger',
+  'electric vehicle',
+  'charge point',
+  'solar pv',
+  'solar panel',
+  'photovoltaic',
+  'renewable energy',
+  'battery storage',
+  'ups',
+  'uninterruptible power',
   // Data and low voltage
-  'data cabling', 'structured cabling', 'cat5', 'cat6', 'fibre optic',
-  'containment', 'trunking', 'conduit', 'cable tray',
-  'cctv', 'door entry', 'intercom',
+  'data cabling',
+  'structured cabling',
+  'cat5',
+  'cat6',
+  'fibre optic',
+  'containment',
+  'trunking',
+  'conduit',
+  'cable tray',
+  'cctv',
+  'door entry',
+  'intercom',
   // Building services
-  'm&e', 'mechanical electrical', 'mep', 'building services',
-  'hvac control', 'bms', 'building management',
+  'm&e',
+  'mechanical electrical',
+  'mep',
+  'building services',
+  'hvac control',
+  'bms',
+  'building management',
   // General construction that often includes electrical
-  '45310000', '45311000', '45312000', '45314000', '45315000', '45316000', '45317000',
+  '45310000',
+  '45311000',
+  '45312000',
+  '45314000',
+  '45315000',
+  '45316000',
+  '45317000',
   // Additional relevant terms
-  'maintenance contract', 'reactive repairs', 'planned maintenance',
-  'housing maintenance', 'facilities management', 'fm contract',
+  'maintenance contract',
+  'reactive repairs',
+  'planned maintenance',
+  'housing maintenance',
+  'facilities management',
+  'fm contract',
 ];
 
 function isElectricalOpportunity(release: OCDSRelease): boolean {
   // Check CPV codes
-  const cpvCodes = release.tender?.items?.map(i => i.classification?.id) || [];
-  if (cpvCodes.some(code => code && ELECTRICAL_CPV_CODES.has(code.substring(0, 8)))) {
+  const cpvCodes = release.tender?.items?.map((i) => i.classification?.id) || [];
+  if (cpvCodes.some((code) => code && ELECTRICAL_CPV_CODES.has(code.substring(0, 8)))) {
     return true;
   }
 
@@ -128,15 +210,17 @@ function isElectricalOpportunity(release: OCDSRelease): boolean {
   const text = [
     release.tender?.title || '',
     release.tender?.description || '',
-    ...(release.tender?.items?.map(i => i.description) || [])
-  ].join(' ').toLowerCase();
+    ...(release.tender?.items?.map((i) => i.description) || []),
+  ]
+    .join(' ')
+    .toLowerCase();
 
-  return ELECTRICAL_KEYWORDS.some(keyword => text.includes(keyword));
+  return ELECTRICAL_KEYWORDS.some((keyword) => text.includes(keyword));
 }
 
 function extractPostcodeFromRelease(release: OCDSRelease): string | null {
   // Try buyer address
-  const buyer = release.parties?.find(p => p.roles?.includes('buyer'));
+  const buyer = release.parties?.find((p) => p.roles?.includes('buyer'));
   if (buyer?.address?.postalCode) {
     return buyer.address.postalCode.toUpperCase();
   }
@@ -155,16 +239,17 @@ function extractPostcodeFromRelease(release: OCDSRelease): string | null {
 
 function determineCategories(release: OCDSRelease): string[] {
   const categories: string[] = ['electrical'];
-  const text = [
-    release.tender?.title || '',
-    release.tender?.description || '',
-  ].join(' ').toLowerCase();
+  const text = [release.tender?.title || '', release.tender?.description || '']
+    .join(' ')
+    .toLowerCase();
 
   if (text.includes('fire alarm') || text.includes('fire detection')) categories.push('fire_alarm');
   if (text.includes('emergency light')) categories.push('emergency_lighting');
   if (text.includes('rewir') || text.includes('re-wir')) categories.push('rewire');
-  if (text.includes('eicr') || text.includes('periodic') || text.includes('testing')) categories.push('testing');
-  if (text.includes('ev charg') || text.includes('electric vehicle')) categories.push('ev_charging');
+  if (text.includes('eicr') || text.includes('periodic') || text.includes('testing'))
+    categories.push('testing');
+  if (text.includes('ev charg') || text.includes('electric vehicle'))
+    categories.push('ev_charging');
   if (text.includes('led') || text.includes('lighting')) categories.push('lighting');
   if (text.includes('solar') || text.includes('pv')) categories.push('solar');
   if (text.includes('data') || text.includes('cabling')) categories.push('data_cabling');
@@ -174,20 +259,33 @@ function determineCategories(release: OCDSRelease): string[] {
 }
 
 function determineSector(release: OCDSRelease): string {
-  const buyer = release.parties?.find(p => p.roles?.includes('buyer'));
+  const buyer = release.parties?.find((p) => p.roles?.includes('buyer'));
   const buyerName = (buyer?.name || '').toLowerCase();
   const description = (release.tender?.description || '').toLowerCase();
 
   if (buyerName.includes('nhs') || buyerName.includes('hospital') || buyerName.includes('health')) {
     return 'healthcare';
   }
-  if (buyerName.includes('housing') || buyerName.includes('homes') || description.includes('social housing')) {
+  if (
+    buyerName.includes('housing') ||
+    buyerName.includes('homes') ||
+    description.includes('social housing')
+  ) {
     return 'housing';
   }
-  if (buyerName.includes('school') || buyerName.includes('academy') || buyerName.includes('college') || buyerName.includes('university')) {
+  if (
+    buyerName.includes('school') ||
+    buyerName.includes('academy') ||
+    buyerName.includes('college') ||
+    buyerName.includes('university')
+  ) {
     return 'education';
   }
-  if (buyerName.includes('council') || buyerName.includes('borough') || buyerName.includes('district')) {
+  if (
+    buyerName.includes('council') ||
+    buyerName.includes('borough') ||
+    buyerName.includes('district')
+  ) {
     return 'local_authority';
   }
   return 'public';
@@ -196,21 +294,126 @@ function determineSector(release: OCDSRelease): string {
 function extractRegionFromPostcode(postcode: string | null): string | null {
   if (!postcode) return null;
 
-  const prefix = postcode.replace(/\s+/g, '').match(/^[A-Z]{1,2}/i)?.[0]?.toUpperCase() || '';
+  const prefix =
+    postcode
+      .replace(/\s+/g, '')
+      .match(/^[A-Z]{1,2}/i)?.[0]
+      ?.toUpperCase() || '';
 
   const regionMap: Record<string, string> = {
-    'B': 'west_midlands', 'CV': 'west_midlands', 'DY': 'west_midlands', 'WS': 'west_midlands', 'WV': 'west_midlands',
-    'M': 'northwest', 'L': 'northwest', 'WA': 'northwest', 'WN': 'northwest', 'BL': 'northwest', 'OL': 'northwest', 'PR': 'northwest', 'FY': 'northwest', 'BB': 'northwest', 'SK': 'northwest', 'CW': 'northwest',
-    'LS': 'yorkshire', 'BD': 'yorkshire', 'HX': 'yorkshire', 'HD': 'yorkshire', 'WF': 'yorkshire', 'S': 'yorkshire', 'DN': 'yorkshire', 'HU': 'yorkshire', 'YO': 'yorkshire', 'HG': 'yorkshire',
-    'NE': 'northeast', 'DH': 'northeast', 'SR': 'northeast', 'TS': 'northeast', 'DL': 'northeast', 'CA': 'northeast',
-    'NG': 'east_midlands', 'DE': 'east_midlands', 'LE': 'east_midlands', 'NN': 'east_midlands', 'LN': 'east_midlands', 'MK': 'east_midlands',
-    'BS': 'southwest', 'BA': 'southwest', 'EX': 'southwest', 'PL': 'southwest', 'TQ': 'southwest', 'TR': 'southwest', 'GL': 'southwest', 'TA': 'southwest', 'DT': 'southwest', 'BH': 'southwest', 'SP': 'southwest', 'SN': 'southwest',
-    'CB': 'east_england', 'CO': 'east_england', 'IP': 'east_england', 'NR': 'east_england', 'PE': 'east_england', 'CM': 'east_england', 'SS': 'east_england', 'AL': 'east_england', 'SG': 'east_england', 'LU': 'east_england',
-    'RG': 'southeast', 'SL': 'southeast', 'HP': 'southeast', 'OX': 'southeast', 'GU': 'southeast', 'PO': 'southeast', 'BN': 'southeast', 'TN': 'southeast', 'ME': 'southeast', 'CT': 'southeast', 'SO': 'southeast', 'RH': 'southeast',
-    'SW': 'london', 'SE': 'london', 'NW': 'london', 'N': 'london', 'E': 'london', 'W': 'london', 'EC': 'london', 'WC': 'london', 'CR': 'london', 'BR': 'london', 'DA': 'london', 'EN': 'london', 'HA': 'london', 'IG': 'london', 'KT': 'london', 'RM': 'london', 'SM': 'london', 'TW': 'london', 'UB': 'london', 'WD': 'london',
-    'CF': 'wales', 'SA': 'wales', 'LL': 'wales', 'SY': 'wales', 'NP': 'wales', 'LD': 'wales', 'HR': 'wales',
-    'G': 'scotland', 'EH': 'scotland', 'AB': 'scotland', 'DD': 'scotland', 'KY': 'scotland', 'FK': 'scotland', 'PA': 'scotland', 'IV': 'scotland', 'PH': 'scotland', 'ML': 'scotland', 'KA': 'scotland', 'DG': 'scotland', 'TD': 'scotland',
-    'BT': 'northern_ireland',
+    B: 'west_midlands',
+    CV: 'west_midlands',
+    DY: 'west_midlands',
+    WS: 'west_midlands',
+    WV: 'west_midlands',
+    M: 'northwest',
+    L: 'northwest',
+    WA: 'northwest',
+    WN: 'northwest',
+    BL: 'northwest',
+    OL: 'northwest',
+    PR: 'northwest',
+    FY: 'northwest',
+    BB: 'northwest',
+    SK: 'northwest',
+    CW: 'northwest',
+    LS: 'yorkshire',
+    BD: 'yorkshire',
+    HX: 'yorkshire',
+    HD: 'yorkshire',
+    WF: 'yorkshire',
+    S: 'yorkshire',
+    DN: 'yorkshire',
+    HU: 'yorkshire',
+    YO: 'yorkshire',
+    HG: 'yorkshire',
+    NE: 'northeast',
+    DH: 'northeast',
+    SR: 'northeast',
+    TS: 'northeast',
+    DL: 'northeast',
+    CA: 'northeast',
+    NG: 'east_midlands',
+    DE: 'east_midlands',
+    LE: 'east_midlands',
+    NN: 'east_midlands',
+    LN: 'east_midlands',
+    MK: 'east_midlands',
+    BS: 'southwest',
+    BA: 'southwest',
+    EX: 'southwest',
+    PL: 'southwest',
+    TQ: 'southwest',
+    TR: 'southwest',
+    GL: 'southwest',
+    TA: 'southwest',
+    DT: 'southwest',
+    BH: 'southwest',
+    SP: 'southwest',
+    SN: 'southwest',
+    CB: 'east_england',
+    CO: 'east_england',
+    IP: 'east_england',
+    NR: 'east_england',
+    PE: 'east_england',
+    CM: 'east_england',
+    SS: 'east_england',
+    AL: 'east_england',
+    SG: 'east_england',
+    LU: 'east_england',
+    RG: 'southeast',
+    SL: 'southeast',
+    HP: 'southeast',
+    OX: 'southeast',
+    GU: 'southeast',
+    PO: 'southeast',
+    BN: 'southeast',
+    TN: 'southeast',
+    ME: 'southeast',
+    CT: 'southeast',
+    SO: 'southeast',
+    RH: 'southeast',
+    SW: 'london',
+    SE: 'london',
+    NW: 'london',
+    N: 'london',
+    E: 'london',
+    W: 'london',
+    EC: 'london',
+    WC: 'london',
+    CR: 'london',
+    BR: 'london',
+    DA: 'london',
+    EN: 'london',
+    HA: 'london',
+    IG: 'london',
+    KT: 'london',
+    RM: 'london',
+    SM: 'london',
+    TW: 'london',
+    UB: 'london',
+    WD: 'london',
+    CF: 'wales',
+    SA: 'wales',
+    LL: 'wales',
+    SY: 'wales',
+    NP: 'wales',
+    LD: 'wales',
+    HR: 'wales',
+    G: 'scotland',
+    EH: 'scotland',
+    AB: 'scotland',
+    DD: 'scotland',
+    KY: 'scotland',
+    FK: 'scotland',
+    PA: 'scotland',
+    IV: 'scotland',
+    PH: 'scotland',
+    ML: 'scotland',
+    KA: 'scotland',
+    DG: 'scotland',
+    TD: 'scotland',
+    BT: 'northern_ireland',
   };
 
   return regionMap[prefix] || 'uk_wide';
@@ -219,13 +422,17 @@ function extractRegionFromPostcode(postcode: string | null): string | null {
 async function geocodePostcode(postcode: string): Promise<{ lat: number; lng: number } | null> {
   try {
     const cleanPostcode = postcode.replace(/\s+/g, '').toUpperCase();
-    const response = await fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`);
+    const response = await fetch(
+      `https://api.postcodes.io/postcodes/${encodeURIComponent(cleanPostcode)}`
+    );
 
     if (!response.ok) {
       // Try outcode only
       const outcode = cleanPostcode.match(/^[A-Z]{1,2}\d{1,2}/)?.[0];
       if (outcode) {
-        const outcodeResponse = await fetch(`https://api.postcodes.io/outcodes/${encodeURIComponent(outcode)}`);
+        const outcodeResponse = await fetch(
+          `https://api.postcodes.io/outcodes/${encodeURIComponent(outcode)}`
+        );
         if (outcodeResponse.ok) {
           const outcodeData = await outcodeResponse.json();
           if (outcodeData.result) {
@@ -280,7 +487,7 @@ async function fetchFindATenderOCDS(): Promise<OCDSRelease[]> {
     try {
       const response = await fetch(url, {
         headers: {
-          'Accept': 'application/json',
+          Accept: 'application/json',
         },
       });
 
@@ -307,7 +514,7 @@ async function fetchFindATenderOCDS(): Promise<OCDSRelease[]> {
       pageCount++;
 
       // Be respectful with rate limiting
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 500));
     } catch (e) {
       console.error(`[API] Error fetching page ${pageCount + 1}:`, e);
       break;
@@ -364,20 +571,26 @@ async function fetchContractsFinderCSV(): Promise<OCDSRelease[]> {
         // Helper to get value by nested path
         const getValue = (path: string): string => {
           const idx = headerMap[path];
-          return idx !== undefined ? (values[idx]?.trim() || '') : '';
+          return idx !== undefined ? values[idx]?.trim() || '' : '';
         };
 
         // Extract data using the nested column structure
         const title = getValue('releases/0/tender/title') || getValue('title') || '';
-        const description = getValue('releases/0/tender/description') || getValue('description') || '';
+        const description =
+          getValue('releases/0/tender/description') || getValue('description') || '';
         const cpvCode = getValue('releases/0/tender/classification/id') || getValue('cpv') || '';
         const cpvDesc = getValue('releases/0/tender/classification/description') || '';
         const valueStr = getValue('releases/0/tender/value/amount') || getValue('value') || '';
-        const orgName = getValue('releases/0/parties/0/name') || getValue('organisation') || 'Unknown';
-        const postcode = getValue('releases/0/parties/0/address/postalCode') || getValue('postcode') || '';
-        const email = getValue('releases/0/parties/0/contactPoint/email') || getValue('email') || '';
-        const publishedDate = getValue('publishedDate') || getValue('published') || new Date().toISOString();
-        const ocid = getValue('releases/0/ocid') || getValue('ocid') || `CF-${year}${month}${day}-${i}`;
+        const orgName =
+          getValue('releases/0/parties/0/name') || getValue('organisation') || 'Unknown';
+        const postcode =
+          getValue('releases/0/parties/0/address/postalCode') || getValue('postcode') || '';
+        const email =
+          getValue('releases/0/parties/0/contactPoint/email') || getValue('email') || '';
+        const publishedDate =
+          getValue('publishedDate') || getValue('published') || new Date().toISOString();
+        const ocid =
+          getValue('releases/0/ocid') || getValue('ocid') || `CF-${year}${month}${day}-${i}`;
 
         // Skip if no title
         if (!title && !description) continue;
@@ -387,32 +600,40 @@ async function fetchContractsFinderCSV(): Promise<OCDSRelease[]> {
           id: ocid,
           date: publishedDate,
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: orgName,
-            roles: ['buyer'],
-            address: {
-              postalCode: postcode,
+          parties: [
+            {
+              id: 'buyer',
+              name: orgName,
+              roles: ['buyer'],
+              address: {
+                postalCode: postcode,
+              },
+              contactPoint: {
+                email: email,
+              },
             },
-            contactPoint: {
-              email: email,
-            },
-          }],
+          ],
           tender: {
             id: ocid,
             title: title || description.substring(0, 200),
             description: description,
             status: 'active',
-            value: valueStr ? { amount: parseFloat(valueStr.replace(/[£,]/g, '')) || 0, currency: 'GBP' } : undefined,
-            items: cpvCode ? [{
-              id: '1',
-              description: cpvDesc,
-              classification: {
-                scheme: 'CPV',
-                id: cpvCode,
-                description: cpvDesc,
-              }
-            }] : undefined,
+            value: valueStr
+              ? { amount: parseFloat(valueStr.replace(/[£,]/g, '')) || 0, currency: 'GBP' }
+              : undefined,
+            items: cpvCode
+              ? [
+                  {
+                    id: '1',
+                    description: cpvDesc,
+                    classification: {
+                      scheme: 'CPV',
+                      id: cpvCode,
+                      description: cpvDesc,
+                    },
+                  },
+                ]
+              : undefined,
           },
         };
 
@@ -425,7 +646,7 @@ async function fetchContractsFinderCSV(): Promise<OCDSRelease[]> {
     }
 
     // Small delay between requests
-    await new Promise(r => setTimeout(r, 200));
+    await new Promise((r) => setTimeout(r, 200));
   }
 
   console.log(`[API] Total Contracts Finder CSV releases: ${releases.length}`);
@@ -474,7 +695,7 @@ async function fetchConstructionIndex(): Promise<OCDSRelease[]> {
       const response = await fetch(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-          'Accept': 'text/html,application/xhtml+xml',
+          Accept: 'text/html,application/xhtml+xml',
           'Accept-Language': 'en-GB,en;q=0.9',
         },
       });
@@ -487,7 +708,9 @@ async function fetchConstructionIndex(): Promise<OCDSRelease[]> {
       const html = await response.text();
 
       // Parse tender rows - look for table rows with tender data
-      const rowMatches = html.matchAll(/<tr[^>]*>[\s\S]*?<td[^>]*>([\s\S]*?)<\/td>[\s\S]*?<td[^>]*>([\s\S]*?)<\/td>[\s\S]*?<\/tr>/gi);
+      const rowMatches = html.matchAll(
+        /<tr[^>]*>[\s\S]*?<td[^>]*>([\s\S]*?)<\/td>[\s\S]*?<td[^>]*>([\s\S]*?)<\/td>[\s\S]*?<\/tr>/gi
+      );
 
       for (const match of rowMatches) {
         const titleCell = match[1] || '';
@@ -510,12 +733,14 @@ async function fetchConstructionIndex(): Promise<OCDSRelease[]> {
           id: link.match(/\/tender\/(\d+)/)?.[1] || String(releases.length),
           date: new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: 'Construction Index Listing',
-            roles: ['buyer'],
-            address: { locality: location },
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: 'Construction Index Listing',
+              roles: ['buyer'],
+              address: { locality: location },
+            },
+          ],
           tender: {
             id: String(releases.length),
             title,
@@ -526,7 +751,9 @@ async function fetchConstructionIndex(): Promise<OCDSRelease[]> {
       }
 
       // Also try finding tender cards/divs
-      const cardMatches = html.matchAll(/<div[^>]*class="[^"]*tender[^"]*"[^>]*>[\s\S]*?<h[23][^>]*>[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([^<]+)<\/a>/gi);
+      const cardMatches = html.matchAll(
+        /<div[^>]*class="[^"]*tender[^"]*"[^>]*>[\s\S]*?<h[23][^>]*>[\s\S]*?<a[^>]*href="([^"]*)"[^>]*>([^<]+)<\/a>/gi
+      );
 
       for (const match of cardMatches) {
         const link = match[1];
@@ -544,7 +771,7 @@ async function fetchConstructionIndex(): Promise<OCDSRelease[]> {
         });
       }
 
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise((r) => setTimeout(r, 500));
     } catch (e) {
       console.error(`[API] Construction Index error for ${keyword}:`, e);
     }
@@ -561,11 +788,12 @@ async function fetchTEDEuropa(): Promise<OCDSRelease[]> {
   try {
     // TED has an API for searching UK contracts
     // Use CPV codes for electrical work: 45310000
-    const url = 'https://ted.europa.eu/api/v3.0/notices/search?countryCode=GBR&cpvCode=45310000&noticeType=Contract&pageSize=100';
+    const url =
+      'https://ted.europa.eu/api/v3.0/notices/search?countryCode=GBR&cpvCode=45310000&noticeType=Contract&pageSize=100';
 
     const response = await fetch(url, {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
     });
 
@@ -579,17 +807,21 @@ async function fetchTEDEuropa(): Promise<OCDSRelease[]> {
           id: notice.id || '',
           date: notice.publicationDate || new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: notice.contractingAuthorityName || notice.buyerName || 'EU Tender',
-            roles: ['buyer'],
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: notice.contractingAuthorityName || notice.buyerName || 'EU Tender',
+              roles: ['buyer'],
+            },
+          ],
           tender: {
             id: notice.id || '',
             title: notice.title || notice.titleEnglish || 'EU Tender',
             description: notice.shortDescription || '',
             status: 'active',
-            value: notice.estimatedValue ? { amount: notice.estimatedValue, currency: 'GBP' } : undefined,
+            value: notice.estimatedValue
+              ? { amount: notice.estimatedValue, currency: 'GBP' }
+              : undefined,
           },
         });
       }
@@ -604,7 +836,7 @@ async function fetchTEDEuropa(): Promise<OCDSRelease[]> {
 
 function isElectricalText(text: string): boolean {
   const lower = text.toLowerCase();
-  return ELECTRICAL_KEYWORDS.some(keyword => lower.includes(keyword));
+  return ELECTRICAL_KEYWORDS.some((keyword) => lower.includes(keyword));
 }
 
 // =============================================================================
@@ -625,7 +857,7 @@ async function fetchPublicContractsScotland(): Promise<OCDSRelease[]> {
       const response = await fetch(rssUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0)',
-          'Accept': 'application/rss+xml, application/xml, text/xml',
+          Accept: 'application/rss+xml, application/xml, text/xml',
         },
       });
 
@@ -642,9 +874,13 @@ async function fetchPublicContractsScotland(): Promise<OCDSRelease[]> {
       for (const match of itemMatches) {
         const itemXml = match[1];
 
-        const title = itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
+        const title =
+          itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
         const link = itemXml.match(/<link>(.*?)<\/link>/i)?.[1]?.trim() || '';
-        const description = itemXml.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i)?.[1]?.trim() || '';
+        const description =
+          itemXml
+            .match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i)?.[1]
+            ?.trim() || '';
         const pubDate = itemXml.match(/<pubDate>(.*?)<\/pubDate>/i)?.[1]?.trim() || '';
 
         // Extract notice ID from link
@@ -661,12 +897,14 @@ async function fetchPublicContractsScotland(): Promise<OCDSRelease[]> {
           id: noticeId,
           date: pubDate ? new Date(pubDate).toISOString() : new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: orgName,
-            roles: ['buyer'],
-            address: { region: 'Scotland' },
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: orgName,
+              roles: ['buyer'],
+              address: { region: 'Scotland' },
+            },
+          ],
           tender: {
             id: noticeId,
             title: title.substring(0, 500),
@@ -676,7 +914,7 @@ async function fetchPublicContractsScotland(): Promise<OCDSRelease[]> {
         });
       }
 
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 300));
     } catch (e) {
       console.error(`[PCS] Error for ${term}:`, e);
     }
@@ -684,11 +922,12 @@ async function fetchPublicContractsScotland(): Promise<OCDSRelease[]> {
 
   // Also try the JSON API endpoint
   try {
-    const apiUrl = 'https://api.publiccontractsscotland.gov.uk/v1/Notices?cpvCodes=45310000,45311000,45312000&status=Open';
+    const apiUrl =
+      'https://api.publiccontractsscotland.gov.uk/v1/Notices?cpvCodes=45310000,45311000,45312000&status=Open';
 
     const response = await fetch(apiUrl, {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0)',
       },
     });
@@ -703,16 +942,18 @@ async function fetchPublicContractsScotland(): Promise<OCDSRelease[]> {
           id: notice.id || notice.noticeId || String(releases.length),
           date: notice.publishedDate || notice.datePublished || new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: notice.organisationName || notice.buyerName || 'Scottish Public Body',
-            roles: ['buyer'],
-            address: {
-              postalCode: notice.postcode,
-              locality: notice.location,
-              region: 'Scotland',
+          parties: [
+            {
+              id: 'buyer',
+              name: notice.organisationName || notice.buyerName || 'Scottish Public Body',
+              roles: ['buyer'],
+              address: {
+                postalCode: notice.postcode,
+                locality: notice.location,
+                region: 'Scotland',
+              },
             },
-          }],
+          ],
           tender: {
             id: notice.id || '',
             title: notice.title || notice.name || 'Scottish Tender',
@@ -751,7 +992,7 @@ async function fetchSell2Wales(): Promise<OCDSRelease[]> {
       const response = await fetch(rssUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0)',
-          'Accept': 'application/rss+xml, application/xml, text/xml',
+          Accept: 'application/rss+xml, application/xml, text/xml',
         },
       });
 
@@ -763,9 +1004,13 @@ async function fetchSell2Wales(): Promise<OCDSRelease[]> {
       for (const match of itemMatches) {
         const itemXml = match[1];
 
-        const title = itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
+        const title =
+          itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
         const link = itemXml.match(/<link>(.*?)<\/link>/i)?.[1]?.trim() || '';
-        const description = itemXml.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i)?.[1]?.trim() || '';
+        const description =
+          itemXml
+            .match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i)?.[1]
+            ?.trim() || '';
 
         const noticeId = link.match(/ID=(\d+)/i)?.[1] || `S2W-${Date.now()}-${releases.length}`;
 
@@ -776,12 +1021,14 @@ async function fetchSell2Wales(): Promise<OCDSRelease[]> {
           id: noticeId,
           date: new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: 'Welsh Public Body',
-            roles: ['buyer'],
-            address: { region: 'Wales' },
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: 'Welsh Public Body',
+              roles: ['buyer'],
+              address: { region: 'Wales' },
+            },
+          ],
           tender: {
             id: noticeId,
             title: title.substring(0, 500),
@@ -791,7 +1038,7 @@ async function fetchSell2Wales(): Promise<OCDSRelease[]> {
         });
       }
 
-      await new Promise(r => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 300));
     } catch (e) {
       console.error(`[S2W] Error for ${term}:`, e);
     }
@@ -810,12 +1057,13 @@ async function fetchETendersNI(): Promise<OCDSRelease[]> {
 
   try {
     // eTendersNI search
-    const searchUrl = 'https://etendersni.gov.uk/epps/cft/listContractOpportunities.do?status=Open&cpv=45310000';
+    const searchUrl =
+      'https://etendersni.gov.uk/epps/cft/listContractOpportunities.do?status=Open&cpv=45310000';
 
     const response = await fetch(searchUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0)',
-        'Accept': 'text/html',
+        Accept: 'text/html',
       },
     });
 
@@ -823,7 +1071,9 @@ async function fetchETendersNI(): Promise<OCDSRelease[]> {
       const html = await response.text();
 
       // Parse opportunity rows
-      const rowMatches = html.matchAll(/href="[^"]*viewContractOpportunityDetails[^"]*opportunityId=(\d+)[^"]*"[^>]*>([^<]+)</gi);
+      const rowMatches = html.matchAll(
+        /href="[^"]*viewContractOpportunityDetails[^"]*opportunityId=(\d+)[^"]*"[^>]*>([^<]+)</gi
+      );
 
       for (const match of rowMatches) {
         const id = match[1];
@@ -836,12 +1086,14 @@ async function fetchETendersNI(): Promise<OCDSRelease[]> {
           id: id,
           date: new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: 'Northern Ireland Public Body',
-            roles: ['buyer'],
-            address: { region: 'Northern Ireland' },
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: 'Northern Ireland Public Body',
+              roles: ['buyer'],
+              address: { region: 'Northern Ireland' },
+            },
+          ],
           tender: {
             id: id,
             title: title,
@@ -868,10 +1120,22 @@ async function fetchCouncilTenders(): Promise<OCDSRelease[]> {
   // Many councils use these common procurement platforms with RSS
   const councilFeeds = [
     // ProContract portals (many councils)
-    { name: 'Hampshire County Council', url: 'https://in-tendhost.co.uk/hampshire/aspx/ProjectManagement/ProjectSearch.aspx?format=rss' },
-    { name: 'Kent County Council', url: 'https://procontract.due-north.com/Opportunities/rss?site=10072' },
-    { name: 'Essex County Council', url: 'https://procontract.due-north.com/Opportunities/rss?site=10046' },
-    { name: 'Surrey County Council', url: 'https://procontract.due-north.com/Opportunities/rss?site=10076' },
+    {
+      name: 'Hampshire County Council',
+      url: 'https://in-tendhost.co.uk/hampshire/aspx/ProjectManagement/ProjectSearch.aspx?format=rss',
+    },
+    {
+      name: 'Kent County Council',
+      url: 'https://procontract.due-north.com/Opportunities/rss?site=10072',
+    },
+    {
+      name: 'Essex County Council',
+      url: 'https://procontract.due-north.com/Opportunities/rss?site=10046',
+    },
+    {
+      name: 'Surrey County Council',
+      url: 'https://procontract.due-north.com/Opportunities/rss?site=10076',
+    },
     // YPO - Yorkshire Purchasing Organisation
     { name: 'YPO Frameworks', url: 'https://www.ypo.co.uk/rss/opportunities' },
     // ESPO - Eastern Shires Purchasing Organisation
@@ -885,7 +1149,7 @@ async function fetchCouncilTenders(): Promise<OCDSRelease[]> {
       const response = await fetch(feed.url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0)',
-          'Accept': 'application/rss+xml, application/xml, text/xml',
+          Accept: 'application/rss+xml, application/xml, text/xml',
         },
       });
 
@@ -897,26 +1161,33 @@ async function fetchCouncilTenders(): Promise<OCDSRelease[]> {
       for (const match of itemMatches) {
         const itemXml = match[1];
 
-        const title = itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
+        const title =
+          itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
         const link = itemXml.match(/<link>(.*?)<\/link>/i)?.[1]?.trim() || '';
-        const description = itemXml.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i)?.[1]?.trim() || '';
+        const description =
+          itemXml
+            .match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i)?.[1]
+            ?.trim() || '';
 
         if (!title || !isElectricalText(title + ' ' + description)) continue;
 
-        const id = link.match(/[?&]id=(\d+)/i)?.[1] ||
-                   link.match(/opportunity\/(\d+)/i)?.[1] ||
-                   `COUNCIL-${Date.now()}-${releases.length}`;
+        const id =
+          link.match(/[?&]id=(\d+)/i)?.[1] ||
+          link.match(/opportunity\/(\d+)/i)?.[1] ||
+          `COUNCIL-${Date.now()}-${releases.length}`;
 
         releases.push({
           ocid: `COUNCIL-${feed.name.replace(/\s+/g, '')}-${id}`,
           id: id,
           date: new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: feed.name,
-            roles: ['buyer'],
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: feed.name,
+              roles: ['buyer'],
+            },
+          ],
           tender: {
             id: id,
             title: title.substring(0, 500),
@@ -926,7 +1197,7 @@ async function fetchCouncilTenders(): Promise<OCDSRelease[]> {
         });
       }
 
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 200));
     } catch (e) {
       // Silently continue - many RSS feeds may not be available
     }
@@ -946,11 +1217,23 @@ async function fetchHousingTenders(): Promise<OCDSRelease[]> {
   // Housing association procurement portals
   const housingPortals = [
     // In-Tend portals (used by many HAs)
-    { name: 'Clarion Housing', url: 'https://clarionhg.bravosolution.co.uk/web/login.shtml', region: 'london' },
+    {
+      name: 'Clarion Housing',
+      url: 'https://clarionhg.bravosolution.co.uk/web/login.shtml',
+      region: 'london',
+    },
     { name: 'L&Q Group', url: 'https://lq.bravosolution.co.uk', region: 'london' },
     { name: 'Peabody', url: 'https://peabody.bravosolution.co.uk', region: 'london' },
-    { name: 'Places for People', url: 'https://www.placesforpeople.co.uk/about-us/working-with-us/procurement/', region: 'northwest' },
-    { name: 'Sanctuary Housing', url: 'https://www.sanctuary-housing.co.uk/partners/procurement', region: 'west_midlands' },
+    {
+      name: 'Places for People',
+      url: 'https://www.placesforpeople.co.uk/about-us/working-with-us/procurement/',
+      region: 'northwest',
+    },
+    {
+      name: 'Sanctuary Housing',
+      url: 'https://www.sanctuary-housing.co.uk/partners/procurement',
+      region: 'west_midlands',
+    },
   ];
 
   // Try to fetch from common endpoints
@@ -964,7 +1247,7 @@ async function fetchHousingTenders(): Promise<OCDSRelease[]> {
       const response = await fetch(rssUrl, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0)',
-          'Accept': 'application/rss+xml, application/xml, text/html',
+          Accept: 'application/rss+xml, application/xml, text/html',
         },
       });
 
@@ -978,7 +1261,8 @@ async function fetchHousingTenders(): Promise<OCDSRelease[]> {
       for (const match of itemMatches) {
         const itemXml = match[1];
 
-        const title = itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
+        const title =
+          itemXml.match(/<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?<\/title>/i)?.[1]?.trim() || '';
 
         if (!title || !isElectricalText(title)) continue;
 
@@ -987,12 +1271,14 @@ async function fetchHousingTenders(): Promise<OCDSRelease[]> {
           id: String(releases.length),
           date: new Date().toISOString(),
           tag: ['tender'],
-          parties: [{
-            id: 'buyer',
-            name: portal.name,
-            roles: ['buyer'],
-            address: { region: portal.region },
-          }],
+          parties: [
+            {
+              id: 'buyer',
+              name: portal.name,
+              roles: ['buyer'],
+              address: { region: portal.region },
+            },
+          ],
           tender: {
             id: String(releases.length),
             title: title.substring(0, 500),
@@ -1001,7 +1287,7 @@ async function fetchHousingTenders(): Promise<OCDSRelease[]> {
         });
       }
 
-      await new Promise(r => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 200));
     } catch (e) {
       // Silently continue
     }
@@ -1030,37 +1316,117 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     // NUCLEAR & ENERGY - Major electrical spenders
     // ===========================================
     { name: 'Sellafield Ltd', postcode: 'CA20 1PG', sector: 'nuclear', valueMultiplier: 3 },
-    { name: 'Sellafield Ltd - Windscale', postcode: 'CA20 1PF', sector: 'nuclear', valueMultiplier: 2.5 },
-    { name: 'EDF Energy - Hinkley Point C', postcode: 'TA5 1UD', sector: 'nuclear', valueMultiplier: 4 },
-    { name: 'EDF Energy - Sizewell B', postcode: 'IP16 4UR', sector: 'nuclear', valueMultiplier: 2.5 },
+    {
+      name: 'Sellafield Ltd - Windscale',
+      postcode: 'CA20 1PF',
+      sector: 'nuclear',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'EDF Energy - Hinkley Point C',
+      postcode: 'TA5 1UD',
+      sector: 'nuclear',
+      valueMultiplier: 4,
+    },
+    {
+      name: 'EDF Energy - Sizewell B',
+      postcode: 'IP16 4UR',
+      sector: 'nuclear',
+      valueMultiplier: 2.5,
+    },
     { name: 'EDF Energy - Torness', postcode: 'EH42 1QS', sector: 'nuclear', valueMultiplier: 2 },
     { name: 'EDF Energy - Heysham', postcode: 'LA3 2XQ', sector: 'nuclear', valueMultiplier: 2 },
-    { name: 'EDF Energy - Hartlepool', postcode: 'TS25 2BZ', sector: 'nuclear', valueMultiplier: 2 },
-    { name: 'EDF Energy - Dungeness B', postcode: 'TN29 9PP', sector: 'nuclear', valueMultiplier: 2 },
-    { name: 'EDF Energy - Hunterston B', postcode: 'KA23 9QX', sector: 'nuclear', valueMultiplier: 2 },
+    {
+      name: 'EDF Energy - Hartlepool',
+      postcode: 'TS25 2BZ',
+      sector: 'nuclear',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'EDF Energy - Dungeness B',
+      postcode: 'TN29 9PP',
+      sector: 'nuclear',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'EDF Energy - Hunterston B',
+      postcode: 'KA23 9QX',
+      sector: 'nuclear',
+      valueMultiplier: 2,
+    },
     { name: 'Magnox Ltd - Wylfa', postcode: 'LL67 0DH', sector: 'nuclear', valueMultiplier: 1.5 },
-    { name: 'Magnox Ltd - Trawsfynydd', postcode: 'LL41 4DT', sector: 'nuclear', valueMultiplier: 1.5 },
-    { name: 'Magnox Ltd - Berkeley', postcode: 'GL13 9PB', sector: 'nuclear', valueMultiplier: 1.5 },
+    {
+      name: 'Magnox Ltd - Trawsfynydd',
+      postcode: 'LL41 4DT',
+      sector: 'nuclear',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'Magnox Ltd - Berkeley',
+      postcode: 'GL13 9PB',
+      sector: 'nuclear',
+      valueMultiplier: 1.5,
+    },
     { name: 'Magnox Ltd - Oldbury', postcode: 'BS35 1RQ', sector: 'nuclear', valueMultiplier: 1.5 },
     { name: 'AWE Aldermaston', postcode: 'RG7 4PR', sector: 'nuclear', valueMultiplier: 3 },
     { name: 'AWE Burghfield', postcode: 'RG7 4PR', sector: 'nuclear', valueMultiplier: 2.5 },
-    { name: 'Nuclear Decommissioning Authority', postcode: 'CA24 3HY', sector: 'nuclear', valueMultiplier: 2 },
+    {
+      name: 'Nuclear Decommissioning Authority',
+      postcode: 'CA24 3HY',
+      sector: 'nuclear',
+      valueMultiplier: 2,
+    },
     { name: 'URENCO UK Ltd', postcode: 'OL11 4HQ', sector: 'nuclear', valueMultiplier: 2 },
-    { name: 'National Nuclear Laboratory', postcode: 'CA20 1PG', sector: 'nuclear', valueMultiplier: 2 },
+    {
+      name: 'National Nuclear Laboratory',
+      postcode: 'CA20 1PG',
+      sector: 'nuclear',
+      valueMultiplier: 2,
+    },
 
     // ===========================================
     // DEFENCE - BAE, Babcock, QinetiQ etc
     // ===========================================
-    { name: 'BAE Systems - Barrow Shipyard', postcode: 'LA14 1AF', sector: 'defence', valueMultiplier: 3 },
+    {
+      name: 'BAE Systems - Barrow Shipyard',
+      postcode: 'LA14 1AF',
+      sector: 'defence',
+      valueMultiplier: 3,
+    },
     { name: 'BAE Systems - Warton', postcode: 'PR4 1AX', sector: 'defence', valueMultiplier: 2.5 },
-    { name: 'BAE Systems - Samlesbury', postcode: 'BB2 7LF', sector: 'defence', valueMultiplier: 2 },
-    { name: 'BAE Systems - Portsmouth Naval Base', postcode: 'PO1 3LT', sector: 'defence', valueMultiplier: 2.5 },
+    {
+      name: 'BAE Systems - Samlesbury',
+      postcode: 'BB2 7LF',
+      sector: 'defence',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'BAE Systems - Portsmouth Naval Base',
+      postcode: 'PO1 3LT',
+      sector: 'defence',
+      valueMultiplier: 2.5,
+    },
     { name: 'BAE Systems - Rochester', postcode: 'ME1 2XX', sector: 'defence', valueMultiplier: 2 },
     { name: 'BAE Systems - Brough', postcode: 'HU15 1EQ', sector: 'defence', valueMultiplier: 2 },
     { name: 'BAE Systems - Filton', postcode: 'BS34 7QW', sector: 'defence', valueMultiplier: 2 },
-    { name: 'Babcock International - Devonport', postcode: 'PL1 4SG', sector: 'defence', valueMultiplier: 3 },
-    { name: 'Babcock International - Rosyth', postcode: 'KY11 2YD', sector: 'defence', valueMultiplier: 2.5 },
-    { name: 'Babcock International - Faslane', postcode: 'G84 8HL', sector: 'defence', valueMultiplier: 2.5 },
+    {
+      name: 'Babcock International - Devonport',
+      postcode: 'PL1 4SG',
+      sector: 'defence',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Babcock International - Rosyth',
+      postcode: 'KY11 2YD',
+      sector: 'defence',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Babcock International - Faslane',
+      postcode: 'G84 8HL',
+      sector: 'defence',
+      valueMultiplier: 2.5,
+    },
     { name: 'QinetiQ - Farnborough', postcode: 'GU14 0LX', sector: 'defence', valueMultiplier: 2 },
     { name: 'QinetiQ - Malvern', postcode: 'WR14 3PS', sector: 'defence', valueMultiplier: 2 },
     { name: 'QinetiQ - Boscombe Down', postcode: 'SP4 0JF', sector: 'defence', valueMultiplier: 2 },
@@ -1070,63 +1436,263 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     { name: 'Leonardo UK - Yeovil', postcode: 'BA20 2YB', sector: 'defence', valueMultiplier: 2 },
     { name: 'MBDA UK - Stevenage', postcode: 'SG1 2DA', sector: 'defence', valueMultiplier: 2 },
     { name: 'MBDA UK - Bolton', postcode: 'BL6 6RQ', sector: 'defence', valueMultiplier: 2 },
-    { name: 'Defence Infrastructure Organisation', postcode: 'SN9 6DE', sector: 'defence', valueMultiplier: 2 },
+    {
+      name: 'Defence Infrastructure Organisation',
+      postcode: 'SN9 6DE',
+      sector: 'defence',
+      valueMultiplier: 2,
+    },
 
     // ===========================================
     // AEROSPACE - Rolls Royce, Airbus, GKN
     // ===========================================
     { name: 'Rolls-Royce - Derby', postcode: 'DE24 8BJ', sector: 'aerospace', valueMultiplier: 3 },
-    { name: 'Rolls-Royce - Bristol', postcode: 'BS34 7QE', sector: 'aerospace', valueMultiplier: 2.5 },
-    { name: 'Rolls-Royce - Hucknall', postcode: 'NG15 6WU', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Rolls-Royce - Inchinnan', postcode: 'PA4 9AF', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Rolls-Royce - Barnoldswick', postcode: 'BB18 6BJ', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Rolls-Royce - Washington', postcode: 'NE37 3ES', sector: 'aerospace', valueMultiplier: 2 },
+    {
+      name: 'Rolls-Royce - Bristol',
+      postcode: 'BS34 7QE',
+      sector: 'aerospace',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Rolls-Royce - Hucknall',
+      postcode: 'NG15 6WU',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Rolls-Royce - Inchinnan',
+      postcode: 'PA4 9AF',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Rolls-Royce - Barnoldswick',
+      postcode: 'BB18 6BJ',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Rolls-Royce - Washington',
+      postcode: 'NE37 3ES',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
     { name: 'Airbus UK - Broughton', postcode: 'CH4 0DR', sector: 'aerospace', valueMultiplier: 3 },
     { name: 'Airbus UK - Filton', postcode: 'BS34 7PA', sector: 'aerospace', valueMultiplier: 2.5 },
-    { name: 'GKN Aerospace - Filton', postcode: 'BS34 7QQ', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'GKN Aerospace - Western Approach', postcode: 'BS34 8QD', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'GKN Aerospace - Cowes', postcode: 'PO31 8PB', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Collins Aerospace - Wolverhampton', postcode: 'WV10 9LA', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Safran Landing Systems - Gloucester', postcode: 'GL2 9QH', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Spirit AeroSystems - Belfast', postcode: 'BT3 9DZ', sector: 'aerospace', valueMultiplier: 2 },
-    { name: 'Marshall Aerospace - Cambridge', postcode: 'CB5 8RX', sector: 'aerospace', valueMultiplier: 2 },
+    {
+      name: 'GKN Aerospace - Filton',
+      postcode: 'BS34 7QQ',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'GKN Aerospace - Western Approach',
+      postcode: 'BS34 8QD',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'GKN Aerospace - Cowes',
+      postcode: 'PO31 8PB',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Collins Aerospace - Wolverhampton',
+      postcode: 'WV10 9LA',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Safran Landing Systems - Gloucester',
+      postcode: 'GL2 9QH',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Spirit AeroSystems - Belfast',
+      postcode: 'BT3 9DZ',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Marshall Aerospace - Cambridge',
+      postcode: 'CB5 8RX',
+      sector: 'aerospace',
+      valueMultiplier: 2,
+    },
 
     // ===========================================
     // AUTOMOTIVE - JLR, Nissan, Toyota, BMW etc
     // ===========================================
-    { name: 'Jaguar Land Rover - Solihull', postcode: 'B92 8NW', sector: 'automotive', valueMultiplier: 3 },
-    { name: 'Jaguar Land Rover - Castle Bromwich', postcode: 'B35 7RA', sector: 'automotive', valueMultiplier: 2.5 },
-    { name: 'Jaguar Land Rover - Halewood', postcode: 'L24 9PL', sector: 'automotive', valueMultiplier: 2.5 },
-    { name: 'Jaguar Land Rover - Wolverhampton Engine Plant', postcode: 'WV9 5SB', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'Nissan Motor Manufacturing UK', postcode: 'SR5 3NS', sector: 'automotive', valueMultiplier: 3 },
-    { name: 'Toyota Manufacturing UK - Burnaston', postcode: 'DE65 6BT', sector: 'automotive', valueMultiplier: 3 },
-    { name: 'Toyota Manufacturing UK - Deeside', postcode: 'CH5 2NS', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'BMW MINI Plant Oxford', postcode: 'OX4 6NL', sector: 'automotive', valueMultiplier: 2.5 },
-    { name: 'BMW Hams Hall Engine Plant', postcode: 'B46 1GA', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'Honda Manufacturing UK - Swindon', postcode: 'SN3 4TZ', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'Bentley Motors - Crewe', postcode: 'CW1 3PL', sector: 'automotive', valueMultiplier: 2.5 },
-    { name: 'Aston Martin Lagonda - Gaydon', postcode: 'CV35 0DB', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'Aston Martin - St Athan', postcode: 'CF62 4JB', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'Vauxhall Motors - Ellesmere Port', postcode: 'CH65 4LG', sector: 'automotive', valueMultiplier: 2 },
-    { name: 'Ford Dagenham Engine Plant', postcode: 'RM9 6SA', sector: 'automotive', valueMultiplier: 2 },
+    {
+      name: 'Jaguar Land Rover - Solihull',
+      postcode: 'B92 8NW',
+      sector: 'automotive',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Jaguar Land Rover - Castle Bromwich',
+      postcode: 'B35 7RA',
+      sector: 'automotive',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Jaguar Land Rover - Halewood',
+      postcode: 'L24 9PL',
+      sector: 'automotive',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Jaguar Land Rover - Wolverhampton Engine Plant',
+      postcode: 'WV9 5SB',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Nissan Motor Manufacturing UK',
+      postcode: 'SR5 3NS',
+      sector: 'automotive',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Toyota Manufacturing UK - Burnaston',
+      postcode: 'DE65 6BT',
+      sector: 'automotive',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Toyota Manufacturing UK - Deeside',
+      postcode: 'CH5 2NS',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'BMW MINI Plant Oxford',
+      postcode: 'OX4 6NL',
+      sector: 'automotive',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'BMW Hams Hall Engine Plant',
+      postcode: 'B46 1GA',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Honda Manufacturing UK - Swindon',
+      postcode: 'SN3 4TZ',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Bentley Motors - Crewe',
+      postcode: 'CW1 3PL',
+      sector: 'automotive',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Aston Martin Lagonda - Gaydon',
+      postcode: 'CV35 0DB',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Aston Martin - St Athan',
+      postcode: 'CF62 4JB',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Vauxhall Motors - Ellesmere Port',
+      postcode: 'CH65 4LG',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Ford Dagenham Engine Plant',
+      postcode: 'RM9 6SA',
+      sector: 'automotive',
+      valueMultiplier: 2,
+    },
     { name: 'LEVC - Coventry', postcode: 'CV3 4LF', sector: 'automotive', valueMultiplier: 1.5 },
 
     // ===========================================
     // UTILITIES - National Grid, Power Networks
     // ===========================================
-    { name: 'National Grid - Warwick HQ', postcode: 'CV34 6DA', sector: 'utilities', valueMultiplier: 3 },
-    { name: 'National Grid - Wokingham', postcode: 'RG41 5BN', sector: 'utilities', valueMultiplier: 2.5 },
-    { name: 'UK Power Networks - Crawley', postcode: 'RH10 0FL', sector: 'utilities', valueMultiplier: 2.5 },
-    { name: 'UK Power Networks - Ipswich', postcode: 'IP1 2AN', sector: 'utilities', valueMultiplier: 2 },
-    { name: 'Western Power Distribution - Bristol', postcode: 'BS2 0TB', sector: 'utilities', valueMultiplier: 2 },
-    { name: 'Western Power Distribution - Derby', postcode: 'DE65 6FH', sector: 'utilities', valueMultiplier: 2 },
-    { name: 'Scottish Power - Glasgow', postcode: 'G2 5AD', sector: 'utilities', valueMultiplier: 2.5 },
-    { name: 'Scottish and Southern Electricity Networks', postcode: 'PH1 3AQ', sector: 'utilities', valueMultiplier: 2.5 },
-    { name: 'Northern Powergrid - Castleford', postcode: 'WF10 4TA', sector: 'utilities', valueMultiplier: 2 },
-    { name: 'Northern Powergrid - Newcastle', postcode: 'NE1 6PE', sector: 'utilities', valueMultiplier: 2 },
-    { name: 'Electricity North West', postcode: 'WN7 1WB', sector: 'utilities', valueMultiplier: 2 },
+    {
+      name: 'National Grid - Warwick HQ',
+      postcode: 'CV34 6DA',
+      sector: 'utilities',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'National Grid - Wokingham',
+      postcode: 'RG41 5BN',
+      sector: 'utilities',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'UK Power Networks - Crawley',
+      postcode: 'RH10 0FL',
+      sector: 'utilities',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'UK Power Networks - Ipswich',
+      postcode: 'IP1 2AN',
+      sector: 'utilities',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Western Power Distribution - Bristol',
+      postcode: 'BS2 0TB',
+      sector: 'utilities',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Western Power Distribution - Derby',
+      postcode: 'DE65 6FH',
+      sector: 'utilities',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Scottish Power - Glasgow',
+      postcode: 'G2 5AD',
+      sector: 'utilities',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Scottish and Southern Electricity Networks',
+      postcode: 'PH1 3AQ',
+      sector: 'utilities',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Northern Powergrid - Castleford',
+      postcode: 'WF10 4TA',
+      sector: 'utilities',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Northern Powergrid - Newcastle',
+      postcode: 'NE1 6PE',
+      sector: 'utilities',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Electricity North West',
+      postcode: 'WN7 1WB',
+      sector: 'utilities',
+      valueMultiplier: 2,
+    },
     { name: 'British Gas Business', postcode: 'SL1 3DG', sector: 'utilities', valueMultiplier: 2 },
-    { name: 'EDF Energy - London', postcode: 'EC1A 4HD', sector: 'utilities', valueMultiplier: 2.5 },
+    {
+      name: 'EDF Energy - London',
+      postcode: 'EC1A 4HD',
+      sector: 'utilities',
+      valueMultiplier: 2.5,
+    },
     { name: 'E.ON UK', postcode: 'CV2 2PR', sector: 'utilities', valueMultiplier: 2 },
     { name: 'SSE Energy Services', postcode: 'PH1 5PP', sector: 'utilities', valueMultiplier: 2 },
     { name: 'Drax Power Station', postcode: 'YO8 8PQ', sector: 'utilities', valueMultiplier: 2.5 },
@@ -1135,22 +1701,47 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     // ===========================================
     // RAIL - Network Rail, HS2, TfL
     // ===========================================
-    { name: 'Network Rail - Milton Keynes HQ', postcode: 'MK9 1EN', sector: 'rail', valueMultiplier: 3 },
+    {
+      name: 'Network Rail - Milton Keynes HQ',
+      postcode: 'MK9 1EN',
+      sector: 'rail',
+      valueMultiplier: 3,
+    },
     { name: 'Network Rail - York', postcode: 'YO1 6JT', sector: 'rail', valueMultiplier: 2.5 },
-    { name: 'Network Rail - London Victoria', postcode: 'SW1V 1JU', sector: 'rail', valueMultiplier: 2.5 },
+    {
+      name: 'Network Rail - London Victoria',
+      postcode: 'SW1V 1JU',
+      sector: 'rail',
+      valueMultiplier: 2.5,
+    },
     { name: 'Network Rail - Birmingham', postcode: 'B5 4UA', sector: 'rail', valueMultiplier: 2 },
     { name: 'Network Rail - Manchester', postcode: 'M1 2WD', sector: 'rail', valueMultiplier: 2 },
     { name: 'HS2 Ltd', postcode: 'B4 6GA', sector: 'rail', valueMultiplier: 4 },
     { name: 'HS2 - Old Oak Common', postcode: 'NW10 6LG', sector: 'rail', valueMultiplier: 3 },
-    { name: 'HS2 - Curzon Street Birmingham', postcode: 'B4 7XG', sector: 'rail', valueMultiplier: 3 },
+    {
+      name: 'HS2 - Curzon Street Birmingham',
+      postcode: 'B4 7XG',
+      sector: 'rail',
+      valueMultiplier: 3,
+    },
     { name: 'Transport for London', postcode: 'SE1 2TZ', sector: 'rail', valueMultiplier: 3 },
     { name: 'TfL - Victoria Line', postcode: 'E10 7JY', sector: 'rail', valueMultiplier: 2 },
     { name: 'TfL - Elizabeth Line', postcode: 'E1 1BB', sector: 'rail', valueMultiplier: 2.5 },
     { name: 'Crossrail', postcode: 'E14 5AB', sector: 'rail', valueMultiplier: 3 },
     { name: 'Eurostar International', postcode: 'SE1 9SP', sector: 'rail', valueMultiplier: 2 },
-    { name: 'Siemens Mobility - Manchester', postcode: 'M1 2EB', sector: 'rail', valueMultiplier: 2 },
+    {
+      name: 'Siemens Mobility - Manchester',
+      postcode: 'M1 2EB',
+      sector: 'rail',
+      valueMultiplier: 2,
+    },
     { name: 'Alstom UK - Derby', postcode: 'DE24 8AD', sector: 'rail', valueMultiplier: 2 },
-    { name: 'Hitachi Rail UK - Newton Aycliffe', postcode: 'DL5 6EP', sector: 'rail', valueMultiplier: 2.5 },
+    {
+      name: 'Hitachi Rail UK - Newton Aycliffe',
+      postcode: 'DL5 6EP',
+      sector: 'rail',
+      valueMultiplier: 2.5,
+    },
     { name: 'CAF Rolling Stock UK', postcode: 'LL77 7JA', sector: 'rail', valueMultiplier: 2 },
 
     // ===========================================
@@ -1169,32 +1760,122 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     { name: 'Wessex Water', postcode: 'BA2 7WW', sector: 'water', valueMultiplier: 2 },
     { name: 'Affinity Water', postcode: 'HP3 9BF', sector: 'water', valueMultiplier: 1.5 },
     { name: 'South East Water', postcode: 'TN13 3PZ', sector: 'water', valueMultiplier: 1.5 },
-    { name: 'South Staffordshire Water', postcode: 'WS2 7LZ', sector: 'water', valueMultiplier: 1.5 },
+    {
+      name: 'South Staffordshire Water',
+      postcode: 'WS2 7LZ',
+      sector: 'water',
+      valueMultiplier: 1.5,
+    },
 
     // ===========================================
     // MAIN CONTRACTORS - M&E Packages
     // ===========================================
-    { name: 'Balfour Beatty - London', postcode: 'W1K 5NA', sector: 'construction', valueMultiplier: 3 },
-    { name: 'Balfour Beatty - Birmingham', postcode: 'B3 2AT', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'Balfour Beatty - Manchester', postcode: 'M1 4BH', sector: 'construction', valueMultiplier: 2 },
-    { name: 'Kier Group - London', postcode: 'EC3V 1LT', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'Kier Group - Bedfordshire', postcode: 'SG18 8TQ', sector: 'construction', valueMultiplier: 2 },
-    { name: 'Morgan Sindall - London', postcode: 'EC2V 6AA', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'Morgan Sindall - Rugby', postcode: 'CV21 1FD', sector: 'construction', valueMultiplier: 2 },
-    { name: 'Willmott Dixon - Letchworth', postcode: 'SG6 1GD', sector: 'construction', valueMultiplier: 2 },
-    { name: 'Willmott Dixon - Birmingham', postcode: 'B3 2PB', sector: 'construction', valueMultiplier: 2 },
-    { name: 'Wates Construction', postcode: 'KT22 7DE', sector: 'construction', valueMultiplier: 2.5 },
+    {
+      name: 'Balfour Beatty - London',
+      postcode: 'W1K 5NA',
+      sector: 'construction',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Balfour Beatty - Birmingham',
+      postcode: 'B3 2AT',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Balfour Beatty - Manchester',
+      postcode: 'M1 4BH',
+      sector: 'construction',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Kier Group - London',
+      postcode: 'EC3V 1LT',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Kier Group - Bedfordshire',
+      postcode: 'SG18 8TQ',
+      sector: 'construction',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Morgan Sindall - London',
+      postcode: 'EC2V 6AA',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Morgan Sindall - Rugby',
+      postcode: 'CV21 1FD',
+      sector: 'construction',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Willmott Dixon - Letchworth',
+      postcode: 'SG6 1GD',
+      sector: 'construction',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Willmott Dixon - Birmingham',
+      postcode: 'B3 2PB',
+      sector: 'construction',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Wates Construction',
+      postcode: 'KT22 7DE',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
     { name: 'ISG plc - London', postcode: 'W14 0TT', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'Mace Group - London', postcode: 'EC1Y 4SA', sector: 'construction', valueMultiplier: 3 },
-    { name: 'Laing O\'Rourke - Dartford', postcode: 'DA2 6QE', sector: 'construction', valueMultiplier: 3 },
-    { name: 'Skanska UK - London', postcode: 'SE1 9SG', sector: 'construction', valueMultiplier: 3 },
+    {
+      name: 'Mace Group - London',
+      postcode: 'EC1Y 4SA',
+      sector: 'construction',
+      valueMultiplier: 3,
+    },
+    {
+      name: "Laing O'Rourke - Dartford",
+      postcode: 'DA2 6QE',
+      sector: 'construction',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Skanska UK - London',
+      postcode: 'SE1 9SG',
+      sector: 'construction',
+      valueMultiplier: 3,
+    },
     { name: 'Bouygues UK', postcode: 'TW3 3EB', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'Vinci Construction UK', postcode: 'WD6 1GW', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'Sir Robert McAlpine', postcode: 'HA1 2EN', sector: 'construction', valueMultiplier: 2.5 },
+    {
+      name: 'Vinci Construction UK',
+      postcode: 'WD6 1GW',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Sir Robert McAlpine',
+      postcode: 'HA1 2EN',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
     { name: 'Galliford Try', postcode: 'WV1 1PF', sector: 'construction', valueMultiplier: 2 },
     { name: 'BAM Construct UK', postcode: 'HP3 9AA', sector: 'construction', valueMultiplier: 2 },
-    { name: 'Multiplex Construction', postcode: 'W1T 4RJ', sector: 'construction', valueMultiplier: 2.5 },
-    { name: 'McLaren Construction', postcode: 'B45 9AG', sector: 'construction', valueMultiplier: 2 },
+    {
+      name: 'Multiplex Construction',
+      postcode: 'W1T 4RJ',
+      sector: 'construction',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'McLaren Construction',
+      postcode: 'B45 9AG',
+      sector: 'construction',
+      valueMultiplier: 2,
+    },
     { name: 'Robertson Group', postcode: 'PH1 3JL', sector: 'construction', valueMultiplier: 2 },
 
     // ===========================================
@@ -1202,73 +1883,233 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     // ===========================================
     { name: 'NG Bailey - Leeds', postcode: 'BD17 7AW', sector: 'mande', valueMultiplier: 2.5 },
     { name: 'NG Bailey - London', postcode: 'SE1 3QD', sector: 'mande', valueMultiplier: 2.5 },
-    { name: 'Briggs & Forrester - Leicester', postcode: 'LE4 0EF', sector: 'mande', valueMultiplier: 2 },
-    { name: 'Briggs & Forrester - Birmingham', postcode: 'B11 2AB', sector: 'mande', valueMultiplier: 2 },
+    {
+      name: 'Briggs & Forrester - Leicester',
+      postcode: 'LE4 0EF',
+      sector: 'mande',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Briggs & Forrester - Birmingham',
+      postcode: 'B11 2AB',
+      sector: 'mande',
+      valueMultiplier: 2,
+    },
     { name: 'Spie UK', postcode: 'TW8 0GP', sector: 'mande', valueMultiplier: 2 },
-    { name: 'Imtech Engineering Services', postcode: 'B37 7YE', sector: 'mande', valueMultiplier: 2 },
+    {
+      name: 'Imtech Engineering Services',
+      postcode: 'B37 7YE',
+      sector: 'mande',
+      valueMultiplier: 2,
+    },
     { name: 'Crown House Technologies', postcode: 'HA1 2EY', sector: 'mande', valueMultiplier: 2 },
     { name: 'T Clarke plc', postcode: 'SE1 7HJ', sector: 'mande', valueMultiplier: 2 },
     { name: 'Dalkia UK', postcode: 'M17 1LB', sector: 'mande', valueMultiplier: 2 },
     { name: 'Engie Services', postcode: 'SW1X 7QH', sector: 'mande', valueMultiplier: 2 },
-    { name: 'Mitie Technical Facilities Management', postcode: 'TW4 6JS', sector: 'mande', valueMultiplier: 2 },
+    {
+      name: 'Mitie Technical Facilities Management',
+      postcode: 'TW4 6JS',
+      sector: 'mande',
+      valueMultiplier: 2,
+    },
     { name: 'Integral UK', postcode: 'N3 2PX', sector: 'mande', valueMultiplier: 1.5 },
     { name: 'Amey - Birmingham', postcode: 'B16 8PE', sector: 'mande', valueMultiplier: 2 },
 
     // ===========================================
     // DATA CENTRES - Massive electrical users
     // ===========================================
-    { name: 'Microsoft Azure Data Centre - London', postcode: 'UB3 4AZ', sector: 'datacentre', valueMultiplier: 4 },
-    { name: 'Microsoft Azure Data Centre - South', postcode: 'SL1 3YY', sector: 'datacentre', valueMultiplier: 4 },
-    { name: 'Google Data Centre - Belgium/London Hub', postcode: 'E14 5HQ', sector: 'datacentre', valueMultiplier: 4 },
-    { name: 'Amazon Web Services UK', postcode: 'EC2N 1HN', sector: 'datacentre', valueMultiplier: 4 },
-    { name: 'Equinix LD4/LD5 - Slough', postcode: 'SL1 4AX', sector: 'datacentre', valueMultiplier: 3 },
-    { name: 'Equinix LD8 - London Docklands', postcode: 'E14 9JT', sector: 'datacentre', valueMultiplier: 3 },
-    { name: 'Digital Realty - London', postcode: 'E14 9GE', sector: 'datacentre', valueMultiplier: 3 },
-    { name: 'Virtus Data Centres - London', postcode: 'EN3 7SR', sector: 'datacentre', valueMultiplier: 3 },
+    {
+      name: 'Microsoft Azure Data Centre - London',
+      postcode: 'UB3 4AZ',
+      sector: 'datacentre',
+      valueMultiplier: 4,
+    },
+    {
+      name: 'Microsoft Azure Data Centre - South',
+      postcode: 'SL1 3YY',
+      sector: 'datacentre',
+      valueMultiplier: 4,
+    },
+    {
+      name: 'Google Data Centre - Belgium/London Hub',
+      postcode: 'E14 5HQ',
+      sector: 'datacentre',
+      valueMultiplier: 4,
+    },
+    {
+      name: 'Amazon Web Services UK',
+      postcode: 'EC2N 1HN',
+      sector: 'datacentre',
+      valueMultiplier: 4,
+    },
+    {
+      name: 'Equinix LD4/LD5 - Slough',
+      postcode: 'SL1 4AX',
+      sector: 'datacentre',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Equinix LD8 - London Docklands',
+      postcode: 'E14 9JT',
+      sector: 'datacentre',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Digital Realty - London',
+      postcode: 'E14 9GE',
+      sector: 'datacentre',
+      valueMultiplier: 3,
+    },
+    {
+      name: 'Virtus Data Centres - London',
+      postcode: 'EN3 7SR',
+      sector: 'datacentre',
+      valueMultiplier: 3,
+    },
     { name: 'CyrusOne UK', postcode: 'UB11 1FW', sector: 'datacentre', valueMultiplier: 3 },
     { name: 'Kao Data Campus', postcode: 'CM17 9TQ', sector: 'datacentre', valueMultiplier: 2.5 },
     { name: 'ark Data Centres', postcode: 'NG24 2RN', sector: 'datacentre', valueMultiplier: 2.5 },
-    { name: 'Telehouse Docklands', postcode: 'E14 9UF', sector: 'datacentre', valueMultiplier: 2.5 },
+    {
+      name: 'Telehouse Docklands',
+      postcode: 'E14 9UF',
+      sector: 'datacentre',
+      valueMultiplier: 2.5,
+    },
 
     // ===========================================
     // PHARMA & MANUFACTURING
     // ===========================================
-    { name: 'AstraZeneca - Macclesfield', postcode: 'SK10 2NA', sector: 'pharma', valueMultiplier: 2.5 },
+    {
+      name: 'AstraZeneca - Macclesfield',
+      postcode: 'SK10 2NA',
+      sector: 'pharma',
+      valueMultiplier: 2.5,
+    },
     { name: 'AstraZeneca - Cambridge', postcode: 'CB2 0AA', sector: 'pharma', valueMultiplier: 3 },
     { name: 'GSK - Stevenage', postcode: 'SG1 2NY', sector: 'pharma', valueMultiplier: 2.5 },
     { name: 'GSK - Ware', postcode: 'SG12 0DP', sector: 'pharma', valueMultiplier: 2 },
     { name: 'GSK - Worthing', postcode: 'BN14 8QH', sector: 'pharma', valueMultiplier: 2 },
     { name: 'Pfizer UK - Sandwich', postcode: 'CT13 9NJ', sector: 'pharma', valueMultiplier: 2.5 },
-    { name: 'Unilever - Port Sunlight', postcode: 'CH63 3JW', sector: 'manufacturing', valueMultiplier: 2 },
+    {
+      name: 'Unilever - Port Sunlight',
+      postcode: 'CH63 3JW',
+      sector: 'manufacturing',
+      valueMultiplier: 2,
+    },
     { name: 'Unilever - Leeds', postcode: 'LS11 9XS', sector: 'manufacturing', valueMultiplier: 2 },
     { name: 'Nestle UK - York', postcode: 'YO91 1XY', sector: 'manufacturing', valueMultiplier: 2 },
-    { name: 'Nestle Purina - Wisbech', postcode: 'PE13 2RJ', sector: 'manufacturing', valueMultiplier: 1.5 },
+    {
+      name: 'Nestle Purina - Wisbech',
+      postcode: 'PE13 2RJ',
+      sector: 'manufacturing',
+      valueMultiplier: 1.5,
+    },
     { name: 'Mars UK - Slough', postcode: 'SL1 4JX', sector: 'manufacturing', valueMultiplier: 2 },
-    { name: 'Diageo - Edinburgh', postcode: 'EH5 2DZ', sector: 'manufacturing', valueMultiplier: 2 },
+    {
+      name: 'Diageo - Edinburgh',
+      postcode: 'EH5 2DZ',
+      sector: 'manufacturing',
+      valueMultiplier: 2,
+    },
     { name: 'Diageo - Glasgow', postcode: 'G3 8YY', sector: 'manufacturing', valueMultiplier: 2 },
     { name: 'JCB - Rocester', postcode: 'ST14 5JP', sector: 'manufacturing', valueMultiplier: 2.5 },
-    { name: 'Siemens Gamesa - Hull', postcode: 'HU6 7RX', sector: 'manufacturing', valueMultiplier: 2.5 },
-    { name: 'Tata Steel - Port Talbot', postcode: 'SA13 2NG', sector: 'manufacturing', valueMultiplier: 2.5 },
+    {
+      name: 'Siemens Gamesa - Hull',
+      postcode: 'HU6 7RX',
+      sector: 'manufacturing',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Tata Steel - Port Talbot',
+      postcode: 'SA13 2NG',
+      sector: 'manufacturing',
+      valueMultiplier: 2.5,
+    },
 
     // ===========================================
     // UNIVERSITIES (Major electrical infrastructure)
     // ===========================================
     { name: 'University of Oxford', postcode: 'OX1 2JD', sector: 'education', valueMultiplier: 2 },
-    { name: 'University of Cambridge', postcode: 'CB2 1TN', sector: 'education', valueMultiplier: 2 },
-    { name: 'Imperial College London', postcode: 'SW7 2AZ', sector: 'education', valueMultiplier: 2 },
-    { name: 'University College London', postcode: 'WC1E 6BT', sector: 'education', valueMultiplier: 2 },
-    { name: 'University of Manchester', postcode: 'M13 9PL', sector: 'education', valueMultiplier: 2 },
-    { name: 'University of Edinburgh', postcode: 'EH8 9YL', sector: 'education', valueMultiplier: 2 },
-    { name: 'University of Glasgow', postcode: 'G12 8QQ', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'University of Birmingham', postcode: 'B15 2TT', sector: 'education', valueMultiplier: 1.5 },
+    {
+      name: 'University of Cambridge',
+      postcode: 'CB2 1TN',
+      sector: 'education',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Imperial College London',
+      postcode: 'SW7 2AZ',
+      sector: 'education',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'University College London',
+      postcode: 'WC1E 6BT',
+      sector: 'education',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'University of Manchester',
+      postcode: 'M13 9PL',
+      sector: 'education',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'University of Edinburgh',
+      postcode: 'EH8 9YL',
+      sector: 'education',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'University of Glasgow',
+      postcode: 'G12 8QQ',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'University of Birmingham',
+      postcode: 'B15 2TT',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
     { name: 'University of Leeds', postcode: 'LS2 9JT', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'University of Sheffield', postcode: 'S10 2TN', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'University of Bristol', postcode: 'BS8 1TH', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'University of Nottingham', postcode: 'NG7 2RD', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'University of Southampton', postcode: 'SO17 1BJ', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'Newcastle University', postcode: 'NE1 7RU', sector: 'education', valueMultiplier: 1.5 },
+    {
+      name: 'University of Sheffield',
+      postcode: 'S10 2TN',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'University of Bristol',
+      postcode: 'BS8 1TH',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'University of Nottingham',
+      postcode: 'NG7 2RD',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'University of Southampton',
+      postcode: 'SO17 1BJ',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'Newcastle University',
+      postcode: 'NE1 7RU',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
     { name: 'Cardiff University', postcode: 'CF10 3AT', sector: 'education', valueMultiplier: 1.5 },
-    { name: 'Queen\'s University Belfast', postcode: 'BT7 1NN', sector: 'education', valueMultiplier: 1.5 },
+    {
+      name: "Queen's University Belfast",
+      postcode: 'BT7 1NN',
+      sector: 'education',
+      valueMultiplier: 1.5,
+    },
 
     // ===========================================
     // AIRPORTS
@@ -1283,39 +2124,139 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     { name: 'Glasgow Airport', postcode: 'PA3 2SW', sector: 'aviation', valueMultiplier: 2 },
     { name: 'Bristol Airport', postcode: 'BS48 3DY', sector: 'aviation', valueMultiplier: 1.5 },
     { name: 'Newcastle Airport', postcode: 'NE13 8BZ', sector: 'aviation', valueMultiplier: 1.5 },
-    { name: 'East Midlands Airport', postcode: 'DE74 2SA', sector: 'aviation', valueMultiplier: 1.5 },
-    { name: 'Leeds Bradford Airport', postcode: 'LS19 7TU', sector: 'aviation', valueMultiplier: 1.5 },
+    {
+      name: 'East Midlands Airport',
+      postcode: 'DE74 2SA',
+      sector: 'aviation',
+      valueMultiplier: 1.5,
+    },
+    {
+      name: 'Leeds Bradford Airport',
+      postcode: 'LS19 7TU',
+      sector: 'aviation',
+      valueMultiplier: 1.5,
+    },
 
     // ===========================================
     // RETAIL & COMMERCIAL
     // ===========================================
-    { name: 'Tesco - Welwyn Garden City HQ', postcode: 'AL7 1GA', sector: 'retail', valueMultiplier: 2 },
-    { name: 'Sainsbury\'s - Holborn HQ', postcode: 'EC1N 2HT', sector: 'retail', valueMultiplier: 2 },
+    {
+      name: 'Tesco - Welwyn Garden City HQ',
+      postcode: 'AL7 1GA',
+      sector: 'retail',
+      valueMultiplier: 2,
+    },
+    {
+      name: "Sainsbury's - Holborn HQ",
+      postcode: 'EC1N 2HT',
+      sector: 'retail',
+      valueMultiplier: 2,
+    },
     { name: 'Asda - Leeds HQ', postcode: 'LS11 5AD', sector: 'retail', valueMultiplier: 2 },
     { name: 'Morrisons - Bradford', postcode: 'BD3 7DL', sector: 'retail', valueMultiplier: 2 },
     { name: 'John Lewis Partnership', postcode: 'SW1A 1EX', sector: 'retail', valueMultiplier: 2 },
     { name: 'Marks & Spencer - London', postcode: 'W2 1NW', sector: 'retail', valueMultiplier: 2 },
     { name: 'Next plc - Enderby', postcode: 'LE19 4AT', sector: 'retail', valueMultiplier: 1.5 },
-    { name: 'Primark - Dublin/Reading Distribution', postcode: 'RG2 0TG', sector: 'retail', valueMultiplier: 1.5 },
+    {
+      name: 'Primark - Dublin/Reading Distribution',
+      postcode: 'RG2 0TG',
+      sector: 'retail',
+      valueMultiplier: 1.5,
+    },
 
     // ===========================================
     // NHS TRUSTS - Major electrical users
     // ===========================================
-    { name: 'Barts Health NHS Trust', postcode: 'EC1A 7BE', sector: 'healthcare', valueMultiplier: 2.5 },
-    { name: 'Guy\'s and St Thomas\' NHS Foundation Trust', postcode: 'SE1 9RT', sector: 'healthcare', valueMultiplier: 2.5 },
-    { name: 'Imperial College Healthcare NHS Trust', postcode: 'W2 1NY', sector: 'healthcare', valueMultiplier: 2.5 },
-    { name: 'King\'s College Hospital NHS Foundation Trust', postcode: 'SE5 9RS', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'University Hospitals Birmingham NHS FT', postcode: 'B15 2GW', sector: 'healthcare', valueMultiplier: 2.5 },
-    { name: 'Manchester University NHS Foundation Trust', postcode: 'M13 9WL', sector: 'healthcare', valueMultiplier: 2.5 },
-    { name: 'Leeds Teaching Hospitals NHS Trust', postcode: 'LS1 3EX', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'Sheffield Teaching Hospitals NHS FT', postcode: 'S10 2JF', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'Newcastle upon Tyne Hospitals NHS FT', postcode: 'NE7 7DN', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'Oxford University Hospitals NHS FT', postcode: 'OX3 9DU', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'Cambridge University Hospitals NHS FT', postcode: 'CB2 0QQ', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'University Hospitals Bristol and Weston', postcode: 'BS2 8HW', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'Nottingham University Hospitals NHS Trust', postcode: 'NG7 2UH', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'Liverpool University Hospitals NHS FT', postcode: 'L7 8XP', sector: 'healthcare', valueMultiplier: 2 },
-    { name: 'NHS Greater Glasgow and Clyde', postcode: 'G4 0SF', sector: 'healthcare', valueMultiplier: 2 },
+    {
+      name: 'Barts Health NHS Trust',
+      postcode: 'EC1A 7BE',
+      sector: 'healthcare',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: "Guy's and St Thomas' NHS Foundation Trust",
+      postcode: 'SE1 9RT',
+      sector: 'healthcare',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Imperial College Healthcare NHS Trust',
+      postcode: 'W2 1NY',
+      sector: 'healthcare',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: "King's College Hospital NHS Foundation Trust",
+      postcode: 'SE5 9RS',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'University Hospitals Birmingham NHS FT',
+      postcode: 'B15 2GW',
+      sector: 'healthcare',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Manchester University NHS Foundation Trust',
+      postcode: 'M13 9WL',
+      sector: 'healthcare',
+      valueMultiplier: 2.5,
+    },
+    {
+      name: 'Leeds Teaching Hospitals NHS Trust',
+      postcode: 'LS1 3EX',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Sheffield Teaching Hospitals NHS FT',
+      postcode: 'S10 2JF',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Newcastle upon Tyne Hospitals NHS FT',
+      postcode: 'NE7 7DN',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Oxford University Hospitals NHS FT',
+      postcode: 'OX3 9DU',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Cambridge University Hospitals NHS FT',
+      postcode: 'CB2 0QQ',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'University Hospitals Bristol and Weston',
+      postcode: 'BS2 8HW',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Nottingham University Hospitals NHS Trust',
+      postcode: 'NG7 2UH',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'Liverpool University Hospitals NHS FT',
+      postcode: 'L7 8XP',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
+    {
+      name: 'NHS Greater Glasgow and Clyde',
+      postcode: 'G4 0SF',
+      sector: 'healthcare',
+      valueMultiplier: 2,
+    },
     { name: 'NHS Lothian', postcode: 'EH1 3EG', sector: 'healthcare', valueMultiplier: 2 },
 
     // ===========================================
@@ -1331,7 +2272,11 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     { name: 'Nottingham City Council', postcode: 'NG2 3NG', sector: 'local_authority' },
     { name: 'Leicester City Council', postcode: 'LE1 1FZ', sector: 'local_authority' },
     { name: 'Coventry City Council', postcode: 'CV1 5RR', sector: 'local_authority' },
-    { name: 'Bradford Metropolitan District Council', postcode: 'BD1 1HY', sector: 'local_authority' },
+    {
+      name: 'Bradford Metropolitan District Council',
+      postcode: 'BD1 1HY',
+      sector: 'local_authority',
+    },
     { name: 'Wolverhampton City Council', postcode: 'WV1 1SH', sector: 'local_authority' },
     { name: 'Cornwall Council', postcode: 'TR1 3AY', sector: 'local_authority' },
     { name: 'Kent County Council', postcode: 'ME14 1XX', sector: 'local_authority' },
@@ -1390,52 +2335,226 @@ function generateUKWideOpportunities(): OCDSRelease[] {
   // =============================================================================
   const projectTypes = [
     // Standard electrical
-    { type: 'rewire', title: 'Full Electrical Rewiring Programme', values: [35000, 450000], categories: ['electrical', 'rewire'], description: 'Complete rewiring of building stock including new consumer units, circuits, and accessories to current BS 7671 standards' },
-    { type: 'distribution', title: 'Distribution Board Replacement', values: [8000, 85000], categories: ['electrical'], description: 'Replacement of main and sub-distribution boards with new compliant units including RCBO protection' },
-    { type: 'containment', title: 'Cable Containment Installation', values: [15000, 120000], categories: ['electrical'], description: 'Supply and installation of cable tray, trunking and conduit systems' },
+    {
+      type: 'rewire',
+      title: 'Full Electrical Rewiring Programme',
+      values: [35000, 450000],
+      categories: ['electrical', 'rewire'],
+      description:
+        'Complete rewiring of building stock including new consumer units, circuits, and accessories to current BS 7671 standards',
+    },
+    {
+      type: 'distribution',
+      title: 'Distribution Board Replacement',
+      values: [8000, 85000],
+      categories: ['electrical'],
+      description:
+        'Replacement of main and sub-distribution boards with new compliant units including RCBO protection',
+    },
+    {
+      type: 'containment',
+      title: 'Cable Containment Installation',
+      values: [15000, 120000],
+      categories: ['electrical'],
+      description: 'Supply and installation of cable tray, trunking and conduit systems',
+    },
 
     // Fire & Life Safety
-    { type: 'fire_alarm', title: 'Fire Detection & Alarm System', values: [25000, 350000], categories: ['electrical', 'fire_alarm'], description: 'Design, supply and installation of Category L2/L1 fire detection system to BS 5839' },
-    { type: 'emergency_lighting', title: 'Emergency Lighting Installation', values: [15000, 180000], categories: ['electrical', 'emergency_lighting'], description: 'Emergency escape lighting system to BS 5266 including maintained and non-maintained luminaires' },
-    { type: 'voice_alarm', title: 'Voice Alarm System Installation', values: [45000, 280000], categories: ['electrical', 'fire_alarm'], description: 'Voice alarm and public address system installation to BS 5839-8' },
+    {
+      type: 'fire_alarm',
+      title: 'Fire Detection & Alarm System',
+      values: [25000, 350000],
+      categories: ['electrical', 'fire_alarm'],
+      description:
+        'Design, supply and installation of Category L2/L1 fire detection system to BS 5839',
+    },
+    {
+      type: 'emergency_lighting',
+      title: 'Emergency Lighting Installation',
+      values: [15000, 180000],
+      categories: ['electrical', 'emergency_lighting'],
+      description:
+        'Emergency escape lighting system to BS 5266 including maintained and non-maintained luminaires',
+    },
+    {
+      type: 'voice_alarm',
+      title: 'Voice Alarm System Installation',
+      values: [45000, 280000],
+      categories: ['electrical', 'fire_alarm'],
+      description: 'Voice alarm and public address system installation to BS 5839-8',
+    },
 
     // Testing & Inspection
-    { type: 'eicr', title: 'EICR Testing Programme', values: [12000, 150000], categories: ['electrical', 'testing'], description: 'Electrical Installation Condition Reports across property portfolio with remedial works' },
-    { type: 'pat', title: 'PAT Testing Contract', values: [5000, 45000], categories: ['electrical', 'testing'], description: 'Portable appliance testing programme across all sites' },
-    { type: 'thermal', title: 'Thermal Imaging Survey & Remedials', values: [8000, 65000], categories: ['electrical', 'testing'], description: 'Thermal imaging of electrical infrastructure to identify faults' },
+    {
+      type: 'eicr',
+      title: 'EICR Testing Programme',
+      values: [12000, 150000],
+      categories: ['electrical', 'testing'],
+      description:
+        'Electrical Installation Condition Reports across property portfolio with remedial works',
+    },
+    {
+      type: 'pat',
+      title: 'PAT Testing Contract',
+      values: [5000, 45000],
+      categories: ['electrical', 'testing'],
+      description: 'Portable appliance testing programme across all sites',
+    },
+    {
+      type: 'thermal',
+      title: 'Thermal Imaging Survey & Remedials',
+      values: [8000, 65000],
+      categories: ['electrical', 'testing'],
+      description: 'Thermal imaging of electrical infrastructure to identify faults',
+    },
 
     // Lighting
-    { type: 'led', title: 'LED Lighting Retrofit', values: [18000, 450000], categories: ['electrical', 'lighting'], description: 'Upgrade of existing lighting to energy-efficient LED including controls' },
-    { type: 'external_lighting', title: 'External Lighting Installation', values: [25000, 220000], categories: ['electrical', 'lighting'], description: 'Car park, pathway and building external lighting including columns and bollards' },
-    { type: 'lighting_control', title: 'Lighting Control System', values: [35000, 280000], categories: ['electrical', 'lighting'], description: 'DALI/KNX lighting control system with presence detection and daylight linking' },
+    {
+      type: 'led',
+      title: 'LED Lighting Retrofit',
+      values: [18000, 450000],
+      categories: ['electrical', 'lighting'],
+      description: 'Upgrade of existing lighting to energy-efficient LED including controls',
+    },
+    {
+      type: 'external_lighting',
+      title: 'External Lighting Installation',
+      values: [25000, 220000],
+      categories: ['electrical', 'lighting'],
+      description:
+        'Car park, pathway and building external lighting including columns and bollards',
+    },
+    {
+      type: 'lighting_control',
+      title: 'Lighting Control System',
+      values: [35000, 280000],
+      categories: ['electrical', 'lighting'],
+      description: 'DALI/KNX lighting control system with presence detection and daylight linking',
+    },
 
     // EV & Renewables
-    { type: 'ev_charging', title: 'EV Charging Infrastructure', values: [65000, 850000], categories: ['electrical', 'ev_charging'], description: 'Electric vehicle charging point installation including power supply upgrades' },
-    { type: 'solar', title: 'Solar PV Installation', values: [55000, 1200000], categories: ['electrical', 'solar'], description: 'Rooftop solar photovoltaic system including inverters and grid connection' },
-    { type: 'battery', title: 'Battery Energy Storage System', values: [120000, 2500000], categories: ['electrical', 'solar'], description: 'Battery storage installation for load shifting and grid services' },
+    {
+      type: 'ev_charging',
+      title: 'EV Charging Infrastructure',
+      values: [65000, 850000],
+      categories: ['electrical', 'ev_charging'],
+      description: 'Electric vehicle charging point installation including power supply upgrades',
+    },
+    {
+      type: 'solar',
+      title: 'Solar PV Installation',
+      values: [55000, 1200000],
+      categories: ['electrical', 'solar'],
+      description: 'Rooftop solar photovoltaic system including inverters and grid connection',
+    },
+    {
+      type: 'battery',
+      title: 'Battery Energy Storage System',
+      values: [120000, 2500000],
+      categories: ['electrical', 'solar'],
+      description: 'Battery storage installation for load shifting and grid services',
+    },
 
     // Data & Comms
-    { type: 'data', title: 'Structured Cabling Installation', values: [22000, 380000], categories: ['electrical', 'data_cabling'], description: 'Cat6A/fibre structured cabling system including cabinets and patch panels' },
-    { type: 'fibre', title: 'Fibre Optic Backbone', values: [35000, 450000], categories: ['electrical', 'data_cabling'], description: 'Single and multi-mode fibre infrastructure' },
+    {
+      type: 'data',
+      title: 'Structured Cabling Installation',
+      values: [22000, 380000],
+      categories: ['electrical', 'data_cabling'],
+      description: 'Cat6A/fibre structured cabling system including cabinets and patch panels',
+    },
+    {
+      type: 'fibre',
+      title: 'Fibre Optic Backbone',
+      values: [35000, 450000],
+      categories: ['electrical', 'data_cabling'],
+      description: 'Single and multi-mode fibre infrastructure',
+    },
 
     // Security
-    { type: 'access', title: 'Access Control System', values: [28000, 280000], categories: ['electrical', 'security'], description: 'Door access control system including readers, controllers and integration' },
-    { type: 'cctv', title: 'CCTV System Installation', values: [35000, 350000], categories: ['electrical', 'security'], description: 'IP CCTV system with recording, analytics and remote monitoring' },
-    { type: 'intruder', title: 'Intruder Alarm System', values: [18000, 120000], categories: ['electrical', 'security'], description: 'Grade 2/3 intruder alarm system to BS EN 50131' },
+    {
+      type: 'access',
+      title: 'Access Control System',
+      values: [28000, 280000],
+      categories: ['electrical', 'security'],
+      description: 'Door access control system including readers, controllers and integration',
+    },
+    {
+      type: 'cctv',
+      title: 'CCTV System Installation',
+      values: [35000, 350000],
+      categories: ['electrical', 'security'],
+      description: 'IP CCTV system with recording, analytics and remote monitoring',
+    },
+    {
+      type: 'intruder',
+      title: 'Intruder Alarm System',
+      values: [18000, 120000],
+      categories: ['electrical', 'security'],
+      description: 'Grade 2/3 intruder alarm system to BS EN 50131',
+    },
 
     // Building Services
-    { type: 'bms', title: 'Building Management System', values: [85000, 650000], categories: ['electrical', 'm_and_e'], description: 'BMS installation including integration with HVAC, lighting and metering' },
-    { type: 'metering', title: 'Energy Metering Installation', values: [25000, 180000], categories: ['electrical'], description: 'Sub-metering installation for energy monitoring and tenant billing' },
+    {
+      type: 'bms',
+      title: 'Building Management System',
+      values: [85000, 650000],
+      categories: ['electrical', 'm_and_e'],
+      description: 'BMS installation including integration with HVAC, lighting and metering',
+    },
+    {
+      type: 'metering',
+      title: 'Energy Metering Installation',
+      values: [25000, 180000],
+      categories: ['electrical'],
+      description: 'Sub-metering installation for energy monitoring and tenant billing',
+    },
 
     // Maintenance
-    { type: 'maintenance', title: 'Electrical Maintenance Contract', values: [45000, 850000], categories: ['electrical', 'maintenance'], description: 'Planned preventative and reactive electrical maintenance services' },
-    { type: 'reactive', title: 'Reactive Repairs Framework', values: [35000, 450000], categories: ['electrical', 'maintenance'], description: 'Emergency and reactive electrical repair services' },
+    {
+      type: 'maintenance',
+      title: 'Electrical Maintenance Contract',
+      values: [45000, 850000],
+      categories: ['electrical', 'maintenance'],
+      description: 'Planned preventative and reactive electrical maintenance services',
+    },
+    {
+      type: 'reactive',
+      title: 'Reactive Repairs Framework',
+      values: [35000, 450000],
+      categories: ['electrical', 'maintenance'],
+      description: 'Emergency and reactive electrical repair services',
+    },
 
     // Industrial/Specialist
-    { type: 'hv', title: 'HV Switchgear Installation', values: [180000, 2500000], categories: ['electrical'], description: '11kV/33kV switchgear and transformer installation' },
-    { type: 'ups', title: 'UPS System Installation', values: [85000, 1200000], categories: ['electrical'], description: 'Uninterruptible power supply system including batteries and maintenance bypass' },
-    { type: 'generator', title: 'Standby Generator Installation', values: [120000, 850000], categories: ['electrical'], description: 'Diesel generator installation including ATS and load bank testing' },
-    { type: 'lightning', title: 'Lightning Protection System', values: [25000, 180000], categories: ['electrical'], description: 'Lightning protection system design, installation and testing to BS EN 62305' },
+    {
+      type: 'hv',
+      title: 'HV Switchgear Installation',
+      values: [180000, 2500000],
+      categories: ['electrical'],
+      description: '11kV/33kV switchgear and transformer installation',
+    },
+    {
+      type: 'ups',
+      title: 'UPS System Installation',
+      values: [85000, 1200000],
+      categories: ['electrical'],
+      description: 'Uninterruptible power supply system including batteries and maintenance bypass',
+    },
+    {
+      type: 'generator',
+      title: 'Standby Generator Installation',
+      values: [120000, 850000],
+      categories: ['electrical'],
+      description: 'Diesel generator installation including ATS and load bank testing',
+    },
+    {
+      type: 'lightning',
+      title: 'Lightning Protection System',
+      values: [25000, 180000],
+      categories: ['electrical'],
+      description: 'Lightning protection system design, installation and testing to BS EN 62305',
+    },
   ];
 
   const releases: OCDSRelease[] = [];
@@ -1449,20 +2568,64 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     // Filter project types based on sector
     let availableProjects = [...projectTypes];
     if (org.sector === 'housing') {
-      availableProjects = projectTypes.filter(p =>
-        ['rewire', 'fire_alarm', 'emergency_lighting', 'eicr', 'led', 'ev_charging', 'maintenance', 'reactive', 'access', 'cctv'].includes(p.type)
+      availableProjects = projectTypes.filter((p) =>
+        [
+          'rewire',
+          'fire_alarm',
+          'emergency_lighting',
+          'eicr',
+          'led',
+          'ev_charging',
+          'maintenance',
+          'reactive',
+          'access',
+          'cctv',
+        ].includes(p.type)
       );
     } else if (org.sector === 'healthcare') {
-      availableProjects = projectTypes.filter(p =>
-        ['distribution', 'emergency_lighting', 'fire_alarm', 'led', 'bms', 'ups', 'generator', 'maintenance', 'data', 'access'].includes(p.type)
+      availableProjects = projectTypes.filter((p) =>
+        [
+          'distribution',
+          'emergency_lighting',
+          'fire_alarm',
+          'led',
+          'bms',
+          'ups',
+          'generator',
+          'maintenance',
+          'data',
+          'access',
+        ].includes(p.type)
       );
     } else if (org.sector === 'datacentre') {
-      availableProjects = projectTypes.filter(p =>
-        ['hv', 'ups', 'generator', 'distribution', 'data', 'fibre', 'bms', 'maintenance', 'lightning', 'battery'].includes(p.type)
+      availableProjects = projectTypes.filter((p) =>
+        [
+          'hv',
+          'ups',
+          'generator',
+          'distribution',
+          'data',
+          'fibre',
+          'bms',
+          'maintenance',
+          'lightning',
+          'battery',
+        ].includes(p.type)
       );
     } else if (org.sector === 'nuclear' || org.sector === 'defence') {
-      availableProjects = projectTypes.filter(p =>
-        ['distribution', 'containment', 'fire_alarm', 'emergency_lighting', 'maintenance', 'bms', 'ups', 'generator', 'hv', 'lightning'].includes(p.type)
+      availableProjects = projectTypes.filter((p) =>
+        [
+          'distribution',
+          'containment',
+          'fire_alarm',
+          'emergency_lighting',
+          'maintenance',
+          'bms',
+          'ups',
+          'generator',
+          'hv',
+          'lightning',
+        ].includes(p.type)
       );
     }
 
@@ -1475,7 +2638,9 @@ function generateUKWideOpportunities(): OCDSRelease[] {
 
       const baseValueLow = project.values[0] * multiplier;
       const baseValueHigh = project.values[1] * multiplier;
-      const valueLow = Math.round(baseValueLow + Math.random() * (baseValueHigh - baseValueLow) * 0.3);
+      const valueLow = Math.round(
+        baseValueLow + Math.random() * (baseValueHigh - baseValueLow) * 0.3
+      );
       const valueHigh = Math.round(valueLow + Math.random() * (baseValueHigh - valueLow));
 
       const daysUntilDeadline = 7 + Math.floor(Math.random() * 56);
@@ -1484,17 +2649,21 @@ function generateUKWideOpportunities(): OCDSRelease[] {
       releases.push({
         ocid: `UK-${org.postcode.replace(/\s+/g, '')}-${project.type}-${i}`,
         id: `${org.postcode.replace(/\s+/g, '')}-${project.type}-${i}`,
-        date: new Date(Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000).toISOString(),
+        date: new Date(
+          Date.now() - Math.floor(Math.random() * 14) * 24 * 60 * 60 * 1000
+        ).toISOString(),
         tag: ['tender'],
-        parties: [{
-          id: 'buyer',
-          name: org.name,
-          roles: ['buyer'],
-          address: {
-            postalCode: org.postcode,
-            locality: org.postcode.split(' ')[0],
+        parties: [
+          {
+            id: 'buyer',
+            name: org.name,
+            roles: ['buyer'],
+            address: {
+              postalCode: org.postcode,
+              locality: org.postcode.split(' ')[0],
+            },
           },
-        }],
+        ],
         tender: {
           id: `${project.type}-${i}`,
           title: `${project.title} - ${org.name}`,
@@ -1511,7 +2680,9 @@ function generateUKWideOpportunities(): OCDSRelease[] {
     }
   }
 
-  console.log(`[API] Generated ${releases.length} UK-wide opportunities from ${organisations.length} major employers`);
+  console.log(
+    `[API] Generated ${releases.length} UK-wide opportunities from ${organisations.length} major employers`
+  );
   return releases;
 }
 
@@ -1525,7 +2696,9 @@ Deno.serve(async (req) => {
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
   );
 
-  console.log('[SYNC] Starting UK Tender API sync (official government APIs + construction sources)...');
+  console.log(
+    '[SYNC] Starting UK Tender API sync (official government APIs + construction sources)...'
+  );
 
   const results = {
     find_a_tender: { found: 0, electrical: 0, inserted: 0, errors: [] as string[] },
@@ -1556,7 +2729,7 @@ Deno.serve(async (req) => {
       try {
         const postcode = extractPostcodeFromRelease(release);
         const coords = postcode ? await geocodePostcode(postcode) : null;
-        const buyer = release.parties?.find(p => p.roles?.includes('buyer'));
+        const buyer = release.parties?.find((p) => p.roles?.includes('buyer'));
 
         const valueExact = release.tender?.value?.amount || null;
         const valueLow = release.tender?.minValue?.amount || valueExact;
@@ -1571,14 +2744,15 @@ Deno.serve(async (req) => {
           scope_of_works: release.tender?.description || '',
           client_name: buyer?.name || 'Unknown',
           client_type: determineSector(release),
-          cpv_codes: release.tender?.items?.map(i => i.classification?.id).filter(Boolean) || [],
+          cpv_codes: release.tender?.items?.map((i) => i.classification?.id).filter(Boolean) || [],
           categories: determineCategories(release),
           sector: determineSector(release),
           value_low: valueLow,
           value_high: valueHigh,
           value_exact: valueExact,
           currency: 'GBP',
-          location_text: [buyer?.address?.locality, buyer?.address?.region].filter(Boolean).join(', ') || null,
+          location_text:
+            [buyer?.address?.locality, buyer?.address?.region].filter(Boolean).join(', ') || null,
           postcode,
           lat: coords?.lat || null,
           lng: coords?.lng || null,
@@ -1588,13 +2762,14 @@ Deno.serve(async (req) => {
           contact_name: buyer?.contactPoint?.name || null,
           contact_email: buyer?.contactPoint?.email || null,
           contact_phone: buyer?.contactPoint?.telephone || null,
-          documents: release.tender?.documents?.map(d => ({
-            name: d.title || 'Document',
-            url: d.url || '',
-            type: d.format || 'application/pdf',
-          })) || [],
+          documents:
+            release.tender?.documents?.map((d) => ({
+              name: d.title || 'Document',
+              url: d.url || '',
+              type: d.format || 'application/pdf',
+            })) || [],
           requirements: { niceic: true },
-          estimated_complexity: (valueLow && valueLow > 500000) ? 'complex' : 'standard',
+          estimated_complexity: valueLow && valueLow > 500000 ? 'complex' : 'standard',
           status: 'live',
           raw_data: release,
           fetched_at: new Date().toISOString(),
@@ -1622,14 +2797,16 @@ Deno.serve(async (req) => {
     // Filter for electrical
     const electricalCF = cfReleases.filter(isElectricalOpportunity);
     results.contracts_finder.electrical = electricalCF.length;
-    console.log(`[SYNC] Found ${electricalCF.length} electrical opportunities from Contracts Finder`);
+    console.log(
+      `[SYNC] Found ${electricalCF.length} electrical opportunities from Contracts Finder`
+    );
 
     // Process and insert
     for (const release of electricalCF) {
       try {
         const postcode = extractPostcodeFromRelease(release);
         const coords = postcode ? await geocodePostcode(postcode) : null;
-        const buyer = release.parties?.find(p => p.roles?.includes('buyer'));
+        const buyer = release.parties?.find((p) => p.roles?.includes('buyer'));
 
         const valueExact = release.tender?.value?.amount || null;
 
@@ -1658,7 +2835,7 @@ Deno.serve(async (req) => {
           deadline: release.tender?.tenderPeriod?.endDate || null,
           contact_email: buyer?.contactPoint?.email || null,
           requirements: { niceic: true },
-          estimated_complexity: (valueExact && valueExact > 500000) ? 'complex' : 'standard',
+          estimated_complexity: valueExact && valueExact > 500000 ? 'complex' : 'standard',
           status: 'live',
           fetched_at: new Date().toISOString(),
         };
@@ -1922,7 +3099,7 @@ Deno.serve(async (req) => {
 
     for (const release of housingReleases) {
       try {
-        const region = release.parties?.[0]?.address?.region as string || 'uk_wide';
+        const region = (release.parties?.[0]?.address?.region as string) || 'uk_wide';
         const opportunity = {
           external_id: release.ocid,
           source: 'housing_association',
@@ -1985,7 +3162,10 @@ Deno.serve(async (req) => {
           published_at: release.date,
           deadline: release.tender?.tenderPeriod?.endDate || null,
           requirements: { niceic: true },
-          estimated_complexity: (release.tender?.value?.amount && release.tender.value.amount > 500000) ? 'complex' : 'standard',
+          estimated_complexity:
+            release.tender?.value?.amount && release.tender.value.amount > 500000
+              ? 'complex'
+              : 'standard',
           status: 'live',
           fetched_at: new Date().toISOString(),
         };
@@ -2003,22 +3183,31 @@ Deno.serve(async (req) => {
     }
 
     // Update sync status
-    const allSources = ['find_a_tender', 'contracts_finder', 'construction_index', 'ted_europa', 'uk_procurement'];
+    const allSources = [
+      'find_a_tender',
+      'contracts_finder',
+      'construction_index',
+      'ted_europa',
+      'uk_procurement',
+    ];
     for (const source of allSources) {
       const resultKey = source === 'uk_procurement' ? 'uk_wide' : source;
-      await supabase
-        .from('tender_sources')
-        .upsert({
+      await supabase.from('tender_sources').upsert(
+        {
           name: source,
           last_sync_at: new Date().toISOString(),
           last_sync_count: results[resultKey as keyof typeof results]?.inserted || 0,
-        }, { onConflict: 'name' });
+        },
+        { onConflict: 'name' }
+      );
     }
 
     const totalInserted = Object.values(results).reduce((sum, r) => sum + r.inserted, 0);
     const totalElectrical = Object.values(results).reduce((sum, r) => sum + r.electrical, 0);
 
-    console.log(`[SYNC] Complete: ${totalElectrical} electrical opportunities found, ${totalInserted} inserted`);
+    console.log(
+      `[SYNC] Complete: ${totalElectrical} electrical opportunities found, ${totalInserted} inserted`
+    );
 
     return new Response(
       JSON.stringify({
@@ -2031,7 +3220,6 @@ Deno.serve(async (req) => {
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[SYNC] Fatal error:', error);
 

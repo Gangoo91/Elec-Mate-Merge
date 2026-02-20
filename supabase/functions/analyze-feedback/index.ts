@@ -3,7 +3,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -33,23 +34,31 @@ serve(async (req) => {
 
     if (fetchError) throw fetchError;
 
-    console.log(`[analyze-feedback] Found ${negativeFeedback?.length || 0} negative feedback items`);
+    console.log(
+      `[analyze-feedback] Found ${negativeFeedback?.length || 0} negative feedback items`
+    );
 
     if (!negativeFeedback || negativeFeedback.length === 0) {
-      return new Response(JSON.stringify({
-        success: true,
-        message: 'No negative feedback to analyze'
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          message: 'No negative feedback to analyze',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Group by agent
-    const feedbackByAgent = negativeFeedback.reduce((acc, item) => {
-      if (!acc[item.agent_name]) acc[item.agent_name] = [];
-      acc[item.agent_name].push(item);
-      return acc;
-    }, {} as Record<string, any[]>);
+    const feedbackByAgent = negativeFeedback.reduce(
+      (acc, item) => {
+        if (!acc[item.agent_name]) acc[item.agent_name] = [];
+        acc[item.agent_name].push(item);
+        return acc;
+      },
+      {} as Record<string, any[]>
+    );
 
     console.log(`[analyze-feedback] Grouped into ${Object.keys(feedbackByAgent).length} agents`);
 
@@ -59,16 +68,16 @@ serve(async (req) => {
     for (const [agentName, feedbacks] of Object.entries(feedbackByAgent)) {
       if (feedbacks.length < 2) continue; // Skip if less than 2 issues
 
-      const feedbackSummary = feedbacks.map(f => ({
+      const feedbackSummary = feedbacks.map((f) => ({
         question: f.question,
         response: f.ai_response.substring(0, 500), // First 500 chars
-        correction: f.user_correction
+        correction: f.user_correction,
       }));
 
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
+          Authorization: `Bearer ${openAIApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -82,13 +91,13 @@ serve(async (req) => {
 Your task:
 1. Identify common failure patterns
 2. Suggest specific knowledge entries to add to prevent these errors
-3. Format as JSON: { "patterns": ["pattern1", "pattern2"], "suggestedKnowledge": { "topic": "...", "content": "...", "source": "..." } }`
+3. Format as JSON: { "patterns": ["pattern1", "pattern2"], "suggestedKnowledge": { "topic": "...", "content": "...", "source": "..." } }`,
             },
             {
               role: 'user',
-              content: `Agent: ${agentName}\n\nNegative Feedback (${feedbacks.length} items):\n${JSON.stringify(feedbackSummary, null, 2)}\n\nAnalyze patterns and suggest improvements.`
-            }
-          ]
+              content: `Agent: ${agentName}\n\nNegative Feedback (${feedbacks.length} items):\n${JSON.stringify(feedbackSummary, null, 2)}\n\nAnalyze patterns and suggest improvements.`,
+            },
+          ],
         }),
       });
 
@@ -101,22 +110,23 @@ Your task:
       const analysis = JSON.parse(data.choices[0].message.content);
 
       // Insert into review queue
-      const { error: insertError } = await supabase
-        .from('learning_review_queue')
-        .insert({
-          feedback_id: feedbacks[0].id, // Link to first feedback
-          issue_type: 'pattern',
-          agent_name: agentName,
-          ai_answer: feedbacks[0].ai_response.substring(0, 1000),
-          user_correction: feedbacks.map(f => f.user_correction).join(' | '),
-          pattern_frequency: feedbacks.length,
-          suggested_knowledge_update: analysis.suggestedKnowledge,
-          suggested_prompt_change: analysis.patterns.join('; '),
-          status: 'pending'
-        });
+      const { error: insertError } = await supabase.from('learning_review_queue').insert({
+        feedback_id: feedbacks[0].id, // Link to first feedback
+        issue_type: 'pattern',
+        agent_name: agentName,
+        ai_answer: feedbacks[0].ai_response.substring(0, 1000),
+        user_correction: feedbacks.map((f) => f.user_correction).join(' | '),
+        pattern_frequency: feedbacks.length,
+        suggested_knowledge_update: analysis.suggestedKnowledge,
+        suggested_prompt_change: analysis.patterns.join('; '),
+        status: 'pending',
+      });
 
       if (insertError) {
-        console.error(`[analyze-feedback] Error inserting suggestion for ${agentName}:`, insertError);
+        console.error(
+          `[analyze-feedback] Error inserting suggestion for ${agentName}:`,
+          insertError
+        );
       } else {
         suggestions.push({ agent: agentName, patterns: analysis.patterns });
       }
@@ -124,23 +134,28 @@ Your task:
 
     console.log(`[analyze-feedback] Created ${suggestions.length} learning suggestions`);
 
-    return new Response(JSON.stringify({
-      success: true,
-      analyzedFeedback: negativeFeedback.length,
-      suggestionsCreated: suggestions.length,
-      suggestions
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        analyzedFeedback: negativeFeedback.length,
+        suggestionsCreated: suggestions.length,
+        suggestions,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('[analyze-feedback] Error:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

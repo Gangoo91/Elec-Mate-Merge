@@ -27,7 +27,9 @@ async function loginIfRequired(page: Page) {
 // Helper to wait for page content to load
 async function waitForContentLoad(page: Page) {
   await page.waitForLoadState('networkidle');
-  await page.waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 }).catch(() => {});
+  await page
+    .waitForSelector('[data-loading="true"]', { state: 'hidden', timeout: 5000 })
+    .catch(() => {});
 }
 
 test.describe('AM2 Preparation Course', () => {
@@ -81,7 +83,7 @@ test.describe('AM2 Preparation Course', () => {
         'Fault',
         'Online',
         'Strategy',
-        'Mock'
+        'Mock',
       ];
 
       let foundCount = 0;
@@ -140,7 +142,9 @@ test.describe('AM2 Preparation Course', () => {
       expect(page.url()).toContain('section2');
 
       // Find Previous button
-      const prevButton = page.locator('button:has-text("Previous"), a:has-text("Previous"), button:has-text("Prev")').first();
+      const prevButton = page
+        .locator('button:has-text("Previous"), a:has-text("Previous"), button:has-text("Prev")')
+        .first();
       await expect(prevButton).toBeVisible();
       await prevButton.click();
       await waitForContentLoad(page);
@@ -155,7 +159,9 @@ test.describe('AM2 Preparation Course', () => {
       await waitForContentLoad(page);
 
       // Look for progress dots or section indicators
-      const progressIndicator = page.locator('.progress-dots, [data-progress], text=1 of, text=Section 1').first();
+      const progressIndicator = page
+        .locator('.progress-dots, [data-progress], text=1 of, text=Section 1')
+        .first();
       await expect(progressIndicator).toBeVisible({ timeout: 5000 });
     });
   });
@@ -166,7 +172,9 @@ test.describe('AM2 Preparation Course', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      await expect(page.locator('text=Health, text=Safety, text=Documentation').first()).toBeVisible();
+      await expect(
+        page.locator('text=Health, text=Safety, text=Documentation').first()
+      ).toBeVisible();
     });
 
     test('should navigate through all 5 sections', async ({ page }) => {
@@ -279,7 +287,9 @@ test.describe('AM2 Preparation Course', () => {
       expect(has30Questions || has60Minutes).toBeTruthy();
 
       // Should have start button
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await expect(startButton).toBeVisible();
     });
   });
@@ -291,20 +301,26 @@ test.describe('AM2 Preparation Course', () => {
       await waitForContentLoad(page);
 
       // Step 1: Start the exam
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await expect(startButton).toBeVisible({ timeout: 10000 });
       await startButton.click();
       await waitForContentLoad(page);
 
       // Step 2: Verify exam interface loaded
-      await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({ timeout: 10000 });
+      await expect(page.locator('text=Question 1, text=1 of, text=1/')).toBeVisible({
+        timeout: 10000,
+      });
 
       // Step 3: Verify timer shows 60 minutes (AM2 specific)
       const timer = page.locator('text=60:, text=59:, text=:00, .timer').first();
       await expect(timer).toBeVisible({ timeout: 10000 });
 
       // Step 4: Answer first question
-      const firstOption = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+      const firstOption = page
+        .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+        .first();
       await expect(firstOption).toBeVisible();
       await firstOption.click();
 
@@ -313,34 +329,44 @@ test.describe('AM2 Preparation Course', () => {
       if (await nextButton.isVisible()) {
         await nextButton.click();
         await waitForContentLoad(page);
-        await expect(page.locator('text=Question 2, text=2 of, text=2/')).toBeVisible({ timeout: 5000 });
+        await expect(page.locator('text=Question 2, text=2 of, text=2/')).toBeVisible({
+          timeout: 5000,
+        });
       }
 
       // Step 6: Test flag functionality
-      const flagButton = page.locator('button:has-text("Flag"), button[aria-label*="flag"]').first();
+      const flagButton = page
+        .locator('button:has-text("Flag"), button[aria-label*="flag"]')
+        .first();
       if (await flagButton.isVisible()) {
         await flagButton.click();
       }
 
       // Step 7: Answer a few more questions
       for (let i = 0; i < 5; i++) {
-        const option = page.locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)').first();
+        const option = page
+          .locator('input[type="radio"], button[role="radio"], .answer-option, label:has(input)')
+          .first();
         if (await option.isVisible()) {
           await option.click();
         }
 
         const next = page.locator('button:has-text("Next")').first();
-        if (await next.isVisible() && await next.isEnabled()) {
+        if ((await next.isVisible()) && (await next.isEnabled())) {
           await next.click();
           await page.waitForTimeout(300);
         }
       }
 
       // Step 8: Try to submit (navigate to end if needed)
-      const submitButton = page.locator('button:has-text("Submit"), button:has-text("Finish")').first();
+      const submitButton = page
+        .locator('button:has-text("Submit"), button:has-text("Finish")')
+        .first();
 
       if (!(await submitButton.isVisible())) {
-        const lastQuestion = page.locator('button:has-text("30"), .question-grid button:last-child').first();
+        const lastQuestion = page
+          .locator('button:has-text("30"), .question-grid button:last-child')
+          .first();
         if (await lastQuestion.isVisible()) {
           await lastQuestion.click();
           await waitForContentLoad(page);
@@ -348,38 +374,52 @@ test.describe('AM2 Preparation Course', () => {
       }
 
       // Answer last question
-      const lastOption = page.locator('input[type="radio"], button[role="radio"], .answer-option').first();
+      const lastOption = page
+        .locator('input[type="radio"], button[role="radio"], .answer-option')
+        .first();
       if (await lastOption.isVisible()) {
         await lastOption.click();
       }
 
       // Submit
-      const finalSubmit = page.locator('button:has-text("Submit"), button:has-text("Finish")').first();
+      const finalSubmit = page
+        .locator('button:has-text("Submit"), button:has-text("Finish")')
+        .first();
       if (await finalSubmit.isVisible()) {
         await finalSubmit.click();
         await waitForContentLoad(page);
 
         // Step 9: Verify results screen
-        const resultsIndicator = page.locator('text=Results, text=Score, text=%, text=Pass, text=Fail').first();
+        const resultsIndicator = page
+          .locator('text=Results, text=Score, text=%, text=Pass, text=Fail')
+          .first();
         await expect(resultsIndicator).toBeVisible({ timeout: 10000 });
 
         // Step 10: Check for category breakdown (AM2 specific)
-        const categoryBreakdown = page.locator('text=Health, text=Safety, text=BS7671, text=Category').first();
+        const categoryBreakdown = page
+          .locator('text=Health, text=Safety, text=BS7671, text=Category')
+          .first();
         // Category breakdown may or may not be visible depending on implementation
 
         // Step 11: Test review mode
-        const reviewButton = page.locator('button:has-text("Review"), button:has-text("View Answers")').first();
+        const reviewButton = page
+          .locator('button:has-text("Review"), button:has-text("View Answers")')
+          .first();
         if (await reviewButton.isVisible()) {
           await reviewButton.click();
           await waitForContentLoad(page);
 
           // Should have review filters
-          const filterOptions = page.locator('text=All, text=Correct, text=Incorrect, text=Unanswered, text=Flagged');
+          const filterOptions = page.locator(
+            'text=All, text=Correct, text=Incorrect, text=Unanswered, text=Flagged'
+          );
           // At least some filter options should be visible
         }
 
         // Step 12: Verify retake option
-        const retakeButton = page.locator('button:has-text("Retake"), button:has-text("Try Again")').first();
+        const retakeButton = page
+          .locator('button:has-text("Retake"), button:has-text("Try Again")')
+          .first();
         await expect(retakeButton).toBeVisible();
       }
     });
@@ -389,7 +429,9 @@ test.describe('AM2 Preparation Course', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await startButton.click();
       await waitForContentLoad(page);
 
@@ -403,7 +445,9 @@ test.describe('AM2 Preparation Course', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const startButton = page.locator('button:has-text("Start"), button:has-text("Begin")').first();
+      const startButton = page
+        .locator('button:has-text("Start"), button:has-text("Begin")')
+        .first();
       await startButton.click();
       await waitForContentLoad(page);
 
@@ -419,7 +463,11 @@ test.describe('AM2 Preparation Course', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const backLink = page.locator('a:has-text("Back"), button:has-text("Back"), a:has-text("Module"), [aria-label*="back"]').first();
+      const backLink = page
+        .locator(
+          'a:has-text("Back"), button:has-text("Back"), a:has-text("Module"), [aria-label*="back"]'
+        )
+        .first();
       await expect(backLink).toBeVisible();
       await backLink.click();
       await waitForContentLoad(page);
@@ -432,7 +480,11 @@ test.describe('AM2 Preparation Course', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const backLink = page.locator('a:has-text("Back"), a:has-text("AM2"), button:has-text("Back"), [aria-label*="back"]').first();
+      const backLink = page
+        .locator(
+          'a:has-text("Back"), a:has-text("AM2"), button:has-text("Back"), [aria-label*="back"]'
+        )
+        .first();
       await expect(backLink).toBeVisible();
       await backLink.click();
       await waitForContentLoad(page);
@@ -488,7 +540,7 @@ test.describe('AM2 Preparation Course', () => {
 
     test('should not show console errors on page load', async ({ page }) => {
       const consoleErrors: string[] = [];
-      page.on('console', msg => {
+      page.on('console', (msg) => {
         if (msg.type() === 'error') {
           consoleErrors.push(msg.text());
         }
@@ -498,10 +550,9 @@ test.describe('AM2 Preparation Course', () => {
       await loginIfRequired(page);
       await waitForContentLoad(page);
 
-      const criticalErrors = consoleErrors.filter(err =>
-        !err.includes('favicon') &&
-        !err.includes('analytics') &&
-        !err.includes('third-party')
+      const criticalErrors = consoleErrors.filter(
+        (err) =>
+          !err.includes('favicon') && !err.includes('analytics') && !err.includes('third-party')
       );
 
       expect(criticalErrors.length).toBe(0);
@@ -517,8 +568,8 @@ test.describe('AM2 Preparation Course', () => {
       await waitForContentLoad(page);
 
       const body = page.locator('body');
-      const scrollWidth = await body.evaluate(el => el.scrollWidth);
-      const clientWidth = await body.evaluate(el => el.clientWidth);
+      const scrollWidth = await body.evaluate((el) => el.scrollWidth);
+      const clientWidth = await body.evaluate((el) => el.clientWidth);
 
       expect(scrollWidth - clientWidth).toBeLessThan(20);
 
@@ -534,7 +585,9 @@ test.describe('AM2 Preparation Course', () => {
       await waitForContentLoad(page);
 
       // Navigation footer should be visible
-      const navFooter = page.locator('button:has-text("Next"), button:has-text("Previous")').first();
+      const navFooter = page
+        .locator('button:has-text("Next"), button:has-text("Previous")')
+        .first();
       await expect(navFooter).toBeVisible();
     });
   });
@@ -547,9 +600,10 @@ test.describe('AM2 Preparation Course', () => {
 
       // Module 2 covers safe isolation - critical AM2 topic
       const bodyText = await page.locator('body').textContent();
-      const hasSafetyContent = bodyText?.toLowerCase().includes('safe') ||
-                               bodyText?.toLowerCase().includes('isolation') ||
-                               bodyText?.toLowerCase().includes('safety');
+      const hasSafetyContent =
+        bodyText?.toLowerCase().includes('safe') ||
+        bodyText?.toLowerCase().includes('isolation') ||
+        bodyText?.toLowerCase().includes('safety');
       expect(hasSafetyContent).toBeTruthy();
     });
 
@@ -560,8 +614,8 @@ test.describe('AM2 Preparation Course', () => {
 
       // Module 4 covers testing procedures
       const bodyText = await page.locator('body').textContent();
-      const hasTestingContent = bodyText?.toLowerCase().includes('test') ||
-                                 bodyText?.toLowerCase().includes('inspection');
+      const hasTestingContent =
+        bodyText?.toLowerCase().includes('test') || bodyText?.toLowerCase().includes('inspection');
       expect(hasTestingContent).toBeTruthy();
     });
   });

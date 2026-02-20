@@ -73,14 +73,11 @@ serve(async (req: Request) => {
     const { supplier = null, dealType = null, limit = 10 } = body;
 
     // Use the helper function from migration
-    const { data: deals, error } = await supabase.rpc(
-      'get_active_marketplace_deals',
-      {
-        supplier_slug_filter: supplier,
-        deal_type_filter: dealType,
-        limit_count: limit
-      }
-    );
+    const { data: deals, error } = await supabase.rpc('get_active_marketplace_deals', {
+      supplier_slug_filter: supplier,
+      deal_type_filter: dealType,
+      limit_count: limit,
+    });
 
     if (error) {
       console.error('Deals fetch error:', error);
@@ -114,14 +111,13 @@ serve(async (req: Request) => {
     return new Response(JSON.stringify(response), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Marketplace deals error:', error);
     return new Response(
       JSON.stringify({
         deals: [],
         total: 0,
-        error: error instanceof Error ? error.message : 'Failed to fetch deals'
+        error: error instanceof Error ? error.message : 'Failed to fetch deals',
       }),
       {
         status: 500,

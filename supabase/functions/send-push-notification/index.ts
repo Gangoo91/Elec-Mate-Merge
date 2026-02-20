@@ -5,14 +5,24 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface PushPayload {
   userId: string;
   title: string;
   body: string;
-  type: 'peer' | 'job' | 'team' | 'college' | 'quote' | 'invoice' | 'application' | 'vacancy' | 'certificate';
+  type:
+    | 'peer'
+    | 'job'
+    | 'team'
+    | 'college'
+    | 'quote'
+    | 'invoice'
+    | 'application'
+    | 'vacancy'
+    | 'certificate';
   data?: Record<string, unknown>;
 }
 
@@ -26,7 +36,7 @@ function base64UrlDecode(str: string): Uint8Array {
   let base64 = str.replace(/-/g, '+').replace(/_/g, '/');
   while (base64.length % 4) base64 += '=';
   const binary = atob(base64);
-  return Uint8Array.from(binary, c => c.charCodeAt(0));
+  return Uint8Array.from(binary, (c) => c.charCodeAt(0));
 }
 
 // ===== VAPID JWT Creation =====
@@ -138,7 +148,9 @@ async function encryptPayload(
 
   // Derive IKM (Input Keying Material)
   const authInfo = new TextEncoder().encode('WebPush: info\0');
-  const authInfoFull = new Uint8Array(authInfo.length + subPubKeyBytes.length + localPublicKey.length);
+  const authInfoFull = new Uint8Array(
+    authInfo.length + subPubKeyBytes.length + localPublicKey.length
+  );
   authInfoFull.set(authInfo);
   authInfoFull.set(subPubKeyBytes, authInfo.length);
   authInfoFull.set(localPublicKey, authInfo.length + subPubKeyBytes.length);
@@ -153,13 +165,9 @@ async function encryptPayload(
   );
 
   // First derive PRK from shared secret
-  const prkKey = await crypto.subtle.importKey(
-    'raw',
-    sharedSecret,
-    { name: 'HKDF' },
-    false,
-    ['deriveBits']
-  );
+  const prkKey = await crypto.subtle.importKey('raw', sharedSecret, { name: 'HKDF' }, false, [
+    'deriveBits',
+  ]);
 
   // Derive IKM
   const ikmBits = await crypto.subtle.deriveBits(
@@ -176,13 +184,7 @@ async function encryptPayload(
 
   // Derive content encryption key (CEK)
   const cekInfo = new TextEncoder().encode('Content-Encoding: aes128gcm\0');
-  const cekKey = await crypto.subtle.importKey(
-    'raw',
-    ikm,
-    { name: 'HKDF' },
-    false,
-    ['deriveBits']
-  );
+  const cekKey = await crypto.subtle.importKey('raw', ikm, { name: 'HKDF' }, false, ['deriveBits']);
   const cekBits = await crypto.subtle.deriveBits(
     {
       name: 'HKDF',
@@ -197,13 +199,9 @@ async function encryptPayload(
 
   // Derive nonce
   const nonceInfo = new TextEncoder().encode('Content-Encoding: nonce\0');
-  const nonceKey = await crypto.subtle.importKey(
-    'raw',
-    ikm,
-    { name: 'HKDF' },
-    false,
-    ['deriveBits']
-  );
+  const nonceKey = await crypto.subtle.importKey('raw', ikm, { name: 'HKDF' }, false, [
+    'deriveBits',
+  ]);
   const nonceBits = await crypto.subtle.deriveBits(
     {
       name: 'HKDF',
@@ -222,13 +220,9 @@ async function encryptPayload(
   paddedPayload[payloadBytes.length] = 2; // Padding delimiter
 
   // Encrypt with AES-GCM
-  const encryptKey = await crypto.subtle.importKey(
-    'raw',
-    cek,
-    { name: 'AES-GCM' },
-    false,
-    ['encrypt']
-  );
+  const encryptKey = await crypto.subtle.importKey('raw', cek, { name: 'AES-GCM' }, false, [
+    'encrypt',
+  ]);
 
   const encrypted = await crypto.subtle.encrypt(
     { name: 'AES-GCM', iv: nonce },
@@ -282,8 +276,8 @@ async function sendWebPush(
     headers: {
       'Content-Type': 'application/octet-stream',
       'Content-Encoding': 'aes128gcm',
-      'TTL': '86400',
-      'Authorization': `vapid t=${jwt}, k=${vapidPubKeyB64}`,
+      TTL: '86400',
+      Authorization: `vapid t=${jwt}, k=${vapidPubKeyB64}`,
     },
     body: ciphertext,
   });
@@ -314,10 +308,10 @@ serve(async (req: Request) => {
     console.log('[Push v23] Received request for userId:', userId);
 
     if (!userId) {
-      return new Response(
-        JSON.stringify({ error: 'userId is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'userId is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Get subscriptions
@@ -347,7 +341,7 @@ serve(async (req: Request) => {
           message: 'No active subscriptions found',
           sent: 0,
           foundSubscriptions: false,
-          debug: { total: allSubs?.length || 0 }
+          debug: { total: allSubs?.length || 0 },
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -357,10 +351,10 @@ serve(async (req: Request) => {
     const vapidPrivateKey = Deno.env.get('VAPID_PRIVATE_KEY');
 
     if (!vapidPublicKey || !vapidPrivateKey) {
-      return new Response(
-        JSON.stringify({ error: 'VAPID keys not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'VAPID keys not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('[Push v23] VAPID public key starts with:', vapidPublicKey.substring(0, 10));
@@ -422,12 +416,11 @@ serve(async (req: Request) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[Push v23] Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

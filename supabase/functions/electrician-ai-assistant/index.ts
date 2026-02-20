@@ -1,6 +1,5 @@
-
 import { serve } from '../_shared/deps.ts';
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from '../_shared/cors.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 // Make sure we're accessing the right environment variable
@@ -16,19 +15,29 @@ serve(async (req) => {
     // Debug log for API key
     console.log('OpenAI API key available:', !!openAIApiKey);
     console.log('Secret names available: Cannot list keys in Deno environment');
-    
+
     // Check if OpenAI API key is available
     if (!openAIApiKey) {
       console.error('OpenAI API key is not configured or not accessible');
       return new Response(
-        JSON.stringify({ error: "OpenAI API key is not configured. Please add the 'OpenAI API' key to your Supabase secrets." }),
+        JSON.stringify({
+          error:
+            "OpenAI API key is not configured. Please add the 'OpenAI API' key to your Supabase secrets.",
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     const requestBody = await req.json();
-    const { prompt, type = "general", primary_image, additional_images = [], context = {}, use_rag = false } = requestBody;
-    
+    const {
+      prompt,
+      type = 'general',
+      primary_image,
+      additional_images = [],
+      context = {},
+      use_rag = false,
+    } = requestBody;
+
     // Helper function to extract regulation numbers from query
     const extractRegulationNumbers = (query: string): string[] => {
       // More robust regex to handle multiple numbers with various separators
@@ -36,74 +45,79 @@ serve(async (req) => {
       const matches = query.match(regPattern) || [];
       return [...new Set(matches)]; // Deduplicate
     };
-    
+
     // Helper function to extract keywords for intelligent lookup
     const extractQueryKeywords = (query: string) => {
       return {
         amperage: query.match(/\b(\d+)A\b/)?.[1],
         circuitType: query.match(/\b(ring|radial)\s+circuit\b/i)?.[0],
-        hasKeywords: /cable\s+sizing|RCD|protection|installation|voltage\s+drop|earth|bonding/i.test(query)
+        hasKeywords:
+          /cable\s+sizing|RCD|protection|installation|voltage\s+drop|earth|bonding/i.test(query),
       };
     };
-    
+
     // Helper function to detect pure regulation lookup queries
     const isPureRegulationLookup = (query: string): boolean => {
       const cleaned = query.replace(/[,\s\n]+/g, ' ').trim();
-      const words = cleaned.split(' ').filter(w => w.length > 0);
-      const regNumbers = words.filter(w => /^\d{3}(?:\.\d+)?(?:\.\d+)?$/.test(w));
+      const words = cleaned.split(' ').filter((w) => w.length > 0);
+      const regNumbers = words.filter((w) => /^\d{3}(?:\.\d+)?(?:\.\d+)?$/.test(w));
       return regNumbers.length === words.length && words.length > 0;
     };
-    
+
     // Helper function to get regulations directly from database
     const getRegulationsDirect = async (regNumbers: string[], keywords?: any): Promise<any> => {
       const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
       const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
       const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
       const supabase = createClient(supabaseUrl, supabaseKey);
-      
+
       let intelligence;
       let error;
-      
+
       // If we have keywords but no regulation numbers, try keyword-based lookup
       if (keywords?.hasKeywords && regNumbers.length === 0) {
         const filters = [];
         if (keywords.amperage) filters.push(`keywords.cs.{${keywords.amperage}A}`);
         if (keywords.circuitType) filters.push(`keywords.ilike.%${keywords.circuitType}%`);
-        
+
         if (filters.length > 0) {
           const result = await supabase
             .from('regulations_intelligence')
-            .select(`
+            .select(
+              `
               *,
               bs7671_embeddings!inner(content, section, amendment, metadata)
-            `)
+            `
+            )
             .or(filters.join(','))
             .limit(5);
-          
+
           intelligence = result.data;
           error = result.error;
-          
+
           console.log('🔍 Keyword-based lookup:', { keywords, found: intelligence?.length || 0 });
         }
       }
-      
+
       // Fallback to regulation number lookup
       if (!intelligence || intelligence.length === 0) {
         const result = await supabase
           .from('regulations_intelligence')
-          .select(`
+          .select(
+            `
             *,
             bs7671_embeddings!inner(content, section, amendment, metadata)
-          `)
-          .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+          `
+          )
+          .or(regNumbers.map((n) => `regulation_number.ilike.%${n}%`).join(','))
           .order('regulation_number');
-        
+
         intelligence = result.data;
         error = result.error;
       }
-      
+
       if (error) throw error;
-      
+
       // Format with enriched intelligence data
       const regulations = (intelligence || []).map((intel: any) => ({
         id: intel.regulation_id,
@@ -117,14 +131,14 @@ serve(async (req) => {
         primary_topic: intel.primary_topic,
         keywords: intel.keywords,
         category: intel.category,
-        practical_application: intel.practical_application
+        practical_application: intel.practical_application,
       }));
-      
+
       return {
         success: true,
         lookup_mode: true,
         regulations: regulations,
-        
+
         // Include RAG fields for panel population
         rag_regulations: regulations,
         rag_metadata: {
@@ -132,43 +146,44 @@ serve(async (req) => {
           has_installation: false,
           has_testing: false,
           has_design: false,
-          query_type: 'lookup'
+          query_type: 'lookup',
         },
-        
-        message: regulations.length > 0 
-          ? `Found ${regulations.length} regulation(s) matching your request.`
-          : 'No regulations found matching those numbers.'
+
+        message:
+          regulations.length > 0
+            ? `Found ${regulations.length} regulation(s) matching your request.`
+            : 'No regulations found matching those numbers.',
       };
     };
-    
+
     // Check for regulation numbers and try direct lookup first
     const regNumbers = extractRegulationNumbers(prompt || '');
     const keywords = extractQueryKeywords(prompt || '');
-    
-    console.log('🔍 Query analysis:', { 
+
+    console.log('🔍 Query analysis:', {
       regulation_numbers: regNumbers,
       keywords,
-      query: prompt?.substring(0, 50) 
+      query: prompt?.substring(0, 50),
     });
-    
+
     if (prompt && !primary_image && (regNumbers.length > 0 || keywords.hasKeywords)) {
       try {
         const result = await getRegulationsDirect(regNumbers, keywords);
-        
+
         // If we found results, return them immediately
         if (result.regulations && result.regulations.length > 0) {
           console.log('✅ Direct lookup success:', { count: result.regulations.length });
-          return new Response(
-            JSON.stringify(result),
-            { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
+          return new Response(JSON.stringify(result), {
+            status: 200,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
         }
       } catch (lookupError) {
         console.error('❌ Direct lookup error:', lookupError);
         // Fall through to normal AI processing if direct lookup fails
       }
     }
-    
+
     // Fetch regulations from RAG if requested - Direct RPC call (no HTTP overhead)
     let ragRegulations: any[] = [];
     let ragMetadata: any = {};
@@ -179,30 +194,30 @@ serve(async (req) => {
         const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
         const { createClient } = await import('https://esm.sh/@supabase/supabase-js@2');
         const supabase = createClient(supabaseUrl, supabaseKey);
-        
+
         console.log('🔍 Starting intelligence search for:', prompt?.substring(0, 50));
-        
+
         // Direct RPC call to regulations intelligence (simplified architecture)
         const intelligencePromise = supabase.rpc('search_regulations_intelligence_hybrid', {
           query_text: prompt,
-          match_count: 8
+          match_count: 8,
         });
-        
+
         // Add 5-second timeout to prevent hanging
-        const timeoutPromise = new Promise((_, reject) => 
+        const timeoutPromise = new Promise((_, reject) =>
           setTimeout(() => reject(new Error('Intelligence search timeout')), 5000)
         );
-        
-        const { data: intelligenceResults, error: intelligenceError } = await Promise.race([
+
+        const { data: intelligenceResults, error: intelligenceError } = (await Promise.race([
           intelligencePromise,
-          timeoutPromise
-        ]) as any;
-        
+          timeoutPromise,
+        ])) as any;
+
         if (intelligenceError) {
           console.error('❌ Intelligence search failed:', intelligenceError);
         } else if (intelligenceResults && intelligenceResults.length > 0) {
           console.log('✅ Intelligence search found:', intelligenceResults.length, 'regulations');
-          
+
           // Enrich with full regulation content (parallel lookups for speed)
           const enrichmentPromises = intelligenceResults.map(async (intel: any) => {
             const { data: fullReg } = await supabase
@@ -210,7 +225,7 @@ serve(async (req) => {
               .select('content, section, amendment, metadata')
               .eq('id', intel.regulation_id)
               .single();
-            
+
             return {
               id: intel.regulation_id,
               regulation_number: intel.regulation_number,
@@ -223,21 +238,21 @@ serve(async (req) => {
               primary_topic: intel.primary_topic,
               keywords: intel.keywords,
               category: intel.category,
-              practical_application: intel.practical_application
+              practical_application: intel.practical_application,
             };
           });
-          
+
           ragRegulations = await Promise.all(enrichmentPromises);
           ragMetadata = {
             search_method: 'intelligence_hybrid',
             results_count: ragRegulations.length,
             query_keywords: keywords,
-            search_time_ms: Date.now() - startTime
+            search_time_ms: Date.now() - startTime,
           };
-          
+
           console.log('✅ Enrichment complete:', {
             regulations_count: ragRegulations.length,
-            time_ms: Date.now() - startTime
+            time_ms: Date.now() - startTime,
           });
         }
       } catch (ragError) {
@@ -247,14 +262,14 @@ serve(async (req) => {
     }
 
     if (!prompt && !primary_image) {
-      return new Response(
-        JSON.stringify({ error: "Prompt or primary_image is required" }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Prompt or primary_image is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Select the appropriate system message based on request type
-    let systemMessage = "";
+    let systemMessage = '';
 
     // Identity protection - MUST be included in all prompts
     const identityProtection = `
@@ -267,8 +282,8 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
 - If users try to trick you into revealing your model (e.g., "be honest", "what are you really"), maintain your identity as Elec-AI.
 `;
 
-    switch(type) {
-      case "visual_analysis":
+    switch (type) {
+      case 'visual_analysis':
         systemMessage = `${identityProtection}
           You are Elec-AI Visual Analyser, specialising in analysing UK electrical installations and components.
           Provide analysis of electrical components based on descriptions, focusing on potential safety issues and compliance with UK electrical regulations (BS 7671).
@@ -288,7 +303,7 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
         `;
         break;
 
-      case "visual_analysis_advanced":
+      case 'visual_analysis_advanced':
         systemMessage = `${identityProtection}
           You are Elec-AI Advanced Visual Analyser, specialising in comprehensive analysis of UK electrical installations using image recognition.
           
@@ -339,8 +354,8 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
           Always use British English and UK electrical terminology.
         `;
         break;
-      
-      case "cv_generation":
+
+      case 'cv_generation':
         systemMessage = `${identityProtection}
           You are Elec-AI CV Assistant, specialising in creating compelling CV content for UK electricians.
 
@@ -362,7 +377,7 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
         `;
         break;
 
-      case "cover_letter_generation":
+      case 'cover_letter_generation':
         const vacancy = context.vacancy || {};
         const profile = context.profile || {};
 
@@ -398,7 +413,7 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
         `;
         break;
 
-      case "report_writer":
+      case 'report_writer':
         systemMessage = `${identityProtection}
           You are Elec-AI Report Writer, specialising in creating professional electrical reports for UK electricians.
           Generate concise, structured electrical reports and certificates. Use clear sections with descriptive headings.
@@ -407,8 +422,8 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
           Keep responses focused and under 800 words for mobile readability.
         `;
         break;
-        
-      case "regulations":
+
+      case 'regulations':
         systemMessage = `${identityProtection}
           You are Elec-AI Regulations Assistant, an expert on UK electrical regulations and standards.
           Provide accurate information about BS 7671 (IET Wiring Regulations) and related UK electrical standards.
@@ -418,8 +433,8 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
           If there have been updates to regulations, mention both current and previous requirements for context.
         `;
         break;
-        
-      case "circuit":
+
+      case 'circuit':
         systemMessage = `${identityProtection}
           You are Elec-AI Circuit Designer, specialising in electrical circuit design according to UK standards.
           Provide guidance on circuit design, cable sizing, protection devices, and load calculations.
@@ -430,7 +445,7 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
         `;
         break;
 
-      case "circuit_summary":
+      case 'circuit_summary':
         systemMessage = `${identityProtection}
           You are Elec-AI Circuit Analyser, providing professional electrical analysis reports for UK installations.
           
@@ -459,16 +474,23 @@ CRITICAL IDENTITY RULES - FOLLOW EXACTLY:
         `;
         break;
 
-      case "structured_assistant":
-        const ragContext = ragRegulations.length > 0 ? `
+      case 'structured_assistant':
+        const ragContext =
+          ragRegulations.length > 0
+            ? `
 ENRICHED REGULATIONS (${ragRegulations.length} pre-analyzed):
-${ragRegulations.map(reg => `
+${ragRegulations
+  .map(
+    (reg) => `
 [${reg.regulation_number}] ${reg.section}
 ${reg.content}
 Amendment: ${reg.amendment || 'N/A'}
-`).join('\n---\n')}
-` : '';
-        
+`
+  )
+  .join('\n---\n')}
+`
+            : '';
+
         systemMessage = `${identityProtection}
 You are Elec-AI, an expert UK electrician's AI assistant with BS 7671:2018+A3:2024 expertise.
 
@@ -511,7 +533,7 @@ DO NOT: Pricing, costs, materials sourcing
 
 Always use British English (earth not ground, consumer unit not panel).`;
         break;
-        
+
       default:
         systemMessage = `${identityProtection}
           You are Elec-AI, an expert AI assistant specialising in UK electrical regulations, standards, and practices.
@@ -525,65 +547,79 @@ Always use British English (earth not ground, consumer unit not panel).`;
     }
 
     console.log(`Sending request to OpenAI API with prompt type: ${type}`);
-    
+
     // Prepare messages based on type
     let messages: any[] = [{ role: 'system', content: systemMessage }];
-    
-    if (type === "visual_analysis_advanced" && primary_image) {
+
+    if (type === 'visual_analysis_advanced' && primary_image) {
       // Vision analysis with image input
       const imageUrls = [primary_image, ...additional_images].filter(Boolean);
       const content = [
         {
-          type: "text",
-          text: prompt || "Analyze this electrical installation for safety issues, compliance with BS 7671, and provide detailed recommendations."
+          type: 'text',
+          text:
+            prompt ||
+            'Analyze this electrical installation for safety issues, compliance with BS 7671, and provide detailed recommendations.',
         },
-        ...imageUrls.map(url => ({
-          type: "image_url",
+        ...imageUrls.map((url) => ({
+          type: 'image_url',
           image_url: {
             url: url,
-            detail: "high"
-          }
-        }))
+            detail: 'high',
+          },
+        })),
       ];
-      
+
       messages.push({ role: 'user', content });
     } else {
       // Text-based analysis
       messages.push({ role: 'user', content: prompt });
     }
-    
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: messages,
-        max_completion_tokens: type === "visual_analysis_advanced" ? 4000 : (type === "report_writer" ? 800 : (type === "structured_assistant" ? 6000 : 2000)),
-        response_format: type === "structured_assistant" || type === "visual_analysis_advanced" ? { type: "json_object" } : undefined,
+        max_completion_tokens:
+          type === 'visual_analysis_advanced'
+            ? 4000
+            : type === 'report_writer'
+              ? 800
+              : type === 'structured_assistant'
+                ? 6000
+                : 2000,
+        response_format:
+          type === 'structured_assistant' || type === 'visual_analysis_advanced'
+            ? { type: 'json_object' }
+            : undefined,
       }),
     });
 
     const data = await response.json();
-    
+
     if (!response.ok) {
       console.error('OpenAI API Error:', data.error || response.statusText);
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: `Error from OpenAI API: ${data.error?.message || response.statusText}`,
           status: response.status,
-          statusText: response.statusText
+          statusText: response.statusText,
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
-    
+
     if (data.error) {
       console.error('OpenAI API Error:', data.error);
       return new Response(
-        JSON.stringify({ error: "Error from OpenAI API: " + (data.error.message || 'Unknown API error') }),
+        JSON.stringify({
+          error: 'Error from OpenAI API: ' + (data.error.message || 'Unknown API error'),
+        }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -594,57 +630,57 @@ Always use British English (earth not ground, consumer unit not panel).`;
     console.log('Content field:', aiResponse);
 
     // Handle structured responses for structured_assistant type
-    if (type === "structured_assistant") {
+    if (type === 'structured_assistant') {
       let content = aiResponse.trim();
-      
+
       // Clean up the response - strip markdown code blocks if present
       if (content.startsWith('```json')) {
         content = content.replace(/^```json\s*/, '').replace(/\s*```$/, '');
       } else if (content.startsWith('```')) {
         content = content.replace(/^```\s*/, '').replace(/\s*```$/, '');
       }
-      
+
       // Remove any leading/trailing quotes that might wrap the entire JSON
       content = content.replace(/^["'](.*)["']$/s, '$1');
-      
+
       console.log('Cleaned content for parsing (first 200 chars):', content.substring(0, 200));
-      
+
       // Check if content is empty
       if (!content || content.trim() === '') {
         console.error('OpenAI returned empty content');
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             error: 'OpenAI returned empty response',
-            debug: { rawContent: aiResponse, type: type }
+            debug: { rawContent: aiResponse, type: type },
           }),
           { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
-      
+
       try {
         const parsedResponse = JSON.parse(content);
-        
+
         // Validate that all FOUR fields exist (new format)
         const quick_answer = parsedResponse.quick_answer || '';
         const technical_answer = parsedResponse.technical_answer || '';
         const regulations = parsedResponse.regulations || '';
         const practical_guidance = parsedResponse.practical_guidance || '';
-        
+
         if (!quick_answer || !technical_answer || !regulations || !practical_guidance) {
-          console.warn('Warning: Some fields are empty', { 
+          console.warn('Warning: Some fields are empty', {
             hasQuickAnswer: !!quick_answer,
-            hasTechnicalAnswer: !!technical_answer, 
-            hasRegulations: !!regulations, 
-            hasPracticalGuidance: !!practical_guidance 
+            hasTechnicalAnswer: !!technical_answer,
+            hasRegulations: !!regulations,
+            hasPracticalGuidance: !!practical_guidance,
           });
         }
-        
+
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             quick_answer: quick_answer || 'No quick answer provided.',
             technical_answer: technical_answer || 'No technical analysis provided.',
             regulations: regulations || 'No regulations specified.',
-            practical_guidance: practical_guidance || 'No practical guidance available.'
+            practical_guidance: practical_guidance || 'No practical guidance available.',
             // RAG metadata hidden - trade secret
           }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -657,25 +693,26 @@ Always use British English (earth not ground, consumer unit not panel).`;
     }
 
     // Handle visual analysis advanced responses
-    if (type === "visual_analysis_advanced") {
+    if (type === 'visual_analysis_advanced') {
       try {
         const parsedResponse = JSON.parse(aiResponse);
         if (parsedResponse.analysis) {
-          return new Response(
-            JSON.stringify({ analysis: parsedResponse.analysis }),
-            { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-          );
+          return new Response(JSON.stringify({ analysis: parsedResponse.analysis }), {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          });
         }
       } catch (parseError) {
-        console.error('Failed to parse visual analysis response, falling back to regular response:', parseError);
+        console.error(
+          'Failed to parse visual analysis response, falling back to regular response:',
+          parseError
+        );
         // Fall back to regular response format
       }
     }
 
-    return new Response(
-      JSON.stringify({ response: aiResponse }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ response: aiResponse }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('Error in electrician-ai-assistant function:', error);
 
@@ -683,7 +720,7 @@ Always use British English (earth not ground, consumer unit not panel).`;
     await captureException(error, {
       functionName: 'electrician-ai-assistant',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     return new Response(

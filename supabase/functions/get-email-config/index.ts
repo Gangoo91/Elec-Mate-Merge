@@ -23,7 +23,10 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
@@ -31,7 +34,9 @@ serve(async (req: Request) => {
     // Get configs (without tokens)
     const { data: configs, error: configError } = await supabase
       .from('user_email_configs')
-      .select('id, email_provider, email_address, is_active, created_at, daily_sent_count, total_sent_count, last_sent_at, rate_limit_reset_at')
+      .select(
+        'id, email_provider, email_address, is_active, created_at, daily_sent_count, total_sent_count, last_sent_at, rate_limit_reset_at'
+      )
       .eq('user_id', user.id)
       .order('updated_at', { ascending: false });
 
@@ -39,10 +44,9 @@ serve(async (req: Request) => {
       throw new Error('Failed to fetch email configuration');
     }
 
-    return new Response(
-      JSON.stringify({ configs: configs || [] }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ configs: configs || [] }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return handleError(error);
   }

@@ -7,7 +7,7 @@ serve(async (req) => {
 
   try {
     const { userQuery, designContext, messages } = await req.json();
-    
+
     console.log('🔄 Generating design alternatives for:', userQuery);
 
     const geminiKey = Deno.env.get('GEMINI_API_KEY');
@@ -62,34 +62,47 @@ Respond with valid JSON:
     // Import Gemini provider
     const { callGemini, withRetry } = await import('../_shared/ai-providers.ts');
 
-    const result = await withRetry(async () => {
-      const response = await callGemini({
-        messages: [
-          { role: 'system', content: 'You are an expert electrical design consultant specializing in BS 7671 compliant installations.' },
-          { role: 'user', content: prompt }
-        ],
-        model: 'gemini-2.5-flash',
-        temperature: 0.3,
-        max_tokens: 2000,
-        response_format: { type: 'json_object' }
-      }, geminiKey);
+    const result = await withRetry(
+      async () => {
+        const response = await callGemini(
+          {
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You are an expert electrical design consultant specializing in BS 7671 compliant installations.',
+              },
+              { role: 'user', content: prompt },
+            ],
+            model: 'gemini-2.5-flash',
+            temperature: 0.3,
+            max_tokens: 2000,
+            response_format: { type: 'json_object' },
+          },
+          geminiKey
+        );
 
-      return JSON.parse(response.content);
-    }, 3, 2000);
+        return JSON.parse(response.content);
+      },
+      3,
+      2000
+    );
 
     console.log('✅ Generated', result.alternatives?.length || 0, 'alternatives');
 
     return new Response(JSON.stringify(result), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('❌ Error generating alternatives:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to generate alternatives'
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to generate alternatives',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

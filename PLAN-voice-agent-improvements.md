@@ -14,40 +14,42 @@ The ElevenLabs voice agent needs improvements based on BS7671 form structure:
 ## BS7671 Column Reference
 
 ### Schedule of Circuit Details (Columns 1-16)
-| Col | Field | Values |
-|-----|-------|--------|
-| 1 | Circuit number | 1, 2, 3... |
-| 2 | Circuit description | "Lighting", "Ring Final - Sockets", "Cooker" |
-| 3 | Type of wiring | A=T&E, B=T+E in conduit, C=T+E in trunking, D=T+E metallic conduit, E=T+E metallic trunking, F=SWA, G=Thermosetting SWA, H=MI, O=Other |
-| 4 | Reference method | A, B, C, D, E, F, G (per Table 4A2 of BS7671) |
-| 5 | Points served | Number (e.g., 8 for sockets, 12 for lights) |
-| 6 | Live size | 1.5, 2.5, 4.0, 6.0, 10, 16 mm² |
-| 7 | CPC size | 1.0, 1.5, 2.5, 4.0 mm² |
-| 8 | OCPD BS (EN) | "BS EN 60898", "BS EN 61009" |
-| 9 | OCPD Type | B, C, D (MCB curves) or A, AC, F (RCD types) |
-| 10 | OCPD Rating | 6, 10, 16, 20, 32, 40, 45 A |
-| 11 | Breaking capacity | 6, 10 kA |
-| 12 | Max Zs | From tables based on device |
-| 13-16 | RCD details | BS, Type, IΔn (mA), Rating |
+
+| Col   | Field               | Values                                                                                                                                 |
+| ----- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| 1     | Circuit number      | 1, 2, 3...                                                                                                                             |
+| 2     | Circuit description | "Lighting", "Ring Final - Sockets", "Cooker"                                                                                           |
+| 3     | Type of wiring      | A=T&E, B=T+E in conduit, C=T+E in trunking, D=T+E metallic conduit, E=T+E metallic trunking, F=SWA, G=Thermosetting SWA, H=MI, O=Other |
+| 4     | Reference method    | A, B, C, D, E, F, G (per Table 4A2 of BS7671)                                                                                          |
+| 5     | Points served       | Number (e.g., 8 for sockets, 12 for lights)                                                                                            |
+| 6     | Live size           | 1.5, 2.5, 4.0, 6.0, 10, 16 mm²                                                                                                         |
+| 7     | CPC size            | 1.0, 1.5, 2.5, 4.0 mm²                                                                                                                 |
+| 8     | OCPD BS (EN)        | "BS EN 60898", "BS EN 61009"                                                                                                           |
+| 9     | OCPD Type           | B, C, D (MCB curves) or A, AC, F (RCD types)                                                                                           |
+| 10    | OCPD Rating         | 6, 10, 16, 20, 32, 40, 45 A                                                                                                            |
+| 11    | Breaking capacity   | 6, 10 kA                                                                                                                               |
+| 12    | Max Zs              | From tables based on device                                                                                                            |
+| 13-16 | RCD details         | BS, Type, IΔn (mA), Rating                                                                                                             |
 
 ### Schedule of Test Results (Columns 17-31)
-| Col | Field | Typical Values |
-|-----|-------|----------------|
-| 17 | Circuit number | Matches col 1 |
-| 18 | r₁ (ring line) | 0.15-0.5 Ω |
-| 19 | rₙ (ring neutral) | 0.15-0.5 Ω |
-| 20 | r₂ (ring cpc) | 0.3-1.0 Ω |
-| 21 | R₁+R₂ | 0.2-1.5 Ω |
-| 22 | R₂ | 0.1-1.0 Ω |
-| 23 | Test voltage | 250, 500, 1000 V |
-| 24 | IR L-L | >2 MΩ (min 1.0) |
-| 25 | IR L-E | >2 MΩ (min 1.0) |
-| 26 | Polarity | ✓ or ✗ |
-| 27 | Zs measured | Must be < Max Zs |
-| 28 | RCD time | <300ms (1x), <40ms (5x) |
-| 29 | RCD test button | ✓ |
-| 30 | AFDD test | ✓ or N/A |
-| 31 | Remarks | Free text |
+
+| Col | Field             | Typical Values          |
+| --- | ----------------- | ----------------------- |
+| 17  | Circuit number    | Matches col 1           |
+| 18  | r₁ (ring line)    | 0.15-0.5 Ω              |
+| 19  | rₙ (ring neutral) | 0.15-0.5 Ω              |
+| 20  | r₂ (ring cpc)     | 0.3-1.0 Ω               |
+| 21  | R₁+R₂             | 0.2-1.5 Ω               |
+| 22  | R₂                | 0.1-1.0 Ω               |
+| 23  | Test voltage      | 250, 500, 1000 V        |
+| 24  | IR L-L            | >2 MΩ (min 1.0)         |
+| 25  | IR L-E            | >2 MΩ (min 1.0)         |
+| 26  | Polarity          | ✓ or ✗                  |
+| 27  | Zs measured       | Must be < Max Zs        |
+| 28  | RCD time          | <300ms (1x), <40ms (5x) |
+| 29  | RCD test button   | ✓                       |
+| 30  | AFDD test         | ✓ or N/A                |
+| 31  | Remarks           | Free text               |
 
 ---
 
@@ -246,18 +248,18 @@ case 'add_circuit': {
 ```typescript
 export function getDefaultDescription(circuitType: string): string {
   const descriptions: Record<string, string> = {
-    'lighting': 'Lighting',
-    'ring': 'Ring Final Sockets',
-    'radial': 'Radial Sockets',
-    'cooker': 'Cooker',
-    'shower': 'Shower',
-    'immersion': 'Immersion Heater',
-    'smoke_alarm': 'Smoke Alarms',
-    'ev_charger': 'EV Charger',
-    'boiler': 'Boiler/CH',
-    'socket': 'Sockets',
-    'spur': 'Fused Spur',
-    'other': 'Circuit'
+    lighting: 'Lighting',
+    ring: 'Ring Final Sockets',
+    radial: 'Radial Sockets',
+    cooker: 'Cooker',
+    shower: 'Shower',
+    immersion: 'Immersion Heater',
+    smoke_alarm: 'Smoke Alarms',
+    ev_charger: 'EV Charger',
+    boiler: 'Boiler/CH',
+    socket: 'Sockets',
+    spur: 'Fused Spur',
+    other: 'Circuit',
   };
   return descriptions[circuitType.toLowerCase()] || 'Circuit';
 }
@@ -268,30 +270,36 @@ export function getDefaultDescription(circuitType: string): string {
 ## Voice Command Examples
 
 ### Adding Circuits
+
 - "Add circuit 1 sockets" → Circuit 1 - Ring Final Sockets
 - "Add a lighting circuit" → Circuit 2 - Lighting
 - "Add circuit 3 as cooker" → Circuit 3 - Cooker
 - "Add 6 socket circuits" → Circuits with sequential numbers
 
 ### Deleting Circuits
+
 - "Delete circuit 3"
 - "Remove circuit 5"
 - "Delete the last circuit"
 
 ### Updating Wiring Type
+
 - "Set wiring type to A" → Twin & Earth
 - "Circuit 3 is SWA" → Type F
 
 ### Updating Reference Method
+
 - "Reference method C" → Clipped direct
 - "Set reference method to B for circuit 2"
 
 ### Test Validation
+
 - "Check my tests"
 - "Are there any issues?"
 - "Validate the schedule"
 
 ### Getting Issues
+
 - "What's wrong with circuit 3?"
 - "Any problems?"
 
@@ -305,4 +313,3 @@ export function getDefaultDescription(circuitType: string): string {
 4. Deploy edge function
 5. Trigger agent setup
 6. Test in app
-

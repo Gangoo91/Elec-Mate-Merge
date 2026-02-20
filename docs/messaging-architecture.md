@@ -8,30 +8,34 @@ This document outlines the expanded messaging system supporting all user types a
 
 ## User Types & Relationships
 
-| User Type | Auth Link | Can Chat With |
-|-----------|-----------|---------------|
-| **Electrician (Spark)** | `employer_elec_id_profiles.employee_id = auth.uid()` | Employers, Other Sparks (peer support), College tutors |
-| **Employer** | `employer_conversations.employer_id = auth.uid()` | Electricians, Team members, College staff |
-| **College Staff** | `college.staff.user_id = auth.uid()` | Students, Employers, Other staff |
-| **College Student** | `college.students.user_id = auth.uid()` | Tutors, Employer contacts |
-| **Employer Portal User** | `college.employers.portal_user_id = auth.uid()` | College staff, Apprentices |
+| User Type                | Auth Link                                            | Can Chat With                                          |
+| ------------------------ | ---------------------------------------------------- | ------------------------------------------------------ |
+| **Electrician (Spark)**  | `employer_elec_id_profiles.employee_id = auth.uid()` | Employers, Other Sparks (peer support), College tutors |
+| **Employer**             | `employer_conversations.employer_id = auth.uid()`    | Electricians, Team members, College staff              |
+| **College Staff**        | `college.staff.user_id = auth.uid()`                 | Students, Employers, Other staff                       |
+| **College Student**      | `college.students.user_id = auth.uid()`              | Tutors, Employer contacts                              |
+| **Employer Portal User** | `college.employers.portal_user_id = auth.uid()`      | College staff, Apprentices                             |
 
 ---
 
 ## Chat Channels
 
 ### 1. Job Messaging (EXISTS)
+
 - **Employer → Electrician**: Via Talent Pool
 - **Electrician → Employer**: After applying to vacancy
 
 ### 2. Peer Support (EXISTS)
+
 - **Spark ↔ Mental Health Mate**: Anonymous peer support
 
 ### 3. Team Chat (NEW)
+
 - **Employer ↔ Team Members**: Internal company communication
 - Requires: `employer_employees.user_id` column
 
 ### 4. Education Chat (NEW)
+
 - **College Staff ↔ Student**: Progress reviews, support
 - **College Staff ↔ Employer**: Apprentice updates, workplace visits
 - **Student ↔ Employer Contact**: Work queries (via college)
@@ -41,6 +45,7 @@ This document outlines the expanded messaging system supporting all user types a
 ## Database Changes Required
 
 ### 1. Add user_id to employer_employees
+
 ```sql
 ALTER TABLE employer_employees ADD COLUMN user_id UUID REFERENCES auth.users(id);
 ALTER TABLE employer_employees ADD COLUMN employer_id UUID; -- Link to company
@@ -48,6 +53,7 @@ CREATE INDEX idx_employer_employees_user_id ON employer_employees(user_id);
 ```
 
 ### 2. Create unified_conversations table
+
 ```sql
 CREATE TABLE unified_conversations (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -97,6 +103,7 @@ CREATE TABLE unified_messages (
 ```
 
 ### 3. Create team_channels for group chat
+
 ```sql
 CREATE TABLE team_channels (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -134,15 +141,18 @@ CREATE TABLE team_channel_messages (
 ## Spark (Electrician) Chat Initiation Points
 
 ### Current
+
 1. ❌ Cannot initiate - only receive and reply (after applying)
 
 ### Proposed Additions
+
 1. **Job Vacancies Page** → "Message Employer" button on vacancy cards
 2. **Employer Profile View** → "Start Conversation"
 3. **After Applying** → Direct chat opens
 4. **From Notifications** → Reply to employer messages
 
 ### UI Changes Needed
+
 - Add internal vacancy browser (not just external job boards)
 - Add "Message" button to employer/vacancy cards
 - Add conversation starter in application flow
@@ -199,16 +209,19 @@ Chat Channels:
 ## Implementation Priority
 
 ### Phase 1: Spark Chat Initiation (Quick Win)
+
 1. Add internal vacancy listing for electricians
 2. Add "Message Employer" to vacancy cards
 3. Auto-open chat after successful application
 
 ### Phase 2: Team Chat
+
 1. Add `user_id` to `employer_employees`
 2. Create team channels infrastructure
 3. Build Team Chat UI in employer dashboard
 
 ### Phase 3: Education Chat
+
 1. Create education conversations table
 2. Build college messaging UI
 3. Add employer portal messaging
@@ -222,20 +235,24 @@ Current tabs: Jobs | Mates
 Proposed tabs based on user type:
 
 **For Electricians:**
+
 - Jobs (employer conversations)
 - Team (if employed - chat with employer team)
 - Mates (peer support)
 
 **For Employers:**
+
 - Candidates (talent pool conversations)
 - Team (internal team chat)
 - College (apprentice-related)
 
 **For College Staff:**
+
 - Students (student support)
 - Employers (workplace coordination)
 - Staff (internal)
 
 **For Students:**
+
 - Tutor (assigned tutor chat)
 - Work (employer contact via college)

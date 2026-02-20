@@ -31,8 +31,14 @@ const generateTool = {
               question: { type: 'string' },
               targetLO: { type: 'string', description: 'Unit + LO reference, e.g. Unit 201 LO1' },
               targetAC: { type: 'string' },
-              portfolioContext: { type: 'string', description: 'Which portfolio evidence this relates to' },
-              questionType: { type: 'string', enum: ['technical', 'reflective', 'behavioural', 'synoptic'] },
+              portfolioContext: {
+                type: 'string',
+                description: 'Which portfolio evidence this relates to',
+              },
+              questionType: {
+                type: 'string',
+                enum: ['technical', 'reflective', 'behavioural', 'synoptic'],
+              },
               gradeDescriptors: {
                 type: 'object',
                 properties: {
@@ -42,7 +48,14 @@ const generateTool = {
                 required: ['pass', 'distinction'],
               },
             },
-            required: ['id', 'question', 'targetLO', 'portfolioContext', 'questionType', 'gradeDescriptors'],
+            required: [
+              'id',
+              'question',
+              'targetLO',
+              'portfolioContext',
+              'questionType',
+              'gradeDescriptors',
+            ],
           },
         },
       },
@@ -64,7 +77,11 @@ const scoreTool = {
         feedback: { type: 'string', description: '2-3 sentence constructive feedback' },
         strengthsShown: { type: 'array', items: { type: 'string' } },
         areasToImprove: { type: 'array', items: { type: 'string' } },
-        acsCovered: { type: 'array', items: { type: 'string' }, description: 'AC codes evidenced in the response' },
+        acsCovered: {
+          type: 'array',
+          items: { type: 'string' },
+          description: 'AC codes evidenced in the response',
+        },
         subscores: {
           type: 'object',
           properties: {
@@ -74,10 +91,24 @@ const scoreTool = {
             reflection: { type: 'number', description: '0-100' },
             problemSolving: { type: 'number', description: '0-100' },
           },
-          required: ['technicalKnowledge', 'practicalApplication', 'communication', 'reflection', 'problemSolving'],
+          required: [
+            'technicalKnowledge',
+            'practicalApplication',
+            'communication',
+            'reflection',
+            'problemSolving',
+          ],
         },
       },
-      required: ['score', 'grade', 'feedback', 'strengthsShown', 'areasToImprove', 'acsCovered', 'subscores'],
+      required: [
+        'score',
+        'grade',
+        'feedback',
+        'strengthsShown',
+        'areasToImprove',
+        'acsCovered',
+        'subscores',
+      ],
     },
   },
 };
@@ -112,7 +143,10 @@ serve(async (req: Request) => {
       global: { headers: { Authorization: authHeader } },
     });
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       return new Response(JSON.stringify({ error: 'Unauthorised' }), {
         status: 401,
@@ -136,7 +170,10 @@ serve(async (req: Request) => {
   } catch (err) {
     console.error('[epa-professional-discussion] Error:', err);
     return new Response(
-      JSON.stringify({ success: false, error: err instanceof Error ? err.message : 'Internal error' }),
+      JSON.stringify({
+        success: false,
+        error: err instanceof Error ? err.message : 'Internal error',
+      }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
@@ -150,7 +187,10 @@ function buildQualificationStructure(acData: any[], qualificationCode: string): 
   if (!acData?.length) return '';
 
   // Group by unit_code
-  const units = new Map<string, { title: string; los: Map<string, { text: string; acs: { code: string; text: string }[] }> }>();
+  const units = new Map<
+    string,
+    { title: string; los: Map<string, { text: string; acs: { code: string; text: string }[] }> }
+  >();
 
   for (const row of acData) {
     const unitCode = row.unit_code || '';
@@ -191,7 +231,10 @@ async function handleGenerate(body: any, supabase: any, openAIApiKey: string) {
 
   if (!portfolio_entries?.length || !qualification_code) {
     return new Response(
-      JSON.stringify({ success: false, error: 'portfolio_entries and qualification_code required' }),
+      JSON.stringify({
+        success: false,
+        error: 'portfolio_entries and qualification_code required',
+      }),
       { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
@@ -205,11 +248,16 @@ async function handleGenerate(body: any, supabase: any, openAIApiKey: string) {
     if (acData?.length) {
       qualificationStructure = buildQualificationStructure(acData, qualification_code);
     }
-  } catch { /* non-critical */ }
+  } catch {
+    /* non-critical */
+  }
 
   const portfolioSummary = portfolio_entries
     .slice(0, 15)
-    .map((e: any) => `- "${e.title}": ${e.description?.substring(0, 150) || ''} [Skills: ${e.skills?.join(', ') || 'N/A'}] [ACs: ${e.assessment_criteria?.join(', ') || 'N/A'}]`)
+    .map(
+      (e: any) =>
+        `- "${e.title}": ${e.description?.substring(0, 150) || ''} [Skills: ${e.skills?.join(', ') || 'N/A'}] [ACs: ${e.assessment_criteria?.join(', ') || 'N/A'}]`
+    )
     .join('\n');
 
   const systemPrompt = `You are a senior assessor conducting a professional discussion for the qualification shown below.
@@ -257,7 +305,11 @@ ${portfolioSummary}`;
       max_completion_tokens: 6000,
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: 'Generate professional discussion questions for this apprentice based on their portfolio evidence.' },
+        {
+          role: 'user',
+          content:
+            'Generate professional discussion questions for this apprentice based on their portfolio evidence.',
+        },
       ],
       tools: [generateTool],
       tool_choice: { type: 'function', function: { name: 'epa_discussion_questions' } },
@@ -275,10 +327,9 @@ ${portfolioSummary}`;
 
   const result = JSON.parse(toolCall.function.arguments);
 
-  return new Response(
-    JSON.stringify({ success: true, ...result }),
-    { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-  );
+  return new Response(JSON.stringify({ success: true, ...result }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
 }
 
 async function handleScore(body: any, supabase: any, openAIApiKey: string) {
@@ -294,18 +345,25 @@ async function handleScore(body: any, supabase: any, openAIApiKey: string) {
   // RAG for technical validation
   let ragContext = '';
   try {
-    const keywords = apprenticeResponse.toLowerCase().split(/\s+/)
-      .filter((w: string) => w.length >= 4).slice(0, 10);
+    const keywords = apprenticeResponse
+      .toLowerCase()
+      .split(/\s+/)
+      .filter((w: string) => w.length >= 4)
+      .slice(0, 10);
     if (keywords.length > 0) {
       const { data } = await supabase.rpc('search_practical_work_fast', {
-        query_text: keywords.join(' '), match_count: 3,
+        query_text: keywords.join(' '),
+        match_count: 3,
       });
       if (data?.length) {
-        ragContext = '\n\n--- Technical Reference ---\n' +
+        ragContext =
+          '\n\n--- Technical Reference ---\n' +
           data.map((d: any) => `- ${d.title}: ${d.description?.substring(0, 200)}`).join('\n');
       }
     }
-  } catch { /* non-critical */ }
+  } catch {
+    /* non-critical */
+  }
 
   const systemPrompt = `You are a senior assessor scoring an apprentice's response to a professional discussion question. Evaluate against the marking criteria and grade descriptors provided.
 
@@ -333,9 +391,10 @@ async function handleScore(body: any, supabase: any, openAIApiKey: string) {
 Use UK English. Be constructive, specific, and encouraging. Identify what was good and what could be improved.
 ${ragContext}`;
 
-  const questionContext = typeof question === 'object'
-    ? `Question: ${question.question}\nTarget LO: ${question.targetLO}\nQuestion type: ${question.questionType || 'technical'}\nPortfolio context: ${question.portfolioContext || ''}\nGrade descriptors:\n- Pass: ${question.gradeDescriptors?.pass}\n- Distinction: ${question.gradeDescriptors?.distinction}`
-    : `Question: ${question}`;
+  const questionContext =
+    typeof question === 'object'
+      ? `Question: ${question.question}\nTarget LO: ${question.targetLO}\nQuestion type: ${question.questionType || 'technical'}\nPortfolio context: ${question.portfolioContext || ''}\nGrade descriptors:\n- Pass: ${question.gradeDescriptors?.pass}\n- Distinction: ${question.gradeDescriptors?.distinction}`
+      : `Question: ${question}`;
 
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
@@ -348,7 +407,10 @@ ${ragContext}`;
       max_completion_tokens: 3000,
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `${questionContext}\n\nApprentice's response:\n${apprenticeResponse}` },
+        {
+          role: 'user',
+          content: `${questionContext}\n\nApprentice's response:\n${apprenticeResponse}`,
+        },
       ],
       tools: [scoreTool],
       tool_choice: { type: 'function', function: { name: 'epa_response_score' } },
@@ -366,8 +428,7 @@ ${ragContext}`;
 
   const result = JSON.parse(toolCall.function.arguments);
 
-  return new Response(
-    JSON.stringify({ success: true, ...result }),
-    { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-  );
+  return new Response(JSON.stringify({ success: true, ...result }), {
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
 }

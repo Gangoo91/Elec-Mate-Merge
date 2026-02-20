@@ -1,10 +1,10 @@
-import { serve, createClient, corsHeaders } from "../_shared/deps.ts";
-import { ValidationError, ExternalAPIError, handleError } from "../_shared/errors.ts";
-import { validateRequired } from "../_shared/validation.ts";
-import { withRetry, RetryPresets } from "../_shared/retry.ts";
-import { withTimeout, Timeouts } from "../_shared/timeout.ts";
-import { createLogger, generateRequestId } from "../_shared/logger.ts";
-import { ResponseCache } from "../_shared/response-cache.ts";
+import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
+import { ValidationError, ExternalAPIError, handleError } from '../_shared/errors.ts';
+import { validateRequired } from '../_shared/validation.ts';
+import { withRetry, RetryPresets } from '../_shared/retry.ts';
+import { withTimeout, Timeouts } from '../_shared/timeout.ts';
+import { createLogger, generateRequestId } from '../_shared/logger.ts';
+import { ResponseCache } from '../_shared/response-cache.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -19,11 +19,11 @@ serve(async (req) => {
 
     // Validate inputs
     validateRequired(query, 'query');
-    
+
     if (matchThreshold < 0.1 || matchThreshold > 0.9) {
       throw new ValidationError('matchThreshold must be between 0.1 and 0.9');
     }
-    
+
     if (matchCount < 1 || matchCount > 50) {
       throw new ValidationError('matchCount must be between 1 and 50');
     }
@@ -45,16 +45,16 @@ serve(async (req) => {
     const regNumbers = extractRegulationNumbers(query);
     if (regNumbers.length > 0) {
       logger.debug('Trying direct regulation lookup first', { regNumbers });
-      
+
       const { data: directResults, error: directError } = await supabase
         .from('bs7671_embeddings')
         .select('*')
-        .or(regNumbers.map(n => `regulation_number.ilike.%${n}%`).join(','))
+        .or(regNumbers.map((n) => `regulation_number.ilike.%${n}%`).join(','))
         .limit(matchCount);
-      
+
       if (!directError && directResults && directResults.length > 0) {
         logger.info('✅ Direct lookup succeeded', { count: directResults.length });
-        
+
         const regulations = directResults.map((item: any) => ({
           id: item.id,
           regulation_number: item.regulation_number,
@@ -64,7 +64,7 @@ serve(async (req) => {
           metadata: item.metadata || {},
           similarity: 0.95,
         }));
-        
+
         return new Response(
           JSON.stringify({
             success: true,
@@ -74,9 +74,9 @@ serve(async (req) => {
             searchMethod: 'direct',
             requestId,
           }),
-          { 
+          {
             headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 200 
+            status: 200,
           }
         );
       }
@@ -84,17 +84,18 @@ serve(async (req) => {
 
     // ⚡ REGULATIONS INTELLIGENCE: Direct keyword search (no embedding needed!)
     logger.debug('Searching regulations intelligence with hybrid keyword matching');
-    
+
     const { data: intelligenceResults, error: searchError } = await logger.time(
       'Intelligence hybrid search',
-      () => withTimeout(
-        supabase.rpc('search_regulations_intelligence_hybrid', {
-          query_text: query,
-          match_count: matchCount
-        }),
-        Timeouts.STANDARD,
-        'Regulations intelligence search'
-      )
+      () =>
+        withTimeout(
+          supabase.rpc('search_regulations_intelligence_hybrid', {
+            query_text: query,
+            match_count: matchCount,
+          }),
+          Timeouts.STANDARD,
+          'Regulations intelligence search'
+        )
     );
 
     if (searchError) {
@@ -102,10 +103,12 @@ serve(async (req) => {
       throw searchError;
     }
 
-    logger.info('Intelligence search completed', { resultsCount: intelligenceResults?.length || 0 });
+    logger.info('Intelligence search completed', {
+      resultsCount: intelligenceResults?.length || 0,
+    });
 
     let searchMethod = 'intelligence_hybrid';
-    
+
     // Intelligence results already include content from the database function's LEFT JOIN
     const enrichedResults = (intelligenceResults || []).map((intel: any) => ({
       id: intel.id,
@@ -121,15 +124,15 @@ serve(async (req) => {
       category: intel.category,
       subcategory: intel.subcategory,
       applies_to: intel.applies_to,
-      practical_application: intel.practical_application
+      practical_application: intel.practical_application,
     }));
 
     const regulations = enrichedResults;
 
-    logger.info('Returning results', { 
-      count: regulations.length, 
+    logger.info('Returning results', {
+      count: regulations.length,
       searchMethod,
-      requestId 
+      requestId,
     });
 
     return new Response(
@@ -141,12 +144,11 @@ serve(async (req) => {
         searchMethod,
         requestId,
       }),
-      { 
+      {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 200 
+        status: 200,
       }
     );
-
   } catch (error) {
     logger.error('BS 7671 RAG Search error', { error: error.message });
     return handleError(error);

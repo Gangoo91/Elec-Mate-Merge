@@ -1,7 +1,7 @@
 /**
  * IET On-Site Guide Reference Tables
  * BS 7671:2018+A3:2024 On-Site Guide
- * 
+ *
  * PLACEHOLDER STRUCTURE - Awaiting On-Site Guide PDF upload
  * For use in Designer, Installer, and Commissioning agents
  */
@@ -35,7 +35,7 @@ export const CABLE_SELECTION_PLACEHOLDER: CableSelectionData[] = [
     cableSize: '1.5mm² T&E',
     installationMethod: 'Method C (clipped direct)',
     maxLength: 50,
-    protectiveDevice: 'B6 MCB'
+    protectiveDevice: 'B6 MCB',
   },
   {
     circuitType: 'socket_ring',
@@ -43,7 +43,7 @@ export const CABLE_SELECTION_PLACEHOLDER: CableSelectionData[] = [
     cableSize: '2.5mm² T&E',
     installationMethod: 'Method C (clipped direct)',
     maxLength: 106,
-    protectiveDevice: 'B32 MCB'
+    protectiveDevice: 'B32 MCB',
   },
   {
     circuitType: 'shower',
@@ -51,7 +51,7 @@ export const CABLE_SELECTION_PLACEHOLDER: CableSelectionData[] = [
     cableSize: '10mm² T&E',
     installationMethod: 'Method C (clipped direct)',
     maxLength: 27,
-    protectiveDevice: 'B40 MCB'
+    protectiveDevice: 'B40 MCB',
   },
   {
     circuitType: 'cooker',
@@ -59,8 +59,8 @@ export const CABLE_SELECTION_PLACEHOLDER: CableSelectionData[] = [
     cableSize: '6mm² T&E',
     installationMethod: 'Method C (clipped direct)',
     maxLength: 44,
-    protectiveDevice: 'B32 MCB'
-  }
+    protectiveDevice: 'B32 MCB',
+  },
 ];
 
 /**
@@ -79,7 +79,7 @@ export const VOLTAGE_DROP_PLACEHOLDER: VoltageDropData[] = [
   { cableSize: '2.5mm²', voltageDropPerAmpPerMetre: 18, cableType: 'copper_T&E' },
   { cableSize: '4mm²', voltageDropPerAmpPerMetre: 11, cableType: 'copper_T&E' },
   { cableSize: '6mm²', voltageDropPerAmpPerMetre: 7.3, cableType: 'copper_T&E' },
-  { cableSize: '10mm²', voltageDropPerAmpPerMetre: 4.4, cableType: 'copper_T&E' }
+  { cableSize: '10mm²', voltageDropPerAmpPerMetre: 4.4, cableType: 'copper_T&E' },
 ];
 
 /**
@@ -100,39 +100,39 @@ export const INSTALLATION_METHODS_PLACEHOLDER: InstallationMethodData[] = [
     description: 'Enclosed in conduit in thermally insulating wall',
     deratingFactor: 0.5,
     suitableFor: ['domestic', 'commercial'],
-    restrictions: 'Significant derating required'
+    restrictions: 'Significant derating required',
   },
   {
     methodReference: 'Method B',
     description: 'Enclosed in conduit on wooden wall',
     deratingFactor: 0.8,
-    suitableFor: ['domestic', 'commercial']
+    suitableFor: ['domestic', 'commercial'],
   },
   {
     methodReference: 'Method C',
     description: 'Clipped direct to surface or embedded',
     deratingFactor: 1.0,
     suitableFor: ['domestic', 'commercial'],
-    restrictions: 'Most common domestic installation method'
+    restrictions: 'Most common domestic installation method',
   },
   {
     methodReference: 'Method 100',
     description: 'Enclosed in conduit in thermally insulating wall',
     deratingFactor: 0.5,
-    suitableFor: ['domestic']
+    suitableFor: ['domestic'],
   },
   {
     methodReference: 'Method 101',
     description: 'Enclosed in conduit on wall or in trunking',
     deratingFactor: 0.95,
-    suitableFor: ['domestic', 'commercial']
+    suitableFor: ['domestic', 'commercial'],
   },
   {
     methodReference: 'Method 102',
     description: 'Clipped direct',
     deratingFactor: 1.0,
-    suitableFor: ['domestic', 'commercial']
-  }
+    suitableFor: ['domestic', 'commercial'],
+  },
 ];
 
 /**
@@ -143,23 +143,23 @@ export const SAFE_ZONES = {
   horizontal: {
     description: 'Within 150mm of top of wall or ceiling',
     distance: 150,
-    unit: 'mm'
+    unit: 'mm',
   },
   vertical: {
     description: 'Within 150mm of wall corner or ceiling',
     distance: 150,
-    unit: 'mm'
+    unit: 'mm',
   },
   accessories: {
     description: 'Within 150mm zone either side of accessory',
     distance: 150,
-    unit: 'mm'
+    unit: 'mm',
   },
   notes: [
     'Cables must run vertically or horizontally to accessories',
     'If outside safe zones, must be at depth >50mm or have mechanical protection',
-    'In walls with metal studs, cables at any depth must have earthed mechanical protection'
-  ]
+    'In walls with metal studs, cables at any depth must have earthed mechanical protection',
+  ],
 };
 
 /**
@@ -178,45 +178,45 @@ export const CABLE_SUPPORT_SPACING: CableSupportData[] = [
     cableType: 'T&E up to 9mm diameter',
     orientation: 'horizontal',
     maxSpacing: 250,
-    unit: 'mm'
+    unit: 'mm',
   },
   {
     cableType: 'T&E up to 9mm diameter',
     orientation: 'vertical',
     maxSpacing: 400,
-    unit: 'mm'
+    unit: 'mm',
   },
   {
     cableType: 'T&E 9-15mm diameter',
     orientation: 'horizontal',
     maxSpacing: 300,
-    unit: 'mm'
+    unit: 'mm',
   },
   {
     cableType: 'T&E 9-15mm diameter',
     orientation: 'vertical',
     maxSpacing: 400,
-    unit: 'mm'
+    unit: 'mm',
   },
   {
     cableType: 'T&E over 15mm diameter',
     orientation: 'horizontal',
     maxSpacing: 350,
-    unit: 'mm'
+    unit: 'mm',
   },
   {
     cableType: 'T&E over 15mm diameter',
     orientation: 'vertical',
     maxSpacing: 450,
-    unit: 'mm'
-  }
+    unit: 'mm',
+  },
 ];
 
 /**
  * Helper function to get cable selection for circuit type
  */
 export function getCableSelection(circuitType: string): CableSelectionData | undefined {
-  return CABLE_SELECTION_PLACEHOLDER.find(cs => cs.circuitType === circuitType);
+  return CABLE_SELECTION_PLACEHOLDER.find((cs) => cs.circuitType === circuitType);
 }
 
 /**
@@ -227,19 +227,19 @@ export function calculateVoltageDrop(
   current: number,
   length: number
 ): { voltageDrop: number; percentage: number; acceptable: boolean } {
-  const vdData = VOLTAGE_DROP_PLACEHOLDER.find(vd => vd.cableSize === cableSize);
-  
+  const vdData = VOLTAGE_DROP_PLACEHOLDER.find((vd) => vd.cableSize === cableSize);
+
   if (!vdData) {
     return { voltageDrop: 0, percentage: 0, acceptable: false };
   }
-  
+
   // Voltage drop = (mV/A/m × Current × Length) / 1000
   const voltageDrop = (vdData.voltageDropPerAmpPerMetre * current * length) / 1000;
   const percentage = (voltageDrop / 230) * 100;
-  
+
   // BS 7671 allows max 3% for lighting, 5% for other uses
   const acceptable = percentage <= 5;
-  
+
   return { voltageDrop, percentage, acceptable };
 }
 
@@ -247,7 +247,7 @@ export function calculateVoltageDrop(
  * Get installation method by reference
  */
 export function getInstallationMethod(methodRef: string): InstallationMethodData | undefined {
-  return INSTALLATION_METHODS_PLACEHOLDER.find(im => im.methodReference === methodRef);
+  return INSTALLATION_METHODS_PLACEHOLDER.find((im) => im.methodReference === methodRef);
 }
 
 /**

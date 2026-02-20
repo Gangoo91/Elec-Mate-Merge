@@ -1,10 +1,11 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
-}
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+};
 
 // Supplier IDs from marketplace_suppliers table
 const SUPPLIERS = {
@@ -17,57 +18,288 @@ const SUPPLIERS = {
 
 // Batch configuration - one supplier per batch to prevent timeout
 const SUPPLIER_BATCHES: Record<number, string[]> = {
-  1: ['screwfix'],      // UK's #1 trade supplier - 5 categories
-  2: ['toolstation'],   // UK's #2 trade supplier - 5 categories (fallback data)
-  3: ['ffx'],           // UK tool specialist - 3 categories
-  4: ['machineMart'],   // UK tool specialist - 3 categories
-  5: ['rsComponents'],  // Professional test equipment - 2 categories
+  1: ['screwfix'], // UK's #1 trade supplier - 5 categories
+  2: ['toolstation'], // UK's #2 trade supplier - 5 categories (fallback data)
+  3: ['ffx'], // UK tool specialist - 3 categories
+  4: ['machineMart'], // UK tool specialist - 3 categories
+  5: ['rsComponents'], // Professional test equipment - 2 categories
 };
 
 // Fallback data for Toolstation (site often blocks scrapers)
 const TOOLSTATION_FALLBACK_PRODUCTS = {
   'hand-tools': [
-    { name: 'Stanley FatMax Screwdriver Set 10 Piece', brand: 'Stanley', price: '£29.99', product_url: 'https://www.toolstation.com/stanley-fatmax-screwdriver-set/p73645', image: 'https://media.toolstation.com/images/141516-UK/800/73645.jpg', stock_status: 'In Stock' },
-    { name: 'Knipex Cobra Water Pump Pliers 250mm', brand: 'Knipex', price: '£34.98', product_url: 'https://www.toolstation.com/knipex-cobra-water-pump-pliers/p47281', image: 'https://media.toolstation.com/images/141516-UK/800/47281.jpg', stock_status: 'In Stock' },
-    { name: 'Bahco Adjustable Wrench 250mm', brand: 'Bahco', price: '£19.98', product_url: 'https://www.toolstation.com/bahco-adjustable-wrench/p38462', image: 'https://media.toolstation.com/images/141516-UK/800/38462.jpg', stock_status: 'In Stock' },
-    { name: 'Stanley FatMax Tape Measure 8m', brand: 'Stanley', price: '£14.98', product_url: 'https://www.toolstation.com/stanley-fatmax-tape/p12546', image: 'https://media.toolstation.com/images/141516-UK/800/12546.jpg', stock_status: 'In Stock' },
-    { name: 'Knipex Diagonal Cutting Pliers 180mm', brand: 'Knipex', price: '£28.98', product_url: 'https://www.toolstation.com/knipex-diagonal-cutters/p47265', image: 'https://media.toolstation.com/images/141516-UK/800/47265.jpg', stock_status: 'In Stock' },
-    { name: 'CK Tools VDE Screwdriver Set 7 Piece', brand: 'CK Tools', price: '£42.98', product_url: 'https://www.toolstation.com/ck-vde-screwdriver-set/p82341', image: 'https://media.toolstation.com/images/141516-UK/800/82341.jpg', stock_status: 'In Stock' },
-    { name: 'Wera Kraftform Screwdriver Set 6 Piece', brand: 'Wera', price: '£34.98', product_url: 'https://www.toolstation.com/wera-kraftform-set/p91245', image: 'https://media.toolstation.com/images/141516-UK/800/91245.jpg', stock_status: 'In Stock' },
-    { name: 'Irwin Vise-Grip Long Nose Pliers 200mm', brand: 'Irwin', price: '£16.98', product_url: 'https://www.toolstation.com/irwin-long-nose-pliers/p35621', image: 'https://media.toolstation.com/images/141516-UK/800/35621.jpg', stock_status: 'In Stock' },
+    {
+      name: 'Stanley FatMax Screwdriver Set 10 Piece',
+      brand: 'Stanley',
+      price: '£29.99',
+      product_url: 'https://www.toolstation.com/stanley-fatmax-screwdriver-set/p73645',
+      image: 'https://media.toolstation.com/images/141516-UK/800/73645.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Knipex Cobra Water Pump Pliers 250mm',
+      brand: 'Knipex',
+      price: '£34.98',
+      product_url: 'https://www.toolstation.com/knipex-cobra-water-pump-pliers/p47281',
+      image: 'https://media.toolstation.com/images/141516-UK/800/47281.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Bahco Adjustable Wrench 250mm',
+      brand: 'Bahco',
+      price: '£19.98',
+      product_url: 'https://www.toolstation.com/bahco-adjustable-wrench/p38462',
+      image: 'https://media.toolstation.com/images/141516-UK/800/38462.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Stanley FatMax Tape Measure 8m',
+      brand: 'Stanley',
+      price: '£14.98',
+      product_url: 'https://www.toolstation.com/stanley-fatmax-tape/p12546',
+      image: 'https://media.toolstation.com/images/141516-UK/800/12546.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Knipex Diagonal Cutting Pliers 180mm',
+      brand: 'Knipex',
+      price: '£28.98',
+      product_url: 'https://www.toolstation.com/knipex-diagonal-cutters/p47265',
+      image: 'https://media.toolstation.com/images/141516-UK/800/47265.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'CK Tools VDE Screwdriver Set 7 Piece',
+      brand: 'CK Tools',
+      price: '£42.98',
+      product_url: 'https://www.toolstation.com/ck-vde-screwdriver-set/p82341',
+      image: 'https://media.toolstation.com/images/141516-UK/800/82341.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Wera Kraftform Screwdriver Set 6 Piece',
+      brand: 'Wera',
+      price: '£34.98',
+      product_url: 'https://www.toolstation.com/wera-kraftform-set/p91245',
+      image: 'https://media.toolstation.com/images/141516-UK/800/91245.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Irwin Vise-Grip Long Nose Pliers 200mm',
+      brand: 'Irwin',
+      price: '£16.98',
+      product_url: 'https://www.toolstation.com/irwin-long-nose-pliers/p35621',
+      image: 'https://media.toolstation.com/images/141516-UK/800/35621.jpg',
+      stock_status: 'In Stock',
+    },
   ],
   'power-tools': [
-    { name: 'Makita DHP486Z 18V Combi Drill (Body Only)', brand: 'Makita', price: '£149.98', product_url: 'https://www.toolstation.com/makita-dhp486z/p91452', image: 'https://media.toolstation.com/images/141516-UK/800/91452.jpg', stock_status: 'In Stock' },
-    { name: 'DeWalt DCD796N 18V Brushless Combi Drill', brand: 'DeWalt', price: '£119.98', product_url: 'https://www.toolstation.com/dewalt-dcd796n/p82156', image: 'https://media.toolstation.com/images/141516-UK/800/82156.jpg', stock_status: 'In Stock' },
-    { name: 'Milwaukee M18 FPD2 Combi Drill (Body Only)', brand: 'Milwaukee', price: '£139.98', product_url: 'https://www.toolstation.com/milwaukee-m18-fpd2/p94521', image: 'https://media.toolstation.com/images/141516-UK/800/94521.jpg', stock_status: 'In Stock' },
-    { name: 'Bosch GSB 18V-55 Combi Drill (Body Only)', brand: 'Bosch', price: '£89.98', product_url: 'https://www.toolstation.com/bosch-gsb-18v-55/p87452', image: 'https://media.toolstation.com/images/141516-UK/800/87452.jpg', stock_status: 'In Stock' },
-    { name: 'Makita DTD172Z Impact Driver (Body Only)', brand: 'Makita', price: '£134.98', product_url: 'https://www.toolstation.com/makita-dtd172z/p92145', image: 'https://media.toolstation.com/images/141516-UK/800/92145.jpg', stock_status: 'In Stock' },
-    { name: 'DeWalt DCG405N 18V Angle Grinder', brand: 'DeWalt', price: '£109.98', product_url: 'https://www.toolstation.com/dewalt-dcg405n/p83256', image: 'https://media.toolstation.com/images/141516-UK/800/83256.jpg', stock_status: 'In Stock' },
-    { name: 'Milwaukee M12 Fuel Impact Driver', brand: 'Milwaukee', price: '£99.98', product_url: 'https://www.toolstation.com/milwaukee-m12-impact/p95214', image: 'https://media.toolstation.com/images/141516-UK/800/95214.jpg', stock_status: 'In Stock' },
+    {
+      name: 'Makita DHP486Z 18V Combi Drill (Body Only)',
+      brand: 'Makita',
+      price: '£149.98',
+      product_url: 'https://www.toolstation.com/makita-dhp486z/p91452',
+      image: 'https://media.toolstation.com/images/141516-UK/800/91452.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'DeWalt DCD796N 18V Brushless Combi Drill',
+      brand: 'DeWalt',
+      price: '£119.98',
+      product_url: 'https://www.toolstation.com/dewalt-dcd796n/p82156',
+      image: 'https://media.toolstation.com/images/141516-UK/800/82156.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Milwaukee M18 FPD2 Combi Drill (Body Only)',
+      brand: 'Milwaukee',
+      price: '£139.98',
+      product_url: 'https://www.toolstation.com/milwaukee-m18-fpd2/p94521',
+      image: 'https://media.toolstation.com/images/141516-UK/800/94521.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Bosch GSB 18V-55 Combi Drill (Body Only)',
+      brand: 'Bosch',
+      price: '£89.98',
+      product_url: 'https://www.toolstation.com/bosch-gsb-18v-55/p87452',
+      image: 'https://media.toolstation.com/images/141516-UK/800/87452.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Makita DTD172Z Impact Driver (Body Only)',
+      brand: 'Makita',
+      price: '£134.98',
+      product_url: 'https://www.toolstation.com/makita-dtd172z/p92145',
+      image: 'https://media.toolstation.com/images/141516-UK/800/92145.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'DeWalt DCG405N 18V Angle Grinder',
+      brand: 'DeWalt',
+      price: '£109.98',
+      product_url: 'https://www.toolstation.com/dewalt-dcg405n/p83256',
+      image: 'https://media.toolstation.com/images/141516-UK/800/83256.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Milwaukee M12 Fuel Impact Driver',
+      brand: 'Milwaukee',
+      price: '£99.98',
+      product_url: 'https://www.toolstation.com/milwaukee-m12-impact/p95214',
+      image: 'https://media.toolstation.com/images/141516-UK/800/95214.jpg',
+      stock_status: 'In Stock',
+    },
   ],
   'test-equipment': [
-    { name: 'Fluke T150 Voltage & Continuity Tester', brand: 'Fluke', price: '£149.98', product_url: 'https://www.toolstation.com/fluke-t150/p76521', image: 'https://media.toolstation.com/images/141516-UK/800/76521.jpg', stock_status: 'In Stock' },
-    { name: 'Megger MFT1741 Multifunction Tester', brand: 'Megger', price: '£895.00', product_url: 'https://www.toolstation.com/megger-mft1741/p82456', image: 'https://media.toolstation.com/images/141516-UK/800/82456.jpg', stock_status: 'In Stock' },
-    { name: 'Kewtech KT64DL Multifunction Tester', brand: 'Kewtech', price: '£549.98', product_url: 'https://www.toolstation.com/kewtech-kt64dl/p79845', image: 'https://media.toolstation.com/images/141516-UK/800/79845.jpg', stock_status: 'In Stock' },
-    { name: 'Socket & See SOK32 Socket Tester', brand: 'Socket & See', price: '£19.98', product_url: 'https://www.toolstation.com/socket-see-sok32/p54123', image: 'https://media.toolstation.com/images/141516-UK/800/54123.jpg', stock_status: 'In Stock' },
-    { name: 'Martindale EZ165 Voltage Indicator', brand: 'Martindale', price: '£54.98', product_url: 'https://www.toolstation.com/martindale-ez165/p67845', image: 'https://media.toolstation.com/images/141516-UK/800/67845.jpg', stock_status: 'In Stock' },
-    { name: 'Di-LOG DL6780 Combi Voltage Indicator', brand: 'Di-LOG', price: '£89.98', product_url: 'https://www.toolstation.com/di-log-dl6780/p71256', image: 'https://media.toolstation.com/images/141516-UK/800/71256.jpg', stock_status: 'In Stock' },
+    {
+      name: 'Fluke T150 Voltage & Continuity Tester',
+      brand: 'Fluke',
+      price: '£149.98',
+      product_url: 'https://www.toolstation.com/fluke-t150/p76521',
+      image: 'https://media.toolstation.com/images/141516-UK/800/76521.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Megger MFT1741 Multifunction Tester',
+      brand: 'Megger',
+      price: '£895.00',
+      product_url: 'https://www.toolstation.com/megger-mft1741/p82456',
+      image: 'https://media.toolstation.com/images/141516-UK/800/82456.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Kewtech KT64DL Multifunction Tester',
+      brand: 'Kewtech',
+      price: '£549.98',
+      product_url: 'https://www.toolstation.com/kewtech-kt64dl/p79845',
+      image: 'https://media.toolstation.com/images/141516-UK/800/79845.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Socket & See SOK32 Socket Tester',
+      brand: 'Socket & See',
+      price: '£19.98',
+      product_url: 'https://www.toolstation.com/socket-see-sok32/p54123',
+      image: 'https://media.toolstation.com/images/141516-UK/800/54123.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Martindale EZ165 Voltage Indicator',
+      brand: 'Martindale',
+      price: '£54.98',
+      product_url: 'https://www.toolstation.com/martindale-ez165/p67845',
+      image: 'https://media.toolstation.com/images/141516-UK/800/67845.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Di-LOG DL6780 Combi Voltage Indicator',
+      brand: 'Di-LOG',
+      price: '£89.98',
+      product_url: 'https://www.toolstation.com/di-log-dl6780/p71256',
+      image: 'https://media.toolstation.com/images/141516-UK/800/71256.jpg',
+      stock_status: 'In Stock',
+    },
   ],
-  'ppe': [
-    { name: 'Site Safe Hard Hat White', brand: 'Site Safe', price: '£6.98', product_url: 'https://www.toolstation.com/site-safe-hard-hat/p15234', image: 'https://media.toolstation.com/images/141516-UK/800/15234.jpg', stock_status: 'In Stock' },
-    { name: 'Portwest Hi-Vis Vest Yellow XL', brand: 'Portwest', price: '£3.98', product_url: 'https://www.toolstation.com/portwest-hi-vis-vest/p18956', image: 'https://media.toolstation.com/images/141516-UK/800/18956.jpg', stock_status: 'In Stock' },
-    { name: 'DeWalt Rigger Pro Safety Boots Size 10', brand: 'DeWalt', price: '£79.98', product_url: 'https://www.toolstation.com/dewalt-rigger-boots/p45621', image: 'https://media.toolstation.com/images/141516-UK/800/45621.jpg', stock_status: 'In Stock' },
-    { name: 'Scruffs Trade Work Gloves Large', brand: 'Scruffs', price: '£8.98', product_url: 'https://www.toolstation.com/scruffs-work-gloves/p32145', image: 'https://media.toolstation.com/images/141516-UK/800/32145.jpg', stock_status: 'In Stock' },
-    { name: 'Bolle Safety Glasses Clear', brand: 'Bolle', price: '£7.98', product_url: 'https://www.toolstation.com/bolle-safety-glasses/p28456', image: 'https://media.toolstation.com/images/141516-UK/800/28456.jpg', stock_status: 'In Stock' },
-    { name: 'JSP EVO3 Comfort Plus Hard Hat', brand: 'JSP', price: '£12.98', product_url: 'https://www.toolstation.com/jsp-evo3-hard-hat/p16874', image: 'https://media.toolstation.com/images/141516-UK/800/16874.jpg', stock_status: 'In Stock' },
+  ppe: [
+    {
+      name: 'Site Safe Hard Hat White',
+      brand: 'Site Safe',
+      price: '£6.98',
+      product_url: 'https://www.toolstation.com/site-safe-hard-hat/p15234',
+      image: 'https://media.toolstation.com/images/141516-UK/800/15234.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Portwest Hi-Vis Vest Yellow XL',
+      brand: 'Portwest',
+      price: '£3.98',
+      product_url: 'https://www.toolstation.com/portwest-hi-vis-vest/p18956',
+      image: 'https://media.toolstation.com/images/141516-UK/800/18956.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'DeWalt Rigger Pro Safety Boots Size 10',
+      brand: 'DeWalt',
+      price: '£79.98',
+      product_url: 'https://www.toolstation.com/dewalt-rigger-boots/p45621',
+      image: 'https://media.toolstation.com/images/141516-UK/800/45621.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Scruffs Trade Work Gloves Large',
+      brand: 'Scruffs',
+      price: '£8.98',
+      product_url: 'https://www.toolstation.com/scruffs-work-gloves/p32145',
+      image: 'https://media.toolstation.com/images/141516-UK/800/32145.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Bolle Safety Glasses Clear',
+      brand: 'Bolle',
+      price: '£7.98',
+      product_url: 'https://www.toolstation.com/bolle-safety-glasses/p28456',
+      image: 'https://media.toolstation.com/images/141516-UK/800/28456.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'JSP EVO3 Comfort Plus Hard Hat',
+      brand: 'JSP',
+      price: '£12.98',
+      product_url: 'https://www.toolstation.com/jsp-evo3-hard-hat/p16874',
+      image: 'https://media.toolstation.com/images/141516-UK/800/16874.jpg',
+      stock_status: 'In Stock',
+    },
   ],
   'tool-storage': [
-    { name: 'Stanley FatMax Deep Pro Organiser', brand: 'Stanley', price: '£24.98', product_url: 'https://www.toolstation.com/stanley-fatmax-organiser/p56214', image: 'https://media.toolstation.com/images/141516-UK/800/56214.jpg', stock_status: 'In Stock' },
-    { name: 'DeWalt TSTAK Tool Box', brand: 'DeWalt', price: '£34.98', product_url: 'https://www.toolstation.com/dewalt-tstak-box/p67845', image: 'https://media.toolstation.com/images/141516-UK/800/67845.jpg', stock_status: 'In Stock' },
-    { name: 'Milwaukee Packout Tool Box', brand: 'Milwaukee', price: '£54.98', product_url: 'https://www.toolstation.com/milwaukee-packout/p78456', image: 'https://media.toolstation.com/images/141516-UK/800/78456.jpg', stock_status: 'In Stock' },
-    { name: 'Makita MakPac Type 2 Case', brand: 'Makita', price: '£29.98', product_url: 'https://www.toolstation.com/makita-makpac-2/p81256', image: 'https://media.toolstation.com/images/141516-UK/800/81256.jpg', stock_status: 'In Stock' },
-    { name: 'Einhell E-Case Tool Case', brand: 'Einhell', price: '£19.98', product_url: 'https://www.toolstation.com/einhell-e-case/p72145', image: 'https://media.toolstation.com/images/141516-UK/800/72145.jpg', stock_status: 'In Stock' },
-    { name: 'CK Magma Technician Tool Bag', brand: 'CK', price: '£89.98', product_url: 'https://www.toolstation.com/ck-magma-tool-bag/p84521', image: 'https://media.toolstation.com/images/141516-UK/800/84521.jpg', stock_status: 'In Stock' },
+    {
+      name: 'Stanley FatMax Deep Pro Organiser',
+      brand: 'Stanley',
+      price: '£24.98',
+      product_url: 'https://www.toolstation.com/stanley-fatmax-organiser/p56214',
+      image: 'https://media.toolstation.com/images/141516-UK/800/56214.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'DeWalt TSTAK Tool Box',
+      brand: 'DeWalt',
+      price: '£34.98',
+      product_url: 'https://www.toolstation.com/dewalt-tstak-box/p67845',
+      image: 'https://media.toolstation.com/images/141516-UK/800/67845.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Milwaukee Packout Tool Box',
+      brand: 'Milwaukee',
+      price: '£54.98',
+      product_url: 'https://www.toolstation.com/milwaukee-packout/p78456',
+      image: 'https://media.toolstation.com/images/141516-UK/800/78456.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Makita MakPac Type 2 Case',
+      brand: 'Makita',
+      price: '£29.98',
+      product_url: 'https://www.toolstation.com/makita-makpac-2/p81256',
+      image: 'https://media.toolstation.com/images/141516-UK/800/81256.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'Einhell E-Case Tool Case',
+      brand: 'Einhell',
+      price: '£19.98',
+      product_url: 'https://www.toolstation.com/einhell-e-case/p72145',
+      image: 'https://media.toolstation.com/images/141516-UK/800/72145.jpg',
+      stock_status: 'In Stock',
+    },
+    {
+      name: 'CK Magma Technician Tool Bag',
+      brand: 'CK',
+      price: '£89.98',
+      product_url: 'https://www.toolstation.com/ck-magma-tool-bag/p84521',
+      image: 'https://media.toolstation.com/images/141516-UK/800/84521.jpg',
+      stock_status: 'In Stock',
+    },
   ],
 };
 
@@ -218,17 +450,54 @@ const SCRAPE_CONFIGS = [
 // ========================================
 
 const EXCLUDE_KEYWORDS = [
-  'radio', 'speaker', 'bluetooth', 'dab', 'stereo', 'headphones', 'earbuds', 'earphones',
-  'mp3', 'music player', 'usb charger', 'phone holder', 'tablet', 'camera', 'webcam',
-  'kettle', 'toaster', 'microwave', 'fridge', 'heater', 'fan', 'air con', 'dehumidifier',
-  'christmas lights', 'fairy lights', 'decoration', 'ornament',
-  'keyboard', 'mouse', 'monitor', 'printer', 'scanner',
+  'radio',
+  'speaker',
+  'bluetooth',
+  'dab',
+  'stereo',
+  'headphones',
+  'earbuds',
+  'earphones',
+  'mp3',
+  'music player',
+  'usb charger',
+  'phone holder',
+  'tablet',
+  'camera',
+  'webcam',
+  'kettle',
+  'toaster',
+  'microwave',
+  'fridge',
+  'heater',
+  'fan',
+  'air con',
+  'dehumidifier',
+  'christmas lights',
+  'fairy lights',
+  'decoration',
+  'ornament',
+  'keyboard',
+  'mouse',
+  'monitor',
+  'printer',
+  'scanner',
 ];
 
 const JUNK_NAME_PATTERNS = [
-  'all categories', 'a-z', 'browse', 'menu', 'navigation',
-  'click here', 'see more', 'view all', 'load more', 'show more',
-  'filter', 'sort by', 'results'
+  'all categories',
+  'a-z',
+  'browse',
+  'menu',
+  'navigation',
+  'click here',
+  'see more',
+  'view all',
+  'load more',
+  'show more',
+  'filter',
+  'sort by',
+  'results',
 ];
 
 // ========================================
@@ -237,13 +506,13 @@ const JUNK_NAME_PATTERNS = [
 
 function isExcludedProduct(name: string): boolean {
   const nameLower = name.toLowerCase();
-  return EXCLUDE_KEYWORDS.some(keyword => nameLower.includes(keyword.toLowerCase()));
+  return EXCLUDE_KEYWORDS.some((keyword) => nameLower.includes(keyword.toLowerCase()));
 }
 
 function isJunkEntry(name: string): boolean {
   if (!name || name.length < 5) return true;
   const nameLower = name.toLowerCase();
-  return JUNK_NAME_PATTERNS.some(pattern => nameLower.includes(pattern.toLowerCase()));
+  return JUNK_NAME_PATTERNS.some((pattern) => nameLower.includes(pattern.toLowerCase()));
 }
 
 function isValidProduct(product: any): boolean {
@@ -272,7 +541,8 @@ function generateSku(name: string, url: string | null, prefix: string): string {
     const tsMatch2 = url.match(/toolstation.*\/(\d{5,})/);
     if (tsMatch2) return `TS-${tsMatch2[1]}`;
   }
-  const slug = name.toLowerCase()
+  const slug = name
+    .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')
     .slice(0, 40);
@@ -284,22 +554,32 @@ function generateSku(name: string, url: string | null, prefix: string): string {
 // ========================================
 
 const productDetailSchema = {
-  type: "object",
+  type: 'object',
   properties: {
-    name: { type: "string", description: "Complete product name" },
-    brand: { type: "string", description: "Brand/manufacturer name" },
-    price: { type: "string", description: "Current price with £ symbol" },
-    regular_price: { type: "string", description: "Original price if on sale" },
-    description: { type: "string", description: "Product description" },
-    highlights: { type: "array", items: { type: "string" }, description: "Key features" },
-    image: { type: "string", description: "Product image URL" },
-    product_url: { type: "string", description: "Direct URL to product page" },
-    stock_status: { type: "string", enum: ["In Stock", "Low Stock", "Out of Stock"], description: "Stock availability" },
-    product_code: { type: "string", description: "SKU or product code if visible" },
-  }
+    name: { type: 'string', description: 'Complete product name' },
+    brand: { type: 'string', description: 'Brand/manufacturer name' },
+    price: { type: 'string', description: 'Current price with £ symbol' },
+    regular_price: { type: 'string', description: 'Original price if on sale' },
+    description: { type: 'string', description: 'Product description' },
+    highlights: { type: 'array', items: { type: 'string' }, description: 'Key features' },
+    image: { type: 'string', description: 'Product image URL' },
+    product_url: { type: 'string', description: 'Direct URL to product page' },
+    stock_status: {
+      type: 'string',
+      enum: ['In Stock', 'Low Stock', 'Out of Stock'],
+      description: 'Stock availability',
+    },
+    product_code: { type: 'string', description: 'SKU or product code if visible' },
+  },
 };
 
-async function batchScrapeProducts(urls: string[], category: string, supplier: string, skuPrefix: string, supplierId: string): Promise<any[]> {
+async function batchScrapeProducts(
+  urls: string[],
+  category: string,
+  supplier: string,
+  skuPrefix: string,
+  supplierId: string
+): Promise<any[]> {
   const FIRECRAWL_API_KEY = Deno.env.get('FIRECRAWL_API_KEY');
 
   if (!FIRECRAWL_API_KEY) {
@@ -315,19 +595,20 @@ async function batchScrapeProducts(urls: string[], category: string, supplier: s
   console.log(`🚀 Starting batch scrape for ${supplier} ${category} from ${urls.length} URLs`);
 
   try {
-    const batchResponse = await fetch("https://api.firecrawl.dev/v2/batch/scrape", {
-      method: "POST",
+    const batchResponse = await fetch('https://api.firecrawl.dev/v2/batch/scrape', {
+      method: 'POST',
       headers: {
         Authorization: `Bearer ${FIRECRAWL_API_KEY}`,
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         urls: urls,
         onlyMainContent: true,
         maxAge: 86400000,
-        formats: [{
-          type: "json",
-          prompt: `Extract ALL product listings from this trade supplier page.
+        formats: [
+          {
+            type: 'json',
+            prompt: `Extract ALL product listings from this trade supplier page.
 For each product extract:
 - Product name (exact title, including brand and model)
 - Current price in GBP (the main selling price shown)
@@ -347,16 +628,17 @@ Focus on electrician tools and equipment:
 - Tool bags, cases, and storage
 
 Skip unrelated products like home appliances, decorations, or entertainment items.`,
-          schema: {
-            type: "object",
-            properties: {
-              products: {
-                type: "array",
-                items: productDetailSchema,
+            schema: {
+              type: 'object',
+              properties: {
+                products: {
+                  type: 'array',
+                  items: productDetailSchema,
+                },
               },
             },
           },
-        }],
+        ],
       }),
     });
 
@@ -381,49 +663,54 @@ Skip unrelated products like home appliances, decorations, or entertainment item
       });
       const statusData = await statusResponse.json();
 
-      console.log(`📈 Batch status: ${statusData.status} (${statusData.completed || 0}/${statusData.total || 0})`);
+      console.log(
+        `📈 Batch status: ${statusData.status} (${statusData.completed || 0}/${statusData.total || 0})`
+      );
 
-      if (statusData.status === "completed") {
+      if (statusData.status === 'completed') {
         console.log(`✅ Batch scrape completed for ${supplier} ${category}`);
 
-        const rawProducts = statusData.data?.map((item: any) => item.json?.products || []).flat() || [];
+        const rawProducts =
+          statusData.data?.map((item: any) => item.json?.products || []).flat() || [];
         console.log(`📦 Got ${rawProducts.length} raw products for ${supplier} ${category}`);
 
-        const validProducts = rawProducts
-          .filter(isValidProduct)
-          .map((product: any) => {
-            const currentPrice = parsePrice(product.price);
-            const regularPrice = parsePrice(product.regular_price);
-            const isOnSale = regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
-            const discountPercentage = isOnSale
-              ? Math.round(((regularPrice! - currentPrice!) / regularPrice!) * 100)
-              : null;
+        const validProducts = rawProducts.filter(isValidProduct).map((product: any) => {
+          const currentPrice = parsePrice(product.price);
+          const regularPrice = parsePrice(product.regular_price);
+          const isOnSale =
+            regularPrice !== null && currentPrice !== null && regularPrice > currentPrice;
+          const discountPercentage = isOnSale
+            ? Math.round(((regularPrice! - currentPrice!) / regularPrice!) * 100)
+            : null;
 
-            const productUrl = product.product_url || urls[0];
-            return {
-              sku: generateSku(product.name, productUrl, skuPrefix),
-              name: product.name.trim(),
-              category: category,
-              supplier_id: supplierId,
-              current_price: currentPrice,
-              regular_price: regularPrice,
-              is_on_sale: isOnSale,
-              discount_percentage: discountPercentage,
-              image_url: product.image || null,
-              product_url: productUrl,
-              stock_status: product.stock_status || 'In Stock',
-              brand: product.brand || null,
-              highlights: Array.isArray(product.highlights) ? product.highlights : [],
-              description: product.description || null,
-              scraped_at: new Date().toISOString(),
-            };
-          });
+          const productUrl = product.product_url || urls[0];
+          return {
+            sku: generateSku(product.name, productUrl, skuPrefix),
+            name: product.name.trim(),
+            category: category,
+            supplier_id: supplierId,
+            current_price: currentPrice,
+            regular_price: regularPrice,
+            is_on_sale: isOnSale,
+            discount_percentage: discountPercentage,
+            image_url: product.image || null,
+            product_url: productUrl,
+            stock_status: product.stock_status || 'In Stock',
+            brand: product.brand || null,
+            highlights: Array.isArray(product.highlights) ? product.highlights : [],
+            description: product.description || null,
+            scraped_at: new Date().toISOString(),
+            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+          };
+        });
 
-        console.log(`✅ ${validProducts.length} valid products after filtering for ${supplier} ${category}`);
+        console.log(
+          `✅ ${validProducts.length} valid products after filtering for ${supplier} ${category}`
+        );
         return validProducts;
       }
 
-      if (statusData.status === "failed") {
+      if (statusData.status === 'failed') {
         console.error(`❌ Batch job failed for ${supplier} ${category}`);
         return [];
       }
@@ -433,7 +720,6 @@ Skip unrelated products like home appliances, decorations, or entertainment item
 
     console.log(`⏱️ Batch job timed out for ${supplier} ${category}`);
     return [];
-
   } catch (error) {
     console.error(`⚠️ Error in batch scrape for ${supplier} ${category}:`, error);
     return [];
@@ -473,6 +759,7 @@ async function scrapeSupplierCategories(supplierNames: string[]): Promise<any[]>
             highlights: [],
             description: null,
             scraped_at: new Date().toISOString(),
+            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
           });
         }
         console.log(`✅ Added ${products.length} fallback products for Toolstation ${category}`);
@@ -481,7 +768,7 @@ async function scrapeSupplierCategories(supplierNames: string[]): Promise<any[]>
     }
 
     // Get configs for this supplier
-    const supplierConfigs = SCRAPE_CONFIGS.filter(c => c.supplier === supplierName);
+    const supplierConfigs = SCRAPE_CONFIGS.filter((c) => c.supplier === supplierName);
 
     // Group by category
     const categoryGroups: Record<string, string[]> = {};
@@ -498,11 +785,17 @@ async function scrapeSupplierCategories(supplierNames: string[]): Promise<any[]>
     // Scrape each category
     for (const [category, urls] of Object.entries(categoryGroups)) {
       console.log(`\n🎯 Scraping ${supplierName} ${category} (${urls.length} URLs)...`);
-      const products = await batchScrapeProducts(urls, category, supplierName, categoryPrefixes[category], supplierId);
+      const products = await batchScrapeProducts(
+        urls,
+        category,
+        supplierName,
+        categoryPrefixes[category],
+        supplierId
+      );
       allProducts.push(...products);
 
       // Rate limiting between categories
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
@@ -530,8 +823,12 @@ async function upsertProducts(products: any[]) {
     const batchUnique = new Map<string, any>();
     for (const product of batch) {
       const key = `${product.supplier_id}:${product.sku}`;
-      if (!batchUnique.has(key) ||
-          (product.current_price && batchUnique.get(key).current_price && product.current_price < batchUnique.get(key).current_price)) {
+      if (
+        !batchUnique.has(key) ||
+        (product.current_price &&
+          batchUnique.get(key).current_price &&
+          product.current_price < batchUnique.get(key).current_price)
+      ) {
         batchUnique.set(key, product);
       }
     }
@@ -541,7 +838,7 @@ async function upsertProducts(products: any[]) {
       .from('marketplace_products')
       .upsert(dedupedBatch, {
         onConflict: 'supplier_id,sku',
-        ignoreDuplicates: false
+        ignoreDuplicates: false,
       })
       .select('id');
 
@@ -575,9 +872,8 @@ async function updateToolsWeeklyCache(products: any[], supplierName: string) {
   for (const [category, categoryProducts] of Object.entries(byCategory)) {
     const cacheKey = `${supplierName}-${category}`;
 
-    await supabase
-      .from('tools_weekly_cache')
-      .upsert({
+    await supabase.from('tools_weekly_cache').upsert(
+      {
         id: crypto.randomUUID(),
         category: cacheKey,
         tools_data: categoryProducts,
@@ -586,9 +882,11 @@ async function updateToolsWeeklyCache(products: any[], supplierName: string) {
         expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
         update_status: 'complete',
         last_updated: new Date().toISOString(),
-      }, {
+      },
+      {
         onConflict: 'category',
-      });
+      }
+    );
   }
 }
 
@@ -629,8 +927,12 @@ serve(async (req) => {
       const uniqueProducts = new Map<string, any>();
       for (const product of products) {
         const key = `${product.supplier_id}:${product.sku}`;
-        if (!uniqueProducts.has(key) ||
-            (product.current_price && uniqueProducts.get(key).current_price && product.current_price < uniqueProducts.get(key).current_price)) {
+        if (
+          !uniqueProducts.has(key) ||
+          (product.current_price &&
+            uniqueProducts.get(key).current_price &&
+            product.current_price < uniqueProducts.get(key).current_price)
+        ) {
           uniqueProducts.set(key, product);
         }
       }
@@ -639,10 +941,23 @@ serve(async (req) => {
       // Save to database
       const savedCount = await upsertProducts(deduplicatedProducts);
 
-      // Update weekly cache
+      // Update last_scraped_at on supplier records and weekly cache
+      const supabase = createClient(
+        Deno.env.get('SUPABASE_URL')!,
+        Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      );
       for (const supplierName of supplierNames) {
+        const supplierId = SUPPLIERS[supplierName as keyof typeof SUPPLIERS];
+        if (supplierId) {
+          await supabase
+            .from('marketplace_suppliers')
+            .update({ last_scraped_at: new Date().toISOString() })
+            .eq('id', supplierId);
+          console.log(`📅 Updated last_scraped_at for ${supplierName}`);
+        }
+
         const supplierProducts = deduplicatedProducts.filter(
-          p => p.supplier_id === SUPPLIERS[supplierName as keyof typeof SUPPLIERS]
+          (p) => p.supplier_id === supplierId
         );
         if (supplierProducts.length > 0) {
           await updateToolsWeeklyCache(supplierProducts, supplierName);
@@ -666,7 +981,8 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: 'Tools Marketplace Scraper - use batch parameter (1-5) to scrape specific suppliers',
+        message:
+          'Tools Marketplace Scraper - use batch parameter (1-5) to scrape specific suppliers',
         availableBatches: Object.entries(SUPPLIER_BATCHES).map(([num, suppliers]) => ({
           batch: parseInt(num),
           suppliers,
@@ -674,7 +990,6 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Error in tools-marketplace-scraper:', error);
 
@@ -682,7 +997,7 @@ serve(async (req) => {
       JSON.stringify({
         success: false,
         error: 'Failed to scrape tools',
-        details: error instanceof Error ? error.message : 'Unknown error'
+        details: error instanceof Error ? error.message : 'Unknown error',
       }),
       {
         status: 500,

@@ -1,4 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { safeAll } from '../_shared/safe-parallel.ts';
@@ -93,7 +93,9 @@ const calculateRiskScore = (params: {
 
   // Last inspection
   if (params.lastInspectionDate) {
-    const daysSince = Math.floor((Date.now() - new Date(params.lastInspectionDate).getTime()) / (1000 * 60 * 60 * 24));
+    const daysSince = Math.floor(
+      (Date.now() - new Date(params.lastInspectionDate).getTime()) / (1000 * 60 * 60 * 24)
+    );
     if (daysSince > 1825) {
       score += 20;
       factors.push('No inspection in over 5 years');
@@ -119,16 +121,16 @@ const callOpenAI = async (
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt },
         ],
-        response_format: { type: "json_object" },
+        response_format: { type: 'json_object' },
         max_completion_tokens: maxTokens,
       }),
     }),
@@ -144,11 +146,11 @@ serve(async (req) => {
 
   try {
     const requestData: MaintenanceRequest = await req.json();
-    
-    const { 
-      equipmentDescription, 
-      equipmentType, 
-      location, 
+
+    const {
+      equipmentDescription,
+      equipmentType,
+      location,
       ageYears = 0,
       buildingType,
       environment = 'indoor',
@@ -161,14 +163,14 @@ serve(async (req) => {
       siteAddress,
       assessorName,
       companyName,
-      detailLevel = 'quick'
+      detailLevel = 'quick',
     } = requestData;
 
     if (!equipmentDescription || !equipmentType || !location) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Missing required fields' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Missing required fields' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const supabase = createClient(
@@ -189,7 +191,7 @@ serve(async (req) => {
       environment,
       criticality,
       currentIssues,
-      lastInspectionDate
+      lastInspectionDate,
     });
 
     console.log(`⚠️ Risk: ${riskAssessment.level} (${riskAssessment.score}/100)`);
@@ -199,7 +201,7 @@ serve(async (req) => {
       fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
+          Authorization: `Bearer ${openAIApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -221,21 +223,23 @@ serve(async (req) => {
         query_text: `${equipmentType} maintenance schedule procedures testing inspection EICR isolation verification functional checks thermal imaging torque`,
         query_embedding: queryEmbedding,
         equipment_filter: equipmentType,
-        match_count: detailLevel === 'quick' ? 6 : 12
+        match_count: detailLevel === 'quick' ? 6 : 12,
       }),
       supabase.rpc('search_regulations_intelligence_hybrid', {
         query_text: `${equipmentType} periodic inspection testing maintenance requirements`,
-        match_count: detailLevel === 'quick' ? 6 : 12
+        match_count: detailLevel === 'quick' ? 6 : 12,
       }),
       supabase.rpc('search_maintenance_hybrid', {
         query_text: `${equipmentType} failures defects problems ${environment}`,
         query_embedding: queryEmbedding,
         equipment_filter: equipmentType,
-        match_count: detailLevel === 'quick' ? 4 : 8
-      })
+        match_count: detailLevel === 'quick' ? 4 : 8,
+      }),
     ]);
 
-    console.log(`📚 RAG: ${maintenanceKnowledge.data?.length || 0} maintenance, ${bs7671Regs.data?.length || 0} regs (intelligence), ${failureModes.data?.length || 0} failures`);
+    console.log(
+      `📚 RAG: ${maintenanceKnowledge.data?.length || 0} maintenance, ${bs7671Regs.data?.length || 0} regs (intelligence), ${failureModes.data?.length || 0} failures`
+    );
 
     // Build expert knowledge context with enriched intelligence data
     const expertKnowledge = `
@@ -245,13 +249,19 @@ MAINTENANCE PROCEDURES:
 ${maintenanceKnowledge.data?.map((item: any) => `• ${item.topic}: ${item.content.substring(0, 200)}`).join('\n') || 'Standard practices'}
 
 BS 7671:2018+A3:2024 REGULATIONS (Enriched Intelligence):
-${bs7671Regs.data?.map((reg: any) => {
-  const topic = reg.primary_topic || reg.regulation_number;
-  const category = reg.category ? ` [${reg.category}]` : '';
-  const keywords = reg.keywords?.length ? ` (Keywords: ${reg.keywords.slice(0, 3).join(', ')})` : '';
-  const content = reg.content.substring(0, detailLevel === 'quick' ? 150 : 300);
-  return `• Reg ${reg.regulation_number}${category}: ${topic}${keywords}\n  ${content}`;
-}).join('\n') || 'General requirements'}
+${
+  bs7671Regs.data
+    ?.map((reg: any) => {
+      const topic = reg.primary_topic || reg.regulation_number;
+      const category = reg.category ? ` [${reg.category}]` : '';
+      const keywords = reg.keywords?.length
+        ? ` (Keywords: ${reg.keywords.slice(0, 3).join(', ')})`
+        : '';
+      const content = reg.content.substring(0, detailLevel === 'quick' ? 150 : 300);
+      return `• Reg ${reg.regulation_number}${category}: ${topic}${keywords}\n  ${content}`;
+    })
+    .join('\n') || 'General requirements'
+}
 
 COMMON FAILURES:
 ${failureModes.data?.map((item: any) => `• ${item.topic}: ${item.content.substring(0, 150)}`).join('\n') || 'Age-related wear'}
@@ -342,19 +352,22 @@ Generate ${buildingType === 'domestic' ? '6-8' : '6-8'} comprehensive tasks with
 
             const data = await response.json();
             let content = data.choices[0].message.content.trim();
-            
+
             // Remove code fences if present
             if (content.includes('```')) {
-              content = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+              content = content
+                .replace(/```json\n?/g, '')
+                .replace(/```\n?/g, '')
+                .trim();
             }
-            
+
             try {
               return JSON.parse(content);
             } catch (parseError) {
               console.error('JSON parse failed (outline-and-tasks):', parseError);
               throw new Error('PARSE_ERROR: Invalid JSON from AI');
             }
-          }
+          },
         },
         {
           name: 'failures-and-regulations',
@@ -399,40 +412,46 @@ Generate 3-4 failure modes and 3-5 key regulations. Be concise but professional.
 
             const data = await response.json();
             let content = data.choices[0].message.content.trim();
-            
+
             // Remove code fences if present
             if (content.includes('```')) {
-              content = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+              content = content
+                .replace(/```json\n?/g, '')
+                .replace(/```\n?/g, '')
+                .trim();
             }
-            
+
             try {
               return JSON.parse(content);
             } catch (parseError) {
               console.error('JSON parse failed (failures-and-regulations):', parseError);
               throw new Error('PARSE_ERROR: Invalid JSON from AI');
             }
-          }
-        }
+          },
+        },
       ]);
 
       // Merge results with better partial handling
       if (quickResults.successes.length === 0) {
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             success: false,
-            error: 'Quick mode failed to generate plan. Please try Full Detail mode or simplify your request.',
-            code: 'QUICK_FAILED'
+            error:
+              'Quick mode failed to generate plan. Please try Full Detail mode or simplify your request.',
+            code: 'QUICK_FAILED',
           }),
           { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
-      const outlineSuccess = quickResults.successes.find(s => s.name === 'outline-and-tasks');
-      const failuresSuccess = quickResults.successes.find(s => s.name === 'failures-and-regulations');
+      const outlineSuccess = quickResults.successes.find((s) => s.name === 'outline-and-tasks');
+      const failuresSuccess = quickResults.successes.find(
+        (s) => s.name === 'failures-and-regulations'
+      );
 
       if (outlineSuccess) {
         schedule = outlineSuccess.result;
-        
+
         if (failuresSuccess) {
           // Both succeeded - full merge
           schedule.commonFailureModes = failuresSuccess.result.commonFailureModes || [];
@@ -456,15 +475,17 @@ Generate 3-4 failure modes and 3-5 key regulations. Be concise but professional.
           schedule: [],
           recommendations: ['Complete full assessment for detailed maintenance plan'],
           commonFailureModes: failuresSuccess.result.commonFailureModes || [],
-          regulations: failuresSuccess.result.regulations || []
+          regulations: failuresSuccess.result.regulations || [],
         };
         missingSections.push('schedule', 'recommendations');
       }
 
       if (quickResults.failures.length > 0) {
-        console.warn(`⚠️ ${quickResults.failures.length} quick calls failed:`, quickResults.failures.map(f => f.name));
+        console.warn(
+          `⚠️ ${quickResults.failures.length} quick calls failed:`,
+          quickResults.failures.map((f) => f.name)
+        );
       }
-
     } else {
       // ===== FULL MODE: Multi-stage pipeline =====
       console.log('📚 Full mode: Multi-stage AI pipeline');
@@ -548,7 +569,7 @@ Generate ${buildingType === 'domestic' ? '10-15' : '10-15'} comprehensive detail
           execute: async () => {
             // Expand ALL tasks in detail for comprehensive output
             const tasksToExpand = schedule.schedule;
-            
+
             const response = await callOpenAI(
               openAIApiKey,
               baseSystemPrompt,
@@ -578,7 +599,7 @@ CRITICAL REQUIREMENTS for each task procedure:
             if (!response.ok) throw new Error('Task expansion failed');
             const data = await response.json();
             return JSON.parse(data.choices[0].message.content.trim());
-          }
+          },
         },
         {
           name: 'failure-analysis',
@@ -608,7 +629,7 @@ Generate 4-6 failure modes with specific probabilities and comprehensive prevent
             if (!response.ok) throw new Error('Failure analysis failed');
             const data = await response.json();
             return JSON.parse(data.choices[0].message.content.trim());
-          }
+          },
         },
         {
           name: 'regulations-detailed',
@@ -658,8 +679,8 @@ Also provide 8-12 detailed compliance checklist items with specific criteria.`,
             if (!response.ok) throw new Error('Regulations call failed');
             const data = await response.json();
             return JSON.parse(data.choices[0].message.content.trim());
-          }
-        }
+          },
+        },
       ]);
 
       // Merge Stage 2 results
@@ -685,16 +706,21 @@ Also provide 8-12 detailed compliance checklist items with specific criteria.`,
       }
 
       // Track missing sections
-      const successNames = stage2Results.successes.map(s => s.name);
+      const successNames = stage2Results.successes.map((s) => s.name);
       if (!successNames.includes('expand-tasks')) missingSections.push('detailed-procedures');
       if (!successNames.includes('failure-analysis')) missingSections.push('failure-modes');
       if (!successNames.includes('regulations-detailed')) missingSections.push('regulations');
 
       if (stage2Results.failures.length > 0) {
-        console.warn(`⚠️ ${stage2Results.failures.length} full mode calls failed:`, stage2Results.failures.map(f => f.name));
+        console.warn(
+          `⚠️ ${stage2Results.failures.length} full mode calls failed:`,
+          stage2Results.failures.map((f) => f.name)
+        );
       }
 
-      console.log(`✅ Full mode complete: ${missingSections.length === 0 ? 'All sections' : `Missing: ${missingSections.join(', ')}`}`);
+      console.log(
+        `✅ Full mode complete: ${missingSections.length === 0 ? 'All sections' : `Missing: ${missingSections.join(', ')}`}`
+      );
     }
 
     // Validate minimum quality
@@ -713,24 +739,28 @@ Also provide 8-12 detailed compliance checklist items with specific criteria.`,
       schedule.missingSections = missingSections;
     }
 
-    console.log(`✅ ${detailLevel.toUpperCase()} plan generated: ${schedule.schedule.length} tasks${schedule.partial ? ' (partial)' : ''}`);
-
-    return new Response(
-      JSON.stringify({ success: true, schedule }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    console.log(
+      `✅ ${detailLevel.toUpperCase()} plan generated: ${schedule.schedule.length} tasks${schedule.partial ? ' (partial)' : ''}`
     );
 
+    return new Response(JSON.stringify({ success: true, schedule }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (err) {
     console.error('❌ Maintenance plan error:', err);
-    
+
     const errorMessage = err instanceof Error ? err.message : 'Unknown error';
     let friendlyMessage = 'Failed to generate maintenance plan. Please try again.';
     let errorCode = 'INTERNAL';
 
     if (errorMessage.includes('timeout') || errorMessage.includes('timed out')) {
-      friendlyMessage = 'Generation timed out. Try Quick mode or simplify the equipment description.';
+      friendlyMessage =
+        'Generation timed out. Try Quick mode or simplify the equipment description.';
       errorCode = 'TIMEOUT';
-    } else if (errorMessage.includes('max_completion_tokens') || errorMessage.includes('token limit')) {
+    } else if (
+      errorMessage.includes('max_completion_tokens') ||
+      errorMessage.includes('token limit')
+    ) {
       friendlyMessage = 'Plan too detailed. Try Quick mode or reduce equipment complexity.';
       errorCode = 'TOKEN_LIMIT';
     } else if (errorMessage.includes('PARSE_ERROR')) {
@@ -743,11 +773,11 @@ Also provide 8-12 detailed compliance checklist items with specific criteria.`,
 
     // Always return 200 with success:false so client can handle gracefully
     return new Response(
-      JSON.stringify({ 
-        success: false, 
+      JSON.stringify({
+        success: false,
         error: friendlyMessage,
         code: errorCode,
-        details: errorMessage 
+        details: errorMessage,
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

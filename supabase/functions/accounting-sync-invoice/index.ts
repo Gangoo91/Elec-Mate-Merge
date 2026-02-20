@@ -26,9 +26,10 @@ const FRESHBOOKS_CLIENT_SECRET = Deno.env.get('FRESHBOOKS_CLIENT_SECRET');
 
 // QuickBooks environment - defaults to sandbox for safety
 const QUICKBOOKS_ENVIRONMENT = Deno.env.get('QUICKBOOKS_ENVIRONMENT') || 'sandbox';
-const QUICKBOOKS_BASE_URL = QUICKBOOKS_ENVIRONMENT === 'production'
-  ? 'https://quickbooks.api.intuit.com'
-  : 'https://sandbox-quickbooks.api.intuit.com';
+const QUICKBOOKS_BASE_URL =
+  QUICKBOOKS_ENVIRONMENT === 'production'
+    ? 'https://quickbooks.api.intuit.com'
+    : 'https://sandbox-quickbooks.api.intuit.com';
 
 type AccountingProvider = 'xero' | 'sage' | 'quickbooks' | 'freshbooks';
 
@@ -40,10 +41,10 @@ interface TokenData {
 
 // Helper to return errors as 200 so frontend can read them
 function errorResponse(error: string, detail?: string, httpStatus = 400) {
-  return new Response(
-    JSON.stringify({ success: false, error, detail, httpStatus }),
-    { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-  );
+  return new Response(JSON.stringify({ success: false, error, detail, httpStatus }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
 }
 
 Deno.serve(async (req: Request) => {
@@ -109,7 +110,11 @@ Deno.serve(async (req: Request) => {
     // Validate UUID format - catch "undefined" strings and invalid UUIDs
     const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
     if (!uuidRegex.test(invoiceId)) {
-      return errorResponse('Invalid invoice ID format', `Received: "${invoiceId}" - expected UUID format`, 400);
+      return errorResponse(
+        'Invalid invoice ID format',
+        `Received: "${invoiceId}" - expected UUID format`,
+        400
+      );
     }
 
     console.log(`Syncing invoice ${invoiceId} to ${provider} for user ${user.id}`);
@@ -139,7 +144,11 @@ Deno.serve(async (req: Request) => {
       .single();
 
     if (tokenError || !tokenData) {
-      return errorResponse(`No ${provider} connection found. Please connect your account first.`, tokenError?.message, 400);
+      return errorResponse(
+        `No ${provider} connection found. Please connect your account first.`,
+        tokenError?.message,
+        400
+      );
     }
 
     // Decrypt tokens - this is likely where it fails
@@ -163,7 +172,11 @@ Deno.serve(async (req: Request) => {
       }
       if (encKey.length !== 64) {
         console.error('ERROR: ENCRYPTION_KEY wrong length:', encKey.length);
-        return errorResponse(`ENCRYPTION_KEY has wrong length: ${encKey.length} (expected 64)`, undefined, 500);
+        return errorResponse(
+          `ENCRYPTION_KEY has wrong length: ${encKey.length} (expected 64)`,
+          undefined,
+          500
+        );
       }
 
       console.log('Attempting to decrypt access token...');
@@ -177,7 +190,11 @@ Deno.serve(async (req: Request) => {
       }
     } catch (decryptError) {
       console.error('Token decryption FAILED:', decryptError);
-      return errorResponse('Token decryption failed', `${String(decryptError)}. Session may be expired. Please reconnect your accounting software.`, 500);
+      return errorResponse(
+        'Token decryption failed',
+        `${String(decryptError)}. Session may be expired. Please reconnect your accounting software.`,
+        500
+      );
     }
 
     const tenantId = tokenData.tenant_id;
@@ -197,7 +214,11 @@ Deno.serve(async (req: Request) => {
     console.log('Token is expired:', isExpired);
     if (isExpired) {
       if (!refreshToken) {
-        return errorResponse('Token expired and no refresh token available. Please reconnect.', undefined, 401);
+        return errorResponse(
+          'Token expired and no refresh token available. Please reconnect.',
+          undefined,
+          401
+        );
       }
 
       try {
@@ -302,7 +323,8 @@ Deno.serve(async (req: Request) => {
         if (details.error) {
           // Try to parse QuickBooks error response
           try {
-            const qbError = typeof details.error === 'string' ? JSON.parse(details.error) : details.error;
+            const qbError =
+              typeof details.error === 'string' ? JSON.parse(details.error) : details.error;
             const faultError = qbError?.Fault?.Error?.[0];
             if (faultError) {
               detailMsg = `${provider} Error: ${faultError.Message || faultError.Detail || errorMsg}`;
@@ -314,7 +336,11 @@ Deno.serve(async (req: Request) => {
         console.log('Detailed error:', detailMsg);
       }
 
-      return errorResponse(`Failed to sync to ${provider}`, `${detailMsg}\n\nStack: ${errorStack}`, 500);
+      return errorResponse(
+        `Failed to sync to ${provider}`,
+        `${detailMsg}\n\nStack: ${errorStack}`,
+        500
+      );
     }
 
     // Update invoice with external reference
@@ -367,7 +393,7 @@ Deno.serve(async (req: Request) => {
     await captureException(error, {
       functionName: 'accounting-sync-invoice',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     const errorMsg = error instanceof Error ? error.message : String(error);
     const errorStack = error instanceof Error ? error.stack : undefined;
@@ -385,7 +411,10 @@ interface RefreshResult {
   expiresIn: number;
 }
 
-async function refreshAccessToken(provider: AccountingProvider, refreshToken: string): Promise<RefreshResult> {
+async function refreshAccessToken(
+  provider: AccountingProvider,
+  refreshToken: string
+): Promise<RefreshResult> {
   switch (provider) {
     case 'xero':
       return refreshXeroToken(refreshToken);
@@ -557,7 +586,8 @@ async function syncToXero(
 
   // Calculate markup factor to distribute overhead/profit proportionally
   const totalMarkup = (invoice.overhead || 0) + (invoice.profit || 0);
-  const markupFactor = invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
+  const markupFactor =
+    invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
 
   // Format line items for Xero - distribute overhead/profit into each line item
   const lineItems: any[] = invoice.items.map((item) => ({
@@ -657,22 +687,21 @@ async function createXeroPayment(
     const errorText = await response.text();
     console.error('Xero payment creation failed:', errorText);
     // Don't throw - invoice was created, just log the payment failure
-    console.warn('Invoice created but payment marking failed - invoice will show as unpaid in Xero');
+    console.warn(
+      'Invoice created but payment marking failed - invoice will show as unpaid in Xero'
+    );
   }
 }
 
 async function getXeroBankAccount(accessToken: string, tenantId: string): Promise<string> {
   // Get bank accounts from Xero
-  const response = await fetch(
-    'https://api.xero.com/api.xro/2.0/Accounts?where=Type=="BANK"',
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'xero-tenant-id': tenantId,
-        Accept: 'application/json',
-      },
-    }
-  );
+  const response = await fetch('https://api.xero.com/api.xro/2.0/Accounts?where=Type=="BANK"', {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'xero-tenant-id': tenantId,
+      Accept: 'application/json',
+    },
+  });
 
   if (response.ok) {
     const data = await response.json();
@@ -725,12 +754,8 @@ async function findOrCreateXeroContact(
   const newContact = {
     Name: client.name,
     EmailAddress: client.email,
-    Phones: client.phone
-      ? [{ PhoneType: 'DEFAULT', PhoneNumber: client.phone }]
-      : [],
-    Addresses: client.address
-      ? [{ AddressType: 'POBOX', AddressLine1: client.address }]
-      : [],
+    Phones: client.phone ? [{ PhoneType: 'DEFAULT', PhoneNumber: client.phone }] : [],
+    Addresses: client.address ? [{ AddressType: 'POBOX', AddressLine1: client.address }] : [],
   };
 
   const createResponse = await fetch('https://api.xero.com/api.xro/2.0/Contacts', {
@@ -788,7 +813,8 @@ async function syncToQuickBooks(
 
   // Calculate markup factor to distribute overhead/profit proportionally
   const totalMarkup = (invoice.overhead || 0) + (invoice.profit || 0);
-  const markupFactor = invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
+  const markupFactor =
+    invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
 
   // Format line items for QuickBooks - distribute overhead/profit into each line item
   // MUST include ItemRef or amounts are ignored!
@@ -821,18 +847,15 @@ async function syncToQuickBooks(
     CustomerMemo: invoice.notes ? { value: invoice.notes } : undefined,
   };
 
-  const response = await fetch(
-    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/invoice`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(qbInvoice),
-    }
-  );
+  const response = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/invoice`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(qbInvoice),
+  });
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -861,7 +884,9 @@ async function syncToQuickBooks(
     } catch (paymentError) {
       // Don't fail the whole sync if payment creation fails
       console.error('Failed to create payment in QuickBooks:', paymentError);
-      console.warn('Invoice created but payment marking failed - invoice will show as unpaid in QuickBooks');
+      console.warn(
+        'Invoice created but payment marking failed - invoice will show as unpaid in QuickBooks'
+      );
     }
   }
 
@@ -900,18 +925,15 @@ async function createQuickBooksPayment(
     ],
   };
 
-  const response = await fetch(
-    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/payment`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(qbPayment),
-    }
-  );
+  const response = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/payment`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(qbPayment),
+  });
 
   if (!response.ok) {
     const errorText = await response.text();
@@ -953,9 +975,9 @@ async function getOrCreateQBServiceItem(
 
     if (items && items.length > 0) {
       // Prefer an item named "Services" or "Service" if it exists
-      const preferredItem = items.find((item: any) =>
-        item.Name?.toLowerCase() === 'services' ||
-        item.Name?.toLowerCase() === 'service'
+      const preferredItem = items.find(
+        (item: any) =>
+          item.Name?.toLowerCase() === 'services' || item.Name?.toLowerCase() === 'service'
       );
 
       if (preferredItem) {
@@ -987,18 +1009,15 @@ async function getOrCreateQBServiceItem(
     Description: 'General services (auto-created by Elec-Mate)',
   };
 
-  const createResponse = await fetch(
-    `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/item`,
-    {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify(newItem),
-    }
-  );
+  const createResponse = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/item`, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(newItem),
+  });
 
   if (!createResponse.ok) {
     const errorText = await createResponse.text();
@@ -1017,10 +1036,7 @@ async function getOrCreateQBServiceItem(
 /**
  * Get an Income account from QuickBooks for creating service items
  */
-async function getQBIncomeAccount(
-  accessToken: string,
-  realmId: string
-): Promise<string> {
+async function getQBIncomeAccount(accessToken: string, realmId: string): Promise<string> {
   // Query for Income accounts
   const query = `SELECT * FROM Account WHERE AccountType = 'Income' MAXRESULTS 5`;
   const queryUrl = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
@@ -1038,10 +1054,11 @@ async function getQBIncomeAccount(
 
     if (accounts && accounts.length > 0) {
       // Prefer "Sales" or "Services" income account
-      const preferredAccount = accounts.find((acc: any) =>
-        acc.Name?.toLowerCase().includes('sales') ||
-        acc.Name?.toLowerCase().includes('service') ||
-        acc.Name?.toLowerCase().includes('income')
+      const preferredAccount = accounts.find(
+        (acc: any) =>
+          acc.Name?.toLowerCase().includes('sales') ||
+          acc.Name?.toLowerCase().includes('service') ||
+          acc.Name?.toLowerCase().includes('income')
       );
 
       if (preferredAccount) {
@@ -1095,7 +1112,10 @@ async function findOrCreateQBCustomer(
       if (emailSearchResponse.ok) {
         const emailSearchResult = await emailSearchResponse.json();
         if (emailSearchResult.QueryResponse?.Customer?.length > 0) {
-          console.log('Found existing customer by email:', emailSearchResult.QueryResponse.Customer[0].Id);
+          console.log(
+            'Found existing customer by email:',
+            emailSearchResult.QueryResponse.Customer[0].Id
+          );
           return emailSearchResult.QueryResponse.Customer[0].Id;
         }
       }
@@ -1152,7 +1172,9 @@ async function findOrCreateQBCustomer(
   }
 
   // If both attempts failed, throw with detailed error
-  throw new Error(`Failed to create customer "${sanitizedName}" in QuickBooks. The name may already exist with different details, or there may be a QuickBooks configuration issue.`);
+  throw new Error(
+    `Failed to create customer "${sanitizedName}" in QuickBooks. The name may already exist with different details, or there may be a QuickBooks configuration issue.`
+  );
 }
 
 /**
@@ -1174,18 +1196,15 @@ async function tryCreateQBCustomer(
   console.log('Creating customer with payload:', JSON.stringify(newCustomer));
 
   try {
-    const createResponse = await fetch(
-      `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/customer`,
-      {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(newCustomer),
-      }
-    );
+    const createResponse = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/customer`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(newCustomer),
+    });
 
     console.log('Create response status:', createResponse.status);
 
@@ -1230,7 +1249,9 @@ async function syncToSage(
   console.log('Resource Owner ID:', resourceOwnerId);
 
   if (!resourceOwnerId) {
-    throw new Error('Sage resource_owner_id (X-Site) is required. Please reconnect your Sage account.');
+    throw new Error(
+      'Sage resource_owner_id (X-Site) is required. Please reconnect your Sage account.'
+    );
   }
 
   // Find or create contact
@@ -1239,7 +1260,8 @@ async function syncToSage(
 
   // Calculate markup factor to distribute overhead/profit proportionally
   const totalMarkup = (invoice.overhead || 0) + (invoice.profit || 0);
-  const markupFactor = invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
+  const markupFactor =
+    invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
 
   // Format line items for Sage - distribute overhead/profit into each line item
   const lineItems: any[] = invoice.items.map((item) => ({
@@ -1327,9 +1349,7 @@ async function findOrCreateSageContact(
     contact_type_ids: ['CUSTOMER'],
     email: client.email,
     telephone: client.phone,
-    main_address: client.address
-      ? { address_line_1: client.address }
-      : undefined,
+    main_address: client.address ? { address_line_1: client.address } : undefined,
   };
 
   const createResponse = await fetch('https://api.accounting.sage.com/v3.1/contacts', {

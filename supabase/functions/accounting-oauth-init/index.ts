@@ -125,20 +125,21 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
 
     // Store state temporarily in accounting_oauth_states table
-    const { error: insertError } = await supabase
-      .from('accounting_oauth_states')
-      .insert({
-        state,
-        user_id: user.id,
-        provider,
-        expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
-      });
+    const { error: insertError } = await supabase.from('accounting_oauth_states').insert({
+      state,
+      user_id: user.id,
+      provider,
+      expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(),
+    });
 
     if (insertError) {
       console.error('Failed to store OAuth state:', insertError);
@@ -147,15 +148,14 @@ serve(async (req: Request) => {
 
     console.log(`Accounting OAuth flow initiated for ${provider}`, { user_id: user.id });
 
-    return new Response(
-      JSON.stringify({ authUrl }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ authUrl }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     await captureException(error, {
       functionName: 'accounting-oauth-init',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return handleError(error);
   }

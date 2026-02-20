@@ -4,7 +4,7 @@
  * Exchanges code for account and redirects back to app
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
@@ -30,12 +30,18 @@ serve(async (req) => {
     // Handle errors from Stripe
     if (error) {
       console.error('❌ OAuth error from Stripe:', error, errorDescription);
-      return Response.redirect(`${returnUrl}${separator}stripe=error&message=${encodeURIComponent(errorDescription || error)}`, 302);
+      return Response.redirect(
+        `${returnUrl}${separator}stripe=error&message=${encodeURIComponent(errorDescription || error)}`,
+        302
+      );
     }
 
     if (!code) {
       console.error('❌ No authorization code received');
-      return Response.redirect(`${returnUrl}${separator}stripe=error&message=No authorization code`, 302);
+      return Response.redirect(
+        `${returnUrl}${separator}stripe=error&message=No authorization code`,
+        302
+      );
     }
 
     if (!state.user_id) {
@@ -48,7 +54,10 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 
     if (!stripeSecretKey) {
-      return Response.redirect(`${returnUrl}${separator}stripe=error&message=Stripe not configured`, 302);
+      return Response.redirect(
+        `${returnUrl}${separator}stripe=error&message=Stripe not configured`,
+        302
+      );
     }
 
     // Exchange authorization code for access token and account ID
@@ -82,7 +91,7 @@ serve(async (req) => {
     // Verify the account status
     const accountResponse = await fetch(`https://api.stripe.com/v1/accounts/${stripeAccountId}`, {
       headers: {
-        'Authorization': `Bearer ${stripeSecretKey}`,
+        Authorization: `Bearer ${stripeSecretKey}`,
       },
     });
 
@@ -121,17 +130,19 @@ serve(async (req) => {
 
     // Redirect back to app with success
     return Response.redirect(`${returnUrl}${separator}stripe=success`, 302);
-
   } catch (error: any) {
     console.error('❌ Callback error:', error);
     await captureException(error, {
       functionName: 'stripe-connect-oauth-callback',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     // Try to redirect with error, fallback to default URL
     const fallbackUrl = 'https://www.elec-mate.com/electrician/invoices';
-    return Response.redirect(`${fallbackUrl}?stripe=error&message=${encodeURIComponent(error.message)}`, 302);
+    return Response.redirect(
+      `${fallbackUrl}?stripe=error&message=${encodeURIComponent(error.message)}`,
+      302
+    );
   }
 });

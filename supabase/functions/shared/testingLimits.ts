@@ -1,7 +1,7 @@
 /**
  * Electrical Testing Limits & Acceptable Values
  * Based on BS 7671:2018+A3:2024 and GS 38 guidance
- * 
+ *
  * For use in Commissioning & Testing agents
  */
 
@@ -30,7 +30,7 @@ export const INSULATION_RESISTANCE_LIMITS: TestLimit[] = [
     circuitType: 'extra_low_voltage',
     voltageLevel: 'SELV/PELV',
     regulation: 'BS 7671 Table 61',
-    notes: 'Test voltage: 250V DC'
+    notes: 'Test voltage: 250V DC',
   },
   {
     testType: 'insulation_resistance',
@@ -40,7 +40,7 @@ export const INSULATION_RESISTANCE_LIMITS: TestLimit[] = [
     circuitType: 'final_circuit',
     voltageLevel: 'up_to_500V',
     regulation: 'BS 7671 Table 61',
-    notes: 'Test voltage: 500V DC (230V circuits)'
+    notes: 'Test voltage: 500V DC (230V circuits)',
   },
   {
     testType: 'insulation_resistance',
@@ -50,8 +50,8 @@ export const INSULATION_RESISTANCE_LIMITS: TestLimit[] = [
     circuitType: 'distribution',
     voltageLevel: 'above_500V',
     regulation: 'BS 7671 Table 61',
-    notes: 'Test voltage: 1000V DC'
-  }
+    notes: 'Test voltage: 1000V DC',
+  },
 ];
 
 /**
@@ -66,7 +66,7 @@ export const CONTINUITY_TEST_LIMITS: TestLimit[] = [
     unit: 'Ω',
     circuitType: 'ring_final',
     regulation: 'BS 7671 612.2.2',
-    notes: 'Value should be approximately 1.67 times the resistance of each leg'
+    notes: 'Value should be approximately 1.67 times the resistance of each leg',
   },
   {
     testType: 'continuity',
@@ -75,8 +75,8 @@ export const CONTINUITY_TEST_LIMITS: TestLimit[] = [
     unit: 'Ω',
     circuitType: 'all',
     regulation: 'BS 7671 612.2.1',
-    notes: 'Low resistance indicates good connection'
-  }
+    notes: 'Low resistance indicates good connection',
+  },
 ];
 
 /**
@@ -92,7 +92,7 @@ export const EARTH_FAULT_LOOP_IMPEDANCE_LIMITS: TestLimit[] = [
     circuitType: 'final_circuit',
     voltageLevel: '230V',
     regulation: 'BS 7671 Appendix 3 Table 3A',
-    notes: '0.4s disconnection time'
+    notes: '0.4s disconnection time',
   },
   {
     testType: 'earth_loop_impedance',
@@ -102,7 +102,7 @@ export const EARTH_FAULT_LOOP_IMPEDANCE_LIMITS: TestLimit[] = [
     circuitType: 'final_circuit',
     voltageLevel: '230V',
     regulation: 'BS 7671 Appendix 3 Table 3A',
-    notes: '0.4s disconnection time'
+    notes: '0.4s disconnection time',
   },
   {
     testType: 'earth_loop_impedance',
@@ -112,7 +112,7 @@ export const EARTH_FAULT_LOOP_IMPEDANCE_LIMITS: TestLimit[] = [
     circuitType: 'final_circuit',
     voltageLevel: '230V',
     regulation: 'BS 7671 Appendix 3 Table 3A',
-    notes: '0.4s disconnection time'
+    notes: '0.4s disconnection time',
   },
   {
     testType: 'earth_loop_impedance',
@@ -122,8 +122,8 @@ export const EARTH_FAULT_LOOP_IMPEDANCE_LIMITS: TestLimit[] = [
     circuitType: 'shower_circuit',
     voltageLevel: '230V',
     regulation: 'BS 7671 Appendix 3 Table 3A',
-    notes: '0.4s disconnection time'
-  }
+    notes: '0.4s disconnection time',
+  },
 ];
 
 /**
@@ -138,7 +138,7 @@ export const RCD_TEST_LIMITS: TestLimit[] = [
     unit: 'ms',
     circuitType: 'rcd_protected',
     regulation: 'BS 7671 612.13',
-    notes: 'General purpose RCD - should trip within 300ms'
+    notes: 'General purpose RCD - should trip within 300ms',
   },
   {
     testType: 'rcd_trip_time',
@@ -147,7 +147,7 @@ export const RCD_TEST_LIMITS: TestLimit[] = [
     unit: 'ms',
     circuitType: 'rcd_protected',
     regulation: 'BS 7671 612.13',
-    notes: 'Must trip within 40ms at 5× rated residual current'
+    notes: 'Must trip within 40ms at 5× rated residual current',
   },
   {
     testType: 'rcd_trip_time',
@@ -156,7 +156,7 @@ export const RCD_TEST_LIMITS: TestLimit[] = [
     unit: 'ms',
     circuitType: 'socket_outlet',
     regulation: 'BS 7671 531.3.3',
-    notes: 'Type A RCD required for socket outlets (pulsating DC protection)'
+    notes: 'Type A RCD required for socket outlets (pulsating DC protection)',
   },
   {
     testType: 'rcd_trip_current',
@@ -166,8 +166,8 @@ export const RCD_TEST_LIMITS: TestLimit[] = [
     unit: '% of IΔn',
     circuitType: 'rcd_protected',
     regulation: 'BS 7671 612.13',
-    notes: 'Should trip between 50% and 100% of rated current'
-  }
+    notes: 'Should trip between 50% and 100% of rated current',
+  },
 ];
 
 /**
@@ -176,14 +176,15 @@ export const RCD_TEST_LIMITS: TestLimit[] = [
  */
 export const POLARITY_TEST_REQUIREMENTS = {
   testType: 'polarity',
-  description: 'All single-pole devices (switches, fuses, CBs) must be connected in line conductor only',
+  description:
+    'All single-pole devices (switches, fuses, CBs) must be connected in line conductor only',
   regulation: 'BS 7671 612.6',
   checks: [
     'Correct polarity at origin',
     'Line conductor connected to centre contact of Edison screw lampholders',
     'Line conductor switched in all single-pole switching devices',
-    'Socket outlets and similar accessories correctly connected'
-  ]
+    'Socket outlets and similar accessories correctly connected',
+  ],
 };
 
 /**
@@ -196,50 +197,50 @@ export const TEST_SEQUENCE = [
     category: 'dead',
     test: 'Continuity of protective conductors',
     regulation: '612.2.1',
-    voltage: 'Dead'
+    voltage: 'Dead',
   },
   {
     order: 2,
     category: 'dead',
     test: 'Continuity of ring final circuit conductors',
     regulation: '612.2.2',
-    voltage: 'Dead'
+    voltage: 'Dead',
   },
   {
     order: 3,
     category: 'dead',
     test: 'Insulation resistance',
     regulation: '612.3',
-    voltage: 'Dead (250V/500V/1000V DC test voltage)'
+    voltage: 'Dead (250V/500V/1000V DC test voltage)',
   },
   {
     order: 4,
     category: 'dead',
     test: 'Polarity',
     regulation: '612.6',
-    voltage: 'Dead (can also test live)'
+    voltage: 'Dead (can also test live)',
   },
   {
     order: 5,
     category: 'live',
     test: 'Earth fault loop impedance (Zs)',
     regulation: '612.9',
-    voltage: 'Live'
+    voltage: 'Live',
   },
   {
     order: 6,
     category: 'live',
     test: 'RCD operating time and residual current',
     regulation: '612.13',
-    voltage: 'Live'
+    voltage: 'Live',
   },
   {
     order: 7,
     category: 'live',
     test: 'Functional testing',
     regulation: '612.14',
-    voltage: 'Live'
-  }
+    voltage: 'Live',
+  },
 ];
 
 /**
@@ -250,10 +251,10 @@ export function getTestLimits(testType: string): TestLimit[] {
     ...INSULATION_RESISTANCE_LIMITS,
     ...CONTINUITY_TEST_LIMITS,
     ...EARTH_FAULT_LOOP_IMPEDANCE_LIMITS,
-    ...RCD_TEST_LIMITS
+    ...RCD_TEST_LIMITS,
   ];
-  
-  return allLimits.filter(limit => limit.testType === testType);
+
+  return allLimits.filter((limit) => limit.testType === testType);
 }
 
 /**
@@ -265,39 +266,39 @@ export function validateTestResult(
   circuitType?: string
 ): { pass: boolean; limit?: TestLimit; message: string } {
   const limits = getTestLimits(testType);
-  
+
   const applicableLimit = circuitType
-    ? limits.find(l => l.circuitType === circuitType)
+    ? limits.find((l) => l.circuitType === circuitType)
     : limits[0];
-  
+
   if (!applicableLimit) {
     return {
       pass: false,
-      message: `No test limits found for ${testType}`
+      message: `No test limits found for ${testType}`,
     };
   }
-  
+
   const { minValue, maxValue } = applicableLimit;
-  
+
   if (minValue !== undefined && measuredValue < minValue) {
     return {
       pass: false,
       limit: applicableLimit,
-      message: `FAIL: ${measuredValue}${applicableLimit.unit} is below minimum ${minValue}${applicableLimit.unit}`
+      message: `FAIL: ${measuredValue}${applicableLimit.unit} is below minimum ${minValue}${applicableLimit.unit}`,
     };
   }
-  
+
   if (maxValue !== undefined && measuredValue > maxValue) {
     return {
       pass: false,
       limit: applicableLimit,
-      message: `FAIL: ${measuredValue}${applicableLimit.unit} exceeds maximum ${maxValue}${applicableLimit.unit}`
+      message: `FAIL: ${measuredValue}${applicableLimit.unit} exceeds maximum ${maxValue}${applicableLimit.unit}`,
     };
   }
-  
+
   return {
     pass: true,
     limit: applicableLimit,
-    message: `PASS: ${measuredValue}${applicableLimit.unit} is within acceptable limits`
+    message: `PASS: ${measuredValue}${applicableLimit.unit} is within acceptable limits`,
   };
 }

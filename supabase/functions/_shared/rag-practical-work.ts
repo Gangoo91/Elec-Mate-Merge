@@ -48,18 +48,15 @@ export async function searchPracticalWorkIntelligence(
   console.log(`🔍 Searching Practical Work Intelligence`, {
     query: query.substring(0, 50),
     tradeFilter,
-    matchCount
+    matchCount,
   });
 
   try {
     // Call ULTRA-FAST keyword search (GIN index - <1s vs 21s for hybrid)
-    const { data, error } = await supabase.rpc(
-      'search_practical_work_fast',
-      {
-        query_text: query,
-        match_count: matchCount
-      }
-    );
+    const { data, error } = await supabase.rpc('search_practical_work_fast', {
+      query_text: query,
+      match_count: matchCount,
+    });
 
     if (error) {
       console.error('Practical Work search error:', error);
@@ -67,7 +64,7 @@ export async function searchPracticalWorkIntelligence(
         results: [],
         searchTimeMs: Date.now() - startTime,
         qualityScore: 0,
-        meetsThreshold: false
+        meetsThreshold: false,
       };
     }
 
@@ -85,23 +82,25 @@ export async function searchPracticalWorkIntelligence(
       source_table: 'practical_work_intelligence',
       applies_to: row.applies_to,
       cable_sizes: row.cable_sizes,
-      test_procedures: Array.isArray(row.test_procedures) 
-        ? row.test_procedures.map((t: any) => typeof t === 'string' ? t : JSON.stringify(t))
+      test_procedures: Array.isArray(row.test_procedures)
+        ? row.test_procedures.map((t: any) => (typeof t === 'string' ? t : JSON.stringify(t)))
         : [],
       troubleshooting_steps: row.troubleshooting_steps,
       common_failures: Array.isArray(row.common_failures)
-        ? row.common_failures.map((f: any) => typeof f === 'string' ? f : JSON.stringify(f))
-        : []
+        ? row.common_failures.map((f: any) => (typeof f === 'string' ? f : JSON.stringify(f)))
+        : [],
     }));
 
     // Calculate quality metrics
-    const avgHybridScore = results.length > 0
-      ? results.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / results.length
-      : 0;
+    const avgHybridScore =
+      results.length > 0
+        ? results.reduce((sum, r) => sum + (r.hybrid_score || 0), 0) / results.length
+        : 0;
 
-    const avgConfidenceScore = results.length > 0
-      ? results.reduce((sum, r) => sum + (r.confidence_score || 0), 0) / results.length
-      : 0;
+    const avgConfidenceScore =
+      results.length > 0
+        ? results.reduce((sum, r) => sum + (r.confidence_score || 0), 0) / results.length
+        : 0;
 
     // Quality score: combination of result count, hybrid score, and confidence
     const countScore = Math.min(results.length / matchCount, 1) * 40; // Max 40 points
@@ -120,23 +119,22 @@ export async function searchPracticalWorkIntelligence(
       avgConfidence: avgConfidenceScore.toFixed(2),
       qualityScore: qualityScore.toFixed(1),
       meetsThreshold,
-      durationMs: searchTimeMs
+      durationMs: searchTimeMs,
     });
 
     return {
       results,
       searchTimeMs,
       qualityScore,
-      meetsThreshold
+      meetsThreshold,
     };
-
   } catch (error) {
     console.error('Practical Work search exception:', error);
     return {
       results: [],
       searchTimeMs: Date.now() - startTime,
       qualityScore: 0,
-      meetsThreshold: false
+      meetsThreshold: false,
     };
   }
 }
@@ -148,51 +146,53 @@ export function filterByConfidence(
   results: PracticalWorkResult[],
   minConfidence: number = 0.75
 ): PracticalWorkResult[] {
-  return results.filter(r => (r.confidence_score || 0) >= minConfidence);
+  return results.filter((r) => (r.confidence_score || 0) >= minConfidence);
 }
 
 /**
  * Format results for AI context
  */
 export function formatForAIContext(results: PracticalWorkResult[]): string {
-  return results.map((pw, index) => {
-    let formatted = `**${pw.primary_topic || 'Practical Guidance'}**`;
-    
-    if (pw.equipment_category) {
-      formatted += ` (${pw.equipment_category})`;
-    }
-    
-    formatted += `\n${pw.content}\n`;
-    
-    // ⚡ PRIORITY: Flag equipment-specific test procedures prominently
-    if (pw.test_procedures && pw.test_procedures.length > 0) {
-      formatted += `\n⚡ SPECIFIC TEST PROCEDURES: ${pw.test_procedures.join('; ')}`;
-    }
-    
-    if (pw.tools_required && pw.tools_required.length > 0) {
-      formatted += `\nTools Required: ${pw.tools_required.join(', ')}`;
-    }
-    
-    if (pw.bs7671_regulations && pw.bs7671_regulations.length > 0) {
-      formatted += `\nBS 7671: ${pw.bs7671_regulations.join(', ')}`;
-    }
-    
-    if (pw.maintenance_interval) {
-      formatted += `\nMaintenance Interval: ${pw.maintenance_interval}`;
-    }
-    
-    if (pw.expected_results) {
-      formatted += `\nExpected Results: ${pw.expected_results}`;
-    }
-    
-    if (pw.troubleshooting_steps && pw.troubleshooting_steps.length > 0) {
-      formatted += `\nTroubleshooting: ${pw.troubleshooting_steps.join('; ')}`;
-    }
-    
-    if (pw.common_failures && pw.common_failures.length > 0) {
-      formatted += `\nCommon Failures: ${pw.common_failures.join('; ')}`;
-    }
-    
-    return formatted;
-  }).join('\n\n---\n\n');
+  return results
+    .map((pw, index) => {
+      let formatted = `**${pw.primary_topic || 'Practical Guidance'}**`;
+
+      if (pw.equipment_category) {
+        formatted += ` (${pw.equipment_category})`;
+      }
+
+      formatted += `\n${pw.content}\n`;
+
+      // ⚡ PRIORITY: Flag equipment-specific test procedures prominently
+      if (pw.test_procedures && pw.test_procedures.length > 0) {
+        formatted += `\n⚡ SPECIFIC TEST PROCEDURES: ${pw.test_procedures.join('; ')}`;
+      }
+
+      if (pw.tools_required && pw.tools_required.length > 0) {
+        formatted += `\nTools Required: ${pw.tools_required.join(', ')}`;
+      }
+
+      if (pw.bs7671_regulations && pw.bs7671_regulations.length > 0) {
+        formatted += `\nBS 7671: ${pw.bs7671_regulations.join(', ')}`;
+      }
+
+      if (pw.maintenance_interval) {
+        formatted += `\nMaintenance Interval: ${pw.maintenance_interval}`;
+      }
+
+      if (pw.expected_results) {
+        formatted += `\nExpected Results: ${pw.expected_results}`;
+      }
+
+      if (pw.troubleshooting_steps && pw.troubleshooting_steps.length > 0) {
+        formatted += `\nTroubleshooting: ${pw.troubleshooting_steps.join('; ')}`;
+      }
+
+      if (pw.common_failures && pw.common_failures.length > 0) {
+        formatted += `\nCommon Failures: ${pw.common_failures.join('; ')}`;
+      }
+
+      return formatted;
+    })
+    .join('\n\n---\n\n');
 }

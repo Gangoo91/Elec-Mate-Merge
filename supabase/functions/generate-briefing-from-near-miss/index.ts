@@ -1,4 +1,4 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { corsHeaders } from '../_shared/cors.ts';
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -10,7 +10,7 @@ serve(async (req) => {
 
   try {
     const { nearMissData } = await req.json();
-    
+
     if (!OPENAI_API_KEY) {
       throw new Error('OpenAI API key not configured');
     }
@@ -18,16 +18,22 @@ serve(async (req) => {
     const systemPrompt = `You are a UK electrical safety expert specializing in BS 7671 regulations. Generate comprehensive team briefing content from near miss reports.`;
 
     // Build witnesses string if present
-    const witnessesInfo = nearMissData.witnesses && Array.isArray(nearMissData.witnesses) && nearMissData.witnesses.length > 0
-      ? `\n**Witnesses:** ${nearMissData.witnesses.map((w: any) => w.name).join(', ')}`
-      : '';
-    
+    const witnessesInfo =
+      nearMissData.witnesses &&
+      Array.isArray(nearMissData.witnesses) &&
+      nearMissData.witnesses.length > 0
+        ? `\n**Witnesses:** ${nearMissData.witnesses.map((w: any) => w.name).join(', ')}`
+        : '';
+
     // Build environment info
     const environmentInfo = [];
-    if (nearMissData.weather_conditions) environmentInfo.push(`Weather: ${nearMissData.weather_conditions}`);
-    if (nearMissData.lighting_conditions) environmentInfo.push(`Lighting: ${nearMissData.lighting_conditions}`);
-    const environmentString = environmentInfo.length > 0 ? `\n**Environment:** ${environmentInfo.join(', ')}` : '';
-    
+    if (nearMissData.weather_conditions)
+      environmentInfo.push(`Weather: ${nearMissData.weather_conditions}`);
+    if (nearMissData.lighting_conditions)
+      environmentInfo.push(`Lighting: ${nearMissData.lighting_conditions}`);
+    const environmentString =
+      environmentInfo.length > 0 ? `\n**Environment:** ${environmentInfo.join(', ')}` : '';
+
     // Build equipment info
     let equipmentString = '';
     if (nearMissData.equipment_involved) {
@@ -36,13 +42,21 @@ serve(async (req) => {
         equipmentString += ` (FAULTY${nearMissData.equipment_fault_details ? ': ' + nearMissData.equipment_fault_details : ''})`;
       }
     }
-    
+
     // Build investigation info
     const investigationInfo = [];
-    if (nearMissData.supervisor_notified) investigationInfo.push(`Supervisor notified: ${nearMissData.supervisor_name || 'Yes'}`);
-    if (nearMissData.previous_similar_incidents) investigationInfo.push(`Previous similar incidents: ${nearMissData.previous_similar_incidents}`);
-    if (nearMissData.third_party_involved) investigationInfo.push(`Third party involved: ${nearMissData.third_party_details || 'Yes'}`);
-    const investigationString = investigationInfo.length > 0 ? `\n**Investigation Notes:** ${investigationInfo.join('; ')}` : '';
+    if (nearMissData.supervisor_notified)
+      investigationInfo.push(`Supervisor notified: ${nearMissData.supervisor_name || 'Yes'}`);
+    if (nearMissData.previous_similar_incidents)
+      investigationInfo.push(
+        `Previous similar incidents: ${nearMissData.previous_similar_incidents}`
+      );
+    if (nearMissData.third_party_involved)
+      investigationInfo.push(`Third party involved: ${nearMissData.third_party_details || 'Yes'}`);
+    const investigationString =
+      investigationInfo.length > 0
+        ? `\n**Investigation Notes:** ${investigationInfo.join('; ')}`
+        : '';
 
     const userPrompt = `
 Create a professional safety briefing based on this near miss incident:
@@ -81,16 +95,16 @@ Format as JSON with these exact keys: briefingTitle, briefingDescription, safety
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt },
         ],
-        response_format: { type: "json_object" },
+        response_format: { type: 'json_object' },
         max_completion_tokens: 1500,
       }),
     });
@@ -105,9 +119,9 @@ Format as JSON with these exact keys: briefingTitle, briefingDescription, safety
     const content = JSON.parse(data.choices[0].message.content);
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: true,
-        content 
+        content,
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
@@ -116,9 +130,9 @@ Format as JSON with these exact keys: briefingTitle, briefingDescription, safety
   } catch (error) {
     console.error('Error generating briefing:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error' 
+        error: error instanceof Error ? error.message : 'Unknown error',
       }),
       {
         status: 500,

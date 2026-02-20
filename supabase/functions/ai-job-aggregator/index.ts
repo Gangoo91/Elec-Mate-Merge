@@ -1,6 +1,5 @@
-
 import { serve } from '../_shared/deps.ts';
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from '../_shared/cors.ts';
 
 const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
 
@@ -8,22 +7,22 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
-  
+
   try {
     const { jobs, userPreferences, searchQuery } = await req.json();
-    
+
     if (!openAIApiKey) {
-      return new Response(
-        JSON.stringify({ error: "OpenAI API key not configured" }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'OpenAI API key not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
-    
+
     // AI-powered job enhancement and scoring
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -45,7 +44,7 @@ For each job, add these AI enhancements:
 - estimatedSalaryMin: number (if salary mentioned)
 - estimatedSalaryMax: number (if salary mentioned)
 
-Keep all original job fields and add AI enhancements. Return valid JSON only.`
+Keep all original job fields and add AI enhancements. Return valid JSON only.`,
           },
           {
             role: 'user',
@@ -56,41 +55,41 @@ User preferences: ${JSON.stringify(userPreferences || {})}
 Jobs to enhance:
 ${JSON.stringify(jobs.slice(0, 12))}
 
-Return enhanced jobs as valid JSON array only.`
-          }
+Return enhanced jobs as valid JSON array only.`,
+          },
         ],
         temperature: 0.2,
         max_tokens: 4000,
       }),
     });
-    
+
     if (!response.ok) {
       throw new Error(`OpenAI API error: ${response.statusText}`);
     }
-    
+
     const aiData = await response.json();
     let enhancedJobs = jobs; // Fallback to original jobs
-    
+
     try {
       const aiContent = aiData.choices[0].message.content;
       console.log('Raw AI Response received, processing...');
-      
+
       // Multiple cleaning strategies for robust parsing
       let cleanContent = aiContent.trim();
-      
+
       // Remove markdown code blocks
       cleanContent = cleanContent.replace(/```json\s*/g, '').replace(/```\s*/g, '');
-      
+
       // Remove any leading/trailing non-JSON content
       const jsonStart = cleanContent.indexOf('[');
       const jsonEnd = cleanContent.lastIndexOf(']') + 1;
-      
+
       if (jsonStart !== -1 && jsonEnd > jsonStart) {
         cleanContent = cleanContent.substring(jsonStart, jsonEnd);
       }
-      
+
       const parsedJobs = JSON.parse(cleanContent);
-      
+
       if (Array.isArray(parsedJobs) && parsedJobs.length > 0) {
         enhancedJobs = parsedJobs;
         console.log(`AI enhanced ${enhancedJobs.length} jobs successfully`);
@@ -101,40 +100,51 @@ Return enhanced jobs as valid JSON array only.`
       console.error('Failed to parse AI response:', parseError);
       // Continue with original jobs as fallback
     }
-    
+
     // Generate market insights
     const insights = {
-      averageRelevance: enhancedJobs.reduce((sum: number, job: any) => sum + (job.relevanceScore || 75), 0) / enhancedJobs.length,
+      averageRelevance:
+        enhancedJobs.reduce((sum: number, job: any) => sum + (job.relevanceScore || 75), 0) /
+        enhancedJobs.length,
       topCategories: [...new Set(enhancedJobs.flatMap((job: any) => job.aiTags || []))].slice(0, 6),
       salaryRange: {
-        min: Math.min(...enhancedJobs.filter((j: any) => j.estimatedSalaryMin).map((j: any) => j.estimatedSalaryMin)) || 25000,
-        max: Math.max(...enhancedJobs.filter((j: any) => j.estimatedSalaryMax).map((j: any) => j.estimatedSalaryMax)) || 65000
+        min:
+          Math.min(
+            ...enhancedJobs
+              .filter((j: any) => j.estimatedSalaryMin)
+              .map((j: any) => j.estimatedSalaryMin)
+          ) || 25000,
+        max:
+          Math.max(
+            ...enhancedJobs
+              .filter((j: any) => j.estimatedSalaryMax)
+              .map((j: any) => j.estimatedSalaryMax)
+          ) || 65000,
       },
       totalProcessed: jobs.length,
       marketTrends: [
-        "High demand for 18th Edition qualified electricians",
-        "Solar PV and renewable energy skills increasingly valuable", 
-        "EV charging infrastructure installations growing rapidly",
-        "Smart home automation expertise in demand"
+        'High demand for 18th Edition qualified electricians',
+        'Solar PV and renewable energy skills increasingly valuable',
+        'EV charging infrastructure installations growing rapidly',
+        'Smart home automation expertise in demand',
       ],
-      demandAreas: ["London", "Manchester", "Birmingham", "Leeds", "Bristol", "Glasgow"]
+      demandAreas: ['London', 'Manchester', 'Birmingham', 'Leeds', 'Bristol', 'Glasgow'],
     };
-    
+
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         enhancedJobs,
-        aiInsights: insights
+        aiInsights: insights,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-    
   } catch (error) {
     console.error('Error in AI job aggregator:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error instanceof Error ? error.message : 'Unknown error occurred',
         enhancedJobs: [],
-        aiInsights: null
+        aiInsights: null,
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

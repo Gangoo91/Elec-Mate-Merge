@@ -1,6 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testClient } from "../fixtures/test-data";
+import { testClient } from '../fixtures/test-data';
 
 /**
  * EIC Certificate - Navigation Tests
@@ -12,29 +12,36 @@ import { testClient } from "../fixtures/test-data";
 
 // Helper to navigate to EIC form
 async function navigateToEIC(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=eic");
+  await page.goto('/electrician/inspection-testing?section=eic');
   await page.waitForTimeout(3000);
 }
 
-test.describe("EIC Certificate Navigation - Basic", () => {
+test.describe('EIC Certificate Navigation - Basic', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToEIC(page);
   });
 
-  test("1. EIC form loads correctly", async ({ page }) => {
-    await expect(page.locator("body")).toBeVisible();
+  test('1. EIC form loads correctly', async ({ page }) => {
+    await expect(page.locator('body')).toBeVisible();
 
     // Check for EIC-specific content
-    const eicContent = page.locator('text=/EIC|Electrical Installation Certificate|New Installation/i');
-    const hasEIC = await eicContent.first().isVisible({ timeout: 5000 }).catch(() => false);
+    const eicContent = page.locator(
+      'text=/EIC|Electrical Installation Certificate|New Installation/i'
+    );
+    const hasEIC = await eicContent
+      .first()
+      .isVisible({ timeout: 5000 })
+      .catch(() => false);
 
     expect(hasEIC).toBeTruthy();
   });
 
-  test("2. Tab navigation works for EIC sections", async ({ page }) => {
+  test('2. Tab navigation works for EIC sections', async ({ page }) => {
     // Look for tab buttons
-    const tabs = page.locator('[role="tab"], button:has-text("Client"), button:has-text("Supply"), button:has-text("Test")');
+    const tabs = page.locator(
+      '[role="tab"], button:has-text("Client"), button:has-text("Supply"), button:has-text("Test")'
+    );
     const tabCount = await tabs.count();
 
     expect(tabCount).toBeGreaterThan(0);
@@ -45,48 +52,61 @@ test.describe("EIC Certificate Navigation - Basic", () => {
       await page.waitForTimeout(500);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. URL includes design ID when pre-populated", async ({ page }) => {
+  test('3. URL includes design ID when pre-populated', async ({ page }) => {
     // Navigate with designId param
-    await page.goto("/electrician/inspection-testing?section=eic&designId=test-123");
+    await page.goto('/electrician/inspection-testing?section=eic&designId=test-123');
     await page.waitForTimeout(3000);
 
     const url = page.url();
-    expect(url).toContain("designId=test-123");
+    expect(url).toContain('designId=test-123');
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("4. Back to dashboard navigation works", async ({ page }) => {
-    const backButton = page.locator('button:has(svg.lucide-arrow-left), button:has(svg.lucide-chevron-left), a:has-text("Back")').first();
+  test('4. Back to dashboard navigation works', async ({ page }) => {
+    const backButton = page
+      .locator(
+        'button:has(svg.lucide-arrow-left), button:has(svg.lucide-chevron-left), a:has-text("Back")'
+      )
+      .first();
 
     if (await backButton.isVisible({ timeout: 3000 })) {
       await backButton.click();
       await page.waitForTimeout(2000);
 
       // Should navigate away from EIC form
-      const isDashboard = await page.locator('text=/dashboard|inspection|electrician/i').first().isVisible({ timeout: 3000 }).catch(() => false);
+      const isDashboard = await page
+        .locator('text=/dashboard|inspection|electrician/i')
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
       expect(isDashboard || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Save draft button is available", async ({ page }) => {
-    const saveButton = page.locator('button:has-text("Save"), button:has(svg.lucide-save), button:has-text("Draft")');
-    const hasSave = await saveButton.first().isVisible({ timeout: 3000 }).catch(() => false);
+  test('5. Save draft button is available', async ({ page }) => {
+    const saveButton = page.locator(
+      'button:has-text("Save"), button:has(svg.lucide-save), button:has-text("Draft")'
+    );
+    const hasSave = await saveButton
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasSave).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("6. Edit existing EIC loads data", async ({ page }) => {
+  test('6. Edit existing EIC loads data', async ({ page }) => {
     // This would require an existing EIC ID
     // For now, verify the form structure loads
-    await page.goto("/electrician/inspection-testing?section=eic");
+    await page.goto('/electrician/inspection-testing?section=eic');
     await page.waitForTimeout(3000);
 
     const formInputs = page.locator('input, textarea, select');
@@ -94,10 +114,10 @@ test.describe("EIC Certificate Navigation - Basic", () => {
 
     expect(inputCount).toBeGreaterThan(5);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("7. Form preserves data on tab switch", async ({ page }) => {
+  test('7. Form preserves data on tab switch', async ({ page }) => {
     // Fill client name
     const clientNameInput = page.locator('input[name="clientName"]').first();
     if (await clientNameInput.isVisible({ timeout: 3000 })) {
@@ -122,6 +142,6 @@ test.describe("EIC Certificate Navigation - Basic", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

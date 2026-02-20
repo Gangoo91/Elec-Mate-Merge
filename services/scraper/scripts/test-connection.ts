@@ -40,7 +40,7 @@ async function testConnection() {
   }
 
   console.log('✅ Found suppliers:');
-  suppliers?.forEach(s => {
+  suppliers?.forEach((s) => {
     console.log(`   ${s.scrape_enabled ? '🟢' : '⚪'} ${s.name} (${s.slug})`);
   });
 

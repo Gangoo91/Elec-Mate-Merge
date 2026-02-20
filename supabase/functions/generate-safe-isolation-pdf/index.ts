@@ -1,24 +1,12 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import {
-  SafetyPDFBuilder,
-  C,
-  type StatusColour,
-  type CompanyBranding,
-} from '../_shared/SafetyPDFBuilder.ts';
+import { safeIsolationTemplate } from '../_shared/safety-templates/safe-isolation.ts';
+import { htmlToPdf } from '../_shared/safety-pdf-renderer.ts';
+import type { Branding } from '../_shared/safety-html-base.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
-
-const fmtDate = (d: string | null) => (d ? new Date(d).toLocaleDateString('en-GB') : 'N/A');
-
-const STATUS_MAP: Record<string, StatusColour> = {
-  isolated: 'danger',
-  re_energised: 'success',
-  in_progress: 'warning',
-  cancelled: 'grey',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
@@ -44,11 +32,11 @@ serve(async (req) => {
     const { data: profileRows } = await supabase
       .from('company_profiles')
       .select(
-        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color'
+        'company_name, company_address, company_postcode, company_phone, company_email, company_website, company_registration, vat_number, logo_data_url, logo_url, primary_color, secondary_color, scheme_logo_data_url, registration_scheme'
       )
       .eq('user_id', user.id)
       .limit(1);
-    const branding: CompanyBranding = profileRows?.[0] ?? {};
+    const branding: Branding = profileRows?.[0] ?? {};
 
     const { recordId } = await req.json();
     if (!recordId) throw new Error('Missing recordId');
@@ -61,84 +49,11 @@ serve(async (req) => {
 
     if (fetchError || !record) throw new Error('Record not found');
 
-    // ── Build PDF ──────────────────────────────────────────────────────
-    const statusKey = (record.status || 'in_progress').toLowerCase();
-    const statusColour: StatusColour = STATUS_MAP[statusKey] || 'grey';
-
-    const pdf = await SafetyPDFBuilder.create(
-      'Safe Isolation Record',
-      recordId,
-      record.status || 'in_progress',
-      statusColour,
-      branding
-    );
-
-    // Warning banner for isolated circuits
-    if (statusKey === 'isolated') {
-      pdf.warningBanner(
-        'CIRCUIT CURRENTLY ISOLATED \u2014 DO NOT RE-ENERGISE WITHOUT AUTHORISATION'
-      );
-    }
-
-    // Circuit Details
-    pdf.section('Circuit Details');
-    pdf.keyValueGrid([
-      { label: 'Site Address', value: record.site_address || 'N/A' },
-      {
-        label: 'Circuit Description',
-        value: record.circuit_description || 'N/A',
-      },
-      {
-        label: 'Distribution Board',
-        value: record.distribution_board || 'N/A',
-      },
-      { label: 'Date', value: fmtDate(record.created_at) },
-    ]);
-
-    // Voltage Detector
-    pdf.section('Voltage Detector');
-    pdf.keyValueGrid([
-      {
-        label: 'Serial Number',
-        value: record.voltage_detector_serial || 'N/A',
-      },
-      {
-        label: 'Calibration Date',
-        value: fmtDate(record.voltage_detector_calibration_date),
-      },
-    ]);
-
-    // Isolation Steps
-    const steps = (record.steps as Record<string, unknown>[]) || [];
-    pdf.section('Isolation Steps');
-
-    if (steps.length > 0) {
-      pdf.checklist(
-        steps.map((s: Record<string, unknown>) => ({
-          label: s.label || s.name || 'Step',
-          passed: s.completed === true,
-          notes: s.notes || undefined,
-        }))
-      );
-    } else {
-      pdf.paragraph('No steps recorded');
-    }
-
-    // Signature Block
-    pdf.signatureBlock([
-      {
-        role: 'Isolated By',
-        date: fmtDate(record.created_at),
-      },
-    ]);
-
-    // Footnote with BS 7671 reference
-    pdf.footnote(
-      `This document was generated electronically by Elec-Mate. BS 7671:2018+A2:2022 compliance. Isolation Ref: ${recordId}`
-    );
+    // ── Build PDF via HTML template + Browserless ────────────────────
+    const html = safeIsolationTemplate(record, branding);
+    const pdfBytes = await htmlToPdf(html);
 
     // ── Upload PDF ─────────────────────────────────────────────────────
-    const pdfBytes = await pdf.toBuffer();
     const fileName = `safe-isolation-${recordId}-${Date.now()}.pdf`;
 
     const { error: uploadError } = await supabase.storage
@@ -149,8 +64,16 @@ serve(async (req) => {
       });
 
     if (uploadError) {
-      return new Response(pdfBytes, {
-        headers: { ...corsHeaders, 'Content-Type': 'application/pdf' },
+      // Fallback: return base64-encoded PDF as JSON (chunked to avoid stack overflow)
+      const bytes = new Uint8Array(pdfBytes);
+      let binary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+      }
+      const base64 = btoa(binary);
+      return new Response(JSON.stringify({ success: true, pdf_base64: base64 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 

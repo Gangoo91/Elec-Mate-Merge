@@ -1,9 +1,10 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -24,14 +25,14 @@ serve(async (req) => {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
-          { 
-            role: 'system', 
+          {
+            role: 'system',
             content: `You are a senior UK electrical engineer reviewing installation designs for BS 7671:2018 compliance.
 
 Analyze the design and provide professional insights:
@@ -41,10 +42,10 @@ Analyze the design and provide professional insights:
 - Warnings (long runs, high temperatures, special considerations)
 - Best practice recommendations
 
-Be specific and quantitative. Reference BS 7671 regulations where relevant.` 
+Be specific and quantitative. Reference BS 7671 regulations where relevant.`,
           },
-          { 
-            role: 'user', 
+          {
+            role: 'user',
             content: `Review this installation design:
 
 Circuit: ${planData.loadType}
@@ -69,50 +70,50 @@ Results:
 - Safety margin: ${result.safetyMargin.toFixed(1)}%
 - Derating: Temperature ${result.factors.temperature}, Grouping ${result.factors.grouping}, Overall ${result.factors.overall.toFixed(2)}
 
-Provide structured insights in JSON format.`
-          }
+Provide structured insights in JSON format.`,
+          },
         ],
         tools: [
           {
-            type: "function",
+            type: 'function',
             function: {
-              name: "provide_insights",
-              description: "Provide professional installation design insights",
+              name: 'provide_insights',
+              description: 'Provide professional installation design insights',
               parameters: {
-                type: "object",
+                type: 'object',
                 properties: {
                   safetyChecks: {
-                    type: "array",
-                    items: { type: "string" },
-                    description: "Safety verification points"
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Safety verification points',
                   },
                   optimizations: {
-                    type: "array",
-                    items: { type: "string" },
-                    description: "Design optimization suggestions"
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Design optimization suggestions',
                   },
                   costSavings: {
-                    type: "array",
-                    items: { type: "string" },
-                    description: "Potential cost reduction opportunities"
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Potential cost reduction opportunities',
                   },
                   warnings: {
-                    type: "array",
-                    items: { type: "string" },
-                    description: "Important warnings or considerations"
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Important warnings or considerations',
                   },
                   recommendations: {
-                    type: "array",
-                    items: { type: "string" },
-                    description: "Best practice recommendations"
-                  }
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Best practice recommendations',
+                  },
                 },
-                required: ["safetyChecks", "optimizations"]
-              }
-            }
-          }
+                required: ['safetyChecks', 'optimizations'],
+              },
+            },
+          },
         ],
-        tool_choice: { type: "function", function: { name: "provide_insights" } }
+        tool_choice: { type: 'function', function: { name: 'provide_insights' } },
       }),
     });
 
@@ -124,7 +125,7 @@ Provide structured insights in JSON format.`
 
     const data = await response.json();
     const toolCall = data.choices[0]?.message?.tool_calls?.[0];
-    
+
     if (!toolCall) {
       throw new Error('No tool call in response');
     }
@@ -135,14 +136,16 @@ Provide structured insights in JSON format.`
     return new Response(JSON.stringify(insights), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     console.error('Error in validate-installation function:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to validate installation' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to validate installation',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

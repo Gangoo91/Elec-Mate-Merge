@@ -3,10 +3,10 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 /**
  * Guard Design Knowledge Intelligence Deletions
  * 🛡️ CRITICAL PROTECTION: Prevents accidental bulk deletions from enriched intelligence data
- * 
+ *
  * This table contains AI-enriched design intelligence (7,212 facets from 904 sources)
  * Blocks deletes of >10 rows to protect high-value data
- * 
+ *
  * Actions:
  * - check_delete_safety: Validates if delete count is within limits
  * - soft_delete: Archives entries instead of hard deleting
@@ -37,15 +37,16 @@ serve(async (req) => {
         return new Response(
           JSON.stringify({
             safe: false,
-            message: `⛔ BLOCKED: Cannot delete ${deleteCount} design_knowledge_intelligence rows at once. Maximum allowed: ${MAX_SAFE_DELETE}.\n\n` +
-                     `This table contains enriched AI intelligence data (7,212 facets). Use soft-delete (archive) instead.`,
+            message:
+              `⛔ BLOCKED: Cannot delete ${deleteCount} design_knowledge_intelligence rows at once. Maximum allowed: ${MAX_SAFE_DELETE}.\n\n` +
+              `This table contains enriched AI intelligence data (7,212 facets). Use soft-delete (archive) instead.`,
             maxAllowed: MAX_SAFE_DELETE,
             requestedCount: deleteCount,
-            recommendation: 'Use soft_delete action to archive instead of deleting'
+            recommendation: 'Use soft_delete action to archive instead of deleting',
           }),
-          { 
-            status: 403, 
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+          {
+            status: 403,
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
           }
         );
       }
@@ -56,7 +57,7 @@ serve(async (req) => {
           message: `✅ Delete request is within safe limits (${deleteCount}/${MAX_SAFE_DELETE})`,
           maxAllowed: MAX_SAFE_DELETE,
           requestedCount: deleteCount,
-          warning: 'Consider using soft_delete to preserve data for recovery'
+          warning: 'Consider using soft_delete to preserve data for recovery',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -72,10 +73,10 @@ serve(async (req) => {
 
       const { error } = await supabase
         .from('design_knowledge_intelligence')
-        .update({ 
-          is_archived: true, 
+        .update({
+          is_archived: true,
           archived_at: new Date().toISOString(),
-          archived_by: reason || 'admin'
+          archived_by: reason || 'admin',
         })
         .in('id', ids);
 
@@ -85,7 +86,7 @@ serve(async (req) => {
       console.log(`🗃️ ARCHIVED: ${ids.length} intelligence entries`, {
         ids: ids.slice(0, 5),
         reason,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       return new Response(
@@ -93,7 +94,7 @@ serve(async (req) => {
           success: true,
           message: `✅ Archived ${ids.length} design_knowledge_intelligence entries (data preserved for recovery)`,
           archivedCount: ids.length,
-          canRestore: true
+          canRestore: true,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -109,10 +110,10 @@ serve(async (req) => {
 
       const { error } = await supabase
         .from('design_knowledge_intelligence')
-        .update({ 
-          is_archived: false, 
+        .update({
+          is_archived: false,
           archived_at: null,
-          archived_by: null
+          archived_by: null,
         })
         .in('id', ids);
 
@@ -120,14 +121,14 @@ serve(async (req) => {
 
       console.log(`♻️ RESTORED: ${ids.length} intelligence entries`, {
         ids: ids.slice(0, 5),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       return new Response(
         JSON.stringify({
           success: true,
           message: `✅ Restored ${ids.length} design_knowledge_intelligence entries`,
-          restoredCount: ids.length
+          restoredCount: ids.length,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -153,19 +154,19 @@ serve(async (req) => {
           JSON.stringify({
             success: true,
             message: `No archived entries found in last ${hoursAgo} hours`,
-            restoredCount: 0
+            restoredCount: 0,
           }),
           { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
         );
       }
 
-      const restoreIds = recentArchived.map(r => r.id);
+      const restoreIds = recentArchived.map((r) => r.id);
       const { error: restoreError } = await supabase
         .from('design_knowledge_intelligence')
-        .update({ 
-          is_archived: false, 
+        .update({
+          is_archived: false,
           archived_at: null,
-          archived_by: null
+          archived_by: null,
         })
         .in('id', restoreIds);
 
@@ -173,14 +174,14 @@ serve(async (req) => {
 
       console.log(`🚨 EMERGENCY RESTORE: ${restoreIds.length} entries`, {
         cutoffTime,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
 
       return new Response(
         JSON.stringify({
           success: true,
           message: `✅ Emergency restore complete: ${restoreIds.length} entries recovered from last ${hoursAgo} hours`,
-          restoredCount: restoreIds.length
+          restoredCount: restoreIds.length,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -212,33 +213,38 @@ serve(async (req) => {
           active: totalCount - archivedCount,
           archived: archivedCount,
           protectionLevel: 'MAX',
-          maxSafeDelete: MAX_SAFE_DELETE
+          maxSafeDelete: MAX_SAFE_DELETE,
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Invalid action',
-        validActions: ['check_delete_safety', 'soft_delete', 'restore_soft_deleted', 'emergency_restore', 'get_stats']
+        validActions: [
+          'check_delete_safety',
+          'soft_delete',
+          'restore_soft_deleted',
+          'emergency_restore',
+          'get_stats',
+        ],
       }),
-      { 
-        status: 400, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-
   } catch (error) {
     console.error('❌ Guard function error:', error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: error instanceof Error ? error.message : 'Unknown error',
-        stack: error instanceof Error ? error.stack : undefined
+        stack: error instanceof Error ? error.stack : undefined,
       }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

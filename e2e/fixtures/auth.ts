@@ -1,14 +1,14 @@
-import { test as base, expect, Page } from "@playwright/test";
+import { test as base, expect, Page } from '@playwright/test';
 
 // Test credentials for e2e testing
-export const TEST_EMAIL = "andrewgangoo91@gmail.com";
-export const TEST_PASSWORD = "2487gangoo!";
+export const TEST_EMAIL = 'andrewgangoo91@gmail.com';
+export const TEST_PASSWORD = '2487gangoo!';
 
 // Extended test with authentication
 export const test = base.extend<{ authenticatedPage: Page }>({
   authenticatedPage: async ({ page }, use) => {
     // Navigate to login page
-    await page.goto("/auth/signin");
+    await page.goto('/auth/signin');
 
     // Wait for the form to load
     await page.waitForSelector('input[type="email"], input[name="email"]', {
@@ -17,10 +17,7 @@ export const test = base.extend<{ authenticatedPage: Page }>({
 
     // Fill in credentials
     await page.fill('input[type="email"], input[name="email"]', TEST_EMAIL);
-    await page.fill(
-      'input[type="password"], input[name="password"]',
-      TEST_PASSWORD
-    );
+    await page.fill('input[type="password"], input[name="password"]', TEST_PASSWORD);
 
     // Submit the form
     await page.click('button[type="submit"]');
@@ -40,7 +37,7 @@ export const test = base.extend<{ authenticatedPage: Page }>({
 export async function loginViaUI(page: Page, retries = 3) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
-      await page.goto("/auth/signin");
+      await page.goto('/auth/signin');
       await page.waitForSelector('input[type="email"], input[name="email"]', {
         timeout: 15000,
       });
@@ -58,10 +55,7 @@ export async function loginViaUI(page: Page, retries = 3) {
       }
 
       await page.fill('input[type="email"], input[name="email"]', TEST_EMAIL);
-      await page.fill(
-        'input[type="password"], input[name="password"]',
-        TEST_PASSWORD
-      );
+      await page.fill('input[type="password"], input[name="password"]', TEST_PASSWORD);
       await page.click('button[type="submit"]');
 
       // Check for rate limit after submit
@@ -78,7 +72,9 @@ export async function loginViaUI(page: Page, retries = 3) {
 
       // Include admin in URL pattern since test user may be redirected there
       // Increased timeout to 30s for slower browsers (Firefox, WebKit, mobile)
-      await page.waitForURL(/dashboard|electrician|apprentice|admin|employer|college/, { timeout: 30000 });
+      await page.waitForURL(/dashboard|electrician|apprentice|admin|employer|college/, {
+        timeout: 30000,
+      });
       return; // Success
     } catch (error) {
       if (attempt === retries) throw error;
@@ -91,15 +87,11 @@ export async function loginViaUI(page: Page, retries = 3) {
 // Helper to check if page loaded without critical errors
 export async function checkNoConsoleErrors(page: Page) {
   const errors: string[] = [];
-  page.on("console", (msg) => {
-    if (msg.type() === "error") {
+  page.on('console', (msg) => {
+    if (msg.type() === 'error') {
       const text = msg.text();
       // Filter out expected errors
-      if (
-        !text.includes("Sentry") &&
-        !text.includes("PostHog") &&
-        !text.includes("favicon")
-      ) {
+      if (!text.includes('Sentry') && !text.includes('PostHog') && !text.includes('favicon')) {
         errors.push(text);
       }
     }
@@ -108,13 +100,9 @@ export async function checkNoConsoleErrors(page: Page) {
 }
 
 // Helper to verify a page loads correctly
-export async function verifyPageLoads(
-  page: Page,
-  url: string,
-  expectedContent?: string | RegExp
-) {
+export async function verifyPageLoads(page: Page, url: string, expectedContent?: string | RegExp) {
   await page.goto(url);
-  await expect(page.locator("body")).toBeVisible();
+  await expect(page.locator('body')).toBeVisible();
 
   if (expectedContent) {
     await expect(page.getByText(expectedContent).first()).toBeVisible({
@@ -124,12 +112,12 @@ export async function verifyPageLoads(
 
   // Check no crash occurred
   const title = await page.title();
-  expect(title).not.toContain("Error");
+  expect(title).not.toContain('Error');
 }
 
 // Helper to check interactive elements work
 export async function checkButtonsClickable(page: Page) {
-  const buttons = page.locator("button:visible");
+  const buttons = page.locator('button:visible');
   const count = await buttons.count();
 
   for (let i = 0; i < Math.min(count, 5); i++) {
@@ -147,7 +135,7 @@ export async function checkButtonsClickable(page: Page) {
 
 // Helper to check forms are functional
 export async function checkFormInputs(page: Page) {
-  const inputs = page.locator("input:visible, textarea:visible, select:visible");
+  const inputs = page.locator('input:visible, textarea:visible, select:visible');
   const count = await inputs.count();
 
   for (let i = 0; i < Math.min(count, 5); i++) {

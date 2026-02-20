@@ -1,6 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testClient } from "../fixtures/test-data";
+import { testClient } from '../fixtures/test-data';
 
 /**
  * EICR Wizard Auto-Save Tests
@@ -20,14 +20,14 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
   return false;
 }
 
-test.describe("EICR Wizard Auto-Save - Trigger & Indicator", () => {
+test.describe('EICR Wizard Auto-Save - Trigger & Indicator', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
-    await page.goto("/electrician/inspection-testing?section=eicr");
+    await page.goto('/electrician/inspection-testing?section=eicr');
     await page.waitForTimeout(3000);
   });
 
-  test("1. Auto-save triggers after field change (2s delay)", async ({ page }) => {
+  test('1. Auto-save triggers after field change (2s delay)', async ({ page }) => {
     // Fill a field and wait for auto-save
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
 
@@ -35,54 +35,73 @@ test.describe("EICR Wizard Auto-Save - Trigger & Indicator", () => {
     await page.waitForTimeout(3000);
 
     // Look for save indicator
-    const saveIndicator = page.locator('text=/saved|saving|syncing|synced/i, [class*="save"], [class*="sync"]');
-    const hasSaveIndicator = await saveIndicator.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const saveIndicator = page.locator(
+      'text=/saved|saving|syncing|synced/i, [class*="save"], [class*="sync"]'
+    );
+    const hasSaveIndicator = await saveIndicator
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(hasSaveIndicator || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Sync indicator shows after save completes", async ({ page }) => {
+  test('2. Sync indicator shows after save completes', async ({ page }) => {
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
 
     // Wait for save to complete
     await page.waitForTimeout(4000);
 
     // Look for synced status
-    const syncedIndicator = page.locator('text=/synced|saved|cloud/i, [class*="synced"], [class*="success"]');
-    const isSynced = await syncedIndicator.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const syncedIndicator = page.locator(
+      'text=/synced|saved|cloud/i, [class*="synced"], [class*="success"]'
+    );
+    const isSynced = await syncedIndicator
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(isSynced || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. Unsaved indicator appears when data changes", async ({ page }) => {
+  test('3. Unsaved indicator appears when data changes', async ({ page }) => {
     // Fill a field
     await fillIfVisible(page, 'input[name="clientName"]', testClient.name);
 
     // Immediately check for unsaved indicator (before auto-save triggers)
-    const unsavedIndicator = page.locator('text=/unsaved|pending|changes/i, [class*="unsaved"], [class*="pending"], [class*="dot"]');
-    const hasUnsaved = await unsavedIndicator.first().isVisible({ timeout: 1000 }).catch(() => false);
+    const unsavedIndicator = page.locator(
+      'text=/unsaved|pending|changes/i, [class*="unsaved"], [class*="pending"], [class*="dot"]'
+    );
+    const hasUnsaved = await unsavedIndicator
+      .first()
+      .isVisible({ timeout: 1000 })
+      .catch(() => false);
 
     // Either shows unsaved or auto-saves very quickly
     expect(hasUnsaved || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Auto-Save - Draft Recovery", () => {
-  test("4. Draft data is restored after page refresh", async ({ page }) => {
+test.describe('EICR Wizard Auto-Save - Draft Recovery', () => {
+  test('4. Draft data is restored after page refresh', async ({ page }) => {
     // Auth handled by storageState
-    await page.goto("/electrician/inspection-testing?section=eicr");
+    await page.goto('/electrician/inspection-testing?section=eicr');
     await page.waitForTimeout(3000);
 
     // Fill data
     const uniqueName = `Test User ${Date.now()}`;
     await fillIfVisible(page, 'input[name="clientName"]', uniqueName);
-    await fillIfVisible(page, 'input[name="propertyAddress"], textarea[name="propertyAddress"]', testClient.address);
+    await fillIfVisible(
+      page,
+      'input[name="propertyAddress"], textarea[name="propertyAddress"]',
+      testClient.address
+    );
 
     // Wait for auto-save
     await page.waitForTimeout(4000);
@@ -99,12 +118,12 @@ test.describe("EICR Wizard Auto-Save - Draft Recovery", () => {
       expect(typeof value).toBe('string');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Manual save button triggers immediate save", async ({ page }) => {
+  test('5. Manual save button triggers immediate save', async ({ page }) => {
     // Auth handled by storageState
-    await page.goto("/electrician/inspection-testing?section=eicr");
+    await page.goto('/electrician/inspection-testing?section=eicr');
     await page.waitForTimeout(3000);
 
     // Fill data
@@ -118,19 +137,22 @@ test.describe("EICR Wizard Auto-Save - Draft Recovery", () => {
 
       // Check for save confirmation
       const saveConfirmation = page.locator('text=/saved|synced|success/i');
-      const hasSaved = await saveConfirmation.first().isVisible({ timeout: 3000 }).catch(() => false);
+      const hasSaved = await saveConfirmation
+        .first()
+        .isVisible({ timeout: 3000 })
+        .catch(() => false);
 
       expect(hasSaved || true).toBeTruthy();
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("EICR Wizard Auto-Save - Offline Handling", () => {
-  test("6. Changes are queued when offline", async ({ page, context }) => {
+test.describe('EICR Wizard Auto-Save - Offline Handling', () => {
+  test('6. Changes are queued when offline', async ({ page, context }) => {
     // Auth handled by storageState
-    await page.goto("/electrician/inspection-testing?section=eicr");
+    await page.goto('/electrician/inspection-testing?section=eicr');
     await page.waitForTimeout(3000);
 
     // Go offline
@@ -142,19 +164,22 @@ test.describe("EICR Wizard Auto-Save - Offline Handling", () => {
 
     // Look for offline indicator
     const offlineIndicator = page.locator('text=/offline|pending|queued|no connection/i');
-    const isOffline = await offlineIndicator.first().isVisible({ timeout: 3000 }).catch(() => false);
+    const isOffline = await offlineIndicator
+      .first()
+      .isVisible({ timeout: 3000 })
+      .catch(() => false);
 
     expect(isOffline || true).toBeTruthy();
 
     // Go back online
     await context.setOffline(false);
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("7. Queued changes sync when back online", async ({ page, context }) => {
+  test('7. Queued changes sync when back online', async ({ page, context }) => {
     // Auth handled by storageState
-    await page.goto("/electrician/inspection-testing?section=eicr");
+    await page.goto('/electrician/inspection-testing?section=eicr');
     await page.waitForTimeout(3000);
 
     // Go offline
@@ -170,16 +195,19 @@ test.describe("EICR Wizard Auto-Save - Offline Handling", () => {
 
     // Look for sync completion
     const syncedIndicator = page.locator('text=/synced|saved|online/i');
-    const isSynced = await syncedIndicator.first().isVisible({ timeout: 5000 }).catch(() => false);
+    const isSynced = await syncedIndicator
+      .first()
+      .isVisible({ timeout: 5000 })
+      .catch(() => false);
 
     expect(isSynced || true).toBeTruthy();
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("8. Conflict resolution - newer version wins", async ({ page }) => {
+  test('8. Conflict resolution - newer version wins', async ({ page }) => {
     // Auth handled by storageState
-    await page.goto("/electrician/inspection-testing?section=eicr");
+    await page.goto('/electrician/inspection-testing?section=eicr');
     await page.waitForTimeout(3000);
 
     // Fill data
@@ -197,6 +225,6 @@ test.describe("EICR Wizard Auto-Save - Offline Handling", () => {
       expect(value).toBe(testClient.name);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

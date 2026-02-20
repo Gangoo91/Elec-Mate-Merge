@@ -8,20 +8,22 @@ import { captureException } from '../_shared/sentry.ts';
 // Lightweight inline utilities (no v3-core dependency)
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const generateRequestId = () => `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-const createClient = () => createSupabaseClient(
-  Deno.env.get('SUPABASE_URL')!,
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-);
+const createClient = () =>
+  createSupabaseClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
 const createLogger = (requestId: string) => ({
-  info: (msg: string, meta?: any) => console.info(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
-  error: (msg: string, meta?: any) => console.error(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
-  debug: (msg: string, meta?: any) => console.debug(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : '')
+  info: (msg: string, meta?: any) =>
+    console.info(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  error: (msg: string, meta?: any) =>
+    console.error(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
+  debug: (msg: string, meta?: any) =>
+    console.debug(`[${requestId}] ${msg}`, meta ? JSON.stringify(meta) : ''),
 });
 
 class ValidationError extends Error {
@@ -33,10 +35,10 @@ class ValidationError extends Error {
 
 const handleError = (error: any, logger: any) => {
   logger.error('Request failed', { error: error.message });
-  return new Response(
-    JSON.stringify({ success: false, error: error.message }),
-    { status: error instanceof ValidationError ? 400 : 500, headers: corsHeaders }
-  );
+  return new Response(JSON.stringify({ success: false, error: error.message }), {
+    status: error instanceof ValidationError ? 400 : 500,
+    headers: corsHeaders,
+  });
 };
 import { installerV3ToolSchema } from '../_shared/installer-v3-schema.ts';
 
@@ -52,9 +54,9 @@ async function callOpenAI(
     messages,
     max_completion_tokens: isNewModel ? 30000 : undefined,
     max_tokens: isNewModel ? undefined : 30000,
-    temperature: isNewModel ? undefined : 0.7
+    temperature: isNewModel ? undefined : 0.7,
   };
-  
+
   if (tools) {
     body.tools = tools;
     if (tool_choice) body.tool_choice = tool_choice;
@@ -63,10 +65,10 @@ async function callOpenAI(
   const response = await fetch('https://api.openai.com/v1/chat/completions', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
+      Authorization: `Bearer ${Deno.env.get('OPENAI_API_KEY')}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   });
 
   if (!response.ok) {
@@ -77,7 +79,7 @@ async function callOpenAI(
   const data = await response.json();
   return {
     content: data.choices[0].message.content,
-    toolCalls: data.choices[0].message.tool_calls
+    toolCalls: data.choices[0].message.tool_calls,
   };
 }
 
@@ -158,11 +160,11 @@ serve(async (req) => {
 
   if (req.method === 'GET') {
     return new Response(
-      JSON.stringify({ 
-        status: 'healthy', 
+      JSON.stringify({
+        status: 'healthy',
         function: 'installer-v3-simplified',
         version: 'v5.0.0',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
@@ -187,9 +189,9 @@ serve(async (req) => {
         throw new ValidationError('query is required');
       }
 
-      logger.info('🔧 Installer V3 Simplified', { 
+      logger.info('🔧 Installer V3 Simplified', {
         query: query.substring(0, 50),
-        hasCircuitDesign: !!currentDesign?.circuits
+        hasCircuitDesign: !!currentDesign?.circuits,
       });
 
       // Get API keys
@@ -208,9 +210,9 @@ serve(async (req) => {
       const { data: practicalData, error: practicalError } = await supabase.rpc(
         'search_practical_work_intelligence_hybrid',
         {
-          query_text: query,  // Use FULL query, not extracted keywords
+          query_text: query, // Use FULL query, not extracted keywords
           match_count: 25,
-          filter_trade: null
+          filter_trade: null,
         }
       );
 
@@ -218,27 +220,31 @@ serve(async (req) => {
         logger.error('Practical work RPC error', { error: practicalError });
       }
 
-      const practicalDocs = (practicalData || []).map(row => ({
+      const practicalDocs = (practicalData || []).map((row) => ({
         ...row,
         content: row.primary_topic || row.content,
-        source: 'practical_work_intelligence'
+        source: 'practical_work_intelligence',
       }));
 
-      logger.info('🔍 Practical Work RAG Results', { 
+      logger.info('🔍 Practical Work RAG Results', {
         query: query.substring(0, 100),
         resultsCount: practicalDocs.length,
-        avgScore: practicalDocs.length > 0 
-          ? (practicalDocs.reduce((sum, d) => sum + (d.hybrid_score || 0), 0) / practicalDocs.length).toFixed(2)
-          : 0,
-        sampleTopics: practicalDocs.slice(0, 3).map(d => d.primary_topic)
+        avgScore:
+          practicalDocs.length > 0
+            ? (
+                practicalDocs.reduce((sum, d) => sum + (d.hybrid_score || 0), 0) /
+                practicalDocs.length
+              ).toFixed(2)
+            : 0,
+        sampleTopics: practicalDocs.slice(0, 3).map((d) => d.primary_topic),
       });
 
       // Query 2: BS 7671 Regulations Intelligence via RPC (uses full query text)
       const { data: regulationsData, error: regsError } = await supabase.rpc(
         'search_regulations_intelligence_hybrid',
         {
-          query_text: query,  // Use FULL query
-          match_count: 15
+          query_text: query, // Use FULL query
+          match_count: 15,
         }
       );
 
@@ -246,20 +252,24 @@ serve(async (req) => {
         logger.error('Regulations RPC error', { error: regsError });
       }
 
-      const regulationsDocs = (regulationsData || []).map(row => ({
+      const regulationsDocs = (regulationsData || []).map((row) => ({
         ...row,
         content: row.primary_topic || row.content,
         hybrid_score: row.hybrid_score || row.relevance_score || 0,
-        source: 'regulations_intelligence'
+        source: 'regulations_intelligence',
       }));
 
-      logger.info('🔍 Regulations RAG Results', { 
+      logger.info('🔍 Regulations RAG Results', {
         query: query.substring(0, 100),
         resultsCount: regulationsDocs.length,
-        avgScore: regulationsDocs.length > 0
-          ? (regulationsDocs.reduce((sum, d) => sum + (d.hybrid_score || 0), 0) / regulationsDocs.length).toFixed(2)
-          : 0,
-        sampleRegulations: regulationsDocs.slice(0, 3).map(d => d.regulation_number)
+        avgScore:
+          regulationsDocs.length > 0
+            ? (
+                regulationsDocs.reduce((sum, d) => sum + (d.hybrid_score || 0), 0) /
+                regulationsDocs.length
+              ).toFixed(2)
+            : 0,
+        sampleRegulations: regulationsDocs.slice(0, 3).map((d) => d.regulation_number),
       });
 
       const installKnowledge = [...practicalDocs, ...regulationsDocs];
@@ -268,7 +278,7 @@ serve(async (req) => {
         practical: practicalDocs.length,
         regulations: regulationsDocs.length,
         total: installKnowledge.length,
-        duration: `${Date.now() - ragStart}ms`
+        duration: `${Date.now() - ragStart}ms`,
       });
 
       // === PHASE 2: SIMPLIFIED CONTEXT FORMATTING (Plain text) ===
@@ -276,7 +286,8 @@ serve(async (req) => {
         let text = `${doc.primary_topic || doc.regulation_number}\n${doc.content}\n`;
         if (doc.tools_required?.length) text += `Tools: ${doc.tools_required.join(', ')}\n`;
         if (doc.materials_needed?.length) text += `Materials: ${doc.materials_needed.join(', ')}\n`;
-        if (doc.bs7671_regulations?.length) text += `Regulations: ${doc.bs7671_regulations.join(', ')}\n`;
+        if (doc.bs7671_regulations?.length)
+          text += `Regulations: ${doc.bs7671_regulations.join(', ')}\n`;
         return text + '\n';
       };
 
@@ -285,9 +296,12 @@ serve(async (req) => {
       // === PHASE 3: SIMPLIFIED CIRCUIT CONTEXT (10 lines instead of 158) ===
       let circuitContext = '';
       if (currentDesign?.circuits?.length > 0) {
-        circuitContext = `\nCIRCUIT DESIGN:\n${currentDesign.circuits.map((c: any) => 
-          `${c.name}: ${c.cableSize}mm² cable, ${c.protectionDevice.rating}A ${c.protectionDevice.type}, ${c.installationMethod}`
-        ).join('\n')}\n\nUSE THESE EXACT SPECS - focus on installation procedures only.\n`;
+        circuitContext = `\nCIRCUIT DESIGN:\n${currentDesign.circuits
+          .map(
+            (c: any) =>
+              `${c.name}: ${c.cableSize}mm² cable, ${c.protectionDevice.rating}A ${c.protectionDevice.type}, ${c.installationMethod}`
+          )
+          .join('\n')}\n\nUSE THESE EXACT SPECS - focus on installation procedures only.\n`;
       }
 
       // === PHASE 4: STREAMLINED SYSTEM PROMPT (150 lines from 400) ===
@@ -340,12 +354,12 @@ ${circuitContext}
           {
             messages: [
               { role: 'system', content: systemPrompt },
-              { role: 'user', content: query }
+              { role: 'user', content: query },
             ],
             model: 'gpt-5-mini',
             max_tokens: 24000,
             tools: [installerV3ToolSchema],
-            tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } }
+            tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } },
           },
           OPENAI_API_KEY,
           300000 // 5 min timeout
@@ -363,71 +377,86 @@ ${circuitContext}
         logger.info('✅ AI Complete', {
           duration: `${aiDuration}ms`,
           steps: installResult.installationSteps?.length || 0,
-          tests: installResult.testingProcedures?.length || 0
+          tests: installResult.testingProcedures?.length || 0,
         });
 
         // === PHASE 6: CALCULATE QUALITY METRICS ===
-        const toolsExtracted = installResult.installationSteps?.reduce((sum: number, step: any) => 
-          sum + (step.tools?.length || 0), 0) || 0;
-        const materialsExtracted = installResult.installationSteps?.reduce((sum: number, step: any) => 
-          sum + (step.materials?.length || 0), 0) || 0;
+        const toolsExtracted =
+          installResult.installationSteps?.reduce(
+            (sum: number, step: any) => sum + (step.tools?.length || 0),
+            0
+          ) || 0;
+        const materialsExtracted =
+          installResult.installationSteps?.reduce(
+            (sum: number, step: any) => sum + (step.materials?.length || 0),
+            0
+          ) || 0;
         const regulationsReferenced = installResult.regulatoryCitations?.length || 0;
 
-        const overallScore = Math.min(100, Math.round(
-          (installKnowledge.length / 40 * 40) + // RAG coverage (40%)
-          (toolsExtracted / (installResult.installationSteps?.length * 3) * 30) + // Tool extraction (30%)
-          (regulationsReferenced / 5 * 30) // Regulation citation (30%)
-        ));
+        const overallScore = Math.min(
+          100,
+          Math.round(
+            (installKnowledge.length / 40) * 40 + // RAG coverage (40%)
+              (toolsExtracted / (installResult.installationSteps?.length * 3)) * 30 + // Tool extraction (30%)
+              (regulationsReferenced / 5) * 30 // Regulation citation (30%)
+          )
+        );
 
         // === PHASE 7: BUILD RESPONSE ===
         const response: InstallerV3Response = {
           success: true,
           data: {
             steps: installResult.installationSteps || [],
-            toolsRequired: [...new Set(installResult.installationSteps?.flatMap((s: any) => s.tools || []) || [])],
-            materialsRequired: [...new Set(installResult.installationSteps?.flatMap((s: any) => s.materials || []) || [])],
+            toolsRequired: [
+              ...new Set(installResult.installationSteps?.flatMap((s: any) => s.tools || []) || []),
+            ],
+            materialsRequired: [
+              ...new Set(
+                installResult.installationSteps?.flatMap((s: any) => s.materials || []) || []
+              ),
+            ],
             practicalTips: installResult.practicalTips || [],
             commonMistakes: installResult.commonMistakes || [],
             testingProcedures: installResult.testingProcedures || [],
-            competencyRequirements: installResult.competencyRequirements || { minimumQualifications: ['18th Edition'] },
+            competencyRequirements: installResult.competencyRequirements || {
+              minimumQualifications: ['18th Edition'],
+            },
             siteLogistics: installResult.siteLogistics,
-            regulatoryCitations: installResult.regulatoryCitations || []
+            regulatoryCitations: installResult.regulatoryCitations || [],
           },
           metadata: {
             generationTimeMs: Date.now() - startTime,
             stepCount: installResult.steps?.length || 0,
             totalEstimatedTime: installResult.metadata?.totalEstimatedTime || 'Not specified',
-            difficultyLevel: installResult.metadata?.difficultyLevel || 'Medium'
+            difficultyLevel: installResult.metadata?.difficultyLevel || 'Medium',
           },
           qualityMetrics: {
             overallScore,
             ragDataUsed: {
               regulations: regulationsDocs.length,
               practicalProcedures: practicalDocs.length,
-              totalDocs: installKnowledge.length
+              totalDocs: installKnowledge.length,
             },
             extractionBreakdown: {
               toolsExtracted,
               materialsExtracted,
-              regulationsReferenced
-            }
-          }
+              regulationsReferenced,
+            },
+          },
         };
 
         logger.info('✅ Installation method generated', {
           totalTime: `${response.metadata.generationTimeMs}ms`,
-          qualityScore: overallScore
+          qualityScore: overallScore,
         });
 
-        return new Response(
-          JSON.stringify(response),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
-        );
-
+        return new Response(JSON.stringify(response), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        });
       } finally {
         if (progressInterval) clearInterval(progressInterval);
       }
-
     } catch (error) {
       logger.error('Installer V3 error', { error });
 
@@ -436,7 +465,7 @@ ${circuitContext}
         functionName: 'installer-v3',
         requestUrl: req.url,
         requestMethod: req.method,
-        extra: { requestId }
+        extra: { requestId },
       });
 
       return handleError(error, logger);

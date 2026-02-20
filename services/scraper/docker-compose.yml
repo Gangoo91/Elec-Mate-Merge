@@ -5,7 +5,7 @@ services:
     build: .
     container_name: elec-mate-scraper
     ports:
-      - "3001:3001"
+      - '3001:3001'
     environment:
       - NODE_ENV=production
       - PORT=3001
@@ -22,7 +22,7 @@ services:
           memory: 512M
     # Logging
     logging:
-      driver: "json-file"
+      driver: 'json-file'
       options:
-        max-size: "10m"
-        max-file: "3"
+        max-size: '10m'
+        max-file: '3'

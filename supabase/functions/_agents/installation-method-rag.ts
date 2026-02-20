@@ -4,13 +4,11 @@
  * NOW USES FAST INTELLIGENCE SEARCHES (mirrors designer-v2)
  */
 
-import { 
-  searchRegulationsIntelligence 
-} from '../_shared/intelligence-search.ts';
+import { searchRegulationsIntelligence } from '../_shared/intelligence-search.ts';
 
-import { 
+import {
   searchPracticalWorkIntelligence,
-  PracticalWorkSearchResult
+  PracticalWorkSearchResult,
 } from '../_shared/rag-practical-work.ts';
 
 export interface InstallationMethodRAGResult {
@@ -32,59 +30,58 @@ export async function searchInstallationMethodRAG(
   circuitTypes?: string[],
   limit: number = 15
 ): Promise<InstallationMethodRAGResult> {
-  
   const startTime = Date.now();
-  
+
   console.log('⚡ Installation Method RAG (fast intelligence search)', {
     keywordCount: keywords.length,
     keywordSet: keywords.slice(0, 8).join(', '),
     workType,
     circuitTypes: circuitTypes?.slice(0, 3),
-    limit
+    limit,
   });
-  
+
   // QUERY 1: Regulations Intelligence (FAST - GIN keyword indexes)
   const regulationsPromise = searchRegulationsIntelligence(supabase, {
     keywords,
     appliesTo: workType ? [workType, 'all installations'] : ['all installations'],
     categories: ['installation', 'testing', 'inspection', 'earthing', 'protection'],
-    limit: 25  // Increased from 15 to 25 for richer context
+    limit: 25, // Increased from 15 to 25 for richer context
   });
-  
+
   // QUERY 2: Practical Work Intelligence (ULTRA-FAST GIN keyword search)
   const practicalWorkPromise = searchPracticalWorkIntelligence(supabase, {
     query: keywords.join(' '),
     tradeFilter: 'installer',
-    matchCount: 25  // Increased from 15 to 25 for comprehensive guidance
+    matchCount: 25, // Increased from 15 to 25 for comprehensive guidance
   });
-  
+
   // Run both in parallel
   const [regulations, practicalWorkResult] = await Promise.all([
     regulationsPromise,
-    practicalWorkPromise
+    practicalWorkPromise,
   ]);
-  
+
   const searchTimeMs = Date.now() - startTime;
-  
+
   // Calculate combined quality score
   const regQuality = regulations.length > 0 ? 50 : 0;
   const pwQuality = practicalWorkResult.qualityScore / 2; // Scale to 0-50
   const qualityScore = regQuality + pwQuality;
-  
+
   console.log(`✅ Installation Method RAG complete in ${searchTimeMs}ms:`, {
     regulationHits: regulations.length,
     practicalWorkHits: practicalWorkResult.results.length,
     totalHits: regulations.length + practicalWorkResult.results.length,
     practicalQuality: practicalWorkResult.qualityScore.toFixed(1),
     combinedQuality: qualityScore.toFixed(1),
-    searchSpeed: searchTimeMs < 300 ? '🚀 FAST' : searchTimeMs < 600 ? '✅ GOOD' : '⚠️ SLOW'
+    searchSpeed: searchTimeMs < 300 ? '🚀 FAST' : searchTimeMs < 600 ? '✅ GOOD' : '⚠️ SLOW',
   });
-  
+
   return {
     regulations,
     practicalWork: practicalWorkResult.results,
     totalCount: regulations.length + practicalWorkResult.results.length,
     searchTimeMs,
-    qualityScore
+    qualityScore,
   };
 }

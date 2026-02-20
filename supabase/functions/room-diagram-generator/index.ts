@@ -9,7 +9,7 @@ serve(async (req) => {
 
   try {
     const { description } = await req.json();
-    
+
     if (!description) {
       throw new Error('Room description is required');
     }
@@ -76,28 +76,42 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
     // Import Gemini provider
     const { callGemini, withRetry } = await import('../_shared/ai-providers.ts');
 
-    const result = await withRetry(async () => {
-      const response = await callGemini({
-        messages: [
-          { role: 'system', content: 'You are an expert electrical diagram parser. Return only valid JSON, no markdown formatting.' },
-          { role: 'user', content: prompt }
-        ],
-        model: 'gemini-2.5-flash',
-        temperature: 0.3,
-        max_tokens: 8000,  // Increased to handle detailed room JSON with multiple symbols
-        response_format: { type: 'json_object' }
-      }, geminiKey);
+    const result = await withRetry(
+      async () => {
+        const response = await callGemini(
+          {
+            messages: [
+              {
+                role: 'system',
+                content:
+                  'You are an expert electrical diagram parser. Return only valid JSON, no markdown formatting.',
+              },
+              { role: 'user', content: prompt },
+            ],
+            model: 'gemini-2.5-flash',
+            temperature: 0.3,
+            max_tokens: 8000, // Increased to handle detailed room JSON with multiple symbols
+            response_format: { type: 'json_object' },
+          },
+          geminiKey
+        );
 
-      // Clean response (remove markdown code blocks if present)
-      let cleanedContent = response.content.trim();
-      if (cleanedContent.startsWith('```json')) {
-        cleanedContent = cleanedContent.replace(/```json\n?/g, '').replace(/```\n?$/g, '').trim();
-      } else if (cleanedContent.startsWith('```')) {
-        cleanedContent = cleanedContent.replace(/```\n?/g, '').trim();
-      }
+        // Clean response (remove markdown code blocks if present)
+        let cleanedContent = response.content.trim();
+        if (cleanedContent.startsWith('```json')) {
+          cleanedContent = cleanedContent
+            .replace(/```json\n?/g, '')
+            .replace(/```\n?$/g, '')
+            .trim();
+        } else if (cleanedContent.startsWith('```')) {
+          cleanedContent = cleanedContent.replace(/```\n?/g, '').trim();
+        }
 
-      return JSON.parse(cleanedContent);
-    }, 3, 2000);
+        return JSON.parse(cleanedContent);
+      },
+      3,
+      2000
+    );
 
     console.log('✅ Room parsed:', JSON.stringify(result, null, 2));
 
@@ -106,23 +120,28 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
       throw new Error('Invalid room data structure returned by AI');
     }
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      roomData: result,
-      version: VERSION
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        roomData: result,
+        version: VERSION,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Room generation error:', error);
-    return new Response(JSON.stringify({ 
-      success: false,
-      error: error instanceof Error ? error.message : 'Failed to generate room diagram',
-      version: VERSION
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Failed to generate room diagram',
+        version: VERSION,
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

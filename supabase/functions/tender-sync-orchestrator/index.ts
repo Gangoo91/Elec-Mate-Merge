@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface SyncResult {
@@ -74,13 +75,15 @@ Deno.serve(async (req) => {
         .single();
 
       if (data) {
-        sourcesToSync = [{
-          source_id: data.id,
-          source_name: data.name,
-          display_name: data.display_name,
-          source_type: data.source_type,
-          sync_method: data.sync_config?.method || 'api'
-        }];
+        sourcesToSync = [
+          {
+            source_id: data.id,
+            source_name: data.name,
+            display_name: data.display_name,
+            source_type: data.source_type,
+            sync_method: data.sync_config?.method || 'api',
+          },
+        ];
       }
     } else if (forceAll) {
       // Force sync all enabled sources
@@ -91,13 +94,13 @@ Deno.serve(async (req) => {
         .order('name');
 
       sourcesToSync = (data || [])
-        .filter(s => s.sync_config?.enabled)
-        .map(s => ({
+        .filter((s) => s.sync_config?.enabled)
+        .map((s) => ({
           source_id: s.id,
           source_name: s.name,
           display_name: s.display_name,
           source_type: s.source_type,
-          sync_method: s.sync_config?.method || 'api'
+          sync_method: s.sync_config?.method || 'api',
         }));
     } else {
       // Get sources due for sync
@@ -120,7 +123,7 @@ Deno.serve(async (req) => {
           total_updated: 0,
           results: [],
           message: 'No sources due for sync',
-          next_scheduled: null
+          next_scheduled: null,
         }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -142,7 +145,7 @@ Deno.serve(async (req) => {
         .insert({
           source_name: source.source_name,
           status: 'running',
-          triggered_by: triggeredBy
+          triggered_by: triggeredBy,
         })
         .select()
         .single();
@@ -154,7 +157,7 @@ Deno.serve(async (req) => {
         inserted: 0,
         updated: 0,
         errors: [],
-        duration_ms: 0
+        duration_ms: 0,
       };
 
       try {
@@ -168,7 +171,7 @@ Deno.serve(async (req) => {
           inserted: syncResult.inserted || 0,
           updated: syncResult.updated || 0,
           errors: syncResult.errors || [],
-          duration_ms: Date.now() - sourceStart
+          duration_ms: Date.now() - sourceStart,
         };
 
         totalFound += result.found;
@@ -186,7 +189,7 @@ Deno.serve(async (req) => {
               opportunities_inserted: result.inserted,
               opportunities_updated: result.updated,
               errors: result.errors,
-              duration_ms: result.duration_ms
+              duration_ms: result.duration_ms,
             })
             .eq('id', syncRun.id);
         }
@@ -195,9 +198,8 @@ Deno.serve(async (req) => {
         await supabase.rpc('update_source_sync_status', {
           p_source_name: source.source_name,
           p_sync_count: result.inserted + result.updated,
-          p_error_count: result.errors.length
+          p_error_count: result.errors.length,
         });
-
       } catch (error: any) {
         console.error(`[TENDER-SYNC] Error processing ${source.source_name}:`, error);
         result.status = 'failed';
@@ -212,7 +214,7 @@ Deno.serve(async (req) => {
               status: 'failed',
               completed_at: new Date().toISOString(),
               errors: [error.message],
-              duration_ms: result.duration_ms
+              duration_ms: result.duration_ms,
             })
             .eq('id', syncRun.id);
         }
@@ -239,27 +241,26 @@ Deno.serve(async (req) => {
       total_inserted: totalInserted,
       total_updated: totalUpdated,
       results,
-      next_scheduled: nextSync?.next_sync_at || null
+      next_scheduled: nextSync?.next_sync_at || null,
     };
 
     console.log(`[TENDER-SYNC] ✅ Complete in ${Date.now() - startTime}ms:`, {
       sources: results.length,
       found: totalFound,
       inserted: totalInserted,
-      updated: totalUpdated
+      updated: totalUpdated,
     });
 
-    return new Response(
-      JSON.stringify(response),
-      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify(response), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('[TENDER-SYNC] Orchestrator error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -298,7 +299,7 @@ async function syncSource(
         found: 0,
         inserted: 0,
         updated: 0,
-        errors: [`No sync handler implemented for ${source.source_name}`]
+        errors: [`No sync handler implemented for ${source.source_name}`],
       };
   }
 }
@@ -315,10 +316,10 @@ async function syncContractsFinder(supabase: any): Promise<any> {
     const response = await fetch(`${supabaseUrl}/functions/v1/sync-contracts-finder`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${serviceKey}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${serviceKey}`,
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ triggered_by: 'orchestrator' })
+      body: JSON.stringify({ triggered_by: 'orchestrator' }),
     });
 
     if (!response.ok) {
@@ -331,7 +332,7 @@ async function syncContractsFinder(supabase: any): Promise<any> {
       found: result.total_found || result.processed || 0,
       inserted: result.inserted || 0,
       updated: result.updated || 0,
-      errors: result.errors || []
+      errors: result.errors || [],
     };
   } catch (error: any) {
     return {
@@ -339,7 +340,7 @@ async function syncContractsFinder(supabase: any): Promise<any> {
       found: 0,
       inserted: 0,
       updated: 0,
-      errors: [error.message]
+      errors: [error.message],
     };
   }
 }
@@ -356,8 +357,8 @@ async function syncCompeteFor(supabase: any): Promise<any> {
     const response = await fetch('https://www.competefor.com/business/opportunities/', {
       headers: {
         'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0; +https://elec-mate.com)',
-        'Accept': 'text/html'
-      }
+        Accept: 'text/html',
+      },
     });
 
     if (!response.ok) {
@@ -373,9 +374,8 @@ async function syncCompeteFor(supabase: any): Promise<any> {
     let updated = 0;
 
     for (const opp of opportunities) {
-      const { error } = await supabase
-        .from('tender_opportunities')
-        .upsert({
+      const { error } = await supabase.from('tender_opportunities').upsert(
+        {
           external_id: opp.external_id,
           source: 'competefor',
           title: opp.title,
@@ -389,11 +389,13 @@ async function syncCompeteFor(supabase: any): Promise<any> {
           sector: opp.sector,
           source_url: opp.url,
           status: 'live',
-          fetched_at: new Date().toISOString()
-        }, {
+          fetched_at: new Date().toISOString(),
+        },
+        {
           onConflict: 'source,external_id',
-          ignoreDuplicates: false
-        });
+          ignoreDuplicates: false,
+        }
+      );
 
       if (!error) {
         inserted++;
@@ -405,7 +407,7 @@ async function syncCompeteFor(supabase: any): Promise<any> {
       found: opportunities.length,
       inserted,
       updated,
-      errors: []
+      errors: [],
     };
   } catch (error: any) {
     console.error('[SYNC] CompeteFor error:', error);
@@ -414,7 +416,7 @@ async function syncCompeteFor(supabase: any): Promise<any> {
       found: 0,
       inserted: 0,
       updated: 0,
-      errors: [error.message]
+      errors: [error.message],
     };
   }
 }
@@ -432,17 +434,18 @@ async function syncMyCouncilTenders(supabase: any): Promise<any> {
   let inserted = 0;
 
   for (const opp of mockOpportunities) {
-    const { error } = await supabase
-      .from('tender_opportunities')
-      .upsert({
+    const { error } = await supabase.from('tender_opportunities').upsert(
+      {
         external_id: opp.external_id,
         source: 'mycouncil_tenders',
         ...opp,
-        fetched_at: new Date().toISOString()
-      }, {
+        fetched_at: new Date().toISOString(),
+      },
+      {
         onConflict: 'source,external_id',
-        ignoreDuplicates: false
-      });
+        ignoreDuplicates: false,
+      }
+    );
 
     if (!error) {
       inserted++;
@@ -454,7 +457,7 @@ async function syncMyCouncilTenders(supabase: any): Promise<any> {
     found: mockOpportunities.length,
     inserted,
     updated: 0,
-    errors: []
+    errors: [],
   };
 }
 
@@ -466,12 +469,15 @@ async function syncConstructionIndex(supabase: any): Promise<any> {
 
   try {
     // Scrape electrical tenders from Construction Index
-    const response = await fetch('https://www.theconstructionindex.co.uk/tenders?category=electrical', {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0; +https://elec-mate.com)',
-        'Accept': 'text/html'
+    const response = await fetch(
+      'https://www.theconstructionindex.co.uk/tenders?category=electrical',
+      {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; ElecMate/1.0; +https://elec-mate.com)',
+          Accept: 'text/html',
+        },
       }
-    });
+    );
 
     if (!response.ok) {
       throw new Error(`Construction Index fetch failed: ${response.status}`);
@@ -483,17 +489,18 @@ async function syncConstructionIndex(supabase: any): Promise<any> {
     let inserted = 0;
 
     for (const opp of opportunities) {
-      const { error } = await supabase
-        .from('tender_opportunities')
-        .upsert({
+      const { error } = await supabase.from('tender_opportunities').upsert(
+        {
           external_id: opp.external_id,
           source: 'construction_index',
           ...opp,
-          fetched_at: new Date().toISOString()
-        }, {
+          fetched_at: new Date().toISOString(),
+        },
+        {
           onConflict: 'source,external_id',
-          ignoreDuplicates: false
-        });
+          ignoreDuplicates: false,
+        }
+      );
 
       if (!error) {
         inserted++;
@@ -505,7 +512,7 @@ async function syncConstructionIndex(supabase: any): Promise<any> {
       found: opportunities.length,
       inserted,
       updated: 0,
-      errors: []
+      errors: [],
     };
   } catch (error: any) {
     console.error('[SYNC] Construction Index error:', error);
@@ -514,7 +521,7 @@ async function syncConstructionIndex(supabase: any): Promise<any> {
       found: 0,
       inserted: 0,
       updated: 0,
-      errors: [error.message]
+      errors: [error.message],
     };
   }
 }
@@ -542,7 +549,7 @@ function parseCompeteForOpportunities(html: string): any[] {
           location: 'UK',
           deadline: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
           sector: 'construction',
-          url: 'https://www.competefor.com/business/opportunities/'
+          url: 'https://www.competefor.com/business/opportunities/',
         });
       }
     });
@@ -563,7 +570,10 @@ function parseConstructionIndexOpportunities(html: string): any[] {
   if (titleMatches) {
     titleMatches.slice(0, 10).forEach((match, idx) => {
       const title = match.replace(/<[^>]*>/g, '').trim();
-      if (title.length > 10 && (title.toLowerCase().includes('electric') || title.toLowerCase().includes('m&e'))) {
+      if (
+        title.length > 10 &&
+        (title.toLowerCase().includes('electric') || title.toLowerCase().includes('m&e'))
+      ) {
         opportunities.push({
           external_id: `ci-${Date.now()}-${idx}`,
           title,
@@ -573,7 +583,7 @@ function parseConstructionIndexOpportunities(html: string): any[] {
           categories: ['electrical'],
           sector: 'construction',
           status: 'live',
-          source_url: 'https://www.theconstructionindex.co.uk/tenders'
+          source_url: 'https://www.theconstructionindex.co.uk/tenders',
         });
       }
     });
@@ -591,7 +601,7 @@ function generateMockCouncilOpportunities(): any[] {
     { name: 'Manchester City Council', region: 'Greater Manchester', postcode: 'M1' },
     { name: 'Leeds City Council', region: 'West Yorkshire', postcode: 'LS1' },
     { name: 'Liverpool City Council', region: 'Merseyside', postcode: 'L1' },
-    { name: 'Bristol City Council', region: 'South West', postcode: 'BS1' }
+    { name: 'Bristol City Council', region: 'South West', postcode: 'BS1' },
   ];
 
   const projectTypes = [
@@ -599,11 +609,11 @@ function generateMockCouncilOpportunities(): any[] {
     { title: 'Fire Alarm Installation', category: 'fire_alarm', value: [25000, 55000] },
     { title: 'Emergency Lighting Install', category: 'emergency_lighting', value: [15000, 35000] },
     { title: 'Housing Block Rewire', category: 'rewire', value: [65000, 120000] },
-    { title: 'EICR Testing Programme', category: 'testing', value: [20000, 45000] }
+    { title: 'EICR Testing Programme', category: 'testing', value: [20000, 45000] },
   ];
 
   return councils.flatMap((council, cIdx) =>
-    projectTypes.slice(0, 2 + cIdx % 3).map((project, pIdx) => ({
+    projectTypes.slice(0, 2 + (cIdx % 3)).map((project, pIdx) => ({
       external_id: `council-${council.postcode.toLowerCase()}-${Date.now()}-${pIdx}`,
       title: `${project.title} - ${council.name}`,
       client_name: council.name,
@@ -618,10 +628,10 @@ function generateMockCouncilOpportunities(): any[] {
       deadline: new Date(Date.now() + (14 + pIdx * 7) * 24 * 60 * 60 * 1000).toISOString(),
       requirements: {
         niceic: true,
-        insurance: 5000000
+        insurance: 5000000,
       },
       status: 'live',
-      source_url: `https://www.${council.name.toLowerCase().replace(/\s+/g, '')}.gov.uk/tenders`
+      source_url: `https://www.${council.name.toLowerCase().replace(/\s+/g, '')}.gov.uk/tenders`,
     }))
   );
 }

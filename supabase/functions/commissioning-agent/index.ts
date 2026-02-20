@@ -6,8 +6,8 @@ import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import { getTestSequence } from "../shared/bs7671TestingRequirements.ts";
-import { getMaxZs } from "../shared/bs7671ProtectionData.ts";
+import { getTestSequence } from '../shared/bs7671TestingRequirements.ts';
+import { getMaxZs } from '../shared/bs7671ProtectionData.ts';
 
 // corsHeaders imported from shared deps
 
@@ -19,8 +19,15 @@ serve(async (req) => {
   try {
     const requestId = generateRequestId();
     const logger = createLogger(requestId);
-    
-    const { messages, currentDesign, context, conversationSummary, previousAgentOutputs, requestSuggestions } = await req.json();
+
+    const {
+      messages,
+      currentDesign,
+      context,
+      conversationSummary,
+      previousAgentOutputs,
+      requestSuggestions,
+    } = await req.json();
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
     if (!lovableApiKey) throw new ValidationError('LOVABLE_API_KEY not configured');
 
@@ -30,7 +37,7 @@ serve(async (req) => {
     const previousAgents = agentOutputs.map((a: any) => a.agent) || [];
     const hasDesigner = previousAgents.includes('designer');
     const hasInstaller = previousAgents.includes('installer');
-    
+
     // Prepend conversation context if available
     let contextPrefix = '';
     if (conversationSummary) {
@@ -40,38 +47,39 @@ serve(async (req) => {
       }
     }
     if (agentOutputs.length > 0) {
-      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs.map((a: any) => 
-        `[${a.agent}]: ${a.response?.substring(0, 200)}...`
-      ).join('\n\n')}\n`;
+      contextPrefix += `\n\nPREVIOUS AGENT RESPONSES:\n${agentOutputs
+        .map((a: any) => `[${a.agent}]: ${a.response?.substring(0, 200)}...`)
+        .join('\n\n')}\n`;
     }
 
     // RAG - Get testing regulations from database
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
-    
+
     const userMessage = messages[messages.length - 1]?.content || '';
     const ragQuery = `${userMessage} testing commissioning insulation resistance earth fault loop RCD Chapter 64`;
-    
+
     logger.info(`🔍 RAG query: "${ragQuery}"`);
-    
+
     // Generate embedding for testing regulations search with retry and timeout
     const embeddingResponse = await withRetry(
-      () => withTimeout(
-        fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'text-embedding-3-small',
-            input: ragQuery,
+      () =>
+        withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'text-embedding-3-small',
+              input: ragQuery,
+            }),
           }),
-        }),
-        Timeouts.STANDARD,
-        'embeddings generation'
-      ),
+          Timeouts.STANDARD,
+          'embeddings generation'
+        ),
       RetryPresets.STANDARD
     );
 
@@ -79,17 +87,17 @@ serve(async (req) => {
     if (embeddingResponse.ok) {
       const embeddingDataRes = await embeddingResponse.json();
       const embedding = embeddingDataRes.data[0].embedding;
-      
+
       const { data: regulations, error: ragError } = await supabase.rpc('search_bs7671', {
         query_embedding: embedding,
         match_threshold: 0.7,
-        match_count: 10
+        match_count: 10,
       });
 
       if (!ragError && regulations && regulations.length > 0) {
-        testingRegulations = regulations.map((r: any) => 
-          `Reg ${r.regulation_number} (${r.section}): ${r.content}`
-        ).join('\n\n');
+        testingRegulations = regulations
+          .map((r: any) => `Reg ${r.regulation_number} (${r.section}): ${r.content}`)
+          .join('\n\n');
         logger.info(`✅ Found ${regulations.length} testing regulations`);
       } else {
         logger.warn('⚠️ No relevant regulations found');
@@ -98,10 +106,10 @@ serve(async (req) => {
 
     // Build testing context from BS 7671 Chapter 64
     const testSequence = getTestSequence();
-    const testContext = testSequence.map(t => 
-      `${t.testNumber}. ${t.testName} (${t.regulation}): ${t.passFailCriteria}`
-    ).join('\n');
-    
+    const testContext = testSequence
+      .map((t) => `${t.testNumber}. ${t.testName} (${t.regulation}): ${t.passFailCriteria}`)
+      .join('\n');
+
     let systemPrompt = `You are a BS 7671 Testing & Commissioning Specialist.
 
 YOUR ROLE: Testing procedures, meter settings, and verification ONLY
@@ -188,10 +196,14 @@ Expected Reading: [calculated Ze] + [R1+R2] = [expected Zs]Ω
 - Check accessories for loose connections
 - Test switches and controls
 
-${testingRegulations ? `
+${
+  testingRegulations
+    ? `
 BS 7671 TESTING REGULATIONS (from knowledge base):
 ${testingRegulations}
-` : ''}
+`
+    : ''
+}
 
 RECORD SHEET TEMPLATE:
 Circuit: _______  MCB: _______  Cable: _______ / _______ mm²
@@ -210,29 +222,34 @@ Always provide meter settings, target values, common mistakes, and troubleshooti
 Keep it friendly but technically accurate with exact regulation numbers and values.`;
 
     const response = await withRetry(
-      () => withTimeout(
-        fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${lovableApiKey}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'google/gemini-2.5-flash',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              ...messages,
-              ...(agentContext?.structuredKnowledge ? [{
-                role: 'system',
-                content: agentContext.structuredKnowledge
-              }] : [])
-            ],
-            max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage))
+      () =>
+        withTimeout(
+          fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${lovableApiKey}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              model: 'google/gemini-2.5-flash',
+              messages: [
+                { role: 'system', content: systemPrompt },
+                ...messages,
+                ...(agentContext?.structuredKnowledge
+                  ? [
+                      {
+                        role: 'system',
+                        content: agentContext.structuredKnowledge,
+                      },
+                    ]
+                  : []),
+              ],
+              max_completion_tokens: calculateTokenLimit(extractCircuitCount(userMessage)),
+            }),
           }),
-        }),
-        Timeouts.LONG, // Allow more time for complex testing analysis
-        'Lovable AI commissioning generation'
-      ),
+          Timeouts.LONG, // Allow more time for complex testing analysis
+          'Lovable AI commissioning generation'
+        ),
       RetryPresets.STANDARD
     );
 
@@ -251,35 +268,37 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
     for (const match of regMatches) {
       citations.push({
         number: `Reg ${match[1]}`,
-        title: `BS 7671 Regulation ${match[1]}`
+        title: `BS 7671 Regulation ${match[1]}`,
       });
     }
 
     // Generate suggestions for next agents
-    const suggestedNextAgents: Array<{agent: string; reason: string; priority?: string}> = [];
-    
+    const suggestedNextAgents: Array<{ agent: string; reason: string; priority?: string }> = [];
+
     if (requestSuggestions) {
       if (!previousAgents.includes('project-manager')) {
         suggestedNextAgents.push({
           agent: 'project-manager',
           reason: 'Coordinate handover documentation and final certification',
-          priority: 'high'
+          priority: 'high',
         });
       }
     }
-    
-    return new Response(JSON.stringify({
-      response: responseContent,
-      citations,
-      confidence: 0.85,
-      timestamp: new Date().toISOString(),
-      suggestedNextAgents,
-      isComplete: true,
-      exportReady: true
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
 
+    return new Response(
+      JSON.stringify({
+        response: responseContent,
+        citations,
+        confidence: 0.85,
+        timestamp: new Date().toISOString(),
+        suggestedNextAgents,
+        isComplete: true,
+        exportReady: true,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     return handleError(error);
   }
@@ -289,15 +308,15 @@ Keep it friendly but technically accurate with exact regulation numbers and valu
 function calculateTokenLimit(circuitCount: number): number {
   const baseTokens = 2000;
   const perCircuitTokens = 350;
-  return Math.min(baseTokens + (circuitCount * perCircuitTokens), 10000);
+  return Math.min(baseTokens + circuitCount * perCircuitTokens, 10000);
 }
 
 function extractCircuitCount(message: string): number {
   const wayMatch = message.match(/(\d+)[\s-]?way/i);
   if (wayMatch) return parseInt(wayMatch[1]);
-  
+
   const circuitMatch = message.match(/(\d+)\s+circuits?/i);
   if (circuitMatch) return parseInt(circuitMatch[1]);
-  
+
   return 6; // Default
 }

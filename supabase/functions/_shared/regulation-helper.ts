@@ -12,12 +12,12 @@ import { RegulationResult } from './rag-retrieval.ts';
  */
 export function extractHazardsFromRegulation(regulation: RegulationResult): string {
   const content = regulation.content;
-  
+
   // Handle missing or empty content
   if (!content || typeof content !== 'string' || content.trim() === '') {
     return '- General electrical safety requirements';
   }
-  
+
   const hazardIndicators = [
     'electric shock',
     'fire',
@@ -32,23 +32,21 @@ export function extractHazardsFromRegulation(regulation: RegulationResult): stri
     'failure',
     'protection against',
     'prevent',
-    'avoid'
+    'avoid',
   ];
-  
+
   const sentences = content.split(/[.!?]+/);
-  const hazardSentences = sentences.filter(sentence => 
-    hazardIndicators.some(indicator => 
-      sentence.toLowerCase().includes(indicator)
-    )
+  const hazardSentences = sentences.filter((sentence) =>
+    hazardIndicators.some((indicator) => sentence.toLowerCase().includes(indicator))
   );
-  
+
   if (hazardSentences.length === 0) {
     return '- General electrical safety requirements';
   }
-  
+
   return hazardSentences
     .slice(0, 3) // Top 3 most relevant
-    .map(s => `- ${s.trim()}`)
+    .map((s) => `- ${s.trim()}`)
     .join('\n');
 }
 
@@ -58,15 +56,15 @@ export function extractHazardsFromRegulation(regulation: RegulationResult): stri
  */
 export function extractControlsFromRegulation(regulation: RegulationResult): string {
   const content = regulation.content;
-  
+
   // Handle missing or empty content
   if (!content || typeof content !== 'string' || content.trim() === '') {
     return '- Follow BS 7671:2018+A3:2024 requirements';
   }
-  
+
   const sentences = content.split(/[.!?]+/);
-  
-  const controlSentences = sentences.filter(sentence => {
+
+  const controlSentences = sentences.filter((sentence) => {
     const lower = sentence.toLowerCase();
     return (
       lower.includes('shall') ||
@@ -76,14 +74,14 @@ export function extractControlsFromRegulation(regulation: RegulationResult): str
       lower.includes('provide')
     );
   });
-  
+
   if (controlSentences.length === 0) {
     return '- Follow BS 7671:2018+A3:2024 requirements';
   }
-  
+
   return controlSentences
     .slice(0, 3) // Top 3 control requirements
-    .map(s => `- ${s.trim()}`)
+    .map((s) => `- ${s.trim()}`)
     .join('\n');
 }
 
@@ -92,13 +90,13 @@ export function extractControlsFromRegulation(regulation: RegulationResult): str
  * Provides context to help AI understand applicability
  */
 export function determineApplicability(
-  regulation: RegulationResult, 
+  regulation: RegulationResult,
   jobDescription: string
 ): string {
   const regNumber = regulation.regulation_number;
   const section = regulation.section;
   const jobLower = jobDescription.toLowerCase();
-  
+
   // Special locations
   if (regNumber.startsWith('7')) {
     const locationMap: Record<string, string> = {
@@ -112,15 +110,15 @@ export function determineApplicability(
       '709': 'marina/pleasure craft - waterside installation',
       '717': 'mobile/transportable unit installation',
       '721': 'exhibition/show installation - temporary',
-      '722': 'EV charging installation - vehicle power supply'
+      '722': 'EV charging installation - vehicle power supply',
     };
-    
+
     const locationKey = regNumber.substring(0, 3);
     if (locationMap[locationKey]) {
       return `Applies because: ${locationMap[locationKey]}`;
     }
   }
-  
+
   // Protection requirements
   if (regNumber.startsWith('41')) {
     if (jobLower.includes('rcd') || jobLower.includes('rcbo')) {
@@ -131,7 +129,7 @@ export function determineApplicability(
     }
     return 'Applies because: Protection against electric shock';
   }
-  
+
   // Circuit protection
   if (regNumber.startsWith('43')) {
     if (jobLower.includes('mcb') || jobLower.includes('fuse') || jobLower.includes('breaker')) {
@@ -139,7 +137,7 @@ export function determineApplicability(
     }
     return 'Applies because: Overcurrent protection requirements';
   }
-  
+
   // Earthing
   if (regNumber.startsWith('54')) {
     if (jobLower.includes('earth') || jobLower.includes('bond') || jobLower.includes('cpc')) {
@@ -147,20 +145,24 @@ export function determineApplicability(
     }
     return 'Applies because: Earthing arrangements';
   }
-  
+
   // Isolation and switching
   if (regNumber.startsWith('53')) {
-    if (jobLower.includes('isolator') || jobLower.includes('switch') || jobLower.includes('consumer unit')) {
+    if (
+      jobLower.includes('isolator') ||
+      jobLower.includes('switch') ||
+      jobLower.includes('consumer unit')
+    ) {
       return 'Applies because: Isolation and switching requirements';
     }
     return 'Applies because: Switching and control requirements';
   }
-  
+
   // Cable selection
   if (regNumber.includes('Table 4')) {
     return 'Applies because: Cable current-carrying capacity selection';
   }
-  
+
   // Default
   return `Relevant to: ${section}`;
 }
@@ -176,8 +178,10 @@ export function buildOptimizedRegulationContext(
   if (regulations.length === 0) {
     return 'No specific regulations retrieved - apply general BS 7671:2018+A3:2024 requirements.';
   }
-  
-  return regulations.map((reg, i) => `
+
+  return regulations
+    .map(
+      (reg, i) => `
 ## ${i + 1}. ${reg.regulation_number}: ${reg.section}
 
 **Key Hazards This Addresses:**
@@ -190,9 +194,12 @@ ${extractControlsFromRegulation(reg)}
 ${determineApplicability(reg, jobDescription)}
 
 **Full Regulation:**
-${reg.content ? 
-  `${reg.content.slice(0, 500)}${reg.content.length > 500 ? '...' : ''}` : 
-  'Regulation content not available - refer to BS 7671:2018+A3:2024'
+${
+  reg.content
+    ? `${reg.content.slice(0, 500)}${reg.content.length > 500 ? '...' : ''}`
+    : 'Regulation content not available - refer to BS 7671:2018+A3:2024'
 }
-`).join('\n---\n');
+`
+    )
+    .join('\n---\n');
 }

@@ -1,5 +1,10 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { ScrapedProduct, ScrapedDeal, ScrapedCoupon, ScrapeResult } from '../scrapers/base-scraper.js';
+import {
+  ScrapedProduct,
+  ScrapedDeal,
+  ScrapedCoupon,
+  ScrapeResult,
+} from '../scrapers/base-scraper.js';
 
 /**
  * Supabase Database Client
@@ -68,7 +73,11 @@ export class DatabaseClient {
       } else {
         // Keep the one with lower price (better deal)
         const existing = uniqueProducts.get(key)!;
-        if (product.currentPrice && existing.currentPrice && product.currentPrice < existing.currentPrice) {
+        if (
+          product.currentPrice &&
+          existing.currentPrice &&
+          product.currentPrice < existing.currentPrice
+        ) {
           uniqueProducts.set(key, product);
         }
       }
@@ -76,7 +85,9 @@ export class DatabaseClient {
     const deduplicatedProducts = Array.from(uniqueProducts.values());
 
     if (deduplicatedProducts.length < products.length) {
-      console.log(`Deduplicated: ${products.length} -> ${deduplicatedProducts.length} products (removed ${products.length - deduplicatedProducts.length} duplicates)`);
+      console.log(
+        `Deduplicated: ${products.length} -> ${deduplicatedProducts.length} products (removed ${products.length - deduplicatedProducts.length} duplicates)`
+      );
     }
 
     let inserted = 0;
@@ -158,21 +169,20 @@ export class DatabaseClient {
         productId = product?.id || null;
       }
 
-      const { error } = await this.supabase
-        .from('marketplace_deals')
-        .insert({
-          product_id: productId,
-          supplier_id: supplierId,
-          deal_type: deal.dealType,
-          original_price: deal.originalPrice,
-          deal_price: deal.dealPrice,
-          discount_percentage: deal.discountPercentage,
-          title: deal.title,
-          description: deal.description,
-          expires_at: deal.expiresAt?.toISOString() || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-          source_url: deal.sourceUrl,
-          is_active: true,
-        });
+      const { error } = await this.supabase.from('marketplace_deals').insert({
+        product_id: productId,
+        supplier_id: supplierId,
+        deal_type: deal.dealType,
+        original_price: deal.originalPrice,
+        deal_price: deal.dealPrice,
+        discount_percentage: deal.discountPercentage,
+        title: deal.title,
+        description: deal.description,
+        expires_at:
+          deal.expiresAt?.toISOString() || new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+        source_url: deal.sourceUrl,
+        is_active: true,
+      });
 
       if (error) {
         console.error(`Deal insert error:`, error);
@@ -202,9 +212,8 @@ export class DatabaseClient {
     let errors = 0;
 
     for (const coupon of coupons) {
-      const { error } = await this.supabase
-        .from('marketplace_coupon_codes')
-        .upsert({
+      const { error } = await this.supabase.from('marketplace_coupon_codes').upsert(
+        {
           supplier_id: supplierId,
           code: coupon.code,
           description: coupon.description,
@@ -214,9 +223,11 @@ export class DatabaseClient {
           valid_until: coupon.validUntil?.toISOString(),
           source_url: coupon.sourceUrl,
           scraped_at: new Date().toISOString(),
-        }, {
+        },
+        {
           onConflict: 'supplier_id,code',
-        });
+        }
+      );
 
       if (error) {
         console.error(`Coupon insert error:`, error);
@@ -262,10 +273,7 @@ export class DatabaseClient {
   /**
    * Update scrape job with results
    */
-  async completeScrapeJob(
-    jobId: string,
-    result: ScrapeResult
-  ): Promise<void> {
+  async completeScrapeJob(jobId: string, result: ScrapeResult): Promise<void> {
     const { error } = await this.supabase
       .from('marketplace_scrape_jobs')
       .update({

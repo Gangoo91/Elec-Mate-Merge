@@ -1,17 +1,18 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { createClient } from "jsr:@supabase/supabase-js@2";
-import { Resend } from "npm:resend@2.0.0";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'jsr:@supabase/supabase-js@2';
+import { Resend } from 'npm:resend@2.0.0';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 // Generate reminder email HTML - fresh design, different messaging
 function generateReminderEmailHTML(email: string, inviteToken: string): string {
-  const supabaseUrl = Deno.env.get("SUPABASE_URL") || "https://jtwygbeceundfgnkirof.supabase.co";
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co';
   const signupUrl = `${supabaseUrl}/functions/v1/track-email-click?token=${inviteToken}`;
   const trackingPixelUrl = `${supabaseUrl}/functions/v1/track-email-open?token=${inviteToken}`;
 
@@ -178,144 +179,153 @@ function generateReminderEmailHTML(email: string, inviteToken: string): string {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
-    const authHeader = req.headers.get("Authorization");
-    const internalKey = req.headers.get("X-Internal-Key");
-    const testSecret = req.headers.get("X-Test-Secret");
-    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const authHeader = req.headers.get('Authorization');
+    const internalKey = req.headers.get('X-Internal-Key');
+    const testSecret = req.headers.get('X-Test-Secret');
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
 
     // Allow internal key for CLI/internal testing
     const isInternalCall = internalKey === serviceRoleKey;
     // Also check if auth header contains service role
     const isServiceRole = authHeader === `Bearer ${serviceRoleKey}`;
     // Test secret for admin testing only
-    const isTestMode = testSecret === "elecmate-test-2026";
+    const isTestMode = testSecret === 'elecmate-test-2026';
 
     const supabaseAdmin = createClient(
-      Deno.env.get("SUPABASE_URL") ?? "",
-      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
     // Track caller for logging
-    let callerId = "internal";
+    let callerId = 'internal';
 
     // If not internal/service/test call, verify user is admin
     if (!isInternalCall && !isServiceRole && !isTestMode) {
       if (!authHeader) {
-        throw new Error("No authorization header");
+        throw new Error('No authorization header');
       }
 
       const supabaseClient = createClient(
-        Deno.env.get("SUPABASE_URL") ?? "",
-        Deno.env.get("SUPABASE_ANON_KEY") ?? "",
+        Deno.env.get('SUPABASE_URL') ?? '',
+        Deno.env.get('SUPABASE_ANON_KEY') ?? '',
         { global: { headers: { Authorization: authHeader } } }
       );
 
-      const { data: { user }, error: userError } = await supabaseClient.auth.getUser();
+      const {
+        data: { user },
+        error: userError,
+      } = await supabaseClient.auth.getUser();
       if (userError || !user) {
-        throw new Error("Unauthorized");
+        throw new Error('Unauthorized');
       }
 
       callerId = callerId;
 
       // Check admin
       const { data: callerProfile } = await supabaseClient
-        .from("profiles")
-        .select("admin_role")
-        .eq("id", callerId)
+        .from('profiles')
+        .select('admin_role')
+        .eq('id', callerId)
         .single();
 
       if (!callerProfile?.admin_role) {
-        throw new Error("Admin access required");
+        throw new Error('Admin access required');
       }
     }
 
     const { action, testEmail } = await req.json();
 
-    if (action === "send_test") {
+    if (action === 'send_test') {
       // Send test email to specified address
       if (!testEmail) {
-        throw new Error("testEmail is required");
+        throw new Error('testEmail is required');
       }
 
       // Create a test token for tracking
-      const testToken = "TEST-" + Math.random().toString(36).substring(2, 18);
+      const testToken = 'TEST-' + Math.random().toString(36).substring(2, 18);
 
       const emailHtml = generateReminderEmailHTML(testEmail, testToken);
 
       const { data: emailData, error: emailError } = await resend.emails.send({
-        from: "Elec-Mate <hello@elec-mate.com>",
-        replyTo: "info@elec-mate.com",
+        from: 'Elec-Mate <hello@elec-mate.com>',
+        replyTo: 'info@elec-mate.com',
         to: [testEmail],
-        subject: "Join 200 Electricians Who Started Their Free Trial",
+        subject: 'Join 200 Electricians Who Started Their Free Trial',
         html: emailHtml,
       });
 
       if (emailError) {
-        console.error("Email send error:", emailError);
-        throw new Error("Failed to send test email: " + emailError.message);
+        console.error('Email send error:', emailError);
+        throw new Error('Failed to send test email: ' + emailError.message);
       }
 
       console.log(`Test reminder email sent to ${testEmail} by admin ${callerId}`);
-      return new Response(JSON.stringify({
-        success: true,
-        email: testEmail,
-        resendId: emailData?.id,
-        message: "Test email sent successfully"
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+      return new Response(
+        JSON.stringify({
+          success: true,
+          email: testEmail,
+          resendId: emailData?.id,
+          message: 'Test email sent successfully',
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
     }
 
     // Helper to delay between sends (Resend limit is 2/sec, so 600ms to be safe)
-    const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+    const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-    if (action === "send_to_unopened") {
+    if (action === 'send_to_unopened') {
       // Send reminder to all who haven't opened (and aren't bounced/claimed)
       const BATCH_SIZE = 50;
 
       // Get count first
       const { count: totalCount } = await supabaseAdmin
-        .from("early_access_invites")
-        .select("*", { count: "exact", head: true })
-        .is("opened_at", null)
-        .is("bounced_at", null)
-        .is("claimed_at", null)
-        .not("resend_email_id", "is", null); // Must have been sent at least once
+        .from('early_access_invites')
+        .select('*', { count: 'exact', head: true })
+        .is('opened_at', null)
+        .is('bounced_at', null)
+        .is('claimed_at', null)
+        .not('resend_email_id', 'is', null); // Must have been sent at least once
 
       // Get batch - only those not reminded in last 24 hours
       const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
 
       const { data: invites, error: invitesError } = await supabaseAdmin
-        .from("early_access_invites")
-        .select("*")
-        .is("opened_at", null)
-        .is("bounced_at", null)
-        .is("claimed_at", null)
-        .not("resend_email_id", "is", null)
+        .from('early_access_invites')
+        .select('*')
+        .is('opened_at', null)
+        .is('bounced_at', null)
+        .is('claimed_at', null)
+        .not('resend_email_id', 'is', null)
         .or(`reminder_sent_at.is.null,reminder_sent_at.lt.${oneDayAgo}`)
-        .order("created_at", { ascending: true })
+        .order('created_at', { ascending: true })
         .limit(BATCH_SIZE);
 
       if (invitesError) throw invitesError;
 
       if (!invites || invites.length === 0) {
-        return new Response(JSON.stringify({
-          sent: 0,
-          remaining: 0,
-          total: totalCount || 0,
-          message: "No more invites to send reminders to",
-          complete: true
-        }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-          status: 200,
-        });
+        return new Response(
+          JSON.stringify({
+            sent: 0,
+            remaining: 0,
+            total: totalCount || 0,
+            message: 'No more invites to send reminders to',
+            complete: true,
+          }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200,
+          }
+        );
       }
 
       let sentCount = 0;
@@ -326,10 +336,10 @@ Deno.serve(async (req) => {
           const emailHtml = generateReminderEmailHTML(invite.email, invite.invite_token);
 
           const { data: emailData, error: emailError } = await resend.emails.send({
-            from: "Elec-Mate <hello@elec-mate.com>",
-            replyTo: "info@elec-mate.com",
+            from: 'Elec-Mate <hello@elec-mate.com>',
+            replyTo: 'info@elec-mate.com',
             to: [invite.email],
-            subject: "Join 200 Electricians Who Started Their Free Trial",
+            subject: 'Join 200 Electricians Who Started Their Free Trial',
             html: emailHtml,
           });
 
@@ -340,13 +350,13 @@ Deno.serve(async (req) => {
 
           // Update reminder tracking
           await supabaseAdmin
-            .from("early_access_invites")
+            .from('early_access_invites')
             .update({
               reminder_sent_at: new Date().toISOString(),
               reminder_resend_id: emailData?.id || null,
               send_count: (invite.send_count || 0) + 1,
             })
-            .eq("id", invite.id);
+            .eq('id', invite.id);
 
           sentCount++;
 
@@ -359,60 +369,68 @@ Deno.serve(async (req) => {
 
       // Get remaining count
       const { count: remainingCount } = await supabaseAdmin
-        .from("early_access_invites")
-        .select("*", { count: "exact", head: true })
-        .is("opened_at", null)
-        .is("bounced_at", null)
-        .is("claimed_at", null)
-        .not("resend_email_id", "is", null)
+        .from('early_access_invites')
+        .select('*', { count: 'exact', head: true })
+        .is('opened_at', null)
+        .is('bounced_at', null)
+        .is('claimed_at', null)
+        .not('resend_email_id', 'is', null)
         .or(`reminder_sent_at.is.null,reminder_sent_at.lt.${oneDayAgo}`);
 
       const remaining = remainingCount || 0;
       const complete = remaining === 0;
 
-      console.log(`Sent ${sentCount} reminder emails by admin ${callerId}. Remaining: ${remaining}`);
+      console.log(
+        `Sent ${sentCount} reminder emails by admin ${callerId}. Remaining: ${remaining}`
+      );
 
-      return new Response(JSON.stringify({
-        sent: sentCount,
-        attempted: invites.length,
-        remaining,
-        total: totalCount || 0,
-        errors: errors.length > 0 ? errors : undefined,
-        complete,
-        message: complete
-          ? `All done! Sent ${sentCount} reminder emails.`
-          : `Sent ${sentCount} emails. ${remaining} remaining - call again to continue.`
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+      return new Response(
+        JSON.stringify({
+          sent: sentCount,
+          attempted: invites.length,
+          remaining,
+          total: totalCount || 0,
+          errors: errors.length > 0 ? errors : undefined,
+          complete,
+          message: complete
+            ? `All done! Sent ${sentCount} reminder emails.`
+            : `Sent ${sentCount} emails. ${remaining} remaining - call again to continue.`,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
     }
 
-    if (action === "send_to_undelivered") {
+    if (action === 'send_to_undelivered') {
       // Send to those where delivery wasn't confirmed (and not bounced)
       const BATCH_SIZE = 50;
 
       const { data: invites, error: invitesError } = await supabaseAdmin
-        .from("early_access_invites")
-        .select("*")
-        .is("delivered_at", null)
-        .is("bounced_at", null)
-        .is("claimed_at", null)
-        .not("resend_email_id", "is", null)
-        .order("created_at", { ascending: true })
+        .from('early_access_invites')
+        .select('*')
+        .is('delivered_at', null)
+        .is('bounced_at', null)
+        .is('claimed_at', null)
+        .not('resend_email_id', 'is', null)
+        .order('created_at', { ascending: true })
         .limit(BATCH_SIZE);
 
       if (invitesError) throw invitesError;
 
       if (!invites || invites.length === 0) {
-        return new Response(JSON.stringify({
-          sent: 0,
-          message: "No undelivered invites to retry",
-          complete: true
-        }), {
-          headers: { ...corsHeaders, "Content-Type": "application/json" },
-          status: 200,
-        });
+        return new Response(
+          JSON.stringify({
+            sent: 0,
+            message: 'No undelivered invites to retry',
+            complete: true,
+          }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 200,
+          }
+        );
       }
 
       let sentCount = 0;
@@ -423,10 +441,10 @@ Deno.serve(async (req) => {
           const emailHtml = generateReminderEmailHTML(invite.email, invite.invite_token);
 
           const { data: emailData, error: emailError } = await resend.emails.send({
-            from: "Elec-Mate <hello@elec-mate.com>",
-            replyTo: "info@elec-mate.com",
+            from: 'Elec-Mate <hello@elec-mate.com>',
+            replyTo: 'info@elec-mate.com',
             to: [invite.email],
-            subject: "Join 200 Electricians Who Started Their Free Trial",
+            subject: 'Join 200 Electricians Who Started Their Free Trial',
             html: emailHtml,
           });
 
@@ -436,13 +454,13 @@ Deno.serve(async (req) => {
           }
 
           await supabaseAdmin
-            .from("early_access_invites")
+            .from('early_access_invites')
             .update({
               reminder_sent_at: new Date().toISOString(),
               reminder_resend_id: emailData?.id || null,
               send_count: (invite.send_count || 0) + 1,
             })
-            .eq("id", invite.id);
+            .eq('id', invite.id);
 
           sentCount++;
 
@@ -455,23 +473,25 @@ Deno.serve(async (req) => {
 
       console.log(`Sent ${sentCount} reminder emails to undelivered by admin ${callerId}`);
 
-      return new Response(JSON.stringify({
-        sent: sentCount,
-        attempted: invites.length,
-        errors: errors.length > 0 ? errors : undefined,
-        message: `Sent ${sentCount} reminder emails to previously undelivered addresses`
-      }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
-        status: 200,
-      });
+      return new Response(
+        JSON.stringify({
+          sent: sentCount,
+          attempted: invites.length,
+          errors: errors.length > 0 ? errors : undefined,
+          message: `Sent ${sentCount} reminder emails to previously undelivered addresses`,
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200,
+        }
+      );
     }
 
     throw new Error(`Unknown action: ${action}`);
-
   } catch (error: any) {
-    console.error("Error in send-early-access-reminder:", error);
+    console.error('Error in send-early-access-reminder:', error);
     return new Response(JSON.stringify({ error: error.message }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 400,
     });
   }

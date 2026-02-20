@@ -1,10 +1,11 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const serve = Deno.serve;
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 /**
@@ -54,7 +55,7 @@ serve(async (req) => {
       console.log(`📊 Running single batch ${singleBatch}...`);
 
       const { data, error } = await supabase.functions.invoke('comprehensive-job-scraper', {
-        body: { batch: singleBatch, forceRefresh: true }
+        body: { batch: singleBatch, forceRefresh: true },
       });
 
       if (error) throw error;
@@ -90,7 +91,7 @@ serve(async (req) => {
 
       // Just return merged data
       const { data: mergeResult } = await supabase.functions.invoke('comprehensive-job-scraper', {
-        body: { mergeAll: true }
+        body: { mergeAll: true },
       });
 
       return new Response(
@@ -114,7 +115,7 @@ serve(async (req) => {
       const delay = (i - 1) * 2000;
 
       const promise = new Promise(async (resolve) => {
-        await new Promise(r => setTimeout(r, delay));
+        await new Promise((r) => setTimeout(r, delay));
 
         try {
           const timeoutPromise = new Promise((_, reject) =>
@@ -122,14 +123,18 @@ serve(async (req) => {
           );
 
           const batchPromise = supabase.functions.invoke('comprehensive-job-scraper', {
-            body: { batch: i, forceRefresh: true }
+            body: { batch: i, forceRefresh: true },
           });
 
           const result = await Promise.race([batchPromise, timeoutPromise]);
           resolve({ batch: i, success: true, data: (result as any).data });
         } catch (error) {
           console.error(`❌ Batch ${i} failed:`, error);
-          resolve({ batch: i, success: false, error: error instanceof Error ? error.message : 'Unknown error' });
+          resolve({
+            batch: i,
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          });
         }
       });
 
@@ -140,13 +145,13 @@ serve(async (req) => {
     const batchResults = await Promise.all(batchPromises);
 
     // Summarize results
-    const successful = batchResults.filter(r => r.success);
-    const failed = batchResults.filter(r => !r.success);
+    const successful = batchResults.filter((r) => r.success);
+    const failed = batchResults.filter((r) => !r.success);
 
     console.log(`📊 Batch Summary: ${successful.length}/${TOTAL_BATCHES} succeeded`);
 
     // Log each batch result
-    batchResults.forEach(r => {
+    batchResults.forEach((r) => {
       if (r.success) {
         console.log(`✅ Batch ${r.batch}: ${r.data?.totalJobs || 0} jobs`);
       } else {
@@ -173,7 +178,7 @@ serve(async (req) => {
       message: `Refreshed ${successful.length}/${TOTAL_BATCHES} regions with ${mergeResult?.totalJobs || 0} unique jobs`,
       totalJobs: mergeResult?.totalJobs || 0,
       elapsed: `${elapsed}s`,
-      batchResults: batchResults.map(r => ({
+      batchResults: batchResults.map((r) => ({
         batch: r.batch,
         success: r.success,
         jobs: r.data?.totalJobs || 0,
@@ -186,16 +191,15 @@ serve(async (req) => {
       refreshedAt: now.toISOString(),
     };
 
-    console.log(response.success
-      ? `🎉 Daily job refresh complete: ${response.totalJobs} jobs in ${elapsed}s`
-      : `⚠️ Job refresh completed with issues`
+    console.log(
+      response.success
+        ? `🎉 Daily job refresh complete: ${response.totalJobs} jobs in ${elapsed}s`
+        : `⚠️ Job refresh completed with issues`
     );
 
-    return new Response(
-      JSON.stringify(response),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify(response), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     console.error('❌ Fatal error:', error);
 

@@ -24,7 +24,7 @@ const CONDUCTOR_RESISTANCE_20C: Record<number, number> = {
   185: 0.0991,
   240: 0.0754,
   300: 0.0601,
-  400: 0.0470
+  400: 0.047,
 };
 
 /**
@@ -38,17 +38,17 @@ function calculateR1R2(
 ): { at20C: number; at70C: number; value: string } {
   const r1 = CONDUCTOR_RESISTANCE_20C[liveSize] || 0;
   const r2 = CONDUCTOR_RESISTANCE_20C[cpcSize] || 0;
-  
+
   // Calculate at 20°C
   const r1r2At20C = ((r1 + r2) * length) / 1000; // Convert mΩ to Ω
-  
+
   // Apply 1.2 multiplier for operating temperature (70°C for thermoplastic)
   const r1r2At70C = r1r2At20C * 1.2;
-  
+
   return {
     at20C: Number(r1r2At20C.toFixed(4)),
     at70C: Number(r1r2At70C.toFixed(4)),
-    value: `${r1r2At70C.toFixed(3)}Ω`
+    value: `${r1r2At70C.toFixed(3)}Ω`,
   };
 }
 
@@ -68,12 +68,12 @@ function calculateZs(
 } {
   const expected = Number((ze + r1r2At70C).toFixed(3));
   const marginPercent = Number((((maxZs - expected) / maxZs) * 100).toFixed(1));
-  
+
   return {
     expected,
     maxPermitted: maxZs,
     marginPercent,
-    compliant: expected <= maxZs
+    compliant: expected <= maxZs,
   };
 }
 
@@ -89,46 +89,46 @@ export function calculateExpectedTestValues(
   const liveSize = circuit.cableSize || 2.5;
   const cpcSize = circuit.cpcSize || 1.5;
   const length = (circuit as any).cableLength || 20; // Try to get from circuit, default 20m if missing
-  
+
   // Calculate R1+R2
   const r1r2Result = calculateR1R2(liveSize, cpcSize, length);
-  
+
   // Calculate Zs
   const maxZs = circuit.calculations?.maxZs || 1.0;
   const zsResult = calculateZs(ze, r1r2Result.at70C, maxZs);
-  
+
   // Build expected test values
   const expectedTests: ExpectedTestValues = {
     r1r2: {
       at20C: r1r2Result.at20C,
       at70C: r1r2Result.at70C,
       value: r1r2Result.value,
-      regulation: 'BS 7671 Reg 612.2'
+      regulation: 'BS 7671 Reg 612.2',
     },
     zs: {
       expected: zsResult.expected,
       maxPermitted: zsResult.maxPermitted,
       marginPercent: zsResult.marginPercent,
       compliant: zsResult.compliant,
-      regulation: 'BS 7671 Reg 612.9'
+      regulation: 'BS 7671 Reg 612.9',
     },
     insulationResistance: {
       testVoltage: '500V DC',
       minResistance: '≥1.0 MΩ',
-      regulation: 'BS 7671 Table 61'
-    }
+      regulation: 'BS 7671 Table 61',
+    },
   };
-  
+
   // Add RCD test values if RCD/RCBO protected
   if (circuit.protectionDevice?.type === 'RCBO' || circuit.protectionDevice?.type === 'RCD+MCB') {
     expectedTests.rcd = {
       ratingmA: 30,
       maxTripTimeMs: 300,
       testCurrentMultiple: 1,
-      regulation: 'BS 7671 Reg 612.13'
+      regulation: 'BS 7671 Reg 612.13',
     };
   }
-  
+
   return expectedTests;
 }
 
@@ -142,25 +142,27 @@ export function ensureExpectedTestValues(
   logger: any
 ): DesignedCircuit {
   // Check if expectedTests exists and has valid numerical values
-  const hasValidR1R2 = circuit.expectedTests?.r1r2?.at20C && 
-                       circuit.expectedTests?.r1r2?.at70C &&
-                       !circuit.expectedTests?.r1r2?.value.toLowerCase().includes('less than');
-  
-  const hasValidZs = circuit.expectedTests?.zs?.expected && 
-                     !String(circuit.expectedTests?.zs?.expected).toLowerCase().includes('within');
-  
+  const hasValidR1R2 =
+    circuit.expectedTests?.r1r2?.at20C &&
+    circuit.expectedTests?.r1r2?.at70C &&
+    !circuit.expectedTests?.r1r2?.value.toLowerCase().includes('less than');
+
+  const hasValidZs =
+    circuit.expectedTests?.zs?.expected &&
+    !String(circuit.expectedTests?.zs?.expected).toLowerCase().includes('within');
+
   if (!hasValidR1R2 || !hasValidZs) {
     logger.info('Calculating expected test values (AI omitted or used placeholders)', {
       circuit: circuit.name,
       hasValidR1R2,
-      hasValidZs
+      hasValidZs,
     });
-    
+
     return {
       ...circuit,
-      expectedTests: calculateExpectedTestValues(circuit, ze)
+      expectedTests: calculateExpectedTestValues(circuit, ze),
     };
   }
-  
+
   return circuit;
 }

@@ -6,10 +6,19 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { handleError, ValidationError, getErrorMessage } from '../_shared/errors.ts';
 import { validateAgentRequest, getRequestBody } from '../_shared/validation.ts';
-import type { Message, ConversationState, ConversationSummary } from '../_shared/conversation-memory.ts';
+import type {
+  Message,
+  ConversationState,
+  ConversationSummary,
+} from '../_shared/conversation-memory.ts';
 import { buildConversationState, summarizeConversation } from '../_shared/conversation-memory.ts';
 import { detectIntents, type IntentAnalysis } from '../_shared/intent-detection.ts';
-import { planAgentSequence, type AgentContext, type AgentOutput, type AgentPlan } from '../_shared/agent-orchestration.ts';
+import {
+  planAgentSequence,
+  type AgentContext,
+  type AgentOutput,
+  type AgentPlan,
+} from '../_shared/agent-orchestration.ts';
 import { validateResponse } from '../_shared/response-validation.ts';
 import { ResponseCache, isCacheable } from '../_shared/response-cache.ts';
 import { extractCircuitContext } from '../_shared/extract-circuit-context.ts';
@@ -17,14 +26,20 @@ import { validateAgentOutputs, formatValidationReport } from '../_shared/validat
 import { withRetry, RetryPresets } from '../_shared/retry.ts';
 import { withTimeout, Timeouts } from '../_shared/timeout.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
-import { 
-  validateDesignerOutput, 
-  validateCostOutput, 
+import {
+  validateDesignerOutput,
+  validateCostOutput,
   validateInstallerOutput,
   reviewChallenge,
-  type Challenge 
+  type Challenge,
 } from '../_shared/agent-validation.ts';
-import { createContextEnvelope, mergeContext, type ContextEnvelope, type QueryIntent, inferRAGPriority } from '../_shared/agent-context.ts';
+import {
+  createContextEnvelope,
+  mergeContext,
+  type ContextEnvelope,
+  type QueryIntent,
+  inferRAGPriority,
+} from '../_shared/agent-context.ts';
 
 const responseCache = new ResponseCache();
 
@@ -41,12 +56,42 @@ interface AvailableAgent {
 
 // PHASE 5: Complete V3 Integration - All agents use world-class RAG
 const availableAgents: AvailableAgent[] = [
-  { name: 'designer', endpoint: 'designer-v3', capabilities: ['design', 'calculations', 'cable-sizing'], priority: 1 },
-  { name: 'health-safety', endpoint: 'health-safety-v3', capabilities: ['safety', 'risk-assessment', 'method-statements'], priority: 2 },
-  { name: 'installer', endpoint: 'installer-v3', capabilities: ['installation', 'practical-guidance', 'tools'], priority: 3 },
-  { name: 'inspector', endpoint: 'inspector-v3', capabilities: ['testing', 'inspection', 'certification'], priority: 4 },
-  { name: 'cost', endpoint: 'cost-engineer-v3', capabilities: ['pricing', 'materials', 'labour'], priority: 5 },
-  { name: 'project-mgmt', endpoint: 'project-mgmt-v3', capabilities: ['timeline', 'planning', 'coordination', 'scheduling'], priority: 6 }
+  {
+    name: 'designer',
+    endpoint: 'designer-v3',
+    capabilities: ['design', 'calculations', 'cable-sizing'],
+    priority: 1,
+  },
+  {
+    name: 'health-safety',
+    endpoint: 'health-safety-v3',
+    capabilities: ['safety', 'risk-assessment', 'method-statements'],
+    priority: 2,
+  },
+  {
+    name: 'installer',
+    endpoint: 'installer-v3',
+    capabilities: ['installation', 'practical-guidance', 'tools'],
+    priority: 3,
+  },
+  {
+    name: 'inspector',
+    endpoint: 'inspector-v3',
+    capabilities: ['testing', 'inspection', 'certification'],
+    priority: 4,
+  },
+  {
+    name: 'cost',
+    endpoint: 'cost-engineer-v3',
+    capabilities: ['pricing', 'materials', 'labour'],
+    priority: 5,
+  },
+  {
+    name: 'project-mgmt',
+    endpoint: 'project-mgmt-v3',
+    capabilities: ['timeline', 'planning', 'coordination', 'scheduling'],
+    priority: 6,
+  },
 ];
 
 function getCacheKey(messages: Message[], selectedAgents?: string[]): string {
@@ -64,20 +109,20 @@ function getAgentCacheKey(agentName: string, messages: Message[], context: any):
 function getCachedAgentResult(cacheKey: string): any | null {
   const cached = agentResultsCache.get(cacheKey);
   if (!cached) return null;
-  
+
   const age = Date.now() - cached.timestamp;
   if (age > AGENT_CACHE_TTL) {
     agentResultsCache.delete(cacheKey);
     return null;
   }
-  
+
   return cached.data;
 }
 
 function setCachedAgentResult(cacheKey: string, data: any): void {
   agentResultsCache.set(cacheKey, {
     data,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   });
 }
 
@@ -91,72 +136,89 @@ serve(async (req) => {
   const startTime = Date.now();
 
   try {
-    const { messages, context, selectedAgents, sessionId, conversationalMode = false, currentDesign, jobScale = 'commercial' } = await req.json();
+    const {
+      messages,
+      context,
+      selectedAgents,
+      sessionId,
+      conversationalMode = false,
+      currentDesign,
+      jobScale = 'commercial',
+    } = await req.json();
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openAIApiKey) throw new ValidationError('OPENAI_API_KEY not configured');
 
-    logger.info('Orchestrator starting', { 
+    logger.info('Orchestrator starting', {
       messageCount: messages?.length,
       selectedAgents,
       conversationalMode,
-      sessionId
+      sessionId,
     });
 
     // Create QueryIntent and ContextEnvelope
     const latestMessage = messages[messages.length - 1]?.content || '';
     const queryIntent = inferQueryIntent(latestMessage);
-    
-    let agentContext: ContextEnvelope = context?.agentContext || createContextEnvelope(requestId, queryIntent);
+
+    let agentContext: ContextEnvelope =
+      context?.agentContext || createContextEnvelope(requestId, queryIntent);
     agentContext.sessionId = sessionId;
     agentContext.agentChain.push('orchestrator');
-    
-    logger.info('Context created', { 
+
+    logger.info('Context created', {
       queryIntent: queryIntent.primaryGoal,
       circuitType: queryIntent.circuitType,
-      ragPriority: agentContext.ragPriority
+      ragPriority: agentContext.ragPriority,
     });
 
     // Check cache for identical requests
     const cacheKey = getCacheKey(messages, selectedAgents);
     const cachedResponse = responseCache.get(cacheKey);
-    
+
     if (cachedResponse && isCacheable(messages)) {
       logger.info('Cache hit - returning cached response', { cacheKey });
-      return new Response(JSON.stringify({
-        ...cachedResponse,
-        cached: true,
-        cacheAge: Date.now() - (cachedResponse.timestamp || Date.now())
-      }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({
+          ...cachedResponse,
+          cached: true,
+          cacheAge: Date.now() - (cachedResponse.timestamp || Date.now()),
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Build conversation state
     const conversationState = buildConversationState(messages, context);
     const conversationSummary = await summarizeConversation(messages, openAIApiKey);
-    
+
     logger.debug('Conversation state built', {
       messageCount: conversationState.messageCount,
-      lastTopic: conversationSummary.lastTopic
+      lastTopic: conversationSummary.lastTopic,
     });
 
     // Detect intents - build proper ConversationSummary with safe defaults
     const safeSummary: ConversationSummary = {
       projectType: conversationSummary?.projectType || conversationState?.projectType || 'domestic',
-      lastTopic: conversationSummary?.lastTopic || conversationState?.lastTopic || 'general electrical work',
+      lastTopic:
+        conversationSummary?.lastTopic || conversationState?.lastTopic || 'general electrical work',
       keyFacts: conversationSummary?.keyFacts || [],
       decisions: conversationSummary?.decisions || [],
       requirements: conversationSummary?.requirements || [],
-      openQuestions: conversationSummary?.openQuestions || []
+      openQuestions: conversationSummary?.openQuestions || [],
     };
-    
+
     // PHASE 1: FIX - await detectIntents and pass openAIApiKey
-    const intents = await detectIntents(messages[messages.length - 1]?.content || '', safeSummary, openAIApiKey);
-    
+    const intents = await detectIntents(
+      messages[messages.length - 1]?.content || '',
+      safeSummary,
+      openAIApiKey
+    );
+
     // PHASE 2: Check if clarification is needed BEFORE calling agents
     if (intents.requiresClarification && intents.suggestedFollowUp) {
       logger.info('Clarification required', { suggestedFollowUp: intents.suggestedFollowUp });
-      
+
       const clarificationResponse = {
         agent: 'orchestrator',
         agentPlan: [],
@@ -167,31 +229,26 @@ serve(async (req) => {
         conversationSummary,
         requiresClarification: true,
         executionTime: Date.now() - startTime,
-        agentContext
+        agentContext,
       };
-      
+
       return new Response(JSON.stringify(clarificationResponse), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-    
+
     logger.info('Intents detected', {
       primary: intents.primary,
       secondary: intents.secondary,
-      confidence: intents.confidence
+      confidence: intents.confidence,
     });
 
     // Plan agent sequence
-    const agentPlan = await planAgentSequence(
-      intents,
-      safeSummary,
-      latestMessage,
-      openAIApiKey
-    );
-    
+    const agentPlan = await planAgentSequence(intents, safeSummary, latestMessage, openAIApiKey);
+
     logger.info('Agent plan created', {
-      sequence: agentPlan.sequence.map(s => s.agent),
-      reasoning: agentPlan.reasoning
+      sequence: agentPlan.sequence.map((s) => s.agent),
+      reasoning: agentPlan.reasoning,
     });
 
     // Initialize Supabase client for agent calls
@@ -203,16 +260,18 @@ serve(async (req) => {
     const agentOutputs: AgentOutput[] = [];
     let totalRAGCalls = 0;
     let designerFoundRegulations: any[] = [];
-    
+
     for (const agentStep of agentPlan.sequence) {
-      const agent = availableAgents.find(a => a.name === agentStep.agent);
+      const agent = availableAgents.find((a) => a.name === agentStep.agent);
       if (!agent) continue;
 
       try {
         // Check agent-level cache
-        const agentCacheKey = getAgentCacheKey(agent.name, messages, { previousAgentOutputs: agentOutputs });
+        const agentCacheKey = getAgentCacheKey(agent.name, messages, {
+          previousAgentOutputs: agentOutputs,
+        });
         const cachedAgentResult = getCachedAgentResult(agentCacheKey);
-        
+
         if (cachedAgentResult) {
           logger.info(`Agent cache hit: ${agent.name}`);
           agentOutputs.push(cachedAgentResult);
@@ -225,54 +284,59 @@ serve(async (req) => {
           try {
             circuitContext = extractCircuitContext({ previousAgentOutputs: agentOutputs });
           } catch (error) {
-            logger.warn('Failed to extract circuit context for H&S agent', { error: error.message });
+            logger.warn('Failed to extract circuit context for H&S agent', {
+              error: error.message,
+            });
           }
         }
 
         // PHASE 3: RAG Context Sharing - After designer completes, share regulations with other agents
         const shouldSkipRAG = agent.name !== 'designer' && designerFoundRegulations.length > 0;
-        
-        const agentResponse = await logger.time(
-          `${agent.name} agent call`,
-          () => withRetry(
-            () => withTimeout(
-              supabase.functions.invoke(agent.endpoint, {
-                body: {
-                  messages,
-                  context: {
-                    ...context,
-                    conversationState,
-                    conversationSummary: safeSummary,
-                    circuitContext,
-                    previousAgentOutputs: agentOutputs,
-                    // PHASE 3: Pass shared RAG context
-                    skipRAG: shouldSkipRAG,
-                    sharedRegulations: designerFoundRegulations
+
+        const agentResponse = await logger.time(`${agent.name} agent call`, () =>
+          withRetry(
+            () =>
+              withTimeout(
+                supabase.functions.invoke(agent.endpoint, {
+                  body: {
+                    messages,
+                    context: {
+                      ...context,
+                      conversationState,
+                      conversationSummary: safeSummary,
+                      circuitContext,
+                      previousAgentOutputs: agentOutputs,
+                      // PHASE 3: Pass shared RAG context
+                      skipRAG: shouldSkipRAG,
+                      sharedRegulations: designerFoundRegulations,
+                    },
+                    currentDesign,
+                    jobScale,
+                    incomingContext: shouldSkipRAG
+                      ? {
+                          ...agentContext,
+                          foundRegulations: designerFoundRegulations,
+                        }
+                      : agentContext,
                   },
-                  currentDesign,
-                  jobScale,
-                  incomingContext: shouldSkipRAG ? {
-                    ...agentContext,
-                    foundRegulations: designerFoundRegulations
-                  } : agentContext
-                }
-              }),
-              Timeouts.LONG,
-              `${agent.name} agent call`
-            ),
+                }),
+                Timeouts.LONG,
+                `${agent.name} agent call`
+              ),
             RetryPresets.STANDARD
           )
         );
 
         if (agentResponse.data) {
-          const parsedData = typeof agentResponse.data === 'string' 
-            ? JSON.parse(agentResponse.data) 
-            : agentResponse.data;
+          const parsedData =
+            typeof agentResponse.data === 'string'
+              ? JSON.parse(agentResponse.data)
+              : agentResponse.data;
 
           const agentOutput: AgentOutput = {
             agent: agent.name,
             response: parsedData.response || JSON.stringify(parsedData),
-            data: parsedData
+            data: parsedData,
           };
 
           agentOutputs.push(agentOutput);
@@ -283,28 +347,33 @@ serve(async (req) => {
           // Merge context from agent
           if (parsedData.agentContext) {
             agentContext = mergeContext(agentContext, parsedData.agentContext);
-            
+
             // PHASE 3: After designer completes, extract regulations for sharing
             if (agent.name === 'designer' && agentContext.foundRegulations) {
               designerFoundRegulations = agentContext.foundRegulations;
               totalRAGCalls++;
-              logger.info(`🚀 RAG: Designer searched ${designerFoundRegulations.length} regulations`, {
-                ragCallCount: 1
-              });
+              logger.info(
+                `🚀 RAG: Designer searched ${designerFoundRegulations.length} regulations`,
+                {
+                  ragCallCount: 1,
+                }
+              );
             } else if (shouldSkipRAG) {
-              logger.info(`♻️ ${agent.name} reused designer's ${designerFoundRegulations.length} regulations (0ms RAG)`);
+              logger.info(
+                `♻️ ${agent.name} reused designer's ${designerFoundRegulations.length} regulations (0ms RAG)`
+              );
             }
-            
+
             logger.info(`Context updated by ${agent.name}`, {
               ragCalls: agentContext.ragCallCount,
               regulations: agentContext.foundRegulations?.length || 0,
-              totalRAGCalls
+              totalRAGCalls,
             });
           }
 
           logger.info(`${agent.name} completed`, {
             confidence: parsedData.confidence,
-            hasStructuredData: !!parsedData.structuredData
+            hasStructuredData: !!parsedData.structuredData,
           });
         }
       } catch (error) {
@@ -312,7 +381,7 @@ serve(async (req) => {
         agentOutputs.push({
           agent: agent.name,
           response: `${agent.name} encountered an error: ${getErrorMessage(error)}`,
-          data: { error: getErrorMessage(error) }
+          data: { error: getErrorMessage(error) },
         });
       }
     }
@@ -320,15 +389,15 @@ serve(async (req) => {
     // Validate agent outputs
     const validationResults = validateAgentOutputs(agentOutputs, intents);
     const validationReport = formatValidationReport(validationResults);
-    
+
     logger.info('Agent outputs validated', {
-      allValid: validationResults.every(r => r.isValid),
-      issues: validationResults.filter(r => !r.isValid).length
+      allValid: validationResults.every((r) => r.isValid),
+      issues: validationResults.filter((r) => !r.isValid).length,
     });
 
     // Intelligent Response Synthesis
     const { synthesizeAgentOutputs } = await import('../_shared/response-synthesizer.ts');
-    
+
     const synthesizedResponse = await synthesizeAgentOutputs({
       intents,
       agentOutputs,
@@ -337,26 +406,26 @@ serve(async (req) => {
       ragMetadata: {
         totalRAGCalls,
         regulationCount: designerFoundRegulations.length,
-        searchMethod: agentContext.foundRegulations?.[0]?.source || 'hybrid'
+        searchMethod: agentContext.foundRegulations?.[0]?.source || 'hybrid',
       },
-      agentChain: agentPlan.sequence.map(s => s.agent),
-      validationReport: !validationResults.every(r => r.isValid) ? validationReport : undefined
+      agentChain: agentPlan.sequence.map((s) => s.agent),
+      validationReport: !validationResults.every((r) => r.isValid) ? validationReport : undefined,
     });
-    
+
     const combinedResponse = synthesizedResponse;
 
     // Build final response
     const finalResponse = {
       agent: 'orchestrator',
-      agentPlan: agentPlan.sequence.map(s => s.agent),
+      agentPlan: agentPlan.sequence.map((s) => s.agent),
       agentOutputs,
       combinedResponse,
-      confidence: Math.min(...agentOutputs.map(o => o.data?.confidence || 0.8)),
+      confidence: Math.min(...agentOutputs.map((o) => o.data?.confidence || 0.8)),
       conversationState,
       conversationSummary,
       validationResults,
       executionTime: Date.now() - startTime,
-      agentContext
+      agentContext,
     };
 
     // Cache response if appropriate
@@ -368,19 +437,18 @@ serve(async (req) => {
     logger.info('Orchestration complete', {
       agentsExecuted: agentOutputs.length,
       executionTime: finalResponse.executionTime,
-      confidence: finalResponse.confidence
+      confidence: finalResponse.confidence,
     });
 
     return new Response(JSON.stringify(finalResponse), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error) {
     logger.error('Orchestrator error', { error: getErrorMessage(error) });
     await captureException(error, {
       functionName: 'orchestrator-agent-v2',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return handleError(error, logger, corsHeaders);
   }
@@ -389,7 +457,7 @@ serve(async (req) => {
 // Infer query intent for RAG prioritization
 function inferQueryIntent(message: string): QueryIntent {
   const lower = message.toLowerCase();
-  
+
   let primaryGoal: QueryIntent['primaryGoal'] = 'general';
   if (/(design|calculate|cable|size|voltage drop)/i.test(lower)) primaryGoal = 'design';
   else if (/(safe|risk|hazard|ppe|method statement)/i.test(lower)) primaryGoal = 'safety';
@@ -405,7 +473,9 @@ function inferQueryIntent(message: string): QueryIntent {
   else if (/(ev|car charg)/i.test(lower)) circuitType = 'ev';
 
   const powerMatch = lower.match(/(\d+(?:\.\d+)?)\s*(?:kw|kilowatt|w|watt)/i);
-  const powerRating = powerMatch ? parseFloat(powerMatch[1]) * (powerMatch[0].includes('kw') ? 1000 : 1) : undefined;
+  const powerRating = powerMatch
+    ? parseFloat(powerMatch[1]) * (powerMatch[0].includes('kw') ? 1000 : 1)
+    : undefined;
 
   let complexity: QueryIntent['complexity'] = 'medium';
   if (/(simple|basic|single|one circuit)/i.test(lower)) complexity = 'simple';
@@ -414,7 +484,7 @@ function inferQueryIntent(message: string): QueryIntent {
   const requiresCalculations = /(calculate|size|select|determine|volt drop)/i.test(lower);
   const requiresRegulations = /(regulation|bs ?7671|must|require|comply)/i.test(lower);
 
-  const keywords = lower.split(/\s+/).filter(w => w.length > 3);
+  const keywords = lower.split(/\s+/).filter((w) => w.length > 3);
 
   return {
     primaryGoal,
@@ -423,7 +493,6 @@ function inferQueryIntent(message: string): QueryIntent {
     complexity,
     requiresCalculations,
     requiresRegulations,
-    keywords: keywords.slice(0, 10)
+    keywords: keywords.slice(0, 10),
   };
 }
-

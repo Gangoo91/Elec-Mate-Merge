@@ -1,9 +1,10 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface Chunk {
@@ -25,13 +26,13 @@ serve(async (req) => {
 
   try {
     console.log('🎓 Starting NEBOSH IGC Course Notes processing...');
-    
+
     const { fileContent } = await req.json();
-    
+
     if (!fileContent) {
       throw new Error('No file content provided in request body');
     }
-    
+
     const lines = fileContent.split('\n');
     console.log(`📄 Total lines: ${lines.length}`);
 
@@ -44,7 +45,7 @@ serve(async (req) => {
     for (let i = 0; i < lines.length; i += chunkSize) {
       const chunkLines = lines.slice(i, i + chunkSize);
       const content = chunkLines.join('\n').trim();
-      
+
       if (content.length < 100) continue;
 
       const chapterMatch = content.match(/(?:Element|Chapter|Section)\s+(\d+)[:\s-]+([^\n]+)/i);
@@ -54,28 +55,52 @@ serve(async (req) => {
       let topic = 'NEBOSH IGC General';
       let keywords: string[] = ['NEBOSH', 'IGC', 'international certificate'];
 
-      if (content.toLowerCase().includes('legal') || content.toLowerCase().includes('legislation')) {
+      if (
+        content.toLowerCase().includes('legal') ||
+        content.toLowerCase().includes('legislation')
+      ) {
         topic = 'Health & Safety Legislation';
         keywords.push('legislation', 'legal framework', 'compliance');
-      } else if (content.toLowerCase().includes('management system') || content.toLowerCase().includes('sms')) {
+      } else if (
+        content.toLowerCase().includes('management system') ||
+        content.toLowerCase().includes('sms')
+      ) {
         topic = 'Safety Management Systems';
         keywords.push('SMS', 'management systems', 'policy');
-      } else if (content.toLowerCase().includes('chemical') || content.toLowerCase().includes('substance')) {
+      } else if (
+        content.toLowerCase().includes('chemical') ||
+        content.toLowerCase().includes('substance')
+      ) {
         topic = 'Chemical & Substance Hazards';
         keywords.push('chemicals', 'substances', 'COSHH');
-      } else if (content.toLowerCase().includes('electrical') || content.toLowerCase().includes('shock')) {
+      } else if (
+        content.toLowerCase().includes('electrical') ||
+        content.toLowerCase().includes('shock')
+      ) {
         topic = 'Electrical Safety';
         keywords.push('electrical hazards', 'shock', 'arc flash');
-      } else if (content.toLowerCase().includes('fire') || content.toLowerCase().includes('explosion')) {
+      } else if (
+        content.toLowerCase().includes('fire') ||
+        content.toLowerCase().includes('explosion')
+      ) {
         topic = 'Fire & Explosion Prevention';
         keywords.push('fire safety', 'explosion', 'flammable');
-      } else if (content.toLowerCase().includes('transport') || content.toLowerCase().includes('vehicle')) {
+      } else if (
+        content.toLowerCase().includes('transport') ||
+        content.toLowerCase().includes('vehicle')
+      ) {
         topic = 'Transport & Vehicle Safety';
         keywords.push('transport safety', 'vehicle operations', 'driving');
-      } else if (content.toLowerCase().includes('welfare') || content.toLowerCase().includes('wellbeing')) {
+      } else if (
+        content.toLowerCase().includes('welfare') ||
+        content.toLowerCase().includes('wellbeing')
+      ) {
         topic = 'Health & Welfare';
         keywords.push('welfare', 'wellbeing', 'occupational health');
-      } else if (content.toLowerCase().includes('noise') || content.toLowerCase().includes('vibration')) {
+      } else if (
+        content.toLowerCase().includes('noise') ||
+        content.toLowerCase().includes('vibration')
+      ) {
         topic = 'Physical Hazards';
         keywords.push('noise', 'vibration', 'temperature');
       }
@@ -88,28 +113,30 @@ serve(async (req) => {
           chapter_number: chapterNumber,
           chapter_title: chapterTitle,
           topic,
-          keywords
-        }
+          keywords,
+        },
       });
     }
 
     console.log(`✅ Parsed ${chunks.length} chunks from NEBOSH IGC`);
-    console.log(`📊 Topics: ${[...new Set(chunks.map(c => c.metadata.topic))].slice(0, 5).join(', ')}`);
+    console.log(
+      `📊 Topics: ${[...new Set(chunks.map((c) => c.metadata.topic))].slice(0, 5).join(', ')}`
+    );
 
     const response = await fetch(`${supabaseUrl}/functions/v1/process-pdf-embeddings`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${supabaseKey}`,
+        Authorization: `Bearer ${supabaseKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        chunks: chunks.map(chunk => ({
+        chunks: chunks.map((chunk) => ({
           section: chunk.section,
           content: chunk.content,
           metadata: chunk.metadata,
-          source: 'nebosh-igc'
+          source: 'nebosh-igc',
         })),
-        source: 'nebosh-igc'
+        source: 'nebosh-igc',
       }),
     });
 
@@ -120,21 +147,26 @@ serve(async (req) => {
     const result = await response.json();
     console.log('✅ NEBOSH IGC embeddings created successfully');
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      chunksProcessed: chunks.length,
-      result 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        chunksProcessed: chunks.length,
+        result,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error processing NEBOSH IGC:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Processing failed' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Processing failed',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

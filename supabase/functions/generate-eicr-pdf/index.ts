@@ -1,12 +1,13 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
-import { captureException } from "../_shared/sentry.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '178C3DA6-99D0-490C-A031-23AD55A1134C';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
 };
 
@@ -22,7 +23,7 @@ async function createPDFMonkeyDocument(formData: any): Promise<PDFMonkeyDocument
   const response = await fetch('https://api.pdfmonkey.io/api/v1/documents', {
     method: 'POST',
     headers: {
-      'Authorization': `Bearer ${PDFMONKEY_API_KEY}`,
+      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -48,7 +49,7 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
   const response = await fetch(`https://api.pdfmonkey.io/api/v1/documents/${documentId}`, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${PDFMONKEY_API_KEY}`,
+      Authorization: `Bearer ${PDFMONKEY_API_KEY}`,
       'Content-Type': 'application/json',
     },
   });
@@ -63,7 +64,10 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
   return data.document;
 }
 
-async function waitForPDFGeneration(documentId: string, maxAttempts = 30): Promise<PDFMonkeyDocument> {
+async function waitForPDFGeneration(
+  documentId: string,
+  maxAttempts = 30
+): Promise<PDFMonkeyDocument> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const document = await getPDFMonkeyDocument(documentId);
 
@@ -78,7 +82,7 @@ async function waitForPDFGeneration(documentId: string, maxAttempts = 30): Promi
     }
 
     // Wait 1 second before checking again
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   }
 
   throw new Error('PDF generation timed out');
@@ -106,18 +110,30 @@ Deno.serve(async (req: Request) => {
     console.log('[generate-eicr-pdf] Address:', formData.installation_details?.address);
 
     // Debug inspection_checklist
-    console.log('[generate-eicr-pdf] inspection_checklist present:', !!formData.inspection_checklist);
-    console.log('[generate-eicr-pdf] inspection_checklist length:', formData.inspection_checklist?.length || 0);
+    console.log(
+      '[generate-eicr-pdf] inspection_checklist present:',
+      !!formData.inspection_checklist
+    );
+    console.log(
+      '[generate-eicr-pdf] inspection_checklist length:',
+      formData.inspection_checklist?.length || 0
+    );
     if (formData.inspection_checklist?.length > 0) {
-      console.log('[generate-eicr-pdf] First inspection item:', JSON.stringify(formData.inspection_checklist[0]));
-      console.log('[generate-eicr-pdf] Sample outcomes:', formData.inspection_checklist.slice(0, 5).map((i: any) => i.outcome));
+      console.log(
+        '[generate-eicr-pdf] First inspection item:',
+        JSON.stringify(formData.inspection_checklist[0])
+      );
+      console.log(
+        '[generate-eicr-pdf] Sample outcomes:',
+        formData.inspection_checklist.slice(0, 5).map((i: any) => i.outcome)
+      );
     }
 
     // Log full payload keys
     console.log('[generate-eicr-pdf] Payload top-level keys:', Object.keys(formData));
 
     // Debug flat inspection keys
-    const flatInspKeys = Object.keys(formData).filter(k => k.startsWith('insp_'));
+    const flatInspKeys = Object.keys(formData).filter((k) => k.startsWith('insp_'));
     console.log('[generate-eicr-pdf] Flat inspection keys count:', flatInspKeys.length);
     console.log('[generate-eicr-pdf] Sample flat keys:', flatInspKeys.slice(0, 10));
     if (flatInspKeys.length > 0) {
@@ -131,16 +147,37 @@ Deno.serve(async (req: Request) => {
     // Debug schedule of tests
     console.log('[generate-eicr-pdf] ========== SCHEDULE OF TESTS DEBUG ==========');
     console.log('[generate-eicr-pdf] schedule_of_tests present:', !!formData.schedule_of_tests);
-    console.log('[generate-eicr-pdf] schedule_of_tests length:', formData.schedule_of_tests?.length || 0);
-    console.log('[generate-eicr-pdf] boards_with_schedules present:', !!formData.boards_with_schedules);
-    console.log('[generate-eicr-pdf] boards_with_schedules length:', formData.boards_with_schedules?.length || 0);
+    console.log(
+      '[generate-eicr-pdf] schedule_of_tests length:',
+      formData.schedule_of_tests?.length || 0
+    );
+    console.log(
+      '[generate-eicr-pdf] boards_with_schedules present:',
+      !!formData.boards_with_schedules
+    );
+    console.log(
+      '[generate-eicr-pdf] boards_with_schedules length:',
+      formData.boards_with_schedules?.length || 0
+    );
     if (formData.schedule_of_tests?.length > 0) {
-      console.log('[generate-eicr-pdf] First circuit:', JSON.stringify(formData.schedule_of_tests[0]).substring(0, 300));
-      console.log('[generate-eicr-pdf] First circuit keys:', Object.keys(formData.schedule_of_tests[0]));
+      console.log(
+        '[generate-eicr-pdf] First circuit:',
+        JSON.stringify(formData.schedule_of_tests[0]).substring(0, 300)
+      );
+      console.log(
+        '[generate-eicr-pdf] First circuit keys:',
+        Object.keys(formData.schedule_of_tests[0])
+      );
     }
     if (formData.boards_with_schedules?.length > 0) {
-      console.log('[generate-eicr-pdf] First board reference:', formData.boards_with_schedules[0]?.db_reference);
-      console.log('[generate-eicr-pdf] First board circuits count:', formData.boards_with_schedules[0]?.circuits?.length || 0);
+      console.log(
+        '[generate-eicr-pdf] First board reference:',
+        formData.boards_with_schedules[0]?.db_reference
+      );
+      console.log(
+        '[generate-eicr-pdf] First board circuits count:',
+        formData.boards_with_schedules[0]?.circuits?.length || 0
+      );
     }
     console.log('[generate-eicr-pdf] ================================================');
 
@@ -179,7 +216,7 @@ Deno.serve(async (req: Request) => {
       functionName: 'generate-eicr-pdf',
       requestUrl: req.url,
       requestMethod: req.method,
-      extra: { hasPdfMonkeyKey: !!PDFMONKEY_API_KEY }
+      extra: { hasPdfMonkeyKey: !!PDFMONKEY_API_KEY },
     });
 
     return new Response(

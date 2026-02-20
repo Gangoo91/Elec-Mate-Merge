@@ -37,7 +37,10 @@ serve(async (req: Request) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new ValidationError('Authentication required');
     }
@@ -66,20 +69,18 @@ serve(async (req: Request) => {
 
     if (config.email_provider === 'gmail') {
       tokenData = await withRetry(
-        () => withTimeout(
-          refreshGoogleToken(refreshToken),
-          Timeouts.STANDARD,
-          'Google token refresh'
-        ),
+        () =>
+          withTimeout(refreshGoogleToken(refreshToken), Timeouts.STANDARD, 'Google token refresh'),
         RetryPresets.AGGRESSIVE
       );
     } else {
       tokenData = await withRetry(
-        () => withTimeout(
-          refreshMicrosoftToken(refreshToken),
-          Timeouts.STANDARD,
-          'Microsoft token refresh'
-        ),
+        () =>
+          withTimeout(
+            refreshMicrosoftToken(refreshToken),
+            Timeouts.STANDARD,
+            'Microsoft token refresh'
+          ),
         RetryPresets.AGGRESSIVE
       );
     }
@@ -106,15 +107,14 @@ serve(async (req: Request) => {
       throw new Error('Failed to update tokens');
     }
 
-    console.log(`✅ Token refreshed`, { 
-      config_id: configId, 
-      provider: config.email_provider 
+    console.log(`✅ Token refreshed`, {
+      config_id: configId,
+      provider: config.email_provider,
     });
 
-    return new Response(
-      JSON.stringify({ success: true }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ success: true }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error) {
     return handleError(error);
   }
@@ -134,7 +134,10 @@ async function refreshGoogleToken(refreshToken: string) {
 
   if (!response.ok) {
     const error = await response.text();
-    throw new ExternalAPIError('Google OAuth', { error, hint: 'Token refresh failed. User may need to re-authorize.' });
+    throw new ExternalAPIError('Google OAuth', {
+      error,
+      hint: 'Token refresh failed. User may need to re-authorize.',
+    });
   }
 
   return await response.json();
@@ -154,7 +157,10 @@ async function refreshMicrosoftToken(refreshToken: string) {
 
   if (!response.ok) {
     const error = await response.text();
-    throw new ExternalAPIError('Microsoft OAuth', { error, hint: 'Token refresh failed. User may need to re-authorize.' });
+    throw new ExternalAPIError('Microsoft OAuth', {
+      error,
+      hint: 'Token refresh failed. User may need to re-authorize.',
+    });
   }
 
   return await response.json();

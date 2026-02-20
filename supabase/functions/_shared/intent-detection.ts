@@ -5,15 +5,23 @@ import { Message, ConversationSummary } from './conversation-memory.ts';
 
 export interface IntentAnalysis {
   intents: {
-    design: number;      // 0-1 confidence
+    design: number; // 0-1 confidence
     cost: number;
     installation: number;
     commissioning: number;
-    refinement: number;      // NEW: User refining previous design
-    clarification: number;   // NEW: User asking for clarification
-    followUp: number;        // NEW: User acknowledging/confirming
+    refinement: number; // NEW: User refining previous design
+    clarification: number; // NEW: User asking for clarification
+    followUp: number; // NEW: User acknowledging/confirming
   };
-  primaryIntent: 'design' | 'cost' | 'installation' | 'commissioning' | 'refinement' | 'clarification' | 'followUp' | 'general';
+  primaryIntent:
+    | 'design'
+    | 'cost'
+    | 'installation'
+    | 'commissioning'
+    | 'refinement'
+    | 'clarification'
+    | 'followUp'
+    | 'general';
   reasoning: string;
   requiresClarification: boolean;
   suggestedFollowUp?: string;
@@ -92,17 +100,21 @@ EXAMPLES:
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-2025-08-07',
         messages: [
-          { role: 'system', content: 'You are an intent classification system for electrical installation conversations. Always return valid JSON.' },
+          {
+            role: 'system',
+            content:
+              'You are an intent classification system for electrical installation conversations. Always return valid JSON.',
+          },
           { role: 'user', content: intentPrompt },
         ],
-        response_format: { type: "json_object" },
-        max_completion_tokens: 400
+        response_format: { type: 'json_object' },
+        max_completion_tokens: 400,
       }),
     });
 
@@ -113,18 +125,25 @@ EXAMPLES:
 
     const data = await response.json();
     const intentData = JSON.parse(data.choices[0]?.message?.content || '{}');
-    
+
     console.log('🎯 AI Intent Analysis:', intentData);
-    
+
     // Ensure well-formed structure with all required fields
     return {
-      intents: intentData?.intents ?? { design: 0.6, cost: 0.4, installation: 0.4, commissioning: 0.3, refinement: 0, clarification: 0, followUp: 0 },
+      intents: intentData?.intents ?? {
+        design: 0.6,
+        cost: 0.4,
+        installation: 0.4,
+        commissioning: 0.3,
+        refinement: 0,
+        clarification: 0,
+        followUp: 0,
+      },
       primaryIntent: intentData?.primaryIntent ?? 'design',
       reasoning: intentData?.reasoning ?? 'AI analysis',
       requiresClarification: !!intentData?.requiresClarification,
-      suggestedFollowUp: intentData?.suggestedFollowUp
+      suggestedFollowUp: intentData?.suggestedFollowUp,
     };
-
   } catch (error) {
     console.error('Intent detection failed, using fallback:', error);
     return fallbackIntentDetection(latestMessage);
@@ -134,44 +153,53 @@ EXAMPLES:
 // Fallback to keyword-based detection if AI fails
 function fallbackIntentDetection(message: string): IntentAnalysis {
   const lower = message.toLowerCase();
-  
-  const designScore = ['cable', 'size', 'mcb', 'voltage', 'regulation', 'amp', 'circuit', 'design']
-    .filter(kw => lower.includes(kw)).length / 8;
-  
-  const costScore = ['price', 'cost', 'budget', 'cheap', 'wholesaler']
-    .filter(kw => lower.includes(kw)).length / 5;
-  
-  const installScore = ['install', 'how to', 'method', 'mount', 'route']
-    .filter(kw => lower.includes(kw)).length / 5;
-  
-  const commissionScore = ['test', 'certificate', 'verify', 'inspect', 'commission']
-    .filter(kw => lower.includes(kw)).length / 5;
-  
-  const refinementScore = ['going to use', 'what if i use', 'can i use', "i'll use", 'instead']
-    .filter(kw => lower.includes(kw)).length / 5;
-  
-  const clarificationScore = ['what about', 'do i need', 'is there', 'where does', 'how do i']
-    .filter(kw => lower.includes(kw)).length / 5;
-  
-  const followUpScore = ['okay', 'sounds good', 'yes', 'thanks', 'got it', 'perfect']
-    .filter(kw => lower.includes(kw)).length / 6;
 
-  const scores = { 
-    design: designScore, 
-    cost: costScore, 
-    installation: installScore, 
+  const designScore =
+    ['cable', 'size', 'mcb', 'voltage', 'regulation', 'amp', 'circuit', 'design'].filter((kw) =>
+      lower.includes(kw)
+    ).length / 8;
+
+  const costScore =
+    ['price', 'cost', 'budget', 'cheap', 'wholesaler'].filter((kw) => lower.includes(kw)).length /
+    5;
+
+  const installScore =
+    ['install', 'how to', 'method', 'mount', 'route'].filter((kw) => lower.includes(kw)).length / 5;
+
+  const commissionScore =
+    ['test', 'certificate', 'verify', 'inspect', 'commission'].filter((kw) => lower.includes(kw))
+      .length / 5;
+
+  const refinementScore =
+    ['going to use', 'what if i use', 'can i use', "i'll use", 'instead'].filter((kw) =>
+      lower.includes(kw)
+    ).length / 5;
+
+  const clarificationScore =
+    ['what about', 'do i need', 'is there', 'where does', 'how do i'].filter((kw) =>
+      lower.includes(kw)
+    ).length / 5;
+
+  const followUpScore =
+    ['okay', 'sounds good', 'yes', 'thanks', 'got it', 'perfect'].filter((kw) => lower.includes(kw))
+      .length / 6;
+
+  const scores = {
+    design: designScore,
+    cost: costScore,
+    installation: installScore,
     commissioning: commissionScore,
     refinement: refinementScore,
     clarification: clarificationScore,
-    followUp: followUpScore
+    followUp: followUpScore,
   };
-  const primaryIntent = Object.entries(scores).reduce((a, b) => a[1] > b[1] ? a : b)[0] as any;
+  const primaryIntent = Object.entries(scores).reduce((a, b) => (a[1] > b[1] ? a : b))[0] as any;
 
   return {
     intents: scores,
     primaryIntent: scores[primaryIntent as keyof typeof scores] > 0.3 ? primaryIntent : 'general',
     reasoning: 'Fallback keyword-based detection',
-    requiresClarification: Object.values(scores).every(s => s < 0.3),
-    suggestedFollowUp: undefined
+    requiresClarification: Object.values(scores).every((s) => s < 0.3),
+    suggestedFollowUp: undefined,
   };
 }

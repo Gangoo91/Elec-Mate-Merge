@@ -6,7 +6,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req: Request) => {
@@ -33,17 +34,16 @@ serve(async (req: Request) => {
 
     if (queryError) {
       console.error('Error fetching overdue invoices:', queryError);
-      return new Response(
-        JSON.stringify({ error: 'Failed to fetch invoices' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Failed to fetch invoices' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     if (!overdueInvoices || overdueInvoices.length === 0) {
-      return new Response(
-        JSON.stringify({ message: 'No overdue invoices found', processed: 0 }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ message: 'No overdue invoices found', processed: 0 }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     let notificationsSent = 0;
@@ -64,7 +64,9 @@ serve(async (req: Request) => {
         // Calculate days overdue
         const dueDate = new Date(invoice.due_date);
         const todayDate = new Date(today);
-        const daysOverdue = Math.floor((todayDate.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24));
+        const daysOverdue = Math.floor(
+          (todayDate.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
+        );
 
         const daysText = daysOverdue === 1 ? '1 day' : `${daysOverdue} days`;
 
@@ -127,13 +129,16 @@ serve(async (req: Request) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('Check overdue invoices error:', error);
-    await captureException(error, { functionName: 'check-overdue-invoices', requestUrl: req.url, requestMethod: req.method });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    await captureException(error, {
+      functionName: 'check-overdue-invoices',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

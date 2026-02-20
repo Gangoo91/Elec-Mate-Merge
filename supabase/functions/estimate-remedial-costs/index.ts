@@ -2,11 +2,16 @@
 // Batch processes EICR defects using pricing_embeddings + practical_work_intelligence
 import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { searchPricingKnowledge, formatPricingContext } from '../_shared/rag-cost-engineer.ts';
-import { searchPracticalWorkIntelligence, formatForAIContext } from '../_shared/rag-practical-work.ts';
+import {
+  searchPracticalWorkIntelligence,
+  formatForAIContext,
+} from '../_shared/rag-practical-work.ts';
 
 // Attempt to repair truncated JSON (e.g. from finish_reason: 'length')
 function repairJSON(str: string): any {
-  try { return JSON.parse(str); } catch {}
+  try {
+    return JSON.parse(str);
+  } catch {}
   let s = str.trim();
   s = s.replace(/,?\s*"[^"]*":\s*"[^"]*$/, '');
   s = s.replace(/,?\s*\{[^}]*$/, '');
@@ -17,9 +22,15 @@ function repairJSON(str: string): any {
   s = s.replace(/,\s*$/, '');
   for (let i = 0; i < openBrackets - closeBrackets; i++) s += ']';
   for (let i = 0; i < opens - closes; i++) s += '}';
-  try { return JSON.parse(s); } catch {}
+  try {
+    return JSON.parse(s);
+  } catch {}
   const match = s.match(/\{[\s\S]*\}/);
-  if (match) { try { return JSON.parse(match[0]); } catch {} }
+  if (match) {
+    try {
+      return JSON.parse(match[0]);
+    } catch {}
+  }
   return null;
 }
 
@@ -28,7 +39,8 @@ const estimateRemedialCostsTool = {
   type: 'function',
   function: {
     name: 'provide_remedial_cost_estimate',
-    description: 'Provide itemised remedial cost estimate for EICR defects with materials and labour',
+    description:
+      'Provide itemised remedial cost estimate for EICR defects with materials and labour',
     parameters: {
       type: 'object',
       properties: {
@@ -39,22 +51,47 @@ const estimateRemedialCostsTool = {
             properties: {
               description: { type: 'string', description: 'Item description' },
               quantity: { type: 'number', description: 'Quantity needed' },
-              unit: { type: 'string', enum: ['units', 'metres', 'hours'], description: 'Unit of measurement' },
+              unit: {
+                type: 'string',
+                enum: ['units', 'metres', 'hours'],
+                description: 'Unit of measurement',
+              },
               unitPrice: { type: 'number', description: 'Price per unit in GBP' },
               totalPrice: { type: 'number', description: 'Total price (quantity * unitPrice)' },
-              category: { type: 'string', enum: ['materials', 'labour'], description: 'Cost category' },
-              subcategory: { type: 'string', description: 'e.g. Protection Devices, Cables, Accessories' },
+              category: {
+                type: 'string',
+                enum: ['materials', 'labour'],
+                description: 'Cost category',
+              },
+              subcategory: {
+                type: 'string',
+                description: 'e.g. Protection Devices, Cables, Accessories',
+              },
               defectCode: { type: 'string', description: 'C1, C2, C3 or FI' },
-              defectDescription: { type: 'string', description: 'Brief original defect observation text (e.g. "Lack of earthing to gas/water pipework")' },
+              defectDescription: {
+                type: 'string',
+                description:
+                  'Brief original defect observation text (e.g. "Lack of earthing to gas/water pipework")',
+              },
               labourHours: { type: 'number', description: 'Labour hours (for labour items)' },
             },
-            required: ['description', 'quantity', 'unit', 'unitPrice', 'totalPrice', 'category', 'defectCode', 'defectDescription'],
+            required: [
+              'description',
+              'quantity',
+              'unit',
+              'unitPrice',
+              'totalPrice',
+              'category',
+              'defectCode',
+              'defectDescription',
+            ],
           },
           description: 'Array of quote line items for materials and labour',
         },
         scopeOfWorks: {
           type: 'string',
-          description: 'Brief professional summary (3-5 sentences) of all remedial works to be carried out. Suitable for a quote scope of works section. UK English.',
+          description:
+            'Brief professional summary (3-5 sentences) of all remedial works to be carried out. Suitable for a quote scope of works section. UK English.',
         },
       },
       required: ['items', 'scopeOfWorks'],
@@ -70,9 +107,13 @@ serve(async (req) => {
   try {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(JSON.stringify({ success: false, error: 'Missing authorisation header' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ success: false, error: 'Missing authorisation header' }),
+        {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -80,34 +121,50 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Verify user
-    const userSupabase = createClient(
-      supabaseUrl,
-      Deno.env.get('SUPABASE_ANON_KEY')!,
-      { global: { headers: { Authorization: authHeader } } }
-    );
-    const { data: { user }, error: userError } = await userSupabase.auth.getUser();
+    const userSupabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY')!, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const {
+      data: { user },
+      error: userError,
+    } = await userSupabase.auth.getUser();
     if (userError || !user) {
       return new Response(JSON.stringify({ success: false, error: 'Unauthorised' }), {
-        status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
     const { defects, region, labourRate } = await req.json();
 
     if (!defects || !Array.isArray(defects) || defects.length === 0) {
-      return new Response(JSON.stringify({ success: false, error: 'At least one defect is required' }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ success: false, error: 'At least one defect is required' }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
     // Cap at 30 defects to prevent prompt overflow
     if (defects.length > 30) {
-      return new Response(JSON.stringify({ success: false, error: 'Maximum 30 defects per request' }), {
-        status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      });
+      return new Response(
+        JSON.stringify({ success: false, error: 'Maximum 30 defects per request' }),
+        {
+          status: 400,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        }
+      );
     }
 
-    console.log('💰 Estimating remedial costs for', defects.length, 'defects', '| labourRate from request:', labourRate);
+    console.log(
+      '💰 Estimating remedial costs for',
+      defects.length,
+      'defects',
+      '| labourRate from request:',
+      labourRate
+    );
 
     // Fetch company profile for labour rate if not provided
     let effectiveLabourRate = labourRate;
@@ -118,7 +175,12 @@ serve(async (req) => {
         .eq('user_id', user.id)
         .single();
       effectiveLabourRate = companyProfile?.hourly_rate || 55;
-      console.log('💰 Labour rate from company_profiles:', companyProfile?.hourly_rate, '| effective:', effectiveLabourRate);
+      console.log(
+        '💰 Labour rate from company_profiles:',
+        companyProfile?.hourly_rate,
+        '| effective:',
+        effectiveLabourRate
+      );
     }
 
     // Build combined description for efficient single-embedding RAG search
@@ -137,7 +199,7 @@ serve(async (req) => {
     const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
+        Authorization: `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -149,7 +211,9 @@ serve(async (req) => {
     if (!embeddingResponse.ok) {
       const embError = await embeddingResponse.text();
       console.error('Embedding error:', embeddingResponse.status, embError);
-      throw new Error(`Failed to generate embedding (${embeddingResponse.status}): ${embError.substring(0, 200)}`);
+      throw new Error(
+        `Failed to generate embedding (${embeddingResponse.status}): ${embError.substring(0, 200)}`
+      );
     }
 
     const embeddingData = await embeddingResponse.json();
@@ -179,17 +243,23 @@ serve(async (req) => {
     ]);
 
     // Format RAG context for AI — keep minimal to reduce token usage
-    const pricingContext = formatPricingContext(Array.isArray(pricingResults) ? pricingResults.slice(0, 10) : []);
+    const pricingContext = formatPricingContext(
+      Array.isArray(pricingResults) ? pricingResults.slice(0, 10) : []
+    );
     // Only use topic names from practical results (full content is too verbose for cost estimation)
-    const practicalSummary = practicalResults.results.slice(0, 4)
+    const practicalSummary = practicalResults.results
+      .slice(0, 4)
       .map((pw: any) => pw.primary_topic || pw.content?.substring(0, 80))
       .filter(Boolean)
       .join('; ');
 
     // Build defect list for the prompt
-    const defectList = defects.map((d: any, i: number) =>
-      `${i + 1}. [${d.code}] ${d.description}${d.location ? ` — Location: ${d.location}` : ''}${d.circuitRef ? ` — Circuit: ${d.circuitRef}` : ''}`
-    ).join('\n');
+    const defectList = defects
+      .map(
+        (d: any, i: number) =>
+          `${i + 1}. [${d.code}] ${d.description}${d.location ? ` — Location: ${d.location}` : ''}${d.circuitRef ? ` — Circuit: ${d.circuitRef}` : ''}`
+      )
+      .join('\n');
 
     const systemPrompt = `UK electrical remedial cost estimator. Quote items for EICR defects.
 
@@ -209,14 +279,17 @@ ${defectList}`;
     const aiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
+        Authorization: `Bearer ${openaiApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: `Generate remedial quote items for the ${defects.length} defects listed above.` },
+          {
+            role: 'user',
+            content: `Generate remedial quote items for the ${defects.length} defects listed above.`,
+          },
         ],
         max_completion_tokens: 6000,
         tools: [estimateRemedialCostsTool],
@@ -227,14 +300,20 @@ ${defectList}`;
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
       console.error('OpenAI error:', aiResponse.status, errorText);
-      throw new Error(`AI cost estimation failed (${aiResponse.status}): ${errorText.substring(0, 200)}`);
+      throw new Error(
+        `AI cost estimation failed (${aiResponse.status}): ${errorText.substring(0, 200)}`
+      );
     }
 
     const aiData = await aiResponse.json();
 
     const choice = aiData.choices?.[0];
     const finishReason = choice?.finish_reason;
-    console.log('AI response:', { finishReason, hasToolCalls: !!choice?.message?.tool_calls, hasContent: !!choice?.message?.content });
+    console.log('AI response:', {
+      finishReason,
+      hasToolCalls: !!choice?.message?.tool_calls,
+      hasContent: !!choice?.message?.content,
+    });
 
     // Extract from tool call — with JSON repair for truncated responses
     let parsed: any = null;
@@ -242,7 +321,10 @@ ${defectList}`;
     if (toolCall?.function?.arguments) {
       parsed = repairJSON(toolCall.function.arguments);
       if (!parsed) {
-        console.error('Failed to parse/repair tool call args:', toolCall.function.arguments.substring(0, 500));
+        console.error(
+          'Failed to parse/repair tool call args:',
+          toolCall.function.arguments.substring(0, 500)
+        );
       }
     }
 
@@ -255,7 +337,12 @@ ${defectList}`;
     }
 
     if (!parsed) {
-      console.error('No parseable AI response. finish_reason:', finishReason, 'raw:', JSON.stringify(choice || aiData).substring(0, 500));
+      console.error(
+        'No parseable AI response. finish_reason:',
+        finishReason,
+        'raw:',
+        JSON.stringify(choice || aiData).substring(0, 500)
+      );
       throw new Error(`AI returned no parseable response (finish_reason: ${finishReason})`);
     }
 
@@ -269,11 +356,14 @@ ${defectList}`;
       totalPrice: Math.max(Number(item.totalPrice) || 0, 0),
       category: item.category === 'labour' ? 'labour' : 'materials',
       subcategory: String(item.subcategory || ''),
-      notes: item.defectDescription ? `${item.defectCode || ''} defect: ${item.defectDescription}` : undefined,
+      notes: item.defectDescription
+        ? `${item.defectCode || ''} defect: ${item.defectDescription}`
+        : undefined,
       source: 'eicr-defect' as const,
       defectCode: String(item.defectCode || ''),
       defectDescription: String(item.defectDescription || ''),
-      labourHours: item.category === 'labour' ? Number(item.labourHours || item.quantity) || 0 : undefined,
+      labourHours:
+        item.category === 'labour' ? Number(item.labourHours || item.quantity) || 0 : undefined,
     }));
 
     // Calculate summary
@@ -306,15 +396,17 @@ ${defectList}`;
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
-
   } catch (error: any) {
     console.error('❌ Error in estimate-remedial-costs:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error.message || 'Failed to estimate remedial costs',
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error.message || 'Failed to estimate remedial costs',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

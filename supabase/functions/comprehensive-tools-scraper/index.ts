@@ -3,7 +3,8 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -15,8 +16,10 @@ serve(async (req) => {
 
   try {
     const { searchTerm, categoryFilter, supplierFilter } = await req.json();
-    
-    console.log(`🔍 Searching for tools: "${searchTerm}" | Category: ${categoryFilter || 'all'} | Supplier: ${supplierFilter || 'all'}`);
+
+    console.log(
+      `🔍 Searching for tools: "${searchTerm}" | Category: ${categoryFilter || 'all'} | Supplier: ${supplierFilter || 'all'}`
+    );
 
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
@@ -52,7 +55,7 @@ serve(async (req) => {
         highlights: item.highlights || [],
         productUrl: item.view_product_url || item.productUrl,
         description: item.description,
-        reviews: item.reviews
+        reviews: item.reviews,
       }));
 
       console.log(`📊 Loaded ${allTools.length} tools from cache`);
@@ -64,32 +67,32 @@ serve(async (req) => {
     if (categoryFilter && categoryFilter !== 'all') {
       console.log(`📂 Applying category filter: ${categoryFilter}`);
       const categoryLower = categoryFilter.toLowerCase();
-      filteredTools = filteredTools.filter(tool => {
+      filteredTools = filteredTools.filter((tool) => {
         if (!tool.category) return false;
         const toolCategory = tool.category.toLowerCase();
-        
+
         // Direct match or partial match
         if (toolCategory.includes(categoryLower) || categoryLower.includes(toolCategory)) {
           return true;
         }
-        
+
         // Special category mappings for better matches
         const categoryMappings: Record<string, string[]> = {
           'power tools': ['power', 'cordless', 'electric', 'drill', 'grinder', 'saw'],
           'hand tools': ['hand', 'manual', 'pliers', 'screwdriver', 'spanner'],
           'test equipment': ['test', 'meter', 'tester', 'measurement', 'electrical'],
           'measuring tools': ['measuring', 'level', 'tape', 'ruler', 'detector'],
-          'safety equipment': ['safety', 'protection', 'ppe', 'helmet', 'gloves']
+          'safety equipment': ['safety', 'protection', 'ppe', 'helmet', 'gloves'],
         };
-        
+
         const searchTerms = categoryMappings[categoryLower] || [];
-        return searchTerms.some(term => toolCategory.includes(term));
+        return searchTerms.some((term) => toolCategory.includes(term));
       });
       console.log(`🎯 Tools after category filter: ${filteredTools.length}`);
     }
 
     if (supplierFilter && supplierFilter !== 'all') {
-      filteredTools = filteredTools.filter(tool => 
+      filteredTools = filteredTools.filter((tool) =>
         tool.supplier.toLowerCase().includes(supplierFilter.toLowerCase())
       );
     }
@@ -97,26 +100,30 @@ serve(async (req) => {
     if (searchTerm && searchTerm.trim()) {
       console.log(`🔍 Applying search term: ${searchTerm}`);
       const searchLower = searchTerm.toLowerCase().trim();
-      filteredTools = filteredTools.filter(tool => {
+      filteredTools = filteredTools.filter((tool) => {
         // Search in name (primary)
         if (tool.name.toLowerCase().includes(searchLower)) return true;
-        
+
         // Search in description
         if (tool.description && tool.description.toLowerCase().includes(searchLower)) return true;
-        
+
         // Search in highlights array
         if (tool.highlights && Array.isArray(tool.highlights)) {
-          if (tool.highlights.some((highlight: any) => 
-            typeof highlight === 'string' && highlight.toLowerCase().includes(searchLower)
-          )) return true;
+          if (
+            tool.highlights.some(
+              (highlight: any) =>
+                typeof highlight === 'string' && highlight.toLowerCase().includes(searchLower)
+            )
+          )
+            return true;
         }
-        
+
         // Search in category
         if (tool.category && tool.category.toLowerCase().includes(searchLower)) return true;
-        
+
         // Search in supplier
         if (tool.supplier && tool.supplier.toLowerCase().includes(searchLower)) return true;
-        
+
         return false;
       });
       console.log(`📝 Tools after search filter: ${filteredTools.length}`);
@@ -136,24 +143,29 @@ serve(async (req) => {
 
     console.log(`✅ Returning ${filteredTools.length} filtered tools`);
 
-    return new Response(JSON.stringify({
-      success: true,
-      tools: filteredTools,
-      searchTerm,
-      total: filteredTools.length
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        tools: filteredTools,
+        searchTerm,
+        total: filteredTools.length,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error in comprehensive-tools-scraper:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error occurred',
-      tools: []
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
+        tools: [],
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

@@ -180,79 +180,111 @@ Founded in the UK, Elec-Mate serves qualified electricians, electrical apprentic
 
 ---
 
-## Elec-AI — 8 AI Specialist Agents + 12 AI Tools
+## Elec-AI — Like ChatGPT, But Built Specifically for Electricians
 
-All AI specialists are trained on BS 7671:2018 + Amendment 2:2022 + Amendment 3:2024, the IET On-Site Guide, Guidance Notes 1 through 8, and real-world electrical installation knowledge.
+Elec-Mate includes a complete AI system called Elec-AI — think of it as ChatGPT but trained exclusively on UK electrical regulations, trade knowledge, and real-world installation data. It is not a generic AI chatbot. Every response is grounded in BS 7671:2018 + Amendment 2:2022 + Amendment 3:2024, the IET On-Site Guide, Guidance Notes 1 through 8, and decades of UK electrical trade practice.
 
-### Circuit Designer
-- Designs complete consumer unit schedules
-- Selects appropriate MCB/RCBO types and ratings
-- Calculates cable sizes using adiabatic method
-- Considers discrimination, selectivity, and fault levels
-- Handles specialist circuits: EV chargers, solar PV, battery storage, electric showers
-- Outputs a complete circuit schedule with protective devices, cable sizes, and circuit descriptions
+Elec-AI includes 8 specialist AI agents and 12 AI tools. Each agent is a deep expert in its area. Users can ask anything in plain English and get regulation-compliant, trade-accurate answers instantly.
 
-### Cost Engineer
-- Generates detailed quotations for electrical work
-- Uses live UK trade pricing data (updated regularly)
-- Calculates labour timing from benchmarks
-- Produces professional bills of quantities
-- Includes material costs, labour costs, and suggested profit margins
-- Learns from completed jobs to improve accuracy
+### Agent 1: Circuit Designer
+The most advanced AI circuit design tool for UK electricians. Describe a job in plain English and get a complete consumer unit schedule:
+- Selects appropriate MCB/RCBO types and ratings for every circuit
+- Calculates cable sizes using the adiabatic method with all correction factors (Ca, Cg, Ci, Cf)
+- Checks discrimination and selectivity between protective devices
+- Verifies fault levels and breaking capacity
+- Handles specialist circuits: EV chargers (Section 722), solar PV (Section 712), battery storage, electric showers, underfloor heating, three-phase supplies
+- Outputs a complete circuit schedule with protective devices, cable sizes, reference methods, and circuit descriptions
+- **One click converts the design into a pre-filled EIC certificate** — no re-typing
 
-### Installation Guide
-- Step-by-step installation procedures for any electrical task
-- Part P Building Regulations guidance (notifiable vs non-notifiable)
-- Special location requirements (BS 7671 Part 7): bathrooms (Section 701), swimming pools (702), saunas (703), construction sites (704), agricultural (705), solar PV (712), EV charging (722)
+### Agent 2: Cost Engineer
+AI-powered quoting and cost estimation using live UK trade pricing:
+- Describe any electrical job in plain English
+- AI generates a detailed bill of quantities with every material itemised
+- Labour timing calculated from UK electrical trade benchmarks
+- Material costs from current UK wholesale pricing
+- Suggested profit margins based on job complexity and market rates
+- Professional branded quote PDF generated in minutes
+- **Connects directly to EICR observations** — log C1/C2/C3 codes during an inspection and the Cost Engineer automatically generates a remedial works quote with pricing
+- Learns from completed jobs to improve accuracy over time
+
+### Agent 3: Installation Specialist
+Step-by-step installation guidance for any electrical task:
+- Part P Building Regulations guidance — knows which work is notifiable and which isn't
+- Special location requirements (BS 7671 Part 7): bathrooms (701), swimming pools (702), saunas (703), construction sites (704), agricultural (705), solar PV (712), EV charging (722)
 - Testing procedures in GN3 order: continuity, insulation resistance, polarity, earth fault loop impedance, RCD testing
+- Wiring instructions with cable colour codes and termination guidance
 - Suitable for both qualified electricians and supervised apprentices
 
-### Maintenance Agent
-- Periodic inspection interval recommendations per Table 3A
-- Emergency lighting maintenance schedules (BS 5266)
-- Fire alarm maintenance schedules (BS 5839)
+### Agent 4: Maintenance Specialist
+Planned preventive maintenance powered by AI:
+- Periodic inspection interval recommendations per BS 7671 Table 3A
+- Emergency lighting maintenance schedules (BS 5266 — monthly function tests, annual full-duration tests)
+- Fire alarm maintenance schedules (BS 5839 — weekly tests, quarterly inspections, annual service)
 - Identifies deterioration patterns and recommends remedial action
 - Tracks maintenance history per installation
+- Generates maintenance reports and schedules
 
-### Health & Safety Specialist
-- Generates RAMS (Risk Assessment and Method Statements)
-- COSHH assessments for electrical materials
-- CDM Regulations 2015 compliance
+### Agent 5: Health & Safety Specialist (RAMS Generator)
+Generates complete, professional RAMS documents — 30+ pages in under 2 minutes:
+- Full Risk Assessment with hazard identification, risk ratings (likelihood x severity), and control measures
+- Detailed Method Statement with step-by-step safe working procedures
+- COSHH assessments for electrical materials (solvents, adhesives, PVC compounds)
+- CDM Regulations 2015 compliance checks
 - Working at height assessments
 - Electrical safety risk assessments
-- References Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, Management of Health and Safety at Work Regulations 1999
+- Emergency procedures and first aid arrangements
+- PPE requirements matrix
+- References: Health and Safety at Work Act 1974, Electricity at Work Regulations 1989, Management of Health and Safety at Work Regulations 1999
+- Output is a professional document ready to submit to main contractors, clients, or HSE inspectors
 
-### Regulations Guide
-- Instant lookup of any BS 7671 regulation
-- Plain-English interpretation of complex wiring regulations
+### Agent 6: Regulations Guide
+Instant BS 7671 regulation lookup — like having the brown book in your pocket:
+- Search any regulation number and get the full text with plain-English interpretation
 - Cross-references between related regulations
-- Amendment 3:2024 updates highlighted
+- Amendment 3:2024 updates highlighted (including Regulation 530.3.201)
+- Explains complex regulations in simple terms electricians actually understand
+- Covers all 7 parts of BS 7671, Appendices 1-17, and the IET Guidance Notes
 
-### Study Coach
-- Personalised learning recommendations based on progress
-- Exam preparation strategies for C&G 2382, 2391, AM2
-- Spaced repetition scheduling
-- Weakness identification and targeted practice
+### Agent 7: Study Coach
+AI-powered exam preparation and personalised learning:
+- Personalised study plans based on the apprentice's actual knowledge gaps
+- Exam preparation for City & Guilds 2382 (18th Edition), 2391 (Inspection & Testing), and AM2
+- Spaced repetition scheduling — the AI knows when to resurface each topic
+- Weakness identification with targeted practice questions
+- Explains concepts at any level — from absolute beginner to advanced
 
-### Voice Quotes (AI Agent)
-- Voice-based quote and invoice generation
-- Speak job details and get a professional quote
-- Automatic material and labour pricing
-- Convert voice quotes to formal documents
+### Agent 8: Voice Quotes
+Hands-free quoting for electricians on site:
+- Speak job details into the phone — no typing required
+- AI converts speech into structured job description
+- Automatically generates material lists and labour estimates
+- Produces professional quote PDF ready to send
+- Perfect for electricians who are on ladders, in lofts, or have dirty hands
 
 ### 12 Additional AI Tools
-- **Fault Diagnosis** — AI-powered electrical fault finding assistance
-- **Diagram Builder** — Generate circuit and wiring diagrams
-- **Visual Analysis** — Photo-based electrical installation analysis
-- **Report Writer** — Automated report and documentation generation
-- **Component Identify** — Identify electrical components from photos
-- **Client Explainer** — Generate plain-English explanations for customers
-- **Installation Verify** — Check installations against BS 7671
-- **Wiring Instruction** — Step-by-step wiring guidance
-- **RAMS Generator** — Risk Assessment and Method Statements
-- **Method Statement AI** — Automated method statement creation
-- **Commissioning Specialist** — System commissioning guidance
-- **Installation Planner** — Plan and schedule installation work
+- **Fault Diagnosis** — Describe symptoms and the AI walks through systematic fault finding using BS 7671 testing procedures
+- **Diagram Builder** — Generate professional circuit and wiring diagrams from plain English descriptions
+- **Visual Analysis (Board Scanner)** — Take a photo of a consumer unit and the AI identifies every device, brand, and rating
+- **Report Writer** — Automatically generate professional electrical reports and documentation
+- **Component Identify** — Point your camera at any electrical component and the AI identifies it with specifications
+- **Client Explainer** — Generate plain-English explanations of electrical work for customers who don't understand technical terms
+- **Installation Verify** — Check completed installations against BS 7671 requirements before signing off
+- **Wiring Instructions** — Step-by-step wiring guidance for any circuit type with cable colours and termination details
+- **RAMS Generator** — Quick risk assessment and method statement generation for smaller jobs
+- **Method Statement AI** — Detailed method statement creation for complex work
+- **Commissioning Specialist** — System commissioning procedures and sign-off documentation
+- **Installation Planner** — Plan and schedule installation work with material ordering lists
+
+### Job Vacancies
+Elec-Mate includes an integrated job board where electricians can browse and apply for electrical job vacancies across the UK. Employers can post vacancies and find qualified electricians through the platform.
+
+### ElecID — Digital Professional Identity
+Every electrician on Elec-Mate gets an ElecID — a verified digital professional identity card:
+- Shows qualifications, competent person scheme membership, and professional credentials
+- Shareable via link or QR code — send to customers before arriving on site
+- Builds instant trust and professionalism
+- Verified by Elec-Mate — not self-declared
+- Digital alternative to carrying physical cards
 
 ---
 
@@ -386,6 +418,58 @@ Including: Asbestos Awareness, BMS (Building Management Systems), Business Funda
 
 ---
 
+## What Makes Elec-Mate Different — Killer Features No Other App Has
+
+### One-Click Workflows That Save Hours
+
+**AI Circuit Designer → EIC Certificate in One Click**
+Design a complete consumer unit schedule with the AI Circuit Designer — it selects MCBs/RCBOs, sizes cables, checks discrimination and fault levels. When the design is done, one click generates a pre-filled Electrical Installation Certificate (EIC) with all the circuit details, cable sizes, and protective devices already populated. No re-typing. No copying between apps. Design → Certificate in seconds.
+
+**EICR Observations → Remedial Quote with Cost Estimator**
+During an EICR inspection, log observation codes (C1, C2, C3, FI). When finished, the app automatically generates a remedial works quote from those observations. The AI Cost Engineer estimates materials and labour for each remedial item using live UK trade pricing. The electrician reviews, adjusts if needed, and sends a professional quote to the landlord or customer — all from the same inspection. Inspect → Quote → Get paid, without leaving the app.
+
+**AI Cost Engineer → Professional Quote in Minutes**
+Describe a job in plain English ("rewire 3-bed semi, new consumer unit, 12 circuits, EV charger"). The AI Cost Engineer generates a detailed bill of quantities with materials, labour hours, and pricing based on live UK trade data. One click converts it into a professional branded quote PDF ready to send to the customer.
+
+**30-Page RAMS Documents in 2 Minutes**
+The AI Health & Safety specialist generates complete Risk Assessment and Method Statement documents — 30+ pages of professional, site-specific RAMS — in under 2 minutes. Just describe the job. The AI produces hazard identification, risk ratings, control measures, method statements, emergency procedures, and PPE requirements. Fully compliant with CDM 2015, Electricity at Work Regulations 1989, and Health and Safety at Work Act 1974. No templates to fill in. No copying from old documents.
+
+### Apprentice Features That Change the Game
+
+**AI Portfolio Builder with Auto-Mapped Assessment Criteria**
+Apprentices capture evidence (photos, descriptions, documents) from their on-site work. The AI automatically analyses each piece of evidence and maps it to the correct apprenticeship assessment criteria — no manual mapping, no guessing which criteria each piece of work covers. The portfolio grows organically as the apprentice works, with the AI ensuring complete coverage of all required competencies.
+
+**AM2 Simulator**
+A full simulation of the AM2 practical assessment — the final hurdle to becoming a qualified electrician. Timed exercises matching real exam conditions: consumer unit build, ring final circuit wiring, lighting circuit installation, and fault finding. AI-graded with detailed feedback on what went well and what to improve. Practice unlimited times until confident. No other app offers this.
+
+**EPA Readiness Checker That Reads Your Portfolio**
+The End Point Assessment (EPA) readiness tool analyses the apprentice's entire portfolio and tells them exactly how ready they are. It reads every piece of evidence, checks coverage against all EPA criteria (knowledge, skills, and behaviours), identifies gaps, and provides a readiness score. The apprentice knows exactly what evidence they still need before their EPA. Tutors and employers can see the same dashboard.
+
+**AI Study Coach with Spaced Repetition**
+Personalised study recommendations based on what the apprentice actually knows vs what they need to learn. 24 flashcard sets with spaced repetition scheduling — the AI knows when to resurface each topic for maximum retention. Mock exams for 18th Edition (2382), Inspection & Testing (2391), and AM2. Weakness identification with targeted practice questions.
+
+**Off-the-Job Training Tracker**
+Automatically logs study hours against the 20% ESFA requirement. Generates reports for employers and training providers. Categorises activities into formal training, practical work, and self-study. No more manual timesheets.
+
+### More Features That Set Elec-Mate Apart
+
+**Board Scanner — AI-Powered Consumer Unit Analysis**
+Take a photo of any consumer unit. The AI identifies every device — brand, type, rating — and maps the entire board. Results import directly into EICR or EIC certificates. Turn a 20-minute manual board survey into a 30-second photo scan.
+
+**Customer Portal with Digital Signatures**
+Send certificates, quotes, and invoices to customers via a unique shareable link. Customers view professional documents without needing an app or account. They can digitally sign certificates on their phone. No printing, no scanning, no posting paper documents.
+
+**ElecID — Professional Digital Identity Card**
+A verified digital identity card for electricians. Shows qualifications, competent person scheme membership, and professional credentials. Shareable via link or QR code. Builds trust with customers before you even arrive on site.
+
+**Offline-First — Works Without Internet**
+Every certificate, calculator, and core tool works completely offline. Auto-saves to device storage every 10 seconds. When internet returns, syncs to cloud automatically. Emergency save on app close ensures zero data loss. Built for electricians working in basements, lofts, plant rooms, and rural areas with no signal.
+
+**Mental Health Hub**
+Confidential mental health resources built specifically for the construction trade. Stress management tools, wellbeing check-ins, links to professional support (Samaritans, Mind, Mates in Mind). Because the trade has the highest suicide rate of any UK industry, and Elec-Mate takes that seriously.
+
+---
+
 ## How It Works — Detailed Feature Workflows
 
 ### Certificate Creation Workflow
@@ -415,51 +499,34 @@ Including: Asbestos Awareness, BMS (Building Management Systems), Business Funda
 4. Results displayed with pass/fail indication against regulation limits
 5. Can be used offline on job sites without internet connection
 
-### Apprentice Training Workflow
-1. Apprentice or college tutor assigns courses
-2. Self-paced study through structured module content
-3. Flashcards with spaced repetition for exam revision
-4. Mock exams simulating real exam conditions with timed questions
-5. AI tutor available to explain any concept in plain English
-6. Progress tracked against qualification requirements
-7. Off-the-job training hours logged automatically
-8. Portfolio evidence captured (photos, documents, descriptions) and mapped to apprenticeship criteria
-9. EPA and AM2 simulators with AI grading and feedback
-
-### Board Scanner Workflow
-1. User takes a photo of a consumer unit / distribution board
-2. AI analyses the image identifying devices, brands, and configurations
-3. Returns device identification, circuit details, and condition observations
-4. Results can be imported directly into EICR or EIC certificates
-
 ### Quoting and Invoicing Workflow
 1. User creates a new quote for a customer
-2. AI Cost Engineer can auto-generate material lists and labour estimates
+2. AI Cost Engineer auto-generates material lists and labour estimates from a plain English job description
 3. Professional quote PDF generated and sent to customer
-4. Customer can view and accept quote via shareable link
+4. Customer views and accepts quote via shareable link — no app needed
 5. Accepted quotes convert to jobs and invoices
-6. Invoices support Stripe card payments
+6. Invoices support Stripe card payments — customer pays by card via link
 7. Integrates with Xero and QuickBooks for accounting
 
-### Customer Portal
-1. Electrician sends certificate or quote to customer via unique link
-2. Customer views professional document without needing an account
-3. Customer can digitally sign certificates
-4. All documents stored and accessible via the portal link
-5. Customers can request follow-up work through the portal
+### Apprentice Training Workflow
+1. Apprentice enrols in courses (18th Edition, Level 2/3, AM2 prep, etc.)
+2. Self-paced study through structured module content with AI tutor support
+3. 24 flashcard sets with spaced repetition for exam revision
+4. Mock exams simulating real exam conditions with timed questions
+5. AM2 Simulator for practical assessment practice with AI grading
+6. Progress tracked against qualification requirements
+7. Off-the-job training hours logged automatically against 20% ESFA target
+8. Portfolio evidence captured and AI-mapped to apprenticeship criteria
+9. EPA readiness checker analyses portfolio and shows gaps
+10. College tutors monitor all apprentices from their dashboard
 
-### Offline Capability
-1. All certificates, calculators, and core tools work without internet
-2. Data auto-saves to device storage every 10 seconds
-3. When connection returns, data syncs to cloud automatically
-4. Emergency save on app close ensures no data loss
-5. Ideal for electricians working in basements, lofts, and areas with poor signal
-
-### Mental Health Support
-1. Confidential mental health resources accessible within the app
-2. Stress management tools and wellbeing tips specific to the construction trade
-3. Links to professional support services (Samaritans, Mind, Mates in Mind)
-4. Community features for peer support
+### Employer Dashboard Workflow
+1. Employer adds team members and assigns roles
+2. Track apprentice progress, qualification status, and competency gaps
+3. Assign jobs and monitor completion
+4. Compliance dashboard shows which team members need qualification renewals
+5. Timesheet and leave management
+6. View all certificates generated by the team
 
 ---
 

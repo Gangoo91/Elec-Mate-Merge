@@ -1,8 +1,9 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const ELEVENLABS_API_BASE = 'https://api.elevenlabs.io/v1';
@@ -19,10 +20,10 @@ serve(async (req) => {
     const apiKey = Deno.env.get('ELEVENLABS_API_KEY');
 
     if (!apiKey) {
-      return new Response(
-        JSON.stringify({ error: 'ELEVENLABS_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'ELEVENLABS_API_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('Starting cleanup of ALL ElevenLabs tools...');
@@ -76,7 +77,7 @@ serve(async (req) => {
       }
 
       // Small delay to avoid rate limiting
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
     // Verify remaining tools
@@ -87,26 +88,31 @@ serve(async (req) => {
     const remainingTools = verifyData.tools || [];
 
     return new Response(
-      JSON.stringify({
-        success: true,
-        originalCount: allTools.length,
-        deletedCount,
-        errorCount: errors.length,
-        errors: errors.slice(0, 10), // First 10 errors
-        remainingCount: remainingTools.length,
-        remainingTools: remainingTools.map((t: { id: string; tool_config?: { name?: string } }) => ({
-          id: t.id,
-          name: t.tool_config?.name,
-        })),
-      }, null, 2),
+      JSON.stringify(
+        {
+          success: true,
+          originalCount: allTools.length,
+          deletedCount,
+          errorCount: errors.length,
+          errors: errors.slice(0, 10), // First 10 errors
+          remainingCount: remainingTools.length,
+          remainingTools: remainingTools.map(
+            (t: { id: string; tool_config?: { name?: string } }) => ({
+              id: t.id,
+              name: t.tool_config?.name,
+            })
+          ),
+        },
+        null,
+        2
+      ),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error:', error);
     return new Response(
       JSON.stringify({
-        error: error instanceof Error ? error.message : 'Internal server error'
+        error: error instanceof Error ? error.message : 'Internal server error',
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

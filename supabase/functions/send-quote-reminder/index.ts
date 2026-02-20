@@ -1,10 +1,11 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface QuoteReminderRequest {
@@ -226,7 +227,10 @@ const handler = async (req: Request): Promise<Response> => {
     });
 
     const jwt = authHeader.replace('Bearer ', '').trim();
-    const { data: { user }, error: userError } = await supabase.auth.getUser(jwt);
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser(jwt);
 
     if (userError || !user) {
       throw new Error('Authentication failed');
@@ -318,11 +322,12 @@ const handler = async (req: Request): Promise<Response> => {
       companyProfile?.company_email
     );
 
-    const subjectPrefix = reminderType === 'urgent'
-      ? 'Final Reminder: '
-      : reminderType === 'firm'
-        ? 'Reminder: '
-        : 'Following Up: ';
+    const subjectPrefix =
+      reminderType === 'urgent'
+        ? 'Final Reminder: '
+        : reminderType === 'firm'
+          ? 'Reminder: '
+          : 'Following Up: ';
 
     const subject = `${subjectPrefix}Quote ${quote.quote_number} - ${companyName}`;
     const replyToEmail = companyProfile?.company_email || 'info@elec-mate.com';
@@ -354,18 +359,16 @@ const handler = async (req: Request): Promise<Response> => {
       .eq('id', quoteId);
 
     // Record email event
-    await supabase
-      .from('quote_email_events')
-      .insert({
-        quote_id: quoteId,
-        event_type: 'sent',
-        event_data: {
-          type: 'manual_reminder',
-          reminder_type: reminderType,
-          reminder_number: currentReminderCount + 1,
-          email_id: emailData?.id,
-        },
-      });
+    await supabase.from('quote_email_events').insert({
+      quote_id: quoteId,
+      event_type: 'sent',
+      event_data: {
+        type: 'manual_reminder',
+        reminder_type: reminderType,
+        reminder_number: currentReminderCount + 1,
+        email_id: emailData?.id,
+      },
+    });
 
     const duration = Date.now() - startTime;
     console.log(`✅ Complete in ${duration}ms`);
@@ -380,7 +383,6 @@ const handler = async (req: Request): Promise<Response> => {
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     const duration = Date.now() - startTime;
     console.error(`❌ Error after ${duration}ms:`, error);

@@ -73,7 +73,7 @@ const AGGREGATOR_CONFIG = {
     nextPage: '',
   },
   pagination: { type: 'query' as const, maxPages: 1 },
-  rateLimit: 3000,  // Be polite to aggregator sites
+  rateLimit: 3000, // Be polite to aggregator sites
 };
 
 export class CouponAggregatorScraper extends BaseScraper {
@@ -159,21 +159,25 @@ export class CouponAggregatorScraper extends BaseScraper {
 
       offers.forEach((offer) => {
         // Look for actual code (not just "deal" offers)
-        const codeEl = offer.querySelector('.code, .voucher-code, [data-clipboard-text], input[readonly]');
+        const codeEl = offer.querySelector(
+          '.code, .voucher-code, [data-clipboard-text], input[readonly]'
+        );
         const titleEl = offer.querySelector('.offer-title, .voucher-title, h3, h4');
         const discountEl = offer.querySelector('.discount, .saving, .offer-amount');
         const expiryEl = offer.querySelector('.expiry, .expires, .valid-until');
         const verifiedEl = offer.querySelector('.verified, .tested, [data-verified="true"]');
 
         // Get the code
-        let code = codeEl?.textContent?.trim() ||
-                   codeEl?.getAttribute('data-clipboard-text') ||
-                   (codeEl as HTMLInputElement)?.value || null;
+        let code =
+          codeEl?.textContent?.trim() ||
+          codeEl?.getAttribute('data-clipboard-text') ||
+          (codeEl as HTMLInputElement)?.value ||
+          null;
 
         // Clean up code (remove "Copy" text etc)
         if (code) {
           code = code.replace(/copy|click|reveal/gi, '').trim();
-          if (code.length < 3 || code.length > 30) code = null;  // Invalid code
+          if (code.length < 3 || code.length > 30) code = null; // Invalid code
         }
 
         const description = titleEl?.textContent?.trim() || '';
@@ -196,7 +200,9 @@ export class CouponAggregatorScraper extends BaseScraper {
     for (const item of extractedCoupons) {
       if (!item.code) continue;
 
-      const { discountType, discountValue } = this.parseDiscount(item.discountText || item.description);
+      const { discountType, discountValue } = this.parseDiscount(
+        item.discountText || item.description
+      );
       const validUntil = item.expiryText ? this.parseExpiryDate(item.expiryText) : null;
 
       coupons.push({
@@ -245,8 +251,7 @@ export class CouponAggregatorScraper extends BaseScraper {
         const discountEl = offer.querySelector('.discount, .saving');
         const expiryEl = offer.querySelector('.expiry, .valid');
 
-        let code = codeEl?.textContent?.trim() ||
-                   codeEl?.getAttribute('data-code') || null;
+        let code = codeEl?.textContent?.trim() || codeEl?.getAttribute('data-code') || null;
 
         if (code) {
           code = code.replace(/copy|click|get code/gi, '').trim();
@@ -271,7 +276,9 @@ export class CouponAggregatorScraper extends BaseScraper {
     for (const item of extractedCoupons) {
       if (!item.code) continue;
 
-      const { discountType, discountValue } = this.parseDiscount(item.discountText || item.description);
+      const { discountType, discountValue } = this.parseDiscount(
+        item.discountText || item.description
+      );
       const validUntil = item.expiryText ? this.parseExpiryDate(item.expiryText) : null;
 
       coupons.push({
@@ -292,7 +299,10 @@ export class CouponAggregatorScraper extends BaseScraper {
   /**
    * Parse discount from text
    */
-  private parseDiscount(text: string): { discountType: 'percentage' | 'fixed' | 'free_delivery'; discountValue: number } {
+  private parseDiscount(text: string): {
+    discountType: 'percentage' | 'fixed' | 'free_delivery';
+    discountValue: number;
+  } {
     const lowerText = text.toLowerCase();
 
     if (lowerText.includes('free delivery') || lowerText.includes('free shipping')) {
@@ -336,8 +346,18 @@ export class CouponAggregatorScraper extends BaseScraper {
     ];
 
     const months: Record<string, number> = {
-      january: 0, february: 1, march: 2, april: 3, may: 4, june: 5,
-      july: 6, august: 7, september: 8, october: 9, november: 10, december: 11,
+      january: 0,
+      february: 1,
+      march: 2,
+      april: 3,
+      may: 4,
+      june: 5,
+      july: 6,
+      august: 7,
+      september: 8,
+      october: 9,
+      november: 10,
+      december: 11,
     };
 
     for (const pattern of patterns) {
@@ -349,7 +369,7 @@ export class CouponAggregatorScraper extends BaseScraper {
             const day = parseInt(match[1]);
             const month = parseInt(match[2]) - 1;
             let year = parseInt(match[3]);
-            if (year < 100) year += 2000;  // Handle YY format
+            if (year < 100) year += 2000; // Handle YY format
             return new Date(year, month, day, 23, 59, 59);
           }
           // Month name format
@@ -385,9 +405,11 @@ export class CouponAggregatorScraper extends BaseScraper {
       const existing = uniqueMap.get(key);
 
       // Keep if new or if this one has better data
-      if (!existing ||
-          (coupon.validUntil && !existing.validUntil) ||
-          (coupon.discountValue > existing.discountValue)) {
+      if (
+        !existing ||
+        (coupon.validUntil && !existing.validUntil) ||
+        coupon.discountValue > existing.discountValue
+      ) {
         uniqueMap.set(key, coupon);
       }
     }
@@ -399,7 +421,7 @@ export class CouponAggregatorScraper extends BaseScraper {
    * Get coupons for a specific supplier
    */
   async scrapeCouponsForSupplier(supplierSlug: string): Promise<ScrapedCoupon[]> {
-    const supplier = SUPPLIER_COUPON_SOURCES.find(s => s.slug === supplierSlug);
+    const supplier = SUPPLIER_COUPON_SOURCES.find((s) => s.slug === supplierSlug);
     if (!supplier) return [];
 
     const page = await this.createPage();

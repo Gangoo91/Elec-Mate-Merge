@@ -1,10 +1,11 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface PDFChunk {
@@ -66,11 +67,11 @@ serve(async (req) => {
   }
 
   try {
-    const { chunks, source } = await req.json() as { 
-      chunks: PDFChunk[], 
-      source: string
+    const { chunks, source } = (await req.json()) as {
+      chunks: PDFChunk[];
+      source: string;
     };
-    
+
     const openAIApiKey = Deno.env.get('OPENAI_API_KEY');
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -88,7 +89,9 @@ serve(async (req) => {
     for (const chunk of chunks) {
       const tokens = estimateTokens(chunk.content);
       if (tokens > 4000) {
-        console.log(`📦 Splitting oversized chunk: ${chunk.regulation_number || chunk.section} (~${tokens} tokens)`);
+        console.log(
+          `📦 Splitting oversized chunk: ${chunk.regulation_number || chunk.section} (~${tokens} tokens)`
+        );
         const splitParts = splitContent(chunk.content, 4000);
         splitParts.forEach((part, idx) => {
           expandedChunks.push({
@@ -96,7 +99,7 @@ serve(async (req) => {
             content: part,
             chunk_index: idx + 1,
             total_chunks: splitParts.length,
-            section: chunk.chunk_index 
+            section: chunk.chunk_index
               ? `${chunk.section} (Part ${chunk.chunk_index}.${idx + 1})`
               : `${chunk.section} (Part ${idx + 1} of ${splitParts.length})`,
           });
@@ -106,7 +109,9 @@ serve(async (req) => {
       }
     }
 
-    console.log(`📊 Expanded ${chunks.length} chunks to ${expandedChunks.length} processable chunks`);
+    console.log(
+      `📊 Expanded ${chunks.length} chunks to ${expandedChunks.length} processable chunks`
+    );
 
     // Process in smaller batches to reduce risk
     const batchSize = 50;
@@ -114,34 +119,36 @@ serve(async (req) => {
 
     for (let i = 0; i < expandedChunks.length; i += batchSize) {
       const batch = expandedChunks.slice(i, i + batchSize);
-      
+
       // Final safety check
-      const validBatch = batch.filter(chunk => estimateTokens(chunk.content) <= 4000);
+      const validBatch = batch.filter((chunk) => estimateTokens(chunk.content) <= 4000);
       const skippedCount = batch.length - validBatch.length;
-      
+
       if (skippedCount > 0) {
-        console.warn(`⚠️ Skipping ${skippedCount} chunks in batch ${Math.floor(i / batchSize) + 1}`);
+        console.warn(
+          `⚠️ Skipping ${skippedCount} chunks in batch ${Math.floor(i / batchSize) + 1}`
+        );
       }
-      
+
       if (validBatch.length === 0) {
         console.log(`Batch ${Math.floor(i / batchSize) + 1}: All chunks oversized, skipping`);
         continue;
       }
-      
+
       // Generate embeddings with retry logic
       let embeddingResponse;
       let retryAttempt = 0;
-      
+
       while (retryAttempt < 2) {
         embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${openAIApiKey}`,
+            Authorization: `Bearer ${openAIApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             model: 'text-embedding-3-small',
-            input: validBatch.map(chunk => chunk.content),
+            input: validBatch.map((chunk) => chunk.content),
           }),
         });
 
@@ -151,17 +158,21 @@ serve(async (req) => {
         if (embeddingResponse.status === 400) {
           const errorText = await embeddingResponse.text();
           console.error(`❌ OpenAI API error ${embeddingResponse.status}:`, errorText);
-          
+
           if (errorText.includes('maximum context length') && retryAttempt === 0) {
             // Find and log the largest chunk
-            const largest = validBatch.reduce((max, chunk) => 
+            const largest = validBatch.reduce((max, chunk) =>
               estimateTokens(chunk.content) > estimateTokens(max.content) ? chunk : max
             );
-            console.error(`🔍 Largest chunk: ${largest.regulation_number || largest.section} (~${estimateTokens(largest.content)} tokens)`);
+            console.error(
+              `🔍 Largest chunk: ${largest.regulation_number || largest.section} (~${estimateTokens(largest.content)} tokens)`
+            );
             console.error(`📝 Content preview: ${largest.content.substring(0, 200)}...`);
-            throw new Error(`Context length exceeded. Largest chunk: ${largest.regulation_number || largest.section} with ~${estimateTokens(largest.content)} tokens`);
+            throw new Error(
+              `Context length exceeded. Largest chunk: ${largest.regulation_number || largest.section} with ~${estimateTokens(largest.content)} tokens`
+            );
           }
-          
+
           throw new Error(`OpenAI API error: ${embeddingResponse.status} - ${errorText}`);
         }
 
@@ -169,13 +180,13 @@ serve(async (req) => {
       }
 
       if (!embeddingResponse || !embeddingResponse.ok) {
-        const errorText = await embeddingResponse?.text() || 'Unknown error';
+        const errorText = (await embeddingResponse?.text()) || 'Unknown error';
         console.error(`OpenAI API error ${embeddingResponse?.status}:`, errorText);
         throw new Error(`OpenAI API error: ${embeddingResponse?.status} - ${errorText}`);
       }
 
       const embeddingData = await embeddingResponse.json();
-      
+
       // Insert into appropriate table
       if (source === 'bs7671') {
         const records = validBatch.map((chunk, idx) => ({
@@ -186,9 +197,7 @@ serve(async (req) => {
           metadata: chunk.metadata,
         }));
 
-        const { error } = await supabase
-          .from('bs7671_embeddings')
-          .insert(records);
+        const { error } = await supabase.from('bs7671_embeddings').insert(records);
 
         if (error) throw error;
       } else if (source === 'design-guide') {
@@ -200,9 +209,7 @@ serve(async (req) => {
           metadata: chunk.metadata,
         }));
 
-        const { error } = await supabase
-          .from('design_knowledge')
-          .insert(records);
+        const { error } = await supabase.from('design_knowledge').insert(records);
 
         if (error) throw error;
       } else {
@@ -214,32 +221,37 @@ serve(async (req) => {
           metadata: chunk.metadata,
         }));
 
-        const { error } = await supabase
-          .from('installation_knowledge')
-          .insert(records);
+        const { error } = await supabase.from('installation_knowledge').insert(records);
 
         if (error) throw error;
       }
 
       processedCount += validBatch.length;
-      console.log(`Processed ${processedCount}/${chunks.length} chunks (${batch.length - validBatch.length} skipped)`);
+      console.log(
+        `Processed ${processedCount}/${chunks.length} chunks (${batch.length - validBatch.length} skipped)`
+      );
     }
 
-    return new Response(JSON.stringify({ 
-      success: true,
-      processed: processedCount,
-      source 
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
-
+    return new Response(
+      JSON.stringify({
+        success: true,
+        processed: processedCount,
+        source,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('Error processing PDF embeddings:', error);
-    return new Response(JSON.stringify({ 
-      error: error instanceof Error ? error.message : 'Failed to process PDF' 
-    }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    });
+    return new Response(
+      JSON.stringify({
+        error: error instanceof Error ? error.message : 'Failed to process PDF',
+      }),
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

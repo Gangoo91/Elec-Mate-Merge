@@ -11,19 +11,124 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 
 // ---------- Stop words for keyword filtering ----------
 const STOP_WORDS = new Set([
-  'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-  'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been',
-  'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would',
-  'could', 'should', 'may', 'might', 'shall', 'can', 'need', 'must',
-  'it', 'its', 'this', 'that', 'these', 'those', 'they', 'them', 'their',
-  'he', 'she', 'his', 'her', 'we', 'our', 'you', 'your', 'my', 'me',
-  'who', 'which', 'what', 'when', 'where', 'how', 'why', 'all', 'each',
-  'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such', 'no',
-  'not', 'only', 'same', 'so', 'than', 'too', 'very', 'just', 'because',
-  'as', 'into', 'through', 'during', 'before', 'after', 'above', 'below',
-  'between', 'out', 'off', 'over', 'under', 'again', 'then', 'once',
-  'here', 'there', 'about', 'up', 'if', 'also', 'any', 'etc', 'got',
-  'ran', 'did', 'put', 'set', 'get', 'let', 'say', 'use', 'used',
+  'the',
+  'a',
+  'an',
+  'and',
+  'or',
+  'but',
+  'in',
+  'on',
+  'at',
+  'to',
+  'for',
+  'of',
+  'with',
+  'by',
+  'from',
+  'is',
+  'are',
+  'was',
+  'were',
+  'be',
+  'been',
+  'being',
+  'have',
+  'has',
+  'had',
+  'do',
+  'does',
+  'did',
+  'will',
+  'would',
+  'could',
+  'should',
+  'may',
+  'might',
+  'shall',
+  'can',
+  'need',
+  'must',
+  'it',
+  'its',
+  'this',
+  'that',
+  'these',
+  'those',
+  'they',
+  'them',
+  'their',
+  'he',
+  'she',
+  'his',
+  'her',
+  'we',
+  'our',
+  'you',
+  'your',
+  'my',
+  'me',
+  'who',
+  'which',
+  'what',
+  'when',
+  'where',
+  'how',
+  'why',
+  'all',
+  'each',
+  'every',
+  'both',
+  'few',
+  'more',
+  'most',
+  'other',
+  'some',
+  'such',
+  'no',
+  'not',
+  'only',
+  'same',
+  'so',
+  'than',
+  'too',
+  'very',
+  'just',
+  'because',
+  'as',
+  'into',
+  'through',
+  'during',
+  'before',
+  'after',
+  'above',
+  'below',
+  'between',
+  'out',
+  'off',
+  'over',
+  'under',
+  'again',
+  'then',
+  'once',
+  'here',
+  'there',
+  'about',
+  'up',
+  'if',
+  'also',
+  'any',
+  'etc',
+  'got',
+  'ran',
+  'did',
+  'put',
+  'set',
+  'get',
+  'let',
+  'say',
+  'use',
+  'used',
 ]);
 
 // ---------- Tool schema for structured output ----------
@@ -31,8 +136,7 @@ const analysisTool = {
   type: 'function' as const,
   function: {
     name: 'portfolio_evidence_analysis',
-    description:
-      'Structured analysis of portfolio evidence with assessment criteria matching',
+    description: 'Structured analysis of portfolio evidence with assessment criteria matching',
     parameters: {
       type: 'object',
       properties: {
@@ -60,8 +164,7 @@ const analysisTool = {
             },
             required: ['unitCode', 'acCode', 'acText', 'confidence', 'reason'],
           },
-          description:
-            'Assessment criteria this evidence could satisfy, with confidence 0-100',
+          description: 'Assessment criteria this evidence could satisfy, with confidence 0-100',
         },
         qualityTips: {
           type: 'array',
@@ -188,13 +291,10 @@ serve(async (req: Request) => {
     const qualificationCode: string | null = body.qualification_code || null;
 
     if (!evidenceUrl) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Evidence URL is required' }),
-        {
-          status: 400,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Evidence URL is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // ---------- RAG: search qualification requirements ----------
@@ -215,14 +315,11 @@ serve(async (req: Request) => {
 
     if (qualificationCode && uniqueKeywords.length > 0) {
       try {
-        const { data: qualData } = await supabase.rpc(
-          'search_qualification_requirements',
-          {
-            p_keywords: uniqueKeywords,
-            p_qualification_code: qualificationCode,
-            p_limit: 10,
-          }
-        );
+        const { data: qualData } = await supabase.rpc('search_qualification_requirements', {
+          p_keywords: uniqueKeywords,
+          p_qualification_code: qualificationCode,
+          p_limit: 10,
+        });
 
         if (qualData && qualData.length > 0) {
           ragContext += `\n\n--- Qualification Requirements (${qualificationCode}) ---\n`;
@@ -234,10 +331,7 @@ serve(async (req: Request) => {
           }
         }
       } catch (err) {
-        console.warn(
-          '[analyze-portfolio-evidence] Qualification search failed:',
-          err
-        );
+        console.warn('[analyze-portfolio-evidence] Qualification search failed:', err);
       }
     }
 
@@ -317,11 +411,7 @@ ${ragContext}`;
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(
-        '[analyze-portfolio-evidence] OpenAI error:',
-        response.status,
-        errorText
-      );
+      console.error('[analyze-portfolio-evidence] OpenAI error:', response.status, errorText);
       throw new Error(`OpenAI API error: ${response.status}`);
     }
 
@@ -401,11 +491,7 @@ ${ragContext}`;
       throw new Error('No usable response from AI');
     }
 
-    console.log(
-      '[analyze-portfolio-evidence] Analysis complete in',
-      duration,
-      'ms'
-    );
+    console.log('[analyze-portfolio-evidence] Analysis complete in', duration, 'ms');
 
     return new Response(
       JSON.stringify({

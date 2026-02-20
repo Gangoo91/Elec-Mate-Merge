@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -13,27 +14,32 @@ serve(async (req) => {
 
   try {
     console.log('⚠️ This function is deprecated. Use firecrawl-education-scraper instead.');
-    
-    // Return a response directing to the new function
-    return new Response(JSON.stringify({
-      success: false,
-      error: 'This function has been replaced by firecrawl-education-scraper',
-      redirect: 'Use firecrawl-education-scraper for live education data',
-      timestamp: new Date().toISOString()
-    }), {
-      status: 410, // Gone
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
 
+    // Return a response directing to the new function
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'This function has been replaced by firecrawl-education-scraper',
+        redirect: 'Use firecrawl-education-scraper for live education data',
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        status: 410, // Gone
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   } catch (error) {
     console.error('❌ Error in deprecated live education aggregator:', error);
-    return new Response(JSON.stringify({
-      success: false,
-      error: 'Function deprecated',
-      timestamp: new Date().toISOString()
-    }), {
-      status: 410,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
+    return new Response(
+      JSON.stringify({
+        success: false,
+        error: 'Function deprecated',
+        timestamp: new Date().toISOString(),
+      }),
+      {
+        status: 410,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      }
+    );
   }
 });

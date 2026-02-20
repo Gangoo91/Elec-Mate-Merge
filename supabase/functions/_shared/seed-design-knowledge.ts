@@ -7,7 +7,7 @@ export async function seedDesignKnowledge(supabase: any, logger?: any) {
   try {
     // Delete corrupt entries
     await supabase.from('design_knowledge').delete().ilike('topic', 'Section at line%');
-    
+
     const entries = [
       {
         topic: 'Voltage Drop Calculation - BS 7671 Appendix 4',
@@ -32,7 +32,7 @@ APPENDIX 4 TABLE (mV/A/m for 70°C thermoplastic insulated cables):
 1.0mm² = 44, 1.5mm² = 29, 2.5mm² = 18, 4mm² = 11, 6mm² = 7.3
 10mm² = 4.4, 16mm² = 2.8, 25mm² = 1.75, 35mm² = 1.25, 50mm² = 0.93`,
         source: 'bs7671_calculations',
-        metadata: { tags: ['voltage drop', 'appendix 4', 'mV/A/m', 'cable sizing'] }
+        metadata: { tags: ['voltage drop', 'appendix 4', 'mV/A/m', 'cable sizing'] },
       },
       {
         topic: 'Earth Fault Loop Impedance (Zs) Calculation',
@@ -68,7 +68,7 @@ TABLE 54.7 CONDUCTOR RESISTANCE (mΩ/m at 20°C):
 1.0mm² = 18.1, 1.5mm² = 12.1, 2.5mm² = 7.41, 4mm² = 4.61, 6mm² = 3.08
 10mm² = 1.83, 16mm² = 1.15, 25mm² = 0.727`,
         source: 'bs7671_calculations',
-        metadata: { tags: ['zs', 'earth fault', 'r1+r2', 'impedance', 'table 54.7'] }
+        metadata: { tags: ['zs', 'earth fault', 'r1+r2', 'impedance', 'table 54.7'] },
       },
       {
         topic: 'Ring Final Circuit Calculation - Appendix 15',
@@ -101,10 +101,10 @@ If voltage drop exceeds limit:
 - Use larger cable (4mm² or 6mm²)
 - Reduce protection rating if needed`,
         source: 'bs7671_calculations',
-        metadata: { tags: ['ring final', 'appendix 15', 'socket circuits', '2.5mm²'] }
-      }
+        metadata: { tags: ['ring final', 'appendix 15', 'socket circuits', '2.5mm²'] },
+      },
     ];
-    
+
     // Insert entries using the new unique constraint
     for (const entry of entries) {
       // First check if entry exists
@@ -113,14 +113,14 @@ If voltage drop exceeds limit:
         .select('id')
         .eq('topic', entry.topic)
         .single();
-      
+
       if (existing) {
         // Update existing entry
         const { error } = await supabase
           .from('design_knowledge')
           .update(entry)
           .eq('topic', entry.topic);
-        
+
         if (error) {
           logger?.warn('Failed to update design knowledge entry', { topic: entry.topic, error });
         } else {
@@ -128,10 +128,8 @@ If voltage drop exceeds limit:
         }
       } else {
         // Insert new entry
-        const { error } = await supabase
-          .from('design_knowledge')
-          .insert(entry);
-        
+        const { error } = await supabase.from('design_knowledge').insert(entry);
+
         if (error) {
           logger?.warn('Failed to insert design knowledge entry', { topic: entry.topic, error });
         } else {
@@ -139,7 +137,7 @@ If voltage drop exceeds limit:
         }
       }
     }
-    
+
     logger?.info('✅ Design knowledge seeding complete');
     return true;
   } catch (error) {

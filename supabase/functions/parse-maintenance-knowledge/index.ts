@@ -1,9 +1,10 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -14,7 +15,7 @@ serve(async (req) => {
   try {
     const { fileContent, text } = await req.json();
     const content = fileContent || text;
-    
+
     if (!content) {
       throw new Error('No file content provided');
     }
@@ -37,13 +38,13 @@ serve(async (req) => {
     // Force split by character limit (hard boundary)
     const forceChunkBySize = (text: string): string[] => {
       if (text.length <= MAX_CHUNK_SIZE) return [text];
-      
+
       const chunks: string[] = [];
       let start = 0;
-      
+
       while (start < text.length) {
         let end = Math.min(start + MAX_CHUNK_SIZE, text.length);
-        
+
         // Find last space before limit to avoid word splitting
         if (end < text.length) {
           const lastSpace = text.lastIndexOf(' ', end);
@@ -51,29 +52,29 @@ serve(async (req) => {
             end = lastSpace;
           }
         }
-        
+
         chunks.push(text.slice(start, end).trim());
         start = end + 1;
       }
-      
+
       return chunks;
     };
 
     // Helper function to split large paragraphs intelligently (NO RECURSION)
     const splitLargeParagraph = (text: string, maxSize: number = 900): string[] => {
       if (text.length <= maxSize) return [text];
-      
+
       // Try splitting by sentences first
       const sentencePattern = /[^.!?]+[.!?]+(?:\s|$)/g;
       const sentences = text.match(sentencePattern) || [];
-      
+
       // Fallback: if no sentences found, split by newlines or words
       if (sentences.length === 0) {
         const lines = text.split(/\n/);
         if (lines.length > 1) {
           const chunks: string[] = [];
           let currentChunk = '';
-          
+
           for (const line of lines) {
             if (currentChunk.length + line.length < maxSize) {
               currentChunk += line + '\n';
@@ -85,12 +86,12 @@ serve(async (req) => {
           if (currentChunk.trim()) chunks.push(currentChunk.trim());
           return chunks;
         }
-        
+
         // Last resort: split at word boundaries
         const words = text.split(/\s+/);
         const chunks: string[] = [];
         let currentChunk = '';
-        
+
         for (const word of words) {
           // Handle mega-words that exceed maxSize
           if (word.length > maxSize) {
@@ -99,7 +100,7 @@ serve(async (req) => {
             currentChunk = '';
             continue;
           }
-          
+
           if (currentChunk.length + word.length + 1 < maxSize) {
             currentChunk += (currentChunk ? ' ' : '') + word;
           } else {
@@ -110,11 +111,11 @@ serve(async (req) => {
         if (currentChunk.trim()) chunks.push(currentChunk.trim());
         return chunks;
       }
-      
+
       // Build chunks from sentences
       const chunks: string[] = [];
       let currentChunk = '';
-      
+
       for (const sentence of sentences) {
         if (currentChunk.length + sentence.length < maxSize) {
           currentChunk += sentence;
@@ -124,7 +125,7 @@ serve(async (req) => {
         }
       }
       if (currentChunk.trim()) chunks.push(currentChunk.trim());
-      
+
       // CRITICAL: Replace recursion with forceChunkBySize
       const finalChunks: string[] = [];
       for (const chunk of chunks) {
@@ -134,14 +135,12 @@ serve(async (req) => {
           finalChunks.push(chunk);
         }
       }
-      
+
       return finalChunks;
     };
 
     // Smart chunking: Split by paragraphs, then split large paragraphs
-    const paragraphs = content
-      .split(/\n\n+/)
-      .filter((p: string) => p.trim().length > 50);
+    const paragraphs = content.split(/\n\n+/).filter((p: string) => p.trim().length > 50);
 
     let chunks: string[] = [];
 
@@ -156,29 +155,33 @@ serve(async (req) => {
     }
 
     // CRITICAL: Apply hard size limit as final safety check
-    chunks = chunks.flatMap(chunk => 
+    chunks = chunks.flatMap((chunk) =>
       chunk.length > MAX_CHUNK_SIZE ? forceChunkBySize(chunk) : [chunk]
     );
 
     console.log(`📊 Created ${chunks.length} chunks`);
-    
+
     // Log chunk statistics with validation
     if (chunks.length > 0) {
       const avgChunkSize = Math.round(chunks.reduce((sum, c) => sum + c.length, 0) / chunks.length);
-      const maxChunkSize = Math.max(...chunks.map(c => c.length));
-      const minChunkSize = Math.min(...chunks.map(c => c.length));
-      console.log(`📏 Chunk stats - Avg: ${avgChunkSize} chars, Min: ${minChunkSize}, Max: ${maxChunkSize}`);
-      
+      const maxChunkSize = Math.max(...chunks.map((c) => c.length));
+      const minChunkSize = Math.min(...chunks.map((c) => c.length));
+      console.log(
+        `📏 Chunk stats - Avg: ${avgChunkSize} chars, Min: ${minChunkSize}, Max: ${maxChunkSize}`
+      );
+
       // Validation warning
-      const oversizedChunks = chunks.filter(c => c.length > MAX_CHUNK_SIZE);
+      const oversizedChunks = chunks.filter((c) => c.length > MAX_CHUNK_SIZE);
       if (oversizedChunks.length > 0) {
-        console.error(`⚠️ WARNING: ${oversizedChunks.length} chunks exceed ${MAX_CHUNK_SIZE} chars!`);
+        console.error(
+          `⚠️ WARNING: ${oversizedChunks.length} chunks exceed ${MAX_CHUNK_SIZE} chars!`
+        );
       }
     }
 
     // Process chunks and generate embeddings
     let processedCount = 0;
-    
+
     for (const chunk of chunks) {
       // Preflight token estimation (safety check)
       const estimatedTokens = Math.ceil(chunk.length / 4);
@@ -186,22 +189,25 @@ serve(async (req) => {
         console.warn(`⚠️ Chunk too large (~${estimatedTokens} tokens), skipping...`);
         continue;
       }
-      
+
       // Extract metadata using simple keyword detection
       const lowerChunk = chunk.toLowerCase();
-      
+
       const metadata: any = {};
-      
+
       // COMPREHENSIVE Equipment type detection with priority matching
       const equipmentPatterns = [
         // Protection devices
-        { patterns: ['consumer unit', 'distribution board', 'db board', 'ccu'], type: 'consumer_unit' },
+        {
+          patterns: ['consumer unit', 'distribution board', 'db board', 'ccu'],
+          type: 'consumer_unit',
+        },
         { patterns: ['rcbo'], type: 'rcbo' },
         { patterns: ['rcd', 'residual current'], type: 'rcd' },
         { patterns: ['mcb', 'miniature circuit breaker'], type: 'mcb' },
         { patterns: ['surge protection', 'spd'], type: 'surge_protector' },
         { patterns: ['isolator', 'isolation switch'], type: 'isolator' },
-        
+
         // Power systems
         { patterns: ['ups', 'uninterruptible power'], type: 'ups' },
         { patterns: ['generator', 'standby power'], type: 'generator' },
@@ -209,12 +215,15 @@ serve(async (req) => {
         { patterns: ['battery', 'energy storage'], type: 'battery_system' },
         { patterns: ['transformer'], type: 'transformer' },
         { patterns: ['switchgear', 'switch gear'], type: 'switchgear' },
-        
+
         // Renewable energy
         { patterns: ['solar panel', 'photovoltaic', 'pv system', 'pv array'], type: 'solar_panel' },
-        { patterns: ['ev charger', 'ev charging', 'electric vehicle charger', 'charging point'], type: 'ev_charger' },
+        {
+          patterns: ['ev charger', 'ev charging', 'electric vehicle charger', 'charging point'],
+          type: 'ev_charger',
+        },
         { patterns: ['wind turbine'], type: 'wind_turbine' },
-        
+
         // Loads & appliances
         { patterns: ['shower', 'electric shower'], type: 'shower' },
         { patterns: ['cooker', 'electric cooker', 'oven'], type: 'cooker' },
@@ -222,49 +231,66 @@ serve(async (req) => {
         { patterns: ['motor', 'electric motor', 'motor drive'], type: 'motor' },
         { patterns: ['pump'], type: 'pump' },
         { patterns: ['air conditioning', 'hvac'], type: 'hvac' },
-        
+
         // Wiring & distribution
         { patterns: ['socket', 'outlet', 'receptacle', 'power point'], type: 'socket_outlet' },
         { patterns: ['cable', 'wiring', 'conductor'], type: 'cable' },
         { patterns: ['busbar', 'bus bar'], type: 'busbar' },
         { patterns: ['junction box', 'enclosure'], type: 'junction_box' },
-        
+
         // Lighting
         { patterns: ['lighting', 'luminaire', 'light fitting'], type: 'lighting' },
         { patterns: ['emergency lighting', 'emergency light'], type: 'emergency_lighting' },
         { patterns: ['led', 'led lighting'], type: 'led_lighting' },
-        
+
         // Safety & detection
         { patterns: ['fire alarm', 'smoke detector', 'heat detector'], type: 'fire_alarm' },
         { patterns: ['earthing', 'earth electrode', 'grounding'], type: 'earthing_system' },
         { patterns: ['bonding'], type: 'bonding' },
-        
+
         // Metering & monitoring
         { patterns: ['meter', 'metering', 'electricity meter'], type: 'meter' },
         { patterns: ['monitoring system', 'energy monitor'], type: 'monitoring' },
       ];
-      
+
       // Match against patterns in priority order
       let foundType = 'electrical_equipment'; // Default
       for (const { patterns, type } of equipmentPatterns) {
-        if (patterns.some(pattern => lowerChunk.includes(pattern))) {
+        if (patterns.some((pattern) => lowerChunk.includes(pattern))) {
           foundType = type;
           break; // Use first match (highest priority)
         }
       }
-      
+
       // Validation: Only accept meaningful equipment types
-      const invalidTypes = ['introduction', 'ombibed', 'contents', 'index', 'chapter', 'section', 'appendix', 'glossary'];
-      if (!invalidTypes.some(invalid => foundType.toLowerCase().includes(invalid))) {
+      const invalidTypes = [
+        'introduction',
+        'ombibed',
+        'contents',
+        'index',
+        'chapter',
+        'section',
+        'appendix',
+        'glossary',
+      ];
+      if (!invalidTypes.some((invalid) => foundType.toLowerCase().includes(invalid))) {
         metadata.equipment_type = foundType;
       } else {
         metadata.equipment_type = 'electrical_equipment'; // Safe default for invalid extractions
       }
 
       // Maintenance type detection
-      if (lowerChunk.includes('annual') || lowerChunk.includes('preventive') || lowerChunk.includes('scheduled')) {
+      if (
+        lowerChunk.includes('annual') ||
+        lowerChunk.includes('preventive') ||
+        lowerChunk.includes('scheduled')
+      ) {
         metadata.maintenance_type = 'preventive';
-      } else if (lowerChunk.includes('fault') || lowerChunk.includes('diagnostic') || lowerChunk.includes('troubleshoot')) {
+      } else if (
+        lowerChunk.includes('fault') ||
+        lowerChunk.includes('diagnostic') ||
+        lowerChunk.includes('troubleshoot')
+      ) {
         metadata.maintenance_type = 'diagnostic';
       } else if (lowerChunk.includes('repair') || lowerChunk.includes('reactive')) {
         metadata.maintenance_type = 'reactive';
@@ -278,7 +304,7 @@ serve(async (req) => {
       const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${openAIApiKey}`,
+          Authorization: `Bearer ${openAIApiKey}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -296,15 +322,13 @@ serve(async (req) => {
       const embedding = embeddingData.data[0].embedding;
 
       // Insert into database
-      const { error } = await supabase
-        .from('maintenance_knowledge')
-        .insert({
-          topic,
-          content: chunk,
-          source: 'uploaded_txt',
-          metadata,
-          embedding,
-        });
+      const { error } = await supabase.from('maintenance_knowledge').insert({
+        topic,
+        content: chunk,
+        source: 'uploaded_txt',
+        metadata,
+        embedding,
+      });
 
       if (error) {
         console.error('Insert error:', error);
@@ -326,15 +350,11 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { 
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-      }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

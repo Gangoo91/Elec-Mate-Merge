@@ -1,10 +1,11 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from '../_shared/deps.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // System prompt for educational tutor
@@ -61,235 +62,271 @@ Remember: This is educational guidance that helps apprentices pass exams and bec
 
 // Tool schema for structured educational guidance
 const TUTOR_TOOL_SCHEMA = {
-  name: "provide_educational_guidance",
-  description: "Provide comprehensive educational guidance in PDF-ready learning report format",
+  name: 'provide_educational_guidance',
+  description: 'Provide comprehensive educational guidance in PDF-ready learning report format',
   parameters: {
-    type: "object",
+    type: 'object',
     properties: {
       response: {
-        type: "string",
-        description: "Comprehensive educational overview (300-400 words) in UK English. Explain the learning approach and educational context."
+        type: 'string',
+        description:
+          'Comprehensive educational overview (300-400 words) in UK English. Explain the learning approach and educational context.',
       },
       conceptExplanation: {
-        type: "object",
-        description: "Multi-level concept explanation",
+        type: 'object',
+        description: 'Multi-level concept explanation',
         properties: {
-          simpleExplanation: { type: "string", description: "Explain in plain English (2-3 sentences)" },
-          technicalDefinition: { type: "string", description: "Formal technical definition using correct terminology" },
-          realWorldAnalogy: { type: "string", description: "Relatable analogy or example" },
-          commonMisconceptions: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Common mistakes or misunderstandings to avoid"
-          }
+          simpleExplanation: {
+            type: 'string',
+            description: 'Explain in plain English (2-3 sentences)',
+          },
+          technicalDefinition: {
+            type: 'string',
+            description: 'Formal technical definition using correct terminology',
+          },
+          realWorldAnalogy: { type: 'string', description: 'Relatable analogy or example' },
+          commonMisconceptions: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Common mistakes or misunderstandings to avoid',
+          },
         },
-        required: ["simpleExplanation", "technicalDefinition", "realWorldAnalogy"]
+        required: ['simpleExplanation', 'technicalDefinition', 'realWorldAnalogy'],
       },
       keyPoints: {
-        type: "array",
-        description: "Essential facts and must-know points",
+        type: 'array',
+        description: 'Essential facts and must-know points',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            point: { type: "string", description: "Key fact or concept" },
-            why: { type: "string", description: "Why this matters (safety/compliance/practical)" },
-            examRelevance: { type: "string", description: "How this appears in exams" }
+            point: { type: 'string', description: 'Key fact or concept' },
+            why: { type: 'string', description: 'Why this matters (safety/compliance/practical)' },
+            examRelevance: { type: 'string', description: 'How this appears in exams' },
           },
-          required: ["point", "why"]
-        }
+          required: ['point', 'why'],
+        },
       },
       calculations: {
-        type: "object",
-        description: "Calculation guidance if applicable to the topic",
+        type: 'object',
+        description: 'Calculation guidance if applicable to the topic',
         properties: {
-          formula: { type: "string", description: "Mathematical formula" },
+          formula: { type: 'string', description: 'Mathematical formula' },
           variablesExplained: {
-            type: "array",
+            type: 'array',
             items: {
-              type: "object",
+              type: 'object',
               properties: {
-                symbol: { type: "string", description: "Variable symbol" },
-                meaning: { type: "string", description: "What it represents" },
-                unit: { type: "string", description: "Unit of measurement" }
+                symbol: { type: 'string', description: 'Variable symbol' },
+                meaning: { type: 'string', description: 'What it represents' },
+                unit: { type: 'string', description: 'Unit of measurement' },
               },
-              required: ["symbol", "meaning", "unit"]
-            }
+              required: ['symbol', 'meaning', 'unit'],
+            },
           },
           workedExample: {
-            type: "object",
+            type: 'object',
             properties: {
-              scenario: { type: "string", description: "Problem statement" },
-              givenValues: { 
-                type: "array",
-                items: { type: "string" },
-                description: "What's given in the problem"
+              scenario: { type: 'string', description: 'Problem statement' },
+              givenValues: {
+                type: 'array',
+                items: { type: 'string' },
+                description: "What's given in the problem",
               },
-              steps: { 
-                type: "array",
-                items: { type: "string" },
-                description: "Step-by-step solution"
+              steps: {
+                type: 'array',
+                items: { type: 'string' },
+                description: 'Step-by-step solution',
               },
-              answer: { type: "string", description: "Final answer with units" }
-            }
+              answer: { type: 'string', description: 'Final answer with units' },
+            },
           },
           practiceQuestion: {
-            type: "object",
+            type: 'object',
             properties: {
-              question: { type: "string", description: "Practice problem for student" },
-              answer: { type: "string", description: "Correct answer with working" }
-            }
-          }
-        }
+              question: { type: 'string', description: 'Practice problem for student' },
+              answer: { type: 'string', description: 'Correct answer with working' },
+            },
+          },
+        },
       },
       examQuestions: {
-        type: "array",
-        description: "Exam-style practice questions with model answers",
+        type: 'array',
+        description: 'Exam-style practice questions with model answers',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            questionNumber: { type: "number", description: "Question number" },
-            questionType: { type: "string", enum: ["multiple_choice", "short_answer", "calculation", "extended_response"], description: "Type of question" },
-            marks: { type: "number", description: "Marks available" },
-            question: { type: "string", description: "Question text" },
-            options: { 
-              type: "array",
-              items: { type: "string" },
-              description: "Options for multiple choice (if applicable)"
+            questionNumber: { type: 'number', description: 'Question number' },
+            questionType: {
+              type: 'string',
+              enum: ['multiple_choice', 'short_answer', 'calculation', 'extended_response'],
+              description: 'Type of question',
             },
-            modelAnswer: { type: "string", description: "Complete model answer with marking points" },
-            examinerTips: { type: "string", description: "Tips for answering this type of question" }
+            marks: { type: 'number', description: 'Marks available' },
+            question: { type: 'string', description: 'Question text' },
+            options: {
+              type: 'array',
+              items: { type: 'string' },
+              description: 'Options for multiple choice (if applicable)',
+            },
+            modelAnswer: {
+              type: 'string',
+              description: 'Complete model answer with marking points',
+            },
+            examinerTips: {
+              type: 'string',
+              description: 'Tips for answering this type of question',
+            },
           },
-          required: ["questionNumber", "questionType", "marks", "question", "modelAnswer"]
-        }
+          required: ['questionNumber', 'questionType', 'marks', 'question', 'modelAnswer'],
+        },
       },
       installationCritique: {
-        type: "object",
-        description: "Installation photo review (if photo provided)",
+        type: 'object',
+        description: 'Installation photo review (if photo provided)',
         properties: {
-          hasPhoto: { type: "boolean", description: "Whether a photo was provided" },
-          overallAssessment: { type: "string", description: "Overall quality assessment" },
-          strengths: { 
-            type: "array",
+          hasPhoto: { type: 'boolean', description: 'Whether a photo was provided' },
+          overallAssessment: { type: 'string', description: 'Overall quality assessment' },
+          strengths: {
+            type: 'array',
             items: {
-              type: "object",
+              type: 'object',
               properties: {
-                observation: { type: "string", description: "What's good" },
-                regulation: { type: "string", description: "BS 7671 regulation it complies with" },
-                whyGood: { type: "string", description: "Why this is good practice" }
+                observation: { type: 'string', description: "What's good" },
+                regulation: { type: 'string', description: 'BS 7671 regulation it complies with' },
+                whyGood: { type: 'string', description: 'Why this is good practice' },
               },
-              required: ["observation", "whyGood"]
-            }
+              required: ['observation', 'whyGood'],
+            },
           },
-          issues: { 
-            type: "array",
+          issues: {
+            type: 'array',
             items: {
-              type: "object",
+              type: 'object',
               properties: {
-                issue: { type: "string", description: "What needs improvement" },
-                severity: { type: "string", enum: ["critical", "important", "minor"], description: "How serious" },
-                regulation: { type: "string", description: "BS 7671 regulation breached" },
-                whyMatters: { type: "string", description: "Safety/compliance reason" },
-                howToFix: { type: "string", description: "Step-by-step fix" }
+                issue: { type: 'string', description: 'What needs improvement' },
+                severity: {
+                  type: 'string',
+                  enum: ['critical', 'important', 'minor'],
+                  description: 'How serious',
+                },
+                regulation: { type: 'string', description: 'BS 7671 regulation breached' },
+                whyMatters: { type: 'string', description: 'Safety/compliance reason' },
+                howToFix: { type: 'string', description: 'Step-by-step fix' },
               },
-              required: ["issue", "severity", "whyMatters", "howToFix"]
-            }
+              required: ['issue', 'severity', 'whyMatters', 'howToFix'],
+            },
           },
-          readyForAssessment: { type: "boolean", description: "Whether this would pass assessment" },
-          recommendations: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Specific actions to take"
-          }
-        }
+          readyForAssessment: {
+            type: 'boolean',
+            description: 'Whether this would pass assessment',
+          },
+          recommendations: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Specific actions to take',
+          },
+        },
       },
       studyPlan: {
-        type: "object",
-        description: "Personalized study recommendations",
+        type: 'object',
+        description: 'Personalized study recommendations',
         properties: {
-          strengths: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Areas where student shows understanding"
+          strengths: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Areas where student shows understanding',
           },
-          weaknesses: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Knowledge gaps identified"
+          weaknesses: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Knowledge gaps identified',
           },
-          recommendedActivities: { 
-            type: "array",
+          recommendedActivities: {
+            type: 'array',
             items: {
-              type: "object",
+              type: 'object',
               properties: {
-                activity: { type: "string", description: "Study activity" },
-                purpose: { type: "string", description: "What this will achieve" },
-                timeEstimate: { type: "string", description: "How long it should take" }
+                activity: { type: 'string', description: 'Study activity' },
+                purpose: { type: 'string', description: 'What this will achieve' },
+                timeEstimate: { type: 'string', description: 'How long it should take' },
               },
-              required: ["activity", "purpose"]
-            }
+              required: ['activity', 'purpose'],
+            },
           },
-          nextSteps: { 
-            type: "array",
-            items: { type: "string" },
-            description: "Immediate next actions"
-          }
+          nextSteps: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Immediate next actions',
+          },
         },
-        required: ["strengths", "weaknesses", "recommendedActivities", "nextSteps"]
+        required: ['strengths', 'weaknesses', 'recommendedActivities', 'nextSteps'],
       },
       curriculumAlignment: {
-        type: "array",
-        description: "City & Guilds / EAL curriculum mapping",
+        type: 'array',
+        description: 'City & Guilds / EAL curriculum mapping',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            awarding_body: { type: "string", enum: ["City & Guilds", "EAL"], description: "Which awarding body" },
-            qualification: { type: "string", description: "Qualification code (e.g., '2365-03')" },
-            unit: { type: "string", description: "Unit code and name" },
-            learningOutcome: { type: "string", description: "Learning outcome reference" },
-            covered: { type: "boolean", description: "Whether this was covered in this session" },
-            notes: { type: "string", description: "How this topic relates" }
+            awarding_body: {
+              type: 'string',
+              enum: ['City & Guilds', 'EAL'],
+              description: 'Which awarding body',
+            },
+            qualification: { type: 'string', description: "Qualification code (e.g., '2365-03')" },
+            unit: { type: 'string', description: 'Unit code and name' },
+            learningOutcome: { type: 'string', description: 'Learning outcome reference' },
+            covered: { type: 'boolean', description: 'Whether this was covered in this session' },
+            notes: { type: 'string', description: 'How this topic relates' },
           },
-          required: ["awarding_body", "qualification", "learningOutcome", "covered"]
-        }
+          required: ['awarding_body', 'qualification', 'learningOutcome', 'covered'],
+        },
       },
       bs7671References: {
-        type: "array",
-        description: "BS 7671 regulations referenced",
+        type: 'array',
+        description: 'BS 7671 regulations referenced',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            regulation: { type: "string", description: "Regulation number" },
-            title: { type: "string", description: "Regulation title/topic" },
-            relevance: { type: "string", description: "Why it's relevant to this topic" },
-            examFrequency: { type: "string", enum: ["very_common", "common", "occasional"], description: "How often this appears in exams" }
+            regulation: { type: 'string', description: 'Regulation number' },
+            title: { type: 'string', description: 'Regulation title/topic' },
+            relevance: { type: 'string', description: "Why it's relevant to this topic" },
+            examFrequency: {
+              type: 'string',
+              enum: ['very_common', 'common', 'occasional'],
+              description: 'How often this appears in exams',
+            },
           },
-          required: ["regulation", "title", "relevance"]
-        }
+          required: ['regulation', 'title', 'relevance'],
+        },
       },
       furtherReading: {
-        type: "array",
-        description: "Additional resources for deeper learning",
+        type: 'array',
+        description: 'Additional resources for deeper learning',
         items: {
-          type: "object",
+          type: 'object',
           properties: {
-            resource: { type: "string", description: "Resource name (book, article, video)" },
-            type: { type: "string", enum: ["book", "guidance_note", "video", "online_resource"], description: "Type of resource" },
-            why: { type: "string", description: "Why this is recommended" }
+            resource: { type: 'string', description: 'Resource name (book, article, video)' },
+            type: {
+              type: 'string',
+              enum: ['book', 'guidance_note', 'video', 'online_resource'],
+              description: 'Type of resource',
+            },
+            why: { type: 'string', description: 'Why this is recommended' },
           },
-          required: ["resource", "type", "why"]
-        }
-      }
+          required: ['resource', 'type', 'why'],
+        },
+      },
     },
     required: [
-      "response",
-      "conceptExplanation",
-      "keyPoints",
-      "studyPlan",
-      "curriculumAlignment",
-      "bs7671References"
+      'response',
+      'conceptExplanation',
+      'keyPoints',
+      'studyPlan',
+      'curriculumAlignment',
+      'bs7671References',
     ],
-    additionalProperties: false
-  }
+    additionalProperties: false,
+  },
 };
 
 Deno.serve(async (req) => {
@@ -325,17 +362,17 @@ Deno.serve(async (req) => {
     // Generate embedding for query - use OpenAI for this
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
     if (!openaiApiKey) throw new Error('OPENAI_API_KEY required for embeddings');
-    
+
     const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openaiApiKey}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${openaiApiKey}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'text-embedding-3-small',
-        input: expandedQuery
-      })
+        input: expandedQuery,
+      }),
     });
 
     if (!embeddingResponse.ok) {
@@ -350,7 +387,7 @@ Deno.serve(async (req) => {
       query_text: expandedQuery,
       query_embedding: queryEmbedding,
       level_filter: qualificationLevel || null,
-      match_count: 12
+      match_count: 12,
     });
 
     if (ragError) {
@@ -360,11 +397,15 @@ Deno.serve(async (req) => {
     console.log(`📚 Retrieved ${ragResults?.length || 0} educational knowledge documents`);
 
     // Build context from RAG results
-    const ragContext = ragResults && ragResults.length > 0
-      ? ragResults.map((doc: any, idx: number) => 
-          `[EDUCATIONAL DOC ${idx + 1}]\nTopic: ${doc.topic}\nSource: ${doc.source}\nLevel: ${doc.qualification_level || 'General'}\nContent: ${doc.content}\n`
-        ).join('\n\n')
-      : 'No specific educational content found. Use general BS 7671 and electrical principles.';
+    const ragContext =
+      ragResults && ragResults.length > 0
+        ? ragResults
+            .map(
+              (doc: any, idx: number) =>
+                `[EDUCATIONAL DOC ${idx + 1}]\nTopic: ${doc.topic}\nSource: ${doc.source}\nLevel: ${doc.qualification_level || 'General'}\nContent: ${doc.content}\n`
+            )
+            .join('\n\n')
+        : 'No specific educational content found. Use general BS 7671 and electrical principles.';
 
     // Construct user message with context
     const userMessage = `Qualification Level: ${qualificationLevel || 'Not specified'}
@@ -382,32 +423,41 @@ Provide comprehensive educational guidance following the tool schema structure. 
     // Call AI with tool calling
     console.log('🤖 Calling AI with tutor tool schema...');
 
-    const aiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        contents: [{
-          role: 'user',
-          parts: [{
-            text: `${TUTOR_SYSTEM_PROMPT}\n\n${userMessage}`
-          }]
-        }],
-        tools: [{
-          functionDeclarations: [TUTOR_TOOL_SCHEMA]
-        }],
-        toolConfig: {
-          functionCallingConfig: {
-            mode: 'ANY',
-            allowedFunctionNames: ['provide_educational_guidance']
-          }
+    const aiResponse = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        generationConfig: {
-          temperature: 0.3
-        }
-      })
-    });
+        body: JSON.stringify({
+          contents: [
+            {
+              role: 'user',
+              parts: [
+                {
+                  text: `${TUTOR_SYSTEM_PROMPT}\n\n${userMessage}`,
+                },
+              ],
+            },
+          ],
+          tools: [
+            {
+              functionDeclarations: [TUTOR_TOOL_SCHEMA],
+            },
+          ],
+          toolConfig: {
+            functionCallingConfig: {
+              mode: 'ANY',
+              allowedFunctionNames: ['provide_educational_guidance'],
+            },
+          },
+          generationConfig: {
+            temperature: 0.3,
+          },
+        }),
+      }
+    );
 
     if (!aiResponse.ok) {
       const errorText = await aiResponse.text();
@@ -435,27 +485,26 @@ Provide comprehensive educational guidance following the tool schema structure. 
           timestamp: new Date().toISOString(),
           ragResultsCount: ragResults?.length || 0,
           qualificationLevel,
-          topicArea
-        }
+          topicArea,
+        },
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Tutor-v3 error:', error);
     await captureException(error, {
       functionName: 'tutor-v3',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return new Response(
       JSON.stringify({
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
+        error: error instanceof Error ? error.message : 'Unknown error occurred',
       }),
       {
         status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

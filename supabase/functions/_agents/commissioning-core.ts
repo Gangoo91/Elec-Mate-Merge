@@ -54,11 +54,11 @@ export async function generateCommissioningProcedures(
   request: CommissioningRequest
 ): Promise<CommissioningResult> {
   const startTime = Date.now();
-  
+
   console.log('🔧 Commissioning Agent START', {
     query: request.query.substring(0, 100),
     hasImage: !!request.imageUrl,
-    circuitType: request.projectContext?.circuitType
+    circuitType: request.projectContext?.circuitType,
   });
 
   // STEP 1: Query Enhancement & Keyword Extraction (match Installation Specialist gameplan)
@@ -67,17 +67,20 @@ export async function generateCommissioningProcedures(
   console.log(`📝 Query enhanced: ${enhancement.addedContext.length} context items added`);
 
   // STEP 1.5: Extract comprehensive keywords (50+ target for better RAG coverage)
-  const keywords = extractCommissioningKeywords(effectiveQuery, request.projectContext?.circuitType);
+  const keywords = extractCommissioningKeywords(
+    effectiveQuery,
+    request.projectContext?.circuitType
+  );
   console.log(`🔑 Extracted ${keywords.size} keywords:`, Array.from(keywords).slice(0, 15));
 
   // STEP 2: RAG Search
   const ragStart = Date.now();
   const logger = createLogger('commissioning-core');
-  
-  const enhancedQuery = request.imageUrl 
+
+  const enhancedQuery = request.imageUrl
     ? `${effectiveQuery} visual inspection photo analysis electrical installation safety compliance`
     : `${effectiveQuery} testing commissioning GN3 Chapter 64 inspection procedures`;
-  
+
   const ragResults = await retrieveCommissioningKnowledge(
     enhancedQuery,
     OPENAI_API_KEY!,
@@ -85,7 +88,7 @@ export async function generateCommissioningProcedures(
     logger,
     request.projectContext?.circuitType
   );
-  
+
   const ragTime = Date.now() - ragStart;
   console.log(`⚡ RAG complete in ${ragTime}ms - ${ragResults.length} results`);
 
@@ -96,16 +99,20 @@ export async function generateCommissioningProcedures(
 
   if (ragResults.length > 0) {
     testContext = '## GN3 TESTING & INSPECTION GUIDANCE:\n\n';
-    testContext += ragResults.map((item: any) => {
-      const header = item.regulation_number 
-        ? `**[${item.regulation_number}]**` 
-        : item.topic 
-          ? `**${item.topic}**` 
-          : '**Testing Guidance**';
-      return `${header}\n${item.content}`;
-    }).join('\n\n---\n\n');
-    
-    console.log(`📚 RAG Quality: ${gn3ProceduresFound} procedures, ${regulationsFound} regulations`);
+    testContext += ragResults
+      .map((item: any) => {
+        const header = item.regulation_number
+          ? `**[${item.regulation_number}]**`
+          : item.topic
+            ? `**${item.topic}**`
+            : '**Testing Guidance**';
+        return `${header}\n${item.content}`;
+      })
+      .join('\n\n---\n\n');
+
+    console.log(
+      `📚 RAG Quality: ${gn3ProceduresFound} procedures, ${regulationsFound} regulations`
+    );
   } else {
     testContext = '⚠️ No specific GN3 guidance found. Use general BS 7671 Chapter 64 principles.';
     console.warn('⚠️ RAG returned zero results');
@@ -113,47 +120,44 @@ export async function generateCommissioningProcedures(
 
   // STEP 3: Call OpenAI for commissioning procedures
   const aiStart = Date.now();
-  const commissioningResult = await callCommissioningAI(
-    request,
-    testContext
-  );
+  const commissioningResult = await callCommissioningAI(request, testContext);
   const aiTime = Date.now() - aiStart;
 
   // STEP 4: Build final result
-    const finalResult: CommissioningResult = {
-      success: true,
-      mode: 'procedure',
-      structuredData: {
-        testingProcedure: {
-          visualInspection: {
-            ...commissioningResult.visualInspection,
-            safetyNotes: Array.isArray(commissioningResult.visualInspection?.safetyNotes) 
-              ? commissioningResult.visualInspection.safetyNotes 
-              : [],
-            checkpoints: Array.isArray(commissioningResult.visualInspection?.checkpoints)
-              ? commissioningResult.visualInspection.checkpoints
-              : []
-          },
-          deadTests: (commissioningResult.deadTests || [])
-            .map(transformTestProcedure)
-            .filter(Boolean),
-          liveTests: (commissioningResult.liveTests || [])
-            .map(transformTestProcedure)
-            .filter(Boolean)
+  const finalResult: CommissioningResult = {
+    success: true,
+    mode: 'procedure',
+    structuredData: {
+      testingProcedure: {
+        visualInspection: {
+          ...commissioningResult.visualInspection,
+          safetyNotes: Array.isArray(commissioningResult.visualInspection?.safetyNotes)
+            ? commissioningResult.visualInspection.safetyNotes
+            : [],
+          checkpoints: Array.isArray(commissioningResult.visualInspection?.checkpoints)
+            ? commissioningResult.visualInspection.checkpoints
+            : [],
         },
-        certification: commissioningResult.certification,
-        circuitSchedule: commissioningResult.circuitSchedule
+        deadTests: (commissioningResult.deadTests || [])
+          .map(transformTestProcedure)
+          .filter(Boolean),
+        liveTests: (commissioningResult.liveTests || [])
+          .map(transformTestProcedure)
+          .filter(Boolean),
       },
-      commissioningCompletionChecks: commissioningResult.commissioningCompletionChecks,
-      documentationRequirements: commissioningResult.documentationRequirements,
-      metadata: {
-        ragQualityMetrics: {
-          gn3ProceduresFound,
-          regulationsFound,
-          totalSources: ragResults.length
-        }
-      }
-    };
+      certification: commissioningResult.certification,
+      circuitSchedule: commissioningResult.circuitSchedule,
+    },
+    commissioningCompletionChecks: commissioningResult.commissioningCompletionChecks,
+    documentationRequirements: commissioningResult.documentationRequirements,
+    metadata: {
+      ragQualityMetrics: {
+        gn3ProceduresFound,
+        regulationsFound,
+        totalSources: ragResults.length,
+      },
+    },
+  };
 
   const totalTime = Date.now() - startTime;
   console.log(`✅ Commissioning complete in ${totalTime}ms (RAG: ${ragTime}ms, AI: ${aiTime}ms)`);
@@ -166,25 +170,32 @@ export async function generateCommissioningProcedures(
  */
 function transformTestProcedure(test: any): any {
   if (!test) return null;
-  
+
   // Flatten procedure objects into string array
   let procedureSteps: string[] = [];
   const rawProcedure = test.procedure || test.procedureSteps || [];
-  
+
   if (Array.isArray(rawProcedure)) {
     rawProcedure.forEach((step: any) => {
       if (typeof step === 'string') {
         procedureSteps.push(step);
       } else if (typeof step === 'object' && step !== null) {
         // Convert structured object to ordered string steps
-        const orderedKeys = ['PREPARATION', 'SETUP', 'LEAD_PLACEMENT', 'TEST', 'INTERPRET/RECORD', 'RECORD'];
-        orderedKeys.forEach(key => {
+        const orderedKeys = [
+          'PREPARATION',
+          'SETUP',
+          'LEAD_PLACEMENT',
+          'TEST',
+          'INTERPRET/RECORD',
+          'RECORD',
+        ];
+        orderedKeys.forEach((key) => {
           if (step[key]) {
             procedureSteps.push(`${key}: ${step[key]}`);
           }
         });
         // Also handle any other keys not in our ordered list
-        Object.keys(step).forEach(key => {
+        Object.keys(step).forEach((key) => {
           if (!orderedKeys.includes(key) && step[key]) {
             procedureSteps.push(`${key}: ${step[key]}`);
           }
@@ -192,7 +203,7 @@ function transformTestProcedure(test: any): any {
       }
     });
   }
-  
+
   return {
     ...test,
     procedure: procedureSteps,
@@ -356,14 +367,18 @@ Return valid JSON only with enhanced detailed content.`;
 
   const userPrompt = `Generate commissioning procedures for: ${request.query}
 
-${request.projectContext ? `
+${
+  request.projectContext
+    ? `
 PROJECT DETAILS:
 - Type: ${request.projectContext.projectType || 'domestic'}
 - Name: ${request.projectContext.projectName || 'N/A'}
 - Client: ${request.projectContext.clientInfo || 'N/A'}
 - Circuit Type: ${request.projectContext.circuitType || 'N/A'}
 - Additional: ${request.projectContext.additionalInfo || 'N/A'}
-` : ''}`;
+`
+    : ''
+}`;
 
   console.log('🤖 Calling OpenAI for commissioning procedures (max 5 min timeout)...');
   console.log('📊 Prompt size:', systemPrompt.length + userPrompt.length, 'chars');
@@ -386,22 +401,22 @@ PROJECT DETAILS:
       let response;
       try {
         response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: 'gpt-5-mini-2025-08-07',
-          messages: [
-            { role: 'system', content: systemPrompt },
-            { role: 'user', content: userPrompt }
-          ],
-          response_format: { type: 'json_object' },
-          max_completion_tokens: 20000
-        }),
-        signal: controller.signal
-      });
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${OPENAI_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            model: 'gpt-5-mini-2025-08-07',
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: userPrompt },
+            ],
+            response_format: { type: 'json_object' },
+            max_completion_tokens: 20000,
+          }),
+          signal: controller.signal,
+        });
       } catch (fetchError: any) {
         clearTimeout(timeoutId);
         if (fetchError.name === 'AbortError') {
@@ -441,41 +456,46 @@ PROJECT DETAILS:
         if (data.choices[0].finish_reason === 'length') {
           throw new Error('Response too long - try simplifying your query');
         }
-        throw new Error(`Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`);
+        throw new Error(
+          `Empty response from OpenAI (finish_reason: ${data.choices[0].finish_reason})`
+        );
       }
 
       console.log(`✅ OpenAI response: ${content.length} chars`);
-      console.log(`📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`);
+      console.log(
+        `📊 Token usage: ${data.usage?.completion_tokens || 'N/A'} completion, ${data.usage?.prompt_tokens || 'N/A'} prompt`
+      );
 
       // Parse JSON
       let parsedResult;
-  try {
-    parsedResult = JSON.parse(content);
-  } catch (parseError: any) {
-    console.error('❌ JSON parse failed:', parseError.message);
-    console.error('📋 Raw content (first 500 chars):', content.substring(0, 500));
-    throw new Error(`Failed to parse OpenAI JSON: ${parseError.message}`);
-  }
+      try {
+        parsedResult = JSON.parse(content);
+      } catch (parseError: any) {
+        console.error('❌ JSON parse failed:', parseError.message);
+        console.error('📋 Raw content (first 500 chars):', content.substring(0, 500));
+        throw new Error(`Failed to parse OpenAI JSON: ${parseError.message}`);
+      }
 
-  // VALIDATE: Ensure deadTests and liveTests are NOT empty
-  if (!parsedResult.deadTests || parsedResult.deadTests.length === 0) {
-    console.error('❌ VALIDATION FAILED: AI returned empty deadTests array');
-    throw new Error('Invalid response: deadTests cannot be empty - minimum 3 required');
-  }
+      // VALIDATE: Ensure deadTests and liveTests are NOT empty
+      if (!parsedResult.deadTests || parsedResult.deadTests.length === 0) {
+        console.error('❌ VALIDATION FAILED: AI returned empty deadTests array');
+        throw new Error('Invalid response: deadTests cannot be empty - minimum 3 required');
+      }
 
-  if (!parsedResult.liveTests || parsedResult.liveTests.length === 0) {
-    console.error('❌ VALIDATION FAILED: AI returned empty liveTests array');
-    throw new Error('Invalid response: liveTests cannot be empty - minimum 2 required');
-  }
+      if (!parsedResult.liveTests || parsedResult.liveTests.length === 0) {
+        console.error('❌ VALIDATION FAILED: AI returned empty liveTests array');
+        throw new Error('Invalid response: liveTests cannot be empty - minimum 2 required');
+      }
 
-      console.log(`✅ Validation passed: ${parsedResult.deadTests.length} dead tests, ${parsedResult.liveTests.length} live tests`);
+      console.log(
+        `✅ Validation passed: ${parsedResult.deadTests.length} dead tests, ${parsedResult.liveTests.length} live tests`
+      );
 
       return parsedResult; // SUCCESS - exit retry loop
-
     } catch (error: any) {
       lastError = error;
       console.error(`❌ Attempt ${attempt}/${MAX_RETRIES} failed:`, error.message);
-      
+
       if (attempt < MAX_RETRIES) {
         console.log('🔄 Retrying with stronger emphasis on required fields...');
         // Continue to next attempt

@@ -1,9 +1,10 @@
-import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface TenderEstimateInput {
@@ -33,7 +34,13 @@ interface EstimateOutput {
   notes: string;
   breakdown: {
     labour: Array<{ task: string; hours: number; rate: number; cost: number }>;
-    materials: Array<{ item: string; quantity: number; unit: string; unit_price: number; cost: number }>;
+    materials: Array<{
+      item: string;
+      quantity: number;
+      unit: string;
+      unit_price: number;
+      cost: number;
+    }>;
     equipment: Array<{ item: string; days: number; rate: number; cost: number }>;
   };
   regional_adjustment: number;
@@ -74,7 +81,7 @@ async function generateEmbedding(text: string, apiKey: string): Promise<number[]
     const response = await fetch('https://ai.gateway.lovable.dev/v1/embeddings', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        Authorization: `Bearer ${apiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -117,7 +124,7 @@ async function searchPricingData(
         supabase.rpc('search_pricing', {
           query_embedding: embedding,
           match_threshold: 0.4, // Lower threshold for more results
-          match_count: 25
+          match_count: 25,
         })
       );
     }
@@ -125,11 +132,7 @@ async function searchPricingData(
     // Pass 2: Keyword search for scope-specific items (15 items per keyword)
     for (const keyword of scopeKeywords.slice(0, 4)) {
       searches.push(
-        supabase
-          .from('pricing_embeddings')
-          .select('*')
-          .ilike('item_name', `%${keyword}%`)
-          .limit(10)
+        supabase.from('pricing_embeddings').select('*').ilike('item_name', `%${keyword}%`).limit(10)
       );
     }
 
@@ -150,7 +153,9 @@ async function searchPricingData(
       supabase
         .from('pricing_embeddings')
         .select('*')
-        .or('category.ilike.%cable%,category.ilike.%MCB%,category.ilike.%consumer%,category.ilike.%socket%')
+        .or(
+          'category.ilike.%cable%,category.ilike.%MCB%,category.ilike.%consumer%,category.ilike.%socket%'
+        )
         .limit(15)
     );
 
@@ -166,7 +171,7 @@ async function searchPricingData(
 
     // Dedupe by id and rank by relevance
     const seenIds = new Set<string>();
-    const uniqueItems = allItems.filter(item => {
+    const uniqueItems = allItems.filter((item) => {
       if (seenIds.has(item.id)) return false;
       seenIds.add(item.id);
       return true;
@@ -206,7 +211,7 @@ async function searchLabourData(
     searches.push(
       supabase.rpc('search_practical_work_fast', {
         query_text: query,
-        match_count: 15
+        match_count: 15,
       })
     );
 
@@ -215,7 +220,7 @@ async function searchLabourData(
       searches.push(
         supabase.rpc('search_practical_work_fast', {
           query_text: keyword,
-          match_count: 8
+          match_count: 8,
         })
       );
     }
@@ -236,7 +241,7 @@ async function searchLabourData(
               primary_topic: topic,
               content: row.description || row.primary_topic || '',
               equipment_category: row.equipment_category,
-              confidence_score: row.confidence_score
+              confidence_score: row.confidence_score,
             });
           }
         }
@@ -389,7 +394,7 @@ function calculateTeamSize(
     electricians,
     mates,
     supervisors,
-    total: electricians + mates + supervisors
+    total: electricians + mates + supervisors,
   };
 }
 
@@ -402,13 +407,13 @@ function calculateLabourRates(
 ): { qualified: number; mate: number; supervisor: number } {
   // Base regional rates (2025 UK market)
   const baseRates: Record<string, { qualified: number; mate: number; supervisor: number }> = {
-    'London': { qualified: 55, mate: 25, supervisor: 70 },
+    London: { qualified: 55, mate: 25, supervisor: 70 },
     'Greater Manchester': { qualified: 48, mate: 22, supervisor: 60 },
-    'Birmingham': { qualified: 46, mate: 21, supervisor: 58 },
+    Birmingham: { qualified: 46, mate: 21, supervisor: 58 },
     'West Yorkshire': { qualified: 45, mate: 20, supervisor: 56 },
-    'Scotland': { qualified: 42, mate: 19, supervisor: 54 },
-    'Wales': { qualified: 40, mate: 18, supervisor: 52 },
-    'UK Average': { qualified: 45, mate: 20, supervisor: 55 }
+    Scotland: { qualified: 42, mate: 19, supervisor: 54 },
+    Wales: { qualified: 40, mate: 18, supervisor: 52 },
+    'UK Average': { qualified: 45, mate: 20, supervisor: 55 },
   };
 
   const rates = { ...(baseRates[region] || baseRates['UK Average']) };
@@ -423,13 +428,13 @@ function calculateLabourRates(
     rates.supervisor *= 1.25;
   }
   if (sector === 'commercial') {
-    rates.qualified *= 1.10; // Commercial premium
+    rates.qualified *= 1.1; // Commercial premium
   }
 
   return {
     qualified: Math.round(rates.qualified),
     mate: Math.round(rates.mate),
-    supervisor: Math.round(rates.supervisor)
+    supervisor: Math.round(rates.supervisor),
   };
 }
 
@@ -441,7 +446,8 @@ function extractElectricalKeywords(scope: string): string[] {
   const scopeLower = scope.toLowerCase();
 
   // Materials
-  if (scopeLower.includes('consumer unit') || scopeLower.includes('distribution board')) keywords.push('consumer unit');
+  if (scopeLower.includes('consumer unit') || scopeLower.includes('distribution board'))
+    keywords.push('consumer unit');
   if (scopeLower.includes('mcb')) keywords.push('MCB');
   if (scopeLower.includes('rcbo')) keywords.push('RCBO');
   if (scopeLower.includes('rcd')) keywords.push('RCD');
@@ -453,7 +459,8 @@ function extractElectricalKeywords(scope: string): string[] {
   if (scopeLower.includes('switch')) keywords.push('switch');
   if (scopeLower.includes('light') || scopeLower.includes('luminaire')) keywords.push('lighting');
   if (scopeLower.includes('emergency light')) keywords.push('emergency lighting');
-  if (scopeLower.includes('fire alarm') || scopeLower.includes('smoke detector')) keywords.push('fire alarm');
+  if (scopeLower.includes('fire alarm') || scopeLower.includes('smoke detector'))
+    keywords.push('fire alarm');
   if (scopeLower.includes('ev charg')) keywords.push('EV charger');
   if (scopeLower.includes('isolator')) keywords.push('isolator');
 
@@ -525,21 +532,22 @@ Deno.serve(async (req) => {
     // Authenticate user
     const authHeader = req.headers.get('Authorization');
     if (!authHeader) {
-      return new Response(
-        JSON.stringify({ error: 'No authorization header' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'No authorization header' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser(
-      authHeader.replace('Bearer ', '')
-    );
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser(authHeader.replace('Bearer ', ''));
 
     if (authError || !user) {
-      return new Response(
-        JSON.stringify({ error: 'Unauthorized' }),
-        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const input: TenderEstimateInput = await req.json();
@@ -551,14 +559,14 @@ Deno.serve(async (req) => {
       postcode,
       scope_of_works,
       categories = [],
-      value_estimate
+      value_estimate,
     } = input;
 
     console.log(`[TENDER-ESTIMATE] Processing:`, {
       tenderId,
       opportunityId,
       documents: documentUrls.length,
-      postcode
+      postcode,
     });
 
     // Fetch tender or opportunity details
@@ -596,13 +604,30 @@ Deno.serve(async (req) => {
     // Build project context from available data
     const projectTitle = tender?.title || opportunity?.title || 'Electrical Project';
     const projectClient = tender?.client || opportunity?.client_name || 'Client';
-    const projectDescription = description || scope_of_works || tender?.description || opportunity?.scope_of_works || opportunity?.description || '';
-    const projectCategories = categories.length > 0 ? categories : (opportunity?.categories || ['electrical']);
+    const projectDescription =
+      description ||
+      scope_of_works ||
+      tender?.description ||
+      opportunity?.scope_of_works ||
+      opportunity?.description ||
+      '';
+    const projectCategories =
+      categories.length > 0 ? categories : opportunity?.categories || ['electrical'];
     const projectPostcode = postcode || opportunity?.postcode || '';
-    const projectValue = value_estimate || tender?.value || opportunity?.value_exact || opportunity?.value_high || opportunity?.value_low || 0;
+    const projectValue =
+      value_estimate ||
+      tender?.value ||
+      opportunity?.value_exact ||
+      opportunity?.value_high ||
+      opportunity?.value_low ||
+      0;
 
     // Calculate complexity
-    const complexity = calculateComplexity(projectCategories, projectDescription.length, projectValue);
+    const complexity = calculateComplexity(
+      projectCategories,
+      projectDescription.length,
+      projectValue
+    );
     console.log(`[TENDER-ESTIMATE] Complexity: ${complexity.level} (score: ${complexity.score})`);
 
     // Extract keywords from scope for better RAG search
@@ -611,7 +636,9 @@ Deno.serve(async (req) => {
 
     // Calculate intelligent team size based on scope analysis
     const teamSize = calculateTeamSize(projectDescription, projectValue, projectCategories);
-    console.log(`[TENDER-ESTIMATE] Team size: ${teamSize.electricians} electricians, ${teamSize.mates} mates, ${teamSize.supervisors} supervisors`);
+    console.log(
+      `[TENDER-ESTIMATE] Team size: ${teamSize.electricians} electricians, ${teamSize.mates} mates, ${teamSize.supervisors} supervisors`
+    );
 
     // Get Lovable API key for AI
     const lovableApiKey = Deno.env.get('LOVABLE_API_KEY');
@@ -634,8 +661,8 @@ Deno.serve(async (req) => {
           metadata: {
             team_size: teamSize.total,
             team_composition: teamSize,
-            complexity: complexity.level
-          }
+            complexity: complexity.level,
+          },
         }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -649,7 +676,7 @@ Deno.serve(async (req) => {
     const [pricingResults, labourResults, regional] = await Promise.all([
       searchPricingData(supabase, ragQuery, embedding, projectCategories, scopeKeywords),
       searchLabourData(supabase, ragQuery, scopeKeywords),
-      getRegionalMultiplier(supabase, projectPostcode)
+      getRegionalMultiplier(supabase, projectPostcode),
     ]);
 
     // Calculate regional labour rates
@@ -660,21 +687,31 @@ Deno.serve(async (req) => {
       pricing: pricingResults.length,
       labour: labourResults.length,
       region: regional.region,
-      multiplier: regional.multiplier
+      multiplier: regional.multiplier,
     });
 
     // Format RAG context for AI
-    const pricingContext = pricingResults.length > 0
-      ? `DATABASE PRICES (15% markup applied):\n${pricingResults.slice(0, 15).map(p =>
-          `- ${p.item_name}: £${p.base_cost?.toFixed(2) || 'N/A'} (${p.wholesaler || 'Trade'})${p.in_stock ? '' : ' ⚠ Lead time'}`
-        ).join('\n')}`
-      : 'No specific pricing found - use 2025 UK wholesale rates (CEF/Screwfix/TLC).';
+    const pricingContext =
+      pricingResults.length > 0
+        ? `DATABASE PRICES (15% markup applied):\n${pricingResults
+            .slice(0, 15)
+            .map(
+              (p) =>
+                `- ${p.item_name}: £${p.base_cost?.toFixed(2) || 'N/A'} (${p.wholesaler || 'Trade'})${p.in_stock ? '' : ' ⚠ Lead time'}`
+            )
+            .join('\n')}`
+        : 'No specific pricing found - use 2025 UK wholesale rates (CEF/Screwfix/TLC).';
 
-    const labourContext = labourResults.length > 0
-      ? `LABOUR TIME STANDARDS:\n${labourResults.slice(0, 8).map(l =>
-          `- ${l.primary_topic}: ${l.content.substring(0, 150)}${l.confidence_score ? ` (${Math.round(l.confidence_score * 100)}% confidence)` : ''}`
-        ).join('\n')}`
-      : 'Use standard UK electrical installation times.';
+    const labourContext =
+      labourResults.length > 0
+        ? `LABOUR TIME STANDARDS:\n${labourResults
+            .slice(0, 8)
+            .map(
+              (l) =>
+                `- ${l.primary_topic}: ${l.content.substring(0, 150)}${l.confidence_score ? ` (${Math.round(l.confidence_score * 100)}% confidence)` : ''}`
+            )
+            .join('\n')}`
+        : 'Use standard UK electrical installation times.';
 
     // Calculate adaptive token limit
     const baseTokens = 4000;
@@ -772,17 +809,17 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
     const aiResponse = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${lovableApiKey}`,
+        Authorization: `Bearer ${lovableApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'google/gemini-2.5-flash',
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: 'Generate the detailed cost estimate in JSON format.' }
+          { role: 'user', content: 'Generate the detailed cost estimate in JSON format.' },
         ],
         max_completion_tokens: maxTokens,
-        temperature: 0.3 // Lower temperature for more consistent pricing
+        temperature: 0.3, // Lower temperature for more consistent pricing
       }),
     });
 
@@ -806,8 +843,8 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
             team_composition: teamSize,
             region: regional.region,
             labour_rate: labourRates.qualified,
-            complexity: complexity.level
-          }
+            complexity: complexity.level,
+          },
         }),
         { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -831,7 +868,9 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
         console.log('[TENDER-ESTIMATE] Applying regional adjustment:', regional.multiplier);
       }
 
-      console.log(`[TENDER-ESTIMATE] ✅ AI estimate complete: £${estimate.total_estimate?.toLocaleString()}`);
+      console.log(
+        `[TENDER-ESTIMATE] ✅ AI estimate complete: £${estimate.total_estimate?.toLocaleString()}`
+      );
     } catch (parseError) {
       console.error('[TENDER-ESTIMATE] Failed to parse AI response:', parseError);
       estimate = generateFallbackEstimate(
@@ -862,7 +901,7 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
             programme: estimate.programme,
             rams_scoped: estimate.rams_scoped,
             confidence: estimate.confidence,
-            notes: estimate.notes
+            notes: estimate.notes,
           })
           .select()
           .single();
@@ -891,18 +930,17 @@ RESPONSE FORMAT (JSON only - include team_size and team_composition):
           labour_rate: estimate.labour_rate_used || labourRates.qualified,
           rag_pricing_items: pricingResults.length,
           rag_labour_items: labourResults.length,
-          tokens_used: maxTokens
-        }
+          tokens_used: maxTokens,
+        },
       }),
       { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('[TENDER-ESTIMATE] Error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -924,20 +962,20 @@ function generateFallbackEstimate(
     electricians: value > 100000 ? 3 : value > 50000 ? 2 : 1,
     mates: value > 100000 ? 1 : 0,
     supervisors: value > 200000 ? 1 : 0,
-    total: value > 200000 ? 5 : value > 100000 ? 4 : value > 50000 ? 2 : 1
+    total: value > 200000 ? 5 : value > 100000 ? 4 : value > 50000 ? 2 : 1,
   };
 
   // Adjust percentages based on complexity
   let labourPercent = 0.35;
-  let materialsPercent = 0.40;
+  let materialsPercent = 0.4;
   let equipmentPercent = 0.05;
 
   if (complexity === 'complex') {
-    labourPercent = 0.40;
+    labourPercent = 0.4;
     materialsPercent = 0.38;
     equipmentPercent = 0.07;
   } else if (complexity === 'simple') {
-    labourPercent = 0.30;
+    labourPercent = 0.3;
     materialsPercent = 0.45;
     equipmentPercent = 0.03;
   }
@@ -966,7 +1004,7 @@ function generateFallbackEstimate(
     team_composition: {
       electricians: team.electricians,
       mates: team.mates,
-      supervisors: team.supervisors
+      supervisors: team.supervisors,
     },
     labour_rate_used: rate,
     hazards: [
@@ -975,7 +1013,9 @@ function generateFallbackEstimate(
       'Manual handling of heavy equipment',
       'Working with power tools',
       ...(categories.includes('fire_alarm') ? ['Fire alarm system work - BS 5839 compliance'] : []),
-      ...(categories.includes('ev_charging') ? ['High voltage EV charging - isolation protocol'] : [])
+      ...(categories.includes('ev_charging')
+        ? ['High voltage EV charging - isolation protocol']
+        : []),
     ],
     programme: programmeWeeks === 1 ? '1 week' : `${programmeWeeks} weeks`,
     rams_scoped: false,
@@ -983,25 +1023,63 @@ function generateFallbackEstimate(
     confidence_factors: [
       'Estimate based on project value only',
       'No detailed specification available',
-      'Regional rates not applied'
+      'Regional rates not applied',
     ],
     notes: `Baseline estimate for ${complexity} ${categories.join('/')} project. Team of ${team.total} (${team.electricians} electricians${team.mates ? `, ${team.mates} mate${team.mates > 1 ? 's' : ''}` : ''}${team.supervisors ? ', 1 supervisor' : ''}). Upload detailed specifications for AI-powered breakdown with real pricing data.`,
     breakdown: {
       labour: [
-        { task: 'First fix', hours: Math.round(labourHours * 0.4), rate, cost: Math.round(labourCost * 0.4) },
-        { task: 'Second fix', hours: Math.round(labourHours * 0.35), rate, cost: Math.round(labourCost * 0.35) },
-        { task: 'Testing & commissioning', hours: Math.round(labourHours * 0.25), rate, cost: Math.round(labourCost * 0.25) }
+        {
+          task: 'First fix',
+          hours: Math.round(labourHours * 0.4),
+          rate,
+          cost: Math.round(labourCost * 0.4),
+        },
+        {
+          task: 'Second fix',
+          hours: Math.round(labourHours * 0.35),
+          rate,
+          cost: Math.round(labourCost * 0.35),
+        },
+        {
+          task: 'Testing & commissioning',
+          hours: Math.round(labourHours * 0.25),
+          rate,
+          cost: Math.round(labourCost * 0.25),
+        },
       ],
       materials: [
-        { item: 'Cables & containment', quantity: 1, unit: 'lot', unit_price: Math.round(materialsCost * 0.5), cost: Math.round(materialsCost * 0.5) },
-        { item: 'Distribution & protection', quantity: 1, unit: 'lot', unit_price: Math.round(materialsCost * 0.3), cost: Math.round(materialsCost * 0.3) },
-        { item: 'Accessories & sundries', quantity: 1, unit: 'lot', unit_price: Math.round(materialsCost * 0.2), cost: Math.round(materialsCost * 0.2) }
+        {
+          item: 'Cables & containment',
+          quantity: 1,
+          unit: 'lot',
+          unit_price: Math.round(materialsCost * 0.5),
+          cost: Math.round(materialsCost * 0.5),
+        },
+        {
+          item: 'Distribution & protection',
+          quantity: 1,
+          unit: 'lot',
+          unit_price: Math.round(materialsCost * 0.3),
+          cost: Math.round(materialsCost * 0.3),
+        },
+        {
+          item: 'Accessories & sundries',
+          quantity: 1,
+          unit: 'lot',
+          unit_price: Math.round(materialsCost * 0.2),
+          cost: Math.round(materialsCost * 0.2),
+        },
       ],
       equipment: [
-        { item: 'Access equipment', days: Math.ceil(labourHours / 8), rate: Math.round(equipmentCost / Math.max(1, Math.ceil(labourHours / 8))), cost: equipmentCost }
-      ]
+        {
+          item: 'Access equipment',
+          days: Math.ceil(labourHours / 8),
+          rate: Math.round(equipmentCost / Math.max(1, Math.ceil(labourHours / 8))),
+          cost: equipmentCost,
+        },
+      ],
     },
     regional_adjustment: 1.0,
-    citations: []
+    citations: [],
   };
 }

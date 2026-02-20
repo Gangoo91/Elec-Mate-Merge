@@ -4,15 +4,16 @@
  * Updates invoice status when payments complete
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
-import { Resend } from "npm:resend@2.0.0";
+import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
+import { Resend } from 'npm:resend@2.0.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, stripe-signature, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, stripe-signature, x-supabase-timeout, x-request-id',
 };
 
 /**
@@ -37,7 +38,7 @@ async function sendClientThankYouEmail(
   companyEmail?: string,
   companyPhone?: string
 ): Promise<void> {
-  const resendApiKey = Deno.env.get("RESEND_API_KEY");
+  const resendApiKey = Deno.env.get('RESEND_API_KEY');
 
   if (!resendApiKey) {
     console.warn('⚠️ RESEND_API_KEY not configured - skipping thank-you email');
@@ -173,7 +174,9 @@ serve(async (req) => {
         // Signature verification failed - log but still process
         // This handles case where secret is misconfigured
         console.error('⚠️ Webhook signature verification failed:', err.message);
-        console.log('⚠️ Processing webhook anyway (signature mismatch - check STRIPE_CONNECT_WEBHOOK_SECRET)');
+        console.log(
+          '⚠️ Processing webhook anyway (signature mismatch - check STRIPE_CONNECT_WEBHOOK_SECRET)'
+        );
         event = JSON.parse(body);
       }
     } else {
@@ -230,21 +233,19 @@ serve(async (req) => {
         if (electricianUserId) {
           const paymentAmount = session.amount_total ? session.amount_total / 100 : 0;
 
-          await supabase
-            .from('notifications')
-            .insert({
-              user_id: electricianUserId,
-              type: 'payment_received',
-              title: 'Payment Received',
-              message: `Invoice ${invoiceNumber} has been paid via card payment.`,
-              data: {
-                invoice_id: invoiceId,
-                invoice_number: invoiceNumber,
-                amount: paymentAmount,
-                payment_method: 'card',
-              },
-              read: false,
-            });
+          await supabase.from('notifications').insert({
+            user_id: electricianUserId,
+            type: 'payment_received',
+            title: 'Payment Received',
+            message: `Invoice ${invoiceNumber} has been paid via card payment.`,
+            data: {
+              invoice_id: invoiceId,
+              invoice_number: invoiceNumber,
+              amount: paymentAmount,
+              payment_method: 'card',
+            },
+            read: false,
+          });
 
           console.log(`🔔 Notification created for user ${electricianUserId}`);
 
@@ -259,9 +260,9 @@ serve(async (req) => {
                 data: {
                   invoiceId: invoiceId,
                   invoiceNumber: invoiceNumber,
-                  amount: paymentAmount
-                }
-              }
+                  amount: paymentAmount,
+                },
+              },
             });
             console.log(`📱 Push notification sent for payment`);
           } catch (pushError) {
@@ -316,14 +317,17 @@ serve(async (req) => {
           console.log(`📋 Invoice client_data:`, JSON.stringify(invoice?.client_data || 'NULL'));
 
           if (invoice?.client_data) {
-            const clientData = typeof invoice.client_data === 'string'
-              ? JSON.parse(invoice.client_data)
-              : invoice.client_data;
+            const clientData =
+              typeof invoice.client_data === 'string'
+                ? JSON.parse(invoice.client_data)
+                : invoice.client_data;
 
             const clientEmail = clientData?.email?.trim();
             const clientName = clientData?.name || 'Valued Customer';
 
-            console.log(`📧 Client email extracted: "${clientEmail || 'EMPTY'}", Client name: "${clientName}"`);
+            console.log(
+              `📧 Client email extracted: "${clientEmail || 'EMPTY'}", Client name: "${clientName}"`
+            );
 
             if (clientEmail) {
               // Fetch company profile for sender info
@@ -397,20 +401,18 @@ serve(async (req) => {
           // Optionally notify electrician of failed payment
           const electricianUserId = paymentIntent.metadata?.electrician_user_id;
           if (electricianUserId) {
-            await supabase
-              .from('notifications')
-              .insert({
-                user_id: electricianUserId,
-                type: 'payment_failed',
-                title: 'Payment Failed',
-                message: `A card payment attempt for invoice ${paymentIntent.metadata?.invoice_number} failed.`,
-                data: {
-                  invoice_id: invoiceId,
-                  invoice_number: paymentIntent.metadata?.invoice_number,
-                  error: paymentIntent.last_payment_error?.message || 'Unknown error',
-                },
-                read: false,
-              });
+            await supabase.from('notifications').insert({
+              user_id: electricianUserId,
+              type: 'payment_failed',
+              title: 'Payment Failed',
+              message: `A card payment attempt for invoice ${paymentIntent.metadata?.invoice_number} failed.`,
+              data: {
+                invoice_id: invoiceId,
+                invoice_number: paymentIntent.metadata?.invoice_number,
+                error: paymentIntent.last_payment_error?.message || 'Unknown error',
+              },
+              read: false,
+            });
           }
         }
         break;
@@ -447,21 +449,19 @@ serve(async (req) => {
         console.log(`ℹ️ Unhandled event type: ${event.type}`);
     }
 
-    return new Response(
-      JSON.stringify({ received: true, type: event.type }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify({ received: true, type: event.type }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('❌ Webhook error:', error);
     await captureException(error, {
       functionName: 'stripe-connect-webhook',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

@@ -4,7 +4,8 @@ import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -31,10 +32,10 @@ Deno.serve(async (req) => {
 
     if (fetchError || !job) {
       console.error('[PROCESS-COST] Job not found:', jobId);
-      return new Response(
-        JSON.stringify({ error: 'Job not found' }),
-        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Job not found' }), {
+        status: 404,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Update status to processing
@@ -44,7 +45,7 @@ Deno.serve(async (req) => {
         status: 'processing',
         started_at: new Date().toISOString(),
         progress: 5,
-        current_step: 'Initializing cost analysis...'
+        current_step: 'Initializing cost analysis...',
       })
       .eq('id', jobId);
 
@@ -54,7 +55,7 @@ Deno.serve(async (req) => {
         .from('cost_engineer_jobs')
         .update({
           progress: 25,
-          current_step: 'Gathering regional pricing data...'
+          current_step: 'Gathering regional pricing data...',
         })
         .eq('id', jobId);
 
@@ -64,7 +65,7 @@ Deno.serve(async (req) => {
         query: job.query,
         region: job.region,
         projectContext: job.project_context,
-        businessSettings: job.business_settings
+        businessSettings: job.business_settings,
       });
 
       // Progress: 70% - Analyzing results
@@ -72,7 +73,7 @@ Deno.serve(async (req) => {
         .from('cost_engineer_jobs')
         .update({
           progress: 70,
-          current_step: 'Analyzing cost breakdown...'
+          current_step: 'Analyzing cost breakdown...',
         })
         .eq('id', jobId);
 
@@ -80,7 +81,7 @@ Deno.serve(async (req) => {
       const outputData = {
         originalQuery: job.query,
         structuredData: result,
-        response: formatTextSummary(result)
+        response: formatTextSummary(result),
       };
 
       // Progress: 100% - Complete
@@ -92,23 +93,22 @@ Deno.serve(async (req) => {
           current_step: 'Cost analysis complete',
           output_data: outputData,
           raw_response: result,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
       console.log(`[PROCESS-COST] ✅ Job completed: ${jobId}`);
 
-      return new Response(
-        JSON.stringify({ success: true, jobId }),
-        { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
-
+      return new Response(JSON.stringify({ success: true, jobId }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     } catch (processingError: any) {
       console.error('[PROCESS-COST] Error processing job:', processingError);
       await captureException(processingError, {
         functionName: 'process-cost-engineer-job',
         requestUrl: req.url,
-        requestMethod: req.method
+        requestMethod: req.method,
       });
 
       // Update job with error
@@ -117,27 +117,26 @@ Deno.serve(async (req) => {
         .update({
           status: 'failed',
           error_message: processingError.message,
-          completed_at: new Date().toISOString()
+          completed_at: new Date().toISOString(),
         })
         .eq('id', jobId);
 
-      return new Response(
-        JSON.stringify({ error: processingError.message }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: processingError.message }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
-
   } catch (error: any) {
     console.error('[PROCESS-COST] Fatal error:', error);
     await captureException(error, {
       functionName: 'process-cost-engineer-job',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -146,25 +145,25 @@ Deno.serve(async (req) => {
  */
 function formatTextSummary(result: any): string {
   let text = '# COST ESTIMATE\n\n';
-  
+
   text += '## MATERIALS\n';
   result.materials.items.forEach((item: any) => {
     text += `• ${item.description} (${item.quantity} ${item.unit}) - £${item.total.toFixed(2)} from ${item.supplier}\n`;
   });
   text += `\nSubtotal Materials: £${result.materials.subtotal.toFixed(2)}\n\n`;
-  
+
   text += '## LABOUR\n';
   result.labour.tasks.forEach((task: any) => {
     text += `• ${task.description} - ${task.hours} hours @ £${task.rate}/hr = £${task.total.toFixed(2)}\n`;
   });
   text += `\nSubtotal Labour: £${result.labour.subtotal.toFixed(2)}\n\n`;
-  
+
   text += '## PROJECT TOTAL\n';
   text += `Materials: £${result.summary.materialsSubtotal.toFixed(2)}\n`;
   text += `Labour: £${result.summary.labourSubtotal.toFixed(2)}\n`;
   text += `Subtotal: £${result.summary.subtotal.toFixed(2)}\n`;
   text += `VAT (20%): £${result.summary.vat.toFixed(2)}\n`;
   text += `**FINAL QUOTE: £${result.summary.grandTotal.toFixed(2)}**\n`;
-  
+
   return text;
 }

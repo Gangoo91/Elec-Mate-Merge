@@ -1,31 +1,32 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import postgres from "https://deno.land/x/postgresjs@v3.4.5/mod.js";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import postgres from 'https://deno.land/x/postgresjs@v3.4.5/mod.js';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
   }
 
   // Get database URL from environment (available in edge functions)
-  const databaseUrl = Deno.env.get("SUPABASE_DB_URL");
+  const databaseUrl = Deno.env.get('SUPABASE_DB_URL');
 
   if (!databaseUrl) {
     return new Response(
       JSON.stringify({
         success: false,
-        error: "Database URL not available",
-        note: "Run this SQL in Supabase Dashboard: ALTER TABLE employer_elec_id_profiles ADD COLUMN rate_type TEXT DEFAULT 'daily', ADD COLUMN rate_amount NUMERIC DEFAULT NULL;"
+        error: 'Database URL not available',
+        note: "Run this SQL in Supabase Dashboard: ALTER TABLE employer_elec_id_profiles ADD COLUMN rate_type TEXT DEFAULT 'daily', ADD COLUMN rate_amount NUMERIC DEFAULT NULL;",
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
 
-  const sql = postgres(databaseUrl, { ssl: "require" });
+  const sql = postgres(databaseUrl, { ssl: 'require' });
 
   try {
     // Check if columns already exist
@@ -42,17 +43,17 @@ serve(async (req) => {
     // Add rate_type if it doesn't exist
     if (!existingColumnNames.includes('rate_type')) {
       await sql`ALTER TABLE employer_elec_id_profiles ADD COLUMN rate_type TEXT DEFAULT 'daily'`;
-      results.push("Added rate_type column");
+      results.push('Added rate_type column');
     } else {
-      results.push("rate_type column already exists");
+      results.push('rate_type column already exists');
     }
 
     // Add rate_amount if it doesn't exist
     if (!existingColumnNames.includes('rate_amount')) {
       await sql`ALTER TABLE employer_elec_id_profiles ADD COLUMN rate_amount NUMERIC DEFAULT NULL`;
-      results.push("Added rate_amount column");
+      results.push('Added rate_amount column');
     } else {
-      results.push("rate_amount column already exists");
+      results.push('rate_amount column already exists');
     }
 
     // Try to add check constraint (ignore if already exists)
@@ -62,10 +63,10 @@ serve(async (req) => {
         ADD CONSTRAINT valid_rate_type
         CHECK (rate_type IS NULL OR rate_type IN ('hourly', 'daily', 'weekly', 'yearly'))
       `;
-      results.push("Added valid_rate_type constraint");
+      results.push('Added valid_rate_type constraint');
     } catch (constraintErr: any) {
       if (constraintErr.message?.includes('already exists')) {
-        results.push("valid_rate_type constraint already exists");
+        results.push('valid_rate_type constraint already exists');
       } else {
         results.push(`Constraint warning: ${constraintErr.message}`);
       }
@@ -76,21 +77,21 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         success: true,
-        message: "Migration completed",
-        results
+        message: 'Migration completed',
+        results,
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 200 }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
     );
   } catch (err: any) {
     await sql.end();
-    console.error("Migration error:", err);
+    console.error('Migration error:', err);
     return new Response(
       JSON.stringify({
         success: false,
         error: err.message,
-        note: "Run this SQL in Supabase Dashboard: ALTER TABLE employer_elec_id_profiles ADD COLUMN rate_type TEXT DEFAULT 'daily', ADD COLUMN rate_amount NUMERIC DEFAULT NULL;"
+        note: "Run this SQL in Supabase Dashboard: ALTER TABLE employer_elec_id_profiles ADD COLUMN rate_type TEXT DEFAULT 'daily', ADD COLUMN rate_amount NUMERIC DEFAULT NULL;",
       }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
     );
   }
 });

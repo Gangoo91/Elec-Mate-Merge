@@ -1,9 +1,10 @@
 import { serve } from '../_shared/deps.ts';
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req) => {
@@ -14,7 +15,7 @@ serve(async (req) => {
 
   try {
     const webhookData = await req.json();
-    
+
     console.log('DocuSign webhook received:', JSON.stringify(webhookData, null, 2));
 
     // Initialize Supabase client
@@ -25,7 +26,7 @@ serve(async (req) => {
     // Extract envelope information
     const envelopeId = webhookData.data?.envelopeId || webhookData.envelopeId;
     const status = webhookData.data?.envelopeSummary?.status || webhookData.status;
-    
+
     if (!envelopeId) {
       console.error('No envelope ID found in webhook data');
       return new Response('OK', { status: 200 });
@@ -45,7 +46,7 @@ serve(async (req) => {
 
     // Update quote based on DocuSign status
     let updateData: any = {
-      docusign_status: status
+      docusign_status: status,
     };
 
     switch (status?.toLowerCase()) {
@@ -53,7 +54,7 @@ serve(async (req) => {
         // Get signer information from webhook
         const recipients = webhookData.data?.envelopeSummary?.recipients;
         const signer = recipients?.signers?.[0];
-        
+
         updateData = {
           ...updateData,
           acceptance_status: 'accepted',
@@ -61,9 +62,9 @@ serve(async (req) => {
           accepted_at: new Date().toISOString(),
           accepted_by_name: signer?.name || 'Unknown',
           accepted_by_email: signer?.email || 'Unknown',
-          status: 'completed'
+          status: 'completed',
         };
-        
+
         console.log(`Quote ${quote.id} accepted via DocuSign`);
         break;
 
@@ -73,9 +74,9 @@ serve(async (req) => {
           ...updateData,
           acceptance_status: 'rejected',
           accepted_at: new Date().toISOString(),
-          status: 'rejected'
+          status: 'rejected',
         };
-        
+
         console.log(`Quote ${quote.id} rejected/voided via DocuSign`);
         break;
 
@@ -102,16 +103,15 @@ serve(async (req) => {
 
     console.log(`Successfully updated quote ${quote.id} with DocuSign status: ${status}`);
 
-    return new Response('OK', { 
+    return new Response('OK', {
       status: 200,
-      headers: corsHeaders 
+      headers: corsHeaders,
     });
-
   } catch (error) {
     console.error('Error processing DocuSign webhook:', error);
-    return new Response('Internal server error', { 
+    return new Response('Internal server error', {
       status: 500,
-      headers: corsHeaders 
+      headers: corsHeaders,
     });
   }
 });

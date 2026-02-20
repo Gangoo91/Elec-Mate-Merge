@@ -1,14 +1,15 @@
 // AI Installation Specialist - Fixed v2.0
 // Aligned with installer-v3 architecture for reliability & speed
 
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { installerV3ToolSchema } from '../_shared/installer-v3-schema.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const OPENAI_API_KEY = Deno.env.get('OPENAI_API_KEY');
@@ -21,32 +22,27 @@ serve(async (req) => {
   const startTime = Date.now();
 
   try {
-    const { 
-      query, 
-      projectDetails, 
-      currentDesign,
-      selectedCircuits,
-      sharedRegulations 
-    } = await req.json();
-    
+    const { query, projectDetails, currentDesign, selectedCircuits, sharedRegulations } =
+      await req.json();
+
     if (!query) {
-      return new Response(
-        JSON.stringify({ success: false, error: 'Query is required' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ success: false, error: 'Query is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('🚀 v2.0 started:', query.substring(0, 80));
-    
+
     // Extract keywords from query (first 50 words, clean special chars)
     const keywords = query
       .toLowerCase()
       .replace(/[^\w\s-]/g, ' ')
       .split(/\s+/)
-      .filter(w => w.length > 3)
+      .filter((w) => w.length > 3)
       .slice(0, 15)
       .join(' ');
-    
+
     console.log('🔍 Keywords extracted:', keywords.substring(0, 100));
 
     // Phase 7: Timeout Protection
@@ -63,30 +59,34 @@ serve(async (req) => {
       const ragStartTime = Date.now();
 
       // Phase 1: Direct SQL RAG (Fast & Reliable)
-      
+
       // RAG 1: Practical Work Intelligence - Optimized RPC Call
       console.log('🔍 Phase 1: Searching practical work via RPC...');
-      const { data: pwData, error: pwError } = await supabase
-        .rpc('search_practical_work_intelligence_hybrid', {
-          query_text: keywords,              // ✅ Correct parameter name
+      const { data: pwData, error: pwError } = await supabase.rpc(
+        'search_practical_work_intelligence_hybrid',
+        {
+          query_text: keywords, // ✅ Correct parameter name
           match_count: 25,
-          filter_trade: 'installer'          // ✅ Filter for installation work
-        });
+          filter_trade: 'installer', // ✅ Filter for installation work
+        }
+      );
 
       let practicalDocs: any[] = [];
 
       // Phase 2: Fallback if RPC fails or returns no data
       if (pwError || !pwData || pwData.length === 0) {
         console.warn('⚠️ RPC failed/empty, trying fallback:', pwError?.message);
-        
+
         const { data: fallbackData } = await supabase
           .from('practical_work_intelligence')
-          .select('primary_topic, installation_method, tools_required, materials_needed, bs7671_regulations, confidence_score')
+          .select(
+            'primary_topic, installation_method, tools_required, materials_needed, bs7671_regulations, confidence_score'
+          )
           .ilike('primary_topic', `%installation%`)
           .gte('confidence_score', 0.7)
           .order('confidence_score', { ascending: false })
           .limit(15);
-        
+
         practicalDocs = (fallbackData || []).map((doc: any) => ({
           type: 'practical_work',
           primary_topic: doc.primary_topic,
@@ -94,9 +94,9 @@ serve(async (req) => {
           tools_required: doc.tools_required || [],
           materials_needed: doc.materials_needed || [],
           bs7671_regulations: doc.bs7671_regulations || [],
-          confidence_score: doc.confidence_score || 0.5
+          confidence_score: doc.confidence_score || 0.5,
         }));
-        
+
         console.log(`⚡ Fallback RAG: ${practicalDocs.length} procedures`);
       } else {
         // Phase 3: Map RPC response correctly (handles different field names)
@@ -107,7 +107,7 @@ serve(async (req) => {
           tools_required: doc.tools_required || [],
           materials_needed: doc.materials_needed || [],
           bs7671_regulations: doc.bs7671_regulations || [],
-          confidence_score: doc.confidence_score || doc.hybrid_score || 0.5
+          confidence_score: doc.confidence_score || doc.hybrid_score || 0.5,
         }));
         console.log(`✅ RPC Success: ${practicalDocs.length} procedures`);
       }
@@ -121,7 +121,7 @@ serve(async (req) => {
           regulation_text: reg.primary_topic || reg.regulation_text || '',
           regulation_number: reg.regulation_number || reg.number,
           primary_topic: reg.primary_topic || '',
-          keywords: reg.keywords || []
+          keywords: reg.keywords || [],
         }));
       } else {
         const { data: regData, error: regError } = await supabase
@@ -138,51 +138,70 @@ serve(async (req) => {
       }
 
       const ragTime = Date.now() - ragStartTime;
-      
+
       // Phase 4: Comprehensive RAG Quality Metrics
       console.log(`🔍 RAG Results Summary:`, {
         practicalWork: {
           retrieved: practicalDocs.length,
           withTools: practicalDocs.filter((d: any) => d.tools_required?.length > 0).length,
           withMaterials: practicalDocs.filter((d: any) => d.materials_needed?.length > 0).length,
-          avgConfidence: practicalDocs.length > 0 
-            ? (practicalDocs.reduce((sum: number, d: any) => sum + (d.confidence_score || 0), 0) / practicalDocs.length).toFixed(2)
-            : '0.00'
+          avgConfidence:
+            practicalDocs.length > 0
+              ? (
+                  practicalDocs.reduce(
+                    (sum: number, d: any) => sum + (d.confidence_score || 0),
+                    0
+                  ) / practicalDocs.length
+                ).toFixed(2)
+              : '0.00',
         },
         regulations: {
-          retrieved: regulationsDocs.length
+          retrieved: regulationsDocs.length,
         },
-        duration: `${ragTime}ms`
+        duration: `${ragTime}ms`,
       });
-      
+
       // Phase 5: Early Warning System for Zero RAG Results
       if (practicalDocs.length === 0 && regulationsDocs.length === 0) {
-        console.error('🚨 CRITICAL: ZERO RAG RESULTS - AI will hallucinate without knowledge base!');
-        console.error('⚠️ Consider: 1) Check query keywords, 2) Verify database connectivity, 3) Inspect RPC function');
+        console.error(
+          '🚨 CRITICAL: ZERO RAG RESULTS - AI will hallucinate without knowledge base!'
+        );
+        console.error(
+          '⚠️ Consider: 1) Check query keywords, 2) Verify database connectivity, 3) Inspect RPC function'
+        );
       } else if (practicalDocs.length === 0) {
-        console.warn('⚠️ WARNING: No practical work data found - installation steps may lack real-world details');
+        console.warn(
+          '⚠️ WARNING: No practical work data found - installation steps may lack real-world details'
+        );
       } else if (regulationsDocs.length === 0) {
-        console.warn('⚠️ WARNING: No regulations data found - method statement may lack compliance citations');
+        console.warn(
+          '⚠️ WARNING: No regulations data found - method statement may lack compliance citations'
+        );
       }
-      
+
       console.log(`✅ RAG complete in ${ragTime}ms`);
 
       // Build AI context (simplified from installer-v3)
       const installContext = [
-        ...practicalDocs.map((doc: any, i: number) => 
-          `[Procedure ${i + 1}] ${doc.primary_topic}\n${doc.installation_method || ''}\nTools: ${doc.tools_required?.join(', ') || 'N/A'}\nMaterials: ${doc.materials_needed?.join(', ') || 'N/A'}`
+        ...practicalDocs.map(
+          (doc: any, i: number) =>
+            `[Procedure ${i + 1}] ${doc.primary_topic}\n${doc.installation_method || ''}\nTools: ${doc.tools_required?.join(', ') || 'N/A'}\nMaterials: ${doc.materials_needed?.join(', ') || 'N/A'}`
         ),
-        ...regulationsDocs.map((doc: any, i: number) => 
-          `[Regulation ${i + 1}] ${doc.regulation_number}: ${doc.primary_topic}`
-        )
+        ...regulationsDocs.map(
+          (doc: any, i: number) =>
+            `[Regulation ${i + 1}] ${doc.regulation_number}: ${doc.primary_topic}`
+        ),
       ].join('\n\n');
 
       const installKnowledge = [...practicalDocs, ...regulationsDocs];
 
       // Build circuit context if available
-      const circuitContext = selectedCircuits?.length > 0 
-        ? `\n**CIRCUITS**: ${selectedCircuits.map((c: any) => `${c.circuitType} (${c.cable?.size || 'TBD'})`).join(', ')}`
-        : currentDesign ? `\n**DESIGN**: ${currentDesign.cable?.size || 'TBD'}, ${currentDesign.protection?.rating || 'TBD'}` : '';
+      const circuitContext =
+        selectedCircuits?.length > 0
+          ? `\n**CIRCUITS**: ${selectedCircuits.map((c: any) => `${c.circuitType} (${c.cable?.size || 'TBD'})`).join(', ')}`
+          : currentDesign
+            ? `\n**DESIGN**: ${currentDesign.cable?.size || 'TBD'}, ${currentDesign.protection?.rating || 'TBD'}`
+            : '';
 
       // Phase 5: Simplified System Prompt (150 lines from 400+)
       const systemPrompt = `You are a UK electrical installation specialist creating BS 7671:2018+A3:2024 compliant method statements.
@@ -222,14 +241,14 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${OPENAI_API_KEY}`,
+          Authorization: `Bearer ${OPENAI_API_KEY}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           model: 'gpt-5-mini-2025-08-07',
           messages: [
             { role: 'system', content: systemPrompt },
-            { role: 'user', content: query }
+            { role: 'user', content: query },
           ],
           tools: [installerV3ToolSchema],
           tool_choice: { type: 'function', function: { name: 'provide_installation_guidance' } },
@@ -260,14 +279,24 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
 
       // Phase 4: Calculate Quality Metrics (simplified)
       const toolsExtracted = steps.reduce((sum: number, s: any) => sum + (s.tools?.length || 0), 0);
-      const materialsExtracted = steps.reduce((sum: number, s: any) => sum + (s.materials?.length || 0), 0);
+      const materialsExtracted = steps.reduce(
+        (sum: number, s: any) => sum + (s.materials?.length || 0),
+        0
+      );
       const regulationsReferenced = installResult.regulatoryCitations?.length || 0;
 
-      const overallScore = Math.min(100, Math.round(
-        (installKnowledge.length / 40 * 40) + (toolsExtracted / (steps.length * 3) * 30) + (regulationsReferenced / 5 * 30)
-      ));
+      const overallScore = Math.min(
+        100,
+        Math.round(
+          (installKnowledge.length / 40) * 40 +
+            (toolsExtracted / (steps.length * 3)) * 30 +
+            (regulationsReferenced / 5) * 30
+        )
+      );
 
-      console.log(`📊 Quality: ${overallScore}%, Tools: ${toolsExtracted}, Materials: ${materialsExtracted}, Regs: ${regulationsReferenced}`);
+      console.log(
+        `📊 Quality: ${overallScore}%, Tools: ${toolsExtracted}, Materials: ${materialsExtracted}, Regs: ${regulationsReferenced}`
+      );
 
       // Build response with correct field names
       const responseData = {
@@ -275,7 +304,7 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
         data: {
           steps: steps.map((s: any, i: number) => ({
             id: `step-${i + 1}`,
-            stepNumber: s.step || (i + 1),
+            stepNumber: s.step || i + 1,
             title: s.title || `Step ${i + 1}`,
             description: s.description || '',
             safetyRequirements: s.safetyNotes || [],
@@ -284,9 +313,13 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
             qualifications: s.qualifications || [],
             linkedHazards: s.linkedHazards || [],
             estimatedDuration: s.estimatedTime ? `${s.estimatedTime} min` : 'TBD',
-            riskLevel: (s.linkedHazards?.length || 0) > 3 ? 'high' : 
-                       (s.linkedHazards?.length || 0) > 1 ? 'medium' : 'low',
-            isCompleted: false
+            riskLevel:
+              (s.linkedHazards?.length || 0) > 3
+                ? 'high'
+                : (s.linkedHazards?.length || 0) > 1
+                  ? 'medium'
+                  : 'low',
+            isCompleted: false,
           })),
           toolsRequired: [...new Set(steps.flatMap((s: any) => s.tools || []))],
           materialsRequired: [...new Set(steps.flatMap((s: any) => s.materials || []))],
@@ -294,32 +327,33 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
           commonMistakes: installResult.commonMistakes || [],
           testingProcedures: installResult.testingProcedures || [],
           competencyRequirements: installResult.competencyRequirements || {
-            minimumQualifications: ['18th Edition BS 7671', '2391 Inspection & Testing']
+            minimumQualifications: ['18th Edition BS 7671', '2391 Inspection & Testing'],
           },
           siteLogistics: installResult.siteLogistics || null,
-          regulatoryCitations: installResult.regulatoryCitations || []
+          regulatoryCitations: installResult.regulatoryCitations || [],
         },
         metadata: {
           generationTimeMs: Date.now() - startTime,
           stepCount: steps.length,
           totalEstimatedTime: `${steps.reduce((sum: number, s: any) => sum + (s.estimatedTime || 30), 0)} min`,
-          difficultyLevel: steps.length > 8 ? 'Complex' : steps.length > 5 ? 'Moderate' : 'Standard',
+          difficultyLevel:
+            steps.length > 8 ? 'Complex' : steps.length > 5 ? 'Moderate' : 'Standard',
           ragTimeMs: ragTime,
-          aiTimeMs: aiTime
+          aiTimeMs: aiTime,
         },
         qualityMetrics: {
           overallScore,
           ragDataUsed: {
             regulations: regulationsDocs.length,
             practicalProcedures: practicalDocs.length,
-            totalDocs: installKnowledge.length
+            totalDocs: installKnowledge.length,
           },
           extractionBreakdown: {
             toolsExtracted,
             materialsExtracted,
-            regulationsReferenced
-          }
-        }
+            regulationsReferenced,
+          },
+        },
       };
 
       console.log(`✅ Completed in ${Date.now() - startTime}ms`);
@@ -329,25 +363,23 @@ Extract from knowledge base data provided above. Be practical and field-ready.`;
     // Race between execution and timeout
     const result = await Promise.race([executionPromise, timeoutPromise]);
 
-    return new Response(
-      JSON.stringify(result),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
-
+    return new Response(JSON.stringify(result), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('❌ installer-rag-direct error:', error);
-    
+
     return new Response(
-      JSON.stringify({ 
-        success: false, 
+      JSON.stringify({
+        success: false,
         error: error.message || 'Unknown error',
         metadata: {
-          generationTimeMs: Date.now() - startTime
-        }
+          generationTimeMs: Date.now() - startTime,
+        },
       }),
-      { 
-        status: 500, 
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
   }

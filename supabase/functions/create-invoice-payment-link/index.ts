@@ -4,14 +4,15 @@
  * 1% platform fee goes to ElecMate
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
-import Stripe from "https://esm.sh/stripe@14.21.0?target=deno";
+import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 // Platform fee percentage (1%)
@@ -41,7 +42,10 @@ serve(async (req) => {
       { global: { headers: { Authorization: authHeader } } }
     );
 
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
     if (authError || !user) {
       throw new Error('Unauthorized');
     }
@@ -84,19 +88,23 @@ serve(async (req) => {
     const stripe = new Stripe(stripeKey, { apiVersion: '2023-10-16' });
 
     // Parse client and job data
-    const clientData = typeof invoice.client_data === 'string'
-      ? JSON.parse(invoice.client_data)
-      : invoice.client_data;
+    const clientData =
+      typeof invoice.client_data === 'string'
+        ? JSON.parse(invoice.client_data)
+        : invoice.client_data;
 
-    const jobDetails = typeof invoice.job_details === 'string'
-      ? JSON.parse(invoice.job_details)
-      : invoice.job_details;
+    const jobDetails =
+      typeof invoice.job_details === 'string'
+        ? JSON.parse(invoice.job_details)
+        : invoice.job_details;
 
     // Calculate platform fee (1% in pence)
     const invoiceAmountPence = Math.round(invoice.total * 100);
     const platformFeePence = Math.round(invoice.total * PLATFORM_FEE_PERCENT);
 
-    console.log(`💰 Invoice: £${invoice.total}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`);
+    console.log(
+      `💰 Invoice: £${invoice.total}, Platform fee: £${(platformFeePence / 100).toFixed(2)}`
+    );
 
     // Create Stripe Checkout Session
     // HARDCODED: Always use www.elec-mate.com (non-www has no SSL certificate)
@@ -104,17 +112,19 @@ serve(async (req) => {
 
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
-      line_items: [{
-        price_data: {
-          currency: 'gbp',
-          product_data: {
-            name: `Invoice ${invoice.invoice_number}`,
-            description: jobDetails?.title || 'Electrical Work',
+      line_items: [
+        {
+          price_data: {
+            currency: 'gbp',
+            product_data: {
+              name: `Invoice ${invoice.invoice_number}`,
+              description: jobDetails?.title || 'Electrical Work',
+            },
+            unit_amount: invoiceAmountPence,
           },
-          unit_amount: invoiceAmountPence,
+          quantity: 1,
         },
-        quantity: 1,
-      }],
+      ],
       payment_intent_data: {
         application_fee_amount: platformFeePence, // 1% to ElecMate
         transfer_data: {
@@ -158,7 +168,6 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('❌ Error creating payment link:', error);
 
@@ -166,12 +175,12 @@ serve(async (req) => {
     await captureException(error, {
       functionName: 'create-invoice-payment-link',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

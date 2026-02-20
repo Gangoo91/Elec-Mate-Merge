@@ -1,9 +1,10 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { createClient } from '../_shared/deps.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -34,7 +35,11 @@ Deno.serve(async (req) => {
 
     if (!hazards || hazards.length === 0) {
       return new Response(
-        JSON.stringify({ success: true, message: 'No hazards need embedding generation', updated: 0 }),
+        JSON.stringify({
+          success: true,
+          message: 'No hazards need embedding generation',
+          updated: 0,
+        }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -45,7 +50,9 @@ Deno.serve(async (req) => {
 
     for (let i = 0; i < hazards.length; i += batchSize) {
       const batch = hazards.slice(i, i + batchSize);
-      console.log(`🔄 Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(hazards.length / batchSize)}`);
+      console.log(
+        `🔄 Processing batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(hazards.length / batchSize)}`
+      );
 
       // Generate embeddings for this batch
       const embeddingPromises = batch.map(async (hazard) => {
@@ -53,7 +60,7 @@ Deno.serve(async (req) => {
           const response = await fetch('https://api.openai.com/v1/embeddings', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${openAiKey}`,
+              Authorization: `Bearer ${openAiKey}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
@@ -77,7 +84,7 @@ Deno.serve(async (req) => {
         }
       });
 
-      const embeddings = (await Promise.all(embeddingPromises)).filter(e => e !== null);
+      const embeddings = (await Promise.all(embeddingPromises)).filter((e) => e !== null);
 
       // Update records with embeddings
       for (const { id, embedding } of embeddings) {
@@ -95,27 +102,28 @@ Deno.serve(async (req) => {
 
       // Rate limit: wait 1 second between batches
       if (i + batchSize < hazards.length) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       }
     }
 
-    console.log(`✅ Successfully generated embeddings for ${totalUpdated}/${hazards.length} hazards`);
+    console.log(
+      `✅ Successfully generated embeddings for ${totalUpdated}/${hazards.length} hazards`
+    );
 
     return new Response(
-      JSON.stringify({ 
-        success: true, 
+      JSON.stringify({
+        success: true,
         message: 'Hazard embeddings generated successfully',
         total: hazards.length,
-        updated: totalUpdated
+        updated: totalUpdated,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('❌ Error generating hazard embeddings:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

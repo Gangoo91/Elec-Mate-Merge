@@ -1,6 +1,5 @@
-
 import { serve } from '../_shared/deps.ts';
-import { corsHeaders } from "../_shared/cors.ts";
+import { corsHeaders } from '../_shared/cors.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const openAIApiKey = Deno.env.get('OpenAI API') || Deno.env.get('OPENAI_API_KEY');
@@ -14,27 +13,27 @@ serve(async (req) => {
   try {
     if (!openAIApiKey) {
       console.error('OpenAI API key not configured');
-      return new Response(
-        JSON.stringify({ error: "OpenAI API key not configured" }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'OpenAI API key not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const requestData = await req.json();
-    const { 
-      jobType, 
-      propertyDetails, 
+    const {
+      jobType,
+      propertyDetails,
       clientRequirements,
-      region = "UK",
-      standards = ["BS 7671", "Part P Building Regulations"],
-      currency = "GBP"
+      region = 'UK',
+      standards = ['BS 7671', 'Part P Building Regulations'],
+      currency = 'GBP',
     } = requestData;
 
     if (!jobType) {
-      return new Response(
-        JSON.stringify({ error: "Job type is required" }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Job type is required' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Generate a unique quote variation seed
@@ -55,7 +54,7 @@ CRITICAL REQUIREMENTS:
 PROPERTY DETAILS:
 - Job Type: ${jobType}
 - Property: ${JSON.stringify(propertyDetails)}
-- Client Requirements: ${clientRequirements || "Standard installation to BS 7671"}
+- Client Requirements: ${clientRequirements || 'Standard installation to BS 7671'}
 - Region: ${region}
 - Quote Variation Seed: ${quoteSeed}
 - Generated: ${currentDate}
@@ -116,19 +115,19 @@ RESPONSE FORMAT (JSON):
 IMPORTANT: Generate DIFFERENT materials, quantities, and prices each time. Avoid repetitive patterns.`;
 
     console.log('Generating varied UK electrical quote via OpenAI API');
-    
+
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
+        Authorization: `Bearer ${openAIApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-5-mini-2025-08-07',
         messages: [
           { role: 'system', content: systemMessage },
-          { 
-            role: 'user', 
+          {
+            role: 'user',
             content: `Generate a unique UK electrical quote for a ${jobType} in a ${propertyDetails.bedrooms}-bedroom ${propertyDetails.type} with ${propertyDetails.floors} floors.
 
 SPECIFIC REQUIREMENTS:
@@ -138,8 +137,8 @@ SPECIFIC REQUIREMENTS:
 - Include varied material brands and specifications
 - Provide realistic labour estimates with current UK rates
 
-Make this quote unique and different from previous quotes with varied pricing and materials.` 
-          }
+Make this quote unique and different from previous quotes with varied pricing and materials.`,
+          },
         ],
         max_completion_tokens: 2500,
       }),
@@ -149,7 +148,7 @@ Make this quote unique and different from previous quotes with varied pricing an
       const errorData = await response.json();
       console.error('OpenAI API Error:', errorData);
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: `OpenAI API Error: ${errorData.error?.message || response.statusText}`,
         }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
@@ -164,66 +163,67 @@ Make this quote unique and different from previous quotes with varied pricing an
     let parsedQuote;
     try {
       // Extract JSON from response
-      const jsonMatch = aiResponse.match(/```json\s*([\s\S]*?)\s*```/) || 
-                         aiResponse.match(/{[\s\S]*}/);
-      
+      const jsonMatch =
+        aiResponse.match(/```json\s*([\s\S]*?)\s*```/) || aiResponse.match(/{[\s\S]*}/);
+
       if (!jsonMatch) {
         throw new Error('No JSON structure found in AI response');
       }
 
       const jsonString = jsonMatch[1] || jsonMatch[0];
       parsedQuote = JSON.parse(jsonString.trim());
-      
+
       // Validate essential fields
       if (!parsedQuote.materials || !Array.isArray(parsedQuote.materials)) {
         throw new Error('Invalid materials structure in AI response');
       }
-      
+
       if (!parsedQuote.labour || typeof parsedQuote.labour.days !== 'number') {
         throw new Error('Invalid labour structure in AI response');
       }
 
       // Ensure UK pricing standards with more variation
       const baseVariation = (Math.random() - 0.5) * 0.3; // ±15% base variation
-      
+
       parsedQuote.materials = parsedQuote.materials.map((item: any) => ({
         ...item,
-        unitPrice: Math.max(0.50, parseFloat(item.unitPrice) * (1 + baseVariation) || 0),
-        quantity: Math.max(1, parseInt(item.quantity) || 1)
+        unitPrice: Math.max(0.5, parseFloat(item.unitPrice) * (1 + baseVariation) || 0),
+        quantity: Math.max(1, parseInt(item.quantity) || 1),
       }));
 
       // Apply labour rate variation
       const labourVariation = 1 + (Math.random() - 0.5) * 0.25; // ±12.5% variation
       parsedQuote.labour.days = Math.max(0.25, parseFloat(parsedQuote.labour.days) || 1);
-      parsedQuote.labour.dailyRate = Math.max(250, Math.round((parseFloat(parsedQuote.labour.dailyRate) || 280) * labourVariation));
+      parsedQuote.labour.dailyRate = Math.max(
+        250,
+        Math.round((parseFloat(parsedQuote.labour.dailyRate) || 280) * labourVariation)
+      );
 
       console.log('Successfully parsed and validated varied UK quote');
-
     } catch (error) {
       console.error('Error parsing AI response:', error);
-      
+
       // Return raw response with error context
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           raw: aiResponse,
-          error: "Could not parse AI response as valid quote structure",
-          details: error instanceof Error ? error.message : 'Unknown parsing error'
+          error: 'Could not parse AI response as valid quote structure',
+          details: error instanceof Error ? error.message : 'Unknown parsing error',
         }),
         { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         quote: parsedQuote,
         generatedAt: new Date().toISOString(),
         region: region,
         currency: currency,
-        quoteVariation: quoteSeed
+        quoteVariation: quoteSeed,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error) {
     console.error('Error in ai-quote-generator function:', error);
 
@@ -231,13 +231,13 @@ Make this quote unique and different from previous quotes with varied pricing an
     await captureException(error, {
       functionName: 'ai-quote-generator',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
 
     return new Response(
       JSON.stringify({
         error: error instanceof Error ? error.message : 'Unknown error occurred',
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );

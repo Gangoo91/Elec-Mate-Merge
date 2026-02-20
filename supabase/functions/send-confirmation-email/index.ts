@@ -1,13 +1,14 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3";
-import { Resend } from "npm:resend@2.0.0";
+import { serve } from 'https://deno.land/std@0.190.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
+import { Resend } from 'npm:resend@2.0.0';
 import { captureException } from '../_shared/sentry.ts';
 
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface ConfirmationEmailRequest {
@@ -23,7 +24,7 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { email, fullName } = await req.json() as ConfirmationEmailRequest;
+    const { email, fullName } = (await req.json()) as ConfirmationEmailRequest;
 
     if (!email) {
       throw new Error('Email is required');
@@ -37,8 +38,8 @@ const handler = async (req: Request): Promise<Response> => {
       {
         auth: {
           autoRefreshToken: false,
-          persistSession: false
-        }
+          persistSession: false,
+        },
       }
     );
 
@@ -97,7 +98,7 @@ const handler = async (req: Request): Promise<Response> => {
     await captureException(error, {
       functionName: 'send-confirmation-email',
       requestUrl: req.url,
-      requestMethod: req.method
+      requestMethod: req.method,
     });
     return new Response(
       JSON.stringify({ error: error.message || 'Failed to send confirmation email' }),

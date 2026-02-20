@@ -14,16 +14,14 @@ const validationTool = {
   type: 'function' as const,
   function: {
     name: 'evidence_quality_validation',
-    description:
-      'Structured per-AC evidence quality validation from an assessor perspective',
+    description: 'Structured per-AC evidence quality validation from an assessor perspective',
     parameters: {
       type: 'object',
       properties: {
         overallGrade: {
           type: 'string',
           enum: ['A', 'B', 'C', 'D'],
-          description:
-            'A=ready for submission, B=minor gaps, C=significant gaps, D=insufficient',
+          description: 'A=ready for submission, B=minor gaps, C=significant gaps, D=insufficient',
         },
         overallScore: {
           type: 'number',
@@ -48,12 +46,7 @@ const validationTool = {
               },
               status: {
                 type: 'string',
-                enum: [
-                  'sufficient',
-                  'minor_gaps',
-                  'significant_gaps',
-                  'insufficient',
-                ],
+                enum: ['sufficient', 'minor_gaps', 'significant_gaps', 'insufficient'],
               },
               feedback: {
                 type: 'string',
@@ -106,23 +99,110 @@ const validationTool = {
 
 // ---------- Stop words ----------
 const STOP_WORDS = new Set([
-  'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for',
-  'of', 'with', 'by', 'from', 'is', 'are', 'was', 'were', 'be', 'been',
-  'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would',
-  'could', 'should', 'may', 'might', 'shall', 'can', 'need', 'must',
-  'it', 'its', 'this', 'that', 'these', 'those', 'they', 'them', 'their',
-  'he', 'she', 'his', 'her', 'we', 'our', 'you', 'your', 'my', 'me',
-  'who', 'which', 'what', 'when', 'where', 'how', 'why', 'all', 'each',
-  'every', 'both', 'few', 'more', 'most', 'other', 'some', 'such', 'no',
-  'not', 'only', 'same', 'so', 'than', 'too', 'very', 'just', 'because',
-  'as', 'into', 'through', 'during', 'before', 'after', 'above', 'below',
-  'between', 'out', 'off', 'over', 'under', 'again', 'then', 'once',
+  'the',
+  'a',
+  'an',
+  'and',
+  'or',
+  'but',
+  'in',
+  'on',
+  'at',
+  'to',
+  'for',
+  'of',
+  'with',
+  'by',
+  'from',
+  'is',
+  'are',
+  'was',
+  'were',
+  'be',
+  'been',
+  'being',
+  'have',
+  'has',
+  'had',
+  'do',
+  'does',
+  'did',
+  'will',
+  'would',
+  'could',
+  'should',
+  'may',
+  'might',
+  'shall',
+  'can',
+  'need',
+  'must',
+  'it',
+  'its',
+  'this',
+  'that',
+  'these',
+  'those',
+  'they',
+  'them',
+  'their',
+  'he',
+  'she',
+  'his',
+  'her',
+  'we',
+  'our',
+  'you',
+  'your',
+  'my',
+  'me',
+  'who',
+  'which',
+  'what',
+  'when',
+  'where',
+  'how',
+  'why',
+  'all',
+  'each',
+  'every',
+  'both',
+  'few',
+  'more',
+  'most',
+  'other',
+  'some',
+  'such',
+  'no',
+  'not',
+  'only',
+  'same',
+  'so',
+  'than',
+  'too',
+  'very',
+  'just',
+  'because',
+  'as',
+  'into',
+  'through',
+  'during',
+  'before',
+  'after',
+  'above',
+  'below',
+  'between',
+  'out',
+  'off',
+  'over',
+  'under',
+  'again',
+  'then',
+  'once',
 ]);
 
 // ---------- Image URL to base64 ----------
-async function imageUrlToBase64(
-  url: string
-): Promise<{ base64: string; mimeType: string } | null> {
+async function imageUrlToBase64(url: string): Promise<{ base64: string; mimeType: string } | null> {
   try {
     if (url.startsWith('data:image')) {
       const match = url.match(/data:(.*?);base64,(.+)/);
@@ -191,13 +271,8 @@ serve(async (req: Request) => {
     }
 
     const body = await req.json();
-    const {
-      portfolio_item_id,
-      evidence_text,
-      evidence_urls,
-      claimed_acs,
-      qualification_code,
-    } = body;
+    const { portfolio_item_id, evidence_text, evidence_urls, claimed_acs, qualification_code } =
+      body;
 
     if (!evidence_text || !claimed_acs?.length || !qualification_code) {
       return new Response(
@@ -249,13 +324,10 @@ serve(async (req: Request) => {
     let practicalContext = '';
     if (uniqueKeywords.length > 0) {
       try {
-        const { data: practData } = await supabase.rpc(
-          'search_practical_work_fast',
-          {
-            p_keywords: uniqueKeywords,
-            p_limit: 5,
-          }
-        );
+        const { data: practData } = await supabase.rpc('search_practical_work_fast', {
+          p_keywords: uniqueKeywords,
+          p_limit: 5,
+        });
         if (practData?.length) {
           practicalContext += '\n\n--- Practical Work Context ---\n';
           for (const item of practData) {
@@ -334,11 +406,7 @@ ${acContext}${practicalContext}`;
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(
-        '[validate-evidence-quality] OpenAI error:',
-        response.status,
-        errorText
-      );
+      console.error('[validate-evidence-quality] OpenAI error:', response.status, errorText);
       throw new Error(`OpenAI API error: ${response.status}`);
     }
 

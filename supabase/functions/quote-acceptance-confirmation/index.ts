@@ -4,12 +4,13 @@
  * Sends FROM the electrician's company (like other quote emails)
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 serve(async (req: Request) => {
@@ -22,19 +23,19 @@ serve(async (req: Request) => {
     const { quoteId, quoteNumber, clientEmail, clientName, total } = await req.json();
 
     if (!clientEmail || !quoteNumber) {
-      return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {
       console.warn('RESEND_API_KEY not configured');
-      return new Response(
-        JSON.stringify({ error: 'Email service not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     // Initialize Supabase to fetch company profile
@@ -70,7 +71,7 @@ serve(async (req: Request) => {
 
     const formattedTotal = new Intl.NumberFormat('en-GB', {
       style: 'currency',
-      currency: 'GBP'
+      currency: 'GBP',
     }).format(total || 0);
 
     const html = `
@@ -219,7 +220,7 @@ serve(async (req: Request) => {
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
+        Authorization: `Bearer ${resendApiKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -234,25 +235,26 @@ serve(async (req: Request) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error('Resend API error:', errorText);
-      return new Response(
-        JSON.stringify({ error: 'Failed to send email', details: errorText }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'Failed to send email', details: errorText }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const result = await response.json();
-    console.log(`✅ Acceptance confirmation sent to ${clientEmail} for quote ${quoteNumber} from ${companyName}`);
-
-    return new Response(
-      JSON.stringify({ success: true, messageId: result.id }),
-      { status: 200, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    console.log(
+      `✅ Acceptance confirmation sent to ${clientEmail} for quote ${quoteNumber} from ${companyName}`
     );
 
+    return new Response(JSON.stringify({ success: true, messageId: result.id }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   } catch (error: any) {
     console.error('Quote acceptance confirmation error:', error);
-    return new Response(
-      JSON.stringify({ error: error.message || 'Internal server error' }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message || 'Internal server error' }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

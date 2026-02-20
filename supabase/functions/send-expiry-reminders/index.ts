@@ -8,13 +8,14 @@
  * Run via pg_cron daily or manually triggered
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 interface ExpiryReminder {
@@ -40,8 +41,8 @@ interface ExpiryReminder {
 
 /** Human-readable certificate type labels */
 const CERT_TYPE_LABELS: Record<string, string> = {
-  'eicr': 'Electrical Installation Condition Report (EICR)',
-  'eic': 'Electrical Installation Certificate (EIC)',
+  eicr: 'Electrical Installation Condition Report (EICR)',
+  eic: 'Electrical Installation Certificate (EIC)',
   'minor-works': 'Minor Electrical Installation Works Certificate',
   'fire-alarm': 'Fire Alarm Certificate',
   'emergency-lighting': 'Emergency Lighting Certificate',
@@ -63,10 +64,10 @@ serve(async (req: Request) => {
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY');
     if (!resendApiKey) {
-      return new Response(
-        JSON.stringify({ error: 'RESEND_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      );
+      return new Response(JSON.stringify({ error: 'RESEND_API_KEY not configured' }), {
+        status: 500,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     const today = new Date();
@@ -86,7 +87,8 @@ serve(async (req: Request) => {
     // Join with reports to get report_type and property_type
     const { data: expiringCerts, error: queryError } = await supabase
       .from('certificate_expiry_reminders')
-      .select(`
+      .select(
+        `
         id,
         user_id,
         report_id,
@@ -105,7 +107,8 @@ serve(async (req: Request) => {
           report_type,
           property_type
         )
-      `)
+      `
+      )
       .not('reminder_status', 'in', '("completed","cancelled")')
       .gte('expiry_date', today.toISOString().split('T')[0])
       .lte('expiry_date', in30Days.toISOString().split('T')[0]);
@@ -136,7 +139,9 @@ serve(async (req: Request) => {
       const propertyType = reportData?.property_type || 'domestic';
 
       const expiryDate = new Date(cert.expiry_date);
-      const daysUntilExpiry = Math.floor((expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      const daysUntilExpiry = Math.floor(
+        (expiryDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+      );
 
       // Determine which tier of reminder to send
       let reminderTier: '30-day' | '14-day' | '7-day' | null = null;
@@ -158,7 +163,7 @@ serve(async (req: Request) => {
         results.push({
           certificate: cert.certificate_number,
           status: 'skipped',
-          reason: 'already reminded at this tier'
+          reason: 'already reminded at this tier',
         });
         continue;
       }
@@ -168,7 +173,9 @@ serve(async (req: Request) => {
         cert.email_30_day_sent_at,
         cert.email_14_day_sent_at,
         cert.email_7_day_sent_at,
-      ].filter(Boolean).map(ts => new Date(ts as string).getTime());
+      ]
+        .filter(Boolean)
+        .map((ts) => new Date(ts as string).getTime());
 
       if (lastSentTimestamps.length > 0) {
         const mostRecentSend = Math.max(...lastSentTimestamps);
@@ -178,7 +185,7 @@ serve(async (req: Request) => {
           results.push({
             certificate: cert.certificate_number,
             status: 'skipped',
-            reason: 'rate limited (24h)'
+            reason: 'rate limited (24h)',
           });
           continue;
         }
@@ -228,7 +235,7 @@ serve(async (req: Request) => {
         const response = await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${resendApiKey}`,
+            Authorization: `Bearer ${resendApiKey}`,
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
@@ -242,11 +249,14 @@ serve(async (req: Request) => {
 
         if (!response.ok) {
           const errorText = await response.text();
-          console.error(`Failed to send expiry reminder for ${cert.certificate_number}:`, errorText);
+          console.error(
+            `Failed to send expiry reminder for ${cert.certificate_number}:`,
+            errorText
+          );
           results.push({
             certificate: cert.certificate_number,
             status: 'failed',
-            reason: errorText
+            reason: errorText,
           });
           continue;
         }
@@ -257,10 +267,7 @@ serve(async (req: Request) => {
           updated_at: new Date().toISOString(),
         };
 
-        await supabase
-          .from('certificate_expiry_reminders')
-          .update(updatePayload)
-          .eq('id', cert.id);
+        await supabase.from('certificate_expiry_reminders').update(updatePayload).eq('id', cert.id);
 
         emailsSent++;
         results.push({
@@ -268,17 +275,18 @@ serve(async (req: Request) => {
           status: 'sent',
           tier: reminderTier,
           daysUntilExpiry,
-          reportType
+          reportType,
         });
 
-        console.log(`Sent ${reminderTier} expiry reminder for ${cert.certificate_number} (${certLabel}) to ${recipientEmail}`);
-
+        console.log(
+          `Sent ${reminderTier} expiry reminder for ${cert.certificate_number} (${certLabel}) to ${recipientEmail}`
+        );
       } catch (emailError: any) {
         console.error(`Error sending expiry reminder for ${cert.certificate_number}:`, emailError);
         results.push({
           certificate: cert.certificate_number,
           status: 'error',
-          reason: emailError.message
+          reason: emailError.message,
         });
       }
     }
@@ -289,11 +297,10 @@ serve(async (req: Request) => {
         totalExpiring: expiringCerts.length,
         emailsSent,
         skipped,
-        results
+        results,
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('Certificate expiry reminders error:', error);
     await captureException(error, {
@@ -301,10 +308,10 @@ serve(async (req: Request) => {
       requestUrl: req.url,
       requestMethod: req.method,
     });
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });
 
@@ -328,13 +335,14 @@ function generateExpiryReminderEmail(
     year: 'numeric',
   });
 
-  const formattedInspection = inspectionDate !== 'N/A'
-    ? new Date(inspectionDate).toLocaleDateString('en-GB', {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      })
-    : 'N/A';
+  const formattedInspection =
+    inspectionDate !== 'N/A'
+      ? new Date(inspectionDate).toLocaleDateString('en-GB', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        })
+      : 'N/A';
 
   const configs = {
     '30-day': {
@@ -349,7 +357,7 @@ function generateExpiryReminderEmail(
       badgeBorder: 'rgba(59, 130, 246, 0.3)',
       message: `A certificate you issued is approaching its expiry date. This is a good time to reach out to your client and schedule a re-inspection.`,
       cta: 'We recommend contacting the client within the next couple of weeks to arrange the re-inspection before it becomes urgent.',
-      urgency: ''
+      urgency: '',
     },
     '14-day': {
       emoji: '⚠️',
@@ -363,7 +371,7 @@ function generateExpiryReminderEmail(
       badgeBorder: 'rgba(245, 158, 11, 0.3)',
       message: `This certificate is expiring within two weeks. If you haven't already, now is the time to contact your client about scheduling a re-inspection.`,
       cta: 'Reaching out promptly helps maintain your client relationships and ensures continued compliance.',
-      urgency: 'Time is running short to arrange a convenient re-inspection date.'
+      urgency: 'Time is running short to arrange a convenient re-inspection date.',
     },
     '7-day': {
       emoji: '🚨',
@@ -377,8 +385,8 @@ function generateExpiryReminderEmail(
       badgeBorder: 'rgba(239, 68, 68, 0.3)',
       message: `This certificate expires in less than a week. If a re-inspection hasn't been booked yet, the installation will soon be non-compliant.`,
       cta: 'Please contact the client urgently to arrange immediate re-inspection and maintain compliance.',
-      urgency: 'Once expired, the installation will no longer have a valid certificate.'
-    }
+      urgency: 'Once expired, the installation will no longer have a valid certificate.',
+    },
   };
 
   const config = configs[tier];

@@ -1,4 +1,4 @@
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import 'https://deno.land/x/xhr@0.1.0/mod.ts';
 import { serve } from '../_shared/deps.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { corsHeaders } from '../_shared/cors.ts';
@@ -19,24 +19,48 @@ function shouldEnrichChunk(item: any, taskType: string = 'bs7671'): boolean {
   if (taskType === 'practical_work') {
     return true;
   }
-  
+
   // Strict filter for BS7671/health-safety content
   const content = (item.content || item.description || '').toLowerCase();
-  
+
   // Min length check
   if (content.length < 150) return false;
-  
+
   // Electrical term density
-  const electricalTerms = ['cable', 'wire', 'mcb', 'rcd', 'circuit', 'test', 'install', 
-    'earth', 'bond', 'isolate', 'voltage', 'current', 'amp', 'volt', 'protection',
-    'consumer unit', 'distribution', 'switch', 'socket', 'lighting', 'cooker', 'shower'];
-  const termCount = electricalTerms.filter(term => content.includes(term)).length;
+  const electricalTerms = [
+    'cable',
+    'wire',
+    'mcb',
+    'rcd',
+    'circuit',
+    'test',
+    'install',
+    'earth',
+    'bond',
+    'isolate',
+    'voltage',
+    'current',
+    'amp',
+    'volt',
+    'protection',
+    'consumer unit',
+    'distribution',
+    'switch',
+    'socket',
+    'lighting',
+    'cooker',
+    'shower',
+  ];
+  const termCount = electricalTerms.filter((term) => content.includes(term)).length;
   if (termCount < 3) return false;
-  
+
   // Must have procedural OR specification content
-  const hasProcedural = /\b(install|connect|test|check|measure|fix|mount|terminate|strip|crimp|commissioning|inspect)\b/.test(content);
+  const hasProcedural =
+    /\b(install|connect|test|check|measure|fix|mount|terminate|strip|crimp|commissioning|inspect)\b/.test(
+      content
+    );
   const hasSpecs = /\b(\d+(?:mm²|mm|amp|a|volt|v|kw|m|metre))\b/i.test(content);
-  
+
   return hasProcedural || hasSpecs;
 }
 
@@ -46,27 +70,37 @@ function shouldEnrichChunk(item: any, taskType: string = 'bs7671'): boolean {
 function calculateEnrichmentPriority(item: any): number {
   const content = (item.content || item.description || '').toLowerCase();
   let score = 0;
-  
+
   // High value: Installation procedures
-  if (content.includes('install') || content.includes('fit') || content.includes('mount')) score += 10;
-  
+  if (content.includes('install') || content.includes('fit') || content.includes('mount'))
+    score += 10;
+
   // High value: Testing procedures
-  if (content.includes('test') || content.includes('commissioning') || content.includes('inspect')) score += 10;
-  
+  if (content.includes('test') || content.includes('commissioning') || content.includes('inspect'))
+    score += 10;
+
   // High value: Specific equipment
-  const equipment = ['consumer unit', 'ev charger', 'solar', 'shower', 'cooker', 'distribution', 'switchgear'];
-  score += equipment.filter(e => content.includes(e)).length * 5;
-  
+  const equipment = [
+    'consumer unit',
+    'ev charger',
+    'solar',
+    'shower',
+    'cooker',
+    'distribution',
+    'switchgear',
+  ];
+  score += equipment.filter((e) => content.includes(e)).length * 5;
+
   // High value: Contains specs
   const hasSpecs = /\d+(?:mm²|amp|kw|volt)/.test(content);
   if (hasSpecs) score += 8;
-  
+
   // High value: Contains BS7671 references
   if (/bs\s*7671|section\s*\d+|regulation\s*\d+/.test(content)) score += 8;
-  
+
   // Content length bonus
   score += Math.min(content.length / 200, 5);
-  
+
   return score;
 }
 
@@ -74,11 +108,11 @@ function calculateEnrichmentPriority(item: any): number {
  * Normalise category/subcategory spellings
  */
 const CATEGORY_ALIASES: Record<string, string> = {
-  'ombined': 'combined',
-  'combi': 'combined',
-  'introduction': 'general',
-  'intro': 'general',
-  'overview': 'general'
+  ombined: 'combined',
+  combi: 'combined',
+  introduction: 'general',
+  intro: 'general',
+  overview: 'general',
 };
 
 function normaliseCategory(category: string): string {
@@ -100,34 +134,36 @@ function validateFacetSafety(facet: any): string | null {
     /live.*work/i,
     /work.*on.*live/i,
     /test.*live.*circuit/i,
-    /energ(i|y)sed.*clean/i
+    /energ(i|y)sed.*clean/i,
   ];
-  
+
   // Check maintenance_tasks and primary_topic for dangerous patterns
   const checkFields = [
     JSON.stringify(facet.maintenance_tasks || []),
-    facet.primary_topic || ''
+    facet.primary_topic || '',
   ].join(' ');
-  
+
   for (const pattern of dangerousPatterns) {
     if (pattern.test(checkFields)) {
       return `Dangerous pattern detected: ${pattern.source}`;
     }
   }
-  
+
   // Additional check: if maintenance on electrical equipment, must mention isolation
-  if (facet.equipment_category && 
-      Array.isArray(facet.maintenance_tasks) && 
-      facet.maintenance_tasks.length > 0) {
+  if (
+    facet.equipment_category &&
+    Array.isArray(facet.maintenance_tasks) &&
+    facet.maintenance_tasks.length > 0
+  ) {
     const tasksStr = JSON.stringify(facet.maintenance_tasks).toLowerCase();
     const hasIsolation = /isolat|de-energ|switch.*off|disconnect.*supply/i.test(tasksStr);
     const isElectricalClean = /clean|wipe|brush|vacuum/i.test(tasksStr);
-    
+
     if (isElectricalClean && !hasIsolation) {
       return 'Electrical equipment cleaning without isolation mentioned';
     }
   }
-  
+
   return null; // Safe
 }
 
@@ -136,30 +172,34 @@ function validateFacetSafety(facet: any): string | null {
  */
 function validatePracticalWorkFacet(facet: any): boolean {
   if (!facet) return false;
-  
+
   // MUST have keywords (relaxed from 6 to 4)
   if (!facet.keywords || facet.keywords.length < 4) return false;
-  
+
   // MUST have primary_topic
   if (!facet.primary_topic || facet.primary_topic.length < 30) return false;
-  
+
   // MUST have equipment category
   const category = normaliseCategory(facet.equipment_category);
   if (!category || category.length < 3) return false;
-  
+
   // MUST have tools OR materials
   const hasTools = facet.tools_required && facet.tools_required.length >= 1;
   const hasMaterials = facet.materials_needed && facet.materials_needed.length >= 1;
   if (!hasTools && !hasMaterials) return false;
-  
+
   // MUST have core intelligence (NEW REQUIREMENT)
   if (!facet.typical_duration_minutes || facet.typical_duration_minutes < 1) return false;
-  if (!facet.skill_level || !['apprentice', 'electrician', 'designer', 'specialist'].includes(facet.skill_level)) return false;
+  if (
+    !facet.skill_level ||
+    !['apprentice', 'electrician', 'designer', 'specialist'].includes(facet.skill_level)
+  )
+    return false;
   if (!facet.safety_requirements) return false;
-  
+
   // Accept lower confidence for inferred data (was 0.60, now 0.50)
-  if (facet.confidence_score && facet.confidence_score < 0.50) return false;
-  
+  if (facet.confidence_score && facet.confidence_score < 0.5) return false;
+
   return true;
 }
 
@@ -167,7 +207,7 @@ function validatePracticalWorkFacet(facet: any): boolean {
 
 function ensureArrayOfStrings(value: any): string[] {
   if (!value) return [];
-  if (Array.isArray(value)) return value.map(v => String(v));
+  if (Array.isArray(value)) return value.map((v) => String(v));
   if (typeof value === 'string') return [value];
   return [];
 }
@@ -182,7 +222,7 @@ function toJsonOrNull(value: any): any {
 function ensureJsonArray(value: any): any[] {
   if (!value) return [];
   if (Array.isArray(value)) {
-    return value.map(v => {
+    return value.map((v) => {
       if (typeof v === 'object') return v;
       if (typeof v === 'string') return { task: v };
       return { value: String(v) };
@@ -194,10 +234,17 @@ function ensureJsonArray(value: any): any[] {
 
 // ==================== GPT ENRICHMENT ====================
 
-async function callGPTForFacets(id: string, title: string, content: string, logger: any, retryCount = 0, compactMode = false): Promise<any> {
+async function callGPTForFacets(
+  id: string,
+  title: string,
+  content: string,
+  logger: any,
+  retryCount = 0,
+  compactMode = false
+): Promise<any> {
   // Compact mode: shorter content for retry (reduced token budget)
   let processedContent = compactMode ? content.slice(0, 6000) : content.slice(0, 18000); // ~12K tokens at 1.5 chars/token
-  
+
   // Remove TOC/header patterns selectively to preserve technical content
   processedContent = processedContent
     .replace(/^table of contents[\s\S]{0,500}/gim, '') // Remove TOC sections
@@ -206,9 +253,9 @@ async function callGPTForFacets(id: string, title: string, content: string, logg
     .replace(/^figure \d+\.\s*$/gim, '') // Only standalone "Figure 7." without description
     .replace(/^page \d+\s*$/gim, '') // Only page numbers alone
     .trim();
-  
+
   const targetFacets = compactMode ? '4-6' : '8'; // ✅ EXACTLY 8 facets total (enforced via dedup + top-8 selection)
-  
+
   const systemPrompt = `You are a precision parser extracting structured electrical training data from real textbook content.
 
 PRIMARY DIRECTIVE: EXTRACT > INFER > GENERATE
@@ -485,16 +532,16 @@ Return ONLY the JSON object with the "facets" array.`;
     fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: OPENAI_MODEL,
         messages: [
           { role: 'system', content: systemPrompt },
-          { role: 'user', content: userPrompt }
+          { role: 'user', content: userPrompt },
         ],
-        max_completion_tokens: 10000
+        max_completion_tokens: 10000,
       }),
     }),
     Timeouts.PRACTICAL_WORK,
@@ -503,23 +550,23 @@ Return ONLY the JSON object with the "facets" array.`;
 
   if (!response.ok) {
     const errorText = await response.text();
-    
+
     // Retry on 504 timeout with compact mode
     if (response.status === 504 && retryCount < 1) {
       logger.warn(`⏱️ 504 timeout, retrying in compact mode...`, { id });
       return callGPTForFacets(id, title, content, logger, retryCount + 1, true);
     }
-    
+
     logger.error(`GPT API failed: ${response.status} ${response.statusText}`, { errorText });
     throw new Error(`GPT API failed: ${response.statusText}`);
   }
 
   const data = await response.json();
-  
+
   const choice = data.choices?.[0];
   if (!choice) {
-    logger.error('No choices in API response', { 
-      responsePreview: JSON.stringify(data).substring(0, 500)
+    logger.error('No choices in API response', {
+      responsePreview: JSON.stringify(data).substring(0, 500),
     });
     throw new Error('No choices returned from OpenAI API');
   }
@@ -528,7 +575,7 @@ Return ONLY the JSON object with the "facets" array.`;
   logger.debug('GPT response received', {
     finish_reason: finishReason,
     has_content: !!choice.message?.content,
-    model: OPENAI_MODEL
+    model: OPENAI_MODEL,
   });
 
   // Retry on "length" stop with compact mode
@@ -539,49 +586,56 @@ Return ONLY the JSON object with the "facets" array.`;
 
   // Extract from message.content (no tool_calls defined in request)
   const gptResponse = choice.message.content;
-  
+
   if (!gptResponse) {
     if (!compactMode && retryCount < 1) {
       logger.info('Retrying due to empty response...', { id });
       return callGPTForFacets(id, title, content, logger, retryCount + 1, true);
     }
-    logger.error('Empty response from GPT', { finish_reason: finishReason, model: OPENAI_MODEL, id });
+    logger.error('Empty response from GPT', {
+      finish_reason: finishReason,
+      model: OPENAI_MODEL,
+      id,
+    });
     throw new Error('Empty GPT response');
   }
-  
+
   if (!gptResponse || gptResponse.trim() === '') {
-    logger.error('Empty response from GPT', { 
+    logger.error('Empty response from GPT', {
       finish_reason: choice.finish_reason,
-      model: OPENAI_MODEL
+      model: OPENAI_MODEL,
     });
-    
+
     // Retry once if empty response on first attempt
     if (retryCount === 0) {
       logger.info('Retrying due to empty response...');
       return callGPTForFacets(id, title, content, logger, 1);
     }
-    
+
     return null;
   }
-  
+
   logger.info('Parsing JSON from message.content', { id });
-  
+
   // Remove markdown fences if present
-  const cleanJson = gptResponse.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-  
+  const cleanJson = gptResponse
+    .replace(/```json\n?/g, '')
+    .replace(/```\n?/g, '')
+    .trim();
+
   let parsedResponse;
   try {
     parsedResponse = JSON.parse(cleanJson);
   } catch (parseErr) {
-    logger.warn('Initial JSON parse failed, attempting brace-slice recovery', { 
+    logger.warn('Initial JSON parse failed, attempting brace-slice recovery', {
       parseError: parseErr instanceof Error ? parseErr.message : String(parseErr),
-      responsePreview: gptResponse.substring(0, 200)
+      responsePreview: gptResponse.substring(0, 200),
     });
-    
+
     // Attempt brace-slice recovery
     const start = cleanJson.indexOf('{');
     const end = cleanJson.lastIndexOf('}');
-    
+
     if (start !== -1 && end !== -1 && end > start) {
       try {
         const slicedJson = cleanJson.slice(start, end + 1);
@@ -589,95 +643,95 @@ Return ONLY the JSON object with the "facets" array.`;
         logger.info('Brace-slice recovery successful');
       } catch (sliceErr) {
         logger.error('Brace-slice recovery also failed', {
-          sliceError: sliceErr instanceof Error ? sliceErr.message : String(sliceErr)
+          sliceError: sliceErr instanceof Error ? sliceErr.message : String(sliceErr),
         });
-        
+
         // Retry once if parse error on first attempt
         if (retryCount === 0) {
           logger.info('Retrying due to parse error...');
           return callGPTForFacets(id, title, content, logger, 1);
         }
-        
+
         return null;
       }
     } else {
       logger.error('No valid JSON braces found');
-      
+
       // Retry once if parse error on first attempt
       if (retryCount === 0) {
         logger.info('Retrying due to parse error...');
         return callGPTForFacets(id, title, content, logger, 1);
       }
-      
+
       return null;
     }
   }
 
   // Validate response structure
   if (!parsedResponse || !parsedResponse.facets || !Array.isArray(parsedResponse.facets)) {
-    logger.warn('Invalid response structure', { 
+    logger.warn('Invalid response structure', {
       id,
       hasResponse: !!parsedResponse,
-      hasFacets: !!(parsedResponse?.facets),
-      isArray: Array.isArray(parsedResponse?.facets)
+      hasFacets: !!parsedResponse?.facets,
+      isArray: Array.isArray(parsedResponse?.facets),
     });
-    
+
     // Retry once if invalid structure on first attempt
     if (retryCount === 0) {
       logger.info('Retrying due to invalid structure...');
       return callGPTForFacets(id, title, content, logger, 1);
     }
-    
+
     return null;
   }
-    
-    // Validate and filter facets
-    const validFacets = parsedResponse.facets.filter((facet: any) => {
-      // Normalise categories before validation
-      if (facet.equipment_category) {
-        facet.equipment_category = normaliseCategory(facet.equipment_category);
-      }
-      
-      // SAFETY CHECK: Reject dangerous maintenance advice
-      const safetyError = validateFacetSafety(facet);
-      if (safetyError) {
-        logger.warn(`🚨 SAFETY VIOLATION: Rejected unsafe facet - ${safetyError}`, { 
-          facet_topic: facet.primary_topic,
-          dangerous_tasks: facet.maintenance_tasks
-        });
-        return false; // REJECT this facet
-      }
-      
-      const isValid = validatePracticalWorkFacet(facet);
-      if (!isValid) {
-        logger.warn('Rejected low-quality facet', {
-          primary_topic: facet.primary_topic?.substring(0, 50),
-          keywordCount: facet.keywords?.length,
-          category: facet.equipment_category,
-          hasTools: !!facet.tools_required?.length,
-          hasMaterials: !!facet.materials_needed?.length,
-          hasBS7671: !!facet.bs7671_regulations?.length,
-          hasAppliesTo: !!facet.applies_to?.length,
-          confidence: facet.confidence_score
-        });
-      }
-      return isValid;
-    });
-    
-    if (validFacets.length === 0) {
-      logger.warn('No valid facets extracted after filtering');
-      
-      // Retry once
-      if (retryCount === 0) {
-        logger.info('Retrying due to 0 valid facets...');
-        return callGPTForFacets(id, title, content, logger, 1);
-      }
-      
-      return null;
+
+  // Validate and filter facets
+  const validFacets = parsedResponse.facets.filter((facet: any) => {
+    // Normalise categories before validation
+    if (facet.equipment_category) {
+      facet.equipment_category = normaliseCategory(facet.equipment_category);
     }
-    
-    logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`);
-    return { facets: validFacets };
+
+    // SAFETY CHECK: Reject dangerous maintenance advice
+    const safetyError = validateFacetSafety(facet);
+    if (safetyError) {
+      logger.warn(`🚨 SAFETY VIOLATION: Rejected unsafe facet - ${safetyError}`, {
+        facet_topic: facet.primary_topic,
+        dangerous_tasks: facet.maintenance_tasks,
+      });
+      return false; // REJECT this facet
+    }
+
+    const isValid = validatePracticalWorkFacet(facet);
+    if (!isValid) {
+      logger.warn('Rejected low-quality facet', {
+        primary_topic: facet.primary_topic?.substring(0, 50),
+        keywordCount: facet.keywords?.length,
+        category: facet.equipment_category,
+        hasTools: !!facet.tools_required?.length,
+        hasMaterials: !!facet.materials_needed?.length,
+        hasBS7671: !!facet.bs7671_regulations?.length,
+        hasAppliesTo: !!facet.applies_to?.length,
+        confidence: facet.confidence_score,
+      });
+    }
+    return isValid;
+  });
+
+  if (validFacets.length === 0) {
+    logger.warn('No valid facets extracted after filtering');
+
+    // Retry once
+    if (retryCount === 0) {
+      logger.info('Retrying due to 0 valid facets...');
+      return callGPTForFacets(id, title, content, logger, 1);
+    }
+
+    return null;
+  }
+
+  logger.info(`✅ Extracted ${validFacets.length} valid facets from GPT (${OPENAI_MODEL})`);
+  return { facets: validFacets };
 }
 
 /**
@@ -686,13 +740,13 @@ Return ONLY the JSON object with the "facets" array.`;
 function inferActivityTypes(facet: any, sourceItem: any): string[] {
   const content = ((facet.primary_topic || '') + ' ' + (sourceItem.content || '')).toLowerCase();
   const types = [];
-  
+
   if (/install|fitting|mount|fix/.test(content)) types.push('installation');
   if (/test|commission|inspect|verify/.test(content)) types.push('testing');
   if (/maintain|service|clean|replace/.test(content)) types.push('maintenance');
   if (/design|calculate|size|select/.test(content)) types.push('design');
   if (/fault|diagnose|troubleshoot|repair/.test(content)) types.push('fault_finding');
-  
+
   return types.length > 0 ? types : ['installation']; // Default to installation
 }
 
@@ -702,7 +756,7 @@ function inferActivityTypes(facet: any, sourceItem: any): string[] {
  */
 function inferFacetType(facet: any, index: number): string {
   const topic = (facet.primary_topic || '').toLowerCase();
-  
+
   // Prioritize specific types based on content
   if (facet.test_procedures?.length > 0 || /test|commission|verify/.test(topic)) {
     return 'testing';
@@ -716,7 +770,7 @@ function inferFacetType(facet: any, index: number): string {
   if (facet.materials_needed?.length > 0 && /cost|price|material/.test(topic)) {
     return 'costing';
   }
-  
+
   // Default: alternate between primary types to avoid conflicts
   const types = ['installation', 'testing', 'maintenance', 'primary'];
   return types[index % types.length];
@@ -729,14 +783,23 @@ function computeFacetHash(facet: any): string {
   const canonical = [
     (facet.primary_topic || '').toLowerCase().trim(),
     (facet.equipment_category || '').toLowerCase().trim(),
-    (facet.keywords || []).map((k: string) => k.toLowerCase().trim()).sort().join('|'),
-    (facet.bs7671_regulations || []).map((r: string) => r.toLowerCase().trim()).sort().join('|')
+    (facet.keywords || [])
+      .map((k: string) => k.toLowerCase().trim())
+      .sort()
+      .join('|'),
+    (facet.bs7671_regulations || [])
+      .map((r: string) => r.toLowerCase().trim())
+      .sort()
+      .join('|'),
   ].join('::');
-  
+
   // Simple hash using Web Crypto API
   const encoder = new TextEncoder();
   const data = encoder.encode(canonical);
-  return Array.from(data).map(b => b.toString(16).padStart(2, '0')).join('').substring(0, 32);
+  return Array.from(data)
+    .map((b) => b.toString(16).padStart(2, '0'))
+    .join('')
+    .substring(0, 32);
 }
 
 /**
@@ -744,24 +807,24 @@ function computeFacetHash(facet: any): string {
  */
 function scoreFacetQuality(facet: any): number {
   let score = 0;
-  
+
   // Core fields (1 point each)
   if (facet.typical_duration_minutes) score += 1;
   if (facet.skill_level) score += 1;
   if (facet.safety_requirements) score += 1;
-  
+
   // Rich content (2 points for regulations)
   if (facet.bs7671_regulations && facet.bs7671_regulations.length > 0) score += 2;
-  
+
   // Testing procedures (2 points if ≥3)
   if (facet.test_procedures && facet.test_procedures.length >= 3) score += 2;
-  
+
   // Tools (1 point if ≥4)
   if (facet.tools_required && facet.tools_required.length >= 4) score += 1;
-  
+
   // Materials (1 point if ≥3)
   if (facet.materials_needed && facet.materials_needed.length >= 3) score += 1;
-  
+
   return score;
 }
 
@@ -770,34 +833,34 @@ function scoreFacetQuality(facet: any): number {
  */
 function selectTop8WithDiversity(facets: any[]): any[] {
   if (facets.length <= 8) return facets;
-  
+
   // Score each facet
-  const scored = facets.map(f => ({
+  const scored = facets.map((f) => ({
     facet: f,
     score: scoreFacetQuality(f),
     category: f.equipment_category || 'unknown',
-    type: f.facet_type || 'unknown'
+    type: f.facet_type || 'unknown',
   }));
-  
+
   // Apply light diversity penalty for repeated categories
   const categoryCounts: Record<string, number> = {};
-  scored.forEach(s => {
+  scored.forEach((s) => {
     const key = `${s.category}:${s.type}`;
     categoryCounts[key] = (categoryCounts[key] || 0) + 1;
     if (categoryCounts[key] > 1) {
       s.score -= 0.5; // Light penalty for duplicates
     }
   });
-  
+
   // Sort by score (descending) and take top 8
   scored.sort((a, b) => b.score - a.score);
-  return scored.slice(0, 8).map(s => s.facet);
+  return scored.slice(0, 8).map((s) => s.facet);
 }
 
 async function enrichProcedure(supabase: any, item: any, logger: any): Promise<number> {
   const content = item.content || item.description || '';
   const title = item.topic || 'Untitled';
-  
+
   if (!content || content.length < 150) {
     logger.warn('Content too short', { id: item.id, length: content.length });
     return 0;
@@ -807,15 +870,15 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   const staleThreshold = new Date(Date.now() - 10 * 60 * 1000).toISOString(); // 10 min stale lock
   const { data: claimedSource, error: claimError } = await supabase
     .from('practical_work')
-    .update({ 
+    .update({
       enrichment_status: 'processing',
-      enrichment_locked_at: new Date().toISOString()
+      enrichment_locked_at: new Date().toISOString(),
     })
     .eq('id', item.id)
     .or(`enrichment_status.is.null,enrichment_locked_at.lt.${staleThreshold}`)
     .select()
     .single();
-  
+
   if (claimError || !claimedSource) {
     // Enhanced logging: distinguish why we're skipping
     const { data: statusCheck } = await supabase
@@ -823,17 +886,27 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
       .select('enrichment_status, enrichment_locked_at')
       .eq('id', item.id)
       .single();
-    
+
     if (statusCheck?.enrichment_status === 'completed') {
       logger.debug(`⏭️ Skipping (already completed)`, { id: item.id, topic: title });
-    } else if (statusCheck?.enrichment_locked_at && new Date(statusCheck.enrichment_locked_at) > new Date(staleThreshold)) {
-      logger.debug(`⏭️ Skipping (claimed by another worker)`, { id: item.id, lockedAt: statusCheck.enrichment_locked_at });
+    } else if (
+      statusCheck?.enrichment_locked_at &&
+      new Date(statusCheck.enrichment_locked_at) > new Date(staleThreshold)
+    ) {
+      logger.debug(`⏭️ Skipping (claimed by another worker)`, {
+        id: item.id,
+        lockedAt: statusCheck.enrichment_locked_at,
+      });
     } else {
-      logger.warn(`⏭️ Skipping (unknown reason)`, { id: item.id, status: statusCheck?.enrichment_status, claimError });
+      logger.warn(`⏭️ Skipping (unknown reason)`, {
+        id: item.id,
+        status: statusCheck?.enrichment_status,
+        claimError,
+      });
     }
     return 0;
   }
-  
+
   logger.info(`🔒 Source locked for enrichment`, { id: item.id, topic: title });
 
   // Check if enrichment already complete
@@ -841,7 +914,7 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     .from('practical_work_intelligence')
     .select('*', { count: 'exact', head: true })
     .eq('practical_work_id', item.id);
-  
+
   if (existingCount && existingCount >= 8) {
     logger.info(`⏭️ Already enriched (${existingCount} facets)`, { id: item.id });
     // Mark complete and unlock
@@ -851,13 +924,16 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
       .eq('id', item.id);
     return 0;
   }
-  
+
   const maxNewFacets = 8 - (existingCount || 0);
-  logger.info(`🔍 Extracting (need ${maxNewFacets} more facets, ${existingCount || 0} exist)`, { id: item.id, topic: title });
+  logger.info(`🔍 Extracting (need ${maxNewFacets} more facets, ${existingCount || 0} exist)`, {
+    id: item.id,
+    topic: title,
+  });
 
   // Call GPT to extract multi-facets (passing full content)
   const intelligence = await callGPTForFacets(item.id, title, content, logger);
-  
+
   if (!intelligence || !intelligence.facets || intelligence.facets.length === 0) {
     logger.warn('No facets extracted', { id: item.id });
     return 0;
@@ -865,25 +941,30 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
 
   // ✅ POST-GPT VALIDATION: Warn if GPT generated too many facets
   if (intelligence.facets.length > 10) {
-    logger.warn(`⚠️ GPT generated ${intelligence.facets.length} facets (expected 8), applying quality filter`, { id: item.id });
+    logger.warn(
+      `⚠️ GPT generated ${intelligence.facets.length} facets (expected 8), applying quality filter`,
+      { id: item.id }
+    );
   }
 
   // ✅ DEDUPLICATION: Compute hash for each facet
   const facetsWithHash = intelligence.facets.map((facet: any) => ({
     ...facet,
-    facet_hash: computeFacetHash(facet)
+    facet_hash: computeFacetHash(facet),
   }));
-  
+
   // ✅ SCORING & TOP-8 SELECTION: Preserve diversity
   const top8Facets = selectTop8WithDiversity(facetsWithHash).slice(0, maxNewFacets);
-  
-  logger.info(`✅ Selected ${top8Facets.length}/${intelligence.facets.length} facets (avg quality: ${(top8Facets.reduce((sum, f) => sum + scoreFacetQuality(f), 0) / top8Facets.length).toFixed(1)})`);
+
+  logger.info(
+    `✅ Selected ${top8Facets.length}/${intelligence.facets.length} facets (avg quality: ${(top8Facets.reduce((sum, f) => sum + scoreFacetQuality(f), 0) / top8Facets.length).toFixed(1)})`
+  );
 
   // Fix 1: Add missing required columns + Fix 2: Map all enhanced GPT fields
   const facetsToInsert = top8Facets.map((facet: any, i: number) => ({
     practical_work_id: item.id,
     facet_type: inferFacetType(facet, i),
-    
+
     // ✅ Fix 1: Add missing NOT NULL columns
     activity_types: inferActivityTypes(facet, item),
     source_tables: ['practical_work'],
@@ -892,9 +973,9 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
       enrichment_function: 'enrich-practical-work',
       enriched_at: new Date().toISOString(),
       source_content_length: content.length,
-      gpt_tokens: intelligence.tokens || null
+      gpt_tokens: intelligence.tokens || null,
     },
-    
+
     // Existing basic fields
     primary_topic: facet.primary_topic,
     keywords: facet.keywords,
@@ -907,46 +988,46 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     tools_required: facet.tools_required || [],
     materials_needed: facet.materials_needed || [],
     bs7671_regulations: facet.bs7671_regulations || [],
-    
+
     // ✅ Fix 2: Add installation-specific fields
     installation_method: facet.installation_method || null,
     cable_routes: ensureArrayOfStrings(facet.cable_routes),
     termination_methods: ensureArrayOfStrings(facet.termination_methods),
-    
+
     // ✅ Fix 2: Add testing & commissioning fields
     test_procedures: ensureJsonArray(facet.test_procedures),
     test_equipment_required: ensureArrayOfStrings(facet.test_equipment_required),
     acceptance_criteria: toJsonOrNull(facet.acceptance_criteria),
-    
+
     // ✅ Fix 2: Add inspection fields
     visual_inspection_points: ensureArrayOfStrings(facet.visual_inspection_points),
     eicr_observation_codes: ensureArrayOfStrings(facet.eicr_observation_codes),
     common_defects: ensureArrayOfStrings(facet.common_defects),
-    
+
     // ✅ Fix 2: Add maintenance fields
     maintenance_intervals: toJsonOrNull(facet.maintenance_intervals),
     maintenance_tasks: ensureJsonArray(facet.maintenance_tasks),
     wear_indicators: ensureArrayOfStrings(facet.wear_indicators),
-    
+
     // ✅ NEW: Add fault diagnosis fields
     common_failures: ensureJsonArray(facet.common_failures),
     troubleshooting_steps: ensureArrayOfStrings(facet.troubleshooting_steps),
     diagnostic_tests: ensureArrayOfStrings(facet.diagnostic_tests),
     replacement_criteria: ensureArrayOfStrings(facet.replacement_criteria),
-    
+
     // ✅ NEW: Add required core intelligence fields
     typical_duration_minutes: facet.typical_duration_minutes || null,
     skill_level: facet.skill_level || null,
     team_size: facet.team_size || 1,
-    
+
     // Existing error & safety fields
     common_mistakes: ensureArrayOfStrings(facet.common_mistakes),
     safety_requirements: toJsonOrNull(facet.safety_requirements),
-    
+
     confidence_score: facet.confidence_score || 0.85,
-    
+
     // ✅ ADD FACET HASH for deduplication
-    facet_hash: facet.facet_hash
+    facet_hash: facet.facet_hash,
   }));
 
   // Fix 4: Add comprehensive error logging
@@ -956,14 +1037,14 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
     .select(); // ✅ Select to verify insertion
 
   if (insertError) {
-    logger.error('❌ Insert failed', { 
+    logger.error('❌ Insert failed', {
       error: insertError.message,
       code: insertError.code,
       details: insertError.details,
       hint: insertError.hint,
       id: item.id,
       facetCount: facetsToInsert.length,
-      sampleFacet: JSON.stringify(facetsToInsert[0], null, 2) // Log first facet for debugging
+      sampleFacet: JSON.stringify(facetsToInsert[0], null, 2), // Log first facet for debugging
     });
     return 0;
   }
@@ -971,14 +1052,16 @@ async function enrichProcedure(supabase: any, item: any, logger: any): Promise<n
   if (!insertedData || insertedData.length === 0) {
     logger.warn('⚠️ Insert succeeded but no rows returned', {
       id: item.id,
-      facetCount: facetsToInsert.length
+      facetCount: facetsToInsert.length,
     });
     return 0;
   }
 
-  logger.info(`✅ Inserted ${insertedData.length} facets`, { 
+  logger.info(`✅ Inserted ${insertedData.length} facets`, {
     id: item.id,
-    avgConfidence: (insertedData.reduce((sum, f) => sum + f.confidence_score, 0) / insertedData.length).toFixed(2)
+    avgConfidence: (
+      insertedData.reduce((sum, f) => sum + f.confidence_score, 0) / insertedData.length
+    ).toFixed(2),
   });
 
   // ✅ PHASE 1: Mark source as completed and unlock
@@ -1025,24 +1108,29 @@ serve(async (req) => {
     if (!items || items.length === 0) {
       logger.info(`No items found for batch ${batchId}`);
       return new Response(JSON.stringify({ success: true, total_facets: 0 }), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
 
     logger.info(`📦 Retrieved ${items.length} items (batch size: ${effectiveBatchSize})`);
 
     // Phase 1: Filter quality items (bypass for practical_work)
-    const qualityItems = items.filter(item => shouldEnrichChunk(item, 'practical_work'));
-    logger.info(`📊 Filtered ${items.length} → ${qualityItems.length} quality items (${((qualityItems.length / items.length) * 100).toFixed(1)}% pass rate)`);
+    const qualityItems = items.filter((item) => shouldEnrichChunk(item, 'practical_work'));
+    logger.info(
+      `📊 Filtered ${items.length} → ${qualityItems.length} quality items (${((qualityItems.length / items.length) * 100).toFixed(1)}% pass rate)`
+    );
 
     // Phase 6: Sort by priority
     qualityItems.sort((a, b) => calculateEnrichmentPriority(b) - calculateEnrichmentPriority(a));
     logger.info('🎯 Sorted by enrichment priority');
 
-    await supabase.from('batch_progress').update({
-      status: 'processing',
-      started_at: new Date().toISOString()
-    }).eq('id', batchId);
+    await supabase
+      .from('batch_progress')
+      .update({
+        status: 'processing',
+        started_at: new Date().toISOString(),
+      })
+      .eq('id', batchId);
 
     let totalFacets = 0;
     let lastHeartbeat = Date.now();
@@ -1050,14 +1138,17 @@ serve(async (req) => {
     // Process with concurrency limit (2 at a time)
     for (let i = 0; i < qualityItems.length; i += 2) {
       const batch = qualityItems.slice(i, Math.min(i + 2, qualityItems.length));
-      
+
       // Heartbeat every 15 seconds
       if (Date.now() - lastHeartbeat > 15000) {
-        await supabase.from('batch_progress').update({
-          items_processed: i,
-          updated_at: new Date().toISOString(),
-          data: { last_heartbeat: new Date().toISOString(), total_facets: totalFacets }
-        }).eq('id', batchId);
+        await supabase
+          .from('batch_progress')
+          .update({
+            items_processed: i,
+            updated_at: new Date().toISOString(),
+            data: { last_heartbeat: new Date().toISOString(), total_facets: totalFacets },
+          })
+          .eq('id', batchId);
         lastHeartbeat = Date.now();
       }
 
@@ -1073,37 +1164,44 @@ serve(async (req) => {
       );
     }
 
-    await supabase.from('batch_progress').update({
-      status: 'completed',
-      items_processed: qualityItems.length,
-      completed_at: new Date().toISOString(),
-      data: { 
-        total_facets_created: totalFacets,
-        quality_filtered: items.length - qualityItems.length,
-        avg_facets_per_item: (totalFacets / qualityItems.length).toFixed(1)
+    await supabase
+      .from('batch_progress')
+      .update({
+        status: 'completed',
+        items_processed: qualityItems.length,
+        completed_at: new Date().toISOString(),
+        data: {
+          total_facets_created: totalFacets,
+          quality_filtered: items.length - qualityItems.length,
+          avg_facets_per_item: (totalFacets / qualityItems.length).toFixed(1),
+        },
+      })
+      .eq('id', batchId);
+
+    logger.info(
+      `🎉 Batch complete: ${qualityItems.length} items → ${totalFacets} facets (avg ${(totalFacets / qualityItems.length).toFixed(1)} facets/item)`
+    );
+
+    return new Response(
+      JSON.stringify({
+        success: true,
+        total_facets: totalFacets,
+        items_processed: qualityItems.length,
+        items_filtered: items.length - qualityItems.length,
+      }),
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
-    }).eq('id', batchId);
-
-    logger.info(`🎉 Batch complete: ${qualityItems.length} items → ${totalFacets} facets (avg ${(totalFacets / qualityItems.length).toFixed(1)} facets/item)`);
-
-    return new Response(JSON.stringify({ 
-      success: true, 
-      total_facets: totalFacets,
-      items_processed: qualityItems.length,
-      items_filtered: items.length - qualityItems.length
-    }), {
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
-    });
-
+    );
   } catch (error) {
-    logger.error('Enrichment failed', { 
-      error: error.message, 
-      stack: error.stack
+    logger.error('Enrichment failed', {
+      error: error.message,
+      stack: error.stack,
     });
-    
+
     return new Response(JSON.stringify({ success: false, error: error.message }), {
       status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   }
 });

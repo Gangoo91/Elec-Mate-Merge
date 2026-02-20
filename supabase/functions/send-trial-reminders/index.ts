@@ -6,12 +6,13 @@
  * - Day 7 trial ended email
  */
 
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const TRIAL_DAYS = 7;
@@ -25,7 +26,7 @@ interface EmailTemplate {
 
 function getWelcome24hEmail(firstName: string): EmailTemplate {
   return {
-    subject: "Welcome to Elec-Mate! Lock in your launch price",
+    subject: 'Welcome to Elec-Mate! Lock in your launch price',
     html: `
 <!DOCTYPE html>
 <html>
@@ -106,13 +107,13 @@ function getWelcome24hEmail(firstName: string): EmailTemplate {
   </table>
 </body>
 </html>
-    `
+    `,
   };
 }
 
 function getDay5ReminderEmail(firstName: string): EmailTemplate {
   return {
-    subject: "⏰ Your Elec-Mate trial ends in 2 days",
+    subject: '⏰ Your Elec-Mate trial ends in 2 days',
     html: `
 <!DOCTYPE html>
 <html>
@@ -199,13 +200,13 @@ function getDay5ReminderEmail(firstName: string): EmailTemplate {
   </table>
 </body>
 </html>
-    `
+    `,
   };
 }
 
 function getTrialEndedEmail(firstName: string): EmailTemplate {
   return {
-    subject: "Your Elec-Mate trial has ended",
+    subject: 'Your Elec-Mate trial has ended',
     html: `
 <!DOCTYPE html>
 <html>
@@ -277,7 +278,7 @@ function getTrialEndedEmail(firstName: string): EmailTemplate {
   </table>
 </body>
 </html>
-    `
+    `,
   };
 }
 
@@ -291,7 +292,7 @@ async function sendEmail(to: string, template: EmailTemplate): Promise<boolean> 
     const response = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        Authorization: `Bearer ${RESEND_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
@@ -353,7 +354,7 @@ serve(async (req) => {
           if (authUser?.user?.email) {
             usersWithEmails.push({
               ...profile,
-              email: authUser.user.email
+              email: authUser.user.email,
             });
           }
         } catch (e) {
@@ -470,12 +471,11 @@ serve(async (req) => {
       }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
-
   } catch (error: any) {
     console.error('❌ Error in trial reminder job:', error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
   }
 });

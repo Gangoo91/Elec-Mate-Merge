@@ -1,8 +1,9 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.4";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-request-id",
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-request-id',
 };
 
 /**
@@ -18,27 +19,27 @@ const TOTAL_BATCHES = 12;
 const BATCH_TIMEOUT_MS = 180000; // 3 minutes per batch
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
+  if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
   }
 
-  console.log("🎓 [TRAINING-REFRESH] Starting comprehensive course refresh...");
+  console.log('🎓 [TRAINING-REFRESH] Starting comprehensive course refresh...');
   const startTime = Date.now();
 
   try {
-    const body = req.method === "POST" ? await req.json().catch(() => ({})) : {};
+    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {};
     const forceRefresh = body.forceRefresh === true;
     const singleBatch = body.batch;
 
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // If single batch requested, just run that one
     if (singleBatch && singleBatch >= 1 && singleBatch <= TOTAL_BATCHES) {
       console.log(`📊 Running single batch ${singleBatch}...`);
 
-      const { data, error } = await supabase.functions.invoke("comprehensive-training-scraper", {
+      const { data, error } = await supabase.functions.invoke('comprehensive-training-scraper', {
         body: { batch: singleBatch, forceRefresh: true },
       });
 
@@ -50,18 +51,18 @@ Deno.serve(async (req) => {
           message: `Batch ${singleBatch} completed`,
           ...data,
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     // Check if we need refresh (cache age)
-    console.log("📊 Checking cache freshness...");
+    console.log('📊 Checking cache freshness...');
 
     const { data: recentCache } = await supabase
-      .from("training_courses_cache")
-      .select("created_at, region")
-      .gt("expires_at", new Date().toISOString())
-      .order("created_at", { ascending: false })
+      .from('training_courses_cache')
+      .select('created_at, region')
+      .gt('expires_at', new Date().toISOString())
+      .order('created_at', { ascending: false })
       .limit(1)
       .single();
 
@@ -74,9 +75,12 @@ Deno.serve(async (req) => {
       console.log(`✅ Cache is fresh (${cacheAge} hours old), skipping refresh`);
 
       // Just return merged data
-      const { data: mergeResult } = await supabase.functions.invoke("comprehensive-training-scraper", {
-        body: { mergeAll: true },
-      });
+      const { data: mergeResult } = await supabase.functions.invoke(
+        'comprehensive-training-scraper',
+        {
+          body: { mergeAll: true },
+        }
+      );
 
       return new Response(
         JSON.stringify({
@@ -85,7 +89,7 @@ Deno.serve(async (req) => {
           cached: true,
           ...mergeResult,
         }),
-        { headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
@@ -106,7 +110,7 @@ Deno.serve(async (req) => {
             setTimeout(() => reject(new Error(`Batch ${i} timeout`)), BATCH_TIMEOUT_MS)
           );
 
-          const batchPromise = supabase.functions.invoke("comprehensive-training-scraper", {
+          const batchPromise = supabase.functions.invoke('comprehensive-training-scraper', {
             body: { batch: i, forceRefresh: true },
           });
 
@@ -114,7 +118,11 @@ Deno.serve(async (req) => {
           resolve({ batch: i, success: true, data: (result as any).data });
         } catch (error) {
           console.error(`❌ Batch ${i} failed:`, error);
-          resolve({ batch: i, success: false, error: error instanceof Error ? error.message : "Unknown error" });
+          resolve({
+            batch: i,
+            success: false,
+            error: error instanceof Error ? error.message : 'Unknown error',
+          });
         }
       });
 
@@ -140,15 +148,15 @@ Deno.serve(async (req) => {
     });
 
     // Merge all courses
-    console.log("🔄 Merging all course data...");
+    console.log('🔄 Merging all course data...');
 
     const { data: mergeResult, error: mergeError } = await supabase.functions.invoke(
-      "comprehensive-training-scraper",
+      'comprehensive-training-scraper',
       { body: { mergeAll: true } }
     );
 
     if (mergeError) {
-      console.error("⚠️ Merge error:", mergeError);
+      console.error('⚠️ Merge error:', mergeError);
     }
 
     const elapsed = ((Date.now() - startTime) / 1000).toFixed(2);
@@ -175,18 +183,18 @@ Deno.serve(async (req) => {
     );
 
     return new Response(JSON.stringify(response), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
   } catch (error) {
-    console.error("❌ Fatal error:", error);
+    console.error('❌ Fatal error:', error);
 
     return new Response(
       JSON.stringify({
         success: false,
-        error: "Failed to refresh courses",
-        details: error instanceof Error ? error.message : "Unknown error",
+        error: 'Failed to refresh courses',
+        details: error instanceof Error ? error.message : 'Unknown error',
       }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   }
 });

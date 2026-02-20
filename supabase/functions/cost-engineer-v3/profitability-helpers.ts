@@ -44,50 +44,50 @@ export function createFallbackProfitability(costResult: any): ProfitabilityAnaly
   const directTotal = materialsTotal + labourTotal;
   const overheadAllocation = jobDuration * 35;
   const breakEvenSubtotal = directTotal + overheadAllocation;
-  
+
   return {
-    directCosts: { 
-      materials: materialsTotal, 
-      labour: labourTotal, 
-      total: directTotal 
+    directCosts: {
+      materials: materialsTotal,
+      labour: labourTotal,
+      total: directTotal,
     },
     jobOverheads: {
       estimatedDuration: `${jobDuration} days`,
       overheadAllocation,
-      total: overheadAllocation
+      total: overheadAllocation,
     },
     breakEven: {
       subtotal: breakEvenSubtotal,
-      vat: breakEvenSubtotal * 0.20,
-      total: breakEvenSubtotal * 1.20,
-      explanation: 'Break-even covers direct costs plus overhead allocation'
+      vat: breakEvenSubtotal * 0.2,
+      total: breakEvenSubtotal * 1.2,
+      explanation: 'Break-even covers direct costs plus overhead allocation',
     },
     quotingGuidance: {
       minimum: {
         margin: 15,
         subtotal: breakEvenSubtotal * 1.15,
-        vat: (breakEvenSubtotal * 1.15) * 0.20,
-        total: (breakEvenSubtotal * 1.15) * 1.20,
+        vat: breakEvenSubtotal * 1.15 * 0.2,
+        total: breakEvenSubtotal * 1.15 * 1.2,
         profit: breakEvenSubtotal * 0.15,
-        explanation: 'Minimum 15% margin - covers costs with modest profit'
+        explanation: 'Minimum 15% margin - covers costs with modest profit',
       },
       target: {
         margin: 25,
         subtotal: breakEvenSubtotal * 1.25,
-        vat: (breakEvenSubtotal * 1.25) * 0.20,
-        total: (breakEvenSubtotal * 1.25) * 1.20,
+        vat: breakEvenSubtotal * 1.25 * 0.2,
+        total: breakEvenSubtotal * 1.25 * 1.2,
         profit: breakEvenSubtotal * 0.25,
-        explanation: 'Target 25% margin - recommended for healthy profit'
+        explanation: 'Target 25% margin - recommended for healthy profit',
       },
       premium: {
         margin: 35,
         subtotal: breakEvenSubtotal * 1.35,
-        vat: (breakEvenSubtotal * 1.35) * 0.20,
-        total: (breakEvenSubtotal * 1.35) * 1.20,
+        vat: breakEvenSubtotal * 1.35 * 0.2,
+        total: breakEvenSubtotal * 1.35 * 1.2,
         profit: breakEvenSubtotal * 0.35,
-        explanation: 'Premium 35% margin - for specialist/complex work'
-      }
-    }
+        explanation: 'Premium 35% margin - for specialist/complex work',
+      },
+    },
   };
 }
 
@@ -102,7 +102,7 @@ export async function calculateProfitabilityAnalysis(
 ): Promise<ProfitabilityAnalysis> {
   try {
     logger.info('🧮 Calculating profitability analysis');
-    
+
     const materialsTotal = costResult.summary?.materialsSubtotal || 0;
     const labourTotal = costResult.summary?.labourSubtotal || 0;
     const jobDuration = costResult.timescales?.totalDays || 1;
@@ -132,18 +132,22 @@ Return JSON:
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${LOVABLE_API_KEY}`,
-        'Content-Type': 'application/json'
+        Authorization: `Bearer ${LOVABLE_API_KEY}`,
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: [
-          { role: 'system', content: 'You are a UK electrical business profitability calculator. Return only valid JSON.' },
-          { role: 'user', content: prompt }
+          {
+            role: 'system',
+            content:
+              'You are a UK electrical business profitability calculator. Return only valid JSON.',
+          },
+          { role: 'user', content: prompt },
         ],
         temperature: 0.2,
-        max_tokens: 1000
-      })
+        max_tokens: 1000,
+      }),
     });
 
     if (!response.ok) {
@@ -152,12 +156,14 @@ Return JSON:
 
     const data = await response.json();
     const content = data.choices?.[0]?.message?.content || '{}';
-    const cleanJson = content.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+    const cleanJson = content
+      .replace(/```json\n?/g, '')
+      .replace(/```\n?/g, '')
+      .trim();
     const result = JSON.parse(cleanJson);
 
     logger.info('✅ Profitability calculated', { breakEven: result.breakEven?.total });
     return result as ProfitabilityAnalysis;
-
   } catch (error: any) {
     logger.error('❌ Profitability failed, using fallback', { error: error.message });
     return createFallbackProfitability(costResult);

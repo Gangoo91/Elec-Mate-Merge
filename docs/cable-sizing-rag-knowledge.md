@@ -288,11 +288,13 @@ If any □ fails → review cable size/type selection',
 ## Changes Implemented
 
 ### 1. RAG Query Builder (`ragQueryBuilder.ts`)
+
 ✅ Added cable size-based selection prompts
 ✅ Added VD-driven upsizing prompts for long + high-power runs
 ✅ Enhanced methodology prompts for >10mm² scenarios
 
 ### 2. Designer Agent (`designer-agent/index.ts`)
+
 ✅ Fixed cable sizing to check voltage drop before finalizing size
 ✅ Added Twin & Earth maximum size validation (10mm² domestic, 16mm² commercial)
 ✅ Implemented cable type selection AFTER VD-aware sizing
@@ -302,22 +304,27 @@ If any □ fails → review cable size/type selection',
 ### 3. Test Cases
 
 **Test 1: High Power Short Run**
+
 - Input: "9.5kW shower, 18m indoor"
 - Expected: 10mm² Twin & Earth (VD = 1.96%)
 
 **Test 2: High Power Medium Run (Size Limit)**
+
 - Input: "12kW shower, 20m indoor"
 - Expected: 16mm² SWA (exceeds 10mm² T&E limit)
 
 **Test 3: Medium Power Long Run (VD Upsize)**
+
 - Input: "7kW heater, 50m indoor"
 - Expected: 16mm² SWA (VD drives upsize beyond T&E)
 
 **Test 4: Low Power Outdoor**
+
 - Input: "3kW outdoor socket, 20m"
 - Expected: 2.5mm² SWA (outdoor requirement)
 
 **Test 5: EV Charger**
+
 - Input: "7.4kW EV charger, 25m garage"
 - Expected: 10mm² SWA (Section 722 + outdoor)
 

@@ -1,6 +1,6 @@
-import { test, expect, Page } from "@playwright/test";
+import { test, expect, Page } from '@playwright/test';
 
-import { testInstruments, testResultsPassing, testResultsFailing } from "../fixtures/test-data";
+import { testInstruments, testResultsPassing, testResultsFailing } from '../fixtures/test-data';
 
 /**
  * Minor Works - Testing Section Tests
@@ -12,7 +12,7 @@ import { testInstruments, testResultsPassing, testResultsFailing } from "../fixt
 
 // Helper to navigate to Minor Works form
 async function navigateToMinorWorks(page: Page) {
-  await page.goto("/electrician/inspection-testing?section=minor-works");
+  await page.goto('/electrician/inspection-testing?section=minor-works');
   await page.waitForTimeout(3000);
 }
 
@@ -27,12 +27,20 @@ async function fillIfVisible(page: Page, selector: string, value: string): Promi
 }
 
 // Helper to select from dropdown
-async function selectOption(page: Page, triggerSelector: string, optionText: string): Promise<boolean> {
+async function selectOption(
+  page: Page,
+  triggerSelector: string,
+  optionText: string
+): Promise<boolean> {
   const trigger = page.locator(triggerSelector).first();
   if (await trigger.isVisible({ timeout: 2000 }).catch(() => false)) {
     await trigger.click();
     await page.waitForTimeout(300);
-    const option = page.locator(`[role="option"]:has-text("${optionText}"), [role="menuitem"]:has-text("${optionText}")`).first();
+    const option = page
+      .locator(
+        `[role="option"]:has-text("${optionText}"), [role="menuitem"]:has-text("${optionText}")`
+      )
+      .first();
     if (await option.isVisible({ timeout: 2000 })) {
       await option.click();
       return true;
@@ -41,13 +49,13 @@ async function selectOption(page: Page, triggerSelector: string, optionText: str
   return false;
 }
 
-test.describe("Minor Works Testing - Continuity Tester Details", () => {
+test.describe('Minor Works Testing - Continuity Tester Details', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("1. Continuity Tester Make field accepts input", async ({ page }) => {
+  test('1. Continuity Tester Make field accepts input', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="continuityTester" i][name*="make" i], input[name*="continuity" i][placeholder*="make" i]',
@@ -62,10 +70,10 @@ test.describe("Minor Works Testing - Continuity Tester Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("2. Continuity Tester Serial field accepts input", async ({ page }) => {
+  test('2. Continuity Tester Serial field accepts input', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="continuityTester" i][name*="serial" i], input[name*="continuity" i][placeholder*="serial" i]',
@@ -80,11 +88,15 @@ test.describe("Minor Works Testing - Continuity Tester Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("3. Continuity Tester Calibration Date accepts date", async ({ page }) => {
-    const dateInput = page.locator('input[type="date"][name*="continuity" i], input[name*="continuityTester" i][name*="cal" i]').first();
+  test('3. Continuity Tester Calibration Date accepts date', async ({ page }) => {
+    const dateInput = page
+      .locator(
+        'input[type="date"][name*="continuity" i], input[name*="continuityTester" i][name*="cal" i]'
+      )
+      .first();
 
     if (await dateInput.isVisible({ timeout: 3000 })) {
       await dateInput.fill(testInstruments.continuityTester.calDate);
@@ -92,17 +104,17 @@ test.describe("Minor Works Testing - Continuity Tester Details", () => {
       expect(value).toBe(testInstruments.continuityTester.calDate);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Insulation Tester Details", () => {
+test.describe('Minor Works Testing - Insulation Tester Details', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("4. Insulation Tester Make field accepts input", async ({ page }) => {
+  test('4. Insulation Tester Make field accepts input', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="insulationTester" i][name*="make" i], input[name*="insulation" i][placeholder*="make" i]',
@@ -117,10 +129,10 @@ test.describe("Minor Works Testing - Insulation Tester Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("5. Insulation Tester Serial field accepts input", async ({ page }) => {
+  test('5. Insulation Tester Serial field accepts input', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="insulationTester" i][name*="serial" i], input[name*="insulation" i][placeholder*="serial" i]',
@@ -135,11 +147,15 @@ test.describe("Minor Works Testing - Insulation Tester Details", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("6. Insulation Tester Calibration Date accepts date", async ({ page }) => {
-    const dateInput = page.locator('input[type="date"][name*="insulation" i], input[name*="insulationTester" i][name*="cal" i]').first();
+  test('6. Insulation Tester Calibration Date accepts date', async ({ page }) => {
+    const dateInput = page
+      .locator(
+        'input[type="date"][name*="insulation" i], input[name*="insulationTester" i][name*="cal" i]'
+      )
+      .first();
 
     if (await dateInput.isVisible({ timeout: 3000 })) {
       await dateInput.fill(testInstruments.insulationTester.calDate);
@@ -147,17 +163,17 @@ test.describe("Minor Works Testing - Insulation Tester Details", () => {
       expect(value).toBe(testInstruments.insulationTester.calDate);
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Test Conditions", () => {
+test.describe('Minor Works Testing - Test Conditions', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("7. Ambient Temperature field accepts value", async ({ page }) => {
+  test('7. Ambient Temperature field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="ambient" i], input[name*="temp" i], input[placeholder*="temperature" i]',
@@ -172,54 +188,54 @@ test.describe("Minor Works Testing - Test Conditions", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("8. Isolation Confirmed dropdown (Yes/No)", async ({ page }) => {
+  test('8. Isolation Confirmed dropdown (Yes/No)', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name*="isolation" i], button:has-text("Isolation")',
-      "Yes"
+      'Yes'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent?.toLowerCase()).toContain("yes");
+      const pageContent = await page.textContent('body');
+      expect(pageContent?.toLowerCase()).toContain('yes');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Circuit Type", () => {
+test.describe('Minor Works Testing - Circuit Type', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("9. Circuit Type dropdown can be selected", async ({ page }) => {
+  test('9. Circuit Type dropdown can be selected', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name*="circuitType" i], button:has-text("Circuit type")',
-      "Ring"
+      'Ring'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent?.toLowerCase()).toContain("ring");
+      const pageContent = await page.textContent('body');
+      expect(pageContent?.toLowerCase()).toContain('ring');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Ring Circuit Continuity", () => {
+test.describe('Minor Works Testing - Ring Circuit Continuity', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("10. Ring - Live continuity field accepts value", async ({ page }) => {
+  test('10. Ring - Live continuity field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="ringContinuityLive" i], input[name*="ringLive" i], input[name*="r1" i]',
@@ -227,17 +243,19 @@ test.describe("Minor Works Testing - Ring Circuit Continuity", () => {
     );
 
     if (filled) {
-      const input = page.locator('input[name*="ringContinuityLive" i], input[name*="r1" i]').first();
+      const input = page
+        .locator('input[name*="ringContinuityLive" i], input[name*="r1" i]')
+        .first();
       if (await input.isVisible()) {
         const value = await input.inputValue();
         expect(value).toBe(testResultsPassing.ringContinuityLive);
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("11. Ring - Neutral continuity field accepts value", async ({ page }) => {
+  test('11. Ring - Neutral continuity field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="ringContinuityNeutral" i], input[name*="ringNeutral" i], input[name*="rn" i]',
@@ -252,10 +270,10 @@ test.describe("Minor Works Testing - Ring Circuit Continuity", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("12. Ring - R1+R2 field accepts value (max 1.67Ohm)", async ({ page }) => {
+  test('12. Ring - R1+R2 field accepts value (max 1.67Ohm)', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="r1r2" i], input[name*="r1+r2" i]',
@@ -270,17 +288,17 @@ test.describe("Minor Works Testing - Ring Circuit Continuity", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Radial Circuit Continuity", () => {
+test.describe('Minor Works Testing - Radial Circuit Continuity', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("13. Radial - R1+R2 field accepts value", async ({ page }) => {
+  test('13. Radial - R1+R2 field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="radialR1R2" i], input[name*="r1r2" i]',
@@ -295,32 +313,32 @@ test.describe("Minor Works Testing - Radial Circuit Continuity", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Insulation Resistance", () => {
+test.describe('Minor Works Testing - Insulation Resistance', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("14. Insulation Test Voltage can be selected (250V/500V/1000V)", async ({ page }) => {
+  test('14. Insulation Test Voltage can be selected (250V/500V/1000V)', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name*="insulationVoltage" i], button:has-text("Test voltage")',
-      "500V"
+      '500V'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent).toContain("500");
+      const pageContent = await page.textContent('body');
+      expect(pageContent).toContain('500');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("15. Insulation L-N field accepts value (min 1.0 MOhm)", async ({ page }) => {
+  test('15. Insulation L-N field accepts value (min 1.0 MOhm)', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="insulationLN" i], input[name*="ln" i], input[name*="liveNeutral" i]',
@@ -335,10 +353,10 @@ test.describe("Minor Works Testing - Insulation Resistance", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("16. Insulation L-E field accepts value (min 1.0 MOhm)", async ({ page }) => {
+  test('16. Insulation L-E field accepts value (min 1.0 MOhm)', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="insulationLE" i], input[name*="le" i], input[name*="liveEarth" i]',
@@ -353,10 +371,10 @@ test.describe("Minor Works Testing - Insulation Resistance", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("17. Insulation N-E field accepts value (min 1.0 MOhm)", async ({ page }) => {
+  test('17. Insulation N-E field accepts value (min 1.0 MOhm)', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="insulationNE" i], input[name*="ne" i], input[name*="neutralEarth" i]',
@@ -371,32 +389,32 @@ test.describe("Minor Works Testing - Insulation Resistance", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Polarity & Loop Impedance", () => {
+test.describe('Minor Works Testing - Polarity & Loop Impedance', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("18. Polarity dropdown (Correct/Incorrect)", async ({ page }) => {
+  test('18. Polarity dropdown (Correct/Incorrect)', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name*="polarity" i], button:has-text("Polarity")',
-      "Correct"
+      'Correct'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent?.toLowerCase()).toContain("correct");
+      const pageContent = await page.textContent('body');
+      expect(pageContent?.toLowerCase()).toContain('correct');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("19. Earth Fault Loop Zs field accepts value", async ({ page }) => {
+  test('19. Earth Fault Loop Zs field accepts value', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="zs" i], input[name*="loop" i], input[placeholder*="zs" i]',
@@ -411,17 +429,17 @@ test.describe("Minor Works Testing - Polarity & Loop Impedance", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - RCD Testing", () => {
+test.describe('Minor Works Testing - RCD Testing', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("20. RCD Trip Time field accepts value (max 300ms)", async ({ page }) => {
+  test('20. RCD Trip Time field accepts value (max 300ms)', async ({ page }) => {
     const filled = await fillIfVisible(
       page,
       'input[name*="rcdTrip" i], input[name*="tripTime" i], input[placeholder*="trip" i]',
@@ -436,43 +454,43 @@ test.describe("Minor Works Testing - RCD Testing", () => {
       }
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 
-  test("21. RCD Test Button dropdown (Sat/Unsat)", async ({ page }) => {
+  test('21. RCD Test Button dropdown (Sat/Unsat)', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name*="rcdTestButton" i], button:has-text("Test button")',
-      "Satisfactory"
+      'Satisfactory'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent?.toLowerCase()).toContain("satisfactory");
+      const pageContent = await page.textContent('body');
+      expect(pageContent?.toLowerCase()).toContain('satisfactory');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });
 
-test.describe("Minor Works Testing - Functional Testing", () => {
+test.describe('Minor Works Testing - Functional Testing', () => {
   test.beforeEach(async ({ page }) => {
     // Auth handled by storageState
     await navigateToMinorWorks(page);
   });
 
-  test("22. Functional Testing dropdown (Sat/Unsat/N/A)", async ({ page }) => {
+  test('22. Functional Testing dropdown (Sat/Unsat/N/A)', async ({ page }) => {
     const selected = await selectOption(
       page,
       '[name*="functional" i], button:has-text("Functional testing")',
-      "Satisfactory"
+      'Satisfactory'
     );
 
     if (selected) {
-      const pageContent = await page.textContent("body");
-      expect(pageContent?.toLowerCase()).toContain("satisfactory");
+      const pageContent = await page.textContent('body');
+      expect(pageContent?.toLowerCase()).toContain('satisfactory');
     }
 
-    await expect(page.locator("body")).toBeVisible();
+    await expect(page.locator('body')).toBeVisible();
   });
 });

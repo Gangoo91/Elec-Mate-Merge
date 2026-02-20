@@ -13,8 +13,8 @@ async function test() {
     body: {
       productType: 'materials',
       page: 1,
-      pageSize: 5
-    }
+      pageSize: 5,
+    },
   });
 
   if (error) {

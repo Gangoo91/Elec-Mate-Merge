@@ -21,14 +21,21 @@ import { BaseScraper } from './scrapers/base-scraper.js';
 
 // Define materials vs tools categories
 const MATERIALS_CATEGORIES = [
-  'cables', 'consumer-units', 'circuit-protection', 'wiring-accessories',
-  'lighting', 'containment', 'earthing', 'fire-security', 'ev-charging',
-  'data-networking', 'fixings', 'hvac'
+  'cables',
+  'consumer-units',
+  'circuit-protection',
+  'wiring-accessories',
+  'lighting',
+  'containment',
+  'earthing',
+  'fire-security',
+  'ev-charging',
+  'data-networking',
+  'fixings',
+  'hvac',
 ];
 
-const TOOLS_CATEGORIES = [
-  'hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'
-];
+const TOOLS_CATEGORIES = ['hand-tools', 'power-tools', 'test-equipment', 'ppe', 'tool-storage'];
 
 const scrapers: Record<string, () => BaseScraper> = {
   screwfix: () => new ScrewfixScraper(),
@@ -127,7 +134,6 @@ Examples:
 
     const deactivated = await db.deactivateExpiredDeals();
     console.log(`\nDeactivated ${deactivated} expired deals`);
-
   } else if (command === 'materials') {
     // Scrape ONLY materials categories from all suppliers
     console.log('Running MATERIALS-ONLY scrape for all suppliers...\n');
@@ -164,7 +170,6 @@ Examples:
 
     const deactivated = await db.deactivateExpiredDeals();
     console.log(`\nDeactivated ${deactivated} expired deals`);
-
   } else if (command === 'tools') {
     // Scrape ONLY tools categories from all suppliers
     console.log('Running TOOLS-ONLY scrape for all suppliers...\n');
@@ -201,7 +206,6 @@ Examples:
 
     const deactivated = await db.deactivateExpiredDeals();
     console.log(`\nDeactivated ${deactivated} expired deals`);
-
   } else if (command === 'deals') {
     console.log('Running deals-only scrape for all suppliers...\n');
 
@@ -228,7 +232,6 @@ Examples:
 
     const deactivated = await db.deactivateExpiredDeals();
     console.log(`\nDeactivated ${deactivated} expired deals`);
-
   } else if (command === 'coupons') {
     console.log('Running coupons-only scrape...\n');
 
@@ -244,7 +247,9 @@ Examples:
       const couponsBySupplier = new Map<string, typeof aggregatorCoupons>();
       for (const coupon of aggregatorCoupons) {
         // Extract supplier from source URL
-        const supplierMatch = coupon.sourceUrl.match(/vouchercodes\.co\.uk\/([^\/]+)|myvouchercodes\.co\.uk\/([^\/]+)/);
+        const supplierMatch = coupon.sourceUrl.match(
+          /vouchercodes\.co\.uk\/([^\/]+)|myvouchercodes\.co\.uk\/([^\/]+)/
+        );
         const supplierHint = supplierMatch?.[1] || supplierMatch?.[2] || 'unknown';
 
         // Map to our supplier slugs
@@ -273,7 +278,7 @@ Examples:
 
     // Then check supplier-specific coupon pages
     console.log('\n--- Checking supplier coupon pages ---\n');
-    const suppliersWithCoupons = ['electrical-direct'];  // Only ED has a coupons page
+    const suppliersWithCoupons = ['electrical-direct']; // Only ED has a coupons page
     for (const slug of suppliersWithCoupons) {
       const factory = scrapers[slug];
       if (factory) {
@@ -288,7 +293,6 @@ Examples:
         console.log(`  ${slug}: ${coupons.length} coupons`);
       }
     }
-
   } else if (scrapers[command]) {
     const slug = command;
     console.log(`Running scrape for ${slug}...`);
@@ -321,7 +325,6 @@ Examples:
     console.log(`  Coupons: ${coupons.length}`);
 
     await db.updateSupplierLastScraped(slug);
-
   } else {
     console.error(`Unknown command: ${command}`);
     console.log('Run without arguments for usage information.');
