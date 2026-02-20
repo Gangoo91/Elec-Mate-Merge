@@ -1,11 +1,11 @@
 import React from 'react';
 import { SmartTabs } from '@/components/ui/smart-tabs';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Shield, AlertTriangle, BookOpen, ArrowLeft } from 'lucide-react';
-import WhyIsolateSection from './WhyIsolateSection';
-import HowToIsolateSection from './HowToIsolateSection';
-import PracticalGuidanceSection from './PracticalGuidanceSection';
+import { Shield, ListChecks, Zap, Wrench, BookOpen, ArrowLeft } from 'lucide-react';
+import ProcedureTab from './ProcedureTab';
+import ProveDeadTab from './ProveDeadTab';
+import EquipmentTab from './EquipmentTab';
+import ReferenceTab from './ReferenceTab';
 
 interface SafeIsolationCardProps {
   onBack?: () => void;
@@ -14,22 +14,32 @@ interface SafeIsolationCardProps {
 const SafeIsolationCard = ({ onBack }: SafeIsolationCardProps) => {
   const smartTabs = [
     {
-      value: 'why-isolate',
-      label: 'Why Isolate?',
-      icon: <AlertTriangle className="h-4 w-4" />,
-      content: <WhyIsolateSection />,
+      value: 'procedure',
+      label: 'Procedure',
+      shortLabel: 'Procedure',
+      icon: <ListChecks className="h-4 w-4" />,
+      content: <ProcedureTab />,
     },
     {
-      value: 'how-isolate',
-      label: 'How to Isolate',
-      icon: <Shield className="h-4 w-4" />,
-      content: <HowToIsolateSection />,
+      value: 'prove-dead',
+      label: 'Prove Dead',
+      shortLabel: 'Prove Dead',
+      icon: <Zap className="h-4 w-4" />,
+      content: <ProveDeadTab />,
     },
     {
-      value: 'practical',
-      label: 'Practical Guide',
+      value: 'equipment',
+      label: 'Equipment',
+      shortLabel: 'Equipment',
+      icon: <Wrench className="h-4 w-4" />,
+      content: <EquipmentTab />,
+    },
+    {
+      value: 'reference',
+      label: 'Reference',
+      shortLabel: 'Reference',
       icon: <BookOpen className="h-4 w-4" />,
-      content: <PracticalGuidanceSection />,
+      content: <ReferenceTab />,
     },
   ];
 
@@ -39,7 +49,7 @@ const SafeIsolationCard = ({ onBack }: SafeIsolationCardProps) => {
         <Button
           variant="outline"
           onClick={onBack}
-          className="mb-4 border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
+          className="mb-2 border-elec-yellow text-elec-yellow hover:bg-elec-yellow hover:text-black min-h-[44px] touch-manipulation"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
           <span className="hidden sm:inline">Back to Testing Procedures</span>
@@ -47,21 +57,21 @@ const SafeIsolationCard = ({ onBack }: SafeIsolationCardProps) => {
         </Button>
       )}
 
-      <Card className="bg-gradient-to-br from-neutral-900 to-neutral-800 border-border">
-        <CardHeader className="p-4 sm:p-6">
-          <CardTitle className="text-elec-yellow flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
-            <Shield className="h-5 w-5 sm:h-6 sm:w-6" />
-            Enhanced Safe Isolation Procedure
-          </CardTitle>
-          <CardDescription className="text-white text-sm sm:text-base">
-            Comprehensive guide to BS 7671 compliant safe isolation with practical implementation
-            strategies
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <SmartTabs tabs={smartTabs} defaultValue="why-isolate" className="w-full" />
-        </CardContent>
-      </Card>
+      <div className="bg-card rounded-lg p-4 sm:p-6 space-y-4 sm:space-y-6">
+        <div className="flex items-center gap-3">
+          <Shield className="h-6 w-6 sm:h-8 sm:w-8 text-elec-yellow" />
+          <div>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+              Safe Isolation Procedure
+            </h2>
+            <p className="text-sm text-white">
+              BS 7671 compliant &mdash; verified against GN3, GS38, and EAW Regulations 1989
+            </p>
+          </div>
+        </div>
+
+        <SmartTabs tabs={smartTabs} defaultValue="procedure" className="w-full" />
+      </div>
     </div>
   );
 };
