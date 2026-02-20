@@ -95,6 +95,11 @@ export function BusinessSettingsDialog({
   );
   const [hasConfigured, setHasConfigured] = useState(false);
 
+  // Display helper: show empty string for 0 so users can clear fields
+  const displayValue = (val: number) => (val === 0 ? '' : val.toString());
+  // Parse helper: allow empty → 0, preserve typed numbers
+  const parseValue = (val: string) => (val === '' ? 0 : Number(val));
+
   const storageKey = getStorageKey(userId);
 
   useEffect(() => {
@@ -223,13 +228,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.monthlyOverheads.vanCosts.toString()}
+                value={displayValue(settings.monthlyOverheads.vanCosts)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     monthlyOverheads: {
                       ...settings.monthlyOverheads,
-                      vanCosts: Number(e.target.value) || 0,
+                      vanCosts: parseValue(e.target.value),
                     },
                   })
                 }
@@ -241,13 +246,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.monthlyOverheads.toolDepreciation.toString()}
+                value={displayValue(settings.monthlyOverheads.toolDepreciation)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     monthlyOverheads: {
                       ...settings.monthlyOverheads,
-                      toolDepreciation: Number(e.target.value) || 0,
+                      toolDepreciation: parseValue(e.target.value),
                     },
                   })
                 }
@@ -259,13 +264,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.monthlyOverheads.insurance.toString()}
+                value={displayValue(settings.monthlyOverheads.insurance)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     monthlyOverheads: {
                       ...settings.monthlyOverheads,
-                      insurance: Number(e.target.value) || 0,
+                      insurance: parseValue(e.target.value),
                     },
                   })
                 }
@@ -277,13 +282,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.monthlyOverheads.adminCosts.toString()}
+                value={displayValue(settings.monthlyOverheads.adminCosts)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     monthlyOverheads: {
                       ...settings.monthlyOverheads,
-                      adminCosts: Number(e.target.value) || 0,
+                      adminCosts: parseValue(e.target.value),
                     },
                   })
                 }
@@ -295,13 +300,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.monthlyOverheads.marketing.toString()}
+                value={displayValue(settings.monthlyOverheads.marketing)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     monthlyOverheads: {
                       ...settings.monthlyOverheads,
-                      marketing: Number(e.target.value) || 0,
+                      marketing: parseValue(e.target.value),
                     },
                   })
                 }
@@ -319,13 +324,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£/hr"
-                value={settings.labourRates.electrician.toString()}
+                value={displayValue(settings.labourRates.electrician)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     labourRates: {
                       ...settings.labourRates,
-                      electrician: Number(e.target.value) || 0,
+                      electrician: parseValue(e.target.value),
                     },
                   })
                 }
@@ -337,13 +342,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£/hr"
-                value={settings.labourRates.apprentice.toString()}
+                value={displayValue(settings.labourRates.apprentice)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     labourRates: {
                       ...settings.labourRates,
-                      apprentice: Number(e.target.value) || 0,
+                      apprentice: parseValue(e.target.value),
                     },
                   })
                 }
@@ -356,13 +361,13 @@ export function BusinessSettingsDialog({
                   type="number"
                   inputMode="decimal"
                   unit="£/mo"
-                  value={settings.labourRates.targetIncome.toString()}
+                  value={displayValue(settings.labourRates.targetIncome)}
                   onChange={(e) =>
                     setSettings({
                       ...settings,
                       labourRates: {
                         ...settings.labourRates,
-                        targetIncome: Number(e.target.value) || 0,
+                        targetIncome: parseValue(e.target.value),
                       },
                     })
                   }
@@ -381,13 +386,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="%"
-                value={settings.profitTargets.minimum.toString()}
+                value={displayValue(settings.profitTargets.minimum)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     profitTargets: {
                       ...settings.profitTargets,
-                      minimum: Number(e.target.value) || 0,
+                      minimum: parseValue(e.target.value),
                     },
                   })
                 }
@@ -399,13 +404,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="%"
-                value={settings.profitTargets.target.toString()}
+                value={displayValue(settings.profitTargets.target)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     profitTargets: {
                       ...settings.profitTargets,
-                      target: Number(e.target.value) || 0,
+                      target: parseValue(e.target.value),
                     },
                   })
                 }
@@ -417,13 +422,13 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="%"
-                value={settings.profitTargets.premium.toString()}
+                value={displayValue(settings.profitTargets.premium)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
                     profitTargets: {
                       ...settings.profitTargets,
-                      premium: Number(e.target.value) || 0,
+                      premium: parseValue(e.target.value),
                     },
                   })
                 }
@@ -441,11 +446,11 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.jobCosts.travel.toString()}
+                value={displayValue(settings.jobCosts.travel)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
-                    jobCosts: { ...settings.jobCosts, travel: Number(e.target.value) || 0 },
+                    jobCosts: { ...settings.jobCosts, travel: parseValue(e.target.value) },
                   })
                 }
               />
@@ -456,11 +461,11 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.jobCosts.permits.toString()}
+                value={displayValue(settings.jobCosts.permits)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
-                    jobCosts: { ...settings.jobCosts, permits: Number(e.target.value) || 0 },
+                    jobCosts: { ...settings.jobCosts, permits: parseValue(e.target.value) },
                   })
                 }
               />
@@ -471,11 +476,11 @@ export function BusinessSettingsDialog({
                 type="number"
                 inputMode="decimal"
                 unit="£"
-                value={settings.jobCosts.waste.toString()}
+                value={displayValue(settings.jobCosts.waste)}
                 onChange={(e) =>
                   setSettings({
                     ...settings,
-                    jobCosts: { ...settings.jobCosts, waste: Number(e.target.value) || 0 },
+                    jobCosts: { ...settings.jobCosts, waste: parseValue(e.target.value) },
                   })
                 }
               />
