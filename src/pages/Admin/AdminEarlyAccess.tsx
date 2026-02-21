@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
@@ -5,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import {
   AlertDialog,
@@ -96,14 +98,14 @@ export default function AdminEarlyAccess() {
   const [activeTab, setActiveTab] = useState<'unsent' | 'sent'>('unsent');
   const [showTestEmail, setShowTestEmail] = useState(false);
   const [testEmail, setTestEmail] = useState('');
-  const [manualEmail, setManualEmail] = useState('');
+  const [manualEmails, setManualEmails] = useState('');
+  const [manualSending, setManualSending] = useState(false);
+  const [manualProgress, setManualProgress] = useState({ sent: 0, failed: 0, total: 0 });
   const [confirmSendAll, setConfirmSendAll] = useState(false);
   const [convertedOpen, setConvertedOpen] = useState(false);
 
   // Batch sending state — all stored on window to survive React lifecycle
-  const [batchSending, setBatchSending] = useState(
-    () => !!(window as any).__convBatchRunning
-  );
+  const [batchSending, setBatchSending] = useState(() => !!(window as any).__convBatchRunning);
   const [batchProgress, setBatchProgress] = useState(
     () => (window as any).__convBatchProgress || { sent: 0, remaining: 0 }
   );
@@ -152,27 +154,57 @@ export default function AdminEarlyAccess() {
     },
   });
 
-  // Send manual email mutation
-  const sendManualMutation = useMutation({
-    mutationFn: async (email: string) => {
-      const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
-        body: { action: 'send_manual_conversion_email', manualEmail: email },
-      });
-      if (error) throw error;
-      if (data?.error) throw new Error(data.error);
-      return data;
-    },
-    onSuccess: () => {
+  // Parse emails from textarea (comma, newline, space, or semicolon separated)
+  const parseEmails = (text: string): string[] => {
+    const raw = text.split(/[\n,;\s]+/).map((e) => e.trim().toLowerCase());
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return [...new Set(raw.filter((e) => emailRegex.test(e)))];
+  };
+
+  const parsedEmails = useMemo(() => parseEmails(manualEmails), [manualEmails]);
+
+  // Send multiple manual emails sequentially
+  const sendManualBulk = async () => {
+    const emails = parsedEmails;
+    if (emails.length === 0) return;
+
+    setManualSending(true);
+    setManualProgress({ sent: 0, failed: 0, total: emails.length });
+
+    let sent = 0;
+    let failed = 0;
+    const failures: string[] = [];
+
+    for (const email of emails) {
+      try {
+        const { data, error } = await supabase.functions.invoke('send-early-access-invite', {
+          body: { action: 'send_manual_conversion_email', manualEmail: email },
+        });
+        if (error) throw error;
+        if (data?.error) throw new Error(data.error);
+        sent++;
+      } catch {
+        failed++;
+        failures.push(email);
+      }
+      setManualProgress({ sent, failed, total: emails.length });
+    }
+
+    setManualSending(false);
+
+    if (failed === 0) {
       haptic.success();
-      toast.success('Conversion email sent!');
-      setManualEmail('');
-      queryClient.invalidateQueries({ queryKey: ['admin-conversion-leads'] });
-    },
-    onError: (error) => {
+      toast.success(`All ${sent} emails sent successfully!`);
+      setManualEmails('');
+    } else {
       haptic.error();
-      toast.error(`Failed: ${error.message}`);
-    },
-  });
+      toast.error(`Sent ${sent}, failed ${failed}: ${failures.join(', ')}`);
+      // Keep failed emails in the box so they can retry
+      setManualEmails(failures.join('\n'));
+    }
+
+    queryClient.invalidateQueries({ queryKey: ['admin-conversion-leads'] });
+  };
 
   // ──────────────────────────────────────────────────────────────
   // Batch sender — runs entirely on window with setTimeout chaining.
@@ -201,18 +233,15 @@ export default function AdminEarlyAccess() {
 
       try {
         const session = (await supabase.auth.getSession()).data.session;
-        const resp = await fetch(
-          `${SUPABASE_URL}/functions/v1/send-early-access-invite`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${session?.access_token}`,
-              apikey: SUPABASE_PUBLISHABLE_KEY,
-            },
-            body: JSON.stringify({ action: 'send_conversion_campaign' }),
-          }
-        );
+        const resp = await fetch(`${SUPABASE_URL}/functions/v1/send-early-access-invite`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session?.access_token}`,
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+          },
+          body: JSON.stringify({ action: 'send_conversion_campaign' }),
+        });
 
         const data = await resp.json();
         if (!resp.ok || data.error) throw new Error(data.error || `HTTP ${resp.status}`);
@@ -383,9 +412,7 @@ export default function AdminEarlyAccess() {
               <Target className="h-5 w-5 text-purple-400" />
               Conversion Campaign
             </h2>
-            <p className="text-sm text-white">
-              Convert early access signups into paying users
-            </p>
+            <p className="text-sm text-white">Convert early access signups into paying users</p>
           </div>
           <Button
             variant="outline"
@@ -627,26 +654,66 @@ export default function AdminEarlyAccess() {
               </div>
             )}
 
-            {/* Manual email */}
-            <div className="flex items-center gap-2">
-              <Input
-                type="email"
-                value={manualEmail}
-                onChange={(e) => setManualEmail(e.target.value)}
-                placeholder="Send to any email..."
-                className="h-11 text-base touch-manipulation flex-1"
-              />
-              <Button
-                onClick={() => manualEmail && sendManualMutation.mutate(manualEmail)}
-                disabled={!manualEmail || sendManualMutation.isPending}
-                className="h-11 px-4 touch-manipulation bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white shrink-0"
-              >
-                {sendManualMutation.isPending ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Send className="h-4 w-4" />
+            {/* Manual email — supports multiple addresses */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-white font-semibold">Manual Send</p>
+                {parsedEmails.length > 0 && (
+                  <Badge className="bg-purple-500/20 text-purple-400 text-[10px]">
+                    {parsedEmails.length} email{parsedEmails.length !== 1 ? 's' : ''} ready
+                  </Badge>
                 )}
-              </Button>
+              </div>
+              <Textarea
+                value={manualEmails}
+                onChange={(e) => setManualEmails(e.target.value)}
+                placeholder="Paste emails here — one per line, or comma/space separated..."
+                className="text-base touch-manipulation min-h-[80px] resize-y border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                disabled={manualSending}
+              />
+              {manualSending ? (
+                <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 space-y-2">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-2 text-purple-400 font-semibold">
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Sending...
+                    </span>
+                    <span className="text-white">
+                      {manualProgress.sent + manualProgress.failed} of {manualProgress.total}
+                      {manualProgress.failed > 0 && (
+                        <span className="text-red-400 ml-1">({manualProgress.failed} failed)</span>
+                      )}
+                    </span>
+                  </div>
+                  <div className="w-full h-3 bg-muted rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-purple-500 to-violet-500 rounded-full transition-all duration-300"
+                      style={{
+                        width: `${
+                          manualProgress.total > 0
+                            ? ((manualProgress.sent + manualProgress.failed) /
+                                manualProgress.total) *
+                              100
+                            : 0
+                        }%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  onClick={sendManualBulk}
+                  disabled={parsedEmails.length === 0}
+                  className="w-full h-11 touch-manipulation bg-gradient-to-r from-purple-500 to-violet-500 hover:from-purple-600 hover:to-violet-600 text-white gap-2"
+                >
+                  <Send className="h-4 w-4" />
+                  {parsedEmails.length > 1
+                    ? `Send to ${parsedEmails.length} Emails`
+                    : parsedEmails.length === 1
+                      ? 'Send Email'
+                      : 'Send to Any Email'}
+                </Button>
+              )}
             </div>
 
             {/* Batch progress */}
@@ -667,8 +734,7 @@ export default function AdminEarlyAccess() {
                     style={{
                       width: `${
                         batchProgress.sent + batchProgress.remaining > 0
-                          ? (batchProgress.sent /
-                              (batchProgress.sent + batchProgress.remaining)) *
+                          ? (batchProgress.sent / (batchProgress.sent + batchProgress.remaining)) *
                             100
                           : 0
                       }%`,
@@ -760,8 +826,7 @@ export default function AdminEarlyAccess() {
                       <div className="flex-1 min-w-0">
                         <p className="font-medium text-sm text-white truncate">{lead.email}</p>
                         <p className="text-xs text-white">
-                          Signed up{' '}
-                          {format(new Date(lead.created_at), 'd MMM yyyy')}
+                          Signed up {format(new Date(lead.created_at), 'd MMM yyyy')}
                         </p>
                       </div>
                       {getStatusBadge(lead.conversion_status)}
@@ -873,8 +938,8 @@ export default function AdminEarlyAccess() {
                 Send to all {stats?.unsent || 0} unsent leads?
               </AlertDialogTitle>
               <AlertDialogDescription className="text-sm leading-relaxed">
-                This sends the conversion email in batches of 10. People who have already signed
-                up ({stats?.total_converted || 0}) and bounced emails ({stats?.bounced || 0}) are
+                This sends the conversion email in batches of 10. People who have already signed up
+                ({stats?.total_converted || 0}) and bounced emails ({stats?.bounced || 0}) are
                 automatically excluded. You can stop at any time.
               </AlertDialogDescription>
             </AlertDialogHeader>
