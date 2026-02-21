@@ -37,6 +37,31 @@ export interface SearchFilters {
   productType?: ProductType;
 }
 
+export interface MarketplaceCoupon {
+  id: string;
+  code: string;
+  description: string;
+  discount_type: 'percentage' | 'fixed_amount' | 'free_shipping';
+  discount_value: number | null;
+  minimum_spend: number | null;
+  valid_until: string;
+  is_verified: boolean;
+  supplier_name: string;
+  supplier_slug: string;
+}
+
+export interface DealOfTheDay {
+  id: string;
+  name: string;
+  current_price: number;
+  regular_price: number | null;
+  discount_percentage: number;
+  image_url: string;
+  product_url: string;
+  supplier_name: string;
+  supplier_slug: string;
+}
+
 export interface SearchFacets {
   categories: { name: string; count: number }[];
   suppliers: { slug: string; name: string; count: number }[];
@@ -50,6 +75,8 @@ export interface SearchResponse {
   pageSize: number;
   totalPages: number;
   lastUpdated: string | null;
+  coupons?: MarketplaceCoupon[];
+  dealOfTheDay?: DealOfTheDay | null;
   facets: SearchFacets;
 }
 

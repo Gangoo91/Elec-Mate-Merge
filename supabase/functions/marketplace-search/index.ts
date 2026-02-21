@@ -249,6 +249,88 @@ serve(async (req: Request) => {
       .limit(1)
       .single();
 
+    // Fetch active coupon codes (only on page 1 to avoid repeated queries)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
+    let coupons: any[] = [];
+    if (page === 1) {
+      const { data: couponData } = await supabase
+        .from('marketplace_coupon_codes')
+        .select(
+          `
+          id,
+          code,
+          description,
+          discount_type,
+          discount_value,
+          minimum_spend,
+          valid_until,
+          is_verified,
+          supplier_id,
+          marketplace_suppliers (
+            name,
+            slug
+          )
+        `
+        )
+        .gte('valid_until', nowISO)
+        .order('is_verified', { ascending: false })
+        .order('discount_value', { ascending: false, nullsFirst: false })
+        .limit(20);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
+      coupons = (couponData || []).map((c: any) => ({
+        id: c.id,
+        code: c.code,
+        description: c.description,
+        discount_type: c.discount_type,
+        discount_value: c.discount_value,
+        minimum_spend: c.minimum_spend,
+        valid_until: c.valid_until,
+        is_verified: c.is_verified,
+        supplier_name: c.marketplace_suppliers?.name || 'Unknown',
+        supplier_slug: c.marketplace_suppliers?.slug || 'unknown',
+      }));
+    }
+
+    // Pick deal of the day — highest discount product that's on sale with an image
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
+    let dealOfTheDay: any = null;
+    if (page === 1 && !query && !dealsOnly) {
+      const { data: dotdData } = await supabase
+        .from('marketplace_products')
+        .select(
+          `
+          id, sku, name, brand, category, current_price, regular_price,
+          is_on_sale, discount_percentage, image_url, product_url, stock_status,
+          supplier_id,
+          marketplace_suppliers ( name, slug )
+        `
+        )
+        .eq('is_on_sale', true)
+        .not('discount_percentage', 'is', null)
+        .not('image_url', 'is', null)
+        .or(`expires_at.gte.${nowISO},expires_at.is.null`)
+        .order('discount_percentage', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (dotdData) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase joined query
+        const d = dotdData as any;
+        dealOfTheDay = {
+          id: d.id,
+          name: d.brand ? `${d.brand} ${d.name}` : d.name,
+          current_price: d.current_price,
+          regular_price: d.regular_price,
+          discount_percentage: d.discount_percentage,
+          image_url: d.image_url,
+          product_url: d.product_url,
+          supplier_name: d.marketplace_suppliers?.name || 'Unknown',
+          supplier_slug: d.marketplace_suppliers?.slug || 'unknown',
+        };
+      }
+    }
+
     const response = {
       products: transformedProducts,
       total: totalCount,
@@ -256,6 +338,8 @@ serve(async (req: Request) => {
       pageSize,
       totalPages,
       lastUpdated: lastScrapedData?.last_scraped_at || null,
+      coupons,
+      dealOfTheDay,
       facets: {
         categories: categoryFacets,
         suppliers: supplierFacets,

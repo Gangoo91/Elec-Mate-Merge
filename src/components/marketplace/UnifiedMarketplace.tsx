@@ -1,6 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Flame, Tag, Search, RefreshCw, Clock, ListChecks, BarChart3, LucideIcon } from 'lucide-react';
+import {
+  ArrowLeft,
+  Flame,
+  Tag,
+  Search,
+  RefreshCw,
+  Clock,
+  ListChecks,
+  BarChart3,
+  LucideIcon,
+  Ticket,
+} from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,6 +24,8 @@ import {
   MarketplaceProduct,
 } from '@/hooks/useMarketplaceSearch';
 import { SaveToListSheet } from '@/components/marketplace/SaveToListSheet';
+import { CouponCard } from '@/components/marketplace/CouponCard';
+import { DealOfTheDay } from '@/components/marketplace/DealOfTheDay';
 import { cn } from '@/lib/utils';
 
 export interface UnifiedMarketplaceProps {
@@ -245,11 +258,7 @@ export default function UnifiedMarketplace({
             )}
             {listsPath && (
               <Link to={listsPath}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-11 touch-manipulation text-white"
-                >
+                <Button variant="ghost" size="sm" className="h-11 touch-manipulation text-white">
                   <ListChecks className="h-4 w-4 mr-1.5" />
                   My Lists
                 </Button>
@@ -280,7 +289,10 @@ export default function UnifiedMarketplace({
 
         {/* Last Updated */}
         {data?.lastUpdated && (
-          <motion.div variants={itemVariants} className="flex items-center gap-1.5 text-xs text-white -mt-3">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center gap-1.5 text-xs text-white -mt-3"
+          >
             <Clock className="h-3 w-3" />
             <span>Prices updated {formatLastUpdated(data.lastUpdated)}</span>
           </motion.div>
@@ -308,6 +320,29 @@ export default function UnifiedMarketplace({
             Search
           </Button>
         </motion.form>
+
+        {/* Deal of the Day */}
+        {data?.dealOfTheDay && !query && !filters.dealsOnly && (
+          <motion.section variants={itemVariants}>
+            <DealOfTheDay deal={data.dealOfTheDay} />
+          </motion.section>
+        )}
+
+        {/* Coupon Codes Section */}
+        {data?.coupons && data.coupons.length > 0 && !query && (
+          <motion.section variants={itemVariants} className="space-y-3">
+            <div className="flex items-center gap-2.5">
+              <div className="h-1.5 w-1.5 rounded-full bg-green-400" />
+              <h2 className="text-base font-bold text-white">Discount Codes</h2>
+              <Ticket className="h-4 w-4 text-green-400" />
+            </div>
+            <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4">
+              {data.coupons.map((coupon) => (
+                <CouponCard key={coupon.id} coupon={coupon} />
+              ))}
+            </div>
+          </motion.section>
+        )}
 
         {/* Deals Section */}
         {dealsData?.products && dealsData.products.length > 0 && !filters.dealsOnly && !query && (
@@ -380,7 +415,10 @@ export default function UnifiedMarketplace({
         )}
 
         {/* Filter Bar */}
-        <motion.div variants={itemVariants} className="sticky top-[52px] z-20 bg-background/95 backdrop-blur-sm py-3 -mx-4 px-4 border-b border-white/[0.08]">
+        <motion.div
+          variants={itemVariants}
+          className="sticky top-[52px] z-20 bg-background/95 backdrop-blur-sm py-3 -mx-4 px-4 border-b border-white/[0.08]"
+        >
           <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-hide">
             {categories.map((cat) => (
               <button
@@ -451,7 +489,10 @@ export default function UnifiedMarketplace({
 
         {/* Error State */}
         {isError && !isLoading && (
-          <motion.div variants={itemVariants} className="flex flex-col items-center justify-center py-12 text-center">
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-col items-center justify-center py-12 text-center"
+          >
             <div className="p-3 bg-red-500/10 rounded-full mb-4">
               <Icon className="h-8 w-8 text-red-400" />
             </div>
@@ -484,11 +525,7 @@ export default function UnifiedMarketplace({
       </motion.main>
 
       {/* Save to List Bottom Sheet */}
-      <SaveToListSheet
-        open={saveSheetOpen}
-        onOpenChange={setSaveSheetOpen}
-        product={saveProduct}
-      />
+      <SaveToListSheet open={saveSheetOpen} onOpenChange={setSaveSheetOpen} product={saveProduct} />
     </div>
   );
 }
