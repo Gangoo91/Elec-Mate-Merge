@@ -72,7 +72,6 @@ const courses: Course[] = [
     level: 'Foundation',
     duration: '5 hours',
     link: 'communication-confidence',
-    comingSoon: true,
   },
   {
     id: 5,
@@ -83,7 +82,6 @@ const courses: Course[] = [
     level: 'Intermediate',
     duration: '5 hours',
     link: 'mentoring-developing-others',
-    comingSoon: true,
   },
   {
     id: 6,

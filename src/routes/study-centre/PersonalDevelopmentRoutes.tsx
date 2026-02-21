@@ -5,6 +5,8 @@ import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { leadershipOnSiteRoutes } from './leadershipOnSiteRoutes';
 import { mentalHealthAwarenessRoutes } from './mentalHealthAwarenessRoutes';
 import { emotionalIntelligenceRoutes } from './emotionalIntelligenceRoutes';
+import { communicationConfidenceRoutes } from './communicationConfidenceRoutes';
+import { mentoringDevelopingOthersRoutes } from './mentoringDevelopingOthersRoutes';
 
 const PersonalDevelopmentIndex = lazyWithRetry(
   () => import('@/pages/study-centre/personal-development/Index')
@@ -20,6 +22,8 @@ export default function PersonalDevelopmentRoutes() {
         {leadershipOnSiteRoutes}
         {mentalHealthAwarenessRoutes}
         {emotionalIntelligenceRoutes}
+        {communicationConfidenceRoutes}
+        {mentoringDevelopingOthersRoutes}
       </Routes>
     </Suspense>
   );
