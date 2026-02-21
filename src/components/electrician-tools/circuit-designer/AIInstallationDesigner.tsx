@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { StructuredDesignWizard } from './structured-input/StructuredDesignWizard';
@@ -10,6 +11,7 @@ import { toast } from 'sonner';
 import { useCircuitDesignGeneration } from '@/hooks/useCircuitDesignGeneration';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 import { AnimatePresence } from 'framer-motion';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 
 // User-friendly error message mapper
 const getFriendlyErrorMessage = (error: string): string => {
@@ -266,6 +268,9 @@ export const AIInstallationDesigner = () => {
   const [wizardInitialData, setWizardInitialData] = useState<Partial<DesignInputs> | undefined>(
     undefined
   );
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
+  const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
 
   // Use job polling hook (now includes installationGuidance and installationAgentStatus)
   const {
@@ -350,6 +355,19 @@ export const AIInstallationDesigner = () => {
       // Start polling the job
       setJobId(data.jobId);
       console.log('🚀 Started circuit design job:', data.jobId);
+
+      // Link customer to job
+      if (customerId && data.jobId) {
+        supabase
+          .from('circuit_design_jobs')
+          .update({ customer_id: customerId })
+          .eq('id', data.jobId)
+          .then(({ error: linkErr }) => {
+            if (linkErr) console.error('Failed to link customer to circuit design job:', linkErr);
+          });
+      } else if (!customerId && inputs.clientName?.trim() && !savePromptDismissed) {
+        setShowSaveCustomerPrompt(true);
+      }
     } catch (error: any) {
       console.error('Design generation error:', error);
       toast.error('Design generation failed', {
@@ -644,11 +662,36 @@ export const AIInstallationDesigner = () => {
       </AnimatePresence>
 
       {currentView === 'input' && (
-        <StructuredDesignWizard
-          onGenerate={handleGenerate}
-          isProcessing={status === 'processing'}
-          initialData={wizardInitialData}
-        />
+        <>
+          {/* Save Customer Prompt */}
+          {showSaveCustomerPrompt && !customerId && (
+            <SaveCustomerPrompt
+              client={{ name: designData?.clientName || '' }}
+              onSaved={(savedId) => {
+                setCustomerId(savedId);
+                setShowSaveCustomerPrompt(false);
+                if (jobId) {
+                  supabase
+                    .from('circuit_design_jobs')
+                    .update({ customer_id: savedId })
+                    .eq('id', jobId);
+                }
+              }}
+              onDismiss={() => {
+                setShowSaveCustomerPrompt(false);
+                setSavePromptDismissed(true);
+              }}
+            />
+          )}
+
+          <StructuredDesignWizard
+            onGenerate={handleGenerate}
+            isProcessing={status === 'processing'}
+            initialData={wizardInitialData}
+            customerId={customerId}
+            onCustomerIdChange={setCustomerId}
+          />
+        </>
       )}
 
       {currentView === 'processing' && (

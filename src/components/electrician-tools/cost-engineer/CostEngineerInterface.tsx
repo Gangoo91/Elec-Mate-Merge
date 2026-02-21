@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -14,6 +15,7 @@ import {
 } from './BusinessSettingsDialog';
 import { AgentSuccessDialog } from '@/components/agents/shared/AgentSuccessDialog';
 import { CostEngineerInput } from './CostEngineerInput';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import {
   getStoredCircuitContext,
   clearStoredCircuitContext,
@@ -62,6 +64,9 @@ const CostEngineerInterface = () => {
   const [jobId, setJobId] = useState<string | null>(null);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
+  const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
   // Track last inputs for retry functionality
   const [lastJobInputs, setLastJobInputs] = useState<{
     query: string;
@@ -286,6 +291,20 @@ const CostEngineerInterface = () => {
       // Set job ID to start polling
       setJobId(data.jobId);
 
+      // Link customer to job if selected
+      if (customerId && data.jobId) {
+        supabase
+          .from('cost_engineer_jobs')
+          .update({ customer_id: customerId })
+          .eq('id', data.jobId)
+          .then(({ error: linkError }) => {
+            if (linkError)
+              console.error('Failed to link customer to cost engineer job:', linkError);
+          });
+      } else if (!customerId && clientInfo.trim() && !savePromptDismissed) {
+        setShowSaveCustomerPrompt(true);
+      }
+
       toast({
         title: 'Analysis started',
         description: 'Generating cost estimate...',
@@ -356,6 +375,9 @@ const CostEngineerInterface = () => {
     setAdditionalInfo('');
     setJobId(null);
     setShowSuccessDialog(false);
+    setCustomerId(undefined);
+    setShowSaveCustomerPrompt(false);
+    setSavePromptDismissed(false);
   };
 
   if (viewState === 'processing' && (isPolling || jobError)) {
@@ -417,6 +439,29 @@ const CostEngineerInterface = () => {
         )}
       </AnimatePresence>
 
+      {/* Save Customer Prompt */}
+      {showSaveCustomerPrompt && !customerId && clientInfo.trim() && (
+        <div className="px-4 pt-4">
+          <SaveCustomerPrompt
+            client={{ name: clientInfo.split(' - ')[0] || clientInfo }}
+            onSaved={(savedId) => {
+              setCustomerId(savedId);
+              setShowSaveCustomerPrompt(false);
+              if (jobId) {
+                supabase
+                  .from('cost_engineer_jobs')
+                  .update({ customer_id: savedId })
+                  .eq('id', jobId);
+              }
+            }}
+            onDismiss={() => {
+              setShowSaveCustomerPrompt(false);
+              setSavePromptDismissed(true);
+            }}
+          />
+        </div>
+      )}
+
       <CostEngineerInput
         prompt={prompt}
         projectType={projectType}
@@ -435,6 +480,8 @@ const CostEngineerInterface = () => {
         businessSettings={businessSettings}
         onOpenSettings={() => setShowSettingsDialog(true)}
         hasConfiguredSettings={hasConfiguredSettings}
+        customerId={customerId}
+        onCustomerIdChange={setCustomerId}
       />
 
       {/* Business Settings Dialog - Controlled from Hero button */}

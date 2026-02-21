@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils';
 import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';
 import { AGENT_CONFIG } from '@/components/agents/shared/AgentConfig';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface MaintenanceInputProps {
   query: string;
@@ -19,6 +21,8 @@ interface MaintenanceInputProps {
   onEquipmentDetailsChange: (details: MaintenanceEquipmentDetails) => void;
   onGenerate: () => void;
   isProcessing: boolean;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
 }
 
 const MAX_CHARS = 2000;
@@ -30,6 +34,8 @@ export const MaintenanceInput = ({
   onEquipmentDetailsChange,
   onGenerate,
   isProcessing,
+  customerId,
+  onCustomerIdChange,
 }: MaintenanceInputProps) => {
   const [hasEquipmentDetails, setHasEquipmentDetails] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
@@ -181,6 +187,24 @@ export const MaintenanceInput = ({
             <p className="text-xs text-white/50 pb-2">
               Additional equipment information for detailed instructions
             </p>
+            <div className="mb-3">
+              <ClientSelector
+                onSelectCustomer={(customer: Customer | null) => {
+                  if (customer) {
+                    if (customer.address) {
+                      onEquipmentDetailsChange({
+                        ...equipmentDetails,
+                        location: customer.address,
+                      });
+                    }
+                    onCustomerIdChange?.(customer.id);
+                  } else {
+                    onCustomerIdChange?.(undefined);
+                  }
+                }}
+                selectedCustomerId={customerId}
+              />
+            </div>
             <MaintenanceEquipmentDetailsForm
               equipmentDetails={equipmentDetails}
               onChange={onEquipmentDetailsChange}

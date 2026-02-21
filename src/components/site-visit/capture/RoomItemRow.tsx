@@ -37,11 +37,13 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
     if (accessory) {
       onUpdate({
         itemType: accessory.id,
-        itemDescription: accessory.label,
+        itemDescription: accessory.id === 'custom_item' ? '' : accessory.label,
         unit: accessory.defaultUnit,
       });
     }
   };
+
+  const isCustomItem = item.itemType === 'custom_item';
 
   return (
     <div className="space-y-2 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
@@ -112,6 +114,20 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
           <Trash2 className="h-4 w-4" />
         </Button>
       </div>
+
+      {/* Custom item description */}
+      {isCustomItem && (
+        <Input
+          value={item.itemDescription || ''}
+          onChange={(e) => onUpdate({ itemDescription: e.target.value })}
+          placeholder="What is it? e.g. Dado trunking adaptor"
+          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+          autoCapitalize="sentences"
+          autoComplete="off"
+          enterKeyHint="done"
+          autoFocus
+        />
+      )}
 
       {/* Expandable notes */}
       <button

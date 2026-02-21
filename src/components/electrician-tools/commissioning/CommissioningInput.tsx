@@ -21,6 +21,8 @@ import PhotoUploadButton from './PhotoUploadButton';
 import { InlineInstallationTypeSelector } from './InlineInstallationTypeSelector';
 import { InputHeroBar } from './redesign/InputHeroBar';
 import { InputCardSection } from './redesign/InputCardSection';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface ExampleScenario {
   title: string;
@@ -78,6 +80,7 @@ interface CommissioningInputProps {
     installationDate: string;
     imageUrl?: string;
     imageUrls?: string[];
+    customerId?: string;
   }) => void;
   isProcessing: boolean;
   initialPrompt?: string;
@@ -100,6 +103,7 @@ const CommissioningInput = ({
   const [clientName, setClientName] = useState('');
   const [installationDate, setInstallationDate] = useState('');
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
 
   // Update state when initial values change
   useEffect(() => {
@@ -120,6 +124,7 @@ const CommissioningInput = ({
     toast.success(`${urls.length} photo${urls.length > 1 ? 's' : ''} ready for analysis`);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
       try {
@@ -170,6 +175,7 @@ const CommissioningInput = ({
       installationDate,
       imageUrl: imageUrls[0], // For backwards compatibility
       imageUrls,
+      customerId,
     });
   };
 
@@ -312,6 +318,20 @@ const CommissioningInput = ({
           defaultOpen={false}
         >
           <div className="space-y-4">
+            {/* Select Existing Customer */}
+            <ClientSelector
+              onSelectCustomer={(customer: Customer | null) => {
+                if (customer) {
+                  setClientName(customer.name);
+                  if (customer.address) setLocation(customer.address);
+                  setCustomerId(customer.id);
+                } else {
+                  setCustomerId(undefined);
+                }
+              }}
+              selectedCustomerId={customerId}
+            />
+
             <div className="space-y-2">
               <Label htmlFor="projectName" className="text-sm font-medium text-foreground">
                 Project Name

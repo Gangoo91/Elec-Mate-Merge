@@ -1,6 +1,8 @@
 import { IOSInput } from '@/components/ui/ios-input';
 import { Building, Building2, Factory, FolderOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface ProjectInfoStepProps {
   projectName: string;
@@ -13,6 +15,8 @@ interface ProjectInfoStepProps {
   setElectricianName: (value: string) => void;
   installationType: 'domestic' | 'commercial' | 'industrial';
   setInstallationType: (value: 'domestic' | 'commercial' | 'industrial') => void;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
 }
 
 const INSTALLATION_TYPES = [
@@ -42,6 +46,8 @@ export const ProjectInfoStep = ({
   setElectricianName,
   installationType,
   setInstallationType,
+  customerId,
+  onCustomerIdChange,
 }: ProjectInfoStepProps) => {
   return (
     <div className="space-y-6">
@@ -77,6 +83,7 @@ export const ProjectInfoStep = ({
                     ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]'
                     : 'border-white/[0.08] hover:border-white/15 hover:bg-white/5'
                 )}
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 onClick={() => setInstallationType(type.value as any)}
               >
                 <div className="flex items-start gap-3">
@@ -111,6 +118,20 @@ export const ProjectInfoStep = ({
           })}
         </div>
       </div>
+
+      {/* Select Existing Customer */}
+      <ClientSelector
+        onSelectCustomer={(customer: Customer | null) => {
+          if (customer) {
+            setClientName(customer.name);
+            if (customer.address) setLocation(customer.address);
+            onCustomerIdChange?.(customer.id);
+          } else {
+            onCustomerIdChange?.(undefined);
+          }
+        }}
+        selectedCustomerId={customerId}
+      />
 
       {/* Form Fields */}
       <div className="space-y-4">

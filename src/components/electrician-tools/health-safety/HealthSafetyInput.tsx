@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
@@ -11,6 +12,9 @@ import {
   Home,
   Building2,
   Factory,
+  Users,
+  Check,
+  X,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { AgentInbox } from '@/components/install-planner-v2/AgentInbox';
@@ -19,6 +23,8 @@ import { cn } from '@/lib/utils';
 import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';
 import { AGENT_CONFIG } from '@/components/agents/shared/AgentConfig';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface ExampleScenario {
   title: string;
@@ -83,6 +89,8 @@ export const HealthSafetyInput = ({
   const [projectName, setProjectName] = useState(initialProjectName || '');
   const [location, setLocation] = useState('');
   const [clientName, setClientName] = useState('');
+  const [customerId, setCustomerId] = useState<string | undefined>();
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
   const [showExamples, setShowExamples] = useState(false);
   const [showProjectDetails, setShowProjectDetails] = useState(false);
 
@@ -96,6 +104,25 @@ export const HealthSafetyInput = ({
   }, [initialProjectName]);
 
   const config = AGENT_CONFIG['health-safety'];
+
+  const handleCustomerSelect = (customer: Customer | null) => {
+    if (customer) {
+      setSelectedCustomer(customer);
+      setCustomerId(customer.id);
+      setClientName(customer.name);
+      // Auto-open the project details if not already open
+      if (!showProjectDetails) setShowProjectDetails(true);
+    } else {
+      setSelectedCustomer(null);
+      setCustomerId(undefined);
+    }
+  };
+
+  const handleClearCustomer = () => {
+    setSelectedCustomer(null);
+    setCustomerId(undefined);
+    setClientName('');
+  };
 
   const handleTaskAccept = (contextData: any, instruction: string | null) => {
     if (contextData) {
@@ -133,7 +160,7 @@ export const HealthSafetyInput = ({
       toast.error('Please describe what safety documentation you need');
       return;
     }
-    onGenerate(prompt, { projectName, location, clientName }, selectedType);
+    onGenerate(prompt, { projectName, location, clientName, customerId }, selectedType);
   };
 
   // Character count styling
@@ -262,6 +289,40 @@ export const HealthSafetyInput = ({
 
           <CollapsibleContent className="p-4 pt-0 space-y-4">
             <p className="text-xs text-white/50 pb-2">Add for comprehensive documentation</p>
+
+            {/* Customer Selector */}
+            <div className="space-y-2">
+              <label className="text-[13px] font-medium text-white flex items-center gap-2">
+                <Users className="h-3.5 w-3.5" />
+                Select Customer
+              </label>
+              {selectedCustomer ? (
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                  <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                    <Check className="h-4 w-4 text-white" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-emerald-400">{selectedCustomer.name}</p>
+                    <p className="text-xs text-white truncate">
+                      {selectedCustomer.email || selectedCustomer.phone || ''}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleClearCustomer}
+                    className="p-2 rounded-lg hover:bg-white/5 touch-manipulation"
+                  >
+                    <X className="h-4 w-4 text-white" />
+                  </button>
+                </div>
+              ) : (
+                <ClientSelector
+                  onSelectCustomer={handleCustomerSelect}
+                  selectedCustomerId={customerId}
+                />
+              )}
+            </div>
+
             <MobileInput
               label="Project Name"
               value={projectName}

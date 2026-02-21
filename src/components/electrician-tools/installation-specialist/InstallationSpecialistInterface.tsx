@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useRef, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -17,6 +18,7 @@ import {
 } from '@/utils/circuit-context-generator';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 import { AnimatePresence } from 'framer-motion';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 
 interface InstallationSpecialistInterfaceProps {
   designerContext?: any;
@@ -82,6 +84,9 @@ const InstallationSpecialistInterface = ({
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
   const [initialPrompt, setInitialPrompt] = useState<string>('');
   const [initialProjectName, setInitialProjectName] = useState<string>('');
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
+  const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
 
   // Check for imported circuit context on mount
   useEffect(() => {
@@ -160,6 +165,20 @@ const InstallationSpecialistInterface = ({
       console.log('✅ Created installation method job:', data.jobId);
       setCurrentJobId(data.jobId);
       startPolling();
+
+      // Link customer to job
+      if (customerId && data.jobId) {
+        supabase
+          .from('installation_method_jobs')
+          .update({ customer_id: customerId })
+          .eq('id', data.jobId)
+          .then(({ error: linkErr }) => {
+            if (linkErr)
+              console.error('Failed to link customer to installation method job:', linkErr);
+          });
+      } else if (!customerId && projectDetails.clientName?.trim() && !savePromptDismissed) {
+        setShowSaveCustomerPrompt(true);
+      }
     } catch (error: any) {
       console.error('Generation error:', error);
       toast.error('Generation Failed', {
@@ -305,11 +324,37 @@ const InstallationSpecialistInterface = ({
               />
             )}
           </AnimatePresence>
+          {/* Save Customer Prompt */}
+          {showSaveCustomerPrompt && !customerId && projectInfo.clientName?.trim() && (
+            <SaveCustomerPrompt
+              client={{
+                name: projectInfo.clientName,
+                address: projectInfo.location || undefined,
+              }}
+              onSaved={(savedId) => {
+                setCustomerId(savedId);
+                setShowSaveCustomerPrompt(false);
+                if (currentJobId) {
+                  supabase
+                    .from('installation_method_jobs')
+                    .update({ customer_id: savedId })
+                    .eq('id', currentJobId);
+                }
+              }}
+              onDismiss={() => {
+                setShowSaveCustomerPrompt(false);
+                setSavePromptDismissed(true);
+              }}
+            />
+          )}
+
           <InstallationInput
             onGenerate={handleGenerate}
             isProcessing={isGenerating}
             initialPrompt={initialPrompt}
             initialProjectName={initialProjectName}
+            customerId={customerId}
+            onCustomerIdChange={setCustomerId}
           />
         </>
       ) : isGenerating ? (

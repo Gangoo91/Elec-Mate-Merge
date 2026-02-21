@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -15,6 +16,7 @@ import {
   type StoredCircuitContext,
 } from '@/utils/circuit-context-generator';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import { AnimatePresence } from 'framer-motion';
 
 const HealthSafetyInterface = () => {
@@ -46,6 +48,8 @@ const HealthSafetyInterface = () => {
     workType: 'domestic' | 'commercial' | 'industrial';
     projectInfo: any;
   } | null>(null);
+  const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
 
   const { job, startPolling, stopPolling, progress, status, currentStep, outputData, error } =
     useHealthSafetyGeneration(currentJobId);
@@ -157,6 +161,17 @@ const HealthSafetyInterface = () => {
       sessionStorage.setItem('health-safety-job-id', data.jobId);
       startPolling();
 
+      // Write customer_id to the job if provided
+      if (projectInfo?.customerId) {
+        await supabase
+          .from('health_safety_jobs')
+          .update({ customer_id: projectInfo.customerId })
+          .eq('id', data.jobId);
+      } else if (projectInfo?.clientName && !savePromptDismissed) {
+        // Show save customer prompt after generation starts
+        setShowSaveCustomerPrompt(true);
+      }
+
       toast.success('Generation started', {
         description: 'Your safety documentation is being created',
       });
@@ -167,6 +182,16 @@ const HealthSafetyInterface = () => {
       });
       setShowResults(false);
       sessionStorage.removeItem('health-safety-generation-active');
+    }
+  };
+
+  const handleCustomerSaved = async (savedCustomerId: string) => {
+    setShowSaveCustomerPrompt(false);
+    if (currentJobId) {
+      await supabase
+        .from('health_safety_jobs')
+        .update({ customer_id: savedCustomerId })
+        .eq('id', currentJobId);
     }
   };
 
@@ -264,6 +289,20 @@ const HealthSafetyInterface = () => {
           isProcessing={status === 'processing' || status === 'pending'}
           initialPrompt={initialPrompt}
           initialProjectName={initialProjectName}
+        />
+      )}
+
+      {/* Save Customer Prompt */}
+      {showSaveCustomerPrompt && lastJobInputs?.projectInfo?.clientName && (
+        <SaveCustomerPrompt
+          client={{
+            name: lastJobInputs.projectInfo.clientName,
+          }}
+          onSaved={handleCustomerSaved}
+          onDismiss={() => {
+            setShowSaveCustomerPrompt(false);
+            setSavePromptDismissed(true);
+          }}
         />
       )}
 

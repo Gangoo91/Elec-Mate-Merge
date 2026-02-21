@@ -1,7 +1,6 @@
 import React from 'react';
 import { Home, Camera, HelpCircle, Package } from 'lucide-react';
 import type { SiteVisit } from '@/types/siteVisit';
-import { getRoomLabel } from '@/data/siteVisit/roomTypes';
 import { SurveyAnalysisPanel } from '../review/SurveyAnalysisPanel';
 
 interface SiteVisitReviewStepProps {
@@ -23,64 +22,80 @@ export const SiteVisitReviewStep = ({
 
   return (
     <div className="space-y-4">
-      <div>
-        <h2 className="text-lg font-bold text-white">Review Site Visit</h2>
-        <p className="text-sm text-white mt-1">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-xl px-4 py-3">
+        <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+          Review Site Visit
+        </h2>
+        <p className="text-sm text-white mt-0.5">
           Check everything looks right before generating outputs
         </p>
       </div>
 
       {/* Summary stats bar */}
       <div className="grid grid-cols-4 gap-2">
-        {[
-          { icon: Home, label: 'Rooms', value: totalRooms, colour: 'bg-blue-500' },
-          { icon: Package, label: 'Items', value: totalItems, colour: 'bg-emerald-500' },
-          { icon: Camera, label: 'Photos', value: totalPhotos, colour: 'bg-purple-500' },
-          {
-            icon: HelpCircle,
-            label: 'Prompts',
-            value: totalPromptsAnswered,
-            colour: 'bg-orange-500',
-          },
-        ].map((stat) => (
-          <div
-            key={stat.label}
-            className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]"
-          >
-            <div
-              className={`w-8 h-8 rounded-lg ${stat.colour}/20 flex items-center justify-center mb-1`}
-            >
-              <stat.icon className={`h-4 w-4 ${stat.colour.replace('bg-', 'text-')}`} />
-            </div>
-            <p className="text-lg font-bold text-white">{stat.value}</p>
-            <p className="text-[11px] text-white">{stat.label}</p>
+        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="w-8 h-8 rounded-lg bg-blue-500/20 flex items-center justify-center mb-1">
+            <Home className="h-4 w-4 text-blue-400" />
           </div>
-        ))}
+          <p className="text-lg font-bold text-white">{totalRooms}</p>
+          <p className="text-[11px] text-white">Rooms</p>
+        </div>
+        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center mb-1">
+            <Package className="h-4 w-4 text-emerald-400" />
+          </div>
+          <p className="text-lg font-bold text-white">{totalItems}</p>
+          <p className="text-[11px] text-white">Items</p>
+        </div>
+        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center mb-1">
+            <Camera className="h-4 w-4 text-purple-400" />
+          </div>
+          <p className="text-lg font-bold text-white">{totalPhotos}</p>
+          <p className="text-[11px] text-white">Photos</p>
+        </div>
+        <div className="flex flex-col items-center p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+          <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center mb-1">
+            <HelpCircle className="h-4 w-4 text-orange-400" />
+          </div>
+          <p className="text-lg font-bold text-white">{totalPromptsAnswered}</p>
+          <p className="text-[11px] text-white">Prompts</p>
+        </div>
       </div>
 
       {/* Client & property summary */}
-      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
-        <h3 className="text-sm font-semibold text-white">Client & Property</h3>
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <div>
-            <p className="text-white">Client</p>
-            <p className="text-white">{visit.customerName || '—'}</p>
+      <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+        <div className="px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
+          <h3 className="text-sm font-semibold text-white">Client & Property</h3>
+        </div>
+        <div className="p-4 space-y-3">
+          <div className="grid grid-cols-2 gap-x-4 gap-y-3">
+            <div>
+              <p className="text-[11px] font-medium text-white mb-0.5">Client</p>
+              <p className="text-sm text-white font-medium">{visit.customerName || '—'}</p>
+            </div>
+            <div>
+              <p className="text-[11px] font-medium text-white mb-0.5">Phone</p>
+              <p className="text-sm text-white font-medium">{visit.customerPhone || '—'}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-white">Phone</p>
-            <p className="text-white">{visit.customerPhone || '—'}</p>
+          <div className="border-t border-white/[0.06] pt-3">
+            <p className="text-[11px] font-medium text-white mb-0.5">Address</p>
+            <p className="text-sm text-white font-medium">{visit.propertyAddress || '—'}</p>
           </div>
-          <div className="col-span-2">
-            <p className="text-white">Address</p>
-            <p className="text-white">{visit.propertyAddress || '—'}</p>
-          </div>
-          <div>
-            <p className="text-white">Postcode</p>
-            <p className="text-white">{visit.propertyPostcode || '—'}</p>
-          </div>
-          <div>
-            <p className="text-white">Type</p>
-            <p className="text-white capitalize">{visit.propertyType || '—'}</p>
+          <div className="grid grid-cols-2 gap-x-4">
+            <div>
+              <p className="text-[11px] font-medium text-white mb-0.5">Postcode</p>
+              <p className="text-sm text-white font-medium">{visit.propertyPostcode || '—'}</p>
+            </div>
+            <div>
+              <p className="text-[11px] font-medium text-white mb-0.5">Type</p>
+              <p className="text-sm text-white font-medium capitalize">
+                {visit.propertyType || '—'}
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -93,9 +108,10 @@ export const SiteVisitReviewStep = ({
         return (
           <div
             key={room.id}
-            className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-3"
+            className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden"
           >
-            <div className="flex items-center gap-2">
+            {/* Room header */}
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
               <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
               <h3 className="text-sm font-semibold text-white">{room.roomName}</h3>
               <span className="text-xs text-white ml-auto">
@@ -103,60 +119,77 @@ export const SiteVisitReviewStep = ({
               </span>
             </div>
 
-            {/* Items */}
-            {room.items.length > 0 && (
-              <div className="space-y-1">
-                {room.items.map((item) => (
-                  <div key={item.id} className="flex justify-between text-xs">
-                    <span className="text-white">{item.itemDescription || item.itemType}</span>
-                    <span className="text-white font-medium">x{item.quantity}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="p-4 space-y-3">
+              {/* Items */}
+              {room.items.length > 0 && (
+                <div className="space-y-1.5">
+                  {room.items.map((item) => (
+                    <div key={item.id} className="flex justify-between items-baseline text-xs">
+                      <span className="text-white">{item.itemDescription || item.itemType}</span>
+                      <span className="text-white font-semibold tabular-nums ml-2 flex-shrink-0">
+                        x{item.quantity}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-            {/* Photo thumbnails */}
-            {roomPhotos.length > 0 && (
-              <div className="flex gap-1.5 overflow-x-auto">
-                {roomPhotos.map((photo) => (
-                  <img
-                    key={photo.id}
-                    src={photo.photoUrl}
-                    alt={photo.description || 'Photo'}
-                    className="w-12 h-12 rounded-lg object-cover flex-shrink-0"
-                  />
-                ))}
-              </div>
-            )}
+              {/* Photo thumbnails */}
+              {roomPhotos.length > 0 && (
+                <div className="flex gap-2 overflow-x-auto pt-2 border-t border-white/[0.06]">
+                  {roomPhotos.map((photo) => (
+                    <img
+                      key={photo.id}
+                      src={photo.photoUrl}
+                      alt={photo.description || 'Photo'}
+                      className="w-14 h-14 rounded-lg object-cover flex-shrink-0 border border-white/10"
+                    />
+                  ))}
+                </div>
+              )}
 
-            {/* Prompt responses */}
-            {roomPrompts.length > 0 && (
-              <div className="space-y-1 pt-1 border-t border-white/[0.06]">
-                {roomPrompts.map((prompt) => (
-                  <div key={prompt.id} className="flex justify-between text-xs">
-                    <span className="text-white">{prompt.promptQuestion}</span>
-                    <span className="text-white font-medium">{prompt.response}</span>
-                  </div>
-                ))}
-              </div>
-            )}
+              {/* Prompt responses */}
+              {roomPrompts.length > 0 && (
+                <div className="space-y-1.5 pt-2 border-t border-white/[0.06]">
+                  {roomPrompts.map((prompt) => (
+                    <div
+                      key={prompt.id}
+                      className="flex justify-between items-baseline text-xs gap-2"
+                    >
+                      <span className="text-white">{prompt.promptQuestion}</span>
+                      <span className="text-elec-yellow font-medium flex-shrink-0">
+                        {prompt.response}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
 
-            {room.notes && <p className="text-xs text-white italic">{room.notes}</p>}
+              {room.notes && (
+                <p className="text-xs text-white italic pt-2 border-t border-white/[0.06]">
+                  {room.notes}
+                </p>
+              )}
+            </div>
           </div>
         );
       })}
 
       {/* Global prompt responses */}
       {visit.prompts.filter((p) => !p.roomId && p.response).length > 0 && (
-        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
-          <h3 className="text-sm font-semibold text-white">Property Assessment</h3>
-          <div className="space-y-1">
+        <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          <div className="px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
+            <h3 className="text-sm font-semibold text-white">Property Assessment</h3>
+          </div>
+          <div className="p-4 space-y-1.5">
             {visit.prompts
               .filter((p) => !p.roomId && p.response)
               .map((prompt) => (
-                <div key={prompt.id} className="flex justify-between text-xs">
+                <div key={prompt.id} className="flex justify-between items-baseline text-xs gap-2">
                   <span className="text-white">{prompt.promptQuestion}</span>
-                  <span className="text-white font-medium">{prompt.response}</span>
+                  <span className="text-elec-yellow font-medium flex-shrink-0">
+                    {prompt.response}
+                  </span>
                 </div>
               ))}
           </div>

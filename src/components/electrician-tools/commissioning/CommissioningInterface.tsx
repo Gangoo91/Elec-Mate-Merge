@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, lazy, Suspense, useEffect } from 'react';
 import { useCommissioningGeneration } from '@/hooks/useCommissioningGeneration';
 import { supabase } from '@/integrations/supabase/client';
@@ -16,6 +17,7 @@ import {
 } from '@/utils/circuit-context-generator';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
 import { AnimatePresence } from 'framer-motion';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 
 const CommissioningChat = lazy(() => import('./CommissioningChat'));
 
@@ -63,6 +65,9 @@ const CommissioningInterface = () => {
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [isFastPath, setIsFastPath] = useState(false);
   const [originalQuery, setOriginalQuery] = useState<string>('');
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
+  const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
   const [projectInfo, setProjectInfo] = useState({
     projectName: '',
     location: '',
@@ -116,10 +121,14 @@ const CommissioningInterface = () => {
     installationDate: string;
     imageUrl?: string;
     imageUrls?: string[];
+    customerId?: string;
   }) => {
     setGenerationStartTime(Date.now());
     setShowResults(true);
     setCelebrationShown(false);
+
+    // Track customer
+    if (data.customerId) setCustomerId(data.customerId);
 
     // Store original query and project info for results page
     setOriginalQuery(data.prompt);
@@ -218,7 +227,7 @@ const CommissioningInterface = () => {
     setIsFastPath(false);
 
     try {
-      await createJob({
+      const jobResult = await createJob({
         query: data.prompt,
         queryMode: data.queryMode,
         projectContext: {
@@ -232,6 +241,20 @@ const CommissioningInterface = () => {
         imageUrl: data.imageUrl,
         imageUrls: data.imageUrls,
       });
+
+      // Link customer to job
+      const createdJobId = (jobResult as any)?.id || job?.id;
+      if (data.customerId && createdJobId) {
+        supabase
+          .from('commissioning_jobs')
+          .update({ customer_id: data.customerId })
+          .eq('id', createdJobId)
+          .then(({ error: linkErr }) => {
+            if (linkErr) console.error('Failed to link customer to commissioning job:', linkErr);
+          });
+      } else if (!data.customerId && data.clientName.trim() && !savePromptDismissed) {
+        setShowSaveCustomerPrompt(true);
+      }
     } catch (err) {
       console.error('Error creating commissioning job:', err);
     }
@@ -268,6 +291,29 @@ const CommissioningInterface = () => {
   if (!showResults) {
     return (
       <div className="space-y-4">
+        {/* Save Customer Prompt */}
+        {showSaveCustomerPrompt && !customerId && projectInfo.clientName.trim() && (
+          <div className="px-4">
+            <SaveCustomerPrompt
+              client={{ name: projectInfo.clientName, address: projectInfo.location || undefined }}
+              onSaved={(savedId) => {
+                setCustomerId(savedId);
+                setShowSaveCustomerPrompt(false);
+                if (job?.id) {
+                  supabase
+                    .from('commissioning_jobs')
+                    .update({ customer_id: savedId })
+                    .eq('id', job.id);
+                }
+              }}
+              onDismiss={() => {
+                setShowSaveCustomerPrompt(false);
+                setSavePromptDismissed(true);
+              }}
+            />
+          </div>
+        )}
+
         {/* Imported Circuit Context Banner */}
         <AnimatePresence>
           {importedContext && (

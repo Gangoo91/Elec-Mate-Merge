@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,9 +14,13 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { SectionHeader } from '@/components/ui/section-header';
-import { Users } from 'lucide-react';
+import { Users, Check, X } from 'lucide-react';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 
 interface EICClientDetailsSectionProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
   onUpdate: (field: string, value: string) => void;
   isOpen: boolean;
@@ -29,6 +33,37 @@ const EICClientDetailsSection = ({
   isOpen,
   onToggle,
 }: EICClientDetailsSectionProps) => {
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
+  const [showSavePrompt, setShowSavePrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
+
+  const handleCustomerSelect = (customer: Customer | null) => {
+    if (customer) {
+      setSelectedCustomer(customer);
+      onUpdate('customerId', customer.id);
+      onUpdate('clientName', customer.name);
+      if (customer.phone) onUpdate('clientPhone', customer.phone);
+      if (customer.email) onUpdate('clientEmail', customer.email);
+      if (customer.address) onUpdate('clientAddress', customer.address);
+      setShowSavePrompt(false);
+      setSavePromptDismissed(true);
+    } else {
+      setSelectedCustomer(null);
+      onUpdate('customerId', '');
+    }
+  };
+
+  const handleClearCustomer = () => {
+    setSelectedCustomer(null);
+    onUpdate('customerId', '');
+    setSavePromptDismissed(false);
+  };
+
+  const handleCustomerSaved = (savedCustomerId: string) => {
+    setShowSavePrompt(false);
+    onUpdate('customerId', savedCustomerId);
+  };
+
   const handleSameAddressToggle = (checked: boolean) => {
     if (checked && formData.clientAddress) {
       onUpdate('installationAddress', formData.clientAddress);
@@ -80,6 +115,39 @@ const EICClientDetailsSection = ({
                 <div className="w-1.5 h-1.5 rounded-full bg-yellow-400"></div>
                 Client Information
               </h3>
+
+              {/* Customer Selector */}
+              <div className="space-y-2">
+                <Label className="font-medium text-sm">Select Existing Customer</Label>
+                {selectedCustomer ? (
+                  <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                    <div className="w-9 h-9 rounded-lg bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                      <Check className="h-4 w-4 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-emerald-400">
+                        {selectedCustomer.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground truncate">
+                        {selectedCustomer.email || selectedCustomer.phone || ''}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleClearCustomer}
+                      className="p-2 rounded-lg hover:bg-white/5 touch-manipulation"
+                    >
+                      <X className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  </div>
+                ) : (
+                  <ClientSelector
+                    onSelectCustomer={handleCustomerSelect}
+                    selectedCustomerId={formData.customerId}
+                  />
+                )}
+              </div>
+
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="clientName" className="font-medium text-sm">
@@ -135,6 +203,23 @@ const EICClientDetailsSection = ({
                   />
                 </div>
               </div>
+
+              {/* Save Customer Prompt */}
+              {!formData.customerId &&
+                formData.clientName?.trim() &&
+                !selectedCustomer &&
+                !savePromptDismissed && (
+                  <SaveCustomerPrompt
+                    client={{
+                      name: formData.clientName,
+                      email: formData.clientEmail || undefined,
+                      phone: formData.clientPhone || undefined,
+                      address: formData.clientAddress || undefined,
+                    }}
+                    onSaved={handleCustomerSaved}
+                    onDismiss={() => setSavePromptDismissed(true)}
+                  />
+                )}
             </div>
 
             <Separator className="my-6" />

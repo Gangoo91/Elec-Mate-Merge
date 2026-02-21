@@ -24,6 +24,11 @@ import {
   Lightbulb,
   Zap,
   Sun,
+  ClipboardList,
+  Shield,
+  Cpu,
+  CheckCircle2,
+  Settings,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -42,7 +47,14 @@ type ActionType =
   | 'ev-charging'
   | 'solar-pv'
   | 'quote'
-  | 'invoice';
+  | 'invoice'
+  | 'site-visit'
+  | 'rams'
+  | 'cost-engineer'
+  | 'circuit-designer'
+  | 'installation-specialist'
+  | 'commissioning'
+  | 'maintenance';
 
 // Certificate types that use the new standalone routes (/inspection-testing/<type>/new)
 const STANDALONE_CERT_TYPES: ActionType[] = [
@@ -58,8 +70,24 @@ const actionTypes: {
   description: string;
   icon: React.ElementType;
   color: string;
-  group: 'certificate' | 'business';
+  group: 'certificate' | 'business' | 'job' | 'ai';
 }[] = [
+  {
+    value: 'site-visit',
+    label: 'Site Visit',
+    description: 'Pre-site survey and scope of works',
+    icon: ClipboardList,
+    color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    group: 'job',
+  },
+  {
+    value: 'rams',
+    label: 'RAMS',
+    description: 'Risk assessment & method statement',
+    icon: Shield,
+    color: 'bg-orange-500/20 text-orange-400 border-orange-500/30',
+    group: 'job',
+  },
   {
     value: 'quote',
     label: 'New Quote',
@@ -75,6 +103,46 @@ const actionTypes: {
     icon: PoundSterling,
     color: 'bg-green-500/20 text-green-400 border-green-500/30',
     group: 'business',
+  },
+  {
+    value: 'cost-engineer',
+    label: 'Cost Engineer',
+    description: 'AI-powered cost analysis',
+    icon: PoundSterling,
+    color: 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+    group: 'ai',
+  },
+  {
+    value: 'circuit-designer',
+    label: 'Circuit Designer',
+    description: 'AI circuit design to BS 7671',
+    icon: Cpu,
+    color: 'bg-blue-500/20 text-blue-400 border-blue-500/30',
+    group: 'ai',
+  },
+  {
+    value: 'installation-specialist',
+    label: 'Installation',
+    description: 'AI method statement generation',
+    icon: Wrench,
+    color: 'bg-purple-500/20 text-purple-400 border-purple-500/30',
+    group: 'ai',
+  },
+  {
+    value: 'commissioning',
+    label: 'Commissioning',
+    description: 'AI testing & commissioning',
+    icon: CheckCircle2,
+    color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30',
+    group: 'ai',
+  },
+  {
+    value: 'maintenance',
+    label: 'Maintenance',
+    description: 'AI maintenance instructions',
+    icon: Settings,
+    color: 'bg-amber-500/20 text-amber-400 border-amber-500/30',
+    group: 'ai',
   },
   {
     value: 'eicr',
@@ -141,16 +209,72 @@ export const StartCertificateDialog = ({
 }: StartCertificateDialogProps) => {
   const navigate = useNavigate();
   const { properties } = useCustomerProperties(customer.id);
-  const [selectedType, setSelectedType] = useState<ActionType>('quote');
+  const [selectedType, setSelectedType] = useState<ActionType>('site-visit');
   const [selectedPropertyId, setSelectedPropertyId] = useState<string>('');
 
-  const isCertificate = selectedType !== 'quote' && selectedType !== 'invoice';
+  const AI_AGENT_TYPES: ActionType[] = [
+    'cost-engineer',
+    'circuit-designer',
+    'installation-specialist',
+    'commissioning',
+    'maintenance',
+  ];
+  const isCertificate = !['quote', 'invoice', 'site-visit', 'rams', ...AI_AGENT_TYPES].includes(
+    selectedType
+  );
   const isStandalone = STANDALONE_CERT_TYPES.includes(selectedType);
+  const isAIAgent = AI_AGENT_TYPES.includes(selectedType);
 
   const handleStart = () => {
     const address = selectedPropertyId
       ? properties.find((p) => p.id === selectedPropertyId)?.address || customer.address
       : customer.address;
+
+    if (selectedType === 'site-visit') {
+      navigate('/electrician/site-visits', {
+        state: {
+          prefillCustomerId: customer.id,
+          prefillCustomerName: customer.name,
+          prefillCustomerEmail: customer.email,
+          prefillCustomerPhone: customer.phone,
+          prefillAddress: address,
+        },
+      });
+      onOpenChange(false);
+      return;
+    }
+
+    if (selectedType === 'rams') {
+      navigate('/electrician/health-safety', {
+        state: {
+          prefillCustomerId: customer.id,
+          prefillClientName: customer.name,
+        },
+      });
+      onOpenChange(false);
+      return;
+    }
+
+    if (isAIAgent) {
+      const agentSectionMap: Record<string, string> = {
+        'cost-engineer': 'cost-engineer',
+        'circuit-designer': 'circuit-designer',
+        'installation-specialist': 'installation-specialist',
+        commissioning: 'commissioning',
+        maintenance: 'maintenance',
+      };
+      const section = agentSectionMap[selectedType] || selectedType;
+      navigate(`/electrician/design-consultation`, {
+        state: {
+          section,
+          prefillCustomerId: customer.id,
+          prefillClientName: customer.name,
+          prefillAddress: address,
+        },
+      });
+      onOpenChange(false);
+      return;
+    }
 
     if (selectedType === 'quote' || selectedType === 'invoice') {
       // Use sessionStorage pattern for pre-filling customer data
@@ -202,7 +326,9 @@ export const StartCertificateDialog = ({
 
   const defaultProperty = properties.find((p) => p.isPrimary) || properties[0];
 
+  const jobActions = actionTypes.filter((a) => a.group === 'job');
   const businessActions = actionTypes.filter((a) => a.group === 'business');
+  const aiActions = actionTypes.filter((a) => a.group === 'ai');
   const certificateActions = actionTypes.filter((a) => a.group === 'certificate');
 
   return (
@@ -210,14 +336,46 @@ export const StartCertificateDialog = ({
       <DialogContent className="w-[calc(100%-2rem)] max-w-[500px] max-h-[90vh] overflow-y-auto bg-card border-border p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-lg sm:text-xl text-foreground">
-            New for {customer.name}
+            Begin Job for {customer.name}
           </DialogTitle>
           <DialogDescription className="text-sm text-neutral-400">
-            Create a quote, invoice or certificate
+            Start a site visit, quote, certificate or safety docs
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-4 mt-3">
+          {/* Job Actions */}
+          <div className="space-y-2">
+            <Label className="text-xs text-muted-foreground uppercase tracking-wider">Jobs</Label>
+            <div className="grid grid-cols-2 gap-2">
+              {jobActions.map((type) => (
+                <button
+                  key={type.value}
+                  type="button"
+                  onClick={() => setSelectedType(type.value)}
+                  className={cn(
+                    'flex items-center gap-2.5 p-3 rounded-xl border transition-all touch-manipulation text-left',
+                    selectedType === type.value
+                      ? type.color
+                      : 'bg-background border-border hover:border-border/80'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
+                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
+                    )}
+                  >
+                    <type.icon className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">{type.label}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
           {/* Business Actions */}
           <div className="space-y-2">
             <Label className="text-xs text-muted-foreground uppercase tracking-wider">
@@ -225,6 +383,40 @@ export const StartCertificateDialog = ({
             </Label>
             <div className="grid grid-cols-2 gap-2">
               {businessActions.map((type) => (
+                <button
+                  key={type.value}
+                  type="button"
+                  onClick={() => setSelectedType(type.value)}
+                  className={cn(
+                    'flex items-center gap-2.5 p-3 rounded-xl border transition-all touch-manipulation text-left',
+                    selectedType === type.value
+                      ? type.color
+                      : 'bg-background border-border hover:border-border/80'
+                  )}
+                >
+                  <div
+                    className={cn(
+                      'w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0',
+                      selectedType === type.value ? 'bg-white/10' : 'bg-muted'
+                    )}
+                  >
+                    <type.icon className="h-4 w-4" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">{type.label}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* AI Agents */}
+          <div className="space-y-2">
+            <Label className="text-xs text-muted-foreground uppercase tracking-wider">
+              AI Agents
+            </Label>
+            <div className="grid grid-cols-2 gap-2">
+              {aiActions.map((type) => (
                 <button
                   key={type.value}
                   type="button"
@@ -338,11 +530,17 @@ export const StartCertificateDialog = ({
               onClick={handleStart}
               className="w-full sm:w-auto h-11 touch-manipulation"
             >
-              {selectedType === 'quote'
-                ? 'Create Quote'
-                : selectedType === 'invoice'
-                  ? 'Create Invoice'
-                  : 'Start Certificate'}
+              {selectedType === 'site-visit'
+                ? 'Start Site Visit'
+                : selectedType === 'rams'
+                  ? 'Create RAMS'
+                  : selectedType === 'quote'
+                    ? 'Create Quote'
+                    : selectedType === 'invoice'
+                      ? 'Create Invoice'
+                      : isAIAgent
+                        ? 'Open AI Agent'
+                        : 'Start Certificate'}
               <ArrowRight className="h-4 w-4 ml-2" />
             </Button>
           </div>

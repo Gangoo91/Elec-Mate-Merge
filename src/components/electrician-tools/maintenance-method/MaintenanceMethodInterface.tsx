@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
@@ -16,6 +17,7 @@ import {
   type StoredCircuitContext,
 } from '@/utils/circuit-context-generator';
 import { ImportedContextBanner } from '@/components/electrician-tools/shared/ImportedContextBanner';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 
 type ViewState = 'input' | 'processing' | 'success' | 'results';
 
@@ -47,6 +49,9 @@ export const MaintenanceMethodInterface = () => {
   );
   const [startTime, setStartTime] = useState<number>(0);
   const [importedContext, setImportedContext] = useState<StoredCircuitContext | null>(null);
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
+  const [showSaveCustomerPrompt, setShowSaveCustomerPrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
   const [savedMethodData, setSavedMethodData] = useState<any>(
     savedResultsState?.fromSavedResults ? savedResultsState.outputData : null
   );
@@ -138,6 +143,20 @@ export const MaintenanceMethodInterface = () => {
 
       setCurrentJobId(data.jobId);
       setViewState('processing');
+
+      // Link customer to job
+      if (customerId && data.jobId) {
+        supabase
+          .from('maintenance_method_jobs')
+          .update({ customer_id: customerId })
+          .eq('id', data.jobId)
+          .then(({ error: linkErr }) => {
+            if (linkErr)
+              console.error('Failed to link customer to maintenance method job:', linkErr);
+          });
+      } else if (!customerId && !savePromptDismissed) {
+        // No customer prompt for maintenance — no clientName field to check
+      }
 
       toast({
         title: 'Generation Started',
@@ -336,6 +355,8 @@ export const MaintenanceMethodInterface = () => {
         onEquipmentDetailsChange={setEquipmentDetails}
         onGenerate={handleGenerate}
         isProcessing={isSubmitting}
+        customerId={customerId}
+        onCustomerIdChange={setCustomerId}
       />
     </>
   );

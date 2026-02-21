@@ -51,6 +51,7 @@ export interface QuoteClient {
   phone: string;
   address: string;
   postcode: string;
+  customerId?: string;
 }
 
 export interface JobDetails {

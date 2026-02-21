@@ -27,6 +27,8 @@ interface StructuredDesignWizardProps {
   onGenerate: (inputs: DesignInputs) => Promise<void>;
   isProcessing: boolean;
   initialData?: Partial<DesignInputs>;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
 }
 
 const STEPS = [
@@ -58,6 +60,8 @@ export const StructuredDesignWizard = ({
   onGenerate,
   isProcessing,
   initialData,
+  customerId,
+  onCustomerIdChange,
 }: StructuredDesignWizardProps) => {
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -241,6 +245,7 @@ export const StructuredDesignWizard = ({
       pscc,
       mainSwitchRating,
       ambientTemp,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       installationMethod: installationMethod as any,
       groupingFactor,
       propertyAge,
@@ -268,6 +273,8 @@ export const StructuredDesignWizard = ({
             setElectricianName={setElectricianName}
             installationType={installationType}
             setInstallationType={setInstallationType}
+            customerId={customerId}
+            onCustomerIdChange={onCustomerIdChange}
           />
         );
       case 1:
@@ -335,6 +342,7 @@ export const StructuredDesignWizard = ({
               earthingSystem,
               pscc,
               ambientTemp,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               installationMethod: installationMethod as any,
               groupingFactor,
               circuits,

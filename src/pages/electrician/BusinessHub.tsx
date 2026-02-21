@@ -103,17 +103,13 @@ const BusinessHub = () => {
       link: '/electrician/materials',
       gradient: 'from-red-400 to-orange-500',
     },
-  ];
-
-  // Customers
-  const customerTools = [
     {
-      id: 6,
-      title: 'Customers',
-      description: 'Client management',
-      icon: Users,
-      link: '/customers',
-      gradient: 'from-blue-400 to-cyan-500',
+      id: 9,
+      title: 'Tools',
+      description: 'Equipment tracking and management',
+      icon: Wrench,
+      link: '/electrician/tools',
+      gradient: 'from-red-400 to-amber-500',
     },
   ];
 
@@ -134,14 +130,6 @@ const BusinessHub = () => {
       icon: Calculator,
       link: '/electrician/business-development/tools',
       gradient: 'from-yellow-400 to-orange-500',
-    },
-    {
-      id: 9,
-      title: 'Tools',
-      description: 'Equipment tracking and management',
-      icon: Wrench,
-      link: '/electrician/tools',
-      gradient: 'from-yellow-400 to-lime-500',
     },
     {
       id: 10,
@@ -199,8 +187,25 @@ const BusinessHub = () => {
             <Briefcase className="h-7 w-7 text-elec-yellow" />
           </div>
           <h1 className="text-xl font-bold text-white">Business Hub</h1>
-          <p className="text-sm text-white mt-1">Quotes, invoices & business tools</p>
+          <p className="text-sm text-white mt-1">Clients, jobs & business tools</p>
         </motion.div>
+
+        {/* Customers — Top Position */}
+        <motion.section variants={itemVariants} className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
+            <h2 className="text-base font-bold text-white">Customers</h2>
+          </div>
+          <div className="space-y-2">
+            <BusinessCard
+              title="Customers"
+              description="Client management & work history"
+              icon={Users}
+              href="/customers"
+              gradient="from-blue-400 to-cyan-500"
+            />
+          </div>
+        </motion.section>
 
         {/* Job Management */}
         <motion.section variants={itemVariants} className="space-y-3">
@@ -266,26 +271,6 @@ const BusinessHub = () => {
           </div>
           <div className="space-y-2">
             {moneyOutTools.map((card) => (
-              <BusinessCard
-                key={card.id}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                href={card.link}
-                gradient={card.gradient}
-              />
-            ))}
-          </div>
-        </motion.section>
-
-        {/* Customers */}
-        <motion.section variants={itemVariants} className="space-y-3">
-          <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-blue-400" />
-            <h2 className="text-base font-bold text-white">Customers</h2>
-          </div>
-          <div className="space-y-2">
-            {customerTools.map((card) => (
               <BusinessCard
                 key={card.id}
                 title={card.title}

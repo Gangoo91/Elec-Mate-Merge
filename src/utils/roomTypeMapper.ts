@@ -107,6 +107,7 @@ const ALIASES: Record<string, RoomType> = {
   workshop: 'workshop',
   'the workshop': 'workshop',
   'welding bay': 'welding_bay',
+  other: 'custom',
 };
 
 /**

@@ -17,6 +17,7 @@ export type AccessoryCategory =
   | 'data'
   | 'heating'
   | 'ev_outdoor'
+  | 'containment'
   | 'other';
 
 export const ACCESSORY_CATEGORIES: { id: AccessoryCategory; label: string }[] = [
@@ -28,6 +29,7 @@ export const ACCESSORY_CATEGORIES: { id: AccessoryCategory; label: string }[] = 
   { id: 'data', label: 'Data / Comms' },
   { id: 'heating', label: 'Heating' },
   { id: 'ev_outdoor', label: 'EV / Outdoor' },
+  { id: 'containment', label: 'Containment' },
   { id: 'other', label: 'Other' },
 ];
 
@@ -220,11 +222,31 @@ export const ACCESSORY_TYPES: AccessoryType[] = [
     commonRooms: ['garden_external'],
   },
 
+  // Containment
+  { id: 'mini_trunking', category: 'containment', label: 'Mini Trunking', defaultUnit: 'metres' },
+  { id: 'dado_trunking', category: 'containment', label: 'Dado Trunking', defaultUnit: 'metres' },
+  {
+    id: 'cable_trunking',
+    category: 'containment',
+    label: 'Cable Trunking',
+    defaultUnit: 'metres',
+  },
+  { id: 'pvc_conduit', category: 'containment', label: 'PVC Conduit', defaultUnit: 'metres' },
+  { id: 'steel_conduit', category: 'containment', label: 'Steel Conduit', defaultUnit: 'metres' },
+  {
+    id: 'flexible_conduit',
+    category: 'containment',
+    label: 'Flexible Conduit',
+    defaultUnit: 'metres',
+  },
+  { id: 'cable_tray', category: 'containment', label: 'Cable Tray', defaultUnit: 'metres' },
+  { id: 'cable_basket', category: 'containment', label: 'Cable Basket', defaultUnit: 'metres' },
+
   // Other
   { id: 'consumer_unit', category: 'other', label: 'Consumer Unit', defaultUnit: 'each' },
   { id: 'distribution_board', category: 'other', label: 'Distribution Board', defaultUnit: 'each' },
   { id: 'cable_run', category: 'other', label: 'Cable Run', defaultUnit: 'metres' },
-  { id: 'custom_item', category: 'other', label: 'Custom Item', defaultUnit: 'each' },
+  { id: 'custom_item', category: 'other', label: 'Other', defaultUnit: 'each' },
 ];
 
 /**

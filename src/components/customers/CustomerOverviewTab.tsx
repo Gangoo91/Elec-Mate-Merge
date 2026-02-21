@@ -16,8 +16,12 @@ import {
   Calendar,
   Loader2,
   ExternalLink,
+  Briefcase,
 } from 'lucide-react';
-import { CustomerDetailAnalytics } from './CustomerDetailAnalytics';
+import { CustomerQuotesCard } from './CustomerQuotesCard';
+import { CustomerSiteVisitsCard } from './CustomerSiteVisitsCard';
+import { CustomerRAMSCard } from './CustomerRAMSCard';
+import { CustomerDesignConsultationCard } from './CustomerDesignConsultationCard';
 
 interface CustomerOverviewTabProps {
   customer: Customer;
@@ -53,7 +57,7 @@ export const CustomerOverviewTab = ({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       {/* Contact Details Card */}
       <Card>
         <CardHeader className="pb-3">
@@ -104,6 +108,22 @@ export const CustomerOverviewTab = ({
         </CardContent>
       </Card>
 
+      {/* Quick Actions — Begin Job is primary */}
+      <div className="flex gap-3">
+        <Button
+          variant="accent"
+          onClick={onStartCertificate}
+          className="flex-1 h-12 touch-manipulation"
+        >
+          <Briefcase className="h-4 w-4 mr-2" />
+          Begin Job
+        </Button>
+        <Button variant="outline" onClick={onAddNote} className="h-12 touch-manipulation">
+          <StickyNote className="h-4 w-4 mr-2" />
+          Add Note
+        </Button>
+      </div>
+
       {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3">
         <Card className="text-center">
@@ -134,25 +154,6 @@ export const CustomerOverviewTab = ({
         </Card>
       </div>
 
-      {/* Quick Actions */}
-      <div className="flex gap-3">
-        <Button
-          variant="accent"
-          onClick={onStartCertificate}
-          className="flex-1 h-12 touch-manipulation"
-        >
-          <Plus className="h-4 w-4 mr-2" />
-          New Certificate
-        </Button>
-        <Button variant="outline" onClick={onAddNote} className="h-12 touch-manipulation">
-          <StickyNote className="h-4 w-4 mr-2" />
-          Add Note
-        </Button>
-      </div>
-
-      {/* Analytics */}
-      <CustomerDetailAnalytics customerId={customer.id} />
-
       {/* Notes */}
       {customer.notes && (
         <Card>
@@ -168,12 +169,42 @@ export const CustomerOverviewTab = ({
         </Card>
       )}
 
-      {/* Recent Certificates */}
+      {/* Work History — all linked documents */}
+      <div className="space-y-1">
+        <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider px-1">
+          Work History
+        </h3>
+      </div>
+
+      {/* Quotes */}
+      <CustomerQuotesCard customerId={customer.id} customerName={customer.name} />
+
+      {/* Site Visits */}
+      <CustomerSiteVisitsCard customerId={customer.id} />
+
+      {/* RAMS */}
+      <CustomerRAMSCard customerId={customer.id} />
+
+      {/* AI Design Consultation */}
+      <CustomerDesignConsultationCard customerId={customer.id} />
+
+      {/* Certificates */}
       <Card>
         <CardHeader className="pb-2">
-          <CardTitle className="text-base flex items-center gap-2">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            Recent Certificates
+          <CardTitle className="text-base flex items-center justify-between">
+            <span className="flex items-center gap-2">
+              <FileText className="h-4 w-4 text-elec-yellow" />
+              Certificates
+            </span>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onStartCertificate}
+              className="h-8 text-xs touch-manipulation text-elec-yellow"
+            >
+              <Plus className="h-3.5 w-3.5 mr-1" />
+              New
+            </Button>
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -183,6 +214,7 @@ export const CustomerOverviewTab = ({
             </div>
           ) : reports && reports.length > 0 ? (
             <div className="space-y-2">
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {reports.slice(0, 5).map((report: any) => (
                 <div
                   key={report.id}

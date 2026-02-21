@@ -11,6 +11,8 @@ import { cn } from '@/lib/utils';
 import { StickySubmitButton } from '@/components/agents/shared/StickySubmitButton';
 import { AGENT_CONFIG } from '@/components/agents/shared/AgentConfig';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface InstallationInputProps {
   onGenerate: (
@@ -21,6 +23,8 @@ interface InstallationInputProps {
   isProcessing: boolean;
   initialPrompt?: string;
   initialProjectName?: string;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
 }
 
 export const InstallationInput = ({
@@ -28,6 +32,8 @@ export const InstallationInput = ({
   isProcessing,
   initialPrompt,
   initialProjectName,
+  customerId,
+  onCustomerIdChange,
 }: InstallationInputProps) => {
   const [description, setDescription] = useState(initialPrompt || '');
   const [generateFullMethodStatement, setGenerateFullMethodStatement] = useState(true);
@@ -194,6 +200,23 @@ export const InstallationInput = ({
 
           <CollapsibleContent className="p-4 pt-0">
             <p className="text-xs text-white/50 pb-2">Add for comprehensive method statements</p>
+            <div className="mb-3">
+              <ClientSelector
+                onSelectCustomer={(customer: Customer | null) => {
+                  if (customer) {
+                    setProjectDetails((prev) => ({
+                      ...prev,
+                      clientName: customer.name,
+                      location: customer.address || prev.location,
+                    }));
+                    onCustomerIdChange?.(customer.id);
+                  } else {
+                    onCustomerIdChange?.(undefined);
+                  }
+                }}
+                selectedCustomerId={customerId}
+              />
+            </div>
             <InstallationProjectDetails
               projectDetails={projectDetails}
               onChange={setProjectDetails}

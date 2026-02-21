@@ -10,6 +10,8 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { CostEngineerHero } from './premium/CostEngineerHero';
 import { ProjectTypeSelector } from './premium/ProjectTypeSelector';
 import { BusinessSettings } from './BusinessSettingsDialog';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 
 interface CostEngineerInputProps {
   prompt: string;
@@ -29,6 +31,8 @@ interface CostEngineerInputProps {
   businessSettings: BusinessSettings;
   onOpenSettings: () => void;
   hasConfiguredSettings: boolean;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
 }
 
 const MAX_CHARS = 2000;
@@ -129,6 +133,8 @@ export const CostEngineerInput = ({
   businessSettings,
   onOpenSettings,
   hasConfiguredSettings,
+  customerId,
+  onCustomerIdChange,
 }: CostEngineerInputProps) => {
   const [showOptionalDetails, setShowOptionalDetails] = useState(false);
   const [showExamples, setShowExamples] = useState(false);
@@ -273,6 +279,22 @@ export const CostEngineerInput = ({
 
             <CollapsibleContent>
               <div className="px-4 pb-4 space-y-3">
+                {/* Select Existing Customer */}
+                <ClientSelector
+                  onSelectCustomer={(customer: Customer | null) => {
+                    if (customer) {
+                      onClientInfoChange(
+                        [customer.name, customer.phone].filter(Boolean).join(' - ')
+                      );
+                      if (customer.address) onLocationChange(customer.address);
+                      onCustomerIdChange?.(customer.id);
+                    } else {
+                      onCustomerIdChange?.(undefined);
+                    }
+                  }}
+                  selectedCustomerId={customerId}
+                />
+
                 {/* Project Name */}
                 <div className="space-y-1.5">
                   <Label className="text-xs font-medium text-white/50 flex items-center gap-1.5">

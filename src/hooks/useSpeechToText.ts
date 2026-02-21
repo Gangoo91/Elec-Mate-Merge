@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * useSpeechToText
  *
  * Reusable hook wrapping the Web Speech API for speech-to-text.
  * Falls back between webkitSpeechRecognition and SpeechRecognition.
  * Uses en-GB locale (UK English). Supports continuous and single-shot modes.
+ *
+ * Features:
+ * - `onFinalChunk` callback: fired each time the API commits a final result
+ * - Safari auto-restart: Safari kills recognition after ~60s, this auto-restarts
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
@@ -15,6 +20,8 @@ interface UseSpeechToTextOptions {
   interimResults?: boolean;
   /** BCP 47 language tag (default: 'en-GB') */
   lang?: string;
+  /** Fired each time the API commits a final result chunk */
+  onFinalChunk?: (chunk: string, fullTranscript: string) => void;
 }
 
 interface UseSpeechToTextReturn {
@@ -46,7 +53,7 @@ function getSpeechRecognition(): SpeechRecognitionType | null {
 }
 
 export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeechToTextReturn {
-  const { continuous = true, interimResults = true, lang = 'en-GB' } = options;
+  const { continuous = true, interimResults = true, lang = 'en-GB', onFinalChunk } = options;
 
   const SpeechRecognition = getSpeechRecognition();
   const isSupported = SpeechRecognition !== null;
@@ -58,12 +65,21 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
   const [error, setError] = useState<string | null>(null);
 
   const recognitionRef = useRef<any>(null);
+  // Track whether the user intentionally stopped vs Safari killing the session
+  const intentionalStopRef = useRef(false);
+  // Keep a ref to the latest transcript so onFinalChunk gets the full text
+  const transcriptRef = useRef('');
+  // Keep a stable ref to the callback to avoid re-creating recognition on every render
+  const onFinalChunkRef = useRef(onFinalChunk);
+  onFinalChunkRef.current = onFinalChunk;
 
   const startListening = useCallback(() => {
     if (!SpeechRecognition) {
       setError('Speech recognition not supported in this browser');
       return;
     }
+
+    intentionalStopRef.current = false;
 
     // Stop any existing instance
     if (recognitionRef.current) {
@@ -99,7 +115,15 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
       }
 
       if (finalText) {
-        setTranscript((prev) => prev + finalText);
+        setTranscript((prev) => {
+          const updated = prev + finalText;
+          transcriptRef.current = updated;
+          // Fire the onFinalChunk callback with the new chunk and full transcript
+          if (onFinalChunkRef.current) {
+            onFinalChunkRef.current(finalText, updated);
+          }
+          return updated;
+        });
       }
       setInterimTranscript(interim);
     };
@@ -112,6 +136,16 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
     };
 
     recognition.onend = () => {
+      // Safari auto-restart: if user didn't intentionally stop, restart
+      // Safari kills continuous recognition after ~60s
+      if (!intentionalStopRef.current && continuous) {
+        try {
+          recognition.start();
+          return; // Don't set isListening to false — we're restarting
+        } catch {
+          // Failed to restart — fall through to normal onend handling
+        }
+      }
       setIsListening(false);
       setInterimTranscript('');
     };
@@ -121,6 +155,7 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
   }, [SpeechRecognition, lang, continuous, interimResults]);
 
   const stopListening = useCallback(() => {
+    intentionalStopRef.current = true;
     if (recognitionRef.current) {
       try {
         recognitionRef.current.stop();
@@ -138,11 +173,13 @@ export function useSpeechToText(options: UseSpeechToTextOptions = {}): UseSpeech
     setInterimTranscript('');
     setConfidence(0);
     setError(null);
+    transcriptRef.current = '';
   }, []);
 
   // Clean up on unmount
   useEffect(() => {
     return () => {
+      intentionalStopRef.current = true;
       if (recognitionRef.current) {
         try {
           recognitionRef.current.stop();

@@ -136,7 +136,7 @@ export const ROOM_TYPES: RoomTypeDefinition[] = [
   // Always available
   {
     type: 'custom',
-    label: 'Custom',
+    label: 'Other',
     icon: 'Plus',
     propertyTypes: ['residential', 'commercial', 'industrial'],
   },

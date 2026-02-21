@@ -3,6 +3,7 @@ import { Search, Plus, User, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useCustomers, type Customer } from '@/hooks/inspection/useCustomers';
+import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
 import type { SiteVisit } from '@/types/siteVisit';
 
 interface SiteVisitClientStepProps {
@@ -32,6 +33,8 @@ export const SiteVisitClientStep = ({
   const [newName, setNewName] = useState(visit.customerName || '');
   const [newEmail, setNewEmail] = useState(visit.customerEmail || '');
   const [newPhone, setNewPhone] = useState(visit.customerPhone || '');
+  const [showSavePrompt, setShowSavePrompt] = useState(false);
+  const [savePromptDismissed, setSavePromptDismissed] = useState(false);
 
   const handleSelectCustomer = (customer: Customer) => {
     setSelectedCustomer(customer);
@@ -66,8 +69,17 @@ export const SiteVisitClientStep = ({
         customerEmail: newEmail,
         customerPhone: newPhone,
       });
+      // Show save prompt when name is filled and no customer is linked
+      if (newName.trim() && !savePromptDismissed) {
+        setShowSavePrompt(true);
+      }
     }
   }, [newName, newEmail, newPhone, showCreate]);
+
+  const handleCustomerSaved = (savedCustomerId: string) => {
+    setShowSavePrompt(false);
+    onUpdateClient({ customerId: savedCustomerId });
+  };
 
   return (
     <div className="space-y-4">
@@ -225,6 +237,22 @@ export const SiteVisitClientStep = ({
               enterKeyHint="done"
             />
           </div>
+
+          {/* Save Customer Prompt */}
+          {showSavePrompt && newName.trim() && !visit.customerId && (
+            <SaveCustomerPrompt
+              client={{
+                name: newName,
+                email: newEmail || undefined,
+                phone: newPhone || undefined,
+              }}
+              onSaved={handleCustomerSaved}
+              onDismiss={() => {
+                setShowSavePrompt(false);
+                setSavePromptDismissed(true);
+              }}
+            />
+          )}
         </div>
       )}
     </div>
