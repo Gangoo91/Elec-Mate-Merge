@@ -62,7 +62,6 @@ const courses: Course[] = [
     level: 'Foundation',
     duration: '5 hours',
     link: 'emotional-intelligence',
-    comingSoon: true,
   },
   {
     id: 4,

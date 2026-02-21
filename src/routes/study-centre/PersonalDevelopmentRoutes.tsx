@@ -4,6 +4,7 @@ import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { leadershipOnSiteRoutes } from './leadershipOnSiteRoutes';
 import { mentalHealthAwarenessRoutes } from './mentalHealthAwarenessRoutes';
+import { emotionalIntelligenceRoutes } from './emotionalIntelligenceRoutes';
 
 const PersonalDevelopmentIndex = lazyWithRetry(
   () => import('@/pages/study-centre/personal-development/Index')
@@ -18,6 +19,7 @@ export default function PersonalDevelopmentRoutes() {
         <Route index element={<PersonalDevelopmentIndex />} />
         {leadershipOnSiteRoutes}
         {mentalHealthAwarenessRoutes}
+        {emotionalIntelligenceRoutes}
       </Routes>
     </Suspense>
   );
