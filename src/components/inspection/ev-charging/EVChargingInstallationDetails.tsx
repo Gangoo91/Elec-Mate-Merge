@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
@@ -12,28 +13,37 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown, User, Car, Zap, Building2, Sparkles, ArrowRightLeft } from 'lucide-react';
+import { ChevronDown, User, Car, Zap, Building2, Sparkles, ArrowRightLeft, X, CheckCircle2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import ChargerAutocomplete from './ChargerAutocomplete';
+import ClientSelector from '@/components/ClientSelector';
+import { Customer } from '@/hooks/inspection/useCustomers';
 import {
   EVCharger,
   calculateCurrentFromPower,
   calculatePowerFromCurrent,
 } from '@/data/evChargerDatabase';
+import { getVehicleMakes, getVehicleModels } from '@/data/evVehicleDatabase';
 import { useEVChargingSmartForm } from '@/hooks/inspection/useEVChargingSmartForm';
 
 interface EVChargingInstallationDetailsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
 }
 
 const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps> = ({
   formData,
   onUpdate,
+  customerId,
+  onCustomerIdChange,
 }) => {
   const isMobile = useIsMobile();
   const { applyChargerDefaults, powerToCurrent, currentToPower } = useEVChargingSmartForm();
+
+  const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
 
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     client: true,
@@ -48,6 +58,24 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
   const toggleSection = (section: string) => {
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
+
+  // Handle customer selection from ClientSelector
+  const handleCustomerSelect = useCallback(
+    (customer: Customer | null) => {
+      if (customer) {
+        setSelectedCustomer(customer);
+        onCustomerIdChange?.(customer.id);
+        onUpdate('clientName', customer.name);
+        if (customer.phone) onUpdate('clientTelephone', customer.phone);
+        if (customer.email) onUpdate('clientEmail', customer.email);
+        if (customer.address) onUpdate('clientAddress', customer.address);
+      } else {
+        setSelectedCustomer(null);
+        onCustomerIdChange?.(undefined);
+      }
+    },
+    [onUpdate, onCustomerIdChange]
+  );
 
   // Handle charger selection from autocomplete
   const handleChargerSelect = useCallback(
@@ -110,9 +138,9 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
   };
 
   return (
-    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-0 divide-y divide-white/[0.06]')}>
       {/* Client Details */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.client} onOpenChange={() => toggleSection('client')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -141,7 +169,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.client && 'rotate-180'
                   )}
                 />
@@ -150,6 +178,32 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              {/* Client Selection */}
+              {selectedCustomer ? (
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-white">{selectedCustomer.name}</p>
+                    <p className="text-sm text-white truncate">
+                      {[selectedCustomer.email, selectedCustomer.phone].filter(Boolean).join(' · ')}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => handleCustomerSelect(null)}
+                    className="h-9 w-9 touch-manipulation shrink-0"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              ) : (
+                <ClientSelector
+                  onSelectCustomer={handleCustomerSelect}
+                  selectedCustomerId={customerId}
+                />
+              )}
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="clientName">Client Name *</Label>
@@ -200,7 +254,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
       </div>
 
       {/* Vehicle Details (Optional) */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.vehicle} onOpenChange={() => toggleSection('vehicle')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -229,7 +283,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.vehicle && 'rotate-180'
                   )}
                 />
@@ -241,23 +295,81 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="vehicleMake">Vehicle Make</Label>
-                  <Input
-                    id="vehicleMake"
-                    placeholder="e.g., Tesla, BMW"
+                  <Select
                     value={formData.vehicleMake || ''}
-                    onChange={(e) => onUpdate('vehicleMake', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
+                    onValueChange={(value) => {
+                      onUpdate('vehicleMake', value);
+                      // Clear model when make changes (model list depends on make)
+                      if (value !== formData.vehicleMake) {
+                        onUpdate('vehicleModel', '');
+                      }
+                    }}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectValue placeholder="Select make" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100] max-h-60 bg-background border-border text-foreground">
+                      {getVehicleMakes().map((make) => (
+                        <SelectItem key={make} value={make}>
+                          {make}
+                        </SelectItem>
+                      ))}
+                      <SelectItem value="__other">Other (type below)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {formData.vehicleMake === '__other' && (
+                    <Input
+                      placeholder="Enter make"
+                      value={formData.vehicleMakeCustom || ''}
+                      onChange={(e) => {
+                        onUpdate('vehicleMakeCustom', e.target.value);
+                        onUpdate('vehicleMake', e.target.value || '__other');
+                      }}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow mt-2"
+                    />
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="vehicleModel">Vehicle Model</Label>
-                  <Input
-                    id="vehicleModel"
-                    placeholder="e.g., Model 3, iX3"
-                    value={formData.vehicleModel || ''}
-                    onChange={(e) => onUpdate('vehicleModel', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                  />
+                  {formData.vehicleMake && formData.vehicleMake !== '__other' && getVehicleModels(formData.vehicleMake).length > 0 ? (
+                    <Select
+                      value={formData.vehicleModel || ''}
+                      onValueChange={(value) => {
+                        if (value === '__other') {
+                          onUpdate('vehicleModel', '');
+                        } else {
+                          onUpdate('vehicleModel', value);
+                        }
+                      }}
+                    >
+                      <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectValue placeholder="Select model" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] max-h-60 bg-background border-border text-foreground">
+                        {getVehicleModels(formData.vehicleMake).map((model) => (
+                          <SelectItem key={model} value={model}>
+                            {model}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="__other">Other (type below)</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  ) : (
+                    <Input
+                      id="vehicleModel"
+                      placeholder="e.g., Model 3, iX3"
+                      value={formData.vehicleModel || ''}
+                      onChange={(e) => onUpdate('vehicleModel', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    />
+                  )}
+                  {formData.vehicleMake && formData.vehicleMake !== '__other' && formData.vehicleModel === '' && getVehicleModels(formData.vehicleMake).length > 0 && (
+                    <Input
+                      placeholder="Or type model"
+                      onChange={(e) => onUpdate('vehicleModel', e.target.value)}
+                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow mt-2"
+                    />
+                  )}
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="vehicleRegistration">Registration</Label>
@@ -276,7 +388,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
       </div>
 
       {/* Installation Details */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible
           open={openSections.installation}
           onOpenChange={() => toggleSection('installation')}
@@ -308,7 +420,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.installation && 'rotate-180'
                   )}
                 />
@@ -378,7 +490,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
       </div>
 
       {/* Charger Details */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.charger} onOpenChange={() => toggleSection('charger')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -407,7 +519,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.charger && 'rotate-180'
                   )}
                 />
@@ -416,49 +528,26 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Charger Selection with Auto-fill - Mobile-optimised */}
-              <div
-                className={cn(
-                  'rounded-xl border overflow-hidden',
-                  chargerAutoFilled
-                    ? 'border-elec-yellow/40 bg-elec-yellow/5'
-                    : 'border-white/10 bg-black/20'
-                )}
-              >
-                {/* Header */}
-                <div
-                  className={cn(
-                    'flex items-center justify-between px-4 py-3',
-                    chargerAutoFilled ? 'bg-elec-yellow/10' : 'bg-white/5'
-                  )}
-                >
-                  <div className="flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-elec-yellow" />
-                    <span className="font-medium text-sm">Charger Make & Model *</span>
-                  </div>
+              {/* Charger Selection with Auto-fill */}
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-white">Charger Make & Model *</Label>
                   {chargerAutoFilled ? (
                     <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs">
                       <Sparkles className="h-3 w-3 mr-1" />
                       Auto-filled
                     </Badge>
                   ) : (
-                    <Badge
-                      variant="outline"
-                      className="border-elec-yellow/30 text-elec-yellow text-xs"
-                    >
-                      <Sparkles className="h-3 w-3 mr-1" />
+                    <span className="text-xs text-elec-yellow flex items-center gap-1">
+                      <Sparkles className="h-3 w-3" />
                       Auto-fills specs
-                    </Badge>
+                    </span>
                   )}
                 </div>
-
-                {/* Autocomplete */}
-                <div className="px-4 py-3">
-                  <ChargerAutocomplete
-                    value={{ make: formData.chargerMake || '', model: formData.chargerModel || '' }}
-                    onChange={handleChargerSelect}
-                  />
-                </div>
+                <ChargerAutocomplete
+                  value={{ make: formData.chargerMake || '', model: formData.chargerModel || '' }}
+                  onChange={handleChargerSelect}
+                />
               </div>
 
               {/* Manual entry fallback for make/model */}
@@ -594,7 +683,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                       }
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
-                    <p className="text-[10px] text-muted-foreground">
+                    <p className="text-[10px] text-white">
                       {formData.phases === 3 ? 'P = √3 × 400V × I' : 'P = 230V × I'}
                     </p>
                   </div>
@@ -611,7 +700,7 @@ const EVChargingInstallationDetails: React.FC<EVChargingInstallationDetailsProps
                       }
                       className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                     />
-                    <p className="text-[10px] text-muted-foreground">
+                    <p className="text-[10px] text-white">
                       {formData.phases === 3 ? 'I = P / (√3 × 400V)' : 'I = P / 230V'}
                     </p>
                   </div>

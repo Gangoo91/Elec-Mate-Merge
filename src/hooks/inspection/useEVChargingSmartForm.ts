@@ -43,9 +43,12 @@ export interface CompanyBranding {
   companyAddress: string;
   companyPhone: string;
   companyEmail: string;
+  companyWebsite: string;
+  companyTagline: string;
   companyAccentColor: string;
   registrationSchemeLogo: string;
   registrationScheme: string;
+  registrationNumber: string;
 }
 
 export interface TestResultValidation {
@@ -144,9 +147,12 @@ export function useEVChargingSmartForm() {
       companyAddress: fullAddress,
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
+      companyWebsite: (companyProfile as any).company_website || '',
+      companyTagline: (companyProfile as any).company_tagline || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
       registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
+      registrationNumber: companyProfile.registration_number || '',
     };
   }, [companyProfile]);
 
@@ -375,6 +381,48 @@ export function useEVChargingSmartForm() {
   );
 
   // ---------------------------------------------------------------------------
+  // Voltage Drop Calculator (BS 7671 Table 4D1B/4D2B)
+  // ---------------------------------------------------------------------------
+  const calculateVoltageDrop = useCallback(
+    (
+      cableSizeMm2: number,
+      cableLengthM: number,
+      currentA: number,
+      cableType: string = '6242Y'
+    ): { voltageDropV: number; percentOf230V: number; satisfactory: boolean } | null => {
+      if (!cableSizeMm2 || !cableLengthM || !currentA) return null;
+
+      // mV/A/m values from BS 7671 Table 4D1B (twin & earth, clipped direct, single phase)
+      // and Table 4D2B (SWA)
+      const mvAmLookup: Record<string, Record<number, number>> = {
+        '6242Y': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+        '6243Y': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+        SWA: { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8, 25: 1.75 },
+        'H07RN-F': { 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+        'singles-conduit': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+        'singles-trunking': { 1: 44, 1.5: 29, 2.5: 18, 4: 11, 6: 7.3, 10: 4.4, 16: 2.8 },
+      };
+
+      const table = mvAmLookup[cableType] || mvAmLookup['6242Y'];
+      const mvAm = table[cableSizeMm2];
+      if (!mvAm) return null;
+
+      // Formula: Vd = (mV/A/m × I × L) / 1000
+      const voltageDropV = (mvAm * currentA * cableLengthM) / 1000;
+      const percentOf230V = (voltageDropV / 230) * 100;
+      // Satisfactory if ≤ 5% (11.5V) per BS 7671 Reg 525
+      const satisfactory = voltageDropV <= 11.5;
+
+      return {
+        voltageDropV: Math.round(voltageDropV * 100) / 100,
+        percentOf230V: Math.round(percentOf230V * 10) / 10,
+        satisfactory,
+      };
+    },
+    []
+  );
+
+  // ---------------------------------------------------------------------------
   // Power / Current Conversion Helpers
   // ---------------------------------------------------------------------------
   const powerToCurrent = useCallback((powerKW: number, phases: number): number => {
@@ -416,6 +464,7 @@ export function useEVChargingSmartForm() {
 
     // Calculations
     calculateZs,
+    calculateVoltageDrop,
     lookupMaxZs,
     powerToCurrent,
     currentToPower,

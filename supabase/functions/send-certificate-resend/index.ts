@@ -503,6 +503,8 @@ const handler = async (req: Request): Promise<Response> => {
       edgeFunctionName = 'generate-eicr-pdf';
     } else if (reportType === 'minor-works' || reportType === 'minor works') {
       edgeFunctionName = 'generate-minor-works-pdf';
+    } else if (reportType === 'ev-charging' || reportType === 'ev charging') {
+      edgeFunctionName = 'generate-ev-charging-pdf';
     } else {
       console.error('❌ Unsupported report type:', reportType);
       throw new Error(`Unsupported certificate type: "${report.report_type}"`);
@@ -588,7 +590,9 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 8: Build email HTML
     // ========================================================================
     const certificateTypeDisplay =
-      reportType === 'minor-works' ? 'Minor Works' : reportType.toUpperCase();
+      reportType === 'minor-works' ? 'Minor Works'
+      : reportType === 'ev-charging' ? 'EV Charging'
+      : reportType.toUpperCase();
 
     const emailHtml = buildCertificateEmailHtml({
       certificateType: certificateTypeDisplay,

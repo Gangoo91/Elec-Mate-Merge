@@ -42,6 +42,7 @@ const SUPPLY_SECTION_FIELDS = [
   'earthElectrodeType',
   'rcdMainSwitch',
   'rcdRating',
+  'rcdType',
   'rcdTimeDelay',
   'rcdMeasuredTime',
 ] as const;
@@ -189,6 +190,7 @@ const SupplyCharacteristicsSectionInner = ({
   // Get earthing arrangement info
   const getEarthingInfo = (arrangement: string) => {
     const info: { [key: string]: string } = {
+      'TN-C': 'Combined neutral and protective conductor throughout',
       'TN-S': 'Separate neutral and protective conductors',
       'TN-C-S': 'Combined neutral and protective conductor (PME)',
       TT: 'Installation earth electrode independent of supply',
@@ -289,6 +291,7 @@ const SupplyCharacteristicsSectionInner = ({
 
   // Earthing arrangement options
   const earthingOptions = [
+    { value: 'TN-C', label: 'TN-C' },
     { value: 'TN-S', label: 'TN-S' },
     { value: 'TN-C-S', label: 'TN-C-S (PME)' },
     { value: 'TT', label: 'TT' },
@@ -789,7 +792,7 @@ const SupplyCharacteristicsSectionInner = ({
         <SectionTitle icon={Globe} title="Earthing System" color="green" isMobile={isMobile} />
         <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
           <FormField label="Earthing Arrangement" required>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
               {earthingOptions.map((option) => (
                 <button
                   key={option.value}
@@ -902,6 +905,31 @@ const SupplyCharacteristicsSectionInner = ({
                     )}
                   >
                     {rating}
+                  </button>
+                ))}
+              </div>
+            </FormField>
+          )}
+
+          {showRCDFields && (
+            <FormField label="RCD Type" required hint="As marked on the device">
+              <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+                {['AC', 'A', 'B', 'F', 'S'].map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => {
+                      haptics.tap();
+                      onUpdate('rcdType', formData.rcdType === `Type ${type}` ? '' : `Type ${type}`);
+                    }}
+                    className={cn(
+                      'h-11 rounded-lg font-medium transition-all touch-manipulation text-sm',
+                      formData.rcdType === `Type ${type}`
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-card/50 text-foreground border border-border/30 hover:bg-card'
+                    )}
+                  >
+                    Type {type}
                   </button>
                 ))}
               </div>

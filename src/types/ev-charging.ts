@@ -91,6 +91,10 @@ export interface EVChargingFormData {
     functionalTest: 'pass' | 'fail' | '';
     loadTest: 'pass' | 'fail' | '';
     loadTestCurrent: string;
+    voltageDrop?: string;
+    phaseRotation?: 'L1-L2-L3' | 'L1-L3-L2' | 'N/A' | '';
+    continuityPE?: string;
+    rcdTestButton?: 'pass' | 'fail' | '';
   };
 
   // OZEV Grant details
@@ -176,7 +180,7 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
   earthElectrodeInstalled: false,
   earthElectrodeResistance: '',
 
-  circuitDesignation: '',
+  circuitDesignation: 'EV Charger',
   cableType: '',
   cableSize: 6,
   cableLength: 0,
@@ -203,6 +207,10 @@ export const getDefaultEVChargingFormData = (): EVChargingFormData => ({
     functionalTest: '',
     loadTest: '',
     loadTestCurrent: '',
+    voltageDrop: '',
+    phaseRotation: '',
+    continuityPE: '',
+    rcdTestButton: '',
   },
 
   ozevGrantApplicable: false,

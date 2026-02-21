@@ -1,6 +1,5 @@
 import React from 'react';
 import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
-import { filterInspectionSections } from '@/utils/inspectionFiltering';
 import InspectionStatsSummary from './InspectionStatsSummary';
 import InspectionChecklistCard from './InspectionChecklistCard';
 import DefectCodesReference from './DefectCodesReference';
@@ -54,13 +53,14 @@ const EICRInspectionChecklist = ({
   const observationsRef = React.useRef<HTMLDivElement>(null);
 
   const getInspectionItems = (): InspectionItem[] => {
-    // Filter sections based on property type (domestic/commercial/industrial)
-    const filteredSections = formData.description
-      ? filterInspectionSections(bs7671InspectionSections, formData.description)
-      : bs7671InspectionSections;
+    // Use all sections from the BS 7671 residential checklist (up to 100A supply).
+    // All 8 sections / ~60 items are relevant regardless of property type —
+    // the inspectionRelevance filter lists were built for a larger checklist and
+    // reference IDs that don't exist in this dataset, causing items to vanish.
+    const allSections = bs7671InspectionSections;
 
-    // Always ensure we have the correct number of items from the filtered structure
-    const expectedItems = filteredSections.flatMap((section) =>
+    // Always ensure we have the correct number of items from the structure
+    const expectedItems = allSections.flatMap((section) =>
       section.items.map((item) => ({
         id: item.id,
         section: section.title,
@@ -416,6 +416,7 @@ const EICRInspectionChecklist = ({
       <div className="space-y-3">
         <InspectionChecklistCard
           inspectionItems={inspectionItems}
+          sections={bs7671InspectionSections}
           expandedSections={expandedSections}
           onToggleSection={toggleSection}
           onUpdateItem={updateInspectionItem}

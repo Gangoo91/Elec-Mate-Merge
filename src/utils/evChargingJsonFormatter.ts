@@ -173,6 +173,17 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
             ? 'Fail'
             : '',
       load_test_current: getTestResult('loadTestCurrent'),
+      voltage_drop: getTestResult('voltageDrop'),
+      voltage_drop_satisfactory: safeCompare(getTestResult('voltageDrop'), '11.5', 'lte'),
+      phase_rotation: getTestResult('phaseRotation'),
+      continuity_pe: getTestResult('continuityPE'),
+      rcd_test_button: getTestResult('rcdTestButton'),
+      rcd_test_button_display:
+        getTestResult('rcdTestButton') === 'pass'
+          ? 'Pass'
+          : getTestResult('rcdTestButton') === 'fail'
+            ? 'Fail'
+            : '',
     },
 
     // DNO Notification
@@ -310,6 +321,12 @@ export const formatEVChargingJson = (formData: Partial<EVChargingFormData>) => {
     rcd_type: get('rcdType'),
     rcd_rating_ma: get('rcdRating'),
     rcd_integral: getBool('rcdIntegral'),
+
+    // Additional Test Results (flat)
+    voltage_drop: getTestResult('voltageDrop'),
+    phase_rotation: getTestResult('phaseRotation'),
+    continuity_pe: getTestResult('continuityPE'),
+    rcd_test_button: getTestResult('rcdTestButton'),
 
     // OZEV (flat)
     ozev_grant_applicable: getBool('ozevGrantApplicable'),

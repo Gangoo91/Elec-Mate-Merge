@@ -70,9 +70,9 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
     formData.installerName && formData.installerSignature && formData.installerScheme;
 
   return (
-    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-0 divide-y divide-white/[0.06]')}>
       {/* OZEV Grant Section */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.ozev} onOpenChange={() => toggleSection('ozev')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -101,7 +101,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.ozev && 'rotate-180'
                   )}
                 />
@@ -109,46 +109,64 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
+            <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <label
+                htmlFor="ozevGrantApplicable"
+                className={cn(
+                  'flex items-center justify-between px-4 py-3 rounded-xl border cursor-pointer transition-all touch-manipulation',
+                  formData.ozevGrantApplicable
+                    ? 'border-green-500/30 bg-green-500/[0.06]'
+                    : 'border-white/10 bg-white/[0.02]'
+                )}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={cn(
+                    'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                    formData.ozevGrantApplicable ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                  )}>
+                    <Receipt className={cn('h-4 w-4', formData.ozevGrantApplicable ? 'text-green-400' : 'text-white')} />
+                  </div>
+                  <div>
+                    <span className="text-sm font-medium text-white block">OZEV Grant Applicable</span>
+                    <span className="text-xs text-white">EVHS or WCS scheme</span>
+                  </div>
+                </div>
                 <Checkbox
                   id="ozevGrantApplicable"
                   checked={formData.ozevGrantApplicable || false}
                   onCheckedChange={(checked) => onUpdate('ozevGrantApplicable', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                  className="sr-only"
                 />
-                <div>
-                  <Label htmlFor="ozevGrantApplicable" className="cursor-pointer text-base">
-                    OZEV Grant Applicable
-                  </Label>
-                  <p className="text-xs text-muted-foreground">
-                    Electric Vehicle Homecharge Scheme (EVHS) or Workplace Charging Scheme (WCS)
-                  </p>
+                <div className={cn(
+                  'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                  formData.ozevGrantApplicable
+                    ? 'border-green-400 bg-green-400'
+                    : 'border-white/30'
+                )}>
+                  {formData.ozevGrantApplicable && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
                 </div>
-              </div>
+              </label>
 
               {formData.ozevGrantApplicable && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pl-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="ozevScheme">Grant Scheme</Label>
+                <div className="grid grid-cols-2 gap-3 items-start">
+                  <div className="space-y-1.5">
+                    <Label htmlFor="ozevScheme" className="text-sm h-5 flex items-center">Grant Scheme</Label>
                     <Select
                       value={formData.ozevScheme || ''}
                       onValueChange={(value) => onUpdate('ozevScheme', value)}
                     >
                       <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                        <SelectValue placeholder="Select scheme" />
+                        <SelectValue placeholder="Select" />
                       </SelectTrigger>
                       <SelectContent className="z-[100] bg-background border-border text-foreground">
-                        <SelectItem value="EVHS">
-                          EVHS - Electric Vehicle Homecharge Scheme
-                        </SelectItem>
-                        <SelectItem value="WCS">WCS - Workplace Charging Scheme</SelectItem>
-                        <SelectItem value="OZEV-flat">OZEV - Flat Owner-Occupier Grant</SelectItem>
+                        <SelectItem value="EVHS">EVHS</SelectItem>
+                        <SelectItem value="WCS">WCS</SelectItem>
+                        <SelectItem value="OZEV-flat">Flat Owner-Occupier</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="ozevGrantRef">Grant Reference Number</Label>
+                  <div className="space-y-1.5">
+                    <Label htmlFor="ozevGrantRef" className="text-sm h-5 flex items-center">Reference Number</Label>
                     <Input
                       id="ozevGrantRef"
                       placeholder="e.g., EVHS-12345"
@@ -165,7 +183,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
       </div>
 
       {/* Handover */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.handover} onOpenChange={() => toggleSection('handover')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -194,7 +212,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.handover && 'rotate-180'
                   )}
                 />
@@ -202,37 +220,81 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
+            <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <div className="space-y-2">
+                <label
+                  htmlFor="userInstructionsProvided"
+                  className={cn(
+                    'flex items-center justify-between px-4 py-3 rounded-xl border cursor-pointer transition-all touch-manipulation',
+                    formData.userInstructionsProvided
+                      ? 'border-green-500/30 bg-green-500/[0.06]'
+                      : 'border-white/10 bg-white/[0.02]'
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                      formData.userInstructionsProvided ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                    )}>
+                      <FileCheck className={cn('h-4 w-4', formData.userInstructionsProvided ? 'text-green-400' : 'text-white')} />
+                    </div>
+                    <span className="text-sm font-medium text-white">User instructions provided</span>
+                  </div>
                   <Checkbox
                     id="userInstructionsProvided"
                     checked={formData.userInstructionsProvided || false}
                     onCheckedChange={(checked) => onUpdate('userInstructionsProvided', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    className="sr-only"
                   />
-                  <Label htmlFor="userInstructionsProvided" className="cursor-pointer text-sm">
-                    User instructions provided
-                  </Label>
-                </div>
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
+                  <div className={cn(
+                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                    formData.userInstructionsProvided
+                      ? 'border-green-400 bg-green-400'
+                      : 'border-white/30'
+                  )}>
+                    {formData.userInstructionsProvided && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                  </div>
+                </label>
+                <label
+                  htmlFor="operatingManualProvided"
+                  className={cn(
+                    'flex items-center justify-between px-4 py-3 rounded-xl border cursor-pointer transition-all touch-manipulation',
+                    formData.operatingManualProvided
+                      ? 'border-green-500/30 bg-green-500/[0.06]'
+                      : 'border-white/10 bg-white/[0.02]'
+                  )}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={cn(
+                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                      formData.operatingManualProvided ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                    )}>
+                      <FileCheck className={cn('h-4 w-4', formData.operatingManualProvided ? 'text-green-400' : 'text-white')} />
+                    </div>
+                    <span className="text-sm font-medium text-white">Operating manual provided</span>
+                  </div>
                   <Checkbox
                     id="operatingManualProvided"
                     checked={formData.operatingManualProvided || false}
                     onCheckedChange={(checked) => onUpdate('operatingManualProvided', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                    className="sr-only"
                   />
-                  <Label htmlFor="operatingManualProvided" className="cursor-pointer text-sm">
-                    Operating manual provided
-                  </Label>
-                </div>
+                  <div className={cn(
+                    'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                    formData.operatingManualProvided
+                      ? 'border-green-400 bg-green-400'
+                      : 'border-white/30'
+                  )}>
+                    {formData.operatingManualProvided && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                  </div>
+                </label>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="specialConditions">Special Conditions / Notes</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="specialConditions" className="text-sm">Special Conditions / Notes</Label>
                 <Textarea
                   id="specialConditions"
-                  placeholder="Any special conditions, limitations, or notes for the user..."
+                  placeholder="Any special conditions, limitations, or notes..."
                   value={formData.specialConditions || ''}
                   onChange={(e) => onUpdate('specialConditions', e.target.value)}
                   className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
@@ -244,7 +306,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
       </div>
 
       {/* Installer Declaration */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.installer} onOpenChange={() => toggleSection('installer')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -273,7 +335,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.installer && 'rotate-180'
                   )}
                 />
@@ -281,61 +343,59 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+            <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
               {/* Smart Auto-fill from Business Settings */}
               {hasSavedInstallerDetails && (
-                <div className="bg-gradient-to-r from-elec-yellow/10 to-amber-600/10 border border-elec-yellow/30 rounded-lg p-3">
-                  <div className="flex items-center justify-between gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
-                      <div className="min-w-0">
-                        <p className="text-sm font-medium text-foreground">
-                          Auto-fill from Business Settings
-                        </p>
-                        <p className="text-[11px] text-muted-foreground">
-                          Load your saved installer profile
-                        </p>
-                      </div>
+                <div className={cn(
+                  'flex items-center justify-between px-4 py-3 rounded-xl border transition-all',
+                  detailsLoaded
+                    ? 'border-green-500/30 bg-green-500/[0.06]'
+                    : 'border-elec-yellow/30 bg-elec-yellow/[0.04]'
+                )}>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className={cn(
+                      'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                      detailsLoaded ? 'bg-green-500/15' : 'bg-elec-yellow/15'
+                    )}>
+                      {detailsLoaded ? (
+                        <CheckCircle2 className="h-4 w-4 text-green-400" />
+                      ) : (
+                        <Sparkles className="h-4 w-4 text-elec-yellow" />
+                      )}
                     </div>
-                    <LoadInstallerButton
-                      onLoadDetails={handleLoadInstallerDetails}
-                      variant="compact"
-                    />
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-white">
+                        {detailsLoaded ? 'Profile loaded' : 'Auto-fill available'}
+                      </p>
+                      <p className="text-xs text-white">
+                        {detailsLoaded ? 'From your business settings' : 'Load your installer profile'}
+                      </p>
+                    </div>
                   </div>
+                  <LoadInstallerButton
+                    onLoadDetails={handleLoadInstallerDetails}
+                    variant="compact"
+                  />
                 </div>
               )}
 
-              <Alert className="border-amber-500/30 bg-amber-500/10">
-                <Shield className="h-4 w-4 text-amber-400" />
-                <AlertDescription className="text-amber-200 text-sm">
-                  <strong>Declaration:</strong> I certify that the EV charging installation has been
-                  designed, constructed, inspected and tested in accordance with BS
-                  7671:2018+A3:2024, IET Code of Practice for Electric Vehicle Charging Equipment
-                  Installation (5th Edition), and relevant Building Regulations.
-                </AlertDescription>
-              </Alert>
+              <div className="rounded-xl border border-amber-500/20 bg-amber-500/[0.04] px-4 py-3">
+                <p className="text-xs text-white leading-relaxed">
+                  <span className="font-semibold text-amber-400">Declaration: </span>
+                  I certify this EV charging installation has been designed, constructed, inspected and tested per BS 7671:2018+A3:2024, IET CoP for EV Charging (5th Ed), and Building Regulations.
+                </p>
+              </div>
 
-              {/* Show confirmation when details loaded */}
-              {detailsLoaded && (
-                <div className="flex items-center gap-2 text-green-400 text-sm">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <span>Installer details loaded from your profile</span>
-                </div>
-              )}
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="installerName">Installer Name *</Label>
+              <div className="grid grid-cols-2 gap-3 items-start">
+                <div className="space-y-1.5">
+                  <Label htmlFor="installerName" className="text-sm h-5 flex items-center gap-1">
+                    Name *
                     {detailsLoaded && formData.installerName && (
-                      <Badge
-                        variant="outline"
-                        className="text-[9px] px-1 py-0 border-green-500/50 text-green-400"
-                      >
-                        Auto-filled
+                      <Badge variant="outline" className="text-[9px] px-1 py-0 border-green-500/50 text-green-400">
+                        Auto
                       </Badge>
                     )}
-                  </div>
+                  </Label>
                   <Input
                     id="installerName"
                     placeholder="Full name"
@@ -344,18 +404,15 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="installerCompany">Company</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="installerCompany" className="text-sm h-5 flex items-center gap-1">
+                    Company
                     {detailsLoaded && formData.installerCompany && (
-                      <Badge
-                        variant="outline"
-                        className="text-[9px] px-1 py-0 border-green-500/50 text-green-400"
-                      >
-                        Auto-filled
+                      <Badge variant="outline" className="text-[9px] px-1 py-0 border-green-500/50 text-green-400">
+                        Auto
                       </Badge>
                     )}
-                  </div>
+                  </Label>
                   <Input
                     id="installerCompany"
                     placeholder="Company name"
@@ -366,15 +423,15 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="installerScheme">Competent Person Scheme *</Label>
+              <div className="grid grid-cols-2 gap-3 items-start">
+                <div className="space-y-1.5">
+                  <Label htmlFor="installerScheme" className="text-sm h-5 flex items-center">Scheme *</Label>
                   <Select
                     value={formData.installerScheme || ''}
                     onValueChange={(value) => onUpdate('installerScheme', value)}
                   >
                     <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
-                      <SelectValue placeholder="Select scheme" />
+                      <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent className="z-[100] bg-background border-border text-foreground">
                       <SelectItem value="NICEIC">NICEIC</SelectItem>
@@ -386,8 +443,8 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installerSchemeNumber">Scheme Membership Number</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="installerSchemeNumber" className="text-sm h-5 flex items-center">Membership No.</Label>
                   <Input
                     id="installerSchemeNumber"
                     placeholder="e.g., 12345678"
@@ -398,19 +455,19 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="installerQualifications">Qualifications</Label>
+              <div className="grid grid-cols-2 gap-3 items-start">
+                <div className="space-y-1.5">
+                  <Label htmlFor="installerQualifications" className="text-sm h-5 flex items-center">Qualifications</Label>
                   <Input
                     id="installerQualifications"
-                    placeholder="e.g., C&G 2391, EV Qualification"
+                    placeholder="C&G 2391, EV Qual"
                     value={formData.installerQualifications || ''}
                     onChange={(e) => onUpdate('installerQualifications', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                   />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="installerDate">Date</Label>
+                <div className="space-y-1.5">
+                  <Label htmlFor="installerDate" className="text-sm h-5 flex items-center">Date</Label>
                   <Input
                     id="installerDate"
                     type="date"
@@ -434,7 +491,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
       </div>
 
       {/* Compliance */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible
           open={openSections.compliance}
           onOpenChange={() => toggleSection('compliance')}
@@ -466,7 +523,7 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.compliance && 'rotate-180'
                   )}
                 />
@@ -474,61 +531,61 @@ const EVChargingDeclarations: React.FC<EVChargingDeclarationsProps> = ({ formDat
             )}
           </CollapsibleTrigger>
           <CollapsibleContent>
-            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <div className="space-y-3">
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                  <Checkbox
-                    id="bs7671Compliance"
-                    checked={formData.bs7671Compliance || false}
-                    onCheckedChange={(checked) => onUpdate('bs7671Compliance', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="bs7671Compliance"
-                    className="cursor-pointer text-base leading-relaxed"
+            <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <div className="space-y-2">
+                {[
+                  { id: 'bs7671Compliance', label: 'BS 7671:2018+A3:2024', sub: '18th Edition Wiring Regulations' },
+                  { id: 'ietCopCompliance', label: 'IET CoP for EV Charging', sub: '5th Edition' },
+                  { id: 'buildingRegsCompliance', label: 'Building Regulations Part P', sub: 'Electrical safety in dwellings' },
+                ].map((item) => (
+                  <label
+                    key={item.id}
+                    htmlFor={item.id}
+                    className={cn(
+                      'flex items-center justify-between px-4 py-3 rounded-xl border cursor-pointer transition-all touch-manipulation',
+                      formData[item.id]
+                        ? 'border-green-500/30 bg-green-500/[0.06]'
+                        : 'border-white/10 bg-white/[0.02]'
+                    )}
                   >
-                    Installation complies with BS 7671:2018+A3:2024 (18th Edition)
-                  </Label>
-                </div>
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                  <Checkbox
-                    id="ietCopCompliance"
-                    checked={formData.ietCopCompliance || false}
-                    onCheckedChange={(checked) => onUpdate('ietCopCompliance', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="ietCopCompliance"
-                    className="cursor-pointer text-base leading-relaxed"
-                  >
-                    Installation complies with IET Code of Practice for EV Charging Equipment (5th
-                    Edition)
-                  </Label>
-                </div>
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                  <Checkbox
-                    id="buildingRegsCompliance"
-                    checked={formData.buildingRegsCompliance || false}
-                    onCheckedChange={(checked) => onUpdate('buildingRegsCompliance', checked)}
-                    className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="buildingRegsCompliance"
-                    className="cursor-pointer text-base leading-relaxed"
-                  >
-                    Installation complies with Building Regulations Part P
-                  </Label>
-                </div>
+                    <div className="flex items-center gap-3">
+                      <div className={cn(
+                        'h-9 w-9 rounded-xl flex items-center justify-center shrink-0',
+                        formData[item.id] ? 'bg-green-500/15' : 'bg-white/[0.06]'
+                      )}>
+                        <Shield className={cn('h-4 w-4', formData[item.id] ? 'text-green-400' : 'text-white')} />
+                      </div>
+                      <div>
+                        <span className="text-sm font-medium text-white block">{item.label}</span>
+                        <span className="text-xs text-white">{item.sub}</span>
+                      </div>
+                    </div>
+                    <Checkbox
+                      id={item.id}
+                      checked={formData[item.id] || false}
+                      onCheckedChange={(checked) => onUpdate(item.id, checked)}
+                      className="sr-only"
+                    />
+                    <div className={cn(
+                      'h-5 w-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-colors',
+                      formData[item.id]
+                        ? 'border-green-400 bg-green-400'
+                        : 'border-white/30'
+                    )}>
+                      {formData[item.id] && <CheckCircle2 className="h-3.5 w-3.5 text-white" />}
+                    </div>
+                  </label>
+                ))}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="additionalNotes">Additional Notes</Label>
+              <div className="space-y-1.5">
+                <Label htmlFor="additionalNotes" className="text-sm">Additional Notes</Label>
                 <Textarea
                   id="additionalNotes"
                   placeholder="Any additional notes or comments..."
                   value={formData.additionalNotes || ''}
                   onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
                 />
               </div>
             </div>

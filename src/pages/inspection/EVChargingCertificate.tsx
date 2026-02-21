@@ -70,6 +70,7 @@ export default function EVChargingCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+  const [customerId, setCustomerId] = useState<string | undefined>(undefined);
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
@@ -365,6 +366,7 @@ export default function EVChargingCertificate() {
         status: 'draft',
         client_name: formData.clientName,
         installation_address: formData.installationAddress,
+        customer_id: customerId || null,
       };
 
       if (savedReportId) {
@@ -432,12 +434,45 @@ export default function EVChargingCertificate() {
             companyAddress: branding.companyAddress || dataWithCertNumber.companyAddress,
             companyPhone: branding.companyPhone || dataWithCertNumber.companyPhone,
             companyEmail: branding.companyEmail || dataWithCertNumber.companyEmail,
-            accentColor: branding.companyAccentColor || dataWithCertNumber.accentColor,
+            companyAccentColor: branding.companyAccentColor || dataWithCertNumber.companyAccentColor,
             registrationSchemeLogo:
               branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
             registrationScheme:
               branding.registrationScheme || dataWithCertNumber.registrationScheme,
+            registrationNumber:
+              branding.registrationNumber || dataWithCertNumber.registrationNumber,
+            companyWebsite: branding.companyWebsite || dataWithCertNumber.companyWebsite,
+            companyTagline: branding.companyTagline || dataWithCertNumber.companyTagline,
           };
+        }
+      }
+
+      // Auto-resolve scheme logo if scheme is set but logo is missing or is a placeholder SVG
+      const schemeName = dataWithCertNumber.registrationScheme;
+      const currentLogo = dataWithCertNumber.registrationSchemeLogo || '';
+      const isPlaceholderLogo = !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
+      if (
+        schemeName &&
+        schemeName !== 'none' &&
+        schemeName !== 'other' &&
+        isPlaceholderLogo
+      ) {
+        try {
+          const { getSchemeInfo } = await import('@/constants/schemeLogos');
+          const info = getSchemeInfo(schemeName);
+          if (info) {
+            const resp = await fetch(info.logoPath);
+            const blob = await resp.blob();
+            const dataUrl = await new Promise<string>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result as string);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+            dataWithCertNumber = { ...dataWithCertNumber, registrationSchemeLogo: dataUrl };
+          }
+        } catch (err) {
+          console.warn('[EVCharging] Failed to resolve scheme logo:', err);
         }
       }
 
@@ -568,66 +603,103 @@ export default function EVChargingCertificate() {
         </AlertDialogContent>
       </AlertDialog>
 
-      {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-green-500/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
-        <div className="px-4 py-3">
-          {/* Top Row - Back & Actions */}
-          <div className="flex items-center justify-between mb-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
-              onClick={() => navigate('/electrician/inspection-testing')}
-            >
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              Back
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {renderSyncStatus()}
-
+      {/* Header */}
+      <div className="bg-[#242428] border-t-2 border-t-green-500 border-b border-b-green-500/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
+        {/* Mobile Header */}
+        <div className="sm:hidden px-4 py-2.5">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="text-white hover:text-white hover:bg-white/10 h-9 w-9 shrink-0 touch-manipulation active:scale-[0.98] transition-transform"
+                onClick={() => navigate('/electrician/inspection-testing')}
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </Button>
+              <div className="min-w-0">
+                <h1 className="text-[15px] font-bold text-white leading-tight">
+                  {isNew ? 'New EV Charging Certificate' : 'EV Charging Certificate'}
+                </h1>
+                <div className="flex items-center gap-2">
+                  <p className="text-[10px] text-white">IET CoP 5th Edition</p>
+                  {renderSyncStatus()}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 shrink-0">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleSaveDraft}
                 disabled={isSaving}
                 aria-label="Save draft"
-                className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
+                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
               >
-                {isSaving ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Save className="h-4 w-4" />
-                )}
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
               </Button>
+              <Button
+                size="icon"
+                onClick={handleGenerateCertificate}
+                disabled={isGenerating}
+                aria-label="Generate certificate PDF"
+                className="bg-green-500 hover:bg-green-600 text-white h-9 w-9 rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
+              >
+                {isGenerating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+              </Button>
+            </div>
+          </div>
+        </div>
 
+        {/* Desktop Header */}
+        <div className="hidden sm:block px-6 py-4">
+          <div className="max-w-6xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
+                onClick={() => navigate('/electrician/inspection-testing')}
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <div className="h-6 w-px bg-white/20" />
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center">
+                  <Car className="h-5 w-5 text-green-400" />
+                </div>
+                <div>
+                  <h1 className="text-lg font-bold text-white leading-tight">
+                    {isNew ? 'New EV Charging Certificate' : 'EV Charging Certificate'}
+                  </h1>
+                  <p className="text-xs text-white">
+                    BS 7671:2018+A3:2024 &middot; IET Code of Practice 5th Edition
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              {renderSyncStatus()}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSaveDraft}
+                disabled={isSaving}
+                className="text-white hover:text-white hover:bg-white/10 h-11 px-4 touch-manipulation active:scale-[0.98] transition-transform"
+              >
+                {isSaving ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Save className="h-4 w-4 mr-2" />}
+                Save
+              </Button>
               <Button
                 size="sm"
                 onClick={handleGenerateCertificate}
                 disabled={isGenerating}
-                aria-label="Generate certificate PDF"
-                className="bg-green-500 hover:bg-green-600 text-white h-11 px-3 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
+                className="bg-green-500 hover:bg-green-600 text-white h-11 px-5 font-semibold rounded-lg touch-manipulation active:scale-[0.98] transition-transform"
               >
-                {isGenerating ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="h-4 w-4" />
-                )}
+                {isGenerating ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Download className="h-4 w-4 mr-2" />}
+                Generate PDF
               </Button>
-            </div>
-          </div>
-
-          {/* Title Row */}
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-green-500/15 flex items-center justify-center">
-              <Car className="h-5 w-5 text-green-400" />
-            </div>
-            <div>
-              <h1 className="text-base font-bold text-white">
-                {isNew ? 'New EV Charging' : 'EV Charging'}
-              </h1>
-              <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white/50">IET Code of Practice</p>
             </div>
           </div>
         </div>
@@ -641,6 +713,8 @@ export default function EVChargingCertificate() {
           canAccessTab={tabProps.canAccessTab}
           formData={formData}
           onUpdate={handleUpdate}
+          customerId={customerId}
+          onCustomerIdChange={setCustomerId}
           tabNavigationProps={{
             currentTab: tabProps.currentTab,
             currentTabIndex: tabProps.currentTabIndex,
@@ -653,10 +727,20 @@ export default function EVChargingCertificate() {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
             onGenerateCertificate: handleGenerateCertificate,
             canGenerateCertificate: !isGenerating,
+            whatsApp: formData.clientTelephone
+              ? {
+                  type: 'ev-charging',
+                  id: savedReportId || 'new',
+                  recipientPhone: formData.clientTelephone,
+                  recipientName: formData.clientName || 'Client',
+                  documentLabel: 'EV Charging Certificate',
+                }
+              : undefined,
           }}
           onGenerateCertificate={handleGenerateCertificate}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
+          reportId={savedReportId}
         />
       </main>
     </div>

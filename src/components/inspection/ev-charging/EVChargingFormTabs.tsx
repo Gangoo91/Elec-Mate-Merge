@@ -16,6 +16,8 @@ interface EVChargingFormTabsProps {
   canAccessTab: (tabId: EVChargingTabValue) => boolean;
   formData: any;
   onUpdate: (field: string, value: any) => void;
+  customerId?: string;
+  onCustomerIdChange?: (id: string | undefined) => void;
   tabNavigationProps: {
     currentTab: EVChargingTabValue;
     currentTabIndex: number;
@@ -39,6 +41,7 @@ interface EVChargingFormTabsProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  reportId?: string | null;
 }
 
 const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
@@ -47,17 +50,20 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
   canAccessTab,
   formData,
   onUpdate,
+  customerId,
+  onCustomerIdChange,
   tabNavigationProps,
   onGenerateCertificate,
   onSaveDraft,
   canGenerateCertificate = true,
+  reportId,
 }) => {
   const isMobile = useIsMobile();
 
   // Mobile: no max-width, no horizontal spacing - edge-to-edge
-  // Desktop: constrained width with spacing
+  // Desktop: constrained width inside a single premium card
   // pb-24 on mobile ensures content isn't hidden behind sticky nav
-  const contentWrapperClass = cn(isMobile ? 'pb-24' : 'md:max-w-5xl mx-auto space-y-6');
+  const contentWrapperClass = cn(isMobile ? 'pb-24' : 'md:max-w-6xl mx-auto space-y-6');
 
   const smartTabs: SmartTab[] = [
     {
@@ -66,7 +72,13 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       icon: <Car className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
-          <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} />
+          {!isMobile ? (
+            <div className="eicr-section-card overflow-hidden">
+              <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
+            </div>
+          ) : (
+            <EVChargingInstallationDetails formData={formData} onUpdate={onUpdate} customerId={customerId} onCustomerIdChange={onCustomerIdChange} />
+          )}
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
       ),
@@ -77,7 +89,13 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       icon: <Zap className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
-          <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
+          {!isMobile ? (
+            <div className="eicr-section-card overflow-hidden">
+              <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
+            </div>
+          ) : (
+            <EVChargingSupplyDetails formData={formData} onUpdate={onUpdate} />
+          )}
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
       ),
@@ -88,7 +106,13 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
-          <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
+          {!isMobile ? (
+            <div className="eicr-section-card overflow-hidden">
+              <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
+            </div>
+          ) : (
+            <EVChargingTestSchedule formData={formData} onUpdate={onUpdate} />
+          )}
           <EVChargingTabNavigation {...tabNavigationProps} />
         </div>
       ),
@@ -99,11 +123,20 @@ const EVChargingFormTabs: React.FC<EVChargingFormTabsProps> = ({
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={contentWrapperClass}>
-          <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
+          {!isMobile ? (
+            <div className="eicr-section-card overflow-hidden">
+              <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
+            </div>
+          ) : (
+            <EVChargingDeclarations formData={formData} onUpdate={onUpdate} />
+          )}
           <EVChargingTabNavigation
             {...tabNavigationProps}
             onGenerateCertificate={onGenerateCertificate}
             canGenerateCertificate={canGenerateCertificate}
+            whatsApp={tabNavigationProps.whatsApp}
+            reportId={reportId}
+            formData={formData}
           />
         </div>
       ),

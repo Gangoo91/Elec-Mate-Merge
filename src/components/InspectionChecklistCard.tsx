@@ -1,5 +1,5 @@
 import React from 'react';
-import { bs7671InspectionSections } from '@/data/bs7671ChecklistData';
+import { InspectionSection } from '@/data/bs7671ChecklistData';
 import InspectionSectionCard from './InspectionSectionCard';
 
 interface InspectionItem {
@@ -22,6 +22,7 @@ interface InspectionItem {
 
 interface InspectionChecklistCardProps {
   inspectionItems: InspectionItem[];
+  sections: InspectionSection[];
   expandedSections: Record<string, boolean>;
   onToggleSection: (sectionId: string) => void;
   onUpdateItem: (id: string, field: keyof InspectionItem, value: any) => void;
@@ -34,6 +35,7 @@ interface InspectionChecklistCardProps {
 
 const InspectionChecklistCard = ({
   inspectionItems,
+  sections,
   expandedSections,
   onToggleSection,
   onUpdateItem,
@@ -43,7 +45,7 @@ const InspectionChecklistCard = ({
   onBulkClearSection,
   propertyType,
 }: InspectionChecklistCardProps) => {
-  const filteredSections = bs7671InspectionSections;
+  const filteredSections = sections;
 
   return (
     <div className="space-y-2">

@@ -18,6 +18,7 @@ import { useHaptics } from '@/hooks/useHaptics';
 const EARTHING_SECTION_FIELDS = [
   'earthElectrodeType',
   'earthElectrodeResistance',
+  'earthElectrodeLocation',
   'meansOfEarthingDistributor',
   'meansOfEarthingElectrode',
   'mainEarthingConductorType',
@@ -121,6 +122,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
     if (normalized.includes('oil')) locations.add('oil');
     if (normalized.includes('structural steel') || normalized.includes('steel'))
       locations.add('structural-steel');
+    if (normalized.includes('lightning')) locations.add('lightning-protection');
     if (normalized.includes('telecom')) locations.add('telecoms');
 
     return locations;
@@ -131,7 +133,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
   );
   const [otherBonding, setOtherBonding] = useState<string>(() => {
     const value = formData.mainBondingLocations || '';
-    const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'telecom'];
+    const knownServices = ['water', 'gas', 'oil', 'structural steel', 'steel', 'lightning', 'telecom'];
     const parts = value
       .split(',')
       .map((s: string) => s.trim())
@@ -172,6 +174,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
       gas: 'Gas',
       oil: 'Oil',
       'structural-steel': 'Structural Steel',
+      'lightning-protection': 'Lightning Protection',
       telecoms: 'Telecommunications',
     };
 
@@ -193,6 +196,7 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
     { id: 'gas', label: 'Gas' },
     { id: 'oil', label: 'Oil' },
     { id: 'structural-steel', label: 'Structural Steel' },
+    { id: 'lightning-protection', label: 'Lightning' },
     { id: 'telecoms', label: 'Telecoms' },
   ];
 
@@ -203,21 +207,34 @@ const EarthingBondingSectionInner = ({ formData, onUpdate }: EarthingBondingSect
         <div>
           <SectionTitle icon={Zap} title="Earth Electrode" color="yellow" isMobile={isMobile} />
           <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
-            <FormField
-              label="Earth Electrode Resistance (Ω)"
-              required
-              hint="Measured in Ohms (Ω). Typical values: TT systems <200Ω"
-            >
-              <Input
-                value={formData.earthElectrodeResistance || ''}
-                onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
-                placeholder="e.g., 21"
-                type="number"
-                step="0.01"
-                min="0"
-                className="h-11 text-base touch-manipulation"
-              />
-            </FormField>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField
+                label="Earth Electrode Resistance (Ω)"
+                required
+                hint="Typical values: TT systems <200Ω"
+              >
+                <Input
+                  value={formData.earthElectrodeResistance || ''}
+                  onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
+                  placeholder="e.g., 21"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  className="h-11 text-base touch-manipulation"
+                />
+              </FormField>
+              <FormField
+                label="Electrode Location"
+                hint="Physical location of the earth electrode"
+              >
+                <Input
+                  value={formData.earthElectrodeLocation || ''}
+                  onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
+                  placeholder="e.g., Front garden, near meter"
+                  className="h-11 text-base touch-manipulation"
+                />
+              </FormField>
+            </div>
           </div>
         </div>
       )}

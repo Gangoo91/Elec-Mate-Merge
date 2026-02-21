@@ -75,7 +75,7 @@ const EnhancedInspectionSectionCard = ({
 
       onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
 
-      if ((outcome === 'C1' || outcome === 'C2' || outcome === 'C3') && onAutoCreateObservation) {
+      if (onAutoCreateObservation) {
         onAutoCreateObservation(updatedItem);
       }
     } catch (error) {

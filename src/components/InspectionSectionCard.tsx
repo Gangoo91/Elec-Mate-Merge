@@ -83,10 +83,10 @@ const InspectionSectionCard = ({
       // Use the bulk update mechanism to update the entire items array at once
       onUpdateItem('__BULK_UPDATE__', '__BULK_UPDATE__', allItems);
 
-      // Create observation for C1/C2/C3 outcomes using the updated item data
-      if ((outcome === 'C1' || outcome === 'C2' || outcome === 'C3') && onAutoCreateObservation) {
+      // Trigger observation auto-create/remove for all outcome changes
+      if (onAutoCreateObservation) {
         console.log(
-          `[InspectionSectionCard] Auto-creating observation for ${outcome}:`,
+          `[InspectionSectionCard] Auto-creating/removing observation for ${outcome}:`,
           updatedItem
         );
         onAutoCreateObservation(updatedItem);

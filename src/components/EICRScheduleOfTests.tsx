@@ -1200,9 +1200,16 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     );
   };
 
-  const handleUpdateBoard = (boardId: string, field: keyof DistributionBoard, value: any) => {
+  const handleUpdateBoard = (
+    boardId: string,
+    field: keyof DistributionBoard | Record<string, any>,
+    value?: any
+  ) => {
+    // Support both single field and multi-field updates
+    const updates = typeof field === 'string' ? { [field]: value } : field;
+
     const updatedBoards = distributionBoards.map((b) =>
-      b.id === boardId ? { ...b, [field]: value } : b
+      b.id === boardId ? { ...b, ...updates } : b
     );
     setDistributionBoards(updatedBoards);
 
@@ -2188,43 +2195,44 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   </CollapsibleTrigger>
 
                   <CollapsibleContent>
-                    {/* Board Details */}
-                    <div className="p-4 bg-card/30 border-b border-border/20 space-y-3">
-                      {/* Board Reference & Location */}
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                            Reference
+                    {/* Board Verification Details — Redesigned */}
+                    <div className="px-4 pt-4 pb-3 space-y-4 bg-card/20">
+                      {/* Reference & Location — Full width stacked on mobile */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="space-y-1.5">
+                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
+                            Board Reference
                           </label>
                           <DebouncedInput
                             type="text"
                             value={board.reference || ''}
                             onChange={(value) => handleUpdateBoard(board.id, 'reference', value)}
                             placeholder={board.name}
-                            className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                            className="w-full h-11 px-3 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
                             style={{ fontSize: '16px' }}
                           />
                         </div>
-                        <div>
-                          <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
+                        <div className="space-y-1.5">
+                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
                             Location
                           </label>
                           <DebouncedInput
                             type="text"
                             value={board.location || ''}
                             onChange={(value) => handleUpdateBoard(board.id, 'location', value)}
-                            placeholder="e.g., Garage, Kitchen"
-                            className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                            placeholder="e.g., Garage, Under stairs"
+                            className="w-full h-11 px-3 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
                             style={{ fontSize: '16px' }}
                           />
                         </div>
                       </div>
 
-                      {/* ZDB & IPF Row */}
+                      {/* Measurements — Side by side with units */}
                       <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                            Z<sub>DB</sub> (Ω)
+                        <div className="space-y-1.5">
+                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
+                            Z<sub className="text-[9px]">DB</sub>{' '}
+                            <span className="text-muted-foreground font-normal normal-case">(Ω)</span>
                           </label>
                           <div className="relative">
                             <DebouncedInput
@@ -2233,17 +2241,20 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               value={board.zdb || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'zdb', value)}
                               placeholder="0.00"
-                              className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              className="w-full h-11 px-3 pr-9 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">
                               Ω
                             </span>
                           </div>
                         </div>
-                        <div>
-                          <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                            I<sub>PF</sub> (kA)
+                        <div className="space-y-1.5">
+                          <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
+                            I<sub className="text-[9px]">PF</sub>{' '}
+                            <span className="text-muted-foreground font-normal normal-case">
+                              (kA)
+                            </span>
                           </label>
                           <div className="relative">
                             <DebouncedInput
@@ -2252,122 +2263,135 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                               value={board.ipf || ''}
                               onChange={(value) => handleUpdateBoard(board.id, 'ipf', value)}
                               placeholder="0.0"
-                              className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
+                              className="w-full h-11 px-3 pr-9 rounded-lg bg-background border border-border/40 text-foreground placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/30 focus:outline-none touch-manipulation"
                               style={{ fontSize: '16px' }}
                             />
-                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 text-sm text-muted-foreground font-medium">
                               kA
                             </span>
                           </div>
                         </div>
                       </div>
 
-                      {/* Quick Checks */}
-                      <div className="grid grid-cols-2 gap-2 relative z-10">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleUpdateBoard(
-                              board.id,
-                              'confirmedCorrectPolarity',
-                              !board.confirmedCorrectPolarity
-                            );
-                          }}
-                          className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                            board.confirmedCorrectPolarity
-                              ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                              : 'bg-card border border-border/50 text-muted-foreground'
-                          }`}
-                        >
-                          <div
-                            className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
-                          >
-                            {board.confirmedCorrectPolarity && (
-                              <Check className="h-3 w-3 text-white" />
-                            )}
-                          </div>
-                          <span className="flex-1 text-left pointer-events-none">Polarity</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            handleUpdateBoard(
-                              board.id,
-                              'confirmedPhaseSequence',
-                              !board.confirmedPhaseSequence
-                            );
-                          }}
-                          className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                            board.confirmedPhaseSequence
-                              ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                              : 'bg-card border border-border/50 text-muted-foreground'
-                          }`}
-                        >
-                          <div
-                            className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
-                          >
-                            {board.confirmedPhaseSequence && (
-                              <Check className="h-3 w-3 text-white" />
-                            )}
-                          </div>
-                          <span className="flex-1 text-left pointer-events-none">Phase Seq</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            if (!board.spdNA) {
+                      {/* Divider */}
+                      <div className="border-t border-border/20" />
+
+                      {/* Verification Checks — Labelled group */}
+                      <div className="space-y-2.5 relative z-10">
+                        <label className="text-[11px] font-semibold text-foreground uppercase tracking-wider block">
+                          Verification
+                        </label>
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
                               handleUpdateBoard(
                                 board.id,
-                                'spdOperationalStatus',
-                                !board.spdOperationalStatus
+                                'confirmedCorrectPolarity',
+                                !board.confirmedCorrectPolarity
                               );
-                            }
-                          }}
-                          disabled={board.spdNA}
-                          className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                            board.spdOperationalStatus
-                              ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                              : 'bg-card border border-border/50 text-muted-foreground'
-                          } ${board.spdNA ? 'opacity-40 cursor-not-allowed' : ''}`}
-                        >
-                          <div
-                            className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
+                            }}
+                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                              board.confirmedCorrectPolarity
+                                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
+                                : 'bg-background border border-border/40 text-muted-foreground'
+                            }`}
                           >
-                            {board.spdOperationalStatus && <Check className="h-3 w-3 text-white" />}
-                          </div>
-                          <span className="flex-1 text-left pointer-events-none">SPD OK</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            const newValue = !board.spdNA;
-                            handleUpdateBoard(board.id, 'spdNA', newValue);
-                            // Clear SPD operational status when marking as N/A
-                            if (newValue) {
-                              handleUpdateBoard(board.id, 'spdOperationalStatus', false);
-                            }
-                          }}
-                          className={`h-10 rounded-lg text-sm font-medium transition-transform touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                            board.spdNA
-                              ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
-                              : 'bg-card border border-border/50 text-muted-foreground'
-                          }`}
-                        >
-                          <div
-                            className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground/50'}`}
+                            >
+                              {board.confirmedCorrectPolarity && (
+                                <Check className="h-3.5 w-3.5 text-white" />
+                              )}
+                            </div>
+                            <span className="flex-1 text-left pointer-events-none">Polarity</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleUpdateBoard(
+                                board.id,
+                                'confirmedPhaseSequence',
+                                !board.confirmedPhaseSequence
+                              );
+                            }}
+                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                              board.confirmedPhaseSequence
+                                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
+                                : 'bg-background border border-border/40 text-muted-foreground'
+                            }`}
                           >
-                            {board.spdNA && <Check className="h-3 w-3 text-black" />}
-                          </div>
-                          <span className="flex-1 text-left pointer-events-none">SPD N/A</span>
-                        </button>
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground/50'}`}
+                            >
+                              {board.confirmedPhaseSequence && (
+                                <Check className="h-3.5 w-3.5 text-white" />
+                              )}
+                            </div>
+                            <span className="flex-1 text-left pointer-events-none">Phase Seq</span>
+                          </button>
+                        </div>
+
+                        {/* SPD Row */}
+                        <div className="grid grid-cols-2 gap-2">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              if (!board.spdNA) {
+                                handleUpdateBoard(
+                                  board.id,
+                                  'spdOperationalStatus',
+                                  !board.spdOperationalStatus
+                                );
+                              }
+                            }}
+                            disabled={board.spdNA}
+                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                              board.spdOperationalStatus
+                                ? 'bg-green-500/15 border border-green-500/40 text-green-400'
+                                : 'bg-background border border-border/40 text-muted-foreground'
+                            } ${board.spdNA ? 'opacity-30 cursor-not-allowed' : ''}`}
+                          >
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground/50'}`}
+                            >
+                              {board.spdOperationalStatus && (
+                                <Check className="h-3.5 w-3.5 text-white" />
+                              )}
+                            </div>
+                            <span className="flex-1 text-left pointer-events-none">SPD OK</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              const newValue = !board.spdNA;
+                              handleUpdateBoard(board.id, {
+                                spdNA: newValue,
+                                ...(newValue ? { spdOperationalStatus: false } : {}),
+                              });
+                            }}
+                            className={`h-11 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.97] flex items-center gap-2.5 px-3 cursor-pointer select-none ${
+                              board.spdNA
+                                ? 'bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow'
+                                : 'bg-background border border-border/40 text-muted-foreground'
+                            }`}
+                          >
+                            <div
+                              className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 pointer-events-none transition-colors ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground/50'}`}
+                            >
+                              {board.spdNA && <Check className="h-3.5 w-3.5 text-black" />}
+                            </div>
+                            <span className="flex-1 text-left pointer-events-none">SPD N/A</span>
+                          </button>
+                        </div>
                       </div>
                     </div>
 

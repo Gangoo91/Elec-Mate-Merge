@@ -134,6 +134,7 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
     personal: true,
     qualifications: false,
     registration: false,
+    insurance: false,
     company: false,
     branding: false,
   });
@@ -548,6 +549,64 @@ const EICRInspectorDetails = ({ formData, onUpdate }: EICRInspectorDetailsProps)
                   type="date"
                   value={formData.registrationExpiry || ''}
                   onChange={(e) => onUpdate('registrationExpiry', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
+                />
+              </FormField>
+            </div>
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
+
+      {/* Insurance Details Section */}
+      <Collapsible
+        open={openSections.insurance}
+        onOpenChange={() => toggleSection('insurance')}
+      >
+        <CollapsibleTrigger asChild>
+          <div>
+            <SectionTitle
+              icon={Shield}
+              title="Insurance Details"
+              color="blue"
+              isOpen={openSections.insurance}
+              isMobile={isMobile}
+            />
+          </div>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className={cn('space-y-4 py-4', isMobile ? 'px-4' : '')}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField label="Insurance Provider">
+                <Input
+                  value={formData.insuranceProvider || ''}
+                  onChange={(e) => onUpdate('insuranceProvider', e.target.value)}
+                  placeholder="e.g. Zurich, Hiscox"
+                  className="h-11 text-base touch-manipulation"
+                />
+              </FormField>
+              <FormField label="Policy Number">
+                <Input
+                  value={formData.insurancePolicyNumber || ''}
+                  onChange={(e) => onUpdate('insurancePolicyNumber', e.target.value)}
+                  placeholder="Policy number"
+                  className="h-11 text-base touch-manipulation"
+                />
+              </FormField>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <FormField label="Coverage Amount">
+                <Input
+                  value={formData.insuranceCoverage || ''}
+                  onChange={(e) => onUpdate('insuranceCoverage', e.target.value)}
+                  placeholder="e.g. £5,000,000"
+                  className="h-11 text-base touch-manipulation"
+                />
+              </FormField>
+              <FormField label="Expiry Date">
+                <Input
+                  type="date"
+                  value={formData.insuranceExpiry || ''}
+                  onChange={(e) => onUpdate('insuranceExpiry', e.target.value)}
                   className="h-11 text-base touch-manipulation"
                 />
               </FormField>

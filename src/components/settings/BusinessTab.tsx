@@ -644,6 +644,32 @@ const BusinessTab = () => {
       setValue('registration_number', companyProfile.registration_number || '');
       setValue('registration_expiry', companyProfile.registration_expiry || '');
       setSchemeLogoDataUrl(companyProfile.scheme_logo_data_url || null);
+
+      // Auto-heal: if scheme is selected but logo data URL is missing, fetch it
+      if (
+        companyProfile.registration_scheme &&
+        companyProfile.registration_scheme !== 'none' &&
+        companyProfile.registration_scheme !== 'other' &&
+        !companyProfile.scheme_logo_data_url
+      ) {
+        import('@/constants/schemeLogos').then(({ getSchemeInfo }) => {
+          const info = getSchemeInfo(companyProfile.registration_scheme!);
+          if (info) {
+            fetch(info.logoPath)
+              .then((resp) => resp.blob())
+              .then((blob) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                  setSchemeLogoDataUrl(reader.result as string);
+                  console.log('[BusinessTab] Auto-healed scheme logo data URL');
+                };
+                reader.readAsDataURL(blob);
+              })
+              .catch((err) => console.warn('[BusinessTab] Failed to auto-heal scheme logo:', err));
+          }
+        });
+      }
+
       setValue('insurance_provider', companyProfile.insurance_provider || '');
       setValue('insurance_policy_number', companyProfile.insurance_policy_number || '');
       setValue('insurance_coverage', companyProfile.insurance_coverage || '');

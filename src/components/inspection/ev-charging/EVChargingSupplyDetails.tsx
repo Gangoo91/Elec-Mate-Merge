@@ -19,8 +19,6 @@ import {
   Shield,
   AlertTriangle,
   Globe,
-  BookOpen,
-  Sparkles,
   Info,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -88,9 +86,9 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
   const isPME = formData.earthingArrangement === 'TN-C-S' || formData.isPME;
 
   return (
-    <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
+    <div className={cn(isMobile ? 'space-y-0' : 'space-y-0 divide-y divide-white/[0.06]')}>
       {/* Supply Characteristics */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.supply} onOpenChange={() => toggleSection('supply')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -119,7 +117,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.supply && 'rotate-180'
                   )}
                 />
@@ -187,6 +185,8 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <Input
                     id="ze"
                     placeholder="e.g., 0.35"
+                    inputMode="decimal"
+                    step="0.01"
                     value={formData.ze || ''}
                     onChange={(e) => onUpdate('ze', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
@@ -197,6 +197,8 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <Input
                     id="prospectiveFaultCurrent"
                     placeholder="e.g., 2.5"
+                    inputMode="decimal"
+                    step="0.01"
                     value={formData.prospectiveFaultCurrent || ''}
                     onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
@@ -207,6 +209,8 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <Input
                     id="externalLoopImpedance"
                     placeholder="e.g., 0.35"
+                    inputMode="decimal"
+                    step="0.01"
                     value={formData.externalLoopImpedance || ''}
                     onChange={(e) => onUpdate('externalLoopImpedance', e.target.value)}
                     className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
@@ -219,7 +223,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* PME Considerations */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.pme} onOpenChange={() => toggleSection('pme')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -280,7 +284,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.pme && 'rotate-180'
                   )}
                 />
@@ -364,6 +368,8 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                       <Input
                         id="earthElectrodeResistance"
                         placeholder="e.g., 150"
+                        inputMode="decimal"
+                        step="0.01"
                         value={formData.earthElectrodeResistance || ''}
                         onChange={(e) => onUpdate('earthElectrodeResistance', e.target.value)}
                         className="h-11 text-base touch-manipulation w-full sm:w-48 border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
@@ -378,7 +384,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* Circuit Details */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.circuit} onOpenChange={() => toggleSection('circuit')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -407,7 +413,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.circuit && 'rotate-180'
                   )}
                 />
@@ -473,6 +479,8 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   <Input
                     id="cableLength"
                     type="number"
+                    inputMode="decimal"
+                    step="0.01"
                     placeholder="metres"
                     value={formData.cableLength || ''}
                     onChange={(e) => onUpdate('cableLength', parseFloat(e.target.value) || 0)}
@@ -505,7 +513,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* Protection */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible
           open={openSections.protection}
           onOpenChange={() => toggleSection('protection')}
@@ -553,7 +561,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.protection && 'rotate-180'
                   )}
                 />
@@ -618,36 +626,29 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
 
               {/* Max Zs Auto-lookup Display */}
               {maxZsLookup && (
-                <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="h-8 w-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center shrink-0">
-                      <Sparkles className="h-4 w-4 text-elec-yellow" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-medium text-elec-yellow">
-                          Max Zs: {maxZsLookup.maxZs}Ω
-                        </span>
-                        <Badge
-                          variant="outline"
-                          className="text-[10px] px-1.5 py-0 border-blue-500/30 text-blue-400"
-                        >
-                          Auto-lookup
-                        </Badge>
-                      </div>
-                      <p className="text-xs text-muted-foreground mt-1">{maxZsLookup.source}</p>
-                      <div className="flex items-center gap-1 mt-1">
-                        <BookOpen className="h-3 w-3 text-muted-foreground" />
-                        <p className="text-[10px] text-muted-foreground">{maxZsLookup.notes}</p>
-                      </div>
+                <div className="flex items-center gap-3 rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] px-4 py-3">
+                  <div className="flex items-center gap-2 flex-1 min-w-0">
+                    <span className="text-2xl font-semibold text-elec-yellow tabular-nums">
+                      {maxZsLookup.maxZs}Ω
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-medium text-white">Max Zs</p>
+                      <p className="text-[10px] text-white">{maxZsLookup.source}</p>
                     </div>
                   </div>
+                  <Badge
+                    variant="outline"
+                    className="text-[10px] px-2 py-0.5 border-elec-yellow/30 text-elec-yellow shrink-0"
+                  >
+                    Auto
+                  </Badge>
                 </div>
               )}
 
-              <div className="bg-black/40 rounded-xl p-4">
-                <h4 className="font-medium mb-3 text-sm text-elec-yellow flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
+              {/* RCD Protection */}
+              <div className="space-y-3 pt-2">
+                <h4 className="text-sm font-medium text-white flex items-center gap-2 px-0.5">
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-400"></div>
                   RCD Protection
                 </h4>
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
@@ -684,17 +685,23 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                     </Select>
                   </div>
                   <div className="col-span-2 sm:col-span-1 flex items-end">
-                    <div className="flex items-center gap-3 p-3 bg-black/30 rounded-lg w-full">
+                    <label
+                      htmlFor="rcdIntegral"
+                      className={cn(
+                        'flex items-center gap-3 p-3 rounded-xl border w-full cursor-pointer transition-colors touch-manipulation',
+                        formData.rcdIntegral
+                          ? 'border-green-500/40 bg-green-500/10'
+                          : 'border-white/10 bg-black/30 hover:bg-white/5'
+                      )}
+                    >
                       <Checkbox
                         id="rcdIntegral"
                         checked={formData.rcdIntegral || false}
                         onCheckedChange={(checked) => onUpdate('rcdIntegral', checked)}
-                        className="border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                        className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
                       />
-                      <Label htmlFor="rcdIntegral" className="cursor-pointer text-sm">
-                        Integral RCD
-                      </Label>
-                    </div>
+                      <span className="text-sm text-white">Integral RCD</span>
+                    </label>
                   </div>
                 </div>
               </div>
@@ -704,7 +711,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
       </div>
 
       {/* DNO Notification */}
-      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+      <div>
         <Collapsible open={openSections.dno} onOpenChange={() => toggleSection('dno')}>
           <CollapsibleTrigger className="w-full">
             {isMobile ? (
@@ -781,7 +788,7 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.dno && 'rotate-180'
                   )}
                 />
@@ -790,44 +797,129 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {/* Dynamic DNO Requirement Alert */}
-              {dnoRequirement.type === 'G99' ? (
-                <Alert className="border-red-500/30 bg-red-500/10">
-                  <AlertTriangle className="h-4 w-4 text-red-400" />
-                  <AlertDescription className="text-red-200 text-xs sm:text-sm">
-                    <strong>{dnoRequirement.message}</strong>
-                    <p className="mt-1">{dnoRequirement.details}</p>
-                  </AlertDescription>
-                </Alert>
-              ) : dnoRequirement.type === 'G98' ? (
-                <Alert className="border-orange-500/30 bg-orange-500/10">
-                  <Info className="h-4 w-4 text-orange-400" />
-                  <AlertDescription className="text-orange-200 text-xs sm:text-sm">
-                    <strong>{dnoRequirement.message}</strong>
-                    <p className="mt-1">{dnoRequirement.details}</p>
-                  </AlertDescription>
-                </Alert>
-              ) : (
-                <Alert className="border-green-500/30 bg-green-500/10">
-                  <Info className="h-4 w-4 text-green-400" />
-                  <AlertDescription className="text-green-200 text-xs sm:text-sm">
-                    <strong>{dnoRequirement.message}</strong>
-                    <p className="mt-1">{dnoRequirement.details}</p>
-                  </AlertDescription>
-                </Alert>
-              )}
+              {/* Dynamic DNO Requirement — compact info strip */}
+              <div
+                className={cn(
+                  'flex items-center gap-3 rounded-xl px-4 py-3 border',
+                  dnoRequirement.type === 'G99'
+                    ? 'border-red-500/30 bg-red-500/[0.06]'
+                    : dnoRequirement.type === 'G98'
+                      ? 'border-orange-500/30 bg-orange-500/[0.06]'
+                      : 'border-green-500/30 bg-green-500/[0.06]'
+                )}
+              >
+                <div
+                  className={cn(
+                    'h-10 w-10 rounded-xl flex items-center justify-center shrink-0',
+                    dnoRequirement.type === 'G99'
+                      ? 'bg-red-500/15'
+                      : dnoRequirement.type === 'G98'
+                        ? 'bg-orange-500/15'
+                        : 'bg-green-500/15'
+                  )}
+                >
+                  {dnoRequirement.type === 'G99' ? (
+                    <AlertTriangle className="h-5 w-5 text-red-400" />
+                  ) : dnoRequirement.type === 'G98' ? (
+                    <Info className="h-5 w-5 text-orange-400" />
+                  ) : (
+                    <Info className="h-5 w-5 text-green-400" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className={cn(
+                    'text-sm font-medium',
+                    dnoRequirement.type === 'G99'
+                      ? 'text-red-400'
+                      : dnoRequirement.type === 'G98'
+                        ? 'text-orange-400'
+                        : 'text-green-400'
+                  )}>
+                    {dnoRequirement.message}
+                  </p>
+                  <p className="text-xs text-white mt-0.5">{dnoRequirement.details}</p>
+                </div>
+              </div>
 
-              <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
+              {/* G98 / G99 toggle cards */}
+              <div className="grid grid-cols-2 gap-3">
+                <label
+                  htmlFor="g98Notification"
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-1.5 p-4 rounded-xl border cursor-pointer transition-all touch-manipulation text-center',
+                    formData.g98Notification
+                      ? 'border-orange-500/50 bg-orange-500/10 ring-1 ring-orange-500/20'
+                      : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
+                  )}
+                >
+                  <Checkbox
+                    id="g98Notification"
+                    checked={formData.g98Notification || false}
+                    onCheckedChange={(checked) => onUpdate('g98Notification', checked)}
+                    className="sr-only"
+                  />
+                  <span className={cn(
+                    'text-lg font-bold',
+                    formData.g98Notification ? 'text-orange-400' : 'text-white'
+                  )}>G98</span>
+                  <span className={cn(
+                    'text-xs',
+                    formData.g98Notification ? 'text-orange-300' : 'text-white'
+                  )}>Notification</span>
+                  {formData.g98Notification && (
+                    <div className="w-2 h-2 rounded-full bg-orange-400 mt-0.5" />
+                  )}
+                </label>
+                <label
+                  htmlFor="g99Application"
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-1.5 p-4 rounded-xl border cursor-pointer transition-all touch-manipulation text-center',
+                    formData.g99Application
+                      ? 'border-red-500/50 bg-red-500/10 ring-1 ring-red-500/20'
+                      : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
+                  )}
+                >
+                  <Checkbox
+                    id="g99Application"
+                    checked={formData.g99Application || false}
+                    onCheckedChange={(checked) => onUpdate('g99Application', checked)}
+                    className="sr-only"
+                  />
+                  <span className={cn(
+                    'text-lg font-bold',
+                    formData.g99Application ? 'text-red-400' : 'text-white'
+                  )}>G99</span>
+                  <span className={cn(
+                    'text-xs',
+                    formData.g99Application ? 'text-red-300' : 'text-white'
+                  )}>Application</span>
+                  {formData.g99Application && (
+                    <div className="w-2 h-2 rounded-full bg-red-400 mt-0.5" />
+                  )}
+                </label>
+              </div>
+
+              {/* DNO notified toggle */}
+              <label
+                htmlFor="dnoNotified"
+                className={cn(
+                  'flex items-center gap-3 p-4 rounded-xl border cursor-pointer transition-all touch-manipulation',
+                  formData.dnoNotified
+                    ? 'border-green-500/40 bg-green-500/[0.06]'
+                    : 'border-white/10 bg-white/[0.02] hover:bg-white/5'
+                )}
+              >
                 <Checkbox
                   id="dnoNotified"
                   checked={formData.dnoNotified || false}
                   onCheckedChange={(checked) => onUpdate('dnoNotified', checked)}
-                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                  className="border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
                 />
-                <Label htmlFor="dnoNotified" className="cursor-pointer text-base leading-relaxed">
-                  DNO has been notified of this installation
-                </Label>
-              </div>
+                <div className="flex-1">
+                  <span className="text-sm font-medium text-white">DNO has been notified</span>
+                  <p className="text-xs text-white">Confirm notification sent to distribution network operator</p>
+                </div>
+              </label>
 
               {formData.dnoNotified && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -853,37 +945,6 @@ const EVChargingSupplyDetails: React.FC<EVChargingSupplyDetailsProps> = ({
                   </div>
                 </div>
               )}
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                  <Checkbox
-                    id="g98Notification"
-                    checked={formData.g98Notification || false}
-                    onCheckedChange={(checked) => onUpdate('g98Notification', checked)}
-                    className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="g98Notification"
-                    className="cursor-pointer text-sm leading-relaxed"
-                  >
-                    G98 Notification
-                  </Label>
-                </div>
-                <div className="flex items-start gap-3 p-3 bg-black/40 rounded-lg">
-                  <Checkbox
-                    id="g99Application"
-                    checked={formData.g99Application || false}
-                    onCheckedChange={(checked) => onUpdate('g99Application', checked)}
-                    className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
-                  />
-                  <Label
-                    htmlFor="g99Application"
-                    className="cursor-pointer text-sm leading-relaxed"
-                  >
-                    G99 Application
-                  </Label>
-                </div>
-              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>

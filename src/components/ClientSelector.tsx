@@ -3,7 +3,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Search, User, X, ChevronDown, Loader2 } from 'lucide-react';
+import { Search, User, X, ChevronDown, Loader2, Mail, Phone, MapPin } from 'lucide-react';
 import { useCustomers, Customer } from '@/hooks/inspection/useCustomers';
 
 interface ClientSelectorProps {
@@ -48,25 +48,51 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
       <Label className="text-sm font-medium text-foreground/80">Select Client</Label>
 
       {selectedCustomer ? (
-        <div className="flex items-center gap-2 p-3 bg-card/50 rounded-lg border border-elec-yellow/30">
-          <div className="flex-1 min-w-0">
-            <p className="font-medium text-foreground truncate">{selectedCustomer.name}</p>
-            <p className="text-sm text-muted-foreground truncate">
-              {[selectedCustomer.email, selectedCustomer.phone].filter(Boolean).join(' • ')}
-            </p>
-            {selectedCustomer.address && (
-              <p className="text-sm text-muted-foreground truncate">{selectedCustomer.address}</p>
-            )}
-          </div>
+        <div className="relative p-4 bg-card/50 rounded-xl border-2 border-elec-yellow/30">
           <Button
             type="button"
             variant="ghost"
             size="icon"
             onClick={handleClearSelection}
-            className="h-9 w-9 shrink-0 touch-manipulation"
+            className="absolute top-2 right-2 h-8 w-8 shrink-0 touch-manipulation text-muted-foreground hover:text-foreground"
           >
             <X className="h-4 w-4" />
           </Button>
+          <div className="flex items-start gap-3">
+            <div className="w-11 h-11 rounded-full bg-elec-yellow/20 flex items-center justify-center shrink-0">
+              <span className="text-sm font-bold text-elec-yellow">
+                {selectedCustomer.name
+                  ?.split(' ')
+                  .map((n) => n[0])
+                  .join('')
+                  .slice(0, 2)
+                  .toUpperCase() || '?'}
+              </span>
+            </div>
+            <div className="flex-1 min-w-0 pr-6">
+              <p className="font-semibold text-foreground text-base">{selectedCustomer.name}</p>
+              <div className="mt-2 space-y-1.5">
+                {selectedCustomer.email && (
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <Mail className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                    <span className="truncate">{selectedCustomer.email}</span>
+                  </div>
+                )}
+                {selectedCustomer.phone && (
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <Phone className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                    <span className="truncate">{selectedCustomer.phone}</span>
+                  </div>
+                )}
+                {selectedCustomer.address && (
+                  <div className="flex items-center gap-2 text-sm text-foreground">
+                    <MapPin className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                    <span className="truncate">{selectedCustomer.address}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       ) : (
         <Button

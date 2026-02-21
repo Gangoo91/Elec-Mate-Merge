@@ -26,6 +26,7 @@ import {
   XCircle,
   FileText,
   FileDown,
+  FileCheck,
   Save,
   Beaker,
   Copy,
@@ -255,8 +256,39 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         clientName: dataForPdf?.clientName,
       });
 
-      // Step 2: Format the EICR data for PDF Monkey (using the SYNCED data)
-      console.log('[PDF Generation] Step 2: Formatting data for PDF generation...');
+      // Step 2: Auto-resolve scheme logo if scheme is set but logo is missing or placeholder
+      const schemeName = dataForPdf.registrationScheme;
+      const currentLogo = dataForPdf.registrationSchemeLogo || '';
+      const isPlaceholderLogo =
+        !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
+      if (
+        schemeName &&
+        schemeName !== 'none' &&
+        schemeName !== 'other' &&
+        isPlaceholderLogo
+      ) {
+        try {
+          const { getSchemeInfo } = await import('@/constants/schemeLogos');
+          const info = getSchemeInfo(schemeName);
+          if (info) {
+            const resp = await fetch(info.logoPath);
+            const blob = await resp.blob();
+            const dataUrl = await new Promise<string>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result as string);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+            dataForPdf = { ...dataForPdf, registrationSchemeLogo: dataUrl };
+            console.log('[PDF Generation] Auto-resolved scheme logo for:', schemeName);
+          }
+        } catch (err) {
+          console.warn('[PDF Generation] Failed to resolve scheme logo:', err);
+        }
+      }
+
+      // Step 3: Format the EICR data for PDF Monkey (using the SYNCED data)
+      console.log('[PDF Generation] Step 3: Formatting data for PDF generation...');
       console.log('[EICRSummary] Raw formData keys:', Object.keys(dataForPdf));
       console.log('[EICRSummary] Critical fields in raw formData:', {
         clientName: dataForPdf.clientName || 'MISSING',
@@ -332,8 +364,8 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       }
       console.log('[PDF Generation] ================================================');
 
-      // Step 3: Call the edge function
-      console.log('[PDF Generation] Step 3: Calling edge function generate-eicr-pdf...');
+      // Step 4: Call the edge function
+      console.log('[PDF Generation] Step 4: Calling edge function generate-eicr-pdf...');
       console.log(
         '[PDF Generation] Sending payload with keys:',
         Object.keys({ formData: formattedJson })
@@ -751,6 +783,12 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     onUpdate('clientPhone', '07700 900123');
     onUpdate('clientAddress', '123 Test Street, London, SW1A 1AA');
     onUpdate('installationAddress', '456 Installation Road, Manchester, M1 2AB');
+    onUpdate('occupier', 'Mrs Jane Smith');
+    onUpdate('sameAsClientAddress', 'false');
+    onUpdate('installationType', 'domestic');
+    onUpdate('alterationsDetails', 'Kitchen rewired 2020, new consumer unit fitted');
+    onUpdate('alterationsAge', '4');
+    onUpdate('installationRecordsAvailable', 'yes');
 
     // Description of Premises
     onUpdate('description', 'domestic');
@@ -762,11 +800,16 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
 
     // Purpose & Inspection Details
     onUpdate('purposeOfInspection', 'Periodic inspection');
+    onUpdate('otherPurpose', '');
     onUpdate('inspectionDate', today);
     onUpdate('inspectionInterval', '5');
     onUpdate('nextInspectionDate', nextInspection);
     onUpdate('extentOfInspection', 'Full installation including consumer unit and all circuits');
     onUpdate('limitationsOfInspection', 'None - full access provided');
+    onUpdate('intervalReasons', 'Standard domestic periodic interval per BS 7671');
+    onUpdate('agreedWith', 'Property Owner');
+    onUpdate('operationalLimitations', 'None');
+    onUpdate('bsAmendment', 'BS 7671:2018+A2:2022');
 
     // Supply & Earthing Characteristics
     onUpdate('earthingArrangement', 'TN-C-S');
@@ -776,25 +819,53 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     onUpdate('serviceEntry', 'Underground');
     onUpdate('supplyVoltage', '230');
     onUpdate('supplyFrequency', '50');
-    onUpdate('phases', 'Single');
-    onUpdate('supplyPME', 'Yes');
+    onUpdate('phases', '1');
+    onUpdate('supplyPME', 'yes');
     onUpdate('earthElectrodeType', 'Rod');
+    onUpdate('supplyAcDc', 'AC');
+    onUpdate('conductorConfiguration', 'Single-phase two-wire');
+    onUpdate('externalZe', '0.12');
+    onUpdate('prospectiveFaultCurrent', '4.5');
+    onUpdate('supplyPolarityConfirmed', 'true');
+    onUpdate('otherSourcesOfSupply', 'None');
+    onUpdate('supplyType', '1P');
 
     // Main Protective Device
     onUpdate('mainProtectiveDevice', '100A BS 88-3');
-    onUpdate('rcdMainSwitch', 'Yes');
+    onUpdate('mainProtectiveDeviceCustom', '');
+    onUpdate('mainSwitchRating', '100');
+    onUpdate('breakingCapacity', '6');
+    onUpdate('mainSwitchPoles', '2');
+    onUpdate('fuseDeviceRating', '100');
+    onUpdate('mainSwitchVoltageRating', '230');
+    onUpdate('rcdMainSwitch', 'yes');
     onUpdate('rcdRating', '100');
+    onUpdate('rcdType', 'Type A');
+    onUpdate('rcdTimeDelay', '0');
+    onUpdate('rcdMeasuredTime', '18');
 
     // Main Earthing Conductor
     onUpdate('mainEarthingConductorType', 'Cu');
     onUpdate('mainEarthingConductorSize', '16');
+    onUpdate('mainEarthingConductorSizeCustom', '');
+    onUpdate('earthingConductorContinuityVerified', 'true');
+
+    // Earth Electrode
+    onUpdate('earthElectrodeResistance', 'N/A');
+    onUpdate('earthElectrodeLocation', '');
+    onUpdate('meansOfEarthingDistributor', 'PME terminal');
+    onUpdate('meansOfEarthingElectrode', 'N/A');
 
     // Main Protective Bonding
     onUpdate('mainBondingConductorType', 'Cu');
     onUpdate('mainBondingSize', '10');
+    onUpdate('mainBondingSizeCustom', '');
+    onUpdate('bondingConductorContinuityVerified', 'true');
     onUpdate('bondingCompliance', 'Satisfactory');
     onUpdate('mainBondingLocations', 'Water, Gas, Oil, Structural Steel');
+    onUpdate('supplementaryBonding', 'yes');
     onUpdate('supplementaryBondingSize', '4');
+    onUpdate('supplementaryBondingSizeCustom', '');
     onUpdate('equipotentialBonding', 'Satisfactory');
 
     // Consumer Unit / Distribution Board
@@ -807,7 +878,68 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     onUpdate('tailsSize', '25');
     onUpdate('tailsLength', '3');
 
-    // Distribution Board Verification
+    // Distribution Boards (multi-board structure)
+    const distributionBoards = [
+      {
+        id: 'main-cu',
+        name: 'Main CU',
+        reference: 'Main CU',
+        location: 'Under stairs',
+        order: 0,
+        zdb: '0.15',
+        ipf: '4.5',
+        confirmedCorrectPolarity: true,
+        confirmedPhaseSequence: true,
+        spdOperationalStatus: true,
+        spdNA: false,
+        spdT1: false,
+        spdT2: true,
+        spdT3: false,
+        make: 'Hager',
+        model: 'VML918SPD',
+        type: 'metal-clad',
+        totalWays: 18,
+        suppliedFrom: 'DNO cutout',
+        incomingDeviceBsEn: 'BS 88-3',
+        incomingDeviceType: 'Fuse',
+        incomingDeviceRating: '100',
+        mainSwitchBsEn: 'BS 88-3',
+        mainSwitchType: 'Switch-fuse',
+        mainSwitchPoles: '2',
+        mainSwitchRating: '100',
+      },
+      {
+        id: 'sub-db-1',
+        name: 'Sub-DB1',
+        reference: 'Garage DB',
+        location: 'Garage',
+        order: 1,
+        zdb: '0.28',
+        ipf: '3.2',
+        confirmedCorrectPolarity: true,
+        confirmedPhaseSequence: true,
+        spdOperationalStatus: false,
+        spdNA: true,
+        spdT1: false,
+        spdT2: false,
+        spdT3: false,
+        make: 'Schneider Electric',
+        model: 'Easy9',
+        type: 'plastic',
+        totalWays: 6,
+        suppliedFrom: 'Main CU',
+        incomingDeviceBsEn: 'BS EN 60898-1',
+        incomingDeviceType: 'MCB',
+        incomingDeviceRating: '32',
+        mainSwitchBsEn: 'BS EN 60898-1',
+        mainSwitchType: 'MCB',
+        mainSwitchPoles: '1',
+        mainSwitchRating: '32',
+      },
+    ];
+    onUpdate('distributionBoards', distributionBoards);
+
+    // Legacy single-board fields (kept for backward compatibility)
     onUpdate('dbReference', 'Main CU');
     onUpdate('zdb', '0.15');
     onUpdate('ipf', '4.5');
@@ -824,6 +956,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     onUpdate('companyEmail', 'info@wilsonelectrical.co.uk');
     onUpdate('registrationScheme', 'NICEIC');
     onUpdate('registrationNumber', 'NIC123456');
+    // registrationSchemeLogo left empty — auto-resolved at PDF generation time
+    onUpdate('insuranceProvider', 'Hiscox');
+    onUpdate('insurancePolicyNumber', 'EL-2024-987654');
+    onUpdate('insuranceCoverage', '£5,000,000');
+    onUpdate('insuranceExpiry', '2027-03-15');
     onUpdate('inspectorSignature', devSignature);
 
     // Test Instrument
@@ -831,6 +968,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     onUpdate('testInstrumentSerial', 'SN-2024-001234');
     onUpdate('calibrationDate', '2024-01-15');
     onUpdate('testTemperature', '20');
+    onUpdate('testMethod', 'Dead testing followed by live testing');
+    onUpdate('testVoltage', '500V');
+    onUpdate('testNotes', 'All circuits tested in accordance with GN3');
 
     // Overall Assessment
     onUpdate('overallAssessment', 'satisfactory');
@@ -839,6 +979,12 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       'additionalComments',
       'Installation in good condition. Minor recommendations for improvement included in observations.'
     );
+
+    // Standards Compliance
+    onUpdate('designStandard', 'BS7671');
+    onUpdate('partPCompliance', 'compliant');
+    onUpdate('bs7671Compliance', true);
+    onUpdate('buildingRegsCompliance', true);
 
     // Authorisation - Inspected By
     onUpdate('inspectedByName', 'JAMES WILSON');
@@ -857,10 +1003,13 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     onUpdate('reportAuthorisedByAddress', '789 Contractor Lane, Birmingham, B1 1AA');
     onUpdate('reportAuthorisedByMembershipNo', 'NIC123456');
 
-    // ====== 10 COMPREHENSIVE CIRCUITS - SCHEDULE OF TESTS ======
+    // ====== 8 COMPREHENSIVE CIRCUITS - SCHEDULE OF TESTS ======
+    // 5 circuits on Main CU + 3 circuits on Sub-DB1 (Garage DB)
     const comprehensiveTestResults = [
+      // === Main CU Circuits ===
       {
         id: crypto.randomUUID(),
+        boardId: 'main-cu',
         circuitNumber: '1',
         circuitDescription: 'Ring Final - Kitchen Sockets',
         circuitType: 'Ring Final',
@@ -911,6 +1060,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        boardId: 'main-cu',
         circuitNumber: '2',
         circuitDescription: 'Ring Final - Living Room Sockets',
         circuitType: 'Ring Final',
@@ -959,6 +1109,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        boardId: 'main-cu',
         circuitNumber: '3',
         circuitDescription: 'Cooker Circuit',
         circuitType: 'Radial',
@@ -1005,6 +1156,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        boardId: 'main-cu',
         circuitNumber: '4',
         circuitDescription: 'Lighting - Ground Floor',
         circuitType: 'Radial',
@@ -1051,6 +1203,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        boardId: 'main-cu',
         circuitNumber: '5',
         circuitDescription: 'Lighting - First Floor',
         circuitType: 'Radial',
@@ -1089,6 +1242,148 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         type: 'RCBO',
         cableSize: '1.5',
         protectiveDevice: 'B6',
+      },
+      // === Sub-DB1 (Garage DB) Circuits ===
+      {
+        id: crypto.randomUUID(),
+        boardId: 'sub-db-1',
+        circuitNumber: '1',
+        circuitDescription: 'Garage Sockets',
+        circuitType: 'Radial',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'C',
+        pointsServed: '4',
+        liveSize: '2.5',
+        cpcSize: '1.5',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '20',
+        protectiveDeviceKaRating: '6',
+        maxZs: '1.85',
+        protectiveDeviceLocation: 'Garage DB',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type A',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        ringR1: 'N/A',
+        ringRn: 'N/A',
+        ringR2: 'N/A',
+        r1r2: '0.45',
+        r2: '0.30',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '0.73',
+        rcdOneX: '20',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        pfc: '1.5',
+        pfcLiveNeutral: '1.5',
+        pfcLiveEarth: '1.3',
+        functionalTesting: 'Pass',
+        notes: '',
+        circuitDesignation: 'C1',
+        type: 'RCBO',
+        cableSize: '2.5',
+        protectiveDevice: 'B20',
+      },
+      {
+        id: crypto.randomUUID(),
+        boardId: 'sub-db-1',
+        circuitNumber: '2',
+        circuitDescription: 'Garage Lighting',
+        circuitType: 'Radial',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'B',
+        pointsServed: '4',
+        liveSize: '1.5',
+        cpcSize: '1.0',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '6',
+        protectiveDeviceKaRating: '6',
+        maxZs: '7.28',
+        protectiveDeviceLocation: 'Garage DB',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type AC',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        ringR1: 'N/A',
+        ringRn: 'N/A',
+        ringR2: 'N/A',
+        r1r2: '1.05',
+        r2: '0.71',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '1.33',
+        rcdOneX: '23',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        pfc: '0.9',
+        pfcLiveNeutral: '0.9',
+        pfcLiveEarth: '0.8',
+        functionalTesting: 'Pass',
+        notes: '',
+        circuitDesignation: 'C2',
+        type: 'RCBO',
+        cableSize: '1.5',
+        protectiveDevice: 'B6',
+      },
+      {
+        id: crypto.randomUUID(),
+        boardId: 'sub-db-1',
+        circuitNumber: '3',
+        circuitDescription: 'EV Charger',
+        circuitType: 'Radial',
+        typeOfWiring: 'Twin & CPC',
+        referenceMethod: 'C',
+        pointsServed: '1',
+        liveSize: '6.0',
+        cpcSize: '2.5',
+        bsStandard: 'BS EN 61009-1',
+        protectiveDeviceType: 'RCBO',
+        protectiveDeviceCurve: 'B',
+        protectiveDeviceRating: '32',
+        protectiveDeviceKaRating: '6',
+        maxZs: '1.37',
+        protectiveDeviceLocation: 'Garage DB',
+        rcdBsStandard: 'BS EN 61008-1',
+        rcdType: 'Type A',
+        rcdRating: '30',
+        rcdRatingA: '30',
+        ringR1: 'N/A',
+        ringRn: 'N/A',
+        ringR2: 'N/A',
+        r1r2: '0.22',
+        r2: '0.15',
+        insulationTestVoltage: '500',
+        insulationLiveNeutral: '>200',
+        insulationLiveEarth: '>200',
+        insulationResistance: '>200',
+        insulationNeutralEarth: '>200',
+        polarity: '✓',
+        zs: '0.50',
+        rcdOneX: '19',
+        rcdTestButton: '✓',
+        afddTest: 'N/A',
+        pfc: '2.0',
+        pfcLiveNeutral: '2.0',
+        pfcLiveEarth: '1.8',
+        functionalTesting: 'Pass',
+        notes: 'Dedicated EV charging circuit, Type 2 charger',
+        circuitDesignation: 'C3',
+        type: 'RCBO',
+        cableSize: '6.0',
+        protectiveDevice: 'B32',
       },
     ];
     onUpdate('testResults', comprehensiveTestResults);
@@ -1450,7 +1745,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         itemNumber: '5.10',
         item: 'Concealed cables installed in prescribed zones',
         clause: '522.6.202',
-        outcome: 'LIM',
+        outcome: 'limitation',
         notes: 'Unable to verify all concealed cables',
       },
       {
@@ -1541,14 +1836,6 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         outcome: 'satisfactory',
         notes: '',
       },
-      {
-        id: 'item_5_22',
-        itemNumber: '5.22',
-        item: 'RCD protection of socket-outlets with rated current not exceeding 32 A',
-        clause: '411.3.3',
-        outcome: 'satisfactory',
-        notes: 'All socket circuits RCD protected',
-      },
       // Section 6: Bath/Shower
       {
         id: 'item_6_0',
@@ -1614,6 +1901,14 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         outcome: 'satisfactory',
         notes: '',
       },
+      {
+        id: 'item_6_8',
+        itemNumber: '6.8',
+        item: 'Reserved for additional items if required',
+        clause: 'Reserved',
+        outcome: 'not-applicable',
+        notes: '',
+      },
       // Section 7: Special Locations
       {
         id: 'item_7_0',
@@ -1635,10 +1930,11 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     ];
     onUpdate('inspectionItems', fullInspectionItems);
 
-    // ====== SAMPLE DEFECT OBSERVATIONS ======
+    // ====== SAMPLE DEFECT OBSERVATIONS (linked to inspection items) ======
     const sampleObservations = [
       {
         id: crypto.randomUUID(),
+        inspectionItemId: 'item_3_5',
         item: 'Earthing arrangement',
         defectCode: 'C1',
         description:
@@ -1650,6 +1946,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        inspectionItemId: 'item_4_9',
         item: 'Circuit chart labelling',
         defectCode: 'C3',
         description: 'Circuit chart not up to date with current circuit descriptions',
@@ -1668,6 +1965,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        inspectionItemId: 'item_3_7',
         item: 'Bonding conductor',
         defectCode: 'C2',
         description: 'Main protective bonding conductor to gas installation disconnected',
@@ -1677,6 +1975,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       },
       {
         id: crypto.randomUUID(),
+        inspectionItemId: 'item_5_18',
         item: 'Socket outlet condition',
         defectCode: 'C2',
         description:
@@ -1703,12 +2002,126 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     toast({
       title: 'Dev Mode: All Fields Populated',
       description:
-        'Complete EICR: 66 inspection items (with C1, C2, C3, LIM, N/A outcomes), 10 circuits, 6 observations (C1, C2, C3, FI), all earthing conductor fields',
+        'Complete EICR: 66 inspection items (with C1, C2, C3, LIM, N/A outcomes), 8 circuits across 2 boards, 6 observations (C1, C2, C3, FI) linked to inspection items',
     });
   };
 
   return (
     <div className={cn('space-y-6', isMobile && '-mx-4')}>
+      {/* Standards Compliance Section */}
+      <div>
+        <Collapsible defaultOpen={false}>
+          <CollapsibleTrigger className="w-full" asChild>
+            <button
+              onClick={() => haptics.tap()}
+              className={cn(
+                'w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors',
+                'bg-card/50 border-y border-border/30',
+                'active:bg-card/80'
+              )}
+            >
+              <div className="h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-amber-500/20">
+                <FileCheck className="h-5 w-5 text-amber-400" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground">Standards Compliance</h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Design standard and regulatory compliance
+                </p>
+              </div>
+              <ChevronDown className="h-5 w-5 text-muted-foreground" />
+            </button>
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('p-4 space-y-4', isMobile ? '' : 'px-6')}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">
+                    Design Standard
+                  </Label>
+                  <Select
+                    value={formData.designStandard || ''}
+                    onValueChange={(value) => {
+                      haptics.tap();
+                      onUpdate('designStandard', value);
+                    }}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-card/50 border-border/30">
+                      <SelectValue placeholder="Select standard" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100]">
+                      <SelectItem value="BS7671">BS 7671</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-foreground/80">
+                    Part P Compliance
+                  </Label>
+                  <Select
+                    value={formData.partPCompliance || ''}
+                    onValueChange={(value) => {
+                      haptics.tap();
+                      onUpdate('partPCompliance', value);
+                    }}
+                  >
+                    <SelectTrigger className="h-11 touch-manipulation bg-card/50 border-border/30">
+                      <SelectValue placeholder="Select status" />
+                    </SelectTrigger>
+                    <SelectContent className="z-[100]">
+                      <SelectItem value="compliant">Compliant</SelectItem>
+                      <SelectItem value="not-applicable">Not Applicable</SelectItem>
+                      <SelectItem value="non-notifiable">Non-notifiable</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              <div className="space-y-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptics.tap();
+                    onUpdate('bs7671Compliance', !formData.bs7671Compliance);
+                  }}
+                  className={cn(
+                    'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+                    formData.bs7671Compliance
+                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      : 'border-border/30 bg-card/30'
+                  )}
+                >
+                  <Checkbox
+                    checked={formData.bs7671Compliance || false}
+                    className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                  />
+                  <span className="font-medium">Work complies with BS 7671</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptics.tap();
+                    onUpdate('buildingRegsCompliance', !formData.buildingRegsCompliance);
+                  }}
+                  className={cn(
+                    'w-full flex items-center gap-3 p-4 rounded-xl border-2 transition-all touch-manipulation',
+                    formData.buildingRegsCompliance
+                      ? 'border-elec-yellow bg-elec-yellow/10'
+                      : 'border-border/30 bg-card/30'
+                  )}
+                >
+                  <Checkbox
+                    checked={formData.buildingRegsCompliance || false}
+                    className="h-5 w-5 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                  />
+                  <span className="font-medium">Work complies with Building Regulations</span>
+                </button>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
       {/* Overall Assessment Section - Edge to Edge */}
       <div>
         <Collapsible defaultOpen={true}>

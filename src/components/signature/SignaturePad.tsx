@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useEffect, useState, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Download, Upload } from 'lucide-react';
@@ -21,8 +21,49 @@ export interface SignaturePadRef {
 const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
   ({ width = 320, height = 160, onSignatureChange, initialSignature, disabled = false }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [isDrawing, setIsDrawing] = useState(false);
+    const isDrawingRef = useRef(false);
     const [isEmpty, setIsEmpty] = useState(true);
+
+    const getSignatureData = useCallback((): string | null => {
+      const canvas = canvasRef.current;
+      if (canvas && !isEmpty) {
+        return canvas.toDataURL('image/png');
+      }
+      return null;
+    }, [isEmpty]);
+
+    const loadSignature = useCallback((signature: string) => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.onload = () => {
+          if (ctx) {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            ctx.drawImage(img, 0, 0, width, height);
+            setIsEmpty(false);
+            onSignatureChange?.(signature);
+          }
+        };
+        img.src = signature;
+      }
+    }, [width, height, onSignatureChange]);
+
+    const handleClear = useCallback(() => {
+      const canvas = canvasRef.current;
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, width, height);
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, width, height);
+          setIsEmpty(true);
+          onSignatureChange?.(null);
+        }
+      }
+    }, [width, height, onSignatureChange]);
 
     useImperativeHandle(ref, () => ({
       clear: handleClear,
@@ -40,8 +81,6 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
           ctx.lineJoin = 'round';
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 2;
-
-          // Set canvas background to white for better PDF rendering
           ctx.fillStyle = '#ffffff';
           ctx.fillRect(0, 0, width, height);
         }
@@ -50,120 +89,88 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       if (initialSignature) {
         loadSignature(initialSignature);
       }
-    }, [width, height, initialSignature]);
+    }, [width, height, initialSignature, loadSignature]);
 
-    const getSignatureData = (): string | null => {
+    // Native touch/mouse event listeners registered with { passive: false }
+    // to allow preventDefault() which stops page scrolling while drawing
+    useEffect(() => {
       const canvas = canvasRef.current;
-      if (canvas && !isEmpty) {
-        return canvas.toDataURL('image/png');
-      }
-      return null;
-    };
+      if (!canvas) return;
 
-    const loadSignature = (signature: string) => {
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        const img = new Image();
-        img.onload = () => {
-          if (ctx) {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, width, height);
-            ctx.drawImage(img, 0, 0, width, height);
-            setIsEmpty(false);
-            onSignatureChange?.(signature);
-          }
-        };
-        img.src = signature;
-      }
-    };
+      const getCoords = (e: MouseEvent | TouchEvent) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = width / rect.width;
+        const scaleY = height / rect.height;
 
-    const handleClear = () => {
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.clearRect(0, 0, width, height);
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, width, height);
-          setIsEmpty(true);
-          onSignatureChange?.(null);
+        if ('touches' in e) {
+          const touch = e.touches[0];
+          return {
+            x: (touch.clientX - rect.left) * scaleX,
+            y: (touch.clientY - rect.top) * scaleY,
+          };
         }
-      }
-    };
-
-    const getCoordinates = (
-      e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
-    ) => {
-      const canvas = canvasRef.current;
-      if (!canvas) return { x: 0, y: 0 };
-
-      const rect = canvas.getBoundingClientRect();
-      const scaleX = width / rect.width;
-      const scaleY = height / rect.height;
-
-      if ('touches' in e) {
-        // Touch event
-        const touch = e.touches[0];
-        return {
-          x: (touch.clientX - rect.left) * scaleX,
-          y: (touch.clientY - rect.top) * scaleY,
-        };
-      } else {
-        // Mouse event
         return {
           x: (e.clientX - rect.left) * scaleX,
           y: (e.clientY - rect.top) * scaleY,
         };
-      }
-    };
+      };
 
-    const startDrawing = (
-      e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
-    ) => {
-      if (disabled) return;
-      e.preventDefault();
-
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const { x, y } = getCoordinates(e);
+      const onStart = (e: MouseEvent | TouchEvent) => {
+        if (disabled) return;
+        e.preventDefault();
 
         const ctx = canvas.getContext('2d');
         if (ctx) {
+          const { x, y } = getCoords(e);
           ctx.strokeStyle = '#000000';
           ctx.lineWidth = 2;
           ctx.beginPath();
           ctx.moveTo(x, y);
-          setIsDrawing(true);
+          isDrawingRef.current = true;
         }
-      }
-    };
+      };
 
-    const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
-      if (!isDrawing || disabled) return;
-      e.preventDefault();
-
-      const canvas = canvasRef.current;
-      if (canvas) {
-        const { x, y } = getCoordinates(e);
+      const onMove = (e: MouseEvent | TouchEvent) => {
+        if (!isDrawingRef.current || disabled) return;
+        e.preventDefault();
 
         const ctx = canvas.getContext('2d');
         if (ctx) {
+          const { x, y } = getCoords(e);
           ctx.lineTo(x, y);
           ctx.stroke();
           setIsEmpty(false);
         }
-      }
-    };
+      };
 
-    const stopDrawing = () => {
-      if (isDrawing) {
-        setIsDrawing(false);
-        const signature = getSignatureData();
-        onSignatureChange?.(signature);
-      }
-    };
+      const onEnd = () => {
+        if (isDrawingRef.current) {
+          isDrawingRef.current = false;
+          // Read signature data directly from canvas
+          const data = canvas.toDataURL('image/png');
+          onSignatureChange?.(data);
+        }
+      };
+
+      // Register with { passive: false } so preventDefault() works on touch events
+      canvas.addEventListener('mousedown', onStart);
+      canvas.addEventListener('mousemove', onMove);
+      canvas.addEventListener('mouseup', onEnd);
+      canvas.addEventListener('mouseleave', onEnd);
+      canvas.addEventListener('touchstart', onStart, { passive: false });
+      canvas.addEventListener('touchmove', onMove, { passive: false });
+      canvas.addEventListener('touchend', onEnd);
+
+      return () => {
+        canvas.removeEventListener('mousedown', onStart);
+        canvas.removeEventListener('mousemove', onMove);
+        canvas.removeEventListener('mouseup', onEnd);
+        canvas.removeEventListener('mouseleave', onEnd);
+        canvas.removeEventListener('touchstart', onStart);
+        canvas.removeEventListener('touchmove', onMove);
+        canvas.removeEventListener('touchend', onEnd);
+      };
+    }, [width, height, disabled, onSignatureChange]);
 
     const handleDownload = () => {
       const signature = getSignatureData();
@@ -201,13 +208,6 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
               width={width}
               height={height}
               className={`w-full h-full border rounded-lg cursor-crosshair touch-none ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
-              onMouseDown={startDrawing}
-              onMouseMove={draw}
-              onMouseUp={stopDrawing}
-              onMouseLeave={stopDrawing}
-              onTouchStart={startDrawing}
-              onTouchMove={draw}
-              onTouchEnd={stopDrawing}
             />
           </div>
         </div>

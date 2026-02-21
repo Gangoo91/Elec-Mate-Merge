@@ -72,7 +72,11 @@ export const useEVChargingTabs = (formData: any) => {
         );
       case 'testing':
         return (
-          completedSections[tabId] || (formData.testResults?.zs && formData.testResults?.polarity)
+          completedSections[tabId] ||
+          (formData.testResults?.zs &&
+            formData.testResults?.polarity &&
+            formData.testResults?.continuityPE &&
+            formData.testResults?.voltageDrop)
         );
       case 'declarations':
         return (

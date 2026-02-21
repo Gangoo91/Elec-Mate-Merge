@@ -7,7 +7,7 @@
     <style>
       @page {
         size: A4;
-        margin: 8mm 10mm 12mm 10mm;
+        margin: 6mm 8mm 6mm 8mm;
       }
 
       @page schedule {
@@ -108,6 +108,29 @@
       .company-logo img {
         max-height: 45px;
         max-width: 120px;
+        object-fit: contain;
+      }
+
+      .scheme-logo {
+        flex-shrink: 0;
+        margin-left: 12px;
+      }
+
+      .scheme-logo img {
+        max-height: 36px;
+        max-width: 80px;
+        object-fit: contain;
+      }
+
+      .scheme-logo-inline {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 6px;
+      }
+
+      .scheme-logo-inline img {
+        max-height: 24px;
+        max-width: 60px;
         object-fit: contain;
       }
 
@@ -835,18 +858,18 @@
 
       .guidance-columns {
         display: flex;
-        gap: 12px;
+        gap: 8px;
       }
 
       .guidance-col {
         flex: 1;
         font-size: 6.5px;
-        line-height: 1.5;
+        line-height: 1.4;
         color: #475569;
       }
 
       .guidance-col p {
-        margin-bottom: 4px;
+        margin-bottom: 3px;
         text-align: justify;
       }
 
@@ -1078,6 +1101,11 @@
           <div class="cert-number">{{ metadata.certificate_number }}</div>
           <div class="page-number">Page 1 of 4</div>
         </div>
+        {% if company_details.registration_scheme_logo %}
+        <div class="scheme-logo">
+          <img src="{{ company_details.registration_scheme_logo }}" alt="{{ company_details.registration_scheme }}" />
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -1308,7 +1336,7 @@
     </div>
 
     <!-- SECTION F: SUPPLY CHARACTERISTICS -->
-    <div class="section">
+    <div class="section avoid-break">
       <div class="section-title">Section F: Supply Characteristics and Earthing Arrangements</div>
       <table class="data-table">
         <thead>
@@ -1375,22 +1403,6 @@
                   {{ earthing_bonding.earth_electrode_resistance }}
                 </div>
               </div>
-              <div class="data-field">
-                <div class="data-field-label">DNO (Distribution Network Operator)</div>
-                <div class="data-field-value">{{ supply_characteristics.dno_name }}</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">MPAN</div>
-                <div class="data-field-value">{{ supply_characteristics.mpan }}</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Cutout Location</div>
-                <div class="data-field-value">{{ supply_characteristics.cutout_location }}</div>
-              </div>
-              <div class="data-field">
-                <div class="data-field-label">Service Entry</div>
-                <div class="data-field-value">{{ supply_characteristics.service_entry }}</div>
-              </div>
             </td>
             <td>
               <div class="data-field">
@@ -1431,6 +1443,12 @@
           </tr>
         </tbody>
       </table>
+      <div class="inline-form" style="margin-top: 4px;">
+        <div class="inline-group"><span class="inline-label">DNO:</span><span class="inline-value">{{ supply_characteristics.dno_name }}</span></div>
+        <div class="inline-group"><span class="inline-label">MPAN:</span><span class="inline-value">{{ supply_characteristics.mpan }}</span></div>
+        <div class="inline-group"><span class="inline-label">Cutout Location:</span><span class="inline-value">{{ supply_characteristics.cutout_location }}</span></div>
+        <div class="inline-group"><span class="inline-label">Service Entry:</span><span class="inline-value">{{ supply_characteristics.service_entry }}</span></div>
+      </div>
     </div>
 
     <!-- SECTION G: BONDING -->
@@ -1644,41 +1662,6 @@
           <span class="inline-label">Tails Length (m):</span>
           <span class="inline-value">{{ cables.tails_length }}</span>
         </div>
-      </div>
-    </div>
-
-    <!-- SECTION K: OBSERVATIONS SUMMARY -->
-    <div class="section">
-      <div class="section-title">Section K: Observations</div>
-      <div class="observations-summary">
-        <div class="observations-row" style="background: #f1f5f9; font-weight: 600">
-          <div class="observations-text">Observation Description</div>
-          <div class="observations-code">Code</div>
-        </div>
-        {% for obs in observations %}
-        <div class="observations-row">
-          <div class="observations-text">{{ obs.item }} - {{ obs.description }}</div>
-          <div
-            class="observations-code {% if obs.defect_code == 'C1' %}code-c1{% elsif obs.defect_code == 'C2' %}code-c2{% elsif obs.defect_code == 'C3' %}code-c3{% elsif obs.defect_code == 'FI' %}code-fi{% endif %}"
-          >
-            {{ obs.defect_code }}
-          </div>
-        </div>
-        {% endfor %} {% if observations.size == 0 %}
-        <div class="observations-row">
-          <div class="observations-text" style="color: #64748b; font-style: italic">
-            No observations recorded
-          </div>
-          <div class="observations-code">-</div>
-        </div>
-        {% endif %}
-      </div>
-      <div class="codes-legend">
-        <strong>Classification Codes:</strong><br />
-        <strong>C1</strong> - Danger present. Risk of injury. Immediate remedial action required.<br />
-        <strong>C2</strong> - Potentially dangerous. Urgent remedial action required.<br />
-        <strong>C3</strong> - Improvement recommended.<br />
-        <strong>FI</strong> - Further investigation required without delay.
       </div>
     </div>
 
@@ -2524,25 +2507,27 @@
     </div>
 
     <!-- =============================================
-     PAGE 3: SCHEDULE OF TEST RESULTS (LANDSCAPE)
+     SCHEDULE OF TEST RESULTS (LANDSCAPE) — One page per board
      ============================================= -->
+    {% for board in boards_with_schedules %}
     <div class="schedule-page">
       <div class="doc-header">
         <div class="doc-header-content">
           <div class="doc-title-section">
             <div class="doc-title">SCHEDULE OF CIRCUIT DETAILS AND TEST RESULTS</div>
             <div class="doc-subtitle">
-              {{ distribution_board.board_designation }} - {{ distribution_board.board_location }}
+              {{ board.db_reference }} - {{ board.db_location }}
             </div>
           </div>
           <div class="doc-meta">
             <div class="cert-number">{{ metadata.certificate_number }}</div>
-            <div class="page-number">Page 3 of 4</div>
+            <div class="page-number">Page {{ forloop.index | plus: 2 }} of {{ boards_with_schedules.size | plus: 3 }}</div>
           </div>
         </div>
       </div>
 
-      <!-- Test Instrument Details -->
+      {% if forloop.first %}
+      <!-- Test Instrument Details (shown on first board page only) -->
       <div class="section" style="margin-bottom: 6px">
         <div class="section-title" style="font-size: 9px; padding: 4px 6px">
           Test Instrument Details
@@ -2566,26 +2551,27 @@
           </div>
         </div>
       </div>
+      {% endif %}
 
       <!-- Distribution Board Info Header -->
       <div class="board-info-header">
-        <div class="board-title">{{ distribution_board.board_designation }}</div>
+        <div class="board-title">{{ board.db_reference }}</div>
         <div class="board-details">
-          <span><strong>Location:</strong> {{ distribution_board.board_location }}</span>
-          <span><strong>Manufacturer:</strong> {{ distribution_board.board_manufacturer }}</span>
-          <span><strong>Type:</strong> {{ distribution_board.board_type }}</span>
-          <span><strong>Ways:</strong> {{ distribution_board.board_size }}</span>
+          <span><strong>Location:</strong> {{ board.db_location }}</span>
+          <span><strong>Manufacturer:</strong> {{ board.db_manufacturer }}</span>
+          <span><strong>Type:</strong> {{ board.db_type }}</span>
+          <span><strong>Ways:</strong> {{ board.db_ways }}</span>
         </div>
         <div class="board-verification">
-          <span><strong>Zdb:</strong> {{ distribution_board_verification.zdb }} Ω</span>
-          <span><strong>Ipf:</strong> {{ distribution_board_verification.ipf }} kA</span>
+          <span><strong>Zdb:</strong> {{ board.db_zdb }} Ω</span>
+          <span><strong>Ipf:</strong> {{ board.db_ipf }} kA</span>
           <span
-            >Polarity: {% if distribution_board_verification.confirmed_correct_polarity %}✓{% else
+            >Polarity: {% if board.polarity_confirmed %}✓{% else
             %}✗{% endif %}</span
           >
           <span
-            >SPD: {% if distribution_board_verification.spd_operational_status %}✓{% elsif
-            distribution_board_verification.spd_na %}N/A{% else %}✗{% endif %}</span
+            >SPD: {% if board.spd_operational %}✓{% elsif
+            board.spd_na %}N/A{% else %}✗{% endif %}</span
           >
         </div>
       </div>
@@ -2638,7 +2624,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for circuit in schedule_of_tests %}
+          {% for circuit in board.circuits %}
           <tr>
             <td>{{ circuit.circuit_number }}</td>
             <td colspan="3" class="desc">{{ circuit.circuit_description }}</td>
@@ -2681,7 +2667,8 @@
         </tbody>
       </table>
     </div>
-    <!-- End schedule-page -->
+    {% endfor %}
+    <!-- End schedule pages -->
 
     <!-- =============================================
      PAGE 4: DECLARATIONS & SIGNATURES
@@ -2924,6 +2911,11 @@
         <div class="inline-group">
           <span class="inline-label">Registration Scheme:</span>
           <span class="inline-value">{{ company_details.registration_scheme }}</span>
+          {% if company_details.registration_scheme_logo %}
+          <span class="scheme-logo-inline">
+            <img src="{{ company_details.registration_scheme_logo }}" alt="{{ company_details.registration_scheme }}" />
+          </span>
+          {% endif %}
         </div>
         <div class="inline-group">
           <span class="inline-label">Registration No:</span>
@@ -2957,7 +2949,7 @@
     </div>
 
     <!-- Guidance for Recipients -->
-    <div class="section" style="margin-top: 12px">
+    <div class="section avoid-break" style="margin-top: 12px">
       <div class="section-title">Guidance for Recipients</div>
       <div class="guidance-intro">
         This Report is an important and valuable document which should be retained for future
@@ -3052,6 +3044,41 @@
           <div class="cert-number">{{ metadata.certificate_number }}</div>
           <div class="page-number">Appendix</div>
         </div>
+      </div>
+    </div>
+
+    <!-- SECTION K: OBSERVATIONS SUMMARY -->
+    <div class="section avoid-break">
+      <div class="section-title">Section K: Observations</div>
+      <div class="observations-summary">
+        <div class="observations-row" style="background: #f1f5f9; font-weight: 600">
+          <div class="observations-text">Observation Description</div>
+          <div class="observations-code">Code</div>
+        </div>
+        {% for obs in observations %}
+        <div class="observations-row">
+          <div class="observations-text">{{ obs.item }} - {{ obs.description }}</div>
+          <div
+            class="observations-code {% if obs.defect_code == 'C1' %}code-c1{% elsif obs.defect_code == 'C2' %}code-c2{% elsif obs.defect_code == 'C3' %}code-c3{% elsif obs.defect_code == 'FI' %}code-fi{% endif %}"
+          >
+            {{ obs.defect_code }}
+          </div>
+        </div>
+        {% endfor %} {% if observations.size == 0 %}
+        <div class="observations-row">
+          <div class="observations-text" style="color: #64748b; font-style: italic">
+            No observations recorded
+          </div>
+          <div class="observations-code">-</div>
+        </div>
+        {% endif %}
+      </div>
+      <div class="codes-legend">
+        <strong>Classification Codes:</strong><br />
+        <strong>C1</strong> - Danger present. Risk of injury. Immediate remedial action required.<br />
+        <strong>C2</strong> - Potentially dangerous. Urgent remedial action required.<br />
+        <strong>C3</strong> - Improvement recommended.<br />
+        <strong>FI</strong> - Further investigation required without delay.
       </div>
     </div>
 

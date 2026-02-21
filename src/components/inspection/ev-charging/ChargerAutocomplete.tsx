@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { Check, ChevronsUpDown, Zap, Search, X, Sparkles } from 'lucide-react';
+import { Check, ChevronsUpDown, Zap, Search, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,52 +99,73 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         key={charger.id}
         onClick={() => handleSelect(charger)}
         className={cn(
-          'rounded-xl cursor-pointer transition-colors',
-          forMobile ? 'p-4 min-h-[56px]' : 'p-2.5 mx-1',
-          'hover:bg-elec-yellow/10 active:bg-elec-yellow/20',
-          isSelected && 'bg-elec-yellow/20'
+          'rounded-xl cursor-pointer transition-all touch-manipulation',
+          forMobile ? 'p-3.5' : 'p-2.5 mx-1',
+          isSelected
+            ? 'bg-elec-yellow/15 border border-elec-yellow/30'
+            : 'border border-transparent hover:bg-white/5 active:bg-white/10'
         )}
       >
         <div className="flex items-start gap-3 w-full">
           <div
             className={cn(
-              'rounded-lg flex items-center justify-center shrink-0',
-              forMobile ? 'w-10 h-10' : 'w-8 h-8 mt-0.5',
-              isSelected ? 'bg-elec-yellow/30' : 'bg-card'
+              'rounded-xl flex items-center justify-center shrink-0',
+              forMobile ? 'w-11 h-11' : 'w-8 h-8 mt-0.5',
+              isSelected ? 'bg-elec-yellow/25' : 'bg-white/[0.06]'
             )}
           >
             {isSelected ? (
               <Check className={cn('text-elec-yellow', forMobile ? 'h-5 w-5' : 'h-4 w-4')} />
             ) : (
-              <Zap className={cn('text-muted-foreground', forMobile ? 'h-5 w-5' : 'h-4 w-4')} />
+              <Zap className={cn('text-white', forMobile ? 'h-5 w-5' : 'h-4 w-4')} />
             )}
           </div>
 
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className={cn('font-medium text-foreground', forMobile && 'text-base')}>
+            <div className="flex items-baseline gap-1.5">
+              <span className={cn('font-semibold text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
                 {charger.make}
               </span>
-              <span className={cn('text-foreground/80', forMobile && 'text-base')}>
+              <span className={cn('text-white', forMobile ? 'text-[15px]' : 'text-sm')}>
                 {charger.model}
               </span>
             </div>
 
-            <div className="flex items-center gap-2 mt-1 flex-wrap">
+            <div className={cn('flex items-center gap-1.5 flex-wrap', forMobile ? 'mt-1.5' : 'mt-1')}>
               <Badge
                 variant="outline"
-                className={cn('px-1.5 py-0 border-elec-yellow/30 text-elec-yellow', 'text-xs')}
+                className={cn(
+                  'px-2 py-0.5 border-elec-yellow/40 text-elec-yellow font-medium',
+                  forMobile ? 'text-xs' : 'text-[10px]'
+                )}
               >
                 {getPowerOptionsLabel(charger)}
               </Badge>
-              <span className={cn('text-muted-foreground', 'text-xs')}>
+              <Badge
+                variant="outline"
+                className={cn(
+                  'px-2 py-0.5 border-white/20 text-white',
+                  forMobile ? 'text-xs' : 'text-[10px]'
+                )}
+              >
                 {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
-              </span>
-              <span className={cn('text-muted-foreground', 'text-xs')}>{charger.socketType}</span>
+              </Badge>
+              <Badge
+                variant="outline"
+                className={cn(
+                  'px-2 py-0.5 border-white/20 text-white',
+                  forMobile ? 'text-xs' : 'text-[10px]'
+                )}
+              >
+                {charger.socketType}
+              </Badge>
               {charger.rcdIntegral && (
                 <Badge
                   variant="outline"
-                  className={cn('px-1.5 py-0 border-green-500/30 text-green-400', 'text-xs')}
+                  className={cn(
+                    'px-2 py-0.5 border-green-500/40 text-green-400 font-medium',
+                    forMobile ? 'text-xs' : 'text-[10px]'
+                  )}
                 >
                   RCD Built-in
                 </Badge>
@@ -152,7 +173,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             </div>
 
             {charger.notes && (
-              <p className={cn('text-muted-foreground mt-1 line-clamp-1', 'text-xs')}>
+              <p className={cn('text-white mt-1 line-clamp-1', forMobile ? 'text-xs' : 'text-[10px]')}>
                 {charger.notes}
               </p>
             )}
@@ -171,31 +192,34 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
       disabled={disabled}
       onClick={isMobile ? () => setOpen(true) : undefined}
       className={cn(
-        'w-full justify-between h-11 touch-manipulation',
+        'w-full justify-between h-12 touch-manipulation',
         'bg-elec-gray border-white/30 text-foreground',
         'hover:bg-elec-gray/80 hover:border-elec-yellow',
         'focus:border-elec-yellow focus:ring-elec-yellow',
         'data-[state=open]:border-elec-yellow data-[state=open]:ring-2',
-        !displayLabel && 'text-muted-foreground',
+        !displayLabel && 'text-white',
         className
       )}
     >
-      <div className="flex items-center gap-2 flex-1 min-w-0">
+      <div className="flex items-center gap-2.5 flex-1 min-w-0">
         {selectedCharger ? (
           <>
-            <Zap className="h-4 w-4 text-elec-yellow shrink-0" />
-            <span className="truncate">{displayLabel}</span>
-            <Badge
-              variant="secondary"
-              className="text-[10px] px-1.5 py-0 bg-elec-yellow/20 text-elec-yellow shrink-0"
-            >
-              {getPowerOptionsLabel(selectedCharger)}
-            </Badge>
+            <div className="h-7 w-7 rounded-lg bg-elec-yellow/20 flex items-center justify-center shrink-0">
+              <Zap className="h-3.5 w-3.5 text-elec-yellow" />
+            </div>
+            <div className="flex flex-col items-start min-w-0 flex-1">
+              <span className="text-sm font-medium text-white truncate w-full text-left">
+                {displayLabel}
+              </span>
+              <span className="text-xs text-elec-yellow">
+                {getPowerOptionsLabel(selectedCharger)}
+              </span>
+            </div>
           </>
         ) : (
           <>
-            <Search className="h-4 w-4 shrink-0" />
-            <span>Search chargers...</span>
+            <Search className="h-4 w-4 shrink-0 text-white" />
+            <span className="text-sm">Search UK chargers...</span>
           </>
         )}
       </div>
@@ -231,13 +255,13 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         >
           <div className="flex flex-col max-h-[70vh]">
             {/* Search input */}
-            <div className="flex items-center gap-2 px-4 py-3 border-b border-border/50 bg-background sticky top-0">
-              <Search className="h-5 w-5 text-muted-foreground shrink-0" />
+            <div className="flex items-center gap-3 px-4 py-3 border-b border-white/[0.06] bg-background sticky top-0">
+              <Search className="h-5 w-5 text-white shrink-0" />
               <Input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search UK chargers..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base"
+                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white/40"
                 autoFocus
               />
               {searchQuery && (
@@ -245,7 +269,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
                   variant="ghost"
                   size="sm"
                   onClick={() => setSearchQuery('')}
-                  className="h-9 w-9 p-0"
+                  className="h-9 w-9 p-0 touch-manipulation"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -253,29 +277,23 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             </div>
 
             {/* Charger list */}
-            <div className="flex-1 overflow-y-auto momentum-scroll-y px-2 py-2">
+            <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-2">
               {filteredChargers.length === 0 ? (
-                <div className="py-12 text-center text-muted-foreground">
-                  <Zap className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                  <p className="text-base">No chargers found</p>
-                  <p className="text-sm mt-1">Try searching by make or model</p>
+                <div className="py-12 text-center">
+                  <Zap className="h-12 w-12 mx-auto mb-3 text-white/20" />
+                  <p className="text-base text-white">No chargers found</p>
+                  <p className="text-sm text-white mt-1">Try searching by make or model</p>
                 </div>
               ) : (
-                <>
-                  <div className="px-3 py-2 flex items-center gap-2 text-xs text-muted-foreground">
-                    <Sparkles className="h-4 w-4 text-elec-yellow" />
-                    <span>Auto-fills specs when selected</span>
-                  </div>
-                  <div className="space-y-1">
-                    {filteredChargers.map((charger) => renderChargerItem(charger, true))}
-                  </div>
-                </>
+                <div className="space-y-1.5">
+                  {filteredChargers.map((charger) => renderChargerItem(charger, true))}
+                </div>
               )}
             </div>
 
             {/* Footer */}
-            <div className="border-t border-border/50 px-4 py-3 bg-card/30">
-              <p className="text-xs text-muted-foreground text-center">
+            <div className="border-t border-white/[0.06] px-4 py-3 bg-card/30">
+              <p className="text-xs text-white text-center">
                 {EV_CHARGERS.length} UK chargers in database (2025/2026)
               </p>
             </div>
@@ -291,13 +309,13 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
       <PopoverTrigger asChild>{triggerButton}</PopoverTrigger>
 
       <PopoverContent
-        className="w-[calc(100vw-2rem)] sm:w-[400px] p-0 bg-background border-border shadow-xl z-[100]"
+        className="w-[calc(100vw-2rem)] sm:w-[420px] p-0 bg-background border-border shadow-xl z-[100]"
         align="start"
         sideOffset={4}
       >
         <Command className="bg-background" shouldFilter={false}>
-          <div className="flex items-center gap-2 px-3 py-2 border-b border-border/50">
-            <Search className="h-4 w-4 text-muted-foreground shrink-0" />
+          <div className="flex items-center gap-2 px-3 py-2.5 border-b border-white/[0.06]">
+            <Search className="h-4 w-4 text-white shrink-0" />
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -317,19 +335,15 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             )}
           </div>
 
-          <CommandList className="max-h-[300px]">
+          <CommandList className="max-h-[320px]">
             {filteredChargers.length === 0 ? (
-              <CommandEmpty className="py-6 text-center text-muted-foreground">
-                <Zap className="h-8 w-8 mx-auto mb-2 opacity-30" />
-                <p>No chargers found</p>
-                <p className="text-xs mt-1">Try searching by make or model</p>
+              <CommandEmpty className="py-6 text-center">
+                <Zap className="h-8 w-8 mx-auto mb-2 text-white/20" />
+                <p className="text-white">No chargers found</p>
+                <p className="text-xs text-white mt-1">Try searching by make or model</p>
               </CommandEmpty>
             ) : (
               <CommandGroup className="py-2">
-                <div className="px-2 pb-2 flex items-center gap-2 text-[10px] text-muted-foreground">
-                  <Sparkles className="h-3 w-3 text-elec-yellow" />
-                  <span>Auto-fills specs when selected</span>
-                </div>
                 {filteredChargers.map((charger) => {
                   const isSelected = selectedCharger?.id === charger.id;
                   return (
@@ -339,47 +353,47 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
                       onSelect={() => handleSelect(charger)}
                       className={cn(
                         'mx-1 rounded-lg cursor-pointer py-2.5',
-                        'hover:bg-elec-yellow/10',
-                        isSelected && 'bg-elec-yellow/20'
+                        'hover:bg-white/5',
+                        isSelected && 'bg-elec-yellow/15'
                       )}
                     >
                       <div className="flex items-start gap-3 w-full">
                         <div
                           className={cn(
                             'w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5',
-                            isSelected ? 'bg-elec-yellow/30' : 'bg-card'
+                            isSelected ? 'bg-elec-yellow/25' : 'bg-white/[0.06]'
                           )}
                         >
                           {isSelected ? (
                             <Check className="h-4 w-4 text-elec-yellow" />
                           ) : (
-                            <Zap className="h-4 w-4 text-muted-foreground" />
+                            <Zap className="h-4 w-4 text-white" />
                           )}
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <span className="font-medium text-foreground">{charger.make}</span>
-                            <span className="text-foreground/80">{charger.model}</span>
+                          <div className="flex items-baseline gap-1.5">
+                            <span className="font-semibold text-white text-sm">{charger.make}</span>
+                            <span className="text-white text-sm">{charger.model}</span>
                           </div>
 
-                          <div className="flex items-center gap-2 mt-1 flex-wrap">
+                          <div className="flex items-center gap-1.5 mt-1 flex-wrap">
                             <Badge
                               variant="outline"
-                              className="text-[10px] px-1.5 py-0 border-elec-yellow/30 text-elec-yellow"
+                              className="text-[10px] px-1.5 py-0 border-elec-yellow/40 text-elec-yellow font-medium"
                             >
                               {getPowerOptionsLabel(charger)}
                             </Badge>
-                            <span className="text-[10px] text-muted-foreground">
+                            <span className="text-[10px] text-white">
                               {charger.phases.includes(3) ? '1/3 Phase' : 'Single Phase'}
                             </span>
-                            <span className="text-[10px] text-muted-foreground">
+                            <span className="text-[10px] text-white">
                               {charger.socketType}
                             </span>
                             {charger.rcdIntegral && (
                               <Badge
                                 variant="outline"
-                                className="text-[10px] px-1.5 py-0 border-green-500/30 text-green-400"
+                                className="text-[10px] px-1.5 py-0 border-green-500/40 text-green-400"
                               >
                                 RCD Built-in
                               </Badge>
@@ -387,7 +401,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
                           </div>
 
                           {charger.notes && (
-                            <p className="text-[10px] text-muted-foreground mt-1 line-clamp-1">
+                            <p className="text-[10px] text-white mt-1 line-clamp-1">
                               {charger.notes}
                             </p>
                           )}
@@ -400,8 +414,8 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             )}
           </CommandList>
 
-          <div className="border-t border-border/50 px-3 py-2 bg-card/30">
-            <p className="text-[10px] text-muted-foreground text-center">
+          <div className="border-t border-white/[0.06] px-3 py-2 bg-card/30">
+            <p className="text-[10px] text-white text-center">
               {EV_CHARGERS.length} UK chargers in database (2025/2026)
             </p>
           </div>

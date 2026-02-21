@@ -139,8 +139,18 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
         return 'EIC';
       case 'eicr':
         return 'EICR';
+      case 'ev-charging':
+        return 'EV';
+      case 'fire-alarm':
+        return 'FIRE';
+      case 'emergency-lighting':
+        return 'EM LTG';
+      case 'pat-testing':
+        return 'PAT';
+      case 'solar-pv':
+        return 'SOLAR';
       default:
-        return 'CERT';
+        return type.toUpperCase().slice(0, 5);
     }
   };
 

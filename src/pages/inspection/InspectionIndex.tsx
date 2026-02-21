@@ -109,6 +109,18 @@ const InspectionIndex = () => {
   };
 
   const handleNavigate = (section: string, reportId?: string, reportType?: string) => {
+    // Cert types with dedicated routes — navigate directly
+    const dedicatedRouteTypes = ['ev-charging', 'fire-alarm', 'emergency-lighting', 'pat-testing', 'solar-pv'];
+    const effectiveType = reportType || section;
+    if (dedicatedRouteTypes.includes(effectiveType) && reportId) {
+      navigate(`/electrician/inspection-testing/${effectiveType}/${reportId}`);
+      return;
+    }
+    if (dedicatedRouteTypes.includes(effectiveType) && !reportId) {
+      navigate(`/electrician/inspection-testing/${effectiveType}`);
+      return;
+    }
+
     setCurrentReportId(reportId || null);
     setCurrentReportType(reportType || null);
     setCurrentSection(section);
