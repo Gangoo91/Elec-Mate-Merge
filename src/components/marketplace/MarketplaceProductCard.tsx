@@ -111,14 +111,25 @@ export function MarketplaceProductCard({
             className="w-full h-full object-contain p-3"
             loading="lazy"
             onError={(e) => {
-              (e.currentTarget as HTMLImageElement).src = '/placeholder.svg';
+              // Hide the broken image and show fallback
+              const img = e.currentTarget as HTMLImageElement;
+              img.style.display = 'none';
+              const fallback = img.parentElement?.querySelector('[data-fallback]') as HTMLElement;
+              if (fallback) fallback.style.display = 'flex';
             }}
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted">
-            <Package className="h-12 w-12 text-white" />
-          </div>
-        )}
+        ) : null}
+        {/* Styled fallback — shown when no image or image fails to load */}
+        <div
+          data-fallback
+          className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200"
+          style={{ display: product.image_url ? 'none' : 'flex' }}
+        >
+          <Package className="h-10 w-10 text-gray-400 mb-1" />
+          <span className="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">
+            {product.supplier_name}
+          </span>
+        </div>
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-active:opacity-100 transition-opacity duration-200" />
@@ -156,9 +167,7 @@ export function MarketplaceProductCard({
             className={cn(
               'absolute bottom-2 right-2 h-8 w-8 rounded-full flex items-center justify-center touch-manipulation',
               'transition-all duration-200 shadow-md',
-              isSaved
-                ? 'bg-elec-yellow text-black'
-                : 'bg-black/50 text-white hover:bg-black/70'
+              isSaved ? 'bg-elec-yellow text-black' : 'bg-black/50 text-white hover:bg-black/70'
             )}
           >
             <Bookmark className={cn('h-4 w-4', isSaved && 'fill-current')} />
