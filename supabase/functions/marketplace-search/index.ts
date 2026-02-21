@@ -205,6 +205,50 @@ serve(async (req: Request) => {
       stock_status: p.stock_status,
     }));
 
+    // Fetch price history for these products (last 30 days, max 10 points each)
+    const productIds = transformedProducts.map((p: { id: string }) => p.id);
+     
+    const priceHistoryMap: Record<string, { price: number; date: string }[]> = {};
+    if (productIds.length > 0) {
+      const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+      const { data: historyData } = await supabase
+        .from('marketplace_price_history')
+        .select('product_id, price, recorded_at')
+        .in('product_id', productIds)
+        .gte('recorded_at', thirtyDaysAgo)
+        .order('recorded_at', { ascending: true });
+
+      if (historyData) {
+        // Group by product_id, keep max 10 evenly-spaced points
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase query result
+        const grouped: Record<string, any[]> = {};
+        for (const h of historyData) {
+          const pid = h.product_id as string;
+          if (!grouped[pid]) grouped[pid] = [];
+          grouped[pid].push({ price: Number(h.price), date: h.recorded_at });
+        }
+        for (const [pid, points] of Object.entries(grouped)) {
+          if (points.length <= 10) {
+            priceHistoryMap[pid] = points;
+          } else {
+            // Sample 10 evenly-spaced points
+            const sampled = [];
+            const step = (points.length - 1) / 9;
+            for (let i = 0; i < 10; i++) {
+              sampled.push(points[Math.round(i * step)]);
+            }
+            priceHistoryMap[pid] = sampled;
+          }
+        }
+      }
+    }
+
+    // Attach price history to products
+    for (const product of transformedProducts) {
+      const p = product as { id: string; price_history?: { price: number; date: string }[] };
+      p.price_history = priceHistoryMap[p.id] || [];
+    }
+
     const totalCount = total || 0;
     const totalPages = Math.ceil(totalCount / pageSize);
 

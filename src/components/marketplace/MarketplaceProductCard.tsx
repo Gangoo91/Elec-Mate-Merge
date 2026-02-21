@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { MarketplaceProduct } from '@/hooks/useMarketplaceSearch';
+import { PriceSparkline } from '@/components/marketplace/PriceSparkline';
 import { cn } from '@/lib/utils';
 
 interface MarketplaceProductCardProps {
@@ -212,6 +213,15 @@ export function MarketplaceProductCard({
             </div>
           )}
         </div>
+
+        {/* Price sparkline */}
+        {product.price_history && product.price_history.length >= 2 && (
+          <PriceSparkline
+            history={product.price_history}
+            currentPrice={product.current_price}
+            className="pt-0.5"
+          />
+        )}
 
         {/* Stock status */}
         <div className="flex items-center gap-1">

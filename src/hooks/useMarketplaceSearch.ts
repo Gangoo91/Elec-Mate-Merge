@@ -4,6 +4,11 @@ import { supabase } from '@/integrations/supabase/client';
 /**
  * Marketplace Search Types
  */
+export interface PricePoint {
+  price: number;
+  date: string;
+}
+
 export interface MarketplaceProduct {
   id: string;
   supplier_id: string;
@@ -23,6 +28,7 @@ export interface MarketplaceProduct {
   image_url: string | null;
   product_url: string;
   stock_status: string;
+  price_history?: PricePoint[];
   search_rank?: number;
 }
 

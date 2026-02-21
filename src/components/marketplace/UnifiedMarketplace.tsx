@@ -26,6 +26,8 @@ import {
 import { SaveToListSheet } from '@/components/marketplace/SaveToListSheet';
 import { CouponCard } from '@/components/marketplace/CouponCard';
 import { DealOfTheDay } from '@/components/marketplace/DealOfTheDay';
+import { PriceAlertsBanner } from '@/components/marketplace/PriceAlertsBanner';
+import { useMarketplacePriceAlerts } from '@/hooks/useMarketplacePriceAlerts';
 import { cn } from '@/lib/utils';
 
 export interface UnifiedMarketplaceProps {
@@ -146,6 +148,9 @@ export default function UnifiedMarketplace({
     setSaveProduct(product);
     setSaveSheetOpen(true);
   }, []);
+
+  // Price alerts
+  const { alerts, dismissAlert } = useMarketplacePriceAlerts();
 
   // Main search query
   const { data, isLoading, isFetching, isError, refetch } = useMarketplaceSearch(
@@ -320,6 +325,13 @@ export default function UnifiedMarketplace({
             Search
           </Button>
         </motion.form>
+
+        {/* Price Drop Alerts */}
+        {alerts.length > 0 && !query && (
+          <motion.section variants={itemVariants}>
+            <PriceAlertsBanner alerts={alerts} onDismiss={dismissAlert} />
+          </motion.section>
+        )}
 
         {/* Deal of the Day */}
         {data?.dealOfTheDay && !query && !filters.dealsOnly && (
