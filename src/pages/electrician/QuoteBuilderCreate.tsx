@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { CheckCircle, ArrowLeft, FileText, ClipboardCheck } from 'lucide-react';
+import { CheckCircle, ArrowLeft, FileText, ClipboardCheck, Package } from 'lucide-react';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useState, useEffect } from 'react';
@@ -45,6 +45,23 @@ type SiteVisitContext = {
   siteVisitId?: string;
 };
 
+type MaterialsContext = {
+  source: 'materials_list' | 'procurement' | 'site_survey';
+  sourceLabel: string;
+  materials: Array<{
+    id: string;
+    description: string;
+    category: string;
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    unit: string;
+    notes?: string;
+  }>;
+  client?: { name: string; email: string; phone: string; address: string; postcode: string };
+  jobDetails?: { title: string; description: string; location: string };
+};
+
 const QuoteBuilderCreate = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -52,6 +69,7 @@ const QuoteBuilderCreate = () => {
   const [costContext, setCostContext] = useState<Record<string, unknown> | null>(null);
   const [certificateContext, setCertificateContext] = useState<CertificateContext | null>(null);
   const [siteVisitContext, setSiteVisitContext] = useState<SiteVisitContext | null>(null);
+  const [materialsContext, setMaterialsContext] = useState<MaterialsContext | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
@@ -61,6 +79,7 @@ const QuoteBuilderCreate = () => {
     const costSessionId = params.get('costSessionId');
     const certificateSessionId = params.get('certificateSessionId');
     const siteVisitSessionId = params.get('siteVisitSessionId');
+    const materialsSessionId = params.get('materialsSessionId');
 
     if (costSessionId) {
       const storedContext = sessionStorage.getItem(costSessionId);
@@ -86,6 +105,15 @@ const QuoteBuilderCreate = () => {
         const parsed = JSON.parse(storedContext);
         setSiteVisitContext(parsed.siteVisitData);
         sessionStorage.removeItem(siteVisitSessionId);
+      }
+    }
+
+    if (materialsSessionId) {
+      const storedContext = sessionStorage.getItem(materialsSessionId);
+      if (storedContext) {
+        const parsed = JSON.parse(storedContext);
+        setMaterialsContext(parsed.materialsData);
+        sessionStorage.removeItem(materialsSessionId);
       }
     }
 
@@ -217,6 +245,28 @@ const QuoteBuilderCreate = () => {
           </motion.div>
         )}
 
+        {/* Materials Import Banner */}
+        {materialsContext && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20"
+          >
+            <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center flex-shrink-0">
+              <Package className="h-5 w-5 text-white" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-amber-400">
+                Materials Imported from {materialsContext.sourceLabel}
+              </p>
+              <p className="text-[13px] text-white/50">
+                {materialsContext.materials.length}{' '}
+                {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled
+              </p>
+            </div>
+          </motion.div>
+        )}
+
         {/* Main Content */}
         <main className="px-4 py-4">
           {isLoadingContext ? (
@@ -229,6 +279,7 @@ const QuoteBuilderCreate = () => {
               initialCostData={costContext}
               initialCertificateData={certificateContext}
               initialSiteVisitData={siteVisitContext}
+              initialMaterialsData={materialsContext}
             />
           )}
         </main>

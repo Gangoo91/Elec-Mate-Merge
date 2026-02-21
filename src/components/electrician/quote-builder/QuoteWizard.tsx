@@ -81,6 +81,32 @@ interface QuoteWizardProps {
     }>;
     siteVisitId?: string;
   };
+  initialMaterialsData?: {
+    source: string;
+    sourceLabel: string;
+    materials: Array<{
+      id: string;
+      description: string;
+      category: string;
+      quantity: number;
+      unitPrice: number;
+      totalPrice: number;
+      unit: string;
+      notes?: string;
+    }>;
+    client?: {
+      name: string;
+      email: string;
+      phone: string;
+      address: string;
+      postcode: string;
+    };
+    jobDetails?: {
+      title: string;
+      description: string;
+      location: string;
+    };
+  } | null;
 }
 
 export const QuoteWizard = ({
@@ -89,6 +115,7 @@ export const QuoteWizard = ({
   initialCostData,
   initialCertificateData,
   initialSiteVisitData,
+  initialMaterialsData,
 }: QuoteWizardProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const [lastSaved, setLastSaved] = useState<Date | undefined>();
@@ -110,7 +137,13 @@ export const QuoteWizard = ({
 
   // Check for recoverable draft on mount
   useEffect(() => {
-    if (!initialQuote && !initialCostData && !initialCertificateData && !initialSiteVisitData) {
+    if (
+      !initialQuote &&
+      !initialCostData &&
+      !initialCertificateData &&
+      !initialSiteVisitData &&
+      !initialMaterialsData
+    ) {
       const draft = draftStorage.loadDraft('quote', null);
       if (draft && draftStorage.hasRecoverableDraft('quote')) {
         setRecoveredDraft(draft.data);
@@ -119,7 +152,7 @@ export const QuoteWizard = ({
     }
   }, []);
 
-  // Merge certificate or site visit data into initial quote for proper initialization
+  // Merge certificate, site visit, or materials data into initial quote for proper initialization
   const mergedInitialQuote = initialCertificateData
     ? {
         ...initialQuote,
@@ -144,7 +177,17 @@ export const QuoteWizard = ({
           jobDetails: initialSiteVisitData.jobDetails,
           items: initialSiteVisitData.materials || [],
         }
-      : initialQuote;
+      : initialMaterialsData
+        ? {
+            ...initialQuote,
+            ...(initialMaterialsData.client && { client: initialMaterialsData.client }),
+            ...(initialMaterialsData.jobDetails && { jobDetails: initialMaterialsData.jobDetails }),
+            items: initialMaterialsData.materials.map((m) => ({
+              ...m,
+              category: m.category as 'materials',
+            })),
+          }
+        : initialQuote;
 
   const {
     quote,

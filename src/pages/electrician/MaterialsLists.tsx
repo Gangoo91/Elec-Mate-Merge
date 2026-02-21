@@ -12,6 +12,7 @@ import {
   ExternalLink,
   Loader2,
   BarChart3,
+  FileText,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -100,6 +101,31 @@ export default function MaterialsLists() {
     }, 0);
   };
 
+  const handleSendToQuote = (list: MaterialsList) => {
+    const materialsSessionId = `materials_${crypto.randomUUID()}`;
+    const materialsData = {
+      source: 'materials_list',
+      sourceLabel: list.name,
+      materials: list.items.map((item) => ({
+        id: crypto.randomUUID(),
+        description: item.name,
+        category: 'materials' as const,
+        quantity: item.quantity,
+        unitPrice: item.estimated_price || 0,
+        totalPrice: (item.estimated_price || 0) * item.quantity,
+        unit: item.unit || 'each',
+        notes: [
+          item.supplier && `Supplier: ${item.supplier}`,
+          item.product_url && `URL: ${item.product_url}`,
+        ]
+          .filter(Boolean)
+          .join(' | '),
+      })),
+    };
+    sessionStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+    navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
+  };
+
   // Detail view for a selected list
   if (activeList) {
     const total = getEstimatedTotal(activeList);
@@ -128,25 +154,36 @@ export default function MaterialsLists() {
               </div>
               <div className="flex items-center gap-2">
                 {activeList.items.length > 0 && (
-                  <Button
-                    size="sm"
-                    onClick={() =>
-                      navigate('/electrician/materials/procurement', {
-                        state: {
-                          items: activeList.items.map((item) => ({
-                            name: item.name,
-                            quantity: item.quantity,
-                            unit: 'each',
-                            original_text: item.name,
-                          })),
-                        },
-                      })
-                    }
-                    className="h-10 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
-                  >
-                    <BarChart3 className="h-4 w-4 mr-1.5" />
-                    Compare Prices
-                  </Button>
+                  <>
+                    <Button
+                      size="sm"
+                      onClick={() => handleSendToQuote(activeList)}
+                      className="h-10 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                    >
+                      <FileText className="h-4 w-4 mr-1.5" />
+                      Send to Quote
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() =>
+                        navigate('/electrician/materials/procurement', {
+                          state: {
+                            items: activeList.items.map((item) => ({
+                              name: item.name,
+                              quantity: item.quantity,
+                              unit: 'each',
+                              original_text: item.name,
+                            })),
+                          },
+                        })
+                      }
+                      className="h-10 touch-manipulation border-elec-yellow/30 text-white"
+                    >
+                      <BarChart3 className="h-4 w-4 mr-1.5" />
+                      Compare Prices
+                    </Button>
+                  </>
                 )}
                 <Button
                   variant="ghost"
@@ -167,7 +204,9 @@ export default function MaterialsLists() {
           {activeList.items.length === 0 && (
             <div className="text-center py-12">
               <Package className="h-12 w-12 text-white mx-auto mb-3" />
-              <p className="text-white mb-4">No items yet. Save products from the marketplace or paste a materials list.</p>
+              <p className="text-white mb-4">
+                No items yet. Save products from the marketplace or paste a materials list.
+              </p>
               <div className="flex gap-3 justify-center">
                 <Link to="/electrician/materials">
                   <Button className="h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold">
@@ -214,12 +253,8 @@ export default function MaterialsLists() {
                       £{(item.estimated_price * item.quantity).toFixed(2)}
                     </span>
                   )}
-                  {item.supplier && (
-                    <span className="text-xs text-white">{item.supplier}</span>
-                  )}
-                  {!item.matched && (
-                    <span className="text-xs text-orange-400">Unmatched</span>
-                  )}
+                  {item.supplier && <span className="text-xs text-white">{item.supplier}</span>}
+                  {!item.matched && <span className="text-xs text-orange-400">Unmatched</span>}
                 </div>
               </div>
 
@@ -271,7 +306,8 @@ export default function MaterialsLists() {
                 <span className="text-xl font-bold text-elec-yellow">£{total.toFixed(2)}</span>
               </div>
               <p className="text-xs text-white mt-1">
-                {activeList.items.length} {activeList.items.length === 1 ? 'item' : 'items'} &middot; prices may have changed
+                {activeList.items.length} {activeList.items.length === 1 ? 'item' : 'items'}{' '}
+                &middot; prices may have changed
               </p>
             </div>
           )}
@@ -293,7 +329,9 @@ export default function MaterialsLists() {
               <Textarea
                 value={pasteText}
                 onChange={(e) => setPasteText(e.target.value)}
-                placeholder={"10x 2.5mm T&E 100m\n5x double sockets\nMCB 32A Type B\nLED downlights x 6"}
+                placeholder={
+                  '10x 2.5mm T&E 100m\n5x double sockets\nMCB 32A Type B\nLED downlights x 6'
+                }
                 className="min-h-[160px] text-base touch-manipulation"
               />
               <div className="flex gap-2">
@@ -417,7 +455,8 @@ export default function MaterialsLists() {
             <ListChecks className="h-14 w-14 text-white mx-auto mb-4" />
             <h2 className="text-lg font-semibold mb-2">No lists yet</h2>
             <p className="text-white mb-6 max-w-sm mx-auto">
-              Create a list to start collecting materials for your jobs. You can also paste a text list to match products automatically.
+              Create a list to start collecting materials for your jobs. You can also paste a text
+              list to match products automatically.
             </p>
             <Button
               onClick={() => setShowNewListInput(true)}
@@ -430,44 +469,47 @@ export default function MaterialsLists() {
         )}
 
         {/* List cards */}
-        {!isLoading && lists.map((list) => {
-          const total = getEstimatedTotal(list);
+        {!isLoading &&
+          lists.map((list) => {
+            const total = getEstimatedTotal(list);
 
-          return (
-            <button
-              key={list.id}
-              onClick={() => setSelectedList(list)}
-              className={cn(
-                'w-full text-left p-4 bg-card rounded-xl border border-border/50 touch-manipulation',
-                'hover:border-elec-yellow/50 active:scale-[0.98] transition-all'
-              )}
-            >
-              <div className="flex items-center justify-between mb-1">
-                <h3 className="font-semibold text-white">{list.name}</h3>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeleteList(list.id);
-                  }}
-                  className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-red-500/10 text-red-400 touch-manipulation"
-                >
-                  <Trash2 className="h-4 w-4" />
-                </button>
-              </div>
-              <div className="flex items-center gap-3 text-sm text-white">
-                <span>{list.items.length} {list.items.length === 1 ? 'item' : 'items'}</span>
-                {total > 0 && (
-                  <>
-                    <span>&middot;</span>
-                    <span className="text-elec-yellow font-semibold">£{total.toFixed(2)}</span>
-                  </>
+            return (
+              <button
+                key={list.id}
+                onClick={() => setSelectedList(list)}
+                className={cn(
+                  'w-full text-left p-4 bg-card rounded-xl border border-border/50 touch-manipulation',
+                  'hover:border-elec-yellow/50 active:scale-[0.98] transition-all'
                 )}
-                <span>&middot;</span>
-                <span>{formatRelativeTime(list.updated_at)}</span>
-              </div>
-            </button>
-          );
-        })}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="font-semibold text-white">{list.name}</h3>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteList(list.id);
+                    }}
+                    className="h-8 w-8 rounded-full flex items-center justify-center hover:bg-red-500/10 text-red-400 touch-manipulation"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="flex items-center gap-3 text-sm text-white">
+                  <span>
+                    {list.items.length} {list.items.length === 1 ? 'item' : 'items'}
+                  </span>
+                  {total > 0 && (
+                    <>
+                      <span>&middot;</span>
+                      <span className="text-elec-yellow font-semibold">£{total.toFixed(2)}</span>
+                    </>
+                  )}
+                  <span>&middot;</span>
+                  <span>{formatRelativeTime(list.updated_at)}</span>
+                </div>
+              </button>
+            );
+          })}
       </div>
     </div>
   );

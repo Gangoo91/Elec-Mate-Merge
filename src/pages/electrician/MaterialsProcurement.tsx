@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
   Zap,
@@ -54,8 +54,7 @@ function ProgressSteps({ currentStep }: { currentStep: ProcurementStep }) {
   const currentIdx = steps.indexOf(currentStep);
 
   // For photo flow, treat parsing_photo same as parsing_text
-  const adjustedIdx =
-    currentStep === 'parsing_photo' ? 0 : currentIdx;
+  const adjustedIdx = currentStep === 'parsing_photo' ? 0 : currentIdx;
 
   return (
     <div className="flex items-center gap-2 py-4">
@@ -76,11 +75,7 @@ function ProgressSteps({ currentStep }: { currentStep: ProcurementStep }) {
                       : 'bg-white/[0.05] text-white'
                 }`}
               >
-                {isDone ? (
-                  <CheckCircle2 className="h-4 w-4" />
-                ) : (
-                  <info.icon className="h-4 w-4" />
-                )}
+                {isDone ? <CheckCircle2 className="h-4 w-4" /> : <info.icon className="h-4 w-4" />}
               </div>
               <span
                 className={`text-xs font-medium ${
@@ -91,9 +86,7 @@ function ProgressSteps({ currentStep }: { currentStep: ProcurementStep }) {
               </span>
             </div>
             {i < steps.length - 1 && (
-              <div
-                className={`h-px flex-1 ${isDone ? 'bg-green-500' : 'bg-white/[0.1]'}`}
-              />
+              <div className={`h-px flex-1 ${isDone ? 'bg-green-500' : 'bg-white/[0.1]'}`} />
             )}
           </div>
         );
@@ -107,6 +100,7 @@ function ProgressSteps({ currentStep }: { currentStep: ProcurementStep }) {
  * Route: /electrician/materials/procurement
  */
 export default function MaterialsProcurement() {
+  const navigate = useNavigate();
   const location = useLocation();
   const locationState = location.state as {
     items?: ParsedMaterialItem[];
@@ -115,16 +109,8 @@ export default function MaterialsProcurement() {
   const preloadedItems = locationState?.items;
   const preloadText = locationState?.preloadText;
 
-  const {
-    step,
-    error,
-    parsedItems,
-    comparison,
-    processPhoto,
-    processText,
-    processItems,
-    reset,
-  } = useProcurementEngine();
+  const { step, error, parsedItems, comparison, processPhoto, processText, processItems, reset } =
+    useProcurementEngine();
 
   const [inputCollapsed, setInputCollapsed] = useState(false);
 
@@ -140,8 +126,32 @@ export default function MaterialsProcurement() {
     }
   }
 
-  const isProcessing = step === 'parsing_photo' || step === 'parsing_text' || step === 'comparing_prices';
+  const isProcessing =
+    step === 'parsing_photo' || step === 'parsing_text' || step === 'comparing_prices';
   const hasResults = step === 'done' && comparison;
+
+  const handleSendToQuote = () => {
+    if (!comparison) return;
+    const materialsSessionId = `materials_${crypto.randomUUID()}`;
+    const materialsData = {
+      source: 'procurement',
+      sourceLabel: 'Smart Procurement',
+      materials: comparison.items
+        .filter((item) => item.best_price !== null)
+        .map((item) => ({
+          id: crypto.randomUUID(),
+          description: item.name,
+          category: 'materials' as const,
+          quantity: item.quantity,
+          unitPrice: item.best_price!,
+          totalPrice: item.best_price! * item.quantity,
+          unit: item.unit || 'each',
+          notes: item.best_supplier ? `Best price: ${item.best_supplier}` : undefined,
+        })),
+    };
+    sessionStorage.setItem(materialsSessionId, JSON.stringify({ materialsData }));
+    navigate(`/electrician/quote-builder/create?materialsSessionId=${materialsSessionId}`);
+  };
 
   return (
     <div className="bg-background pb-20 sm:pb-8 min-h-screen">
@@ -165,9 +175,7 @@ export default function MaterialsProcurement() {
             </div>
             <div>
               <h1 className="text-xl sm:text-2xl font-bold">Smart Procurement</h1>
-              <p className="text-white text-sm">
-                Compare prices across 6 suppliers instantly
-              </p>
+              <p className="text-white text-sm">Compare prices across 6 suppliers instantly</p>
             </div>
           </div>
         </div>
@@ -225,11 +233,7 @@ export default function MaterialsProcurement() {
           <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-xl">
             <p className="text-sm text-red-400 font-medium mb-2">Something went wrong</p>
             <p className="text-sm text-white">{error}</p>
-            <Button
-              onClick={reset}
-              variant="outline"
-              className="mt-3 h-10 touch-manipulation"
-            >
+            <Button onClick={reset} variant="outline" className="mt-3 h-10 touch-manipulation">
               Try Again
             </Button>
           </div>
@@ -239,7 +243,10 @@ export default function MaterialsProcurement() {
         {hasResults && comparison && (
           <div className="space-y-4">
             {/* Optimised basket summary */}
-            <OptimisedBasketSummary basket={comparison.optimised_basket} />
+            <OptimisedBasketSummary
+              basket={comparison.optimised_basket}
+              onSendToQuote={handleSendToQuote}
+            />
 
             {/* Per-item comparison */}
             <ItemComparisonTable items={comparison.items} />

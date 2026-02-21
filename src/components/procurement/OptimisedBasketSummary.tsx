@@ -1,23 +1,23 @@
-import { TrendingDown, Store } from 'lucide-react';
+import { TrendingDown, Store, FileText } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import type { OptimisedBasket } from '@/types/procurement';
 
 interface OptimisedBasketSummaryProps {
   basket: OptimisedBasket;
+  onSendToQuote?: () => void;
 }
 
 /**
  * Summary card showing the optimised basket total, savings, and supplier split
  */
-export function OptimisedBasketSummary({ basket }: OptimisedBasketSummaryProps) {
+export function OptimisedBasketSummary({ basket, onSendToQuote }: OptimisedBasketSummaryProps) {
   return (
     <div className="bg-gradient-to-r from-yellow-500/10 to-green-500/10 border border-elec-yellow/30 rounded-2xl p-4 space-y-4">
       {/* Totals */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-sm font-medium text-white">Optimised Total</span>
-          <span className="text-2xl font-bold text-elec-yellow">
-            £{basket.total.toFixed(2)}
-          </span>
+          <span className="text-2xl font-bold text-elec-yellow">£{basket.total.toFixed(2)}</span>
         </div>
 
         {basket.savings > 0 && (
@@ -64,6 +64,17 @@ export function OptimisedBasketSummary({ basket }: OptimisedBasketSummaryProps) 
             ))}
           </div>
         </div>
+      )}
+
+      {/* Send to Quote CTA */}
+      {onSendToQuote && (
+        <Button
+          onClick={onSendToQuote}
+          className="w-full h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+        >
+          <FileText className="h-4 w-4 mr-2" />
+          Send to Quote Builder
+        </Button>
       )}
     </div>
   );

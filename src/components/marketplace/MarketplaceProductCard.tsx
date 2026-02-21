@@ -58,7 +58,7 @@ export function MarketplaceProductCard({
     } else if (status.includes('out')) {
       return { text: 'Out of Stock', color: 'text-red-500', bgColor: 'bg-red-500/20' };
     }
-    return { text: 'Check Stock', color: 'text-white', bgColor: 'bg-muted' };
+    return { text: 'Check Availability', color: 'text-white', bgColor: 'bg-muted' };
   };
 
   // Deal badge type
@@ -224,10 +224,18 @@ export function MarketplaceProductCard({
         )}
 
         {/* Stock status */}
-        <div className="flex items-center gap-1">
+        <a
+          href={product.product_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-1 touch-manipulation"
+        >
           <CheckCircle2 className={cn('h-3 w-3', stockInfo.color)} />
           <span className={cn('text-xs font-medium', stockInfo.color)}>{stockInfo.text}</span>
-        </div>
+          {stockInfo.text === 'Check Availability' && (
+            <ExternalLink className="h-2.5 w-2.5 text-white" />
+          )}
+        </a>
 
         {/* CTA Button - h-11 minimum touch target */}
         <Button

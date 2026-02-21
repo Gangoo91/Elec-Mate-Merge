@@ -11,8 +11,12 @@ import {
   Package,
   Clock,
   ShieldAlert,
+  ListChecks,
+  FileText,
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { useSiteSurveyAnalysis } from '@/hooks/useSiteSurveyAnalysis';
+import { useSurveyMaterialsActions } from '@/hooks/useSurveyMaterialsActions';
 import type { SiteVisit } from '@/types/siteVisit';
 import type { SurveyAnalysisResult, RegulatoryFlag, SurveyIssue } from '@/types/surveyAnalysis';
 
@@ -353,6 +357,8 @@ function AnalysisProgress({
 export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
   const { status, progress, currentStep, result, error, startAnalysis, isStarting } =
     useSiteSurveyAnalysis(visit.id);
+  const { saveToMaterialsList, sendToQuote } = useSurveyMaterialsActions();
+  const [isSavingList, setIsSavingList] = useState(false);
 
   const hasData = visit.rooms.length > 0;
 
@@ -413,6 +419,34 @@ export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
           {result.materials_list.length > 0 && (
             <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
               <MaterialsTable items={result.materials_list} />
+
+              {/* Materials action buttons */}
+              <div className="flex gap-2 mt-3 pt-3 border-t border-white/[0.06]">
+                <Button
+                  onClick={async () => {
+                    setIsSavingList(true);
+                    await saveToMaterialsList(visit, result.materials_list);
+                    setIsSavingList(false);
+                  }}
+                  disabled={isSavingList}
+                  variant="outline"
+                  className="flex-1 h-11 touch-manipulation border-elec-yellow/30 text-white"
+                >
+                  {isSavingList ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <ListChecks className="h-4 w-4 mr-2" />
+                  )}
+                  Save to Materials List
+                </Button>
+                <Button
+                  onClick={() => sendToQuote(visit, result.materials_list)}
+                  className="flex-1 h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Send to Quote
+                </Button>
+              </div>
             </div>
           )}
 
