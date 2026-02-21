@@ -7,7 +7,7 @@ const corsHeaders = {
     'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
-// Supplier deal/clearance page URLs
+// Supplier deal/clearance page URLs — organised by batch to stay within timeout
 const DEAL_SOURCES = [
   {
     name: 'Screwfix',
@@ -16,41 +16,104 @@ const DEAL_SOURCES = [
     urls: [
       'https://www.screwfix.com/c/clearance/cat6830001',
       'https://www.screwfix.com/c/tools/power-tool-deals/cat14300001',
+      'https://www.screwfix.com/c/tools/hand-tools/cat14290001?price_range=sale',
+      'https://www.screwfix.com/c/electrical-lighting/test-measurement/cat14210002?price_range=sale',
     ],
   },
   {
     name: 'Toolstation',
     slug: 'toolstation',
     supplierId: '8bf5c72e-31b6-42fa-81c3-8ed599e1b5ab',
-    urls: ['https://www.toolstation.com/clearance', 'https://www.toolstation.com/deals'],
+    urls: [
+      'https://www.toolstation.com/clearance',
+      'https://www.toolstation.com/deals',
+      'https://www.toolstation.com/power-tools/c150?sort=price_low&filter=deals',
+      'https://www.toolstation.com/hand-tools/c100?sort=price_low&filter=deals',
+    ],
   },
   {
     name: 'FFX',
     slug: 'ffx',
     supplierId: '004ddaef-0a8c-46f9-a455-7bd99c449f07',
-    urls: ['https://www.ffx.co.uk/offers'],
+    urls: [
+      'https://www.ffx.co.uk/offers',
+      'https://www.ffx.co.uk/offers/power-tools',
+      'https://www.ffx.co.uk/offers/hand-tools',
+    ],
   },
   {
     name: 'Machine Mart',
     slug: 'machine-mart',
     supplierId: 'ff978448-cd20-4cfb-85e3-9cd650be5615',
-    urls: ['https://www.machinemart.co.uk/offers/'],
+    urls: [
+      'https://www.machinemart.co.uk/offers/',
+      'https://www.machinemart.co.uk/c/power-tools/?sort=price_low&show=offers',
+      'https://www.machinemart.co.uk/c/hand-tools/?sort=price_low&show=offers',
+    ],
   },
   {
     name: 'RS Components',
     slug: 'rs-components',
     supplierId: '9435c0a3-1c89-4372-becb-a92f75145aa9',
-    urls: ['https://uk.rs-online.com/web/c/special-offers/'],
+    urls: [
+      'https://uk.rs-online.com/web/c/special-offers/',
+      'https://uk.rs-online.com/web/c/tools/hand-tools/?applied-dimensions=4294510846',
+    ],
+  },
+  {
+    name: 'CEF',
+    slug: 'cef',
+    supplierId: 'b73e4b5b-942f-4cf4-9c08-d406e50afb3e',
+    urls: [
+      'https://www.cef.co.uk/catalogue/special-offers',
+      'https://www.cef.co.uk/catalogue/tools-instruments',
+    ],
+  },
+  {
+    name: 'TLC Electrical',
+    slug: 'tlc-electrical',
+    supplierId: '1a86fc99-d6ae-4430-9838-fbe991a49e43',
+    urls: [
+      'https://www.tlc-direct.co.uk/Main_Index/Tools/index.html',
+      'https://www.tlc-direct.co.uk/Main_Index/Clearance/index.html',
+    ],
+  },
+  {
+    name: 'ElectricalDirect',
+    slug: 'electrical-direct',
+    supplierId: 'b4ebae44-4584-4bae-89e9-4804e8107b42',
+    urls: ['https://www.electricaldirect.co.uk/special-offers'],
   },
 ];
 
 // Tool-related keywords to filter deals (skip non-electrical items)
+// Expanded to catch more electrician-relevant products
 const TOOL_KEYWORDS = [
+  // Power tools
   'drill',
   'driver',
   'saw',
   'grinder',
   'sander',
+  'planer',
+  'router',
+  'jigsaw',
+  'reciprocating',
+  'sds',
+  'impact',
+  'rotary',
+  'combi drill',
+  'angle grinder',
+  'circular saw',
+  'mitre saw',
+  'chop saw',
+  'multi-tool',
+  'oscillating',
+  'heat gun',
+  'hot air gun',
+  'nail gun',
+  'brad nailer',
+  // Hand tools
   'plier',
   'screwdriver',
   'wrench',
@@ -61,16 +124,40 @@ const TOOL_KEYWORDS = [
   'cutter',
   'stripper',
   'crimper',
+  'ratchet',
+  'socket',
+  'hex key',
+  'allen key',
+  'tin snips',
+  'pipe cutter',
+  'wire cutter',
+  'side cutter',
+  'long nose',
+  'combination plier',
+  'adjustable',
+  'punch',
+  'file',
+  'rasp',
+  'hacksaw',
+  'junior hacksaw',
+  // Test equipment
   'tester',
   'meter',
   'multimeter',
   'voltage',
-  'clamp',
-  'insulated',
-  'ratchet',
-  'socket',
-  'bit',
-  'blade',
+  'clamp meter',
+  'insulation',
+  'continuity',
+  'rcd tester',
+  'loop impedance',
+  'pat tester',
+  'earth resistance',
+  'thermal imag',
+  'inspection camera',
+  'voltage indicator',
+  'proving unit',
+  'socket tester',
+  // Brands — electrician favourites
   'fluke',
   'megger',
   'kewtech',
@@ -83,11 +170,39 @@ const TOOL_KEYWORDS = [
   'wera',
   'bahco',
   'irwin',
-  'ck tools',
   'wiha',
+  'ck tools',
+  'c.k.',
+  'hikoki',
+  'metabo',
+  'festool',
+  'hilti',
+  'ryobi',
+  'einhell',
+  'trend',
+  'faithfull',
+  'draper',
+  'sealey',
+  'martindale',
+  'di-log',
+  'robin',
+  'seaward',
+  // Storage / carry
   'tool bag',
   'tool box',
   'tool case',
+  'tool roll',
+  'tool belt',
+  'packout',
+  'tstak',
+  'makpac',
+  'l-boxx',
+  'sortimo',
+  'systainer',
+  'tool chest',
+  'tool pouch',
+  'holster',
+  // PPE and safety
   'hard hat',
   'safety',
   'glove',
@@ -95,12 +210,55 @@ const TOOL_KEYWORDS = [
   'boot',
   'hi-vis',
   'ppe',
+  'ear defender',
+  'ear plug',
+  'knee pad',
+  'face shield',
+  'respirator',
+  'dust mask',
+  'safety glass',
+  // Measuring / layout
   'tape measure',
   'level',
+  'spirit level',
+  'laser level',
+  'laser measure',
+  'stud finder',
+  'detector',
+  'pipe detector',
+  // Lighting / access
   'torch',
   'headlamp',
+  'work light',
+  'inspection lamp',
+  'flood light',
+  'step ladder',
+  'platform',
+  // Electrician consumables
   'cable',
   'wire',
+  'conduit',
+  'trunking',
+  'gland',
+  'terminal',
+  'heat shrink',
+  'insulating tape',
+  'pvc tape',
+  // Fixings / access
+  'fish tape',
+  'draw wire',
+  'cable rod',
+  'wago',
+  'connector',
+  // Battery / charger
+  'battery',
+  'charger',
+  '18v',
+  '12v',
+  '36v',
+  '40v',
+  '54v',
+  'flexvolt',
 ];
 
 function isToolRelated(name: string): boolean {
@@ -262,15 +420,32 @@ serve(async (req: Request) => {
               ? Math.round(((originalPrice! - currentPrice) / originalPrice!) * 100)
               : product.discount_percentage || null;
 
-            // Determine category from keywords
+            // Determine category from keywords (broader matching)
             let category = 'hand-tools';
             const nameLower = product.name.toLowerCase();
-            if (nameLower.match(/drill|driver|saw|grinder|sander|impact/)) category = 'power-tools';
-            else if (nameLower.match(/tester|meter|multimeter|voltage|clamp|fluke|megger|kewtech/))
+            if (
+              nameLower.match(
+                /drill|driver|saw|grinder|sander|planer|router|jigsaw|sds|impact|rotary|combi|reciprocat|oscillat|multi-tool|heat gun|nail gun|brad nailer/
+              )
+            )
+              category = 'power-tools';
+            else if (
+              nameLower.match(
+                /tester|meter|multimeter|voltage|clamp meter|insulation|continuity|rcd|loop impedance|pat test|earth resist|thermal|inspection camera|proving unit|socket tester|fluke|megger|kewtech|martindale|di-log|robin|seaward/
+              )
+            )
               category = 'test-equipment';
-            else if (nameLower.match(/hard hat|safety|glove|goggle|boot|hi-vis|ppe/))
+            else if (
+              nameLower.match(
+                /hard hat|safety|glove|goggle|boot|hi-vis|ppe|ear defend|ear plug|knee pad|face shield|respirator|dust mask|safety glass/
+              )
+            )
               category = 'ppe';
-            else if (nameLower.match(/tool bag|tool box|tool case|packout|tstak|makpac/))
+            else if (
+              nameLower.match(
+                /tool bag|tool box|tool case|tool roll|tool belt|tool chest|tool pouch|holster|packout|tstak|makpac|l-boxx|sortimo|systainer/
+              )
+            )
               category = 'tool-storage';
 
             const sku = `DEAL-${source.slug}-${product.name
@@ -308,7 +483,7 @@ serve(async (req: Request) => {
           }
 
           // Insert coupon codes
-           
+
           for (const coupon of result.coupons || []) {
             if (!coupon.code) continue;
 
