@@ -206,7 +206,7 @@ const PATTestingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/pat-testing-module-4">
@@ -228,10 +228,10 @@ const PATTestingModule4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
             Test Equipment Types
           </h1>
-          <p className="text-white/60 text-base">
+          <p className="text-white text-base">
             Manual, automatic, and advanced PAT testing equipment
           </p>
-          <div className="flex items-center gap-4 text-sm text-white/50">
+          <div className="flex items-center gap-4 text-sm text-white">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" /> 10 min read
             </span>
@@ -283,7 +283,7 @@ const PATTestingModule4Section5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Advantages</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Low cost (100-200 pounds)</li>
                   <li>- Simple to use</li>
                   <li>- Minimal training required</li>
@@ -292,7 +292,7 @@ const PATTestingModule4Section5 = () => {
               </div>
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                 <h4 className="text-red-400 font-semibold mb-2">Limitations</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- No actual readings displayed</li>
                   <li>- Cannot identify marginal results</li>
                   <li>- No data storage</li>
@@ -300,7 +300,7 @@ const PATTestingModule4Section5 = () => {
                 </ul>
               </div>
             </div>
-            <p className="text-white/60 text-sm italic">
+            <p className="text-white text-sm italic">
               Best for: Very occasional testing, quick go/no-go checks, budget-conscious small
               users.
             </p>
@@ -322,7 +322,7 @@ const PATTestingModule4Section5 = () => {
               <h4 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2">
                 <Monitor className="h-5 w-5" /> Key Features
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>- Digital display showing actual readings (ohms, megohms, mA)</li>
                 <li>- Pass/fail indication against programmed limits</li>
                 <li>- Memory for storing test results</li>
@@ -334,13 +334,13 @@ const PATTestingModule4Section5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 mt-4">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="text-blue-400 font-semibold mb-2">Typical Price Range</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   300-600 pounds. Good balance of features and cost for regular testing.
                 </p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Best For</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Regular testing, need for documentation, fault diagnosis, professional use.
                 </p>
               </div>
@@ -360,7 +360,7 @@ const PATTestingModule4Section5 = () => {
                 <h4 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2">
                   <Smartphone className="h-5 w-5" /> Advanced Features
                 </h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Built-in asset database</li>
                   <li>- Barcode/QR code scanning</li>
                   <li>- Automatic report generation</li>
@@ -373,7 +373,7 @@ const PATTestingModule4Section5 = () => {
                 <h4 className="text-blue-400 font-semibold mb-2 flex items-center gap-2">
                   <FileCheck className="h-5 w-5" /> Documentation
                 </h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Customisable certificates</li>
                   <li>- Compliance reports</li>
                   <li>- Trend analysis</li>
@@ -383,7 +383,7 @@ const PATTestingModule4Section5 = () => {
                 </ul>
               </div>
             </div>
-            <p className="text-white/60 text-sm italic mt-4">
+            <p className="text-white text-sm italic mt-4">
               Price range: 600-1500+ pounds. Best for: High-volume testing, professional
               contractors, organisations with strict documentation requirements.
             </p>
@@ -403,7 +403,7 @@ const PATTestingModule4Section5 = () => {
               <h4 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2">
                 <Gauge className="h-5 w-5" /> Calibration Requirements
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   <strong>Frequency:</strong> Annual calibration is typical minimum
                 </li>
@@ -421,7 +421,7 @@ const PATTestingModule4Section5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 mt-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Daily Checks</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Visual inspection of leads</li>
                   <li>- Check lead connections</li>
                   <li>- Verify battery condition</li>
@@ -430,7 +430,7 @@ const PATTestingModule4Section5 = () => {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="text-blue-400 font-semibold mb-2">Before Calibration Due</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Plan ahead for service</li>
                   <li>- Consider backup equipment</li>
                   <li>- Budget for calibration cost</li>
@@ -503,7 +503,7 @@ const PATTestingModule4Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -551,12 +551,12 @@ const PATTestingModule4Section5 = () => {
 
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-white">Module 4.5 Quiz</h2>
-          <p className="text-white/60">Test your understanding of PAT testing equipment.</p>
+          <p className="text-white">Test your understanding of PAT testing equipment.</p>
           <Quiz questions={quizQuestions} moduleId="pat-m4s5" />
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="../section-4" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-4-section-4" className="flex-1">
             <Button
               variant="outline"
               className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
@@ -564,7 +564,7 @@ const PATTestingModule4Section5 = () => {
               <ChevronLeft className="h-4 w-4" /> Previous: Touch Current
             </Button>
           </Link>
-          <Link to="../section-6" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-4-section-6" className="flex-1">
             <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
               Next: Interpreting Results <ChevronRight className="h-4 w-4" />
             </Button>

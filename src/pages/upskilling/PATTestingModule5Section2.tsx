@@ -202,7 +202,7 @@ const PATTestingModule5Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/pat-testing-module-5">
@@ -224,11 +224,11 @@ const PATTestingModule5Section2 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
             Test Record Keeping & Legal Requirements
           </h1>
-          <p className="text-white/60 text-base">
+          <p className="text-white text-base">
             Understanding your legal obligations and maintaining comprehensive records for
             compliance and protection
           </p>
-          <div className="flex items-center gap-4 text-sm text-white/50">
+          <div className="flex items-center gap-4 text-sm text-white">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" /> 15 min read
             </span>
@@ -286,12 +286,12 @@ const PATTestingModule5Section2 = () => {
               <h4 className="font-semibold text-red-400 mb-2">
                 Health and Safety at Work Act 1974
               </h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Section 2 places a general duty on employers to ensure, so far as is reasonably
                 practicable, the health, safety and welfare of employees. This includes providing
                 safe equipment.
               </p>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>- Section 2(1): General duty to employees</li>
                 <li>- Section 2(2)(a): Safe plant and systems of work</li>
                 <li>- Section 3: Duty to non-employees (visitors, contractors)</li>
@@ -303,15 +303,15 @@ const PATTestingModule5Section2 = () => {
               <h4 className="font-semibold text-blue-400 mb-2">
                 Electricity at Work Regulations 1989 (EAWR)
               </h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 These regulations specifically address electrical safety. Regulation 4(2) is
                 particularly relevant:
               </p>
-              <blockquote className="text-white/70 text-sm italic border-l-2 border-blue-500 pl-4 mb-3">
+              <blockquote className="text-white text-sm italic border-l-2 border-blue-500 pl-4 mb-3">
                 "As may be necessary to prevent danger, all systems shall be maintained so as to
                 prevent, so far as is reasonably practicable, such danger."
               </blockquote>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>- Regulation 4(2): Maintenance to prevent danger</li>
                 <li>- Regulation 4(3): Work on equipment must be safe</li>
                 <li>- Applies to all work activities</li>
@@ -324,28 +324,28 @@ const PATTestingModule5Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h5 className="text-white font-medium mb-1">Reasonably Practicable</h5>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Balancing risk reduction against cost, time and effort. You must do what's
                     reasonable, not impossible.
                   </p>
                 </div>
                 <div>
                   <h5 className="text-white font-medium mb-1">Due Diligence</h5>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Taking all reasonable steps to prevent harm. Records demonstrate you've
                     exercised due diligence.
                   </p>
                 </div>
                 <div>
                   <h5 className="text-white font-medium mb-1">Duty Holder</h5>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Person(s) responsible for electrical safety - typically employers,
                     self-employed, or premises controllers.
                   </p>
                 </div>
                 <div>
                   <h5 className="text-white font-medium mb-1">Competent Person</h5>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Someone with suitable training, knowledge and experience to conduct PAT testing
                     safely.
                   </p>
@@ -376,7 +376,7 @@ const PATTestingModule5Section2 = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <h5 className="font-medium text-white">Equipment Identification</h5>
-                  <ul className="text-white/70 text-sm mt-1 space-y-1">
+                  <ul className="text-white text-sm mt-1 space-y-1">
                     <li>- Unique asset ID number</li>
                     <li>- Equipment description/type</li>
                     <li>- Manufacturer and model</li>
@@ -386,7 +386,7 @@ const PATTestingModule5Section2 = () => {
                 </div>
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <h5 className="font-medium text-white">Test Information</h5>
-                  <ul className="text-white/70 text-sm mt-1 space-y-1">
+                  <ul className="text-white text-sm mt-1 space-y-1">
                     <li>- Date of test</li>
                     <li>- Tester name and signature/ID</li>
                     <li>- Test equipment used (with calibration date)</li>
@@ -396,7 +396,7 @@ const PATTestingModule5Section2 = () => {
                 </div>
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <h5 className="font-medium text-white">Results and Actions</h5>
-                  <ul className="text-white/70 text-sm mt-1 space-y-1">
+                  <ul className="text-white text-sm mt-1 space-y-1">
                     <li>- Pass/Fail outcome</li>
                     <li>- Next test due date</li>
                     <li>- Remedial actions required</li>
@@ -410,7 +410,7 @@ const PATTestingModule5Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-green-400 mb-2">Good Practice</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Record actual test values, not just pass/fail</li>
                   <li>- Include equipment photographs</li>
                   <li>- Document any repairs made</li>
@@ -420,7 +420,7 @@ const PATTestingModule5Section2 = () => {
               </div>
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-red-400 mb-2">Poor Practice</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Recording only pass/fail status</li>
                   <li>- Missing tester identification</li>
                   <li>- No equipment serial numbers</li>
@@ -450,13 +450,13 @@ const PATTestingModule5Section2 = () => {
                 <h4 className="font-semibold text-white mb-3">Paper-Based Systems</h4>
                 <div className="space-y-2 text-sm">
                   <p className="text-green-400 font-medium">Advantages:</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Low initial cost</li>
                     <li>- No technical knowledge required</li>
                     <li>- Immediate hard copy evidence</li>
                   </ul>
                   <p className="text-red-400 font-medium mt-2">Disadvantages:</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Difficult to search and analyse</li>
                     <li>- Risk of loss or damage</li>
                     <li>- Storage space requirements</li>
@@ -467,14 +467,14 @@ const PATTestingModule5Section2 = () => {
                 <h4 className="font-semibold text-white mb-3">Electronic Systems</h4>
                 <div className="space-y-2 text-sm">
                   <p className="text-green-400 font-medium">Advantages:</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Easy searching and reporting</li>
                     <li>- Automatic reminders for retests</li>
                     <li>- Integration with PAT testers</li>
                     <li>- Cloud backup options</li>
                   </ul>
                   <p className="text-red-400 font-medium mt-2">Disadvantages:</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Initial setup costs</li>
                     <li>- Training requirements</li>
                     <li>- Data security considerations</li>
@@ -488,7 +488,7 @@ const PATTestingModule5Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-3 text-sm">
                 <div>
                   <h5 className="font-medium text-white">Security Features</h5>
-                  <ul className="text-white/70 mt-1 space-y-1">
+                  <ul className="text-white mt-1 space-y-1">
                     <li>- User authentication and access control</li>
                     <li>- Audit trail of changes</li>
                     <li>- Regular automated backups</li>
@@ -497,7 +497,7 @@ const PATTestingModule5Section2 = () => {
                 </div>
                 <div>
                   <h5 className="font-medium text-white">Functionality</h5>
-                  <ul className="text-white/70 mt-1 space-y-1">
+                  <ul className="text-white mt-1 space-y-1">
                     <li>- Report generation capability</li>
                     <li>- Retest scheduling and alerts</li>
                     <li>- Barcode/QR code integration</li>
@@ -524,19 +524,19 @@ const PATTestingModule5Section2 = () => {
               <h4 className="font-semibold text-elec-yellow mb-2">Recommended Retention Periods</h4>
               <div className="space-y-3 text-sm">
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-white/70">Active equipment records</span>
+                  <span className="text-white">Active equipment records</span>
                   <span className="text-white font-medium">Lifetime of equipment + 5 years</span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-white/70">Disposed equipment records</span>
+                  <span className="text-white">Disposed equipment records</span>
                   <span className="text-white font-medium">5 years from disposal date</span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-white/70">Records following an incident</span>
+                  <span className="text-white">Records following an incident</span>
                   <span className="text-white font-medium">Indefinitely / as advised by legal</span>
                 </div>
                 <div className="flex justify-between items-start">
-                  <span className="text-white/70">Calibration certificates</span>
+                  <span className="text-white">Calibration certificates</span>
                   <span className="text-white font-medium">5 years minimum</span>
                 </div>
               </div>
@@ -546,7 +546,7 @@ const PATTestingModule5Section2 = () => {
               <h4 className="font-semibold text-red-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" /> Important Warning
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Never destroy records following an accident or incident, or when legal action is
                 anticipated. Such destruction could be viewed as spoliation of evidence and may
                 result in adverse legal consequences.
@@ -574,29 +574,29 @@ const PATTestingModule5Section2 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">Systematic approach to electrical safety</span>
+                    <span className="text-white">Systematic approach to electrical safety</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">Risk-based testing frequency</span>
+                    <span className="text-white">Risk-based testing frequency</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">Competent persons conducting tests</span>
+                    <span className="text-white">Competent persons conducting tests</span>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">Proper calibrated equipment used</span>
+                    <span className="text-white">Proper calibrated equipment used</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">Failed equipment was removed from service</span>
+                    <span className="text-white">Failed equipment was removed from service</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Shield className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">Ongoing compliance and improvement</span>
+                    <span className="text-white">Ongoing compliance and improvement</span>
                   </div>
                 </div>
               </div>
@@ -607,7 +607,7 @@ const PATTestingModule5Section2 = () => {
               <div className="space-y-3 text-sm">
                 <div>
                   <h5 className="font-medium text-white">HSE Investigation</h5>
-                  <p className="text-white/70 mt-1">
+                  <p className="text-white mt-1">
                     Inspectors will examine your testing regime, records, and competency. Good
                     records showing a systematic approach demonstrate compliance with Regulation 4
                     of EAWR.
@@ -615,14 +615,14 @@ const PATTestingModule5Section2 = () => {
                 </div>
                 <div>
                   <h5 className="font-medium text-white">Insurance Claim</h5>
-                  <p className="text-white/70 mt-1">
+                  <p className="text-white mt-1">
                     Insurers may require evidence of maintenance and testing. Claims can be denied
                     if you cannot demonstrate reasonable care through documented testing.
                   </p>
                 </div>
                 <div>
                   <h5 className="font-medium text-white">Civil Action</h5>
-                  <p className="text-white/70 mt-1">
+                  <p className="text-white mt-1">
                     In personal injury claims, records help demonstrate the foreseeability of the
                     hazard and the reasonable steps taken to prevent harm.
                   </p>
@@ -640,7 +640,7 @@ const PATTestingModule5Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -680,14 +680,14 @@ const PATTestingModule5Section2 = () => {
 
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-white">Module 5.2 Quiz</h2>
-          <p className="text-white/60">
+          <p className="text-white">
             Test your understanding of record keeping and legal requirements.
           </p>
           <Quiz questions={quizQuestions} moduleId="pat-m5s2" />
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="../section-1" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-5-section-1" className="flex-1">
             <Button
               variant="outline"
               className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
@@ -695,7 +695,7 @@ const PATTestingModule5Section2 = () => {
               <ChevronLeft className="h-4 w-4" /> Previous: PAT Labels
             </Button>
           </Link>
-          <Link to="../section-3" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-5-section-3" className="flex-1">
             <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
               Next: Asset Register Management <ChevronRight className="h-4 w-4" />
             </Button>

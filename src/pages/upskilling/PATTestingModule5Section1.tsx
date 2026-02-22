@@ -206,7 +206,7 @@ const PATTestingModule5Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/pat-testing-module-5">
@@ -228,10 +228,8 @@ const PATTestingModule5Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
             PAT Labels: Pass/Fail, Retest Dates, Asset ID
           </h1>
-          <p className="text-white/60 text-base">
-            Labelling systems and identification requirements
-          </p>
-          <div className="flex items-center gap-4 text-sm text-white/50">
+          <p className="text-white text-base">Labelling systems and identification requirements</p>
+          <div className="flex items-center gap-4 text-sm text-white">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" /> 12 min read
             </span>
@@ -281,7 +279,7 @@ const PATTestingModule5Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Visual Evidence</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Shows equipment has been tested</li>
                   <li>- Indicates when the next test is due</li>
                   <li>- Identifies who performed the test</li>
@@ -290,7 +288,7 @@ const PATTestingModule5Section1 = () => {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="text-blue-400 font-semibold mb-2">Control Purposes</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Prevents use of untested equipment</li>
                   <li>- Identifies failed equipment clearly</li>
                   <li>- Links to test records via asset ID</li>
@@ -317,7 +315,7 @@ const PATTestingModule5Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium mb-1">Essential:</p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>- Date of test (DD/MM/YYYY)</li>
                     <li>- Date of next test (retest date)</li>
                     <li>- Tester identification</li>
@@ -326,7 +324,7 @@ const PATTestingModule5Section1 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Recommended:</p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>- Asset/equipment ID number</li>
                     <li>- Company name or logo</li>
                     <li>- Barcode or QR code</li>
@@ -337,7 +335,7 @@ const PATTestingModule5Section1 = () => {
             </div>
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 mt-4">
               <h4 className="text-blue-400 font-medium mb-2">Tester Identification</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Tester ID can be initials, full name, or an ID number. The key is that it allows
                 tracing back to who performed the test if questions arise. Some organisations use
                 numbered ID cards.
@@ -357,7 +355,7 @@ const PATTestingModule5Section1 = () => {
                 <h4 className="text-green-400 font-semibold mb-2 flex items-center gap-2">
                   <CheckCircle className="h-5 w-5" /> PASS Labels
                 </h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Usually green colour scheme</li>
                   <li>- Clear PASS or TESTED indication</li>
                   <li>- Shows next test due date</li>
@@ -369,7 +367,7 @@ const PATTestingModule5Section1 = () => {
                 <h4 className="text-red-400 font-semibold mb-2 flex items-center gap-2">
                   <AlertTriangle className="h-5 w-5" /> FAIL Labels
                 </h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Usually red colour scheme</li>
                   <li>- Clear FAIL or DO NOT USE</li>
                   <li>- Applied immediately on failure</li>
@@ -383,7 +381,7 @@ const PATTestingModule5Section1 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400" />
                 <h4 className="text-red-400 font-semibold">Important</h4>
               </div>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Never leave failed equipment unlabelled. Always apply a clear FAIL label and
                 physically prevent use (remove plug, isolate, or secure away) to prevent accidental
                 use by others.
@@ -409,35 +407,35 @@ const PATTestingModule5Section1 = () => {
               </h4>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Simple sequential:</strong>
                   </p>
-                  <p className="text-white/60 text-sm font-mono">001, 002, 003...</p>
+                  <p className="text-white text-sm font-mono">001, 002, 003...</p>
                 </div>
                 <div>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Location prefixed:</strong>
                   </p>
-                  <p className="text-white/60 text-sm font-mono">OFF-001, WKS-001, KIT-001</p>
+                  <p className="text-white text-sm font-mono">OFF-001, WKS-001, KIT-001</p>
                 </div>
                 <div>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Department coded:</strong>
                   </p>
-                  <p className="text-white/60 text-sm font-mono">IT-PC-001, MNT-TL-001</p>
+                  <p className="text-white text-sm font-mono">IT-PC-001, MNT-TL-001</p>
                 </div>
                 <div>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Year prefixed:</strong>
                   </p>
-                  <p className="text-white/60 text-sm font-mono">2024-001, 2024-002</p>
+                  <p className="text-white text-sm font-mono">2024-001, 2024-002</p>
                 </div>
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-4 mt-4">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="text-blue-400 font-semibold mb-2">Barcode/QR Benefits</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Fast, error-free data entry</li>
                   <li>- Links directly to records</li>
                   <li>- Speeds up testing process</li>
@@ -446,7 +444,7 @@ const PATTestingModule5Section1 = () => {
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Key Principles</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- One ID per equipment for life</li>
                   <li>- Never reuse numbers</li>
                   <li>- Keep system consistent</li>
@@ -471,7 +469,7 @@ const PATTestingModule5Section1 = () => {
                 <h4 className="text-elec-yellow font-semibold mb-2 flex items-center gap-2">
                   <Palette className="h-5 w-5" /> Label Materials
                 </h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     <strong className="text-white">Paper:</strong> Low cost, office use only
                   </li>
@@ -490,7 +488,7 @@ const PATTestingModule5Section1 = () => {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="text-blue-400 font-semibold mb-2">Placement Guidelines</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Visible when equipment is in use</li>
                   <li>- Clean, dry, flat surface</li>
                   <li>- Away from heat sources</li>
@@ -560,7 +558,7 @@ const PATTestingModule5Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -610,7 +608,7 @@ const PATTestingModule5Section1 = () => {
 
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-white">Module 5.1 Quiz</h2>
-          <p className="text-white/60">Test your understanding of PAT labelling systems.</p>
+          <p className="text-white">Test your understanding of PAT labelling systems.</p>
           <Quiz questions={quizQuestions} moduleId="pat-m5s1" />
         </section>
 
@@ -623,7 +621,7 @@ const PATTestingModule5Section1 = () => {
               <ChevronLeft className="h-4 w-4" /> Previous: Interpreting Results
             </Button>
           </Link>
-          <Link to="../section-2" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-5-section-2" className="flex-1">
             <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
               Next: Test Record Keeping <ChevronRight className="h-4 w-4" />
             </Button>

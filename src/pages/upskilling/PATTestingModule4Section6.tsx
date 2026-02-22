@@ -213,7 +213,7 @@ const PATTestingModule4Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/pat-testing-module-4">
@@ -235,8 +235,8 @@ const PATTestingModule4Section6 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
             Interpreting Results and Common Failures
           </h1>
-          <p className="text-white/60 text-base">Understanding test results and failure modes</p>
-          <div className="flex items-center gap-4 text-sm text-white/50">
+          <p className="text-white text-base">Understanding test results and failure modes</p>
+          <div className="flex items-center gap-4 text-sm text-white">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" /> 12 min read
             </span>
@@ -289,10 +289,10 @@ const PATTestingModule4Section6 = () => {
                   <ThumbsUp className="h-5 w-5 text-green-400" />
                   <h4 className="text-green-400 font-semibold">PASS</h4>
                 </div>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   All readings within acceptable limits with clear margin.
                 </p>
-                <p className="text-white/60 text-sm italic">
+                <p className="text-white text-sm italic">
                   Action: Apply pass label, record result, schedule next test date.
                 </p>
               </div>
@@ -301,10 +301,10 @@ const PATTestingModule4Section6 = () => {
                   <Search className="h-5 w-5 text-yellow-400" />
                   <h4 className="text-yellow-400 font-semibold">BORDERLINE / INVESTIGATE</h4>
                 </div>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Reading close to limits or showing unusual pattern.
                 </p>
-                <p className="text-white/60 text-sm italic">
+                <p className="text-white text-sm italic">
                   Action: Investigate cause, check connections, consider reduced testing interval,
                   monitor trend.
                 </p>
@@ -314,8 +314,8 @@ const PATTestingModule4Section6 = () => {
                   <XCircle className="h-5 w-5 text-red-400" />
                   <h4 className="text-red-400 font-semibold">FAIL</h4>
                 </div>
-                <p className="text-white/70 text-sm mb-2">Reading exceeds acceptable limits.</p>
-                <p className="text-white/60 text-sm italic">
+                <p className="text-white text-sm mb-2">Reading exceeds acceptable limits.</p>
+                <p className="text-white text-sm italic">
                   Action: Apply fail label, withdraw from use immediately, investigate cause, repair
                   or replace.
                 </p>
@@ -342,7 +342,7 @@ const PATTestingModule4Section6 = () => {
                     <th className="text-left py-3 px-2 text-white font-semibold">Fix</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/70">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-3 px-2">High reading</td>
                     <td className="py-3 px-2">Loose terminal in plug</td>
@@ -368,7 +368,7 @@ const PATTestingModule4Section6 = () => {
             </div>
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4 mt-4">
               <h4 className="text-elec-yellow font-medium mb-2">Pro Tip</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Before failing equipment for high earth continuity, check that you used lead null
                 compensation. Test lead resistance can add 0.1-0.2 ohms to readings.
               </p>
@@ -386,7 +386,7 @@ const PATTestingModule4Section6 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="text-blue-400 font-semibold mb-2">Environmental Causes</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Moisture ingress</li>
                   <li>- Condensation buildup</li>
                   <li>- Contamination (dust, oil)</li>
@@ -395,7 +395,7 @@ const PATTestingModule4Section6 = () => {
               </div>
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                 <h4 className="text-red-400 font-semibold mb-2">Physical Causes</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Cracked or damaged insulation</li>
                   <li>- Overheating damage</li>
                   <li>- Age-related breakdown</li>
@@ -405,7 +405,7 @@ const PATTestingModule4Section6 = () => {
             </div>
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4 mt-4">
               <h4 className="text-yellow-400 font-semibold mb-2">Moisture-Related Failures</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 If moisture is suspected, allow the appliance to dry thoroughly (in a warm, dry
                 place) and retest. If the reading improves significantly, moisture was likely the
                 cause - but investigate why moisture entered.
@@ -430,7 +430,7 @@ const PATTestingModule4Section6 = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">Immediate Actions</h4>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Apply FAIL label clearly. Remove plug or disable so equipment cannot be used.
                     Inform the user/owner.
                   </p>
@@ -442,7 +442,7 @@ const PATTestingModule4Section6 = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">Investigation</h4>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Identify the specific failure mode. Check for obvious causes (loose terminals,
                     visible damage). Determine if repair is feasible.
                   </p>
@@ -454,7 +454,7 @@ const PATTestingModule4Section6 = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">Repair or Replace Decision</h4>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Consider cost of repair vs replacement. Age and condition of equipment.
                     Frequency of previous failures.
                   </p>
@@ -466,7 +466,7 @@ const PATTestingModule4Section6 = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-semibold">After Repair</h4>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Perform full retest (not just the failed test). Document the repair and retest.
                     Apply new pass label if successful.
                   </p>
@@ -487,7 +487,7 @@ const PATTestingModule4Section6 = () => {
             <p>Comparing results over time can identify problems before they cause failures:</p>
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="text-elec-yellow font-semibold mb-2">What to Look For</h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>- Gradually decreasing insulation resistance over several tests</li>
                 <li>- Earth continuity readings increasing slightly each time</li>
                 <li>- Equipment that fails repeatedly after repair</li>
@@ -497,14 +497,14 @@ const PATTestingModule4Section6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 mt-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Healthy Trend</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Stable readings over multiple test cycles. Values well within limits with
                   consistent margins.
                 </p>
               </div>
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                 <h4 className="text-red-400 font-semibold mb-2">Warning Signs</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Progressive deterioration. Readings approaching limits. Increasing failure rates.
                 </p>
               </div>
@@ -570,7 +570,7 @@ const PATTestingModule4Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -618,14 +618,14 @@ const PATTestingModule4Section6 = () => {
 
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-white">Module 4.6 Quiz</h2>
-          <p className="text-white/60">
+          <p className="text-white">
             Test your understanding of result interpretation and failure handling.
           </p>
           <Quiz questions={quizQuestions} moduleId="pat-m4s6" />
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="../section-5" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-4-section-5" className="flex-1">
             <Button
               variant="outline"
               className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"

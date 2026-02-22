@@ -189,7 +189,7 @@ const PATTestingModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/pat-testing-module-4">
@@ -203,7 +203,7 @@ const PATTestingModule4Section2 = () => {
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
         {/* Centered Title Header */}
-        <header className="text-center mb-12">
+        <header className="mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
             <Zap className="h-4 w-4" />
             <span>Module 4 Section 2</span>
@@ -211,7 +211,7 @@ const PATTestingModule4Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Insulation Resistance Testing
           </h1>
-          <p className="text-white/80">Testing insulation integrity in Class I and II appliances</p>
+          <p className="text-white">Testing insulation integrity in Class I and II appliances</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -234,7 +234,7 @@ const PATTestingModule4Section2 = () => {
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <p className="text-elec-yellow/90 text-sm font-medium mb-2">Spot it / Use it</p>
+            <p className="text-elec-yellow text-sm font-medium mb-2">Spot it / Use it</p>
             <ul className="text-sm text-white space-y-1">
               <li>
                 <strong>L-N connected:</strong> Tested to earth (Class I)
@@ -546,7 +546,7 @@ const PATTestingModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -597,10 +597,10 @@ const PATTestingModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-1">
+            <Link to="/electrician/upskilling/pat-testing-module-4-section-1">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
@@ -610,7 +610,7 @@ const PATTestingModule4Section2 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-3">
+            <Link to="/electrician/upskilling/pat-testing-module-4-section-3">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

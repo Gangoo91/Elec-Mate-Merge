@@ -201,7 +201,7 @@ const PATTestingModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/pat-testing-module-5">
@@ -223,11 +223,11 @@ const PATTestingModule5Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white leading-tight">
             Asset Register Creation & Management
           </h1>
-          <p className="text-white/60 text-base">
+          <p className="text-white text-base">
             Building and maintaining a comprehensive database of all portable appliances for
             effective testing management
           </p>
-          <div className="flex items-center gap-4 text-sm text-white/50">
+          <div className="flex items-center gap-4 text-sm text-white">
             <span className="flex items-center gap-1">
               <Clock className="h-4 w-4" /> 15 min read
             </span>
@@ -287,21 +287,21 @@ const PATTestingModule5Section3 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <Search className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">
+                    <span className="text-white">
                       <strong className="text-white">Identification:</strong> Uniquely identifies
                       every testable item
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <MapPin className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">
+                    <span className="text-white">
                       <strong className="text-white">Location:</strong> Records where equipment is
                       located
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Database className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">
+                    <span className="text-white">
                       <strong className="text-white">History:</strong> Tracks test history and
                       results
                     </span>
@@ -310,21 +310,21 @@ const PATTestingModule5Section3 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <Layers className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">
+                    <span className="text-white">
                       <strong className="text-white">Scheduling:</strong> Enables test due date
                       management
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <Layers className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">
+                    <span className="text-white">
                       <strong className="text-white">Classification:</strong> Groups equipment by
                       type/risk
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/70">
+                    <span className="text-white">
                       <strong className="text-white">Compliance:</strong> Demonstrates systematic
                       approach
                     </span>
@@ -335,7 +335,7 @@ const PATTestingModule5Section3 = () => {
 
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-blue-400 mb-2">Minimum Data Fields</h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white/70">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white">
                 <div>- Asset ID number</div>
                 <div>- Description/type</div>
                 <div>- Manufacturer</div>
@@ -376,7 +376,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-white">Plan the Walkthrough</h5>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       Obtain floor plans or site maps. Schedule access to all areas including
                       restricted spaces, storage rooms, and workshops. Inform department managers.
                     </p>
@@ -388,7 +388,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-white">Define Naming Conventions</h5>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       Establish asset ID format before starting. Example: LOC-DEPT-0001 (Building A,
                       IT Department, item 1). Consistent format aids sorting and reporting.
                     </p>
@@ -400,7 +400,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-white">Conduct Systematic Walkthrough</h5>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       Work room-by-room, recording every portable appliance. Check desks, under
                       desks, storage areas, kitchens, workshops, and reception areas.
                     </p>
@@ -412,7 +412,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-white">Record All Details</h5>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       Capture all required data fields. Take photos of nameplates if needed. Note
                       equipment condition and any visible damage.
                     </p>
@@ -424,7 +424,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-white">Apply Asset Labels</h5>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       Attach permanent labels with asset ID to each item. Position labels where
                       visible but protected from wear.
                     </p>
@@ -436,7 +436,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <h5 className="font-medium text-white">Enter Data and Verify</h5>
-                    <p className="text-white/70 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       Input all data into your chosen system. Review entries for completeness and
                       accuracy before going live.
                     </p>
@@ -449,7 +449,7 @@ const PATTestingModule5Section3 = () => {
               <h4 className="font-semibold text-orange-400 mb-2 flex items-center gap-2">
                 <AlertTriangle className="h-5 w-5" /> Commonly Missed Items
               </h4>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white/70">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white">
                 <div>- Phone chargers</div>
                 <div>- Desk fans</div>
                 <div>- Personal heaters</div>
@@ -487,12 +487,12 @@ const PATTestingModule5Section3 = () => {
                   <QrCode className="h-5 w-5 text-elec-yellow" />
                   <h4 className="font-semibold text-white">Barcode/QR Code Systems</h4>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Most efficient for medium to large organisations.
                 </p>
                 <div className="text-sm space-y-2">
                   <p className="text-green-400 font-medium">Advantages:</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Fast scanning reduces data entry time</li>
                     <li>- Eliminates transcription errors</li>
                     <li>- Links directly to database record</li>
@@ -502,12 +502,12 @@ const PATTestingModule5Section3 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h4 className="font-semibold text-white mb-3">Numeric/Alphanumeric Labels</h4>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Suitable for smaller organisations or manual systems.
                 </p>
                 <div className="text-sm space-y-2">
                   <p className="text-green-400 font-medium">Advantages:</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Low cost implementation</li>
                     <li>- No special equipment needed</li>
                     <li>- Human-readable at a glance</li>
@@ -520,7 +520,7 @@ const PATTestingModule5Section3 = () => {
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
               <h4 className="font-semibold text-elec-yellow mb-2">Recommended ID Format</h4>
               <div className="text-sm space-y-2">
-                <p className="text-white/70">
+                <p className="text-white">
                   Structure:{' '}
                   <code className="bg-black/30 px-2 py-0.5 rounded text-white">
                     [SITE]-[DEPT]-[NUMBER]
@@ -529,7 +529,7 @@ const PATTestingModule5Section3 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 mt-3">
                   <div>
                     <p className="font-medium text-white">Examples:</p>
-                    <ul className="text-white/70 mt-1 space-y-1">
+                    <ul className="text-white mt-1 space-y-1">
                       <li>- HQ-IT-0001 (Head Office, IT, item 1)</li>
                       <li>- WH-OPS-0156 (Warehouse, Operations)</li>
                       <li>- BR2-ADMIN-0023 (Branch 2, Admin)</li>
@@ -537,7 +537,7 @@ const PATTestingModule5Section3 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Benefits:</p>
-                    <ul className="text-white/70 mt-1 space-y-1">
+                    <ul className="text-white mt-1 space-y-1">
                       <li>- Location immediately identifiable</li>
                       <li>- Easy sorting by department</li>
                       <li>- Unique across all sites</li>
@@ -566,28 +566,28 @@ const PATTestingModule5Section3 = () => {
               <div className="space-y-4">
                 <div className="border-l-2 border-green-500 pl-3">
                   <h5 className="font-medium text-green-400">Adding New Equipment</h5>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Establish a process to capture new equipment at purchase or arrival. Goods
                     receiving, procurement, or IT departments should trigger registration.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <h5 className="font-medium text-blue-400">Recording Disposals</h5>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     When equipment is disposed, update the register with disposal date, method, and
                     reason. Never delete records - mark as disposed and retain.
                   </p>
                 </div>
                 <div className="border-l-2 border-orange-500 pl-3">
                   <h5 className="font-medium text-orange-400">Location Changes</h5>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Update register when equipment moves. Consider a sign-out/sign-in system for
                     frequently moved items or shared equipment.
                   </p>
                 </div>
                 <div className="border-l-2 border-purple-500 pl-3">
                   <h5 className="font-medium text-purple-400">Status Updates</h5>
-                  <p className="text-white/70 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     Track equipment status: active, under repair, awaiting disposal, on loan, etc.
                     This helps identify equipment unavailable for testing.
                   </p>
@@ -597,11 +597,11 @@ const PATTestingModule5Section3 = () => {
 
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-2">Dealing with Ghost Assets</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 'Ghost assets' are items in your register that no longer exist or cannot be located.
                 They distort reporting and scheduling.
               </p>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>- Investigate during regular audits</li>
                 <li>- Check with department managers before marking disposed</li>
                 <li>- Equipment may have been moved, renamed, or scrapped</li>
@@ -636,7 +636,7 @@ const PATTestingModule5Section3 = () => {
                       <th className="text-left py-2 text-elec-yellow font-medium">Scope</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/70">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Full physical audit</td>
                       <td className="text-center py-2">Annually</td>
@@ -665,7 +665,7 @@ const PATTestingModule5Section3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-green-400 mb-2">Audit Checklist</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Equipment exists at recorded location</li>
                   <li>- Asset label attached and legible</li>
                   <li>- Description matches actual item</li>
@@ -676,7 +676,7 @@ const PATTestingModule5Section3 = () => {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-blue-400 mb-2">Common Findings</h4>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Equipment moved without register update</li>
                   <li>- New items not registered</li>
                   <li>- Disposed items still in register</li>
@@ -697,7 +697,7 @@ const PATTestingModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -737,14 +737,14 @@ const PATTestingModule5Section3 = () => {
 
         <section className="space-y-4">
           <h2 className="text-xl font-bold text-white">Module 5.3 Quiz</h2>
-          <p className="text-white/60">
+          <p className="text-white">
             Test your understanding of asset register creation and management.
           </p>
           <Quiz questions={quizQuestions} moduleId="pat-m5s3" />
         </section>
 
         <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-white/10">
-          <Link to="../section-2" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-5-section-2" className="flex-1">
             <Button
               variant="outline"
               className="w-full min-h-[48px] border-white/20 text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98]"
@@ -752,7 +752,7 @@ const PATTestingModule5Section3 = () => {
               <ChevronLeft className="h-4 w-4" /> Previous: Record Keeping
             </Button>
           </Link>
-          <Link to="../section-4" className="flex-1">
+          <Link to="/electrician/upskilling/pat-testing-module-5-section-4" className="flex-1">
             <Button className="w-full min-h-[48px] bg-elec-yellow text-black hover:bg-elec-yellow/90 gap-2 touch-manipulation active:scale-[0.98]">
               Next: Re-Test Period Planning <ChevronRight className="h-4 w-4" />
             </Button>

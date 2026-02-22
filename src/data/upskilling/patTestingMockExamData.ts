@@ -139,7 +139,7 @@ export const patTestingQuestionBank: StandardMockQuestion[] = [
   {
     id: 8,
     question: 'Which document provides guidance on PAT testing frequencies?',
-    options: ['BS 7671', 'IET Code of Practice', 'EAWR 1989', 'PUWER 1998'],
+    options: ['BS 7671:2018+A3:2024', 'IET Code of Practice', 'EAWR 1989', 'PUWER 1998'],
     correctAnswer: 1,
     explanation:
       'The IET Code of Practice for In-service Inspection and Testing of Electrical Equipment provides detailed guidance on PAT testing frequencies.',
