@@ -87,13 +87,13 @@ const EICClientDetailsSection = ({
               </div>
               <div className="flex-1 text-left min-w-0">
                 <h3 className="font-semibold text-foreground">Client & Installation Details</h3>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-white">
                   {getCompletionPercentage()}% complete
                 </span>
               </div>
               <ChevronDown
                 className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                  'h-5 w-5 text-white transition-transform shrink-0',
                   isOpen && 'rotate-180'
                 )}
               />
@@ -125,7 +125,7 @@ const EICClientDetailsSection = ({
                 className="bg-white/5 cursor-not-allowed font-mono text-white border-blue-500/30"
                 tabIndex={-1}
               />
-              <p className="text-xs text-white/50 mt-1">Auto-generated and cannot be changed</p>
+              <p className="text-xs text-white mt-1">Auto-generated and cannot be changed</p>
             </div>
 
             {/* Client Information */}
@@ -148,10 +148,7 @@ const EICClientDetailsSection = ({
                     value={formData.clientName || ''}
                     onChange={(e) => onUpdate('clientName', e.target.value)}
                     placeholder="Full name of person ordering work"
-                    className={cn(
-                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
-                      !formData.clientName && 'border-red-500/50'
-                    )}
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -165,7 +162,7 @@ const EICClientDetailsSection = ({
                       value={formData.clientPhone || ''}
                       onChange={(e) => onUpdate('clientPhone', e.target.value)}
                       placeholder="Contact telephone"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                   <div className="space-y-2">
@@ -178,7 +175,7 @@ const EICClientDetailsSection = ({
                       value={formData.clientEmail || ''}
                       onChange={(e) => onUpdate('clientEmail', e.target.value)}
                       placeholder="Email address"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                 </div>
@@ -192,10 +189,7 @@ const EICClientDetailsSection = ({
                     onChange={(e) => onUpdate('clientAddress', e.target.value)}
                     placeholder="Client's full postal address"
                     rows={2}
-                    className={cn(
-                      'text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
-                      !formData.clientAddress && 'border-red-500/50'
-                    )}
+                    className="text-base touch-manipulation min-h-[80px]"
                   />
                 </div>
               </div>
@@ -236,8 +230,7 @@ const EICClientDetailsSection = ({
                   rows={2}
                   disabled={formData.sameAsClientAddress === 'true'}
                   className={cn(
-                    'text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
-                    !formData.installationAddress && 'border-red-500/50',
+                    'text-base touch-manipulation min-h-[80px]',
                     formData.sameAsClientAddress === 'true' && 'opacity-50'
                   )}
                 />
@@ -254,10 +247,7 @@ const EICClientDetailsSection = ({
                     onChange={(e) => onUpdate('description', e.target.value)}
                     placeholder="Describe the electrical installation"
                     rows={2}
-                    className={cn(
-                      'text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
-                      !formData.description && 'border-red-500/50'
-                    )}
+                    className="text-base touch-manipulation min-h-[80px]"
                   />
                 </div>
                 <div className="space-y-2">
@@ -268,10 +258,10 @@ const EICClientDetailsSection = ({
                     value={formData.installationType || ''}
                     onValueChange={(value) => onUpdate('installationType', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="domestic">Domestic</SelectItem>
                       <SelectItem value="commercial">Commercial</SelectItem>
                       <SelectItem value="industrial">Industrial</SelectItem>
@@ -378,9 +368,9 @@ const EICClientDetailsSection = ({
                   onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
                   placeholder="Describe the extent of installation covered by this certificate (e.g., 'Complete rewire of ground floor' or 'New consumer unit and all circuits')"
                   rows={3}
-                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                  className="text-base touch-manipulation min-h-[100px]"
                 />
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-white">
                   Specify what parts of the installation are covered by this certificate
                 </p>
               </div>
@@ -402,10 +392,7 @@ const EICClientDetailsSection = ({
                     type="date"
                     value={formData.installationDate || ''}
                     onChange={(e) => onUpdate('installationDate', e.target.value)}
-                    className={cn(
-                      'h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500',
-                      !formData.installationDate && 'border-red-500/50'
-                    )}
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="space-y-2">
@@ -417,7 +404,7 @@ const EICClientDetailsSection = ({
                     type="date"
                     value={formData.testDate || ''}
                     onChange={(e) => onUpdate('testDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-green-500 focus:ring-green-500"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
               </div>

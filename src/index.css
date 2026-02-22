@@ -4,6 +4,20 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Force white text on ALL form inputs in dark mode — fixes iOS/Safari number input invisible text */
+.dark input,
+.dark textarea,
+.dark select {
+  color: #fafafa !important;
+  -webkit-text-fill-color: #fafafa !important;
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4) !important;
+  -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+}
+
 /* Hide browser autofill icons (location pin, contacts, etc.) in all inputs */
 input::-webkit-contacts-auto-fill-button,
 input::-webkit-credentials-auto-fill-button,

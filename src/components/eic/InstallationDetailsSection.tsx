@@ -272,13 +272,12 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                       </Label>
                       <Input
                         id="numberOfCircuits"
-                        type="number"
+                        type="text"
+                        inputMode="numeric"
                         value={formData.numberOfCircuits || ''}
                         onChange={(e) => onUpdate('numberOfCircuits', e.target.value)}
                         placeholder="e.g., 12"
                         className="h-11"
-                        min="1"
-                        max="999"
                       />
                     </div>
 
@@ -450,13 +449,12 @@ const InstallationDetailsSection: React.FC<InstallationDetailsSectionProps> = ({
                       <div className="flex gap-2">
                         <Input
                           id="estimatedAge"
-                          type="number"
+                          type="text"
+                          inputMode="numeric"
                           value={formData.estimatedAge || ''}
                           onChange={(e) => onUpdate('estimatedAge', e.target.value)}
                           placeholder="Years"
                           className="h-11"
-                          min="0"
-                          max="100"
                         />
                         <Button
                           type="button"

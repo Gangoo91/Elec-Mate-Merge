@@ -80,7 +80,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       label: 'Installation',
       icon: <Home className="h-4 w-4" />,
       content: (
-        <div className="md:max-w-5xl mx-auto space-y-6">
+        <div className="space-y-6">
           <EICInstallationDetails formData={formData} onUpdate={onUpdate} />
           <EICTabNavigation {...tabNavigationProps} />
         </div>
@@ -91,7 +91,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       label: 'Inspections',
       icon: <Search className="h-4 w-4" />,
       content: (
-        <div className="md:max-w-6xl mx-auto space-y-6">
+        <div className="space-y-6">
           <EICScheduleOfInspections
             formData={formData}
             onUpdate={onUpdate}
@@ -127,7 +127,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       label: 'Declarations',
       icon: <FileText className="h-4 w-4" />,
       content: (
-        <div className="md:max-w-5xl mx-auto space-y-6">
+        <div className="space-y-6">
           <EICDeclarations formData={formData} onUpdate={onUpdate} />
           <EICValidationPanel formData={formData} />
           <EICTabNavigation {...tabNavigationProps} />

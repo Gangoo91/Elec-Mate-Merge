@@ -243,13 +243,13 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
               </div>
               <div className="flex-1 text-left min-w-0">
                 <h3 className="font-semibold text-foreground">Supply Characteristics</h3>
-                <span className="text-xs text-muted-foreground">
+                <span className="text-xs text-white">
                   {getCompletionPercentage()}% complete
                 </span>
               </div>
               <ChevronDown
                 className={cn(
-                  'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                  'h-5 w-5 text-white transition-transform shrink-0',
                   isOpen && 'rotate-180'
                 )}
               />
@@ -278,10 +278,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   value={formData.supplyVoltage || ''}
                   onValueChange={(value) => onUpdate('supplyVoltage', value)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select voltage" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="230V">230V (Single Phase)</SelectItem>
                     <SelectItem value="400V">400V (Three Phase)</SelectItem>
                     <SelectItem value="other">Other</SelectItem>
@@ -295,13 +295,14 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                 </Label>
                 <Input
                   id="supplyFrequency"
-                  type="number"
-                  value={formData.supplyFrequency || '50'}
+                  type="text"
+                  inputMode="decimal"
+                  value={formData.supplyFrequency ?? '50'}
                   onChange={(e) => onUpdate('supplyFrequency', e.target.value)}
                   placeholder="50"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="h-11 text-base touch-manipulation"
                 />
-                <p className="text-xs text-white/50">Typically 50Hz in the UK</p>
+                <p className="text-xs text-white">Typically 50Hz in the UK</p>
               </div>
 
               <div className="space-y-2">
@@ -309,10 +310,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   Number of Phases *
                 </Label>
                 <Select value={formData.phases || ''} onValueChange={handlePhasesChange}>
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select phases" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="single">Single Phase</SelectItem>
                     <SelectItem value="three">Three Phase</SelectItem>
                   </SelectContent>
@@ -335,10 +336,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     value={formData.earthingArrangement || ''}
                     onValueChange={handleEarthingArrangementChange}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500 data-[state=open]:border-green-500 data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select earthing type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
                       <SelectItem value="tns">TN-S</SelectItem>
                       <SelectItem value="tt">TT</SelectItem>
@@ -355,10 +356,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     value={formData.supplyPME || ''}
                     onValueChange={(value) => onUpdate('supplyPME', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-green-500 focus:ring-green-500 data-[state=open]:border-green-500 data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="PME status" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="yes">Yes</SelectItem>
                       <SelectItem value="no">No</SelectItem>
                       <SelectItem value="unknown">Unknown</SelectItem>
@@ -386,10 +387,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   value={formData.liveCondutorType || ''}
                   onValueChange={(value) => onUpdate('liveCondutorType', value)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-blue-500 focus:ring-blue-500 data-[state=open]:border-blue-500 data-[state=open]:ring-2">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select configuration" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="ac-1ph-2w">AC: 1-phase, 2-wire</SelectItem>
                     <SelectItem value="ac-2ph-3w">AC: 2-phase, 3-wire</SelectItem>
                     <SelectItem value="ac-3ph-3w">AC: 3-phase, 3-wire</SelectItem>
@@ -415,14 +416,14 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   </Label>
                   <Input
                     id="prospectiveFaultCurrent"
-                    type="number"
-                    step="0.1"
+                    type="text"
+                    inputMode="decimal"
                     value={formData.prospectiveFaultCurrent || ''}
                     onChange={(e) => onUpdate('prospectiveFaultCurrent', e.target.value)}
                     placeholder="e.g., 16"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                    className="h-11 text-base touch-manipulation"
                   />
-                  <p className="text-xs text-white/50">By enquiry or measurement</p>
+                  <p className="text-xs text-white">By enquiry or measurement</p>
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="externalZe" className="text-sm">
@@ -430,14 +431,14 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                   </Label>
                   <Input
                     id="externalZe"
-                    type="number"
-                    step="0.01"
+                    type="text"
+                    inputMode="decimal"
                     value={formData.externalZe || ''}
                     onChange={(e) => onUpdate('externalZe', e.target.value)}
                     placeholder="e.g., 0.35"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-purple-500 focus:ring-purple-500"
+                    className="h-11 text-base touch-manipulation"
                   />
-                  <p className="text-xs text-white/50">By enquiry or measurement</p>
+                  <p className="text-xs text-white">By enquiry or measurement</p>
                 </div>
               </div>
 
@@ -483,7 +484,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                       value={formData.otherSourcesDetails || ''}
                       onChange={(e) => onUpdate('otherSourcesDetails', e.target.value)}
                       placeholder="e.g., Solar PV system, Generator backup"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-amber-500 focus:ring-amber-500"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                 )}
@@ -505,10 +506,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     value={formData.supplyDeviceBsEn || ''}
                     onValueChange={handleBsStandardChange}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select BS standard" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="BS EN 60898">BS EN 60898 (MCB)</SelectItem>
                       <SelectItem value="BS EN 61009">BS EN 61009 (RCBO)</SelectItem>
                       <SelectItem value="BS EN 60947-2">BS EN 60947-2 (MCCB)</SelectItem>
@@ -528,10 +529,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     value={formData.supplyDeviceType || ''}
                     onValueChange={(value) => onUpdate('supplyDeviceType', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       {getAvailableTypes().map((type) => (
                         <SelectItem key={type.value} value={type.value}>
                           {type.label}
@@ -548,10 +549,10 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                     value={formData.supplyDeviceRating || ''}
                     onValueChange={(value) => onUpdate('supplyDeviceRating', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-orange-500 focus:ring-orange-500 data-[state=open]:border-orange-500 data-[state=open]:ring-2">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select rating" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground max-h-[300px]">
+                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
                       {getAvailableRatings().map((rating) => (
                         <SelectItem key={rating} value={rating}>
                           {rating}A

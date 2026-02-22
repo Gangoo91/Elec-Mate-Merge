@@ -993,13 +993,14 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     <Label className="text-sm text-white">Interval (months)</Label>
                     <Input
                       id="nextInspectionInterval"
-                      type="number"
+                      type="text"
+                      inputMode="numeric"
                       value={formData.nextInspectionInterval || ''}
                       onChange={(e) => onUpdate('nextInspectionInterval', e.target.value)}
                       placeholder="e.g., 60"
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                      className="h-12 text-base touch-manipulation"
                     />
-                    <p className="text-xs text-white/70">60m domestic, 12-60m commercial</p>
+                    <p className="text-xs text-white">60m domestic, 12-60m commercial</p>
                   </div>
                   <div className="space-y-2.5">
                     <Label className="text-sm text-white">Next Date</Label>

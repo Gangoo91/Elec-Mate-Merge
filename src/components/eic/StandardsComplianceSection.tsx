@@ -45,7 +45,7 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
             </div>
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                'h-5 w-5 text-white transition-transform shrink-0',
                 isOpen && 'rotate-180'
               )}
             />
@@ -69,10 +69,10 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
                   value={formData.designStandard || 'BS7671'}
                   onValueChange={(value) => onUpdate('designStandard', value)}
                 >
-                  <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select standard" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="BS7671">BS 7671:18+A3:2024</SelectItem>
                     <SelectItem value="other">Other Standard</SelectItem>
                   </SelectContent>
@@ -87,10 +87,10 @@ const StandardsComplianceSection: React.FC<StandardsComplianceSectionProps> = ({
                   value={formData.partPCompliance || ''}
                   onValueChange={(value) => onUpdate('partPCompliance', value)}
                 >
-                  <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select compliance" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="compliant">Compliant</SelectItem>
                     <SelectItem value="notApplicable">Not Applicable</SelectItem>
                     <SelectItem value="nonNotifiable">Non-notifiable</SelectItem>

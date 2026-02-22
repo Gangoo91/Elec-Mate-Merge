@@ -93,7 +93,7 @@ const EICElectricalInstallationSection = ({
             </div>
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                'h-5 w-5 text-white transition-transform shrink-0',
                 isOpen && 'rotate-180'
               )}
             />
@@ -125,7 +125,7 @@ const EICElectricalInstallationSection = ({
                   value={formData.mainSwitchLocation || ''}
                   onChange={(e) => onUpdate('mainSwitchLocation', e.target.value)}
                   placeholder="e.g., Under stairs cupboard, Garage"
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
 
@@ -140,10 +140,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('mainProtectiveDevice', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select device type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -168,10 +168,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('mainSwitchBsEn', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select BS standard" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -202,10 +202,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('mainSwitchPoles', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select poles" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -229,10 +229,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('mainSwitchRating', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select rating" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50 max-h-[300px]">
+                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -279,10 +279,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('mainSwitchFuseRating', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select setting" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50 max-h-[300px]">
+                    <SelectContent className="max-w-[calc(100vw-2rem)] max-h-[300px]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -332,10 +332,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('mainSwitchVoltageRating', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select voltage" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -355,10 +355,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('breakingCapacity', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select capacity" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -399,10 +399,10 @@ const EICElectricalInstallationSection = ({
                     value={formData.rcdMainSwitch || ''}
                     onValueChange={handleRCDMainSwitchChange}
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select RCD type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -425,10 +425,10 @@ const EICElectricalInstallationSection = ({
                           onUpdate('rcdRating', value === '__clear__' ? '' : value)
                         }
                       >
-                        <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select rating" />
                         </SelectTrigger>
-                        <SelectContent className="bg-background border-border text-foreground z-50">
+                        <SelectContent className="max-w-[calc(100vw-2rem)]">
                           <SelectItem value="__clear__">
                             <span className="text-muted-foreground">Clear selection</span>
                           </SelectItem>
@@ -448,10 +448,10 @@ const EICElectricalInstallationSection = ({
                           onUpdate('rcdType', value === '__clear__' ? '' : value)
                         }
                       >
-                        <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                        <SelectTrigger className="h-11 touch-manipulation">
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
-                        <SelectContent className="bg-background border-border text-foreground z-50">
+                        <SelectContent className="max-w-[calc(100vw-2rem)]">
                           <SelectItem value="__clear__">
                             <span className="text-muted-foreground">Clear selection</span>
                           </SelectItem>
@@ -465,8 +465,8 @@ const EICElectricalInstallationSection = ({
                   </>
                 ) : (
                   formData.rcdMainSwitch === 'no' && (
-                    <div className="md:col-span-2 flex items-center justify-center p-4 bg-white/[0.03] border border-white/[0.08] rounded-md">
-                      <p className="text-sm text-white/50 text-center">
+                    <div className="md:col-span-2 flex items-center justify-center p-4 bg-white/[0.03] border border-white/[0.08] rounded-lg">
+                      <p className="text-sm text-white text-center">
                         RCD rating and type fields are not applicable when no RCD protection is
                         installed
                       </p>
@@ -488,10 +488,10 @@ const EICElectricalInstallationSection = ({
                         onUpdate('rcdTimeDelay', value === '__clear__' ? '' : value)
                       }
                     >
-                      <SelectTrigger className="bg-background border-border focus:border-blue-500 focus:ring-blue-500 h-11">
+                      <SelectTrigger className="h-11 touch-manipulation">
                         <SelectValue placeholder="Select delay" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectContent className="max-w-[calc(100vw-2rem)]">
                         <SelectItem value="__clear__">
                           <span className="text-muted-foreground">Clear selection</span>
                         </SelectItem>
@@ -510,14 +510,14 @@ const EICElectricalInstallationSection = ({
                     </Label>
                     <Input
                       id="rcdMeasuredTime"
-                      type="number"
-                      step="1"
+                      type="text"
+                      inputMode="numeric"
                       value={formData.rcdMeasuredTime || ''}
                       onChange={(e) => onUpdate('rcdMeasuredTime', e.target.value)}
                       placeholder="e.g., 28"
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-blue-500 focus:ring-blue-500"
+                      className="h-11 text-base touch-manipulation"
                     />
-                    <p className="text-xs text-white/50 mt-1">Trip time at IΔn</p>
+                    <p className="text-xs text-white mt-1">Trip time at IΔn</p>
                   </div>
                 </div>
               )}
@@ -547,10 +547,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('intakeCableSize', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select cable size" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -573,10 +573,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('intakeCableType', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select cable type" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -605,10 +605,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('tailsSize', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select tails size" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>
@@ -630,10 +630,10 @@ const EICElectricalInstallationSection = ({
                       onUpdate('tailsLength', value === '__clear__' ? '' : value)
                     }
                   >
-                    <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select length" />
                     </SelectTrigger>
-                    <SelectContent className="bg-background border-border text-foreground z-50">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       <SelectItem value="__clear__">
                         <span className="text-muted-foreground">Clear selection</span>
                       </SelectItem>

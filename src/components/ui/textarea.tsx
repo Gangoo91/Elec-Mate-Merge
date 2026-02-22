@@ -16,7 +16,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           // Base layout
           'flex w-full min-h-[100px] md:min-h-[80px]',
           'px-4 py-3 md:px-3 md:py-2',
-          'text-base md:text-sm text-foreground',
+          'text-base md:text-sm text-white',
           // Background & border - match Input
           'bg-input border border-border/50 rounded-lg',
           // Typography
@@ -37,7 +37,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           // Touch
           'touch-manipulation',
           // Selection
-          'selection:bg-elec-yellow/20 selection:text-foreground',
+          'selection:bg-elec-yellow/20 selection:text-white',
           className
         )}
         ref={ref}

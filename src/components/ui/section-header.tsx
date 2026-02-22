@@ -68,7 +68,7 @@ export const SectionHeader = ({
                 {title}
               </h3>
               {!isComplete && completionPercentage > 0 && (
-                <p className="text-xs text-white/50 mt-0.5">{completionPercentage}% complete</p>
+                <p className="text-xs text-white mt-0.5">{completionPercentage}% complete</p>
               )}
               {isComplete && <p className="text-xs text-green-400/70 mt-0.5">Section complete</p>}
             </div>
@@ -89,7 +89,7 @@ export const SectionHeader = ({
             >
               <ChevronDown
                 className={cn(
-                  'h-5 w-5 text-white/50 transition-all duration-300',
+                  'h-5 w-5 text-white transition-all duration-300',
                   isOpen && 'rotate-180 text-elec-yellow'
                 )}
               />

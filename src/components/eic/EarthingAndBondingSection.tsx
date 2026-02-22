@@ -123,7 +123,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
             </div>
             <ChevronDown
               className={cn(
-                'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                'h-5 w-5 text-white transition-transform shrink-0',
                 isOpen && 'rotate-180'
               )}
             />
@@ -148,10 +148,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                     }
                   }}
                 >
-                  <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select electrode type" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="rod">Earth Rod</SelectItem>
                     <SelectItem value="plate">Earth Plate</SelectItem>
                     <SelectItem value="tape">Earth Tape</SelectItem>
@@ -169,7 +169,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   value={formData.earthElectrodeResistance || ''}
                   onChange={(value) => onUpdate('earthElectrodeResistance', value)}
                   placeholder="e.g., 0.5"
-                  type="number"
+                  type="text"
                   step="0.1"
                   helpText="Maximum 200Ω for TT systems"
                 />
@@ -177,7 +177,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
 
               {isPMESelected && (
                 <div className="flex items-center p-2">
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     No earth electrode resistance measurement required for PME installations
                   </p>
                 </div>
@@ -257,13 +257,12 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 </Label>
                 <Input
                   id="maximumDemand"
-                  type="number"
-                  step="0.1"
+                  type="text"
+                  inputMode="decimal"
                   value={formData.maximumDemand || ''}
                   onChange={(e) => onUpdate('maximumDemand', e.target.value)}
                   placeholder="e.g., 60"
-                  className="h-11 text-base touch-manipulation bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow"
-                  style={{ fontSize: '16px' }}
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
               <div className="space-y-2">
@@ -274,10 +273,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   value={formData.maximumDemandUnit || 'amps'}
                   onValueChange={(value) => onUpdate('maximumDemandUnit', value)}
                 >
-                  <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select unit" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="kva">kVA</SelectItem>
                     <SelectItem value="amps">Amps</SelectItem>
                   </SelectContent>
@@ -296,7 +295,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   value={formData.earthElectrodeLocation || ''}
                   onChange={(e) => onUpdate('earthElectrodeLocation', e.target.value)}
                   placeholder="e.g., Garden adjacent to main building"
-                  className="h-11 text-base touch-manipulation bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="h-11 text-base touch-manipulation"
                   style={{ fontSize: '16px' }}
                 />
               </div>
@@ -314,17 +313,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 <Label className="font-medium text-sm text-purple-300">Earthing Conductor</Label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="earthingConductorMaterial" className="text-xs text-white/60">
+                    <Label htmlFor="earthingConductorMaterial" className="text-xs text-white">
                       Material
                     </Label>
                     <Select
                       value={formData.earthingConductorMaterial || ''}
                       onValueChange={(value) => onUpdate('earthingConductorMaterial', value)}
                     >
-                      <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
+                      <SelectTrigger className="h-11 touch-manipulation">
                         <SelectValue placeholder="Select material" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectContent className="max-w-[calc(100vw-2rem)]">
                         <SelectItem value="copper">Copper</SelectItem>
                         <SelectItem value="aluminium">Aluminium</SelectItem>
                         <SelectItem value="steel">Steel</SelectItem>
@@ -333,17 +332,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="earthingConductorCsa" className="text-xs text-white/60">
+                    <Label htmlFor="earthingConductorCsa" className="text-xs text-white">
                       csa (mm²)
                     </Label>
                     <Select
                       value={formData.earthingConductorCsa || ''}
                       onValueChange={(value) => onUpdate('earthingConductorCsa', value)}
                     >
-                      <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
+                      <SelectTrigger className="h-11 touch-manipulation">
                         <SelectValue placeholder="Select size" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectContent className="max-w-[calc(100vw-2rem)]">
                         <SelectItem value="6">6mm²</SelectItem>
                         <SelectItem value="10">10mm²</SelectItem>
                         <SelectItem value="16">16mm²</SelectItem>
@@ -385,17 +384,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 </Label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="mainBondingMaterial" className="text-xs text-white/60">
+                    <Label htmlFor="mainBondingMaterial" className="text-xs text-white">
                       Material
                     </Label>
                     <Select
                       value={formData.mainBondingMaterial || ''}
                       onValueChange={(value) => onUpdate('mainBondingMaterial', value)}
                     >
-                      <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
+                      <SelectTrigger className="h-11 touch-manipulation">
                         <SelectValue placeholder="Select material" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectContent className="max-w-[calc(100vw-2rem)]">
                         <SelectItem value="copper">Copper</SelectItem>
                         <SelectItem value="aluminium">Aluminium</SelectItem>
                         <SelectItem value="steel">Steel</SelectItem>
@@ -404,17 +403,17 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="mainBondingCsa" className="text-xs text-white/60">
+                    <Label htmlFor="mainBondingCsa" className="text-xs text-white">
                       csa (mm²)
                     </Label>
                     <Select
                       value={formData.mainBondingSize || ''}
                       onValueChange={(value) => onUpdate('mainBondingSize', value)}
                     >
-                      <SelectTrigger className="bg-background border-border focus:border-purple-500 focus:ring-purple-500 h-11">
+                      <SelectTrigger className="h-11 touch-manipulation">
                         <SelectValue placeholder="Select size" />
                       </SelectTrigger>
-                      <SelectContent className="bg-background border-border text-foreground z-50">
+                      <SelectContent className="max-w-[calc(100vw-2rem)]">
                         <SelectItem value="6mm">6mm²</SelectItem>
                         <SelectItem value="10mm">10mm²</SelectItem>
                         <SelectItem value="16mm">16mm²</SelectItem>
@@ -562,10 +561,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   value={formData.supplementaryBondingSize || ''}
                   onValueChange={(value) => onUpdate('supplementaryBondingSize', value)}
                 >
-                  <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select conductor size" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="2.5mm">2.5mm²</SelectItem>
                     <SelectItem value="4mm">4mm²</SelectItem>
                     <SelectItem value="6mm">6mm²</SelectItem>
@@ -584,7 +583,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   />
                 )}
                 {isSupplementaryBondingNotRequired && (
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-xs text-white mt-1">
                     Supplementary bonding may not be required if RCD protection is installed
                   </p>
                 )}
@@ -598,10 +597,10 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                   value={formData.equipotentialBonding || ''}
                   onValueChange={(value) => onUpdate('equipotentialBonding', value)}
                 >
-                  <SelectTrigger className="bg-background border-border focus:border-elec-yellow focus:ring-elec-yellow h-11">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
-                  <SelectContent className="bg-background border-border text-foreground z-50">
+                  <SelectContent className="max-w-[calc(100vw-2rem)]">
                     <SelectItem value="satisfactory">Satisfactory</SelectItem>
                     <SelectItem value="unsatisfactory">Unsatisfactory</SelectItem>
                     <SelectItem value="not-applicable">Not Applicable</SelectItem>

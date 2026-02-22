@@ -26,7 +26,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
         className={cn(
           // Base layout & sizing
           'flex w-full h-12 md:h-11 px-4 py-3 md:px-3 md:py-2',
-          'text-base md:text-sm text-foreground',
+          'text-base md:text-sm text-white',
           // Background & border
           'bg-input border border-border/50 rounded-lg',
           // Typography
@@ -45,9 +45,9 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           // Touch optimization
           'touch-manipulation',
           // Selection
-          'selection:bg-elec-yellow/20 selection:text-foreground',
+          'selection:bg-elec-yellow/20 selection:text-white',
           // File inputs
-          'file:border-0 file:bg-transparent file:text-base file:font-medium file:text-foreground',
+          'file:border-0 file:bg-transparent file:text-base file:font-medium file:text-white',
           className
         )}
         ref={ref}

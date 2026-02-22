@@ -70,27 +70,25 @@ const InputWithValidation: React.FC<InputWithValidationProps> = ({
 
       <Input
         id={id}
-        type={type}
+        type={type === 'number' ? 'text' : type}
+        inputMode={type === 'number' ? 'decimal' : undefined}
         step={step}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onBlur={() => setTouched(true)}
         placeholder={placeholder}
-        className={cn(
-          showError && 'border-red-300 focus:border-red-500',
-          showSuccess && 'border-green-300 focus:border-green-500'
-        )}
+        className="h-11 text-base touch-manipulation"
       />
 
       {helpText && (
-        <div className="flex items-start gap-1 text-xs text-muted-foreground">
+        <div className="flex items-start gap-1 text-xs text-white">
           <Info className="h-3 w-3 mt-0.5 flex-shrink-0" />
           <span>{helpText}</span>
         </div>
       )}
 
       {showError && validationRules?.message && (
-        <p className="text-xs text-red-600 flex items-center gap-1">
+        <p className="text-xs text-white flex items-center gap-1">
           <AlertCircle className="h-3 w-3" />
           {validationRules.message}
         </p>

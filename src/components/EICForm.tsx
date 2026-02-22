@@ -25,10 +25,9 @@ import EICFormTabs from './eic/EICFormTabs';
 import StartNewEICRDialog from './StartNewEICRDialog';
 import { BoardScannerOverlay } from './testing/BoardScannerOverlay';
 import { StickyFormSyncBar, type SyncState } from '@/components/ui/SyncStatusIndicator';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Save, Upload, AlertTriangle, Bell, CircuitBoard, Zap } from 'lucide-react';
+import { Save, Upload, AlertTriangle, Bell, CircuitBoard } from 'lucide-react';
 import { useDesignedCircuit, useUpdateDesignedCircuitStatus } from '@/hooks/useDesignedCircuits';
 
 const EICForm = ({
@@ -1187,18 +1186,6 @@ const EICForm = ({
         />
 
         <div className="p-2 sm:p-4 space-y-3 sm:space-y-6">
-          {/* Design Source Banner */}
-          {(formData as any).designSourceId && (
-            <Alert className="bg-elec-yellow/10 border-elec-yellow/30">
-              <Zap className="h-4 w-4 text-elec-yellow" />
-              <AlertDescription className="text-elec-yellow">
-                <span className="font-medium">Circuit Designer Integration:</span>{' '}
-                {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test
-                values. Enter actual readings on-site.
-              </AlertDescription>
-            </Alert>
-          )}
-
           <EICFormHeader
             onBack={onBack}
             isSaving={isSaving}
