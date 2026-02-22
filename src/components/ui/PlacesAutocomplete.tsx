@@ -158,14 +158,13 @@ export function PlacesAutocomplete({
   return (
     <div ref={containerRef} className="relative">
       <div className="relative">
-        <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
         <Input
           ref={inputRef}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => predictions.length > 0 && setIsOpen(true)}
           placeholder={placeholder}
-          className={cn('pl-9 pr-8', className)}
+          className={cn('pr-8', className)}
           disabled={disabled}
           autoComplete="off"
         />

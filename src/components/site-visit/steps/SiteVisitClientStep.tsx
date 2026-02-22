@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, User, Check } from 'lucide-react';
+import { Plus, User, Check } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useCustomers, type Customer } from '@/hooks/inspection/useCustomers';
@@ -122,18 +122,15 @@ export const SiteVisitClientStep = ({
       {/* Search */}
       {!selectedCustomer && !showCreate && (
         <div className="space-y-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-            <Input
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by name, email or phone..."
-              className="h-11 pl-10 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-              autoCapitalize="off"
-              autoComplete="off"
-              enterKeyHint="search"
-            />
-          </div>
+          <Input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search by name, email or phone..."
+            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            autoCapitalize="off"
+            autoComplete="off"
+            enterKeyHint="search"
+          />
 
           {/* Results */}
           {searchTerm && (
