@@ -11,6 +11,7 @@ import { resilienceStressManagementRoutes } from './resilienceStressManagementRo
 import { timeManagementOrganisationRoutes } from './timeManagementOrganisationRoutes';
 import { conflictResolutionRoutes } from './conflictResolutionRoutes';
 import { personalFinanceRoutes } from './personalFinanceRoutes';
+import { goalSettingGrowthRoutes } from './goalSettingGrowthRoutes';
 
 const PersonalDevelopmentIndex = lazyWithRetry(
   () => import('@/pages/study-centre/personal-development/Index')
@@ -32,6 +33,7 @@ export default function PersonalDevelopmentRoutes() {
         {timeManagementOrganisationRoutes}
         {conflictResolutionRoutes}
         {personalFinanceRoutes}
+        {goalSettingGrowthRoutes}
       </Routes>
     </Suspense>
   );

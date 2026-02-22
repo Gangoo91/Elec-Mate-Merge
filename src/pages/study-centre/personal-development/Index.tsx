@@ -130,7 +130,6 @@ const courses: Course[] = [
     level: 'Foundation',
     duration: '4 hours',
     link: 'goal-setting-growth',
-    comingSoon: true,
   },
 ];
 
