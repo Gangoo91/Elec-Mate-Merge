@@ -4,7 +4,26 @@ import { useSwipeable } from 'react-swipeable';
 import { AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import WalkthroughSlide from '@/components/onboarding/WalkthroughSlide';
-import { Zap, GraduationCap, FileCheck, Sparkles, ArrowRight } from 'lucide-react';
+import {
+  Zap,
+  GraduationCap,
+  Briefcase,
+  Users,
+  Sparkles,
+  ArrowRight,
+  Cpu,
+  PoundSterling,
+  Wrench,
+  ShieldCheck,
+  FileWarning,
+  Calculator,
+  FileCheck,
+  ScanLine,
+  Receipt,
+  Contact,
+  Package,
+  ClipboardList,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const WALKTHROUGH_KEY = 'walkthrough_completed';
@@ -12,59 +31,97 @@ const WALKTHROUGH_KEY = 'walkthrough_completed';
 const slides = [
   {
     icon: Zap,
-    title: 'Your Complete Electrical Toolkit',
+    title: "The UK's All-in-One Electrical App",
     description:
-      'AI assistants trained on BS 7671, 50+ calculators, and digital certificates — all in one app.',
-    features: [
-      '5 AI specialists for every job',
-      'Cable sizing & volt drop calculators',
-      'Voice quotes & invoices',
-      'Stripe payments built in',
-    ],
+      'Certificates, quotes, invoices, RAMS — done in minutes, not hours. Built for BS 7671 by UK electricians.',
+    features: [],
     accentColour: '#FACC15',
-    iconBgColour: 'rgba(250, 204, 21, 0.15)',
+    variant: 'hero' as const,
+  },
+  {
+    icon: Cpu,
+    title: '8 AI Specialist Agents',
+    description: 'Trained on BS 7671:2018 + A3:2024 and real UK trade data.',
+    features: [],
+    accentColour: '#A78BFA',
+    variant: 'showcase' as const,
+    showcaseItems: [
+      { icon: Cpu, label: 'Circuit Designer' },
+      { icon: PoundSterling, label: 'Cost Engineer' },
+      { icon: Wrench, label: 'Installation' },
+      { icon: ShieldCheck, label: 'Health & Safety' },
+      { icon: FileWarning, label: 'RAMS in 2 Minutes' },
+      { icon: Calculator, label: '70+ Calculators' },
+    ],
   },
   {
     icon: GraduationCap,
-    title: 'Train & Qualify',
-    description:
-      'Level 2 & 3 courses, 2,000+ practice questions, AM2 prep, and HNC modules — study anywhere.',
+    title: 'Train at Every Level',
+    description: '',
     features: [
-      '22 courses from apprentice to advanced',
-      '2,000+ exam-style questions',
-      'AM2 practical & theory prep',
-      'Flashcards & mock exams',
+      '48 structured courses',
+      'AM2 exam prep',
+      'Level 2 & 3 complete pathways',
+      'Flashcards & OJT diary',
     ],
     accentColour: '#34D399',
-    iconBgColour: 'rgba(52, 211, 153, 0.15)',
+    variant: 'stats' as const,
+    statCallout: '6,800+',
   },
   {
-    icon: FileCheck,
-    title: 'Certificates Made Easy',
-    description:
-      'EICR, EIC, Minor Works, Fire Alarm and more — fill in on site, sign digitally, export as PDF.',
-    features: [
-      '8 certificate types',
-      'AI board scanner auto-populates circuits',
-      'Digital signatures',
-      'Professional PDF export',
-    ],
+    icon: Briefcase,
+    title: 'Your Complete Business Hub',
+    description: 'Certificates, quotes, and site docs — all on site.',
+    features: [],
     accentColour: '#60A5FA',
-    iconBgColour: 'rgba(96, 165, 250, 0.15)',
+    variant: 'feature-grid' as const,
+    gridItems: [
+      { icon: FileCheck, label: '8 Certificate Types' },
+      { icon: ScanLine, label: 'AI Board Scanner' },
+      { icon: Receipt, label: 'Quotes & Invoices' },
+      { icon: Contact, label: 'Customer Management' },
+      { icon: Package, label: 'Live Material Pricing' },
+      { icon: ClipboardList, label: '30-Page RAMS in Minutes' },
+    ],
+  },
+  {
+    icon: Users,
+    title: 'Choose Your Path',
+    description: '',
+    features: [],
+    accentColour: '#FACC15',
+    variant: 'tiers' as const,
+    tierCards: [
+      {
+        name: 'Apprentice',
+        colour: '#34D399',
+        description: 'Courses, calculators & exam prep',
+        price: 'From £4.99/mo',
+      },
+      {
+        name: 'Electrician',
+        colour: '#FACC15',
+        description: 'AI agents, certs & business tools',
+        price: 'From £9.99/mo',
+        badge: 'Most Popular',
+      },
+      {
+        name: 'Employer',
+        colour: '#60A5FA',
+        description: 'Team management, GPS & safety hub',
+        price: 'From £29.99/mo',
+        badge: 'Coming Soon',
+        badgeColour: '#60A5FA',
+      },
+    ],
   },
   {
     icon: Sparkles,
-    title: 'Start Your Free Trial',
-    description:
-      'Get full access for 7 days — completely free. No charge until day 8, cancel anytime.',
-    features: [
-      '7 days free, then from £4.99/month',
-      'Cancel anytime — no contracts',
-      'All features unlocked instantly',
-      'Used by 430+ UK electricians',
-    ],
+    title: 'Try Everything Free for 7 Days',
+    description: '',
+    features: ['7-day free trial', 'Cancel anytime', 'All features unlocked', 'Secure payments'],
     accentColour: '#FACC15',
-    iconBgColour: 'rgba(250, 204, 21, 0.15)',
+    variant: 'cta' as const,
   },
 ];
 
@@ -124,7 +181,7 @@ const Walkthrough = () => {
         <div className="flex justify-end px-4 pt-4">
           <button
             onClick={handleSkip}
-            className="text-sm text-white/40 hover:text-white/60 transition-colors py-2 px-3 rounded-xl touch-manipulation min-h-[44px] flex items-center"
+            className="text-sm text-white hover:text-white transition-colors py-2 px-3 rounded-xl touch-manipulation min-h-[44px] flex items-center"
           >
             Skip
           </button>
