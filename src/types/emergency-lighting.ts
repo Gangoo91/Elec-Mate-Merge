@@ -42,9 +42,12 @@ export interface LuxReading {
   result: 'pass' | 'fail' | '';
 }
 
+export type CertificateType = 'completion' | 'periodic' | 'existing-site' | 'completion-small';
+
 export interface EmergencyLightingFormData {
   // Certificate metadata
   certificateNumber: string;
+  certificateType: CertificateType | '';
   testType: TestType | '';
   testDate: string;
 
@@ -59,6 +62,7 @@ export interface EmergencyLightingFormData {
   premisesAddress: string;
   premisesType: string;
   occupancyType: string;
+  extentOfInstallation: string;
 
   // System details
   systemType: SystemType | '';
@@ -66,6 +70,12 @@ export interface EmergencyLightingFormData {
   centralBatterySystem: boolean;
   centralBatteryLocation: string;
   selfContainedUnits: boolean;
+
+  // Purpose of system (BS 5266-1 Part 7)
+  purposeEscapeRoute: boolean;
+  purposeOpenArea: boolean;
+  purposeHighRisk: boolean;
+  purposeStandby: boolean;
 
   // Equipment counts
   luminaireCount: number;
@@ -102,6 +112,11 @@ export interface EmergencyLightingFormData {
     notes: string;
   }[];
 
+  // Test equipment
+  luxMeterMake: string;
+  luxMeterSerial: string;
+  luxMeterCalibrationDate: string;
+
   // Lux readings (if required)
   luxReadings: LuxReading[];
 
@@ -129,6 +144,12 @@ export interface EmergencyLightingFormData {
   testerSignature: string;
   testerDate: string;
 
+  // Responsible person (client representative)
+  responsiblePersonName: string;
+  responsiblePersonPosition: string;
+  responsiblePersonSignature: string;
+  responsiblePersonDate: string;
+
   // Service schedule
   nextMonthlyTestDue: string;
   nextAnnualTestDue: string;
@@ -147,6 +168,7 @@ export interface EmergencyLightingFormData {
 // Default form data factory
 export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData => ({
   certificateNumber: '',
+  certificateType: '',
   testType: '',
   testDate: new Date().toISOString().split('T')[0],
 
@@ -159,12 +181,18 @@ export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData
   premisesAddress: '',
   premisesType: '',
   occupancyType: '',
+  extentOfInstallation: '',
 
   systemType: '',
   ratedDuration: 180,
   centralBatterySystem: false,
   centralBatteryLocation: '',
   selfContainedUnits: true,
+
+  purposeEscapeRoute: false,
+  purposeOpenArea: false,
+  purposeHighRisk: false,
+  purposeStandby: false,
 
   luminaireCount: 0,
   exitSignCount: 0,
@@ -190,6 +218,11 @@ export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData
   },
 
   luminaireTestResults: [],
+
+  luxMeterMake: '',
+  luxMeterSerial: '',
+  luxMeterCalibrationDate: '',
+
   luxReadings: [],
 
   defectsFound: [],
@@ -201,6 +234,11 @@ export const getDefaultEmergencyLightingFormData = (): EmergencyLightingFormData
   testerQualifications: '',
   testerSignature: '',
   testerDate: new Date().toISOString().split('T')[0],
+
+  responsiblePersonName: '',
+  responsiblePersonPosition: '',
+  responsiblePersonSignature: '',
+  responsiblePersonDate: '',
 
   nextMonthlyTestDue: '',
   nextAnnualTestDue: '',

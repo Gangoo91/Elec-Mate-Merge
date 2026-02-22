@@ -24,12 +24,15 @@ import {
   Clock,
   Copy,
   History,
+  Target,
+  FileText,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { DurationBadge } from './ValidationBadge';
 import { supabase } from '@/integrations/supabase/client';
+import type { EmergencyLightingFormData } from '@/types/emergency-lighting';
 
 interface ExistingClient {
   id: string;
@@ -44,8 +47,11 @@ interface ExistingClient {
 }
 
 interface EmergencyLightingInstallationDetailsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: EmergencyLightingFormData;
+  onUpdate: (
+    field: string,
+    value: EmergencyLightingFormData[keyof EmergencyLightingFormData]
+  ) => void;
 }
 
 const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallationDetailsProps> = ({
@@ -58,6 +64,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
     client: true,
     premises: true,
     system: true,
+    purpose: true,
     equipment: true,
   });
   const [sameAsClientAddress, setSameAsClientAddress] = useState(false);
@@ -73,17 +80,17 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
 
       const { data, error } = await supabase
         .from('reports')
-        .select('id, report_data, created_at')
+        .select('id, data, created_at')
         .eq('report_type', 'emergency-lighting')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (error || !data) return [];
 
-      // Extract unique clients from report_data
+      // Extract unique clients from report data
       const clientMap = new Map<string, ExistingClient>();
       data.forEach((report) => {
-        const rd = report.report_data as any;
+        const rd = report.data as Record<string, unknown>;
         if (!rd?.clientName) return;
         const key = `${rd.clientName}-${rd.clientAddress || ''}`;
         if (!clientMap.has(key)) {
@@ -160,11 +167,11 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Client Details</h3>
-                  <span className="text-xs text-muted-foreground">Name, contact & address</span>
+                  <span className="text-xs text-white">Name, contact & address</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.client && 'rotate-180'
                   )}
                 />
@@ -179,7 +186,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.client && 'rotate-180'
                   )}
                 />
@@ -196,15 +203,15 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     Load Previous Client
                   </Label>
                   <Select onValueChange={handleSelectExistingClient}>
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select existing client..." />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-background border-border text-foreground">
+                    <SelectContent className="max-w-[calc(100vw-2rem)]">
                       {existingClients.map((client) => (
                         <SelectItem key={client.id} value={client.id}>
                           <div className="flex flex-col">
                             <span className="font-medium">{client.clientName}</span>
-                            <span className="text-xs text-muted-foreground truncate max-w-[250px]">
+                            <span className="text-xs text-white truncate max-w-[250px]">
                               {client.premisesAddress || client.clientAddress || 'No address'}
                             </span>
                           </div>
@@ -212,7 +219,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       ))}
                     </SelectContent>
                   </Select>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-xs text-white">
                     Select a previous client to auto-fill their details
                   </p>
                 </div>
@@ -226,7 +233,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     placeholder="Enter client name"
                     value={formData.clientName || ''}
                     onChange={(e) => onUpdate('clientName', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="space-y-2">
@@ -237,7 +244,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     placeholder="Contact number"
                     value={formData.clientTelephone || ''}
                     onChange={(e) => onUpdate('clientTelephone', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
               </div>
@@ -248,7 +255,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   placeholder="Full address"
                   value={formData.clientAddress || ''}
                   onChange={(e) => onUpdate('clientAddress', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
               <div className="space-y-2">
@@ -259,7 +266,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   placeholder="Email address"
                   value={formData.clientEmail || ''}
                   onChange={(e) => onUpdate('clientEmail', e.target.value)}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
             </div>
@@ -278,11 +285,11 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Premises Details</h3>
-                  <span className="text-xs text-muted-foreground">Address, type & risk</span>
+                  <span className="text-xs text-white">Address, type & risk</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.premises && 'rotate-180'
                   )}
                 />
@@ -297,7 +304,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.premises && 'rotate-180'
                   )}
                 />
@@ -313,7 +320,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   placeholder="Building or site name"
                   value={formData.premisesName || ''}
                   onChange={(e) => onUpdate('premisesName', e.target.value)}
-                  className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="h-11 text-base touch-manipulation"
                 />
               </div>
               <div className="space-y-2">
@@ -325,7 +332,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       variant="ghost"
                       size="sm"
                       onClick={copyClientAddress}
-                      className="h-11 text-xs text-muted-foreground hover:text-foreground touch-manipulation"
+                      className="h-11 text-xs text-white hover:text-white touch-manipulation"
                     >
                       <Copy className="h-3 w-3 mr-1" />
                       Same as client
@@ -340,7 +347,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     onUpdate('premisesAddress', e.target.value);
                     setSameAsClientAddress(false);
                   }}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -350,10 +357,10 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     value={formData.premisesType || ''}
                     onValueChange={(value) => onUpdate('premisesType', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent>
                       <SelectItem value="office">Office</SelectItem>
                       <SelectItem value="retail">Retail</SelectItem>
                       <SelectItem value="industrial">Industrial</SelectItem>
@@ -372,10 +379,10 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     value={formData.occupancyType || ''}
                     onValueChange={(value) => onUpdate('occupancyType', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select risk" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent>
                       <SelectItem value="sleeping">Sleeping Risk</SelectItem>
                       <SelectItem value="high">High Risk</SelectItem>
                       <SelectItem value="normal">Normal Risk</SelectItem>
@@ -383,6 +390,20 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="extentOfInstallation">Extent of Installation Covered</Label>
+                <Textarea
+                  id="extentOfInstallation"
+                  placeholder="e.g., All emergency lighting throughout ground and first floors"
+                  value={formData.extentOfInstallation || ''}
+                  onChange={(e) => onUpdate('extentOfInstallation', e.target.value)}
+                  className="text-base touch-manipulation min-h-[80px]"
+                />
+                <p className="text-xs text-white">
+                  BS 5266 requires documenting the scope of this certificate
+                </p>
               </div>
             </div>
           </CollapsibleContent>
@@ -400,11 +421,11 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">System Classification</h3>
-                  <span className="text-xs text-muted-foreground">BS 5266 settings</span>
+                  <span className="text-xs text-white">BS 5266 settings</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.system && 'rotate-180'
                   )}
                 />
@@ -419,7 +440,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.system && 'rotate-180'
                   )}
                 />
@@ -428,6 +449,50 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <div className="space-y-2">
+                <Label htmlFor="certificateType">Certificate Type (BS 5266)</Label>
+                <Select
+                  value={formData.certificateType || ''}
+                  onValueChange={(value) => onUpdate('certificateType', value)}
+                >
+                  <SelectTrigger className="h-11 touch-manipulation">
+                    <SelectValue placeholder="Select certificate type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="completion">
+                      <div className="flex flex-col">
+                        <span className="font-medium">Completion Certificate</span>
+                        <span className="text-xs text-white">New installation</span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="periodic">
+                      <div className="flex flex-col">
+                        <span className="font-medium">Periodic Inspection & Testing</span>
+                        <span className="text-xs text-white">
+                          Routine testing of existing system
+                        </span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="existing-site">
+                      <div className="flex flex-col">
+                        <span className="font-medium">Existing Site Compliance</span>
+                        <span className="text-xs text-white">
+                          Assessment of existing installation
+                        </span>
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="completion-small">
+                      <div className="flex flex-col">
+                        <span className="font-medium">Completion (Small)</span>
+                        <span className="text-xs text-white">
+                          Up to 25 self-contained luminaires
+                        </span>
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="testType">Test Type</Label>
@@ -435,10 +500,10 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     value={formData.testType || ''}
                     onValueChange={(value) => onUpdate('testType', value)}
                   >
-                    <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                    <SelectTrigger className="h-11 touch-manipulation">
                       <SelectValue placeholder="Select test type" />
                     </SelectTrigger>
-                    <SelectContent className="z-[100] bg-background border-border text-foreground">
+                    <SelectContent>
                       <SelectItem value="commissioning">Commissioning</SelectItem>
                       <SelectItem value="monthly">Monthly Functional Test</SelectItem>
                       <SelectItem value="annual">Annual Duration Test</SelectItem>
@@ -452,7 +517,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     type="date"
                     value={formData.testDate || ''}
                     onChange={(e) => onUpdate('testDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
               </div>
@@ -463,30 +528,26 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   value={formData.systemType || ''}
                   onValueChange={(value) => onUpdate('systemType', value)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select system type" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent>
                     <SelectItem value="maintained">
                       <div className="flex flex-col">
                         <span className="font-medium">Maintained</span>
-                        <span className="text-xs text-muted-foreground">
-                          Continuously lit, battery backup
-                        </span>
+                        <span className="text-xs text-white">Continuously lit, battery backup</span>
                       </div>
                     </SelectItem>
                     <SelectItem value="non-maintained">
                       <div className="flex flex-col">
                         <span className="font-medium">Non-Maintained</span>
-                        <span className="text-xs text-muted-foreground">
-                          Only lit on mains failure
-                        </span>
+                        <span className="text-xs text-white">Only lit on mains failure</span>
                       </div>
                     </SelectItem>
                     <SelectItem value="combined">
                       <div className="flex flex-col">
                         <span className="font-medium">Combined (Sustained)</span>
-                        <span className="text-xs text-muted-foreground">
+                        <span className="text-xs text-white">
                           Both maintained and non-maintained
                         </span>
                       </div>
@@ -509,10 +570,10 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                   value={formData.ratedDuration?.toString() || '180'}
                   onValueChange={(value) => onUpdate('ratedDuration', parseInt(value))}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent>
                     <SelectItem value="60">1 Hour (60 minutes)</SelectItem>
                     <SelectItem value="180">3 Hours (180 minutes)</SelectItem>
                   </SelectContent>
@@ -536,13 +597,13 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                     />
                     <AlertDescription
                       className={cn(
-                        'text-sm',
+                        'text-sm text-left',
                         durationGuidance.duration === 180 ? 'text-purple-200' : 'text-blue-200'
                       )}
                     >
                       <strong>{durationGuidance.title}</strong>
-                      <p className="text-xs mt-1 opacity-80">{durationGuidance.content}</p>
-                      <p className="text-xs mt-1 opacity-60">{durationGuidance.reference}</p>
+                      <p className="text-xs mt-1">{durationGuidance.content}</p>
+                      <p className="text-xs mt-1 opacity-80">{durationGuidance.reference}</p>
                     </AlertDescription>
                   </Alert>
                 )}
@@ -587,10 +648,115 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                       placeholder="e.g., Electrical plant room"
                       value={formData.centralBatteryLocation || ''}
                       onChange={(e) => onUpdate('centralBatteryLocation', e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                 )}
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Purpose of System (BS 5266-1 Part 7) */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible open={openSections.purpose} onOpenChange={() => toggleSection('purpose')}>
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0">
+                  <Target className="h-5 w-5 text-cyan-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Purpose of System</h3>
+                  <span className="text-xs text-white">BS 5266-1 Part 7 requirements</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white transition-transform shrink-0',
+                    openSections.purpose && 'rotate-180'
+                  )}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-cyan-500/15 flex items-center justify-center">
+                    <Target className="h-4 w-4 text-cyan-400" />
+                  </div>
+                  <span className="text-white font-semibold">Purpose of System (BS 5266)</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white transition-transform',
+                    openSections.purpose && 'rotate-180'
+                  )}
+                />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <p className="text-sm text-white">Select all that apply per BS 5266-1 Part 7:</p>
+
+              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                <Checkbox
+                  id="purposeEscapeRoute"
+                  checked={formData.purposeEscapeRoute || false}
+                  onCheckedChange={(checked) => onUpdate('purposeEscapeRoute', checked)}
+                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                />
+                <Label
+                  htmlFor="purposeEscapeRoute"
+                  className="cursor-pointer text-base leading-relaxed"
+                >
+                  Escape route lighting
+                </Label>
+              </div>
+
+              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                <Checkbox
+                  id="purposeOpenArea"
+                  checked={formData.purposeOpenArea || false}
+                  onCheckedChange={(checked) => onUpdate('purposeOpenArea', checked)}
+                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                />
+                <Label
+                  htmlFor="purposeOpenArea"
+                  className="cursor-pointer text-base leading-relaxed"
+                >
+                  Open area lighting (anti-panic)
+                </Label>
+              </div>
+
+              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                <Checkbox
+                  id="purposeHighRisk"
+                  checked={formData.purposeHighRisk || false}
+                  onCheckedChange={(checked) => onUpdate('purposeHighRisk', checked)}
+                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                />
+                <Label
+                  htmlFor="purposeHighRisk"
+                  className="cursor-pointer text-base leading-relaxed"
+                >
+                  High risk task area lighting
+                </Label>
+              </div>
+
+              <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                <Checkbox
+                  id="purposeStandby"
+                  checked={formData.purposeStandby || false}
+                  onCheckedChange={(checked) => onUpdate('purposeStandby', checked)}
+                  className="mt-0.5 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
+                />
+                <Label
+                  htmlFor="purposeStandby"
+                  className="cursor-pointer text-base leading-relaxed"
+                >
+                  Standby lighting
+                </Label>
               </div>
             </div>
           </CollapsibleContent>
@@ -608,11 +774,11 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Equipment Summary</h3>
-                  <span className="text-xs text-muted-foreground">Luminaire & sign counts</span>
+                  <span className="text-xs text-white">Luminaire & sign counts</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.equipment && 'rotate-180'
                   )}
                 />
@@ -627,7 +793,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.equipment && 'rotate-180'
                   )}
                 />
@@ -650,7 +816,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                         e.target.value === '' ? '' : parseInt(e.target.value) || 0
                       )
                     }
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="space-y-2">
@@ -666,7 +832,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                         e.target.value === '' ? '' : parseInt(e.target.value) || 0
                       )
                     }
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 {formData.centralBatterySystem && (
@@ -683,7 +849,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                           e.target.value === '' ? '' : parseInt(e.target.value) || 0
                         )
                       }
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                 )}
@@ -694,7 +860,7 @@ const EmergencyLightingInstallationDetails: React.FC<EmergencyLightingInstallati
                 <p className="text-2xl font-bold text-amber-500">
                   {(formData.luminaireCount || 0) + (formData.exitSignCount || 0)} units
                 </p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-white">
                   {formData.luminaireCount || 0} luminaires + {formData.exitSignCount || 0} exit
                   signs
                 </p>

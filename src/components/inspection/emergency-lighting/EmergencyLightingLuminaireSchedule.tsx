@@ -17,10 +17,14 @@ import LuminaireAutocomplete from './LuminaireAutocomplete';
 import BulkLuminaireActions from './BulkLuminaireActions';
 import { AutoFilledBadge } from './ValidationBadge';
 import type { EmergencyLuminaire } from '@/data/emergencyLuminaireDatabase';
+import type { EmergencyLightingFormData, Luminaire } from '@/types/emergency-lighting';
 
 interface EmergencyLightingLuminaireScheduleProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: EmergencyLightingFormData;
+  onUpdate: (
+    field: string,
+    value: EmergencyLightingFormData[keyof EmergencyLightingFormData]
+  ) => void;
 }
 
 const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireScheduleProps> = ({
@@ -65,7 +69,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
   );
 
   const cloneLuminaire = useCallback(
-    (luminaire: any) => {
+    (luminaire: Luminaire) => {
       const luminaires = formData.luminaires || [];
       const cloned = {
         ...luminaire,
@@ -81,9 +85,18 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
 
   const markAllPass = useCallback(() => {
     const luminaires = formData.luminaires || [];
-    const updated = luminaires.map((lum: any) => ({
+    const updated = luminaires.map((lum: Luminaire) => ({
       ...lum,
-      functionalTestResult: 'pass',
+      functionalTestResult: 'pass' as const,
+    }));
+    onUpdate('luminaires', updated);
+  }, [formData.luminaires, onUpdate]);
+
+  const markAllDurationPass = useCallback(() => {
+    const luminaires = formData.luminaires || [];
+    const updated = luminaires.map((lum: Luminaire) => ({
+      ...lum,
+      durationTestResult: 'pass' as const,
     }));
     onUpdate('luminaires', updated);
   }, [formData.luminaires, onUpdate]);
@@ -92,7 +105,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
     (id: string, dbLuminaire: EmergencyLuminaire) => {
       const defaults = applyLuminaireDefaults(dbLuminaire);
       const luminaires = formData.luminaires || [];
-      const updated = luminaires.map((lum: any) =>
+      const updated = luminaires.map((lum: Luminaire) =>
         lum.id === id
           ? {
               ...lum,
@@ -112,9 +125,9 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
     [formData.luminaires, onUpdate, applyLuminaireDefaults]
   );
 
-  const updateLuminaire = (id: string, field: string, value: any) => {
+  const updateLuminaire = (id: string, field: string, value: string | number | boolean) => {
     const luminaires = formData.luminaires || [];
-    const updatedLuminaires = luminaires.map((lum: any) =>
+    const updatedLuminaires = luminaires.map((lum: Luminaire) =>
       lum.id === id ? { ...lum, [field]: value } : lum
     );
     onUpdate('luminaires', updatedLuminaires);
@@ -124,7 +137,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
     const luminaires = formData.luminaires || [];
     onUpdate(
       'luminaires',
-      luminaires.filter((l: any) => l.id !== id)
+      luminaires.filter((l: Luminaire) => l.id !== id)
     );
   };
 
@@ -139,7 +152,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
             </div>
             <div className="flex-1 text-left min-w-0">
               <h3 className="font-semibold text-foreground">Luminaire Schedule</h3>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-xs text-white">
                 {(formData.luminaires || []).length} luminaires added
               </span>
             </div>
@@ -152,7 +165,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
               </div>
               <span className="text-white font-semibold">Luminaire Schedule</span>
             </div>
-            <span className="text-sm font-normal text-muted-foreground">
+            <span className="text-sm font-normal text-white">
               {(formData.luminaires || []).length} luminaires
             </span>
           </div>
@@ -161,14 +174,25 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
         {/* Content */}
         <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
           {(formData.luminaires || []).length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground">
+            <div className="text-center py-8 text-white">
               <Lightbulb className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No luminaires added yet.</p>
-              <p className="text-sm">Click the button below to add luminaires to the schedule.</p>
+              <p className="font-medium text-base">No luminaires added yet</p>
+              <p className="text-sm mt-1">0 / {formData.luminaireCount || '?'} expected</p>
+              <p className="text-sm mt-3">
+                Search the database to auto-fill specs, or add manually.
+              </p>
+              <Button
+                variant="outline"
+                className="mt-4 h-11 touch-manipulation border-elec-yellow/50 text-elec-yellow hover:bg-elec-yellow/10"
+                onClick={addLuminaire}
+              >
+                <Sparkles className="h-4 w-4 mr-2" />
+                Add First Luminaire
+              </Button>
             </div>
           ) : (
             <div className="space-y-4">
-              {(formData.luminaires || []).map((luminaire: any, index: number) => (
+              {(formData.luminaires || []).map((luminaire: Luminaire, index: number) => (
                 <div key={luminaire.id} className="bg-muted/30 rounded-lg p-4">
                   <div className="flex items-start justify-between mb-3">
                     <h4 className="font-medium flex items-center gap-2">
@@ -181,7 +205,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                         variant="ghost"
                         size="sm"
                         onClick={() => cloneLuminaire(luminaire)}
-                        className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground hover:bg-white/10"
+                        className="h-11 w-11 p-0 text-white hover:text-white hover:bg-white/10 touch-manipulation"
                         title="Clone luminaire"
                         aria-label="Clone luminaire"
                       >
@@ -191,7 +215,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                         variant="ghost"
                         size="sm"
                         onClick={() => removeLuminaire(luminaire.id)}
-                        className="h-8 w-8 p-0 text-red-500 hover:text-red-600 hover:bg-red-500/10"
+                        className="h-11 w-11 p-0 text-red-500 hover:text-red-600 hover:bg-red-500/10 touch-manipulation"
                         aria-label="Delete luminaire"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -218,16 +242,22 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     <div className="col-span-full sm:col-span-1 space-y-2">
-                      <Label className="text-sm">Location *</Label>
+                      <Label htmlFor={`lum-location-${luminaire.id}`} className="text-sm">
+                        Location *
+                      </Label>
                       <Input
+                        id={`lum-location-${luminaire.id}`}
                         placeholder="e.g., Ground floor corridor"
                         value={luminaire.location || ''}
                         onChange={(e) => updateLuminaire(luminaire.id, 'location', e.target.value)}
-                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-type-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Type
                         {luminaire.autoFilled && luminaire.luminaireType && <AutoFilledBadge />}
                       </Label>
@@ -238,10 +268,13 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
                       >
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectTrigger
+                          id={`lum-type-${luminaire.id}`}
+                          className="h-11 touch-manipulation"
+                        >
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
-                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectContent>
                           <SelectItem value="bulkhead">Bulkhead</SelectItem>
                           <SelectItem value="twin-spot">Twin Spot</SelectItem>
                           <SelectItem value="recessed">Recessed</SelectItem>
@@ -254,7 +287,10 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-category-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Category
                         {luminaire.autoFilled && luminaire.category && <AutoFilledBadge />}
                       </Label>
@@ -265,10 +301,13 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
                       >
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectTrigger
+                          id={`lum-category-${luminaire.id}`}
+                          className="h-11 touch-manipulation"
+                        >
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
-                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectContent>
                           <SelectItem value="escape-route">Escape Route</SelectItem>
                           <SelectItem value="open-area">Open Area (Anti-panic)</SelectItem>
                           <SelectItem value="high-risk">High Risk Task Area</SelectItem>
@@ -277,41 +316,53 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-manufacturer-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Manufacturer
                         {luminaire.autoFilled && luminaire.manufacturer && <AutoFilledBadge />}
                       </Label>
                       <Input
+                        id={`lum-manufacturer-${luminaire.id}`}
                         placeholder="e.g., Ansell, Thorn"
                         value={luminaire.manufacturer || ''}
                         onChange={(e) => {
                           updateLuminaire(luminaire.id, 'manufacturer', e.target.value);
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
-                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-model-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Model
                         {luminaire.autoFilled && luminaire.model && <AutoFilledBadge />}
                       </Label>
                       <Input
+                        id={`lum-model-${luminaire.id}`}
                         placeholder="Model number"
                         value={luminaire.model || ''}
                         onChange={(e) => {
                           updateLuminaire(luminaire.id, 'model', e.target.value);
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
-                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-wattage-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Wattage (W)
                         {luminaire.autoFilled && luminaire.wattage > 0 && <AutoFilledBadge />}
                       </Label>
                       <Input
+                        id={`lum-wattage-${luminaire.id}`}
                         type="number"
                         min="0"
                         step="0.1"
@@ -321,11 +372,14 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                           updateLuminaire(luminaire.id, 'wattage', parseFloat(e.target.value) || 0);
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
-                        className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                        className="h-11 text-sm touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-battery-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Battery Type
                         {luminaire.autoFilled && luminaire.batteryType && <AutoFilledBadge />}
                       </Label>
@@ -336,10 +390,13 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
                       >
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectTrigger
+                          id={`lum-battery-${luminaire.id}`}
+                          className="h-11 touch-manipulation"
+                        >
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
-                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectContent>
                           <SelectItem value="NiCd">NiCd (Nickel Cadmium)</SelectItem>
                           <SelectItem value="NiMH">NiMH (Nickel Metal Hydride)</SelectItem>
                           <SelectItem value="LiFePO4">LiFePO4 (Lithium)</SelectItem>
@@ -349,7 +406,10 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                       </Select>
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-1">
+                      <Label
+                        htmlFor={`lum-duration-${luminaire.id}`}
+                        className="text-sm flex items-center gap-1"
+                      >
                         Rated Duration
                         {luminaire.autoFilled && <AutoFilledBadge />}
                       </Label>
@@ -360,10 +420,13 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
                           updateLuminaire(luminaire.id, 'autoFilled', false);
                         }}
                       >
-                        <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                        <SelectTrigger
+                          id={`lum-duration-${luminaire.id}`}
+                          className="h-11 touch-manipulation"
+                        >
                           <SelectValue placeholder="Select" />
                         </SelectTrigger>
-                        <SelectContent className="z-[100] bg-background border-border text-foreground">
+                        <SelectContent>
                           <SelectItem value="60">1 Hour</SelectItem>
                           <SelectItem value="180">3 Hours</SelectItem>
                         </SelectContent>
@@ -390,6 +453,7 @@ const EmergencyLightingLuminaireSchedule: React.FC<EmergencyLightingLuminaireSch
             onAddLuminaires={addMultipleLuminaires}
             onCloneLuminaire={cloneLuminaire}
             onMarkAllPass={markAllPass}
+            onMarkAllDurationPass={markAllDurationPass}
           />
         </div>
       </div>

@@ -20,6 +20,8 @@ import {
   CheckCircle2,
   AlertTriangle,
   Clock,
+  ClipboardCheck,
+  XCircle,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -29,10 +31,14 @@ import { useToast } from '@/hooks/use-toast';
 import LoadTesterButton from './LoadTesterButton';
 import { OverdueBadge } from './ValidationBadge';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
+import type { EmergencyLightingFormData, Luminaire, LuxReading } from '@/types/emergency-lighting';
 
 interface EmergencyLightingDeclarationsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: EmergencyLightingFormData;
+  onUpdate: (
+    field: string,
+    value: EmergencyLightingFormData[keyof EmergencyLightingFormData]
+  ) => void;
 }
 
 const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps> = ({
@@ -42,6 +48,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
   const isMobile = useIsMobile();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
     tester: true,
+    responsiblePerson: true,
     service: true,
     result: true,
   });
@@ -94,7 +101,11 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
     });
   };
 
-  const isComplete = formData.testerName && formData.testerSignature;
+  const isComplete =
+    formData.testerName &&
+    formData.testerSignature &&
+    formData.responsiblePersonName &&
+    formData.responsiblePersonSignature;
 
   // Calculate test dates using the smart form hook
   const testDates = useMemo(() => {
@@ -137,11 +148,11 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Tester Declaration</h3>
-                  <span className="text-xs text-muted-foreground">Name, quals & signature</span>
+                  <span className="text-xs text-white">Name, quals & signature</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.tester && 'rotate-180'
                   )}
                 />
@@ -156,7 +167,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.tester && 'rotate-180'
                   )}
                 />
@@ -185,7 +196,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     placeholder="Full name"
                     value={formData.testerName || ''}
                     onChange={(e) => onUpdate('testerName', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="space-y-2">
@@ -195,7 +206,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     placeholder="Company name"
                     value={formData.testerCompany || ''}
                     onChange={(e) => onUpdate('testerCompany', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
               </div>
@@ -208,7 +219,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     placeholder="e.g., C&G 2391, NICEIC Approved"
                     value={formData.testerQualifications || ''}
                     onChange={(e) => onUpdate('testerQualifications', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="space-y-2">
@@ -218,7 +229,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     type="date"
                     value={formData.testerDate || new Date().toISOString().split('T')[0]}
                     onChange={(e) => onUpdate('testerDate', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
               </div>
@@ -227,6 +238,102 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 label="Tester Signature *"
                 value={formData.testerSignature}
                 onChange={(sig) => onUpdate('testerSignature', sig)}
+                placeholder="Draw or type signature"
+                required
+              />
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
+      {/* Responsible Person / Client Representative */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible
+          open={openSections.responsiblePerson}
+          onOpenChange={() => toggleSection('responsiblePerson')}
+        >
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-b border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0">
+                  <ClipboardCheck className="h-5 w-5 text-cyan-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Client Representative</h3>
+                  <span className="text-xs text-white">Responsible person acknowledgement</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white transition-transform shrink-0',
+                    openSections.responsiblePerson && 'rotate-180'
+                  )}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-cyan-500/15 flex items-center justify-center">
+                    <ClipboardCheck className="h-4 w-4 text-cyan-400" />
+                  </div>
+                  <span className="text-white font-semibold">Client Representative</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white transition-transform',
+                    openSections.responsiblePerson && 'rotate-180'
+                  )}
+                />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <Alert className="border-cyan-500/30 bg-cyan-500/10">
+                <ClipboardCheck className="h-4 w-4 text-cyan-500" />
+                <AlertDescription className="text-cyan-200 text-sm">
+                  The responsible person at the premises acknowledges receipt of the test results
+                  per BS 5266-1.
+                </AlertDescription>
+              </Alert>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="responsiblePersonName">Name *</Label>
+                  <Input
+                    id="responsiblePersonName"
+                    placeholder="Full name"
+                    value={formData.responsiblePersonName || ''}
+                    onChange={(e) => onUpdate('responsiblePersonName', e.target.value)}
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="responsiblePersonPosition">Position / Title</Label>
+                  <Input
+                    id="responsiblePersonPosition"
+                    placeholder="e.g., Facilities Manager"
+                    value={formData.responsiblePersonPosition || ''}
+                    onChange={(e) => onUpdate('responsiblePersonPosition', e.target.value)}
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="responsiblePersonDate">Date</Label>
+                <Input
+                  id="responsiblePersonDate"
+                  type="date"
+                  value={formData.responsiblePersonDate || new Date().toISOString().split('T')[0]}
+                  onChange={(e) => onUpdate('responsiblePersonDate', e.target.value)}
+                  className="h-11 text-base touch-manipulation"
+                />
+              </div>
+
+              <SignatureInput
+                label="Responsible Person Signature *"
+                value={formData.responsiblePersonSignature}
+                onChange={(sig) => onUpdate('responsiblePersonSignature', sig)}
                 placeholder="Draw or type signature"
                 required
               />
@@ -246,11 +353,11 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Service Schedule</h3>
-                  <span className="text-xs text-muted-foreground">Next test dates</span>
+                  <span className="text-xs text-white">Next test dates</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.service && 'rotate-180'
                   )}
                 />
@@ -265,7 +372,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.service && 'rotate-180'
                   )}
                 />
@@ -278,7 +385,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 <p>
                   <strong>BS 5266 Test Schedule:</strong>
                 </p>
-                <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+                <ul className="list-disc list-inside space-y-1 text-white">
                   <li>Daily - visual inspection (where practical)</li>
                   <li>Monthly - brief functional test (flick test)</li>
                   <li>Annually - full rated duration test</li>
@@ -303,12 +410,12 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     value={formData.nextMonthlyTestDue || calculateNextMonthly()}
                     onChange={(e) => onUpdate('nextMonthlyTestDue', e.target.value)}
                     className={cn(
-                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      'h-11 text-base touch-manipulation',
                       testDates.monthlyOverdue && 'border-red-500/50'
                     )}
                   />
                   {!testDates.monthlyOverdue && testDates.daysUntilMonthly > 0 && (
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-white">
                       {testDates.daysUntilMonthly} days until due
                     </p>
                   )}
@@ -329,14 +436,12 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                     value={formData.nextAnnualTestDue || calculateNextAnnual()}
                     onChange={(e) => onUpdate('nextAnnualTestDue', e.target.value)}
                     className={cn(
-                      'h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                      'h-11 text-base touch-manipulation',
                       testDates.annualOverdue && 'border-red-500/50'
                     )}
                   />
                   {!testDates.annualOverdue && testDates.daysUntilAnnual > 0 && (
-                    <p className="text-xs text-muted-foreground">
-                      {testDates.daysUntilAnnual} days until due
-                    </p>
+                    <p className="text-xs text-white">{testDates.daysUntilAnnual} days until due</p>
                   )}
                 </div>
               </div>
@@ -348,7 +453,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   placeholder="Any recommendations for the client..."
                   value={formData.recommendations || ''}
                   onChange={(e) => onUpdate('recommendations', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
             </div>
@@ -367,11 +472,11 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Overall Result</h3>
-                  <span className="text-xs text-muted-foreground">Satisfactory/Unsatisfactory</span>
+                  <span className="text-xs text-white">Satisfactory/Unsatisfactory</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.result && 'rotate-180'
                   )}
                 />
@@ -386,7 +491,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.result && 'rotate-180'
                   )}
                 />
@@ -401,10 +506,10 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   value={formData.overallResult || ''}
                   onValueChange={(v) => onUpdate('overallResult', v)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Select result" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent>
                     <SelectItem value="satisfactory">
                       <span className="flex items-center gap-2 text-green-500">
                         <CheckCircle2 className="h-4 w-4" /> Satisfactory
@@ -426,7 +531,7 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
                   placeholder="Any additional notes or comments..."
                   value={formData.additionalNotes || ''}
                   onChange={(e) => onUpdate('additionalNotes', e.target.value)}
-                  className="text-base touch-manipulation min-h-[100px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[100px]"
                 />
               </div>
             </div>
@@ -434,8 +539,142 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
         </Collapsible>
       </div>
 
-      {/* Final Status */}
-      <div className={cn(isMobile ? 'px-4 py-4' : '')}>
+      {/* Completion Summary Dashboard */}
+      <div className={cn(isMobile ? 'px-4 py-4' : '', 'space-y-4')}>
+        <div className="bg-card/50 border border-white/10 rounded-lg p-4 space-y-3">
+          <h4 className="font-semibold text-sm flex items-center gap-2">
+            <ClipboardCheck className="h-4 w-4 text-elec-yellow" />
+            Completion Summary
+          </h4>
+          <div className="space-y-2 text-sm">
+            {/* Installation Details */}
+            <div className="flex items-center justify-between">
+              <span className="text-white">Installation Details</span>
+              {formData.clientName && formData.premisesAddress ? (
+                <span className="text-green-400 flex items-center gap-1">
+                  <CheckCircle2 className="h-3.5 w-3.5" /> Complete
+                </span>
+              ) : (
+                <span className="text-amber-400 flex items-center gap-1">
+                  <AlertTriangle className="h-3.5 w-3.5" /> Incomplete
+                </span>
+              )}
+            </div>
+
+            {/* Luminaire Schedule */}
+            <div className="flex items-center justify-between">
+              <span className="text-white">Luminaire Schedule</span>
+              <span className="text-white">
+                {(formData.luminaires || []).length} luminaires added
+              </span>
+            </div>
+
+            {/* Test Results */}
+            {(() => {
+              const luminaires = formData.luminaires || [];
+              const tested = luminaires.filter(
+                (l: Luminaire) =>
+                  l.functionalTestResult === 'pass' || l.functionalTestResult === 'fail'
+              ).length;
+              const untested = luminaires.length - tested;
+              return (
+                <div className="flex items-center justify-between">
+                  <span className="text-white">Test Results</span>
+                  {luminaires.length === 0 ? (
+                    <span className="text-white">No luminaires</span>
+                  ) : untested > 0 ? (
+                    <span className="text-amber-400 flex items-center gap-1">
+                      <AlertTriangle className="h-3.5 w-3.5" /> {tested}/{luminaires.length} tested
+                      ({untested} untested)
+                    </span>
+                  ) : (
+                    <span className="text-green-400 flex items-center gap-1">
+                      <CheckCircle2 className="h-3.5 w-3.5" /> {tested}/{luminaires.length} tested
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Lux Readings */}
+            {(() => {
+              const readings = formData.luxReadings || [];
+              const passed = readings.filter((r: LuxReading) => r.result === 'pass').length;
+              const failed = readings.filter((r: LuxReading) => r.result === 'fail').length;
+              return (
+                <div className="flex items-center justify-between">
+                  <span className="text-white">Lux Readings</span>
+                  {readings.length === 0 ? (
+                    <span className="text-white">None recorded</span>
+                  ) : failed > 0 ? (
+                    <span className="text-red-400 flex items-center gap-1">
+                      <XCircle className="h-3.5 w-3.5" /> {passed}/{readings.length} passed (
+                      {failed} failed)
+                    </span>
+                  ) : (
+                    <span className="text-green-400 flex items-center gap-1">
+                      <CheckCircle2 className="h-3.5 w-3.5" /> {passed}/{readings.length} passed
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Defects */}
+            {(() => {
+              const defects = formData.defectsFound || [];
+              const rectified = defects.filter(
+                (d: EmergencyLightingFormData['defectsFound'][number]) => d.rectified
+              ).length;
+              return (
+                <div className="flex items-center justify-between">
+                  <span className="text-white">Defects</span>
+                  {defects.length === 0 ? (
+                    <span className="text-green-400 flex items-center gap-1">
+                      <CheckCircle2 className="h-3.5 w-3.5" /> None found
+                    </span>
+                  ) : (
+                    <span className="text-amber-400">
+                      {defects.length} found ({rectified} rectified)
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Tester Declaration */}
+            <div className="flex items-center justify-between">
+              <span className="text-white">Tester Declaration</span>
+              {formData.testerName && formData.testerSignature ? (
+                <span className="text-green-400 flex items-center gap-1">
+                  <CheckCircle2 className="h-3.5 w-3.5" /> Complete
+                </span>
+              ) : (
+                <span className="text-red-400 flex items-center gap-1">
+                  <XCircle className="h-3.5 w-3.5" />{' '}
+                  {!formData.testerName ? 'Name required' : 'Signature required'}
+                </span>
+              )}
+            </div>
+
+            {/* Client Representative */}
+            <div className="flex items-center justify-between">
+              <span className="text-white">Client Representative</span>
+              {formData.responsiblePersonName && formData.responsiblePersonSignature ? (
+                <span className="text-green-400 flex items-center gap-1">
+                  <CheckCircle2 className="h-3.5 w-3.5" /> Complete
+                </span>
+              ) : (
+                <span className="text-red-400 flex items-center gap-1">
+                  <XCircle className="h-3.5 w-3.5" />{' '}
+                  {!formData.responsiblePersonName ? 'Name required' : 'Signature required'}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Final Status */}
         {isComplete ? (
           <Alert className="border-green-500/30 bg-green-500/10">
             <CheckCircle2 className="h-4 w-4 text-green-400" />
@@ -448,8 +687,8 @@ const EmergencyLightingDeclarations: React.FC<EmergencyLightingDeclarationsProps
           <Alert className="border-amber-500/30 bg-amber-500/10">
             <AlertTriangle className="h-4 w-4 text-amber-400" />
             <AlertDescription className="text-amber-200 text-xs sm:text-sm">
-              <strong>Incomplete declaration.</strong> Tester name and signature are required before
-              the certificate can be generated.
+              <strong>Incomplete.</strong> Complete all required sections above before generating
+              the certificate.
             </AlertDescription>
           </Alert>
         )}

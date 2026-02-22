@@ -221,7 +221,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label className="text-xs text-muted-foreground">Photo Category</Label>
+            <Label className="text-xs text-white">Photo Category</Label>
             <Select
               value={selectedCategory}
               onValueChange={(v) => setSelectedCategory(v as CertificatePhoto['category'])}
@@ -241,7 +241,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
 
           {selectedCategory === 'luminaire' && luminaires.length > 0 && (
             <div className="space-y-2">
-              <Label className="text-xs text-muted-foreground">Link to Luminaire (Optional)</Label>
+              <Label className="text-xs text-white">Link to Luminaire (Optional)</Label>
               <Select value={selectedLinkedId} onValueChange={setSelectedLinkedId}>
                 <SelectTrigger className="h-11 touch-manipulation">
                   <SelectValue placeholder="Select luminaire..." />
@@ -260,7 +260,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
         </div>
 
         <div className="space-y-2">
-          <Label className="text-xs text-muted-foreground">Caption (Optional)</Label>
+          <Label className="text-xs text-white">Caption (Optional)</Label>
           <Input
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
@@ -304,7 +304,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
         <div className="space-y-4">
           {photosByCategory.map((category) => (
             <div key={category.value} className="space-y-2">
-              <h4 className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+              <h4 className="text-sm font-medium text-white flex items-center gap-2">
                 <Image className="h-4 w-4" />
                 {category.label} ({category.photos.length})
               </h4>
@@ -331,9 +331,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
                           className="w-full h-auto rounded-lg"
                         />
                         {photo.caption && (
-                          <p className="text-center text-sm text-muted-foreground mt-2">
-                            {photo.caption}
-                          </p>
+                          <p className="text-center text-sm text-white mt-2">{photo.caption}</p>
                         )}
                       </DialogContent>
                     </Dialog>
@@ -341,7 +339,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
                     <Button
                       variant="destructive"
                       size="icon"
-                      className="absolute top-1 right-1 h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+                      className="absolute top-1 right-1 h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity touch-manipulation"
                       onClick={() => deletePhoto(photo.id)}
                     >
                       <X className="h-3 w-3" />
@@ -359,7 +357,7 @@ export const EmergencyLightingPhotos: React.FC<EmergencyLightingPhotosProps> = (
           ))}
         </div>
       ) : (
-        <div className="text-center py-8 text-muted-foreground">
+        <div className="text-center py-8 text-white">
           <Image className="h-12 w-12 mx-auto mb-2 opacity-30" />
           <p className="text-sm">No photos added yet</p>
           <p className="text-xs">Upload photos to document the installation</p>

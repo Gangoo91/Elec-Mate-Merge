@@ -9,13 +9,17 @@ import EmergencyLightingTabNavigation from './EmergencyLightingTabNavigation';
 import { Building2, Lightbulb, TestTube, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import type { EmergencyLightingFormData } from '@/types/emergency-lighting';
 
 interface EmergencyLightingFormTabsProps {
   currentTab: EmergencyLightingTabValue;
   onTabChange: (value: string) => void;
   canAccessTab: (tabId: EmergencyLightingTabValue) => boolean;
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: EmergencyLightingFormData;
+  onUpdate: (
+    field: string,
+    value: EmergencyLightingFormData[keyof EmergencyLightingFormData]
+  ) => void;
   tabNavigationProps: {
     currentTab: EmergencyLightingTabValue;
     currentTabIndex: number;
@@ -35,6 +39,8 @@ interface EmergencyLightingFormTabsProps {
       recipientName: string;
       documentLabel: string;
     };
+    reportId?: string | null;
+    formData?: EmergencyLightingFormData;
   };
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;

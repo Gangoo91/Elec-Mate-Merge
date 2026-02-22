@@ -48,7 +48,7 @@ const statusConfig: Record<
   unknown: {
     label: '?',
     icon: HelpCircle,
-    classes: 'bg-gray-500/20 text-gray-400 border-gray-500/30',
+    classes: 'bg-gray-500/20 text-white border-gray-500/30',
   },
 };
 
@@ -88,7 +88,7 @@ const ValidationBadge: React.FC<ValidationBadgeProps> = ({
           <TooltipContent side="top" className="max-w-xs">
             <div className="space-y-1">
               {message && <p className="text-sm">{message}</p>}
-              {reference && <p className="text-xs text-muted-foreground">{reference}</p>}
+              {reference && <p className="text-xs text-white">{reference}</p>}
             </div>
           </TooltipContent>
         </Tooltip>
@@ -159,9 +159,7 @@ export const OverdueBadge: React.FC<{
             <p className="text-sm font-medium">
               {testType === 'monthly' ? 'Monthly' : 'Annual'} test overdue
             </p>
-            <p className="text-xs text-muted-foreground">
-              {daysOverdue} days overdue per BS 5266-1
-            </p>
+            <p className="text-xs text-white">{daysOverdue} days overdue per BS 5266-1</p>
           </div>
         </TooltipContent>
       </Tooltip>
@@ -197,7 +195,7 @@ export const BatteryConditionBadge: React.FC<{
       label = 'Poor';
       break;
     default:
-      classes = 'bg-gray-500/20 text-gray-400 border-gray-500/30';
+      classes = 'bg-gray-500/20 text-white border-gray-500/30';
   }
 
   return (

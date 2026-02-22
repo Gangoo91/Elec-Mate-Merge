@@ -29,6 +29,7 @@ import {
   Upload,
   Loader2,
   X,
+  Wrench,
 } from 'lucide-react';
 import { EmergencyLightingPhotos } from './EmergencyLightingPhotos';
 import { cn } from '@/lib/utils';
@@ -36,13 +37,24 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import ValidationBadge, { BatteryConditionBadge } from './ValidationBadge';
 import type { ZoneCategory } from '@/data/emergencyLightingCompliance';
+import type {
+  EmergencyLightingFormData,
+  Luminaire,
+  LuxReading,
+  CertificatePhoto,
+} from '@/types/emergency-lighting';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 
+type Defect = EmergencyLightingFormData['defectsFound'][number];
+
 interface EmergencyLightingTestResultsProps {
-  formData: any;
-  onUpdate: (field: string, value: any) => void;
+  formData: EmergencyLightingFormData;
+  onUpdate: (
+    field: string,
+    value: EmergencyLightingFormData[keyof EmergencyLightingFormData]
+  ) => void;
 }
 
 type TestResult = 'pass' | 'fail' | 'na' | '';
@@ -60,7 +72,7 @@ const TestResultBadge: React.FC<{ result: TestResult }> = ({ result }) => {
         <XCircle className="h-4 w-4" /> Fail
       </span>
     );
-  return <span className="text-muted-foreground">Not tested</span>;
+  return <span className="text-white">Not tested</span>;
 };
 
 const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> = ({
@@ -71,6 +83,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
   const { calculateTestDates, suggestDefectPriority, formatDate, validateLux, getLuxRequirement } =
     useEmergencyLightingSmartForm();
   const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({
+    testEquipment: true,
     monthly: true,
     annual: true,
     luminaires: true,
@@ -92,12 +105,12 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     setOpenSections((prev) => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const updateMonthlyTest = (field: string, value: any) => {
+  const updateMonthlyTest = (field: string, value: string | boolean) => {
     const current = formData.monthlyFunctionalTest || {};
     onUpdate('monthlyFunctionalTest', { ...current, [field]: value });
   };
 
-  const updateAnnualTest = (field: string, value: any) => {
+  const updateAnnualTest = (field: string, value: string | number | boolean) => {
     const current = formData.annualDurationTest || {};
     onUpdate('annualDurationTest', { ...current, [field]: value });
   };
@@ -119,9 +132,9 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     onUpdate('defectsFound', [...defects, newDefect]);
   };
 
-  const updateDefect = (id: string, field: string, value: any) => {
+  const updateDefect = (id: string, field: string, value: string | boolean) => {
     const defects = formData.defectsFound || [];
-    const updatedDefects = defects.map((d: any) => (d.id === id ? { ...d, [field]: value } : d));
+    const updatedDefects = defects.map((d: Defect) => (d.id === id ? { ...d, [field]: value } : d));
     onUpdate('defectsFound', updatedDefects);
   };
 
@@ -132,7 +145,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       const suggestion = suggestDefectPriority(description);
 
       // Map the suggestion priority format to form priority format
-      const priorityMap: Record<string, string> = {
+      const priorityMap: Record<string, Defect['priority']> = {
         immediate: 'immediate',
         '7-days': 'within-7-days',
         '28-days': 'within-28-days',
@@ -140,7 +153,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       };
       const mappedPriority = suggestion?.priority ? priorityMap[suggestion.priority] : null;
 
-      const updatedDefects = defects.map((d: any) =>
+      const updatedDefects = defects.map((d: Defect) =>
         d.id === id ? { ...d, description, priority: mappedPriority || d.priority } : d
       );
       onUpdate('defectsFound', updatedDefects);
@@ -152,7 +165,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     const defects = formData.defectsFound || [];
     onUpdate(
       'defectsFound',
-      defects.filter((d: any) => d.id !== id)
+      defects.filter((d: Defect) => d.id !== id)
     );
   };
 
@@ -221,7 +234,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
       // Update defect with photo URL
       const defects = formData.defectsFound || [];
-      const updatedDefects = defects.map((d: any) =>
+      const updatedDefects = defects.map((d: Defect) =>
         d.id === defectId ? { ...d, photoUrl: publicUrl } : d
       );
       onUpdate('defectsFound', updatedDefects);
@@ -231,7 +244,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
       const newPhoto = {
         id: uuidv4(),
         url: publicUrl,
-        caption: `Defect: ${defects.find((d: any) => d.id === defectId)?.description?.substring(0, 50) || 'Evidence'}`,
+        caption: `Defect: ${defects.find((d: Defect) => d.id === defectId)?.description?.substring(0, 50) || 'Evidence'}`,
         uploadedAt: new Date().toISOString(),
         category: 'defect' as const,
         linkedItemId: defectId,
@@ -249,7 +262,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
   const removeDefectPhoto = (defectId: string) => {
     const defects = formData.defectsFound || [];
-    const updatedDefects = defects.map((d: any) =>
+    const updatedDefects = defects.map((d: Defect) =>
       d.id === defectId ? { ...d, photoUrl: '' } : d
     );
     onUpdate('defectsFound', updatedDefects);
@@ -257,14 +270,14 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     const photos = formData.photos || [];
     onUpdate(
       'photos',
-      photos.filter((p: any) => p.linkedItemId !== defectId || p.category !== 'defect')
+      photos.filter((p: CertificatePhoto) => p.linkedItemId !== defectId || p.category !== 'defect')
     );
   };
 
   // Update luminaire test results
-  const updateLuminaireTest = (lumId: string, field: string, value: any) => {
+  const updateLuminaireTest = (lumId: string, field: string, value: string) => {
     const luminaires = formData.luminaires || [];
-    const updatedLuminaires = luminaires.map((lum: any) =>
+    const updatedLuminaires = luminaires.map((lum: Luminaire) =>
       lum.id === lumId ? { ...lum, [field]: value } : lum
     );
     onUpdate('luminaires', updatedLuminaires);
@@ -283,9 +296,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     onUpdate('luxReadings', [...readings, newReading]);
   };
 
-  const updateLuxReading = (id: string, field: string, value: any) => {
+  const updateLuxReading = (id: string, field: string, value: string) => {
     const readings = formData.luxReadings || [];
-    const updatedReadings = readings.map((r: any) => (r.id === id ? { ...r, [field]: value } : r));
+    const updatedReadings = readings.map((r: LuxReading) =>
+      r.id === id ? { ...r, [field]: value } : r
+    );
     onUpdate('luxReadings', updatedReadings);
   };
 
@@ -293,7 +308,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
     const readings = formData.luxReadings || [];
     onUpdate(
       'luxReadings',
-      readings.filter((r: any) => r.id !== id)
+      readings.filter((r: LuxReading) => r.id !== id)
     );
   };
 
@@ -314,7 +329,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
         }
       }
 
-      const updatedReadings = readings.map((r: any) =>
+      const updatedReadings = readings.map((r: LuxReading) =>
         r.id === id ? { ...r, luxReading: luxValue, minRequired, result } : r
       );
       onUpdate('luxReadings', updatedReadings);
@@ -324,6 +339,88 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
 
   return (
     <div className={cn(isMobile ? 'space-y-0' : 'space-y-6')}>
+      {/* Test Equipment (BS 5266) */}
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
+        <Collapsible
+          open={openSections.testEquipment}
+          onOpenChange={() => toggleSection('testEquipment')}
+        >
+          <CollapsibleTrigger className="w-full">
+            {isMobile ? (
+              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
+                <div className="h-10 w-10 rounded-xl bg-cyan-500/20 flex items-center justify-center shrink-0">
+                  <Wrench className="h-5 w-5 text-cyan-400" />
+                </div>
+                <div className="flex-1 text-left min-w-0">
+                  <h3 className="font-semibold text-foreground">Test Equipment</h3>
+                  <span className="text-xs text-white">Lux meter details & calibration</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white transition-transform shrink-0',
+                    openSections.testEquipment && 'rotate-180'
+                  )}
+                />
+              </div>
+            ) : (
+              <div className="flex items-center justify-between py-4 px-4 cursor-pointer hover:bg-white/5 transition-colors">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-cyan-500/15 flex items-center justify-center">
+                    <Wrench className="h-4 w-4 text-cyan-400" />
+                  </div>
+                  <span className="text-white font-semibold">Test Equipment</span>
+                </div>
+                <ChevronDown
+                  className={cn(
+                    'h-5 w-5 text-white transition-transform',
+                    openSections.testEquipment && 'rotate-180'
+                  )}
+                />
+              </div>
+            )}
+          </CollapsibleTrigger>
+          <CollapsibleContent>
+            <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
+              <p className="text-sm text-white">
+                BS 5266 requires recording the lux meter used for illuminance measurements.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="luxMeterMake">Lux Meter Make/Model</Label>
+                  <Input
+                    id="luxMeterMake"
+                    placeholder="e.g., Kewtech KT200"
+                    value={formData.luxMeterMake || ''}
+                    onChange={(e) => onUpdate('luxMeterMake', e.target.value)}
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="luxMeterSerial">Serial Number</Label>
+                  <Input
+                    id="luxMeterSerial"
+                    placeholder="Serial number"
+                    value={formData.luxMeterSerial || ''}
+                    onChange={(e) => onUpdate('luxMeterSerial', e.target.value)}
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="luxMeterCalibrationDate">Last Calibration Date</Label>
+                  <Input
+                    id="luxMeterCalibrationDate"
+                    type="date"
+                    value={formData.luxMeterCalibrationDate || ''}
+                    onChange={(e) => onUpdate('luxMeterCalibrationDate', e.target.value)}
+                    className="h-11 text-base touch-manipulation"
+                  />
+                </div>
+              </div>
+            </div>
+          </CollapsibleContent>
+        </Collapsible>
+      </div>
+
       {/* Monthly Functional Test */}
       <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible open={openSections.monthly} onOpenChange={() => toggleSection('monthly')}>
@@ -335,11 +432,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Monthly Functional Test</h3>
-                  <span className="text-xs text-muted-foreground">Flick test results</span>
+                  <span className="text-xs text-white">Flick test results</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.monthly && 'rotate-180'
                   )}
                 />
@@ -354,7 +451,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.monthly && 'rotate-180'
                   )}
                 />
@@ -363,7 +460,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 BS 5266 requires monthly "flick test" - briefly simulate mains failure to verify
                 luminaires illuminate.
               </p>
@@ -376,7 +473,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                     type="date"
                     value={monthlyTest.date || ''}
                     onChange={(e) => updateMonthlyTest('date', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 {nextTestDates && monthlyTest.date && (
@@ -456,7 +553,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   placeholder="Describe any faults found during the test..."
                   value={monthlyTest.faultsFound || ''}
                   onChange={(e) => updateMonthlyTest('faultsFound', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
 
@@ -467,7 +564,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   placeholder="Describe any remedial action taken..."
                   value={monthlyTest.actionTaken || ''}
                   onChange={(e) => updateMonthlyTest('actionTaken', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
             </div>
@@ -486,11 +583,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Annual Duration Test</h3>
-                  <span className="text-xs text-muted-foreground">Full rated duration</span>
+                  <span className="text-xs text-white">Full rated duration</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.annual && 'rotate-180'
                   )}
                 />
@@ -505,7 +602,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.annual && 'rotate-180'
                   )}
                 />
@@ -514,7 +611,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 BS 5266 requires annual full-duration test - run luminaires for rated duration (1hr
                 or 3hr) and verify operation throughout.
               </p>
@@ -527,7 +624,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                     type="date"
                     value={annualTest.date || ''}
                     onChange={(e) => updateAnnualTest('date', e.target.value)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
                 <div className="space-y-2">
@@ -539,7 +636,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                     placeholder="e.g., 180"
                     value={annualTest.duration || ''}
                     onChange={(e) => updateAnnualTest('duration', parseInt(e.target.value) || 0)}
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                    className="h-11 text-base touch-manipulation"
                   />
                 </div>
               </div>
@@ -595,10 +692,10 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   value={annualTest.batteryCondition || ''}
                   onValueChange={(value) => updateAnnualTest('batteryCondition', value)}
                 >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow">
+                  <SelectTrigger className="h-11 touch-manipulation">
                     <SelectValue placeholder="Assess battery condition" />
                   </SelectTrigger>
-                  <SelectContent className="z-[100] bg-background border-border text-foreground">
+                  <SelectContent>
                     <SelectItem value="good">Good - Meets rated duration</SelectItem>
                     <SelectItem value="fair">Fair - Approaching end of life</SelectItem>
                     <SelectItem value="poor">Poor - Requires replacement</SelectItem>
@@ -619,7 +716,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   placeholder="Describe any faults found during the duration test..."
                   value={annualTest.faultsFound || ''}
                   onChange={(e) => updateAnnualTest('faultsFound', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
 
@@ -630,13 +727,90 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   placeholder="Describe any remedial action taken..."
                   value={annualTest.actionTaken || ''}
                   onChange={(e) => updateAnnualTest('actionTaken', e.target.value)}
-                  className="text-base touch-manipulation min-h-[80px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
+                  className="text-base touch-manipulation min-h-[80px]"
                 />
               </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
       </div>
+
+      {/* Luminaire Pass/Fail Summary Bar */}
+      {(formData.luminaires || []).length > 0 &&
+        (() => {
+          const luminaires = formData.luminaires || [];
+          const total = luminaires.length;
+          const funcPass = luminaires.filter(
+            (l: Luminaire) => l.functionalTestResult === 'pass'
+          ).length;
+          const funcFail = luminaires.filter(
+            (l: Luminaire) => l.functionalTestResult === 'fail'
+          ).length;
+          const funcUntested = total - funcPass - funcFail;
+          const durPass = luminaires.filter(
+            (l: Luminaire) => l.durationTestResult === 'pass'
+          ).length;
+          const durFail = luminaires.filter(
+            (l: Luminaire) => l.durationTestResult === 'fail'
+          ).length;
+          const durUntested = total - durPass - durFail;
+
+          return (
+            <div className={cn(isMobile ? 'px-4 py-3' : 'eicr-section-card p-4')}>
+              <div className="space-y-3">
+                {/* Functional */}
+                <div>
+                  <div className="flex items-center justify-between text-sm mb-1.5">
+                    <span className="text-white font-medium">Functional Test</span>
+                    <span className="text-white text-xs">
+                      {funcPass} Pass{funcFail > 0 ? `, ${funcFail} Fail` : ''}
+                      {funcUntested > 0 ? `, ${funcUntested} Untested` : ''}
+                    </span>
+                  </div>
+                  <div className="h-3 bg-white/10 rounded-full overflow-hidden flex">
+                    {funcPass > 0 && (
+                      <div
+                        className="bg-green-500 transition-all"
+                        style={{ width: `${(funcPass / total) * 100}%` }}
+                      />
+                    )}
+                    {funcFail > 0 && (
+                      <div
+                        className="bg-red-500 transition-all"
+                        style={{ width: `${(funcFail / total) * 100}%` }}
+                      />
+                    )}
+                  </div>
+                </div>
+
+                {/* Duration */}
+                <div>
+                  <div className="flex items-center justify-between text-sm mb-1.5">
+                    <span className="text-white font-medium">Duration Test</span>
+                    <span className="text-white text-xs">
+                      {durPass} Pass{durFail > 0 ? `, ${durFail} Fail` : ''}
+                      {durUntested > 0 ? `, ${durUntested} Untested` : ''}
+                    </span>
+                  </div>
+                  <div className="h-3 bg-white/10 rounded-full overflow-hidden flex">
+                    {durPass > 0 && (
+                      <div
+                        className="bg-green-500 transition-all"
+                        style={{ width: `${(durPass / total) * 100}%` }}
+                      />
+                    )}
+                    {durFail > 0 && (
+                      <div
+                        className="bg-red-500 transition-all"
+                        style={{ width: `${(durFail / total) * 100}%` }}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
 
       {/* Individual Luminaire Results */}
       {(formData.luminaires || []).length > 0 && (
@@ -653,13 +827,13 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   </div>
                   <div className="flex-1 text-left min-w-0">
                     <h3 className="font-semibold text-foreground">Individual Luminaire Results</h3>
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-xs text-white">
                       {(formData.luminaires || []).length} luminaires
                     </span>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                      'h-5 w-5 text-white transition-transform shrink-0',
                       openSections.luminaires && 'rotate-180'
                     )}
                   />
@@ -676,7 +850,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-5 w-5 text-white/40 transition-transform',
+                      'h-5 w-5 text-white transition-transform',
                       openSections.luminaires && 'rotate-180'
                     )}
                   />
@@ -685,21 +859,57 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
             </CollapsibleTrigger>
             <CollapsibleContent>
               <div className={cn('space-y-3', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-                {(formData.luminaires || []).map((lum: any, index: number) => (
+                {/* Quick bulk actions */}
+                <div className="flex flex-wrap gap-2 pb-2 border-b border-white/10">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const luminaires = formData.luminaires || [];
+                      const updated = luminaires.map((lum: Luminaire) => ({
+                        ...lum,
+                        functionalTestResult: 'pass',
+                      }));
+                      onUpdate('luminaires', updated);
+                    }}
+                    className="h-11 touch-manipulation border-white/30 hover:border-green-500/50"
+                  >
+                    <CheckCircle2 className="h-4 w-4 mr-2 text-green-400" />
+                    All Functional PASS
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const luminaires = formData.luminaires || [];
+                      const updated = luminaires.map((lum: Luminaire) => ({
+                        ...lum,
+                        durationTestResult: 'pass',
+                      }));
+                      onUpdate('luminaires', updated);
+                    }}
+                    className="h-11 touch-manipulation border-white/30 hover:border-green-500/50"
+                  >
+                    <CheckCircle2 className="h-4 w-4 mr-2 text-green-400" />
+                    All Duration PASS
+                  </Button>
+                </div>
+
+                {(formData.luminaires || []).map((lum: Luminaire, index: number) => (
                   <div key={lum.id} className="p-3 bg-muted/30 rounded-lg">
                     {/* Luminaire info */}
                     <div className="mb-2">
                       <p className="font-medium">
                         #{index + 1} {lum.location || 'Unknown location'}
                       </p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-white">
                         {lum.luminaireType || 'Type not specified'}
                       </p>
                     </div>
                     {/* Test results - grid layout for mobile */}
                     <div className="grid grid-cols-2 gap-2">
                       <div className="space-y-1">
-                        <Label className="text-xs text-muted-foreground">Functional</Label>
+                        <Label className="text-xs text-white">Functional</Label>
                         <Select
                           value={lum.functionalTestResult || ''}
                           onValueChange={(v) =>
@@ -708,7 +918,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         >
                           <SelectTrigger
                             className={cn(
-                              'h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                              'h-11 touch-manipulation',
                               lum.functionalTestResult === 'pass' &&
                                 'border-green-500/50 bg-green-500/10',
                               lum.functionalTestResult === 'fail' &&
@@ -717,7 +927,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                           >
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
-                          <SelectContent className="z-[100] bg-background border-border text-foreground">
+                          <SelectContent>
                             <SelectItem value="pass">
                               <span className="flex items-center gap-2">
                                 <CheckCircle2 className="h-4 w-4 text-green-500" />
@@ -735,7 +945,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         </Select>
                       </div>
                       <div className="space-y-1">
-                        <Label className="text-xs text-muted-foreground">Duration</Label>
+                        <Label className="text-xs text-white">Duration</Label>
                         <Select
                           value={lum.durationTestResult || ''}
                           onValueChange={(v) =>
@@ -744,7 +954,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         >
                           <SelectTrigger
                             className={cn(
-                              'h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow focus:ring-elec-yellow',
+                              'h-11 touch-manipulation',
                               lum.durationTestResult === 'pass' &&
                                 'border-green-500/50 bg-green-500/10',
                               lum.durationTestResult === 'fail' && 'border-red-500/50 bg-red-500/10'
@@ -752,7 +962,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                           >
                             <SelectValue placeholder="Select" />
                           </SelectTrigger>
-                          <SelectContent className="z-[100] bg-background border-border text-foreground">
+                          <SelectContent>
                             <SelectItem value="pass">
                               <span className="flex items-center gap-2">
                                 <CheckCircle2 className="h-4 w-4 text-green-500" />
@@ -792,11 +1002,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Lux Readings</h3>
-                  <span className="text-xs text-muted-foreground">BS EN 1838 compliance</span>
+                  <span className="text-xs text-white">BS EN 1838 compliance</span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.luxReadings && 'rotate-180'
                   )}
                 />
@@ -816,7 +1026,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.luxReadings && 'rotate-180'
                   )}
                 />
@@ -833,34 +1043,38 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-green-500" />
-                    <span className="text-muted-foreground">
+                    <span className="text-white">
                       Escape Route: <strong className="text-foreground">≥1 lux</strong>
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-blue-500" />
-                    <span className="text-muted-foreground">
+                    <span className="text-white">
                       Open Area: <strong className="text-foreground">≥0.5 lux</strong>
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="w-3 h-3 rounded-full bg-red-500" />
-                    <span className="text-muted-foreground">
+                    <span className="text-white">
                       High Risk: <strong className="text-foreground">≥15 lux</strong>
                     </span>
                   </div>
                 </div>
+                <div className="mt-2 pt-2 border-t border-yellow-500/20 text-xs text-white space-y-1">
+                  <p>Measured at floor level (0.5m above) on the horizontal plane</p>
+                  <p>Under emergency lighting conditions (mains lighting off)</p>
+                </div>
               </div>
 
               {(formData.luxReadings || []).length === 0 ? (
-                <div className="text-center py-6 text-muted-foreground">
+                <div className="text-center py-6 text-white">
                   <Sun className="h-10 w-10 mx-auto mb-2 opacity-50" />
                   <p className="text-sm">No lux readings recorded</p>
                   <p className="text-xs">Add readings to verify BS EN 1838 compliance</p>
                 </div>
               ) : (
                 <div className="space-y-3">
-                  {(formData.luxReadings || []).map((reading: any, index: number) => (
+                  {(formData.luxReadings || []).map((reading: LuxReading, index: number) => (
                     <div key={reading.id} className="bg-muted/30 rounded-lg p-3">
                       <div className="flex items-center justify-between mb-3">
                         <h4 className="font-medium text-sm">Reading #{index + 1}</h4>
@@ -868,7 +1082,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                           variant="ghost"
                           size="sm"
                           onClick={() => removeLuxReading(reading.id)}
-                          className="h-8 w-8 p-0 text-red-400 hover:text-red-500 hover:bg-red-500/10"
+                          className="h-11 w-11 p-0 text-red-400 hover:text-red-500 hover:bg-red-500/10 touch-manipulation"
                           aria-label="Remove lux reading"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -876,18 +1090,23 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                         <div className="col-span-2 sm:col-span-1 space-y-1">
-                          <Label className="text-xs">Location</Label>
+                          <Label htmlFor={`lux-location-${reading.id}`} className="text-xs">
+                            Location
+                          </Label>
                           <Input
+                            id={`lux-location-${reading.id}`}
                             placeholder="e.g., Corridor A"
                             value={reading.location || ''}
                             onChange={(e) =>
                               updateLuxReading(reading.id, 'location', e.target.value)
                             }
-                            className="h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow"
+                            className="h-11 text-sm touch-manipulation"
                           />
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs">Zone Category</Label>
+                          <Label htmlFor={`lux-category-${reading.id}`} className="text-xs">
+                            Zone Category
+                          </Label>
                           <Select
                             value={reading.category || ''}
                             onValueChange={(v) => {
@@ -898,10 +1117,13 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                               }
                             }}
                           >
-                            <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30">
+                            <SelectTrigger
+                              id={`lux-category-${reading.id}`}
+                              className="h-11 touch-manipulation"
+                            >
                               <SelectValue placeholder="Select" />
                             </SelectTrigger>
-                            <SelectContent className="z-[100] bg-background border-border text-foreground">
+                            <SelectContent>
                               <SelectItem value="escape-route">Escape Route (≥1 lux)</SelectItem>
                               <SelectItem value="open-area">Open Area (≥0.5 lux)</SelectItem>
                               <SelectItem value="high-risk">High Risk (≥15 lux)</SelectItem>
@@ -909,8 +1131,11 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                           </Select>
                         </div>
                         <div className="space-y-1">
-                          <Label className="text-xs">Lux Reading</Label>
+                          <Label htmlFor={`lux-reading-${reading.id}`} className="text-xs">
+                            Lux Reading
+                          </Label>
                           <Input
+                            id={`lux-reading-${reading.id}`}
                             type="number"
                             step="0.1"
                             min="0"
@@ -924,7 +1149,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                               )
                             }
                             className={cn(
-                              'h-11 text-sm touch-manipulation border-white/30 focus:border-elec-yellow',
+                              'h-11 text-sm touch-manipulation',
                               reading.result === 'pass' && 'border-green-500/50 bg-green-500/10',
                               reading.result === 'fail' && 'border-red-500/50 bg-red-500/10'
                             )}
@@ -939,8 +1164,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                                 'bg-green-500/20 text-green-400 border border-green-500/30',
                               reading.result === 'fail' &&
                                 'bg-red-500/20 text-red-400 border border-red-500/30',
-                              !reading.result &&
-                                'bg-muted/50 text-muted-foreground border border-white/10'
+                              !reading.result && 'bg-muted/50 text-white border border-white/10'
                             )}
                           >
                             {reading.result === 'pass' && (
@@ -958,7 +1182,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                         </div>
                       </div>
                       {reading.minRequired && (
-                        <p className="text-xs text-muted-foreground mt-2">
+                        <p className="text-xs text-white mt-2">
                           Minimum required: {reading.minRequired}
                         </p>
                       )}
@@ -991,13 +1215,13 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Defects & Observations</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {(formData.defectsFound || []).length} items
                   </span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.defects && 'rotate-180'
                   )}
                 />
@@ -1012,7 +1236,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.defects && 'rotate-180'
                   )}
                 />
@@ -1021,293 +1245,309 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              {(formData.defectsFound || []).map((defect: any, defectIndex: number) => (
-                <div key={defect.id} className="bg-muted/30 rounded-xl overflow-hidden">
-                  {/* Header with delete - coloured bar */}
-                  <div
-                    className={cn(
-                      'flex items-center justify-between px-4 py-3',
-                      defect.priority === 'immediate'
-                        ? 'bg-red-500/20'
-                        : defect.priority === 'within-7-days'
-                          ? 'bg-orange-500/20'
-                          : defect.priority === 'within-28-days'
-                            ? 'bg-amber-500/20'
-                            : defect.priority === 'recommendation'
-                              ? 'bg-blue-500/20'
-                              : 'bg-white/5'
-                    )}
-                  >
-                    <h4 className="font-semibold text-base flex items-center gap-2">
-                      <AlertTriangle
-                        className={cn(
-                          'h-4 w-4',
-                          defect.priority === 'immediate'
-                            ? 'text-red-400'
-                            : defect.priority === 'within-7-days'
-                              ? 'text-orange-400'
-                              : defect.priority === 'within-28-days'
-                                ? 'text-amber-400'
-                                : defect.priority === 'recommendation'
-                                  ? 'text-blue-400'
-                                  : 'text-muted-foreground'
-                        )}
-                      />
-                      Defect #{defectIndex + 1}
-                    </h4>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => removeDefect(defect.id)}
-                      className="h-8 w-8 p-0 text-red-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg"
-                      aria-label="Remove defect"
+              {(formData.defectsFound || []).map(
+                (
+                  defect: EmergencyLightingFormData['defectsFound'][number],
+                  defectIndex: number
+                ) => (
+                  <div key={defect.id} className="bg-muted/30 rounded-xl overflow-hidden">
+                    {/* Header with delete - coloured bar */}
+                    <div
+                      className={cn(
+                        'flex items-center justify-between px-4 py-3',
+                        defect.priority === 'immediate'
+                          ? 'bg-red-500/20'
+                          : defect.priority === 'within-7-days'
+                            ? 'bg-orange-500/20'
+                            : defect.priority === 'within-28-days'
+                              ? 'bg-amber-500/20'
+                              : defect.priority === 'recommendation'
+                                ? 'bg-blue-500/20'
+                                : 'bg-white/5'
+                      )}
                     >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
+                      <h4 className="font-semibold text-base flex items-center gap-2">
+                        <AlertTriangle
+                          className={cn(
+                            'h-4 w-4',
+                            defect.priority === 'immediate'
+                              ? 'text-red-400'
+                              : defect.priority === 'within-7-days'
+                                ? 'text-orange-400'
+                                : defect.priority === 'within-28-days'
+                                  ? 'text-amber-400'
+                                  : defect.priority === 'recommendation'
+                                    ? 'text-blue-400'
+                                    : 'text-white'
+                          )}
+                        />
+                        Defect #{defectIndex + 1}
+                      </h4>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => removeDefect(defect.id)}
+                        className="h-11 w-11 p-0 text-red-400 hover:text-red-500 hover:bg-red-500/10 rounded-lg touch-manipulation"
+                        aria-label="Remove defect"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
 
-                  <div className="p-4 space-y-4">
-                    {/* Quick-tap common defects - 3 column grid */}
-                    {!defect.description && (
+                    <div className="p-4 space-y-4">
+                      {/* Quick-tap common defects - 3 column grid */}
+                      {!defect.description && (
+                        <div className="space-y-2">
+                          <Label className="text-xs text-white">Tap to select common defect:</Label>
+                          <div className="grid grid-cols-2 gap-2">
+                            {[
+                              { label: 'Failed functional test', icon: '⚡' },
+                              { label: 'Low battery', icon: '🔋' },
+                              { label: 'Charging fault', icon: '🔌' },
+                              { label: 'Exit sign damaged', icon: '🚪' },
+                              { label: 'Lens dirty/obscured', icon: '💡' },
+                              { label: 'Missing luminaire', icon: '❌' },
+                            ].map((quickDefect) => (
+                              <button
+                                key={quickDefect.label}
+                                type="button"
+                                onClick={() =>
+                                  handleDefectDescriptionChange(defect.id, quickDefect.label)
+                                }
+                                className="h-11 px-3 text-sm bg-white/5 hover:bg-white/10 border border-white/20 rounded-lg touch-manipulation transition-colors text-left flex items-center gap-2"
+                              >
+                                <span>{quickDefect.icon}</span>
+                                <span className="truncate">{quickDefect.label}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Description - show when defect selected */}
+                      {defect.description && (
+                        <div className="space-y-2">
+                          <Label htmlFor={`defect-desc-${defect.id}`} className="text-sm">
+                            Description
+                          </Label>
+                          <Textarea
+                            id={`defect-desc-${defect.id}`}
+                            placeholder="Add more details..."
+                            value={defect.description || ''}
+                            onChange={(e) =>
+                              handleDefectDescriptionChange(defect.id, e.target.value)
+                            }
+                            className="text-base touch-manipulation min-h-[60px]"
+                          />
+                        </div>
+                      )}
+
+                      {/* Priority - Horizontal scroll on mobile */}
                       <div className="space-y-2">
-                        <Label className="text-xs text-muted-foreground">
-                          Tap to select common defect:
+                        <Label className="text-sm flex items-center gap-2">
+                          Priority
+                          {defect.description && (
+                            <span className="text-xs text-elec-yellow flex items-center gap-1 bg-elec-yellow/10 px-2 py-0.5 rounded-full">
+                              <Sparkles className="h-3 w-3" />
+                              Auto
+                            </span>
+                          )}
                         </Label>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="flex flex-wrap gap-2">
                           {[
-                            { label: 'Failed functional test', icon: '⚡' },
-                            { label: 'Low battery', icon: '🔋' },
-                            { label: 'Charging fault', icon: '🔌' },
-                            { label: 'Exit sign damaged', icon: '🚪' },
-                            { label: 'Lens dirty/obscured', icon: '💡' },
-                            { label: 'Missing luminaire', icon: '❌' },
-                          ].map((quickDefect) => (
+                            {
+                              value: 'immediate',
+                              label: 'Immediate',
+                              shortLabel: 'Now',
+                              color: 'red',
+                            },
+                            {
+                              value: 'within-7-days',
+                              label: '7 Days',
+                              shortLabel: '7d',
+                              color: 'orange',
+                            },
+                            {
+                              value: 'within-28-days',
+                              label: '28 Days',
+                              shortLabel: '28d',
+                              color: 'amber',
+                            },
+                            {
+                              value: 'recommendation',
+                              label: 'Recommend',
+                              shortLabel: 'Rec',
+                              color: 'blue',
+                            },
+                          ].map((priority) => (
                             <button
-                              key={quickDefect.label}
+                              key={priority.value}
                               type="button"
-                              onClick={() =>
-                                handleDefectDescriptionChange(defect.id, quickDefect.label)
-                              }
-                              className="h-11 px-3 text-sm bg-white/5 hover:bg-white/10 border border-white/20 rounded-lg touch-manipulation transition-colors text-left flex items-center gap-2"
+                              onClick={() => updateDefect(defect.id, 'priority', priority.value)}
+                              className={cn(
+                                'h-11 px-4 rounded-full border text-sm font-medium touch-manipulation transition-all flex items-center gap-2',
+                                defect.priority === priority.value
+                                  ? priority.color === 'red'
+                                    ? 'bg-red-500/30 border-red-500 text-red-300'
+                                    : priority.color === 'orange'
+                                      ? 'bg-orange-500/30 border-orange-500 text-orange-300'
+                                      : priority.color === 'amber'
+                                        ? 'bg-amber-500/30 border-amber-500 text-amber-300'
+                                        : 'bg-blue-500/30 border-blue-500 text-blue-300'
+                                  : 'bg-white/5 border-white/20 text-white hover:bg-white/10'
+                              )}
                             >
-                              <span>{quickDefect.icon}</span>
-                              <span className="truncate">{quickDefect.label}</span>
+                              <span
+                                className={cn(
+                                  'w-2 h-2 rounded-full shrink-0',
+                                  priority.color === 'red'
+                                    ? 'bg-red-500'
+                                    : priority.color === 'orange'
+                                      ? 'bg-orange-500'
+                                      : priority.color === 'amber'
+                                        ? 'bg-amber-500'
+                                        : 'bg-blue-500'
+                                )}
+                              />
+                              {priority.label}
                             </button>
                           ))}
                         </div>
                       </div>
-                    )}
 
-                    {/* Description - show when defect selected */}
-                    {defect.description && (
-                      <div className="space-y-2">
-                        <Label className="text-sm">Description</Label>
-                        <Textarea
-                          placeholder="Add more details..."
-                          value={defect.description || ''}
-                          onChange={(e) => handleDefectDescriptionChange(defect.id, e.target.value)}
-                          className="text-base touch-manipulation min-h-[60px] border-white/30 focus:border-elec-yellow focus:ring-elec-yellow"
-                        />
-                      </div>
-                    )}
-
-                    {/* Priority - Horizontal scroll on mobile */}
-                    <div className="space-y-2">
-                      <Label className="text-sm flex items-center gap-2">
-                        Priority
-                        {defect.description && (
-                          <span className="text-xs text-elec-yellow flex items-center gap-1 bg-elec-yellow/10 px-2 py-0.5 rounded-full">
-                            <Sparkles className="h-3 w-3" />
-                            Auto
-                          </span>
+                      {/* Link to luminaire & Rectified - Side by side on larger screens */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {/* Link to luminaire */}
+                        {(formData.luminaires || []).length > 0 && (
+                          <div className="space-y-2">
+                            <Label
+                              htmlFor={`defect-lum-${defect.id}`}
+                              className="text-xs flex items-center gap-1 text-white"
+                            >
+                              <Lightbulb className="h-3 w-3 text-amber-400" />
+                              Link to Luminaire
+                            </Label>
+                            <Select
+                              value={defect.luminaireId || 'general'}
+                              onValueChange={(v) =>
+                                updateDefect(defect.id, 'luminaireId', v === 'general' ? '' : v)
+                              }
+                            >
+                              <SelectTrigger
+                                id={`defect-lum-${defect.id}`}
+                                className="h-11 touch-manipulation bg-elec-gray text-sm"
+                              >
+                                <SelectValue placeholder="General" />
+                              </SelectTrigger>
+                              <SelectContent className="max-h-60">
+                                <SelectItem value="general">General (not specific)</SelectItem>
+                                {(formData.luminaires || []).map(
+                                  (lum: Luminaire, index: number) => (
+                                    <SelectItem key={lum.id} value={lum.id}>
+                                      #{index + 1} - {lum.location || 'Unknown'}
+                                    </SelectItem>
+                                  )
+                                )}
+                              </SelectContent>
+                            </Select>
+                          </div>
                         )}
-                      </Label>
-                      <div className="flex flex-wrap gap-2">
-                        {[
-                          {
-                            value: 'immediate',
-                            label: 'Immediate',
-                            shortLabel: 'Now',
-                            color: 'red',
-                          },
-                          {
-                            value: 'within-7-days',
-                            label: '7 Days',
-                            shortLabel: '7d',
-                            color: 'orange',
-                          },
-                          {
-                            value: 'within-28-days',
-                            label: '28 Days',
-                            shortLabel: '28d',
-                            color: 'amber',
-                          },
-                          {
-                            value: 'recommendation',
-                            label: 'Recommend',
-                            shortLabel: 'Rec',
-                            color: 'blue',
-                          },
-                        ].map((priority) => (
-                          <button
-                            key={priority.value}
-                            type="button"
-                            onClick={() => updateDefect(defect.id, 'priority', priority.value)}
-                            className={cn(
-                              'h-11 px-4 rounded-full border text-sm font-medium touch-manipulation transition-all flex items-center gap-2',
-                              defect.priority === priority.value
-                                ? priority.color === 'red'
-                                  ? 'bg-red-500/30 border-red-500 text-red-300'
-                                  : priority.color === 'orange'
-                                    ? 'bg-orange-500/30 border-orange-500 text-orange-300'
-                                    : priority.color === 'amber'
-                                      ? 'bg-amber-500/30 border-amber-500 text-amber-300'
-                                      : 'bg-blue-500/30 border-blue-500 text-blue-300'
-                                : 'bg-white/5 border-white/20 text-muted-foreground hover:bg-white/10'
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                'w-2 h-2 rounded-full shrink-0',
-                                priority.color === 'red'
-                                  ? 'bg-red-500'
-                                  : priority.color === 'orange'
-                                    ? 'bg-orange-500'
-                                    : priority.color === 'amber'
-                                      ? 'bg-amber-500'
-                                      : 'bg-blue-500'
-                              )}
-                            />
-                            {priority.label}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
 
-                    {/* Link to luminaire & Rectified - Side by side on larger screens */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {/* Link to luminaire */}
-                      {(formData.luminaires || []).length > 0 && (
-                        <div className="space-y-2">
-                          <Label className="text-xs flex items-center gap-1 text-muted-foreground">
-                            <Lightbulb className="h-3 w-3 text-amber-400" />
-                            Link to Luminaire
-                          </Label>
-                          <Select
-                            value={defect.luminaireId || 'general'}
-                            onValueChange={(v) =>
-                              updateDefect(defect.id, 'luminaireId', v === 'general' ? '' : v)
+                        {/* Rectified checkbox */}
+                        <div
+                          className={cn(
+                            'flex items-center gap-3 p-3 rounded-lg border touch-manipulation cursor-pointer transition-colors h-fit',
+                            defect.rectified
+                              ? 'bg-green-500/15 border-green-500/50'
+                              : 'bg-white/5 border-white/20 hover:bg-white/10'
+                          )}
+                          onClick={() => updateDefect(defect.id, 'rectified', !defect.rectified)}
+                        >
+                          <Checkbox
+                            id={`rectified-${defect.id}`}
+                            checked={defect.rectified || false}
+                            onCheckedChange={(checked) =>
+                              updateDefect(defect.id, 'rectified', checked)
                             }
-                          >
-                            <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-white/30 focus:border-elec-yellow text-sm">
-                              <SelectValue placeholder="General" />
-                            </SelectTrigger>
-                            <SelectContent className="z-[100] bg-background border-border text-foreground max-h-60">
-                              <SelectItem value="general">General (not specific)</SelectItem>
-                              {(formData.luminaires || []).map((lum: any, index: number) => (
-                                <SelectItem key={lum.id} value={lum.id}>
-                                  #{index + 1} - {lum.location || 'Unknown'}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                            className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
+                          />
+                          <div className="flex-1 min-w-0">
+                            <Label
+                              htmlFor={`rectified-${defect.id}`}
+                              className="text-sm font-medium cursor-pointer"
+                            >
+                              Rectified on site
+                            </Label>
+                          </div>
+                          {defect.rectified && (
+                            <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+                          )}
                         </div>
-                      )}
+                      </div>
 
-                      {/* Rectified checkbox */}
-                      <div
-                        className={cn(
-                          'flex items-center gap-3 p-3 rounded-lg border touch-manipulation cursor-pointer transition-colors h-fit',
-                          defect.rectified
-                            ? 'bg-green-500/15 border-green-500/50'
-                            : 'bg-white/5 border-white/20 hover:bg-white/10'
-                        )}
-                        onClick={() => updateDefect(defect.id, 'rectified', !defect.rectified)}
-                      >
-                        <Checkbox
-                          id={`rectified-${defect.id}`}
-                          checked={defect.rectified || false}
-                          onCheckedChange={(checked) =>
-                            updateDefect(defect.id, 'rectified', checked)
-                          }
-                          className="h-5 w-5 border-white/40 data-[state=checked]:bg-green-500 data-[state=checked]:border-green-500 data-[state=checked]:text-white"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <Label
-                            htmlFor={`rectified-${defect.id}`}
-                            className="text-sm font-medium cursor-pointer"
-                          >
-                            Rectified on site
-                          </Label>
-                        </div>
-                        {defect.rectified && (
-                          <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
+                      {/* Photo Evidence for this defect */}
+                      <div className="space-y-2 pt-2 border-t border-white/10">
+                        <Label className="text-xs flex items-center gap-1 text-white">
+                          <Camera className="h-3 w-3 text-purple-400" />
+                          Photo Evidence
+                        </Label>
+                        {defect.photoUrl ? (
+                          <div className="relative">
+                            <img
+                              src={defect.photoUrl}
+                              alt="Defect evidence"
+                              className="w-full h-32 object-cover rounded-lg border border-white/20"
+                            />
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeDefectPhoto(defect.id)}
+                              className="absolute top-2 right-2 h-7 w-7 p-0 bg-black/60 hover:bg-red-500/80 rounded-full"
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ) : (
+                          <div>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              capture="environment"
+                              ref={(el) => {
+                                defectPhotoInputRefs.current[defect.id] = el;
+                              }}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handleDefectPhotoUpload(defect.id, file);
+                              }}
+                              className="hidden"
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => defectPhotoInputRefs.current[defect.id]?.click()}
+                              disabled={uploadingDefectId === defect.id}
+                              className="w-full h-11 border-dashed border-white/30 text-white"
+                            >
+                              {uploadingDefectId === defect.id ? (
+                                <>
+                                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                                  Uploading...
+                                </>
+                              ) : (
+                                <>
+                                  <Camera className="h-4 w-4 mr-2" />
+                                  Add Photo
+                                </>
+                              )}
+                            </Button>
+                          </div>
                         )}
                       </div>
-                    </div>
-
-                    {/* Photo Evidence for this defect */}
-                    <div className="space-y-2 pt-2 border-t border-white/10">
-                      <Label className="text-xs flex items-center gap-1 text-muted-foreground">
-                        <Camera className="h-3 w-3 text-purple-400" />
-                        Photo Evidence
-                      </Label>
-                      {defect.photoUrl ? (
-                        <div className="relative">
-                          <img
-                            src={defect.photoUrl}
-                            alt="Defect evidence"
-                            className="w-full h-32 object-cover rounded-lg border border-white/20"
-                          />
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => removeDefectPhoto(defect.id)}
-                            className="absolute top-2 right-2 h-7 w-7 p-0 bg-black/60 hover:bg-red-500/80 rounded-full"
-                          >
-                            <X className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ) : (
-                        <div>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            capture="environment"
-                            ref={(el) => {
-                              defectPhotoInputRefs.current[defect.id] = el;
-                            }}
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) handleDefectPhotoUpload(defect.id, file);
-                            }}
-                            className="hidden"
-                          />
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={() => defectPhotoInputRefs.current[defect.id]?.click()}
-                            disabled={uploadingDefectId === defect.id}
-                            className="w-full h-11 border-dashed border-white/30 text-muted-foreground"
-                          >
-                            {uploadingDefectId === defect.id ? (
-                              <>
-                                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                                Uploading...
-                              </>
-                            ) : (
-                              <>
-                                <Camera className="h-4 w-4 mr-2" />
-                                Add Photo
-                              </>
-                            )}
-                          </Button>
-                        </div>
-                      )}
                     </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
 
               <Button
                 variant="outline"
@@ -1333,13 +1573,13 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Photo Evidence</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {(formData.photos || []).length} photos
                   </span>
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
+                    'h-5 w-5 text-white transition-transform shrink-0',
                     openSections.photos && 'rotate-180'
                   )}
                 />
@@ -1359,7 +1599,7 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.photos && 'rotate-180'
                   )}
                 />
@@ -1368,17 +1608,19 @@ const EmergencyLightingTestResults: React.FC<EmergencyLightingTestResultsProps> 
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'px-4 pb-4')}>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-white">
                 Upload photos of luminaires, exit signs, defects, and the overall installation for
                 documentation.
               </p>
               <EmergencyLightingPhotos
                 photos={formData.photos || []}
                 luminaires={formData.luminaires || []}
-                defects={(formData.defectsFound || []).map((d: any) => ({
-                  id: d.id,
-                  description: d.description || 'Unnamed defect',
-                }))}
+                defects={(formData.defectsFound || []).map(
+                  (d: EmergencyLightingFormData['defectsFound'][number]) => ({
+                    id: d.id,
+                    description: d.description || 'Unnamed defect',
+                  })
+                )}
                 onPhotosChange={(photos) => onUpdate('photos', photos)}
                 certificateId={formData.certificateNumber}
               />

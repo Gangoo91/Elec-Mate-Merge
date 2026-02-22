@@ -254,7 +254,7 @@ export function calculateEmergencyLighting(
   // Regulatory Notes
   const regulatoryNotes = [
     'BS 5266-1:2016 Emergency lighting requirements',
-    'Minimum 1 lux on escape routes, 0.2 lux in open areas',
+    'Minimum 1 lux on escape routes, 0.5 lux in open areas',
     'Uniformity ratio not exceeding 40:1',
     'Maximum spacing-to-height ratio of 4:1',
   ];

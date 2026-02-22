@@ -11,15 +11,15 @@ import {
 } from '@/types/emergency-lighting';
 
 export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingFormData>) => {
-  const get = (key: string, defaultValue: any = ''): string => {
-    const value = (formData as any)[key] ?? defaultValue;
+  const get = (key: keyof EmergencyLightingFormData, defaultValue: string = ''): string => {
+    const value = formData[key] ?? defaultValue;
     if (value === null || value === undefined) return '';
     if (typeof value === 'number') return String(value);
-    return value;
+    return value as string;
   };
 
-  const getNum = (key: string, defaultValue: number = 0): number => {
-    const value = (formData as any)[key];
+  const getNum = (key: keyof EmergencyLightingFormData, defaultValue: number = 0): number => {
+    const value = formData[key];
     if (typeof value === 'number') return value;
     if (typeof value === 'string') {
       const parsed = parseFloat(value);
@@ -28,8 +28,8 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     return defaultValue;
   };
 
-  const getBool = (key: string): boolean => {
-    const value = (formData as any)[key];
+  const getBool = (key: keyof EmergencyLightingFormData): boolean => {
+    const value = formData[key];
     return value === true || value === 'true';
   };
 
@@ -123,7 +123,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     const defects = formData.defectsFound || [];
     const luminaires: Luminaire[] = formData.luminaires || [];
 
-    return defects.map((d: any, index: number) => {
+    return defects.map((d: EmergencyLightingFormData['defectsFound'][number], index: number) => {
       const linkedLuminaire = luminaires.find((l) => l.id === d.luminaireId);
       return {
         number: index + 1,
@@ -156,9 +156,11 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
             linkedItemName = `Luminaire #${lumIndex} - ${lum.location}`;
           }
         } else if (photo.category === 'defect') {
-          const def = defects.find((d: any) => d.id === photo.linkedItemId);
+          const def = defects.find(
+            (d: EmergencyLightingFormData['defectsFound'][number]) => d.id === photo.linkedItemId
+          );
           if (def) {
-            linkedItemName = `Defect: ${(def as any).description?.substring(0, 40)}...`;
+            linkedItemName = `Defect: ${def.description?.substring(0, 40)}...`;
           }
         }
       }
@@ -192,9 +194,11 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
               linkedItemName = `#${lumIndex} - ${lum.location}`;
             }
           } else if (photo.category === 'defect') {
-            const def = defects.find((d: any) => d.id === photo.linkedItemId);
+            const def = defects.find(
+              (d: EmergencyLightingFormData['defectsFound'][number]) => d.id === photo.linkedItemId
+            );
             if (def) {
-              linkedItemName = (def as any).description?.substring(0, 40);
+              linkedItemName = def.description?.substring(0, 40);
             }
           }
         }
@@ -225,6 +229,10 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       standards: 'BS 5266-1:2016, BS EN 50172:2004, BS EN 1838:2013',
     },
 
+    // Certificate type
+    certificate_type: get('certificateType'),
+    certificate_type_display: formatCertificateType(get('certificateType')),
+
     // ============================================
     // CLIENT DETAILS
     // ============================================
@@ -247,6 +255,10 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       occupancy_display: formatOccupancy(get('occupancyType')),
     },
 
+    // Extent of installation
+    extent_of_installation: get('extentOfInstallation'),
+    has_extent: !!(get('extentOfInstallation') && get('extentOfInstallation').trim()),
+
     // ============================================
     // SYSTEM DETAILS
     // ============================================
@@ -262,6 +274,15 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       central_battery_location: get('centralBatteryLocation'),
       self_contained_units: getBool('selfContainedUnits') !== false,
       self_contained_units_display: getBool('selfContainedUnits') !== false ? 'Yes' : 'No',
+      purpose_escape_route: getBool('purposeEscapeRoute'),
+      purpose_open_area: getBool('purposeOpenArea'),
+      purpose_high_risk: getBool('purposeHighRisk'),
+      purpose_standby: getBool('purposeStandby'),
+      has_purpose:
+        getBool('purposeEscapeRoute') ||
+        getBool('purposeOpenArea') ||
+        getBool('purposeHighRisk') ||
+        getBool('purposeStandby'),
     },
 
     // ============================================
@@ -273,6 +294,16 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       central_battery_count: getNum('centralBatteryCount'),
       total_count:
         (getNum('luminaireCount') || (formData.luminaires || []).length) + getNum('exitSignCount'),
+    },
+
+    // ============================================
+    // TEST EQUIPMENT
+    // ============================================
+    test_equipment: {
+      lux_meter_make: get('luxMeterMake'),
+      lux_meter_serial: get('luxMeterSerial'),
+      lux_meter_calibration_date: getDate('luxMeterCalibrationDate'),
+      has_equipment: !!(get('luxMeterMake') || get('luxMeterSerial')),
     },
 
     // ============================================
@@ -365,6 +396,17 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     },
 
     // ============================================
+    // RESPONSIBLE PERSON (CLIENT REPRESENTATIVE)
+    // ============================================
+    responsible_person: {
+      name: get('responsiblePersonName'),
+      position: get('responsiblePersonPosition'),
+      signature: get('responsiblePersonSignature'),
+      date: getDate('responsiblePersonDate'),
+      has_responsible_person: !!get('responsiblePersonName'),
+    },
+
+    // ============================================
     // OVERALL RESULT
     // ============================================
     overall_result: get('overallResult'),
@@ -395,6 +437,7 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
       accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
       registration_scheme_logo: get('registrationSchemeLogo'),
       registration_scheme: get('registrationScheme'),
+      registration_number: get('registrationNumber'),
     },
 
     // ============================================
@@ -457,6 +500,17 @@ export const formatEmergencyLightingJson = (formData: Partial<EmergencyLightingF
     company_accent_color: get('accentColor') || get('companyAccentColor') || '#f59e0b',
     registration_scheme_logo: get('registrationSchemeLogo'),
     registration_scheme: get('registrationScheme'),
+    registration_number: get('registrationNumber'),
+
+    // New fields (flat)
+    extent_of_installation: get('extentOfInstallation'),
+    responsible_person_name: get('responsiblePersonName'),
+    responsible_person_position: get('responsiblePersonPosition'),
+    responsible_person_signature: get('responsiblePersonSignature'),
+    responsible_person_date: getDate('responsiblePersonDate'),
+    lux_meter_make: get('luxMeterMake'),
+    lux_meter_serial: get('luxMeterSerial'),
+    lux_meter_calibration_date: getDate('luxMeterCalibrationDate'),
   };
 };
 
@@ -653,5 +707,20 @@ function formatLuxCategory(category: string): string {
       return 'High Risk (≥15 lux)';
     default:
       return category || '';
+  }
+}
+
+function formatCertificateType(type: string): string {
+  switch (type) {
+    case 'completion':
+      return 'Completion Certificate (New Installation)';
+    case 'periodic':
+      return 'Periodic Inspection & Testing';
+    case 'existing-site':
+      return 'Existing Site Compliance';
+    case 'completion-small':
+      return 'Completion (≤25 Self-Contained)';
+    default:
+      return type || '';
   }
 }

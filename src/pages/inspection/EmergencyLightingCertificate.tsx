@@ -41,13 +41,17 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { reportCloud } from '@/utils/reportCloud';
-import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
+
 import { draftStorage } from '@/utils/draftStorage';
 import { supabase } from '@/integrations/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 import EmergencyLightingFormTabs from '@/components/inspection/emergency-lighting/EmergencyLightingFormTabs';
 import { useEmergencyLightingTabs } from '@/hooks/useEmergencyLightingTabs';
-import { getDefaultEmergencyLightingFormData } from '@/types/emergency-lighting';
+import {
+  getDefaultEmergencyLightingFormData,
+  EmergencyLightingFormData,
+} from '@/types/emergency-lighting';
 import { useEmergencyLightingSmartForm } from '@/hooks/inspection/useEmergencyLightingSmartForm';
 import { formatEmergencyLightingJson } from '@/utils/emergencyLightingJsonFormatter';
 
@@ -65,7 +69,9 @@ export default function EmergencyLightingCertificate() {
   const isNew = id === 'new' || !id;
 
   // State
-  const [formData, setFormData] = useState<any>(getDefaultEmergencyLightingFormData());
+  const [formData, setFormData] = useState<EmergencyLightingFormData>(
+    getDefaultEmergencyLightingFormData()
+  );
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [isLoading, setIsLoading] = useState(!isNew);
@@ -75,10 +81,11 @@ export default function EmergencyLightingCertificate() {
   const [syncStatus, setSyncStatus] = useState<SyncStatus>('synced');
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [showRecoveryDialog, setShowRecoveryDialog] = useState(false);
-  const [recoveryDraft, setRecoveryDraft] = useState<{ data: any; lastModified: Date } | null>(
-    null
-  );
-  const [user, setUser] = useState<any>(null);
+  const [recoveryDraft, setRecoveryDraft] = useState<{
+    data: EmergencyLightingFormData;
+    lastModified: Date;
+  } | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // Refs for auto-save
   const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -324,14 +331,17 @@ export default function EmergencyLightingCertificate() {
   }, [formData, savedReportId, syncStatus]);
 
   // Update form field
-  const handleUpdate = useCallback((field: string, value: any) => {
-    setFormData((prev: any) => ({
-      ...prev,
-      [field]: value,
-    }));
-    hasUnsavedChangesRef.current = true;
-    setSyncStatus('pending');
-  }, []);
+  const handleUpdate = useCallback(
+    (field: string, value: EmergencyLightingFormData[keyof EmergencyLightingFormData]) => {
+      setFormData((prev: EmergencyLightingFormData) => ({
+        ...prev,
+        [field]: value,
+      }));
+      hasUnsavedChangesRef.current = true;
+      setSyncStatus('pending');
+    },
+    []
+  );
 
   // Handle draft recovery
   const handleRecoverDraft = () => {
@@ -439,7 +449,34 @@ export default function EmergencyLightingCertificate() {
               branding.registrationSchemeLogo || dataWithCertNumber.registrationSchemeLogo,
             registrationScheme:
               branding.registrationScheme || dataWithCertNumber.registrationScheme,
+            registrationNumber:
+              branding.registrationNumber || dataWithCertNumber.registrationNumber,
           };
+        }
+      }
+
+      // Auto-resolve scheme logo if scheme is set but logo is missing/placeholder
+      const schemeName = dataWithCertNumber.registrationScheme;
+      const currentLogo = dataWithCertNumber.registrationSchemeLogo || '';
+      const isPlaceholderLogo =
+        !currentLogo || currentLogo.length < 2000 || currentLogo.includes('image/svg+xml');
+      if (schemeName && schemeName !== 'none' && schemeName !== 'other' && isPlaceholderLogo) {
+        try {
+          const { getSchemeInfo } = await import('@/constants/schemeLogos');
+          const info = getSchemeInfo(schemeName);
+          if (info) {
+            const resp = await fetch(info.logoPath);
+            const blob = await resp.blob();
+            const dataUrl = await new Promise<string>((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result as string);
+              reader.onerror = reject;
+              reader.readAsDataURL(blob);
+            });
+            dataWithCertNumber = { ...dataWithCertNumber, registrationSchemeLogo: dataUrl };
+          }
+        } catch (err) {
+          console.warn('[EmergencyLighting] Failed to resolve scheme logo:', err);
         }
       }
 
@@ -576,14 +613,14 @@ export default function EmergencyLightingCertificate() {
       </AlertDialog>
 
       {/* Mobile-First Header */}
-      <div className="bg-[#242428] border-b border-amber-500/20 sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
+      <div className="bg-background border-b border-white/[0.06] sticky top-0 z-10 pt-[env(safe-area-inset-top)]">
         <div className="px-4 py-3">
           {/* Top Row - Back & Actions */}
           <div className="flex items-center justify-between mb-3">
             <Button
               variant="ghost"
               size="sm"
-              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-11 px-2 touch-manipulation active:scale-[0.98] transition-transform"
+              className="text-white hover:text-white hover:bg-white/10 -ml-2 h-11 px-2 touch-manipulation active:scale-[0.98] transition-transform"
               onClick={() => navigate('/electrician/inspection-testing')}
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
@@ -598,7 +635,7 @@ export default function EmergencyLightingCertificate() {
                 size="icon"
                 onClick={handleSaveDraft}
                 disabled={isSaving}
-                className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
+                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
                 aria-label="Save draft"
               >
                 {isSaving ? (
@@ -621,16 +658,6 @@ export default function EmergencyLightingCertificate() {
                   <Download className="h-4 w-4" />
                 )}
               </Button>
-
-              <WhatsAppShareButton
-                type="emergency-lighting"
-                id={savedReportId || id || 'new'}
-                recipientPhone={formData.clientTelephone || ''}
-                recipientName={formData.clientName || ''}
-                documentLabel="Emergency Lighting Certificate"
-                variant="ghost"
-                className="h-11 w-11 touch-manipulation active:scale-[0.98] transition-transform"
-              />
             </div>
           </div>
 
@@ -641,17 +668,16 @@ export default function EmergencyLightingCertificate() {
             </div>
             <div>
               <h1 className="text-base font-bold text-white">
-                {isNew ? 'New Emergency Lighting' : 'Emergency Lighting'}
+                {isNew ? 'New Emergency Lighting Certificate' : 'Emergency Lighting Certificate'}
               </h1>
-              <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white/50">BS 5266 Compliance</p>
+              <p className="text-[11px] text-white">BS 5266 Compliance</p>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content - Edge-to-edge on mobile, padded on desktop */}
-      <main className="py-4 pb-4 sm:px-4 sm:pb-8">
+      <main className="py-4 pb-4 sm:px-6 lg:px-8 sm:pb-8">
         <EmergencyLightingFormTabs
           currentTab={tabProps.currentTab}
           onTabChange={tabProps.setCurrentTab}
@@ -670,6 +696,15 @@ export default function EmergencyLightingCertificate() {
             isCurrentTabComplete: tabProps.isCurrentTabComplete,
             onGenerateCertificate: handleGenerateCertificate,
             canGenerateCertificate: !isGenerating,
+            reportId: savedReportId,
+            formData: formData,
+            whatsApp: {
+              type: 'emergency-lighting',
+              id: savedReportId || id || 'new',
+              recipientPhone: formData.clientTelephone || '',
+              recipientName: formData.clientName || '',
+              documentLabel: 'Emergency Lighting Certificate',
+            },
           }}
           onGenerateCertificate={handleGenerateCertificate}
           onSaveDraft={handleSaveDraft}
