@@ -8,14 +8,18 @@ import {
   Receipt,
   Download,
   ArrowLeftRight,
+  PenTool,
+  Send,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { RoomPhotoCapture } from '@/components/site-visit/capture/RoomPhotoCapture';
+import { SignatureCapture } from '@/components/ui/signature-capture';
 import { CompletionShareButton } from './CompletionShareButton';
 import { downloadCompletionCertificatePDF } from '@/utils/completion-certificate-pdf';
 import { supabase } from '@/integrations/supabase/client';
@@ -43,6 +47,10 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [compareIndex, setCompareIndex] = useState(0);
   const [completionSigned, setCompletionSigned] = useState(false);
+  const [completionClientName, setCompletionClientName] = useState(visit.customerName || '');
+  const [completionSignatureData, setCompletionSignatureData] = useState<string | null>(null);
+  const [isSigningCompletion, setIsSigningCompletion] = useState(false);
+  const [showCompletionFallback, setShowCompletionFallback] = useState(false);
 
   const beforePhotos = visit.photos.filter((p) => p.photoPhase === 'before');
   const isCompletionSent = visit.status === 'post_job';
@@ -144,6 +152,83 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
     onVisitUpdate,
     toast,
   ]);
+
+  const handleCompletionSignatureCapture = useCallback((data: string) => {
+    setCompletionSignatureData(data || null);
+  }, []);
+
+  const handleSignCompletion = useCallback(async () => {
+    if (!completionSignatureData || !completionClientName.trim()) return;
+    setIsSigningCompletion(true);
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const token = `in-app-${crypto.randomUUID()}`;
+
+      const beforePhotoUrls = visit.photos
+        .filter((p) => p.photoPhase === 'before' && !p.photoUrl.startsWith('blob:'))
+        .map((p) => p.photoUrl);
+
+      const afterPhotoUrls = visit.photos
+        .filter((p) => p.photoPhase === 'after' && !p.photoUrl.startsWith('blob:'))
+        .map((p) => p.photoUrl);
+
+      const scopeSummary = {
+        propertyAddress: visit.propertyAddress,
+        rooms: visit.rooms.map((r) => ({
+          roomName: r.roomName,
+          items: r.items.map((i) => ({
+            itemDescription: i.itemDescription,
+            quantity: i.quantity,
+            unit: i.unit,
+          })),
+        })),
+      };
+
+      const { error } = await supabase.from('completion_signoffs').insert({
+        user_id: user.id,
+        site_visit_id: visit.id,
+        share_token: token,
+        title: `Completion — ${visit.propertyAddress || 'Site Visit'}`,
+        scope_summary: scopeSummary,
+        before_photo_urls: beforePhotoUrls,
+        after_photo_urls: afterPhotoUrls,
+        client_name: completionClientName.trim(),
+        client_email: visit.customerEmail,
+        company_name: companyProfile?.company_name || null,
+        company_logo_url: companyProfile?.logo_url || null,
+        requires_signature: true,
+        status: 'signed',
+        signature_data: completionSignatureData,
+        signed_at: new Date().toISOString(),
+      });
+
+      if (error) throw error;
+
+      // Update visit status to post_job
+      if (visit.id) {
+        await updateStatus(visit.id, 'post_job');
+      }
+
+      setCompletionSigned(true);
+      toast({
+        title: 'Completion signed',
+        description: 'The client has signed off the completed work.',
+      });
+    } catch (error: unknown) {
+      toast({
+        title: 'Signing failed',
+        description: error instanceof Error ? error.message : 'Unknown error',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSigningCompletion(false);
+    }
+  }, [completionSignatureData, completionClientName, visit, companyProfile, updateStatus, toast]);
 
   const handleRaiseInvoice = useCallback(async () => {
     if (!visit.quoteId) return;
@@ -323,17 +408,90 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
         </div>
       )}
 
-      {/* Send Completion for Sign-off */}
-      {!isCompletionSent && (
-        <div className="pt-4 border-t border-white/[0.06] space-y-2">
-          {!hasAfterPhotos && (
-            <p className="text-xs text-amber-400 text-center">
-              Add and save at least one after photo before sharing
-            </p>
-          )}
-          <div className={!hasAfterPhotos ? 'opacity-50 pointer-events-none' : ''}>
-            <CompletionShareButton visit={visit} />
+      {/* Client Sign-Off */}
+      {!isCompletionSent && !completionSigned && hasAfterPhotos && photosSaved && (
+        <div className="pt-4 border-t border-white/[0.06] space-y-4">
+          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+            <PenTool className="h-4 w-4 text-amber-400" />
+            Client Sign-Off
+          </h3>
+          <p className="text-xs text-white">
+            Hand the device to the client to sign off the completed work
+          </p>
+
+          {/* Client name input */}
+          <div className="space-y-1.5">
+            <label className="text-sm font-medium text-white">Client Name</label>
+            <Input
+              value={completionClientName}
+              onChange={(e) => setCompletionClientName(e.target.value)}
+              placeholder="Enter client name"
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            />
           </div>
+
+          {/* Signature capture */}
+          <SignatureCapture
+            onCapture={handleCompletionSignatureCapture}
+            variant="dark"
+            showActions={false}
+            height={180}
+          />
+
+          {/* Confirm Completion button */}
+          <Button
+            onClick={handleSignCompletion}
+            disabled={!completionSignatureData || !completionClientName.trim() || isSigningCompletion}
+            className="w-full h-12 text-base font-semibold touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
+          >
+            {isSigningCompletion ? (
+              <>
+                <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                Saving signature...
+              </>
+            ) : (
+              <>
+                <PenTool className="h-5 w-5 mr-2" />
+                Confirm Completion
+              </>
+            )}
+          </Button>
+
+          {/* Fallback: Send link instead */}
+          {!showCompletionFallback ? (
+            <button
+              onClick={() => setShowCompletionFallback(true)}
+              className="w-full text-center text-sm text-white underline underline-offset-2 py-2 touch-manipulation"
+            >
+              <Send className="h-3.5 w-3.5 inline mr-1.5" />
+              Client not present? Send a link instead
+            </button>
+          ) : (
+            <div className="space-y-2 pt-2 border-t border-white/[0.06]">
+              <p className="text-xs text-white text-center">
+                Send a link for the client to sign remotely
+              </p>
+              <CompletionShareButton visit={visit} />
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Prompt to save photos before signing */}
+      {!isCompletionSent && !completionSigned && hasAfterPhotos && !photosSaved && (
+        <div className="pt-4 border-t border-white/[0.06]">
+          <p className="text-xs text-amber-400 text-center">
+            Save your after photos above before requesting client sign-off
+          </p>
+        </div>
+      )}
+
+      {/* Prompt to add photos */}
+      {!isCompletionSent && !completionSigned && !hasAfterPhotos && (
+        <div className="pt-4 border-t border-white/[0.06]">
+          <p className="text-xs text-amber-400 text-center">
+            Add and save at least one after photo before requesting client sign-off
+          </p>
         </div>
       )}
 

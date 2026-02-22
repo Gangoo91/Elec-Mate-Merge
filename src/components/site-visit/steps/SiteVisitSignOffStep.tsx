@@ -114,44 +114,56 @@ export const SiteVisitSignOffStep = ({
     }
   }, [signatureData, clientName, visit, assumptions, companyProfile, updateStatus, toast]);
 
+  const buildPDFData = useCallback(
+    (includeSig: boolean) => ({
+      companyName: companyProfile?.company_name || undefined,
+      companyLogoUrl: companyProfile?.logo_url || undefined,
+      referenceId: visit.id?.slice(0, 8).toUpperCase(),
+      customerName: visit.customerName,
+      customerEmail: visit.customerEmail,
+      customerPhone: visit.customerPhone,
+      propertyAddress: visit.propertyAddress,
+      propertyPostcode: visit.propertyPostcode,
+      propertyType: visit.propertyType,
+      rooms: visit.rooms.map((r) => ({
+        roomName: r.roomName,
+        items: r.items.map((i) => ({
+          itemDescription: i.itemDescription,
+          quantity: i.quantity,
+          unit: i.unit,
+        })),
+        notes: r.notes,
+      })),
+      prompts: visit.prompts
+        .filter((p) => p.response)
+        .map((p) => {
+          const room = p.roomId ? visit.rooms.find((r) => r.id === p.roomId) : undefined;
+          return {
+            promptQuestion: p.promptQuestion,
+            response: p.response || '',
+            roomName: room?.roomName,
+          };
+        }),
+      assumptions,
+      ...(includeSig && signatureData
+        ? {
+            signatureData,
+            signedByName: clientName.trim(),
+            signedAt: new Date().toISOString(),
+          }
+        : {}),
+    }),
+    [visit, assumptions, companyProfile, signatureData, clientName]
+  );
+
   const handleDownloadPDF = useCallback(async () => {
     setIsDownloadingPDF(true);
     try {
-      await downloadScopePDF({
-        companyName: companyProfile?.company_name || undefined,
-        companyLogoUrl: companyProfile?.logo_url || undefined,
-        referenceId: visit.id?.slice(0, 8).toUpperCase(),
-        customerName: visit.customerName,
-        customerEmail: visit.customerEmail,
-        customerPhone: visit.customerPhone,
-        propertyAddress: visit.propertyAddress,
-        propertyPostcode: visit.propertyPostcode,
-        propertyType: visit.propertyType,
-        rooms: visit.rooms.map((r) => ({
-          roomName: r.roomName,
-          items: r.items.map((i) => ({
-            itemDescription: i.itemDescription,
-            quantity: i.quantity,
-            unit: i.unit,
-          })),
-          notes: r.notes,
-        })),
-        prompts: visit.prompts
-          .filter((p) => p.response)
-          .map((p) => {
-            const room = p.roomId ? visit.rooms.find((r) => r.id === p.roomId) : undefined;
-            return {
-              promptQuestion: p.promptQuestion,
-              response: p.response || '',
-              roomName: room?.roomName,
-            };
-          }),
-        assumptions,
-      });
+      await downloadScopePDF(buildPDFData(isSigned));
     } finally {
       setIsDownloadingPDF(false);
     }
-  }, [visit, assumptions, companyProfile]);
+  }, [buildPDFData, isSigned]);
 
   return (
     <div className="space-y-4">
@@ -275,6 +287,26 @@ export const SiteVisitSignOffStep = ({
               </p>
             </div>
           </div>
+
+          {/* Download Signed PDF */}
+          <Button
+            onClick={handleDownloadPDF}
+            disabled={isDownloadingPDF}
+            variant="outline"
+            className="w-full h-11 touch-manipulation border-emerald-500/30 text-emerald-400 hover:border-emerald-400 hover:text-emerald-300"
+          >
+            {isDownloadingPDF ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Generating PDF...
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4 mr-2" />
+                Download Signed PDF
+              </>
+            )}
+          </Button>
 
           {/* Send to Quote Wizard */}
           <div className="space-y-2 pt-4 border-t border-white/[0.06]">

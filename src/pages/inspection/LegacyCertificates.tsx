@@ -170,7 +170,7 @@ export default function LegacyCertificates() {
         </div>
       </header>
 
-      <main className="p-4 pb-24 space-y-4 max-w-4xl mx-auto">
+      <main className="p-4 pb-24 space-y-4 max-w-6xl mx-auto">
         {/* Search and Actions */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">

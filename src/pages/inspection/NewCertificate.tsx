@@ -152,7 +152,7 @@ export default function NewCertificate() {
     <div className="bg-background min-h-screen">
       {/* Header */}
       <div className="border-b border-white/[0.06] sticky top-0 z-10 bg-background/95 backdrop-blur">
-        <div className="max-w-5xl mx-auto px-4 py-4 sm:px-6">
+        <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6">
           <Button
             variant="ghost"
             className="text-white hover:text-foreground p-0 mb-3 h-11 touch-manipulation active:scale-[0.98]"
@@ -174,7 +174,7 @@ export default function NewCertificate() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-5xl mx-auto px-4 py-6 sm:px-6 pb-24 sm:pb-8">
+      <div className="max-w-6xl mx-auto px-4 py-6 sm:px-6 pb-24 sm:pb-8">
         <motion.div
           className="space-y-8"
           variants={containerVariants}

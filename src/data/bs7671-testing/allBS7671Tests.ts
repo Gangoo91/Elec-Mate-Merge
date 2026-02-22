@@ -1091,7 +1091,7 @@ export const allBS7671Tests: BS7671Test[] = [
           'Use an approved detector tester (aerosol for smoke, heat source for heat) — never use real smoke',
         ],
         equipment: ['Call point key', 'Smoke detector tester', 'Heat source'],
-        regulationReference: 'BS 5839-1:2017',
+        regulationReference: 'BS 5839-1:2025',
         apprenticeTip:
           'If the fire alarm is monitored (connected to an alarm receiving centre), call them BEFORE you test. A false alarm callout from the fire brigade can cost the building owner hundreds of pounds. The phone number is usually on a label on the fire alarm panel.',
       },

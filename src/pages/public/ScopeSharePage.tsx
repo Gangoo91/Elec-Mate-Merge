@@ -134,12 +134,21 @@ export default function ScopeSharePage() {
 
       if (updateError) throw updateError;
       setPageState('signed');
+
+      // Notify electrician (fire and forget)
+      try {
+        await supabase.functions.invoke('scope-signed-webhook', {
+          body: { scopeShareLinkId: scopeLink.id, shareToken: token },
+        });
+      } catch {
+        console.warn('Failed to send signing notification');
+      }
     } catch {
       setError('Failed to save signature');
     } finally {
       setIsSubmitting(false);
     }
-  }, [scopeLink, clientName, signatureData]);
+  }, [scopeLink, clientName, signatureData, token]);
 
   // Loading state
   if (pageState === 'loading') {
