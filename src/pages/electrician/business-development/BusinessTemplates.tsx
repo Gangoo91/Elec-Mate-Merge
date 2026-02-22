@@ -84,7 +84,7 @@ const BusinessTemplates = () => {
         subtitle="Professional templates and tools for your electrical business"
         icon={FileText}
         backUrl="/electrician/business-development"
-        accentColor="yellow"
+        accentColor="cyan"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -94,6 +94,7 @@ const BusinessTemplates = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="cyan"
         />
 
         {/* Content Sections */}
@@ -103,6 +104,7 @@ const BusinessTemplates = () => {
             id="quotes-invoices"
             title="Quotes & Invoices"
             icon={Receipt}
+            accentColor="cyan"
             summary={
               <p className="text-white">
                 Professional quotes and invoices are essential for winning work and getting paid on
@@ -269,6 +271,7 @@ const BusinessTemplates = () => {
             id="contracts"
             title="Contracts & Terms"
             icon={FileCheck}
+            accentColor="cyan"
             summary={
               <p className="text-white">
                 Proper contracts protect both you and your customers. Clear terms and conditions
@@ -367,6 +370,7 @@ const BusinessTemplates = () => {
             id="operations"
             title="Operations & Admin"
             icon={ClipboardList}
+            accentColor="cyan"
             summary={
               <p className="text-white">
                 Streamline your daily operations with checklists, job sheets, and tracking
@@ -473,6 +477,7 @@ const BusinessTemplates = () => {
             id="hr-safety"
             title="HR & Safety"
             icon={Shield}
+            accentColor="cyan"
             summary={
               <p className="text-white">
                 Essential documents for managing employees, apprentices, and maintaining workplace

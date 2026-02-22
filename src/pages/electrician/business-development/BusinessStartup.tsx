@@ -57,11 +57,13 @@ const BusinessStartup = () => {
         subtitle="Your complete guide to establishing a successful electrical contracting business in the UK"
         icon={Briefcase}
         backUrl="/electrician/business-development"
+        accentColor="yellow"
       >
         <SectionNav
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="yellow"
         />
 
         {/* Business Planning Section */}
@@ -98,6 +100,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Market Research & Analysis"
             icon={BarChart3}
+            accentColor="yellow"
             id="market-research"
             summary={
               <div className="space-y-3">
@@ -229,6 +232,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Financial Planning & Investment"
             icon={PoundSterling}
+            accentColor="yellow"
             id="financial-planning"
             summary={
               <div className="space-y-3">
@@ -416,6 +420,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Business Structure & Legal Setup"
             icon={Building}
+            accentColor="yellow"
             id="business-structure"
             summary={
               <div className="space-y-3">
@@ -534,6 +539,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Business Planning Checklist"
             icon={Target}
+            accentColor="yellow"
             id="checklist"
             summary={
               <p className="text-white/90">
@@ -646,6 +652,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Business Registration Requirements"
             icon={FileText}
+            accentColor="yellow"
             summary={
               <p className="text-white/90">
                 All electrical businesses must be properly registered with HMRC and, if operating as
@@ -688,6 +695,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Professional Qualifications & Certifications"
             icon={Award}
+            accentColor="yellow"
             summary={
               <p className="text-white/90">
                 Legitimate electrical contractors must hold recognised qualifications and maintain
@@ -771,6 +779,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Insurance Requirements"
             icon={Shield}
+            accentColor="yellow"
             summary={
               <p className="text-white/90">
                 Adequate insurance protects your business, your clients, and yourself from financial
@@ -851,6 +860,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Industry Bodies & Scheme Providers"
             icon={Users}
+            accentColor="yellow"
             summary={
               <p className="text-white/90">
                 Joining industry bodies provides credibility, access to technical support,
@@ -913,6 +923,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Free Business Support Helplines"
             icon={Phone}
+            accentColor="yellow"
             summary={
               <p className="text-white/90">
                 Free helplines provide expert advice on tax, employment law, health and safety, and
@@ -966,6 +977,7 @@ const BusinessStartup = () => {
           <ContentBlock
             title="Essential Online Resources"
             icon={Globe}
+            accentColor="yellow"
             summary={
               <p className="text-white/90">
                 Government and industry websites offer comprehensive guides, templates, and tools to

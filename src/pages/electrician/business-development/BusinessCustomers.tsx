@@ -94,7 +94,7 @@ const BusinessCustomers = () => {
         subtitle="Proven methods to attract and retain clients for your electrical services"
         icon={HandHelping}
         backUrl="/electrician/business-development"
-        accentColor="yellow"
+        accentColor="purple"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -104,6 +104,7 @@ const BusinessCustomers = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="purple"
         />
 
         {/* Content Sections */}
@@ -113,6 +114,7 @@ const BusinessCustomers = () => {
             id="market-research"
             title="Market Research"
             icon={Search}
+            accentColor="purple"
             summary={
               <p className="text-white">
                 Understanding your local market is essential for targeting the right customers.
@@ -210,6 +212,7 @@ const BusinessCustomers = () => {
             id="digital-marketing"
             title="Digital Marketing"
             icon={Monitor}
+            accentColor="purple"
             summary={
               <p className="text-white">
                 A strong online presence is essential for modern electrical businesses. Over 80% of
@@ -349,6 +352,7 @@ const BusinessCustomers = () => {
             id="traditional-marketing"
             title="Traditional Marketing"
             icon={Megaphone}
+            accentColor="purple"
             summary={
               <p className="text-white">
                 Traditional marketing methods still deliver excellent results for local electrical
@@ -472,6 +476,7 @@ const BusinessCustomers = () => {
             id="lead-generation"
             title="Lead Generation"
             icon={Target}
+            accentColor="purple"
             summary={
               <p className="text-white">
                 Consistent lead generation ensures a steady pipeline of work. Diversify lead sources
@@ -572,6 +577,7 @@ const BusinessCustomers = () => {
             id="customer-experience"
             title="Customer Experience"
             icon={Users}
+            accentColor="purple"
             summary={
               <p className="text-white">
                 Exceptional customer experience differentiates your business and generates
@@ -711,6 +717,7 @@ const BusinessCustomers = () => {
             id="retention-growth"
             title="Retention & Growth"
             icon={TrendingUp}
+            accentColor="purple"
             summary={
               <p className="text-white">
                 Retaining existing customers costs 5-10x less than acquiring new ones. Focus on

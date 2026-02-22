@@ -88,7 +88,7 @@ const DebtRecovery = () => {
         subtitle="Strategies for managing late payments and protecting your cash flow"
         icon={CreditCard}
         backUrl="/electrician/business-development"
-        accentColor="yellow"
+        accentColor="orange"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -98,6 +98,7 @@ const DebtRecovery = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="orange"
         />
 
         {/* Content Sections */}
@@ -107,6 +108,7 @@ const DebtRecovery = () => {
             id="prevention"
             title="Debt Prevention"
             icon={Shield}
+            accentColor="orange"
             summary={
               <p className="text-white">
                 The best debt recovery strategy is prevention. Strong terms, clear communication,
@@ -236,6 +238,7 @@ const DebtRecovery = () => {
             id="process"
             title="Recovery Process"
             icon={FileText}
+            accentColor="orange"
             summary={
               <p className="text-white">
                 Act quickly when payments are overdue. The longer a debt ages, the harder it becomes
@@ -377,6 +380,7 @@ const DebtRecovery = () => {
             id="legal"
             title="Legal Options"
             icon={Scale}
+            accentColor="orange"
             summary={
               <p className="text-white">
                 When informal recovery fails, legal options are available. Small claims court
@@ -524,6 +528,7 @@ const DebtRecovery = () => {
             id="protection"
             title="Business Protection"
             icon={Lock}
+            accentColor="orange"
             summary={
               <p className="text-white">
                 Protect your business from bad debts through proper contracts, insurance, and credit

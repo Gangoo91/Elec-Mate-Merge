@@ -34,16 +34,16 @@ const BusinessCard = ({
         'bg-white/[0.03] border border-white/[0.08]',
         'group active:bg-white/[0.06] transition-colors',
         comingSoon && 'opacity-50 cursor-not-allowed',
-        className,
+        className
       )}
     >
-      <div className="p-4">
+      <div className="p-5">
         <div className="flex items-center gap-3">
           {/* Icon with gradient background */}
           <div
             className={cn(
               'flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br',
-              gradient,
+              gradient
             )}
           >
             <Icon className="h-6 w-6 text-white" />
@@ -74,11 +74,7 @@ const BusinessCard = ({
   );
 
   if (comingSoon) {
-    return (
-      <motion.div variants={itemVariants}>
-        {CardContent}
-      </motion.div>
-    );
+    return <motion.div variants={itemVariants}>{CardContent}</motion.div>;
   }
 
   return (

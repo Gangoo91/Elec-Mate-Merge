@@ -93,7 +93,7 @@ const BusinessGrowth = () => {
         subtitle="Strategies for expanding your electrical contracting business"
         icon={TrendingUp}
         backUrl="/electrician/business-development"
-        accentColor="yellow"
+        accentColor="green"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -103,6 +103,7 @@ const BusinessGrowth = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="green"
         />
 
         {/* Content Sections */}
@@ -112,6 +113,7 @@ const BusinessGrowth = () => {
             id="growth-strategies"
             title="Growth Strategies"
             icon={Target}
+            accentColor="green"
             summary={
               <p className="text-white">
                 Strategic growth planning can increase business value by 200-400% over 2-3 years
@@ -284,6 +286,7 @@ const BusinessGrowth = () => {
             id="pricing"
             title="Pricing Strategies"
             icon={PoundSterling}
+            accentColor="green"
             summary={
               <p className="text-white">
                 Strategic pricing optimisation can increase profit margins by 15-35% while
@@ -400,6 +403,7 @@ const BusinessGrowth = () => {
             id="marketing"
             title="Marketing & Lead Generation"
             icon={Megaphone}
+            accentColor="green"
             summary={
               <p className="text-white">
                 Effective marketing combines digital presence with traditional networking to
@@ -502,6 +506,7 @@ const BusinessGrowth = () => {
             id="services"
             title="Service Diversification"
             icon={Wrench}
+            accentColor="green"
             summary={
               <p className="text-white">
                 Expand your service offerings to increase revenue per customer and reduce dependency
@@ -649,6 +654,7 @@ const BusinessGrowth = () => {
             id="operations"
             title="Operations & Efficiency"
             icon={Settings}
+            accentColor="green"
             summary={
               <p className="text-white">
                 Streamlined operations increase profitability by reducing waste, improving
@@ -774,6 +780,7 @@ const BusinessGrowth = () => {
             id="financial"
             title="Financial Management"
             icon={BarChart3}
+            accentColor="green"
             summary={
               <p className="text-white">
                 Sound financial management ensures sustainable growth and business stability. Target

@@ -65,6 +65,7 @@ const BusinessElectricians = () => {
         subtitle="Strategies for recruiting, integrating and retaining qualified electricians"
         icon={UserCheck}
         backUrl="/electrician/business-development"
+        accentColor="emerald"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -74,6 +75,7 @@ const BusinessElectricians = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="emerald"
         />
 
         {/* Content Area */}
@@ -92,6 +94,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Recruitment Channels"
               icon={Target}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   The most effective recruitment combines specialist platforms, industry networks,
@@ -178,6 +181,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Selection & Interview Process"
               icon={CheckCircle}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   A structured selection process ensures you identify candidates with the right
@@ -226,6 +230,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Competitive Package Structure"
               icon={PoundSterling}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   Attracting quality electricians requires competitive compensation. The best
@@ -294,6 +299,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="First Week Essentials"
               icon={Calendar}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   The first week sets the tone for the entire employment relationship. Focus on
@@ -345,6 +351,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="90-Day Integration Plan"
               icon={TrendingUp}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   A structured 90-day plan with clear milestones and regular check-ins ensures new
@@ -402,6 +409,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Key Retention Factors"
               icon={Heart}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   Research shows that while pay is important, factors like development
@@ -449,6 +457,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Development & Training"
               icon={Award}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   Ongoing development shows employees you're invested in their future. Training
@@ -518,6 +527,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Employment Law Essentials"
               icon={FileText}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   Understanding employment law protects your business and ensures fair treatment of
@@ -565,6 +575,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Performance Management"
               icon={TrendingUp}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   Regular performance conversations prevent issues from escalating and ensure
@@ -601,6 +612,7 @@ const BusinessElectricians = () => {
             <ContentBlock
               title="Handling Difficult Situations"
               icon={AlertTriangle}
+              accentColor="emerald"
               summary={
                 <p className="text-white">
                   Address performance or conduct issues promptly and fairly. Follow proper

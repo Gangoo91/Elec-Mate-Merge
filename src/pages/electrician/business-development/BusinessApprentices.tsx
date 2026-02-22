@@ -333,6 +333,7 @@ const BusinessApprentices = () => {
         subtitle="Complete guide to recruiting, training, and supporting apprentices"
         icon={GraduationCap}
         backUrl="/electrician/business-development"
+        accentColor="rose"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={3} />
@@ -342,6 +343,7 @@ const BusinessApprentices = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={handleSectionChange}
+          accentColor="rose"
         />
 
         {/* Content Area */}
@@ -365,6 +367,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="2025 Recruitment Strategy"
               icon={Target}
+              accentColor="rose"
               summary="Modern digital-first approach with partnership ecosystem and employer branding for maximum candidate quality."
             >
               <InfoList items={recruitmentStrategies} variant="numbered" />
@@ -373,6 +376,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Selection Framework"
               icon={Search}
+              accentColor="rose"
               summary="Three-stage process from digital pre-screening through structured interviews to final onboarding."
             >
               <InfoList items={selectionFramework} variant="numbered" />
@@ -381,6 +385,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Digital Recruitment Channels"
               icon={Brain}
+              accentColor="rose"
               summary="Government portals, social media, and professional networks for comprehensive candidate reach."
             >
               <div className="space-y-3">
@@ -416,6 +421,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Investment Analysis"
               icon={PoundSterling}
+              accentColor="rose"
               summary="Initial recruitment investment vs. government support - often results in net positive ROI."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -463,6 +469,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="2025 Legal Framework"
               icon={Shield}
+              accentColor="rose"
               summary="Wage requirements, training time obligations, and health & safety framework with strict enforcement."
             >
               <InfoList items={legalRequirements} variant="default" />
@@ -471,6 +478,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Critical Compliance Requirements"
               icon={AlertTriangle}
+              accentColor="rose"
               summary="Immediate action required items with significant penalty risks. Employment contracts, wages, and H&S training."
             >
               <InfoList items={criticalCompliance} variant="default" />
@@ -479,6 +487,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Government Support & Guidance"
               icon={CheckCircle}
+              accentColor="rose"
               summary="Free compliance guidance from ACAS, CITB safety training, and financial incentives available."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -504,6 +513,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Regional Compliance Variations"
               icon={Globe}
+              accentColor="rose"
               summary="Different authorities and requirements across England, Scotland, Wales, and Northern Ireland."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -550,6 +560,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="2025 Training Framework"
               icon={Target}
+              accentColor="rose"
               summary="Three-phase approach from digital foundation through applied skills to professional mastery and EPA."
             >
               <InfoList items={trainingFramework} variant="numbered" />
@@ -558,6 +569,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Training Provider Options"
               icon={BookOpen}
+              accentColor="rose"
               summary="Digital-first providers with VR/AR modules or hybrid learning solutions with local colleges."
             >
               <InfoList items={trainingProviders} variant="default" />
@@ -566,6 +578,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Skills Progression Framework"
               icon={Award}
+              accentColor="rose"
               summary="Structured progression across safety leadership, technical excellence, and business & customer focus."
             >
               <div className="space-y-3">
@@ -611,6 +624,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Modern Mentoring Approaches"
               icon={Users}
+              accentColor="rose"
               summary="Digital mentoring platforms, structured competency pathways, and industry exposure programmes."
             >
               <div className="space-y-3">
@@ -641,6 +655,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Training Investment Analysis"
               icon={PoundSterling}
+              accentColor="rose"
               summary="Direct costs (mostly government funded) and indirect costs (mentor time, productivity, equipment)."
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -686,6 +701,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="2025 Digital Support Platforms"
               icon={Brain}
+              accentColor="rose"
               summary="AI-powered support hub, crisis intervention network, and peer community networks for comprehensive coverage."
             >
               <InfoList items={supportPlatforms} variant="default" />
@@ -694,6 +710,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Support Service Categories"
               icon={Users}
+              accentColor="rose"
               summary="Professional & career support, personal & mental wellbeing, and legal & employment rights."
             >
               <div className="space-y-3">
@@ -728,6 +745,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Emergency & Crisis Support"
               icon={Phone}
+              accentColor="rose"
               summary="Critical contact numbers for apprenticeship crises, mental health emergencies, and workplace safety incidents."
             >
               <div className="space-y-3">
@@ -746,6 +764,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Digital Support Resources"
               icon={Globe}
+              accentColor="rose"
               summary="Government and industry-specific digital platforms for ongoing support and guidance."
             >
               <div className="space-y-2">
@@ -803,6 +822,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="2025 Assessment Framework"
               icon={Target}
+              accentColor="rose"
               summary="Digital onboarding assessment, progress gateway reviews, and EPA gateway preparation."
             >
               <InfoList items={assessmentFramework} variant="numbered" />
@@ -811,6 +831,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Digital Assessment Tools"
               icon={Brain}
+              accentColor="rose"
               summary="EPA-aligned platforms and performance analytics for comprehensive progress tracking."
             >
               <div className="space-y-3">
@@ -852,6 +873,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="College Performance Monitoring"
               icon={Award}
+              accentColor="rose"
               summary="Teaching quality, assessment standards, and support systems benchmarks for provider evaluation."
             >
               <div className="space-y-3">
@@ -882,6 +904,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Early Intervention Strategies"
               icon={AlertTriangle}
+              accentColor="rose"
               summary="Trigger-based intervention protocols for assessment issues, engagement problems, and employer concerns."
             >
               <InfoList items={interventionStrategies} variant="default" />
@@ -908,6 +931,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Advanced Cost Calculator"
               icon={Calculator}
+              accentColor="rose"
               summary="Calculate total apprentice investment including government incentives, training costs, and ROI projections."
             >
               <EnhancedCostCalculator />
@@ -916,6 +940,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Skills Gap Analyser"
               icon={Brain}
+              accentColor="rose"
               summary="Assess current competencies and identify development priorities for individual apprentices."
             >
               <DigitalSkillsAnalyser />
@@ -924,6 +949,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Training Schedule Optimiser"
               icon={Calendar}
+              accentColor="rose"
               summary="Plan and optimise off-the-job training time allocation for maximum efficiency."
             >
               <TrainingScheduleOptimiser />
@@ -932,6 +958,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="Compliance Checker"
               icon={Shield}
+              accentColor="rose"
               summary="Verify legal compliance status across employment, training, and health & safety requirements."
             >
               <ComplianceChecker />
@@ -940,6 +967,7 @@ const BusinessApprentices = () => {
             <ContentBlock
               title="2025 Business Impact Summary"
               icon={TrendingUp}
+              accentColor="rose"
               summary="Financial benefits, operational advantages, and strategic impact of apprentice programmes."
             >
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

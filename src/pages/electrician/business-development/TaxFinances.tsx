@@ -95,7 +95,7 @@ const TaxFinances = () => {
         subtitle="Financial management and tax guidance for electrical contractors"
         icon={Calculator}
         backUrl="/electrician/business-development"
-        accentColor="yellow"
+        accentColor="blue"
       >
         {/* Key Stats */}
         <DataGrid items={keyStats} columns={4} />
@@ -105,6 +105,7 @@ const TaxFinances = () => {
           sections={sections}
           activeSection={activeSection}
           onSectionChange={setActiveSection}
+          accentColor="blue"
         />
 
         {/* Content Sections */}
@@ -114,6 +115,7 @@ const TaxFinances = () => {
             id="structure"
             title="Business Structure"
             icon={FileText}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 Choosing the right business structure affects your tax liability, personal
@@ -236,6 +238,7 @@ const TaxFinances = () => {
             id="expenses"
             title="Allowable Expenses"
             icon={Calculator}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 Claiming all allowable expenses reduces your taxable profit and tax bill. Keep
@@ -384,6 +387,7 @@ const TaxFinances = () => {
             id="cashflow"
             title="Cash Flow Management"
             icon={TrendingUp}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 Cash flow is the lifeblood of your business. Poor cash flow is the number one cause
@@ -509,6 +513,7 @@ const TaxFinances = () => {
             id="vat"
             title="VAT & HMRC"
             icon={PoundSterling}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 VAT registration is mandatory when your taxable turnover exceeds £90,000 (2024/25
@@ -646,6 +651,7 @@ const TaxFinances = () => {
             id="tax-planning"
             title="Tax Planning"
             icon={Clock}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 Proactive tax planning legally minimises your tax liability. The key is timing
@@ -726,6 +732,7 @@ const TaxFinances = () => {
             id="insurance"
             title="Business Insurance"
             icon={Shield}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 Adequate insurance protects you from financial ruin due to accidents, claims, or
@@ -821,6 +828,7 @@ const TaxFinances = () => {
             id="retirement"
             title="Pensions & Retirement"
             icon={PiggyBank}
+            accentColor="blue"
             summary={
               <p className="text-white">
                 Self-employed workers don't have employer pension contributions, making personal

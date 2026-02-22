@@ -1,4 +1,5 @@
 import { LucideIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 type ColorVariant = 'blue' | 'green' | 'orange' | 'purple' | 'pink' | 'yellow' | 'emerald' | 'rose';
@@ -66,7 +67,10 @@ const StatCard = ({
   const colors = colorConfig[color];
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
       className={cn(
         'relative overflow-hidden rounded-xl p-4 sm:p-5',
         'border border-white/10',
@@ -89,11 +93,11 @@ const StatCard = ({
         {/* Content */}
         <div className="flex-1 min-w-0">
           <p className={cn('text-xl sm:text-2xl font-black', colors.text)}>{value}</p>
-          <p className="text-xs sm:text-sm text-white/70 font-medium truncate">{label}</p>
+          <p className="text-xs sm:text-sm text-white font-medium truncate">{label}</p>
           {sublabel && <p className="text-[10px] sm:text-xs text-white mt-0.5">{sublabel}</p>}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
