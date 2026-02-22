@@ -59,7 +59,7 @@ const Section3 = () => {
           <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-6">
             Section 3: Risk Assessment and Method Statements (RAMS)
           </h1>
-          <p className="text-base sm:text-xl text-white/80 max-w-3xl">
+          <p className="text-base sm:text-xl text-white/80 max-w-4xl">
             Planning and documenting safe working procedures for electrical installations
           </p>
         </div>

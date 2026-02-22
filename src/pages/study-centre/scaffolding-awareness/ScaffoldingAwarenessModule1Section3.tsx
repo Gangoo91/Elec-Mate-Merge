@@ -1553,7 +1553,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
               Scaffold Component Diagram &mdash; Labelled Elevation
             </p>
 
-            <div className="relative mx-auto max-w-3xl">
+            <div className="relative mx-auto max-w-4xl">
               <div className="relative border-2 border-slate-500/40 rounded-lg bg-gradient-to-b from-slate-500/5 to-transparent">
                 {/* Top Lift — Guard Rails & Platform */}
                 <div className="border-b border-dashed border-slate-500/20 p-3 sm:p-4">

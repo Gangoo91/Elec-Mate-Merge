@@ -88,7 +88,7 @@ const quizQuestions = [
   {
     id: 1,
     question: 'Which British Standard covers workplace first aid kits in the UK?',
-    options: ['BS 7671:2018', 'BS 8599-1:2019', 'BS 5839-1:2017', 'BS EN 166:2002'],
+    options: ['BS 7671:2018', 'BS 8599-1:2019', 'BS 5839-1:2025', 'BS EN 166:2002'],
     correctAnswer: 1,
     explanation:
       'BS 8599-1:2019 is the British Standard for workplace first aid kits. It specifies the contents and quantities for three sizes of kit (small, medium, and large) based on the number of employees. BS 7671 covers electrical installations, BS 5839 covers fire detection systems, and BS EN 166 covers eye protection.',

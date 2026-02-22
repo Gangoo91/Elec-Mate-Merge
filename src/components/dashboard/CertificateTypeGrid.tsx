@@ -1,122 +1,109 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FileText, Zap, Settings, BookOpen, Bell, Lightbulb, Sun, Sparkles } from 'lucide-react';
-import { useIsMobile } from '@/hooks/use-mobile';
+import {
+  FileText,
+  Zap,
+  Settings,
+  BookOpen,
+  Bell,
+  Lightbulb,
+  Sun,
+  ChevronRight,
+  Users,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
 
 interface CertificateTypeGridProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
 }
 
-interface CertificateType {
+interface PrimaryCert {
   id: string;
   title: string;
-  subtitle: string;
   description: string;
   icon: React.ElementType;
-  isNew?: boolean;
+  standard: string;
   useRouter?: boolean;
-  standard?: string;
+  borderColor: string;
+  iconBg: string;
+  iconColor: string;
 }
 
-interface CertificateGroup {
+interface SecondaryCert {
+  id: string;
   title: string;
-  certificates: CertificateType[];
+  standard: string;
+  icon: React.ElementType;
+  useRouter: boolean;
+  iconColor: string;
 }
 
-const certificateGroups: CertificateGroup[] = [
+const primaryCerts: PrimaryCert[] = [
   {
-    title: 'Electrical Installation',
-    certificates: [
-      {
-        id: 'eicr',
-        title: 'EICR',
-        subtitle: 'Condition Report',
-        description: 'Periodic inspection & testing',
-        icon: FileText,
-        standard: 'BS 7671',
-      },
-      {
-        id: 'eic',
-        title: 'EIC',
-        subtitle: 'Installation Certificate',
-        description: 'New installation works',
-        icon: Zap,
-        standard: 'BS 7671',
-      },
-      {
-        id: 'minor-works',
-        title: 'Minor Works',
-        subtitle: 'Certificate',
-        description: 'Additions & alterations',
-        icon: Settings,
-        standard: 'BS 7671',
-      },
-    ],
+    id: 'eicr',
+    title: 'EICR',
+    description: 'Periodic inspection & testing',
+    icon: FileText,
+    standard: 'BS 7671',
+    borderColor: 'border-l-blue-400',
+    iconBg: 'bg-blue-500/12',
+    iconColor: 'text-blue-400',
   },
   {
-    title: 'Fire & Safety',
-    certificates: [
-      {
-        id: 'fire-alarm',
-        title: 'Fire Alarm',
-        subtitle: 'System Certificate',
-        description: 'Installation & periodic testing',
-        icon: Bell,
-        isNew: true,
-        useRouter: true,
-        standard: 'BS 5839',
-      },
-      {
-        id: 'emergency-lighting',
-        title: 'Emergency Lighting',
-        subtitle: 'Certificate',
-        description: 'Installation & inspection',
-        icon: Lightbulb,
-        isNew: true,
-        useRouter: true,
-        standard: 'BS 5266',
-      },
-    ],
+    id: 'eic',
+    title: 'EIC',
+    description: 'New installation works',
+    icon: Zap,
+    standard: 'BS 7671',
+    borderColor: 'border-l-green-400',
+    iconBg: 'bg-green-500/12',
+    iconColor: 'text-green-400',
   },
   {
-    title: 'Specialist',
-    certificates: [
-      {
-        id: 'ev-charging',
-        title: 'EV Charging',
-        subtitle: 'Point Certificate',
-        description: 'EVCP installation',
-        icon: Zap,
-        isNew: true,
-        useRouter: true,
-        standard: 'IET CoP',
-      },
-      {
-        id: 'solar-pv',
-        title: 'Solar PV',
-        subtitle: 'Installation Certificate',
-        description: 'MCS-certified solar installations',
-        icon: Sun,
-        isNew: true,
-        useRouter: true,
-        standard: 'MCS / BS EN 62446',
-      },
-    ],
+    id: 'minor-works',
+    title: 'Minor Works',
+    description: 'Additions & alterations',
+    icon: Settings,
+    standard: 'BS 7671',
+    borderColor: 'border-l-orange-400',
+    iconBg: 'bg-orange-500/12',
+    iconColor: 'text-orange-400',
+  },
+];
+
+const secondaryCerts: SecondaryCert[] = [
+  {
+    id: 'fire-alarm',
+    title: 'Fire Alarm',
+    standard: 'BS 5839',
+    icon: Bell,
+    useRouter: true,
+    iconColor: 'text-red-400',
   },
   {
-    title: 'Resources',
-    certificates: [
-      {
-        id: 'learning-hub',
-        title: 'I&T Hub',
-        subtitle: 'Reference',
-        description: 'BS7671 guidance & resources',
-        icon: BookOpen,
-      },
-    ],
+    id: 'emergency-lighting',
+    title: 'Emergency Lighting',
+    standard: 'BS 5266',
+    icon: Lightbulb,
+    useRouter: true,
+    iconColor: 'text-amber-400',
+  },
+  {
+    id: 'ev-charging',
+    title: 'EV Charging',
+    standard: 'IET CoP',
+    icon: Zap,
+    useRouter: true,
+    iconColor: 'text-emerald-400',
+  },
+  {
+    id: 'solar-pv',
+    title: 'Solar PV',
+    standard: 'MCS',
+    icon: Sun,
+    useRouter: true,
+    iconColor: 'text-yellow-400',
   },
 ];
 
@@ -128,8 +115,8 @@ const containerVariants = {
   },
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 8 },
+const itemVariants = {
+  hidden: { opacity: 0, y: 6 },
   show: {
     opacity: 1,
     y: 0,
@@ -139,9 +126,8 @@ const cardVariants = {
 
 const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
   const navigate = useNavigate();
-  const isMobile = useIsMobile();
 
-  const handleClick = (cert: CertificateType) => {
+  const handlePrimaryClick = (cert: PrimaryCert) => {
     if (cert.useRouter) {
       navigate(`/electrician/inspection-testing/${cert.id}/new`);
     } else {
@@ -149,73 +135,125 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
     }
   };
 
-  const renderCertCard = (cert: CertificateType) => (
-    <motion.button
-      key={cert.id}
-      variants={cardVariants}
-      onClick={() => handleClick(cert)}
-      className={cn(
-        'group relative text-left rounded-2xl p-4 transition-all duration-200 touch-manipulation',
-        'bg-[#242428] border border-elec-yellow/30',
-        'hover:bg-[#252528] hover:border-elec-yellow/50',
-        'active:scale-[0.97]'
-      )}
-    >
-      {cert.isNew && (
-        <div className="absolute top-2.5 right-2.5">
-          <Badge className="bg-elec-yellow/20 text-elec-yellow border-0 text-[9px] px-1.5 py-0.5 h-auto font-semibold">
-            <Sparkles className="w-2.5 h-2.5 mr-0.5" />
-            New
-          </Badge>
-        </div>
-      )}
-
-      <div className="w-10 h-10 rounded-xl bg-elec-yellow/15 flex items-center justify-center mb-3 group-hover:bg-elec-yellow/25 transition-colors">
-        <cert.icon className="w-5 h-5 text-elec-yellow" />
-      </div>
-
-      <h3 className="font-semibold text-white text-sm mb-0.5 group-hover:text-elec-yellow transition-colors">
-        {cert.title}
-      </h3>
-      <p className="text-[11px] text-white/50 line-clamp-1">{cert.description}</p>
-
-      {cert.standard && (
-        <div className="mt-3">
-          <span className="text-[9px] font-medium text-white/40 bg-white/5 px-2 py-1 rounded">
-            {cert.standard}
-          </span>
-        </div>
-      )}
-    </motion.button>
-  );
+  const handleSecondaryClick = (cert: SecondaryCert) => {
+    navigate(`/electrician/inspection-testing/${cert.id}/new`);
+  };
 
   return (
-    <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="show">
-      {certificateGroups.map((group) => (
-        <div key={group.title}>
-          <div className="flex items-center gap-2 mb-2 px-0.5">
-            <h3 className="text-[11px] font-medium text-white/40 uppercase tracking-wider">
-              {group.title}
-            </h3>
-            <div className="flex-1 h-px bg-white/5"></div>
-          </div>
-
-          <div
-            className={cn(
-              'grid gap-2',
-              isMobile
-                ? 'grid-cols-2'
-                : group.certificates.length === 1
-                  ? 'grid-cols-1 max-w-[200px]'
-                  : group.certificates.length === 2
-                    ? 'grid-cols-2 max-w-md'
-                    : 'grid-cols-3'
-            )}
-          >
-            {group.certificates.map(renderCertCard)}
-          </div>
+    <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
+      {/* Primary Certificates — the core 3 */}
+      <div>
+        <h2 className="text-base font-semibold text-white mb-3">Certificates</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          {primaryCerts.map((cert) => (
+            <motion.button
+              key={cert.id}
+              variants={itemVariants}
+              onClick={() => handlePrimaryClick(cert)}
+              className={cn(
+                'group w-full text-left p-4 sm:p-5 rounded-2xl touch-manipulation',
+                'bg-white/[0.06] border border-white/[0.08] border-l-[3px]',
+                cert.borderColor,
+                'hover:bg-white/[0.09] hover:border-white/[0.12]',
+                'active:scale-[0.98] transition-all'
+              )}
+            >
+              <div className="flex items-center gap-3.5">
+                <div
+                  className={cn(
+                    'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
+                    cert.iconBg
+                  )}
+                >
+                  <cert.icon className={cn('w-5 h-5', cert.iconColor)} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-base font-bold text-white group-hover:text-elec-yellow transition-colors">
+                    {cert.title}
+                  </h3>
+                  <p className="text-sm text-white mt-0.5">{cert.description}</p>
+                </div>
+                <div className="flex flex-col items-end gap-1.5 flex-shrink-0">
+                  <span className="text-[10px] font-semibold text-white bg-white/[0.06] px-2 py-0.5 rounded">
+                    {cert.standard}
+                  </span>
+                  <ChevronRight className="h-4 w-4 text-white group-hover:text-elec-yellow transition-colors" />
+                </div>
+              </div>
+            </motion.button>
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* Secondary Certificates — specialist */}
+      <div>
+        <h2 className="text-base font-semibold text-white mb-3">Specialist</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+          {secondaryCerts.map((cert) => (
+            <motion.button
+              key={cert.id}
+              variants={itemVariants}
+              onClick={() => handleSecondaryClick(cert)}
+              className={cn(
+                'group w-full text-left p-3.5 rounded-xl touch-manipulation min-h-[72px]',
+                'bg-white/[0.06] border border-white/[0.08]',
+                'hover:bg-white/[0.09] hover:border-white/[0.12]',
+                'active:scale-[0.97] transition-all'
+              )}
+            >
+              <div className="flex items-center gap-2.5 mb-2">
+                <cert.icon className={cn('w-4 h-4 flex-shrink-0', cert.iconColor)} />
+                <span className="text-sm font-semibold text-white leading-tight group-hover:text-elec-yellow transition-colors">
+                  {cert.title}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-medium text-white bg-white/[0.06] px-1.5 py-0.5 rounded">
+                  {cert.standard}
+                </span>
+                <span className="text-[10px] font-bold text-elec-yellow">NEW</span>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </div>
+
+      {/* Quick Links */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <motion.button
+          variants={itemVariants}
+          onClick={() => onNavigate('learning-hub')}
+          className="group w-full text-left p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.09] hover:border-white/[0.12] active:scale-[0.98] transition-all touch-manipulation flex items-center gap-3.5"
+        >
+          <div className="w-11 h-11 rounded-xl bg-elec-yellow/12 flex items-center justify-center flex-shrink-0">
+            <BookOpen className="h-5 w-5 text-elec-yellow" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base font-bold text-white group-hover:text-elec-yellow transition-colors">
+              I&T Hub
+            </h3>
+            <p className="text-sm text-white mt-0.5">BS 7671 guidance & resources</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        </motion.button>
+
+        <motion.button
+          variants={itemVariants}
+          onClick={() => navigate('/customers')}
+          className="group w-full text-left p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.09] hover:border-white/[0.12] active:scale-[0.98] transition-all touch-manipulation flex items-center gap-3.5"
+        >
+          <div className="w-11 h-11 rounded-xl bg-blue-500/12 flex items-center justify-center flex-shrink-0">
+            <Users className="h-5 w-5 text-blue-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors">
+              Customers
+            </h3>
+            <p className="text-sm text-white mt-0.5">Manage clients & properties</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-blue-400 flex-shrink-0" />
+        </motion.button>
+      </div>
     </motion.div>
   );
 };

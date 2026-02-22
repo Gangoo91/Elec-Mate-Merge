@@ -93,7 +93,9 @@ export function OJTHubShell({
         </header>
 
         {/* Page Content */}
-        <div className="flex-1 overflow-auto pb-24 lg:pb-6">{children}</div>
+        <div className="flex-1 overflow-auto pb-24 lg:pb-6">
+          <div className="max-w-6xl mx-auto lg:px-8">{children}</div>
+        </div>
       </main>
 
       {/* Mobile Quick Log FAB */}

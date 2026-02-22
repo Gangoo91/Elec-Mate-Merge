@@ -105,7 +105,7 @@ const ToolsMaterialsGuide = () => {
             Tools & Materials Guide
           </h1>
         </div>
-        <p className="text-sm sm:text-base md:text-lg text-white max-w-3xl mx-auto mb-4 sm:mb-6 px-2">
+        <p className="text-sm sm:text-base md:text-lg text-white max-w-4xl mx-auto mb-4 sm:mb-6 px-2">
           Essential tools, equipment and materials for professional electrical installations.
           Complete guide to building your electrical toolkit for UK installations.
         </p>

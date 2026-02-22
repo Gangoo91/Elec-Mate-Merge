@@ -288,8 +288,8 @@ export const StandardMockExam = ({
   // Before exam starts - Start Screen
   if (!examStarted) {
     return (
-      <div className="bg-[#1a1a1a] p-2 sm:p-4">
-        <div>
+      <div className="bg-[#1a1a1a] p-2 sm:p-4 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           {/* Back button to course */}
           <Button
             variant="ghost"
@@ -377,8 +377,8 @@ export const StandardMockExam = ({
     const weakCategories = categoryBreakdown.filter((c) => c.percent < config.passThreshold);
 
     return (
-      <div className="bg-[#1a1a1a] p-2 sm:p-4">
-        <div>
+      <div className="bg-[#1a1a1a] p-2 sm:p-4 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           <Card className="border-elec-yellow/30">
             <CardHeader className="text-center pb-4 px-4 sm:px-6">
               <div
@@ -499,8 +499,8 @@ export const StandardMockExam = ({
     const filteredQuestions = getFilteredQuestions();
 
     return (
-      <div className="bg-[#1a1a1a] p-2 sm:p-4">
-        <div className="max-w-3xl mx-auto">
+      <div className="bg-[#1a1a1a] p-2 sm:p-4 lg:px-8">
+        <div className="max-w-4xl mx-auto">
           {/* Review Header */}
           <div className="mb-4">
             <div className="flex items-center justify-between mb-4">
@@ -713,7 +713,7 @@ export const StandardMockExam = ({
     <div className="bg-[#0d0d0d] overflow-x-hidden">
       {/* Desktop Header - hidden on mobile */}
       <div className="hidden lg:block sticky top-0 z-50 backdrop-blur-sm bg-[#1a1a1a]/80 border-b border-elec-yellow/30">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
           <div>
             <Link to={config.exitPath} className="text-white hover:text-elec-yellow">
               <ArrowLeft className="h-5 w-5" />
@@ -799,7 +799,7 @@ export const StandardMockExam = ({
 
       {/* Desktop Layout */}
       <div className="hidden lg:block">
-        <div className="max-w-3xl mx-auto p-4">
+        <div className="max-w-4xl mx-auto p-4">
           <div className="grid grid-cols-1 gap-4">
             {/* Question Panel */}
             <Card className="border border-elec-yellow/30">

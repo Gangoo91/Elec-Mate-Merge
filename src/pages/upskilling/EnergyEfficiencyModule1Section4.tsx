@@ -241,7 +241,7 @@ const EnergyEfficiencyModule1Section4 = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Centered Title Header */}
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">

@@ -277,7 +277,7 @@ export const useHazardDatabase = () => {
         'Follow BS 5839 design and installation standards',
         'Commission system in stages to maintain protection',
       ],
-      regulations: ['BS 5839-1:2017', 'Regulatory Reform (Fire Safety) Order 2005'],
+      regulations: ['BS 5839-1:2025', 'Regulatory Reform (Fire Safety) Order 2005'],
       icon: Shield,
     },
     {

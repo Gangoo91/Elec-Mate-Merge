@@ -59,7 +59,7 @@ const Section4 = () => {
           <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-6">
             Section 4: Personal Protective Equipment (PPE) and Safe Working Practices
           </h1>
-          <p className="text-base sm:text-xl text-white/80 max-w-3xl">
+          <p className="text-base sm:text-xl text-white/80 max-w-4xl">
             Selection, use and maintenance of protective equipment and safe working methods
           </p>
         </div>

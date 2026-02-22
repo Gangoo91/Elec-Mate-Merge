@@ -6,16 +6,12 @@
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import {
   CircuitBoard,
   Zap,
-  MapPin,
-  Calendar,
   ChevronRight,
   FileCheck,
-  Plus,
   AlertCircle,
   Archive,
   Trash2,
@@ -106,21 +102,21 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
   if (isLoading) {
     return (
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <CircuitBoard className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-semibold text-elec-yellow">Designed Circuits</span>
+      <div>
+        <div className="flex items-center gap-2.5 mb-4">
+          <CircuitBoard className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-semibold text-white">Designed Circuits</span>
         </div>
-        <Skeleton className="h-16 w-full rounded-xl bg-black/40" />
+        <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center gap-3 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400">
+      <div className="flex items-center gap-3 p-4 bg-red-500/8 border border-red-500/15 rounded-2xl text-red-400">
         <AlertCircle className="h-5 w-5 flex-shrink-0" />
-        <p className="text-sm">Failed to load designed circuits</p>
+        <p className="text-sm font-medium">Failed to load designed circuits</p>
       </div>
     );
   }
@@ -129,81 +125,90 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
 
   if (totalCount === 0) {
     return (
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
-        <div className="flex items-center gap-2 mb-4">
-          <CircuitBoard className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-semibold text-elec-yellow">Designed Circuits</span>
+      <div>
+        <div className="flex items-center gap-2.5 mb-4">
+          <CircuitBoard className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-semibold text-white">Designed Circuits</span>
         </div>
-        <div className="text-center py-6">
-          <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-            <Zap className="h-6 w-6 text-elec-yellow/50" />
+        <button
+          onClick={() => navigate('/electrician/circuit-designer')}
+          className="group w-full flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation text-left"
+        >
+          <div className="w-11 h-11 rounded-xl bg-elec-yellow/12 flex items-center justify-center flex-shrink-0">
+            <Zap className="h-5 w-5 text-elec-yellow" />
           </div>
-          <p className="text-sm text-white/40 mb-4">No circuit designs yet</p>
-          <Button
-            onClick={() => navigate('/electrician/circuit-designer')}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-10 px-5 font-semibold rounded-xl"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Create Design
-          </Button>
-        </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-white">No designs yet</p>
+            <p className="text-sm text-white mt-0.5">Tap to open Circuit Designer</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        </button>
       </div>
     );
   }
 
   return (
     <>
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl overflow-hidden">
-        {/* Header */}
-        <div className="p-4 pb-3">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-center gap-2">
-              <CircuitBoard className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-semibold text-elec-yellow">Designed Circuits</span>
-            </div>
+      <div>
+        {/* Section Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2.5">
+            <CircuitBoard className="h-5 w-5 text-elec-yellow" />
+            <span className="text-base font-semibold text-white">Designed Circuits</span>
             {pendingDesigns.length > 0 && (
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-lg bg-elec-yellow/20 text-elec-yellow">
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-lg bg-elec-yellow/15 text-elec-yellow">
                 {pendingDesigns.length} pending
               </span>
             )}
           </div>
+          {currentDesigns.length > 3 && (
+            <button
+              className="text-sm font-medium text-elec-yellow hover:underline touch-manipulation h-11 flex items-center"
+              onClick={() => navigate('/electrician/circuit-designer')}
+            >
+              View All
+            </button>
+          )}
+        </div>
 
-          {/* Tabs */}
-          <div className="flex bg-black/30 rounded-xl p-1">
-            {(['pending', 'completed', 'archived'] as StatusTab[]).map((tab) => {
-              const count =
-                tab === 'pending'
-                  ? pendingDesigns.length
-                  : tab === 'completed'
-                    ? completedDesigns.length
-                    : archivedDesigns.length;
-              return (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={cn(
-                    'flex-1 py-2 px-2 text-xs font-medium rounded-lg transition-all touch-manipulation capitalize',
-                    activeTab === tab
-                      ? 'bg-elec-yellow/20 text-elec-yellow'
-                      : 'text-white/40 hover:text-white/60'
-                  )}
-                >
-                  {tab === 'completed' ? 'Done' : tab} {count > 0 && `(${count})`}
-                </button>
-              );
-            })}
-          </div>
+        {/* Tabs */}
+        <div className="flex gap-2 mb-4">
+          {(['pending', 'completed', 'archived'] as StatusTab[]).map((tab) => {
+            const count =
+              tab === 'pending'
+                ? pendingDesigns.length
+                : tab === 'completed'
+                  ? completedDesigns.length
+                  : archivedDesigns.length;
+            return (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={cn(
+                  'h-11 px-4 text-sm font-medium rounded-xl transition-all touch-manipulation capitalize',
+                  activeTab === tab
+                    ? 'bg-elec-yellow/12 text-elec-yellow border border-elec-yellow/20'
+                    : 'bg-white/[0.03] text-white border border-white/[0.06] hover:bg-white/[0.09]'
+                )}
+              >
+                {tab === 'completed' ? 'Done' : tab} {count > 0 && `(${count})`}
+              </button>
+            );
+          })}
         </div>
 
         {/* Empty state for tab */}
         {currentDesigns.length === 0 && (
-          <div className="text-center py-8 px-4">
-            <p className="text-sm text-white/40">No {activeTab} designs</p>
+          <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08]">
+            <div className="w-11 h-11 rounded-xl bg-white/[0.06] flex items-center justify-center flex-shrink-0">
+              <CircuitBoard className="h-5 w-5 text-white" />
+            </div>
+            <p className="text-sm text-white text-left">No {activeTab} designs</p>
           </div>
         )}
 
         {/* Design List */}
-        <div className="px-3 pb-3 space-y-2">
+        <div className="space-y-2">
           <AnimatePresence mode="popLayout">
             {currentDesigns.slice(0, 3).map((design, index) => {
               const circuitCount = design.schedule_data?.circuits?.length || 0;
@@ -219,74 +224,62 @@ export const DesignedCircuitsCard = ({ onNavigate }: DesignedCircuitsCardProps) 
                   exit={{ opacity: 0 }}
                   transition={{ delay: index * 0.03 }}
                   className={cn(
-                    'flex items-center gap-3 p-3 rounded-xl',
-                    'bg-black/40',
+                    'flex items-center gap-3.5 p-4 rounded-2xl',
+                    'bg-white/[0.06] border border-white/[0.08]',
                     isClickable &&
-                      'hover:bg-black/50 cursor-pointer active:scale-[0.98] transition-all touch-manipulation'
+                      'cursor-pointer hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation'
                   )}
                   onClick={() => isClickable && handleUseDesign(design)}
                 >
                   <div
                     className={cn(
-                      'flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center',
-                      design.status === 'completed' ? 'bg-green-500/15' : 'bg-elec-yellow/15'
+                      'flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center',
+                      design.status === 'completed' ? 'bg-green-500/12' : 'bg-elec-yellow/12'
                     )}
                   >
                     {design.status === 'completed' ? (
-                      <FileCheck className="h-4 w-4 text-green-400" />
+                      <FileCheck className="h-5 w-5 text-green-400" />
                     ) : design.status === 'archived' ? (
-                      <Archive className="h-4 w-4 text-white/30" />
+                      <Archive className="h-5 w-5 text-white" />
                     ) : (
-                      <Zap className="h-4 w-4 text-elec-yellow" />
+                      <Zap className="h-5 w-5 text-elec-yellow" />
                     )}
                   </div>
 
                   <div className="flex-1 min-w-0">
-                    <h4 className="text-sm font-medium text-white truncate">{projectName}</h4>
-                    <div className="flex items-center gap-2 text-[11px] text-white/40 mt-0.5">
+                    <h4 className="text-sm font-semibold text-white truncate">{projectName}</h4>
+                    <div className="flex items-center gap-2 text-sm text-white mt-0.5">
                       <span>{circuitCount} circuits</span>
-                      <span>•</span>
+                      <span>·</span>
                       <span>{formatDate(design.created_at)}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-1">
+                  <div className="flex items-center gap-1 flex-shrink-0">
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
                         setDeleteId(design.id);
                       }}
-                      className="w-8 h-8 rounded-lg flex items-center justify-center text-white/20 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                      className="w-11 h-11 rounded-xl flex items-center justify-center text-white hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
                     >
                       <Trash2 className="h-4 w-4" />
                     </button>
-                    {isClickable && <ChevronRight className="h-5 w-5 text-elec-yellow/40" />}
+                    {isClickable && <ChevronRight className="h-5 w-5 text-elec-yellow" />}
                   </div>
                 </motion.div>
               );
             })}
           </AnimatePresence>
         </div>
-
-        {currentDesigns.length > 3 && (
-          <div className="px-3 pb-3">
-            <Button
-              variant="ghost"
-              className="w-full h-9 text-xs text-elec-yellow/60 hover:text-elec-yellow hover:bg-elec-yellow/10 rounded-xl"
-              onClick={() => navigate('/electrician/circuit-designer')}
-            >
-              View All ({currentDesigns.length})
-            </Button>
-          </div>
-        )}
       </div>
 
       {/* Delete Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
-        <AlertDialogContent className="bg-card border-elec-yellow/20">
+        <AlertDialogContent className="bg-[#1a1a1e] border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete Design?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
+            <AlertDialogDescription className="text-white">
               This will permanently delete this circuit design.
             </AlertDialogDescription>
           </AlertDialogHeader>

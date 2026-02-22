@@ -33,7 +33,7 @@ const HNCModule2Section3_6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             3.6 Applications to Air-Conditioning and HVAC Load Calcs
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-4xl">
             Practical applications of psychrometrics to air-conditioning and HVAC load calculations.
           </p>
         </div>

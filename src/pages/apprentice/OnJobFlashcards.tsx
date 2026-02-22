@@ -221,7 +221,7 @@ const OnJobFlashcards = () => {
   // Loading skeleton
   if (progressLoading || streakLoading) {
     return (
-      <div className="max-w-3xl mx-auto px-4 pb-20 space-y-5 pt-4 animate-fade-in">
+      <div className="max-w-4xl mx-auto px-4 pb-20 space-y-5 pt-4 animate-fade-in">
         <div className="flex items-center justify-between">
           <Skeleton className="h-9 w-9 rounded-lg" />
           <Skeleton className="h-6 w-52" />
@@ -278,7 +278,7 @@ const OnJobFlashcards = () => {
 
   return (
     <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
-      <div className="max-w-3xl mx-auto px-4 pb-20 space-y-5 animate-fade-in">
+      <div className="max-w-4xl mx-auto px-4 pb-20 space-y-5 animate-fade-in">
         {/* Achievement unlock toast */}
         <AchievementUnlockToast achievements={recentlyUnlocked} />
 

@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AlertTriangle, CheckCircle2, Bell, ChevronRight } from 'lucide-react';
 import { useNotifications } from '@/hooks/useNotifications';
@@ -60,63 +59,68 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
 
   if (isLoading) {
     return (
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <Bell className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-semibold text-elec-yellow">Part P Notifications</span>
+      <div>
+        <div className="flex items-center gap-2.5 mb-4">
+          <Bell className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-semibold text-white">Part P Notifications</span>
         </div>
-        <Skeleton className="h-16 w-full rounded-xl bg-black/40 mb-2" />
-        <Skeleton className="h-16 w-full rounded-xl bg-black/40" />
+        <div className="space-y-3">
+          <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
+          <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
+        </div>
       </div>
     );
   }
 
   if (urgentNotifications.length === 0) {
     return (
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
-        <div className="flex items-center gap-2 mb-4">
-          <CheckCircle2 className="h-4 w-4 text-green-400" />
-          <span className="text-sm font-semibold text-elec-yellow">Part P Notifications</span>
+      <div>
+        <div className="flex items-center gap-2.5 mb-4">
+          <CheckCircle2 className="h-5 w-5 text-green-400" />
+          <span className="text-base font-semibold text-white">Part P Notifications</span>
         </div>
-        <div className="text-center py-6">
-          <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-green-500/15 flex items-center justify-center">
-            <CheckCircle2 className="h-6 w-6 text-green-400" />
+        <div className="flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08]">
+          <div className="w-11 h-11 rounded-xl bg-green-500/12 flex items-center justify-center flex-shrink-0">
+            <CheckCircle2 className="h-5 w-5 text-green-400" />
           </div>
-          <p className="text-sm text-green-400 font-medium mb-1">All Clear</p>
-          <p className="text-xs text-white/40">No pending notifications</p>
+          <div className="text-left">
+            <p className="text-sm font-semibold text-green-400">All Clear</p>
+            <p className="text-sm text-white mt-0.5">No pending notifications</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      className={cn(
-        'bg-[#242428] border rounded-2xl overflow-hidden',
-        overdueCount > 0 ? 'border-red-500/30' : 'border-elec-yellow/30'
-      )}
-    >
-      {/* Header */}
-      <div className="p-4 pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            {overdueCount > 0 ? (
-              <AlertTriangle className="h-4 w-4 text-red-400" />
-            ) : (
-              <Bell className="h-4 w-4 text-elec-yellow" />
-            )}
-            <span className="text-sm font-semibold text-elec-yellow">Part P Notifications</span>
-          </div>
+    <div>
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2.5">
+          {overdueCount > 0 ? (
+            <AlertTriangle className="h-5 w-5 text-red-400" />
+          ) : (
+            <Bell className="h-5 w-5 text-elec-yellow" />
+          )}
+          <span className="text-base font-semibold text-white">Part P Notifications</span>
           {overdueCount > 0 && (
-            <span className="text-[10px] font-medium px-2 py-1 rounded-lg bg-red-500/20 text-red-400">
+            <span className="text-[10px] font-semibold px-2 py-1 rounded-lg bg-red-500/15 text-red-400">
               {overdueCount} overdue
             </span>
           )}
         </div>
+        {totalPending > 3 && (
+          <button
+            className="text-sm font-medium text-elec-yellow hover:underline touch-manipulation h-11 flex items-center"
+            onClick={() => onNavigate?.('notifications')}
+          >
+            View All
+          </button>
+        )}
       </div>
 
-      {/* Notifications List */}
-      <div className="px-3 pb-3 space-y-2">
+      {/* Notification List */}
+      <div className="space-y-2">
         <AnimatePresence mode="popLayout">
           {urgentNotifications.map((notification, index) => {
             const daysRemaining = notification.submission_deadline
@@ -151,73 +155,66 @@ export const PendingNotificationsCard = ({ onNavigate }: PendingNotificationsCar
                 exit={{ opacity: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={cn(
-                  'relative p-3 rounded-xl cursor-pointer border',
-                  'active:scale-[0.98] transition-all touch-manipulation',
+                  'flex items-center gap-3.5 p-4 rounded-2xl cursor-pointer',
+                  'border transition-all touch-manipulation active:scale-[0.98]',
                   isOverdue
-                    ? 'bg-red-500/10 hover:bg-red-500/15 border-red-500/20'
+                    ? 'bg-red-500/8 border-red-500/15 hover:bg-red-500/12'
                     : isUrgent
-                      ? 'bg-orange-500/10 hover:bg-orange-500/15 border-orange-500/20'
-                      : 'bg-black/40 hover:bg-black/50 border-white/5'
+                      ? 'bg-orange-500/8 border-orange-500/15 hover:bg-orange-500/12'
+                      : 'bg-white/[0.06] border-white/[0.08] hover:bg-white/[0.09]'
                 )}
                 onClick={() => onNavigate?.('notifications')}
               >
-                {/* Top row: Type badge + Work type + Deadline */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span
-                    className={cn(
-                      'text-[10px] font-bold px-2 py-0.5 rounded-md',
-                      isOverdue
-                        ? 'bg-red-500/20 text-red-400'
-                        : isUrgent
-                          ? 'bg-orange-500/20 text-orange-400'
-                          : 'bg-elec-yellow/20 text-elec-yellow'
-                    )}
-                  >
-                    {reportLabel}
-                  </span>
-                  <span className="text-[10px] font-medium text-white/50 px-2 py-0.5 rounded-md bg-white/5">
-                    {formatWorkType(notification.work_type)}
-                  </span>
-                  {notification.submission_deadline && (
+                <div className="flex-1 min-w-0">
+                  {/* Badges row */}
+                  <div className="flex items-center gap-2 mb-1.5">
                     <span
                       className={cn(
-                        'text-[10px] font-semibold ml-auto',
-                        isOverdue ? 'text-red-400' : isUrgent ? 'text-orange-400' : 'text-green-400'
+                        'text-[10px] font-bold px-2 py-0.5 rounded',
+                        isOverdue
+                          ? 'bg-red-500/20 text-red-400'
+                          : isUrgent
+                            ? 'bg-orange-500/20 text-orange-400'
+                            : 'bg-elec-yellow/15 text-elec-yellow'
                       )}
                     >
-                      {deadlineText}
+                      {reportLabel}
                     </span>
-                  )}
+                    <span className="text-[10px] font-medium text-white px-2 py-0.5 rounded bg-white/[0.06]">
+                      {formatWorkType(notification.work_type)}
+                    </span>
+                    {notification.submission_deadline && (
+                      <span
+                        className={cn(
+                          'text-xs font-semibold ml-auto',
+                          isOverdue ? 'text-red-400' : isUrgent ? 'text-orange-400' : 'text-green-400'
+                        )}
+                      >
+                        {deadlineText}
+                      </span>
+                    )}
+                  </div>
+                  {/* Client name */}
+                  <h4 className="text-sm font-semibold text-white truncate text-left">
+                    {clientName || 'No client name'}
+                  </h4>
+                  {/* Address */}
+                  <p className="text-sm text-white truncate mt-0.5 text-left">
+                    {address || 'No address'}
+                  </p>
                 </div>
 
-                {/* Client name */}
-                <h4 className="text-sm font-semibold text-white truncate text-left pr-6">
-                  {clientName || 'No client name'}
-                </h4>
-
-                {/* Address */}
-                <p className="text-xs text-white/40 truncate text-left mt-0.5 pr-6">
-                  {address || 'No address'}
-                </p>
-
-                {/* Chevron */}
-                <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/20" />
+                <ChevronRight
+                  className={cn(
+                    'h-5 w-5 flex-shrink-0',
+                    isOverdue ? 'text-red-400' : isUrgent ? 'text-orange-400' : 'text-elec-yellow'
+                  )}
+                />
               </motion.div>
             );
           })}
         </AnimatePresence>
       </div>
-
-      {totalPending > 3 && (
-        <div className="px-3 pb-3">
-          <button
-            className="w-full py-2 text-xs text-elec-yellow/60 hover:text-elec-yellow transition-colors"
-            onClick={() => onNavigate?.('notifications')}
-          >
-            View All ({totalPending})
-          </button>
-        </div>
-      )}
     </div>
   );
 };

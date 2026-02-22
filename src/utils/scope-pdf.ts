@@ -23,6 +23,9 @@ export interface ScopePDFData {
     roomName?: string;
   }>;
   assumptions: string;
+  signatureData?: string;
+  signedByName?: string;
+  signedAt?: string;
 }
 
 async function loadImageAsDataUrl(url: string): Promise<string | null> {
@@ -230,8 +233,9 @@ export async function generateScopePDF(data: ScopePDFData): Promise<jsPDF> {
     yPos += 8;
   }
 
-  // --- Signature line ---
-  if (yPos + 40 > pageHeight - 30) {
+  // --- Signature / Client Acceptance ---
+  const sigBlockHeight = data.signatureData ? 60 : 40;
+  if (yPos + sigBlockHeight > pageHeight - 30) {
     doc.addPage();
     yPos = 20;
   }
@@ -250,12 +254,38 @@ export async function generateScopePDF(data: ScopePDFData): Promise<jsPDF> {
   );
   yPos += 12;
 
-  doc.setDrawColor(0, 0, 0);
-  doc.line(margin, yPos, margin + 60, yPos);
-  doc.text('Signature', margin, yPos + 5);
+  if (data.signatureData) {
+    // Signed — render name, signature image, and date
+    if (data.signedByName) {
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Signed by: ${data.signedByName}`, margin, yPos);
+      yPos += 6;
+    }
 
-  doc.line(margin + 80, yPos, margin + 140, yPos);
-  doc.text('Date', margin + 80, yPos + 5);
+    try {
+      doc.addImage(data.signatureData, 'PNG', margin, yPos, 60, 20);
+      yPos += 22;
+    } catch {
+      // Signature image failed — add placeholder text
+      doc.setFont('helvetica', 'italic');
+      doc.text('[Signature on file]', margin, yPos);
+      yPos += 6;
+    }
+
+    if (data.signedAt) {
+      doc.setFont('helvetica', 'normal');
+      const signedDate = format(new Date(data.signedAt), 'dd/MM/yyyy HH:mm');
+      doc.text(`Date: ${signedDate}`, margin, yPos);
+    }
+  } else {
+    // Unsigned — blank signature and date lines
+    doc.setDrawColor(0, 0, 0);
+    doc.line(margin, yPos, margin + 60, yPos);
+    doc.text('Signature', margin, yPos + 5);
+
+    doc.line(margin + 80, yPos, margin + 140, yPos);
+    doc.text('Date', margin + 80, yPos + 5);
+  }
 
   // --- Footer ---
   doc.setFontSize(8);

@@ -173,7 +173,7 @@ const Section4_4 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Manual Handling and Tool Safety
               </h1>
-              <p className="text-xl text-white/80 max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-4xl mt-2">
                 Safe lifting techniques and responsible tool use for electrical work
               </p>
             </div>

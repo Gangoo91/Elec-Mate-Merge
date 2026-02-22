@@ -44,7 +44,7 @@ const ApprenticeAITools = () => {
   ];
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <h1 className="text-3xl font-bold tracking-tight text-centre">AI Tools for Apprentices</h1>
         <div className="flex-grow"></div>

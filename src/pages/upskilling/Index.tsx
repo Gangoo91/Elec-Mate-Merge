@@ -170,7 +170,7 @@ const Index = () => {
   return (
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Header */}
-      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 pt-6 pb-4">
+      <header className="sticky top-0 z-10 bg-[#1a1a1a]/95 backdrop-blur-sm px-4 sm:px-6 lg:px-8 pt-6 pb-4">
         <Link to="/study-centre">
           <Button
             variant="ghost"
@@ -183,8 +183,8 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 pb-12">
-        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+      <main className="px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
           {/* Page Title */}
           <div className="space-y-1">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">

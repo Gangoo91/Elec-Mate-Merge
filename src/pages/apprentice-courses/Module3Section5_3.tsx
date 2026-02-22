@@ -161,7 +161,7 @@ export default function Module3Section5_3() {
     <div className="bg-[#1a1a1a] overflow-x-hidden">
       {/* Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
             className="text-white hover:text-white active:text-white p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
@@ -176,7 +176,7 @@ export default function Module3Section5_3() {
       </div>
 
       {/* Main */}
-      <main className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <header className="mb-6 sm:mb-8 text-center">
           <div className="inline-flex items-center justify-center px-3 py-1 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-medium mb-4">
             Module 3 - Section 3.5.3

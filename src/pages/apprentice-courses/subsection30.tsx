@@ -66,7 +66,7 @@ const Module2Section2_1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Module 2, Section 1 – Electrical Quantities and Units
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl">
+          <p className="text-xl text-white/80 max-w-4xl">
             Understanding fundamental electrical quantities: voltage, current, resistance, and their
             units
           </p>

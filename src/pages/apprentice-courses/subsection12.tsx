@@ -278,7 +278,7 @@ const Section3_3 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Method Statements
               </h1>
-              <p className="text-xl text-white/80 max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-4xl mt-2">
                 Comprehensive guide to creating and implementing effective method statements for
                 electrical work
               </p>

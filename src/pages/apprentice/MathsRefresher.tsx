@@ -15,7 +15,7 @@ const MathsRefresher = () => {
       </div>
 
       <div className="text-center mb-6 sm:mb-8 px-2">
-        <p className="text-base sm:text-lg text-white max-w-3xl mx-auto">
+        <p className="text-base sm:text-lg text-white max-w-4xl mx-auto">
           Refresh your mathematical skills essential for electrical work, from basic arithmetic to
           complex calculations needed for electrical theory and installation work.
         </p>

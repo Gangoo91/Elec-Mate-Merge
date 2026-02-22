@@ -44,7 +44,7 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
       {/* Native-style sticky header */}
       {currentSection === 'overview' && (
         <header className="sticky top-0 z-50 bg-white/[0.02] backdrop-blur-xl border-b border-white/[0.06]">
-          <div className="flex items-center gap-3 px-4 h-14 max-w-5xl mx-auto lg:h-16 lg:px-6">
+          <div className="flex items-center gap-3 px-4 h-14 max-w-6xl mx-auto lg:h-16 lg:px-6">
             <Button
               variant="ghost"
               size="icon"
@@ -65,7 +65,7 @@ const LearningHub = ({ onBack }: LearningHubProps) => {
       )}
 
       {/* Content */}
-      <div className="p-4 max-w-2xl mx-auto lg:max-w-5xl">{renderCurrentSection()}</div>
+      <div className="p-4 max-w-6xl mx-auto lg:px-8">{renderCurrentSection()}</div>
     </div>
   );
 };

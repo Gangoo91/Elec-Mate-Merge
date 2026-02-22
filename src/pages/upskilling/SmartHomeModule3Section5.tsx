@@ -158,7 +158,7 @@ const SmartHomeModule3Section5 = () => {
         </div>
       </div>
 
-      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+      <article className="px-4 sm:px-6 py-8 sm:py-12 max-w-4xl mx-auto">
         {/* Header */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 mb-6">

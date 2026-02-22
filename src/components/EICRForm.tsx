@@ -207,7 +207,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
     <div className="bg-background">
       {/* Header - matches EIC structure */}
       <div className="bg-card border-b border-border sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 py-3 sm:px-6 lg:px-8">
+        <div className="px-4 py-3 sm:px-6 lg:px-8">
           <EICRFormHeader
             onBack={onBack}
             currentReportId={currentReportId}
@@ -230,7 +230,7 @@ const EICRFormInner = ({ onBack }: { onBack: () => void }) => {
       </div>
 
       {/* Main Content - matches EIC structure */}
-      <main className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8 pb-20 sm:pb-6">
+      <main className="px-4 py-6 sm:px-6 lg:px-8 pb-20 sm:pb-6">
         <EICRFormContent
           formData={formData}
           onUpdate={updateFormData}

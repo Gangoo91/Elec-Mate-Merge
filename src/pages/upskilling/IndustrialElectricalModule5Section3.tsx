@@ -232,7 +232,7 @@ const IndustrialElectricalModule5Section3: React.FC = () => {
     <div className="bg-background text-foreground">
       {/* Sticky Header */}
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-white/10">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <Button
             variant="ghost"
             size="sm"
@@ -249,7 +249,7 @@ const IndustrialElectricalModule5Section3: React.FC = () => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+      <main className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Title Section */}
         <div className="text-center space-y-4">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10">

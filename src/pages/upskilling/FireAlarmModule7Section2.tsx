@@ -211,7 +211,7 @@ const FireAlarmModule7Section2 = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="px-4 sm:px-6 pt-8 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pt-8 pb-6 max-w-4xl mx-auto">
         <div className="flex items-center gap-3 mb-4">
           <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
             <Building className="h-7 w-7 text-elec-yellow" />
@@ -239,7 +239,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Quick Summary */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto">
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
           <ul className="space-y-2 text-white text-sm">
@@ -269,7 +269,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Learning Outcomes */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto">
         <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Learning Outcomes
         </h2>
@@ -295,7 +295,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Main Content */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto space-y-6">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto space-y-6">
         {/* Section 01 */}
         <div className="p-4 rounded-lg bg-white/5 border border-white/10">
           <div className="flex items-center gap-2 mb-3">
@@ -663,7 +663,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Practical Guidance */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto">
         <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Practical Guidance
         </h2>
@@ -714,7 +714,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Upcoming Changes */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto">
         <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
           <div className="flex items-center gap-2 mb-3">
             <AlertTriangle className="h-5 w-5 text-blue-400" />
@@ -733,7 +733,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* FAQs */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto">
         <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Frequently Asked Questions
         </h2>
@@ -773,7 +773,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Quiz Section */}
-      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-6 max-w-4xl mx-auto">
         <div className="p-4 rounded-lg bg-white/5 border border-elec-yellow/20">
           <div className="flex items-center gap-2 mb-4">
             <BookOpen className="h-5 w-5 text-elec-yellow" />
@@ -883,7 +883,7 @@ const FireAlarmModule7Section2 = () => {
       </section>
 
       {/* Navigation Footer */}
-      <section className="px-4 sm:px-6 pb-8 max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 pb-8 max-w-4xl mx-auto">
         <div className="flex items-center justify-between gap-3 py-4 border-t border-white/10">
           <Button
             variant="ghost"

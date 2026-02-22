@@ -107,7 +107,7 @@ const RenewableEnergyModule2Section2 = () => {
     <div className="bg-[#1a1a1a]">
       {/* Minimal Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center">
           <Button
             variant="ghost"
             size="sm"
@@ -122,7 +122,7 @@ const RenewableEnergyModule2Section2 = () => {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8 pb-24">
+      <div className="max-w-4xl mx-auto px-4 py-8 pb-24">
         {/* Header */}
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">

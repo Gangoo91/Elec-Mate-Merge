@@ -28,7 +28,9 @@ export function ApprenticeHubShell({
       <ApprenticeHubNav activeTab={activeTab} onTabChange={onTabChange} onCapture={onCapture} />
 
       {/* Main Content Area - Full screen below nav */}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">{children}</div>
+      </main>
     </div>
   );
 }

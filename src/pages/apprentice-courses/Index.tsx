@@ -102,7 +102,7 @@ const Index = () => {
   return (
     <div className="overflow-x-hidden bg-[#0d0d0d] min-h-screen">
       {/* Sticky Header */}
-      <header className="sticky top-0 z-10 bg-[#0d0d0d]/95 backdrop-blur-sm border-b border-white/5 px-4 sm:px-6 py-3">
+      <header className="sticky top-0 z-10 bg-[#0d0d0d]/95 backdrop-blur-sm border-b border-white/5 px-4 sm:px-6 lg:px-8 py-3">
         <Link
           to="/study-centre"
           className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors touch-manipulation active:scale-[0.98]"
@@ -128,7 +128,7 @@ const Index = () => {
           transition={{ duration: 3, repeat: Infinity, delay: 1 }}
         />
 
-        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 pt-8 pb-6">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -174,14 +174,14 @@ const Index = () => {
       </div>
 
       {/* Main Content */}
-      <main className="px-4 sm:px-6 pb-12">
-        <div className="max-w-3xl mx-auto space-y-6">
+      <main className="px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="max-w-6xl mx-auto space-y-6">
           {/* Available Courses */}
           <div>
             <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">
               Available Now
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-6">
               {availableCourses.map((course, index) => (
                 <CourseCard
                   key={course.id}
@@ -203,7 +203,7 @@ const Index = () => {
               <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">
                 Coming Soon
               </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-6">
                 {comingSoonCourses.map((course, index) => (
                   <CourseCard
                     key={course.id}

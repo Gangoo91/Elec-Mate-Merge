@@ -171,7 +171,7 @@ const Level3Module1Section1_5 = () => {
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* STICKY HEADER */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link
             to="/study-centre/apprentice/level3-module1-section1"
             className="inline-flex items-center gap-2 text-white/70 hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
@@ -186,7 +186,7 @@ const Level3Module1Section1_5 = () => {
       </div>
 
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto space-y-8 sm:space-y-12">
+        <div className="max-w-4xl mx-auto space-y-8 sm:space-y-12">
           {/* HEADER */}
           <header className="space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-elec-yellow/10 text-elec-yellow text-sm font-medium">

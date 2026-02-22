@@ -74,7 +74,7 @@ const Module2Section2_2 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 2.2 – Ohm's Law and Electrical Calculations
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl">
+          <p className="text-xl text-white/80 max-w-4xl">
             Application of Ohm's Law for calculating voltage, current, and resistance relationships
           </p>
         </div>

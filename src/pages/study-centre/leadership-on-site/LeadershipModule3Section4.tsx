@@ -11,7 +11,7 @@ export default function LeadershipModule3Section4() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         <Link to="/study-centre/apprentice/leadership-on-site">
           <Button variant="ghost" size="sm" className="gap-2 text-white h-11 touch-manipulation">
             <ArrowLeft className="h-4 w-4" />

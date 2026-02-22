@@ -69,7 +69,7 @@ const SmartHomeModule8 = () => {
         </div>
 
         {/* Info Cards */}
-        <div className="grid grid-cols-1 gap-4 max-w-3xl mb-6">
+        <div className="grid grid-cols-1 gap-4 max-w-4xl mb-6">
           {infoCards.map((card) => (
             <div
               key={card.id}
@@ -102,7 +102,7 @@ const SmartHomeModule8 = () => {
         </div>
 
         {/* Before You Begin Card */}
-        <div className="max-w-3xl mb-6">
+        <div className="max-w-4xl mb-6">
           <div className="group relative overflow-hidden bg-elec-yellow/10 backdrop-blur-sm border border-elec-yellow/30 rounded-xl hover:bg-elec-yellow/15 hover:shadow-lg hover:shadow-elec-yellow/10 transition-all duration-300">
             {/* Accent line at top */}
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-elec-yellow/50 to-transparent" />

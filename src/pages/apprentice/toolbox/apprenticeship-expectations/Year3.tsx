@@ -379,7 +379,7 @@ const Year3 = () => {
           </div>
         </div>
 
-        <p className="text-white text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-4xl">
           Year 3 is where you step up - more complex installations, fault finding, and the beginning
           of your End Point Assessment preparation. You'll also start mentoring junior apprentices.
         </p>

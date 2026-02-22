@@ -272,7 +272,7 @@ const Level3Module6Section6_1 = () => {
         </div>
       </div>
 
-      <article className="px-4 sm:px-6 py-8 sm:py-12">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>

@@ -66,7 +66,7 @@ const Section5 = () => {
           <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-6">
             Section 5: Safe Isolation Procedures
           </h1>
-          <p className="text-base sm:text-xl text-white/80 max-w-3xl">
+          <p className="text-base sm:text-xl text-white/80 max-w-4xl">
             Step-by-step procedures for safely isolating electrical circuits before work
           </p>
         </div>

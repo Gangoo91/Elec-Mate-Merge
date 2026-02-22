@@ -24,7 +24,7 @@ export default function CybersecurityIndex() {
       </header>
 
       <main className="px-4 sm:px-6 pb-12">
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="max-w-4xl mx-auto space-y-6">
           <div className="space-y-1">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground tracking-tight">
               Cybersecurity for the Trades

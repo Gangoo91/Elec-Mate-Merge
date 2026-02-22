@@ -156,7 +156,7 @@ const InstrumentationModule8Section6 = () => {
       </div>
 
       {/* Main Content */}
-      <div className="px-4 pb-24 max-w-3xl mx-auto">
+      <div className="px-4 pb-24 max-w-4xl mx-auto">
         {/* Quick Summary Boxes - Level 2 Pattern */}
         <div className="grid sm:grid-cols-2 gap-4 mb-12">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">

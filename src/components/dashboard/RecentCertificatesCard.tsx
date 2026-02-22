@@ -1,16 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import {
-  FileText,
-  ArrowRight,
-  Clock,
-  ChevronRight,
-  MapPin,
-  Plus,
-  CloudOff,
-  AlertCircle,
-} from 'lucide-react';
+import { FileText, ChevronRight, CloudOff } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
@@ -22,7 +12,6 @@ interface RecentCertificatesCardProps {
   onNavigate: (section: string, reportId?: string, reportType?: string) => void;
 }
 
-// Type for local backups
 interface LocalBackup {
   reportType: string;
   reportId: string;
@@ -38,7 +27,6 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     supabase.auth.getUser().then(({ data: { user } }) => setUser(user));
   }, []);
 
-  // Check for local backups on mount
   useEffect(() => {
     const backups = listAllBackups();
     setLocalBackups(backups);
@@ -57,7 +45,6 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
 
   const reports = reportsData?.reports ?? [];
 
-  // Create a map of report IDs that have local backups
   const backupMap = useMemo(() => {
     const map = new Map<string, LocalBackup>();
     localBackups.forEach((backup) => {
@@ -66,22 +53,15 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     return map;
   }, [localBackups]);
 
-  // Check if a report has a local backup that's newer than cloud
   const hasNewerLocalBackup = (report: CloudReport): LocalBackup | null => {
     const backup = backupMap.get(report.report_id);
     if (!backup) return null;
-
     const cloudTime = new Date(report.updated_at).getTime();
     const localTime = new Date(backup.savedAt).getTime();
-
-    // If local backup is newer, return it
-    if (localTime > cloudTime) {
-      return backup;
-    }
+    if (localTime > cloudTime) return backup;
     return null;
   };
 
-  // Count reports with unsynced local changes
   const unsyncedCount = useMemo(() => {
     return reports.filter((r) => hasNewerLocalBackup(r) !== null).length;
   }, [reports, backupMap]);
@@ -108,7 +88,7 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
       case 'completed':
         return 'bg-green-500/15 text-green-400';
       default:
-        return 'bg-white/10 text-white/60';
+        return 'bg-white/10 text-white';
     }
   };
 
@@ -154,65 +134,71 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
     }
   };
 
-  // Loading state
   if (isLoading) {
     return (
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
-        <div className="flex items-center gap-2 mb-3">
-          <FileText className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-semibold text-elec-yellow">Recent Certificates</span>
+      <div>
+        <div className="flex items-center gap-2.5 mb-4">
+          <FileText className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-semibold text-white">Recent Certificates</span>
         </div>
-        <Skeleton className="h-16 w-full rounded-xl bg-black/40 mb-2" />
-        <Skeleton className="h-16 w-full rounded-xl bg-black/40" />
+        <div className="space-y-3">
+          <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
+          <Skeleton className="h-20 w-full rounded-2xl bg-white/[0.03]" />
+        </div>
       </div>
     );
   }
 
-  // Empty state
   if (reports.length === 0) {
     return (
-      <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl p-4">
-        <div className="flex items-center gap-2 mb-4">
-          <FileText className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-semibold text-elec-yellow">Recent Certificates</span>
+      <div>
+        <div className="flex items-center gap-2.5 mb-4">
+          <FileText className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-semibold text-white">Recent Certificates</span>
         </div>
-        <div className="text-center py-6">
-          <div className="w-12 h-12 mx-auto mb-3 rounded-xl bg-elec-yellow/15 flex items-center justify-center">
-            <FileText className="h-6 w-6 text-elec-yellow/50" />
+        <button
+          onClick={() => onNavigate('minor-works')}
+          className="group w-full flex items-center gap-3.5 p-4 rounded-2xl bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation text-left"
+        >
+          <div className="w-11 h-11 rounded-xl bg-elec-yellow/12 flex items-center justify-center flex-shrink-0">
+            <FileText className="h-5 w-5 text-elec-yellow" />
           </div>
-          <p className="text-sm text-white/40 mb-4">No certificates yet</p>
-          <Button
-            onClick={() => onNavigate('minor-works')}
-            className="bg-elec-yellow text-black hover:bg-elec-yellow/90 h-10 px-5 font-semibold rounded-xl"
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Create Certificate
-          </Button>
-        </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-white">No certificates yet</p>
+            <p className="text-sm text-white mt-0.5">Tap to create your first</p>
+          </div>
+          <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#242428] border border-elec-yellow/30 rounded-2xl overflow-hidden">
-      {/* Header */}
-      <div className="p-4 pb-3">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <FileText className="h-4 w-4 text-elec-yellow" />
-            <span className="text-sm font-semibold text-elec-yellow">Recent Certificates</span>
-          </div>
+    <div>
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2.5">
+          <FileText className="h-5 w-5 text-elec-yellow" />
+          <span className="text-base font-semibold text-white">Recent Certificates</span>
           {unsyncedCount > 0 && (
-            <span className="text-[10px] font-medium px-2 py-1 rounded-lg bg-amber-500/20 text-amber-400 flex items-center gap-1">
+            <span className="text-[10px] font-semibold px-2 py-1 rounded-lg bg-amber-500/15 text-amber-400 flex items-center gap-1">
               <CloudOff className="h-3 w-3" />
               {unsyncedCount} unsynced
             </span>
           )}
         </div>
+        {reports.length > 4 && (
+          <button
+            className="text-sm font-medium text-elec-yellow hover:underline touch-manipulation h-11 flex items-center"
+            onClick={() => onNavigate('my-reports')}
+          >
+            View All
+          </button>
+        )}
       </div>
 
       {/* Certificate List */}
-      <div className="px-3 pb-3 space-y-2">
+      <div className="space-y-2">
         <AnimatePresence mode="popLayout">
           {reports.slice(0, 4).map((report, index) => {
             const localBackup = hasNewerLocalBackup(report);
@@ -224,65 +210,53 @@ const RecentCertificatesCard = ({ onNavigate }: RecentCertificatesCardProps) => 
                 exit={{ opacity: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={cn(
-                  'relative p-3 rounded-xl cursor-pointer',
-                  'bg-black/40 hover:bg-black/50 border border-white/5',
-                  'active:scale-[0.98] transition-all touch-manipulation'
+                  'flex items-center gap-3.5 p-4 rounded-2xl cursor-pointer',
+                  'bg-white/[0.06] border border-white/[0.08]',
+                  'hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation'
                 )}
                 onClick={() => handleOpenCertificate(report)}
               >
-                {/* Top row: Type badge + Status + Time */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span
-                    className={cn(
-                      'text-[10px] font-bold px-2 py-0.5 rounded-md',
-                      localBackup
-                        ? 'bg-amber-500/20 text-amber-400'
-                        : 'bg-elec-yellow/20 text-elec-yellow'
-                    )}
-                  >
-                    {getTypeLabel(report.report_type)}
-                  </span>
-                  <span
-                    className={cn(
-                      'text-[10px] font-medium px-2 py-0.5 rounded-md',
-                      localBackup ? 'bg-amber-500/15 text-amber-400' : getStatusStyle(report.status)
-                    )}
-                  >
-                    {localBackup ? 'Unsynced' : getStatusLabel(report.status)}
-                  </span>
-                  <span className="text-[10px] text-white/30 ml-auto">
-                    {formatTimeAgo(localBackup?.savedAt || report.updated_at)}
-                  </span>
+                <div className="flex-1 min-w-0">
+                  {/* Badges row */}
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span
+                      className={cn(
+                        'text-[10px] font-bold px-2 py-0.5 rounded',
+                        localBackup
+                          ? 'bg-amber-500/20 text-amber-400'
+                          : 'bg-elec-yellow/15 text-elec-yellow'
+                      )}
+                    >
+                      {getTypeLabel(report.report_type)}
+                    </span>
+                    <span
+                      className={cn(
+                        'text-[10px] font-semibold px-2 py-0.5 rounded',
+                        localBackup ? 'bg-amber-500/15 text-amber-400' : getStatusStyle(report.status)
+                      )}
+                    >
+                      {localBackup ? 'Unsynced' : getStatusLabel(report.status)}
+                    </span>
+                    <span className="text-xs text-white ml-auto">
+                      {formatTimeAgo(localBackup?.savedAt || report.updated_at)}
+                    </span>
+                  </div>
+                  {/* Client name */}
+                  <h4 className="text-sm font-semibold text-white truncate text-left">
+                    {report.client_name || 'Untitled'}
+                  </h4>
+                  {/* Address */}
+                  <p className="text-sm text-white truncate mt-0.5 text-left">
+                    {report.installation_address || 'No address'}
+                  </p>
                 </div>
 
-                {/* Client name */}
-                <h4 className="text-sm font-semibold text-white truncate text-left">
-                  {report.client_name || 'Untitled'}
-                </h4>
-
-                {/* Address */}
-                <p className="text-xs text-white/40 truncate text-left mt-0.5">
-                  {report.installation_address || 'No address'}
-                </p>
-
-                {/* Chevron */}
-                <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/20" />
+                <ChevronRight className="h-5 w-5 text-elec-yellow flex-shrink-0" />
               </motion.div>
             );
           })}
         </AnimatePresence>
       </div>
-
-      {reports.length > 4 && (
-        <div className="px-3 pb-3">
-          <button
-            className="w-full py-2 text-xs text-elec-yellow/60 hover:text-elec-yellow transition-colors"
-            onClick={() => onNavigate('my-reports')}
-          >
-            View All ({reports.length})
-          </button>
-        </div>
-      )}
     </div>
   );
 };

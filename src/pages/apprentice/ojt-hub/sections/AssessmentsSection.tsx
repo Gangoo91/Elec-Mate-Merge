@@ -167,7 +167,7 @@ export function AssessmentsSection() {
 
   return (
     <>
-      <div className="p-4 sm:p-6 space-y-4">
+      <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:px-8 space-y-4">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>

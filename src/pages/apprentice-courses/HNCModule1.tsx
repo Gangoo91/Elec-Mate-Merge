@@ -69,7 +69,7 @@ const HNCModule1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Module 1: Health, Safety and Risk Management in Engineering
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-4xl">
             Comprehensive health and safety protocols and risk assessment procedures for engineering
             environments, covering legislation, standards, and professional responsibilities.
           </p>

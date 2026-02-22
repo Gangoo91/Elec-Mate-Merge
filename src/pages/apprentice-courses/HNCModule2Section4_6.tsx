@@ -33,7 +33,7 @@ const HNCModule2Section4_6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             4.6 Human Comfort in Lighting and Acoustics
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-4xl">
             Occupant comfort and performance standards for optimal lighting and acoustic
             environments.
           </p>

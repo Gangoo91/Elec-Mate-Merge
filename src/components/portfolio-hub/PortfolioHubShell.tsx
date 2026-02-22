@@ -158,7 +158,7 @@ export function PortfolioHubShell({
 
       {/* Main Content Area */}
       <main className="flex-1 pb-20 lg:pb-0">
-        <div className="max-w-5xl mx-auto">{children}</div>
+        <div className="max-w-6xl mx-auto lg:px-8">{children}</div>
       </main>
 
       {/* Mobile Bottom Navigation - Hidden on desktop */}

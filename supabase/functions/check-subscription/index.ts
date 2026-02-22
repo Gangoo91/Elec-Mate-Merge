@@ -217,6 +217,9 @@ serve(async (req) => {
         price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly',
         // Founders
         price_1SPK8c2RKw5t5RAmRGJxXfjc: 'Employer',
+        // Electrician Win-Back (20% discount offer)
+        price_1SvggR2RKw5t5RAmDN29FBzx: 'electrician',
+        price_1SvggR2RKw5t5RAmsrerSmdG: 'electrician_yearly',
         // Legacy
         price_1RhtdT2RKw5t5RAmv6b2xE6p: 'apprentice',
         price_1Rhtgl2RKw5t5RAmkQVKVnKn: 'apprentice_yearly',

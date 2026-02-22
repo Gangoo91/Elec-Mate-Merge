@@ -168,7 +168,7 @@ export default function UpskillingHome() {
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
             size="lg"
@@ -185,7 +185,7 @@ export default function UpskillingHome() {
 
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Hero Section */}
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
@@ -195,7 +195,7 @@ export default function UpskillingHome() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
               Electrical Upskilling
             </h1>
-            <p className="text-white/80 max-w-3xl mx-auto">
+            <p className="text-white/80 max-w-4xl mx-auto">
               Advanced courses for qualified electricians to expand your expertise
             </p>
           </header>

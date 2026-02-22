@@ -275,7 +275,7 @@ const Level3Module2Section3_5 = () => {
       </div>
 
       {/* Main Article Content */}
-      <article className="px-4 sm:px-6 py-8 sm:py-12">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Header */}
 
         {/* Quick Summary Boxes */}

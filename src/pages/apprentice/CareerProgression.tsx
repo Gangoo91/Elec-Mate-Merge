@@ -87,7 +87,7 @@ const CareerProgression = () => {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 animate-fade-in px-2 sm:px-0">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8 animate-fade-in">
       {/* Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
         <div className="flex-1">

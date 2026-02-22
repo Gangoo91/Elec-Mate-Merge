@@ -194,7 +194,7 @@ const InspectionTestingModule2Section4 = () => {
         </div>
       </header>
 
-      <main className="px-4 py-6 pb-24 max-w-3xl mx-auto">
+      <main className="px-4 py-6 pb-24 max-w-4xl mx-auto">
         {/* Centered Title */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-2 mb-2">

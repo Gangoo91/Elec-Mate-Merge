@@ -185,7 +185,7 @@ const BS7671ExamGuide = () => {
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 py-8 sm:py-12 max-w-3xl mx-auto">
+      <div className="px-4 sm:px-6 py-8 sm:py-12 max-w-4xl mx-auto">
         <div className="space-y-8">
           {/* Header */}
           <div>

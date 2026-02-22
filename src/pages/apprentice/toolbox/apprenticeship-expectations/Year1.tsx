@@ -317,7 +317,7 @@ const Year1 = () => {
           </div>
         </div>
 
-        <p className="text-white text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-4xl">
           Your first year is all about learning the basics - safety comes first, then building your
           knowledge of electrical principles and developing practical skills that will serve you
           throughout your career.

@@ -212,7 +212,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
     <div className="overflow-x-hidden bg-[#1a1a1a] text-white">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
           <Button
             variant="ghost"
             size="sm"
@@ -233,7 +233,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-6 space-y-8">
+      <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <p className="text-white/90 leading-relaxed">

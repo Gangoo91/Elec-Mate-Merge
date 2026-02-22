@@ -167,7 +167,7 @@ const Section4_2 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 PPE Selection, Maintenance and Inspection
               </h1>
-              <p className="text-xl text-white/80 max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-4xl mt-2">
                 Ensuring PPE effectiveness through proper selection, care, and regular inspection
               </p>
             </div>

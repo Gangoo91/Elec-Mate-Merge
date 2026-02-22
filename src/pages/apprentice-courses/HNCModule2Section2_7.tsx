@@ -33,7 +33,7 @@ const HNCModule2Section2_7 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             2.7 Applications in Water Distribution and Duct Systems
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-4xl">
             Practical applications of fluid mechanics principles in building services systems
             design.
           </p>

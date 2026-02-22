@@ -102,7 +102,7 @@ export default function IpafModule6() {
       </div>
 
       <main className="px-4 sm:px-6 py-6 sm:py-8 pb-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Module Header */}
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">

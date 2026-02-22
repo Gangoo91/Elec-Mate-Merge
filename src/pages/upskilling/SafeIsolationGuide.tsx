@@ -411,7 +411,7 @@ const SafeIsolationGuide = () => {
               Safe Isolation Procedures
             </h1>
           </div>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
+          <p className="text-lg sm:text-xl text-white max-w-4xl">
             Comprehensive guide to safe isolation procedures for electrical work - the foundation of
             electrical safety
           </p>

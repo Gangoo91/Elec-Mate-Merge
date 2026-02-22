@@ -166,7 +166,7 @@ const InsulationResistanceGuide = () => {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Insulation Resistance Testing
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
+          <p className="text-lg sm:text-xl text-white max-w-4xl">
             Complete guide to testing insulation resistance between conductors and to earth
           </p>
         </div>

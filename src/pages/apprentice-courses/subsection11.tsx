@@ -211,7 +211,7 @@ const Section3_2 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 The Five Steps of Risk Assessment
               </h1>
-              <p className="text-xl text-white/80 max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-4xl mt-2">
                 HSE's systematic approach to identifying and controlling electrical hazards
               </p>
             </div>

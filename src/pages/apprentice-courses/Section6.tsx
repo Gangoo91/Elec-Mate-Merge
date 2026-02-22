@@ -74,7 +74,7 @@ const Section6 = () => {
           <h1 className="text-xl sm:text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3 sm:mb-6">
             Section 6: Health and Safety Incidents
           </h1>
-          <p className="text-base sm:text-xl text-white/80 max-w-3xl">
+          <p className="text-base sm:text-xl text-white/80 max-w-4xl">
             Understanding workplace accidents and legal reporting requirements
           </p>
         </div>

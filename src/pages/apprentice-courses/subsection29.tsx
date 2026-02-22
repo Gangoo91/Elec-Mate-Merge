@@ -73,7 +73,7 @@ const Section2_6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 2.6 – Power, Energy, and Efficiency
           </h1>
-          <p className="text-xl text-white/80 max-w-3xl">
+          <p className="text-xl text-white/80 max-w-4xl">
             Calculating electrical power consumption, energy usage, and system efficiency
           </p>
         </div>

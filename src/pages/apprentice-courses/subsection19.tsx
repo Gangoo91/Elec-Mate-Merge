@@ -163,7 +163,7 @@ const Section5_2 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Equipment Required for Isolation
               </h1>
-              <p className="text-xl text-white/80 max-w-3xl mt-2">
+              <p className="text-xl text-white/80 max-w-4xl mt-2">
                 Essential tools and equipment for safe isolation procedures
               </p>
             </div>

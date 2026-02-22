@@ -1009,7 +1009,7 @@ const MinorWorksForm = ({
         <div
           className={cn(
             'minor-works-container pb-20 sm:pb-16',
-            isMobile ? '' : 'px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto'
+            isMobile ? '' : 'px-4 sm:px-6 lg:px-8'
           )}
         >
           <SmartTabs

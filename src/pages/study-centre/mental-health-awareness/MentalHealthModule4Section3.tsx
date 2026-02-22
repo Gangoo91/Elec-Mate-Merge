@@ -214,7 +214,7 @@ export default function MentalHealthModule4Section3() {
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
             className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
@@ -745,7 +745,7 @@ export default function MentalHealthModule4Section3() {
                   </div>
 
                   {/* Three ACE categories */}
-                  <div className="flex items-start justify-center gap-3 sm:gap-6 w-full max-w-3xl mb-3">
+                  <div className="flex items-start justify-center gap-3 sm:gap-6 w-full max-w-4xl mb-3">
                     <div className="flex flex-col items-center w-1/3">
                       <div className="h-4 w-0.5 bg-purple-400/60" />
                       <div className="bg-red-500/15 border border-red-500/30 rounded-lg p-2 sm:p-3 w-full text-center">

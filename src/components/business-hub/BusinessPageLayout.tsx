@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
@@ -79,6 +79,7 @@ const BusinessPageLayout = ({
   children,
   className,
 }: BusinessPageLayoutProps) => {
+  const navigate = useNavigate();
   const accent = accentConfig[accentColor];
 
   return (
@@ -90,14 +91,15 @@ const BusinessPageLayout = ({
     >
       {/* Header */}
       <header className="sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10 pt-safe">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16">
-            <Link
-              to={backUrl}
+            <button
+              type="button"
+              onClick={() => navigate(backUrl)}
               className="flex items-center justify-center h-11 w-11 rounded-xl text-white hover:bg-white/10 mr-3 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
-            </Link>
+            </button>
             <div className="flex items-center gap-2 flex-1 min-w-0">
               <Icon className={cn('h-5 w-5 flex-shrink-0', accent.iconText)} />
               <h1 className="text-lg sm:text-xl font-bold text-white truncate">{title}</h1>
@@ -110,7 +112,7 @@ const BusinessPageLayout = ({
       <section
         className={cn('border-b border-white/10 bg-gradient-to-b to-[#1a1a1a]', accent.gradient)}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="px-4 sm:px-6 py-6 sm:py-8">
           <div className="flex items-center gap-4">
             <div className={cn('p-3 sm:p-4 rounded-2xl border', accent.iconBg, accent.iconBorder)}>
               <Icon className={cn('h-8 w-8 sm:h-10 sm:w-10', accent.iconText)} />
@@ -124,9 +126,7 @@ const BusinessPageLayout = ({
       </section>
 
       {/* Main Content */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 pb-safe">
-        {children}
-      </main>
+      <main className="px-4 sm:px-6 py-6 sm:py-8 space-y-6 pb-safe">{children}</main>
     </motion.div>
   );
 };

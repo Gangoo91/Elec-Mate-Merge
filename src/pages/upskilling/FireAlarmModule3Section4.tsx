@@ -190,7 +190,7 @@ const FireAlarmModule3Section4 = () => {
     <div className="bg-background text-white">
       {/* Header */}
       <header className="border-b border-white/10 bg-background/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="px-4 py-4 flex items-center justify-between max-w-3xl mx-auto">
+        <div className="px-4 py-4 flex items-center justify-between max-w-4xl mx-auto">
           <Button
             variant="ghost"
             size="sm"
@@ -206,7 +206,7 @@ const FireAlarmModule3Section4 = () => {
         </div>
       </header>
 
-      <main className="px-4 py-8 max-w-3xl mx-auto">
+      <main className="px-4 py-8 max-w-4xl mx-auto">
         {/* Title */}
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">

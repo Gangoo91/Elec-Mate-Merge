@@ -513,7 +513,7 @@ const VisualInspectionGuide = () => {
               Visual Inspection Guide
             </h1>
           </div>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
+          <p className="text-lg sm:text-xl text-white max-w-4xl">
             Comprehensive step-by-step guidance for conducting professional visual inspections on
             electrical installations
           </p>

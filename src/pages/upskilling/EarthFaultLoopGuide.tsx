@@ -47,7 +47,7 @@ const EarthFaultLoopGuide = () => {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Earth Fault Loop Impedance Testing
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
+          <p className="text-lg sm:text-xl text-white max-w-4xl">
             Step-by-step practical guide to measuring Ze and Zs with complete testing procedures
           </p>
         </div>

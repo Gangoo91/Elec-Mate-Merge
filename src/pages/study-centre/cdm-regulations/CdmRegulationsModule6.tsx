@@ -101,7 +101,7 @@ export default function CdmRegulationsModule6() {
       </div>
 
       <main className="px-4 sm:px-6 py-6 sm:py-8 pb-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 mb-3">
               <span className="text-blue-400 text-xs font-semibold">MODULE 6</span>

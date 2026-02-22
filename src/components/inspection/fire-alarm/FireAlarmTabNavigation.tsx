@@ -56,7 +56,7 @@ const FireAlarmTabNavigation: React.FC<FireAlarmTabNavigationProps> = ({
         isMobile ? 'p-3 mt-2' : 'p-4 sm:p-6 mt-6'
       )}
     >
-      <div className={cn(isMobile ? '' : 'max-w-5xl mx-auto')}>
+      <div className={cn(isMobile ? '' : 'max-w-6xl mx-auto')}>
         {/* Progress bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">

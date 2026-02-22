@@ -146,6 +146,7 @@ export default function StudyCentreHome() {
 
   return (
     <div className="pb-24 bg-elec-dark">
+      <div className="max-w-6xl mx-auto lg:px-8">
       {/* Premium Hero Section */}
       <div className="relative overflow-hidden">
         {/* Dark gradient background matching sidebar */}
@@ -442,6 +443,7 @@ export default function StudyCentreHome() {
             </p>
           </div>
         </motion.div>
+      </div>
       </div>
     </div>
   );

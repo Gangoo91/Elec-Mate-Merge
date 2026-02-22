@@ -33,7 +33,7 @@ const HNCModule2Section4_7 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             4.7 Standards and Guidelines (CIBSE, BS, EN codes)
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
+          <p className="text-xl text-muted-foreground max-w-4xl">
             Industry standards and compliance requirements for lighting and acoustic design.
           </p>
         </div>

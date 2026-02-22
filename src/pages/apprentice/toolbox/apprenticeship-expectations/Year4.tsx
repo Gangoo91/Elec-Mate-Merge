@@ -309,7 +309,7 @@ const Year4 = () => {
           </div>
         </div>
 
-        <p className="text-white text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-4xl">
           The finish line is in sight. Year 4 is about completing your EPA, choosing your
           specialisation, and launching your career as a fully qualified electrician. This is what
           you've been working towards.

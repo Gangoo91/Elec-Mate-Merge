@@ -59,6 +59,7 @@ export default function StudyCentreIndex() {
 
   return (
     <div className="pb-24 momentum-scroll-y">
+      <div className="max-w-6xl mx-auto lg:px-8">
       {/* Back Button */}
       <div className="px-4 pt-4">
         <Link to="/dashboard">
@@ -585,6 +586,7 @@ export default function StudyCentreIndex() {
           </p>
         </div>
       </motion.div>
+      </div>
     </div>
   );
 }

@@ -145,7 +145,7 @@ const EnergyEfficiencyModule2Section4 = () => {
     <div className="bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
           <Button
             variant="ghost"
             size="sm"
@@ -163,7 +163,7 @@ const EnergyEfficiencyModule2Section4 = () => {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
         {/* Title */}
         <header className="text-center mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">

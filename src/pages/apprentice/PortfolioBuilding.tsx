@@ -66,7 +66,7 @@ const PortfolioBuilding = () => {
     <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
       <div className="flex flex-col items-center justify-center mb-6">
         <h1 className="text-3xl font-bold tracking-tight mb-4">Enhanced Portfolio Builder</h1>
-        <p className="text-white text-center max-w-3xl mb-4">
+        <p className="text-white text-center max-w-4xl mb-4">
           Build a professional portfolio that showcases your skills, meets assessment standards, and
           impresses employers. Our comprehensive toolkit guides you through every step of the
           process.

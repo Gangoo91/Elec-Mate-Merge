@@ -102,7 +102,7 @@ const ExamPreparation = () => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6 animate-fade-in">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6 animate-fade-in">
       {/* Back Button */}
       <SmartBackButton />
 

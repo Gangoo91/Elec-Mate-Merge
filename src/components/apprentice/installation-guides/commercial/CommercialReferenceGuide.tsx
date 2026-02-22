@@ -318,7 +318,7 @@ const CommercialReferenceGuide = () => {
                     'Emergency lighting - Code of practice for the emergency lighting of premises',
                 },
                 {
-                  standard: 'BS 5839-1:2017',
+                  standard: 'BS 5839-1:2025',
                   description: 'Fire detection and fire alarm systems for buildings',
                 },
                 {

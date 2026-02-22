@@ -1,11 +1,10 @@
 /**
- * RecoverUnsavedWork - Shows auto-draft certificates that haven't been manually saved
+ * RecoverUnsavedWork - Clean inline banner for auto-draft certificates
  */
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { FileText, Clock, ChevronRight, Trash2, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { FileText, ChevronRight, Trash2, X } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { reportCloud, CloudReport } from '@/utils/reportCloud';
@@ -60,20 +59,6 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
     refetchOnWindowFocus: true,
   });
 
-  const formatTimeAgo = (dateString: string) => {
-    const date = new Date(dateString);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-    const diffDays = Math.floor(diffHours / 24);
-
-    if (diffHours < 1) return 'Just now';
-    if (diffHours < 24) return `${diffHours}h ago`;
-    if (diffDays === 1) return 'Yesterday';
-    if (diffDays < 7) return `${diffDays}d ago`;
-    return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
-  };
-
   const getTypeLabel = (type: string) => {
     switch (type) {
       case 'minor-works':
@@ -117,107 +102,72 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
     return null;
   }
 
+  const firstDraft = autoDrafts[0];
+
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0, y: -6 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.2 }}
         className={cn(
-          'bg-[#242428] border border-elec-yellow/30 rounded-2xl overflow-hidden',
+          'rounded-2xl bg-white/[0.06] border border-white/[0.08] overflow-hidden',
           className
         )}
       >
-        {/* Header */}
-        <div className="p-4 pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <FileText className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-semibold text-elec-yellow">Unsaved Work</span>
-              <span className="text-[10px] font-medium px-2 py-0.5 rounded-lg bg-elec-yellow/20 text-elec-yellow">
-                {autoDrafts.length}
+        {/* Main tappable row */}
+        <button
+          onClick={() => handleRecover(firstDraft)}
+          className="w-full flex items-center gap-3.5 p-4 text-left hover:bg-white/[0.09] active:scale-[0.98] transition-all touch-manipulation"
+        >
+          <div className="w-11 h-11 rounded-xl bg-amber-500/12 flex items-center justify-center flex-shrink-0">
+            <FileText className="h-5 w-5 text-amber-400" />
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-0.5">
+              <span className="text-sm font-semibold text-white">
+                {autoDrafts.length} unsaved draft{autoDrafts.length !== 1 ? 's' : ''}
+              </span>
+              <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400">
+                {getTypeLabel(firstDraft.report_type)}
               </span>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsDismissed(true)}
-              className="h-7 w-7 text-white/40 hover:text-white hover:bg-white/10 rounded-lg"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <p className="text-sm text-white truncate">
+              {firstDraft.client_name || 'Untitled certificate'}
+              {firstDraft.installation_address ? ` · ${firstDraft.installation_address}` : ''}
+            </p>
           </div>
-        </div>
 
-        {/* Draft List */}
-        <div className="px-3 pb-3 space-y-2">
-          <AnimatePresence>
-            {autoDrafts.slice(0, 3).map((draft, index) => (
-              <motion.div
-                key={draft.report_id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: index * 0.03 }}
-                className="relative p-3 rounded-xl bg-black/40 hover:bg-black/50 border border-white/5 transition-colors"
-              >
-                {/* Top row: Type badge + Auto-draft + Time */}
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-elec-yellow/20 text-elec-yellow">
-                    {getTypeLabel(draft.report_type)}
-                  </span>
-                  <span className="text-[10px] font-medium px-2 py-0.5 rounded-md bg-amber-500/15 text-amber-400">
-                    Auto-draft
-                  </span>
-                  <span className="text-[10px] text-white/30 ml-auto flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {formatTimeAgo(draft.updated_at)}
-                  </span>
-                </div>
+          <ChevronRight className="h-5 w-5 text-amber-400 flex-shrink-0" />
+        </button>
 
-                {/* Client name */}
-                <h4 className="text-sm font-semibold text-white truncate text-left pr-24">
-                  {draft.client_name || 'Untitled'}
-                </h4>
-
-                {/* Address */}
-                <p className="text-xs text-white/40 truncate text-left mt-0.5 pr-24">
-                  {draft.installation_address || 'No address'}
-                </p>
-
-                {/* Actions - positioned right */}
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                  <button
-                    onClick={() => setDeleteTarget(draft)}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={() => handleRecover(draft)}
-                    className="flex items-center gap-1 h-8 px-3 rounded-lg bg-elec-yellow/10 text-elec-yellow font-medium text-xs hover:bg-elec-yellow/20 transition-colors touch-manipulation"
-                  >
-                    Recover
-                    <ChevronRight className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Footer */}
-        <div className="px-4 py-2 bg-black/20 border-t border-white/5">
-          <p className="text-[10px] text-white/30">Auto-deleted after 7 days</p>
+        {/* Actions bar */}
+        <div className="flex items-center border-t border-white/[0.06] px-4">
+          <button
+            onClick={() => setDeleteTarget(firstDraft)}
+            className="h-11 flex items-center gap-1.5 text-sm text-white hover:text-red-400 transition-colors touch-manipulation"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+            Delete
+          </button>
+          <button
+            onClick={() => setIsDismissed(true)}
+            className="h-11 flex items-center gap-1.5 text-sm text-white ml-auto hover:text-white transition-colors touch-manipulation"
+          >
+            Dismiss
+            <X className="h-3.5 w-3.5" />
+          </button>
         </div>
       </motion.div>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteTarget} onOpenChange={() => setDeleteTarget(null)}>
-        <AlertDialogContent className="bg-[#242428] border-elec-yellow/20">
+        <AlertDialogContent className="bg-[#1a1a1e] border-white/10">
           <AlertDialogHeader>
             <AlertDialogTitle className="text-white">Delete draft?</AlertDialogTitle>
-            <AlertDialogDescription className="text-white/60">
+            <AlertDialogDescription className="text-white">
               This will permanently delete "{deleteTarget?.client_name || 'Untitled'}".
             </AlertDialogDescription>
           </AlertDialogHeader>

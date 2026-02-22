@@ -84,7 +84,7 @@ const ProfessionalToolGuide = () => {
 
   return (
     <div className="bg-gradient-to-br from-background via-background/98 to-background/95">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-6 animate-fade-in text-left">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 space-y-6 animate-fade-in text-left">
         {/* Header — SmartBackButton LEFT, Title + Icon RIGHT */}
         <div className="flex items-center justify-between gap-4">
           <SmartBackButton className="flex-shrink-0" />

@@ -222,7 +222,7 @@ const Module3Section1_2: React.FC = () => {
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
             size="lg"
@@ -239,7 +239,7 @@ const Module3Section1_2: React.FC = () => {
 
       {/* Main Content */}
       <article className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Centered Header */}
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">

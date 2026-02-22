@@ -34,7 +34,7 @@ const DocumentationGuide = () => {
 
       {/* Main Content */}
       <main className="px-4 sm:px-6 lg:px-8 pb-12">
-        <div className="max-w-3xl mx-auto space-y-4 sm:space-y-6">
+        <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
           {/* Header */}
           <div className="text-center space-y-4">
             <h1 className="text-4xl font-bold text-white">Documentation Guide</h1>

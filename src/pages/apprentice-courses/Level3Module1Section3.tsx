@@ -59,7 +59,7 @@ const Level3Module1Section3 = () => {
     <div className="overflow-x-hidden bg-[#1a1a1a]">
       {/* Sticky Header */}
       <div className="border-b border-white/10 sticky top-0 z-50 bg-[#1a1a1a]/95 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
             size="lg"
@@ -76,7 +76,7 @@ const Level3Module1Section3 = () => {
 
       {/* Main Content */}
       <div className="px-4 sm:px-6 py-8 sm:py-12">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto">
           {/* Subsections Grid */}
           <section>
             <h2 className="text-lg font-semibold text-white mb-6">Subsections</h2>

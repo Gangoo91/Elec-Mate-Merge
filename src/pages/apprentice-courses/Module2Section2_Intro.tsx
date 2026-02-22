@@ -13,7 +13,7 @@ const Module2Section2_Intro: React.FC = () => {
   return (
     <div className="bg-[#1a1a1a] overflow-x-hidden">
       <div className="border-b border-white/10 bg-[#1a1a1a] sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
             className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
@@ -27,7 +27,7 @@ const Module2Section2_Intro: React.FC = () => {
         </div>
       </div>
 
-      <main className="max-w-3xl mx-auto px-6 py-12">
+      <main className="max-w-4xl mx-auto px-6 py-12">
         <header className="mb-12 text-center">
           <span className="inline-block bg-elec-yellow text-black px-3 py-1 rounded-full text-sm font-semibold mb-4">
             Section 2

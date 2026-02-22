@@ -387,7 +387,7 @@ const Year2 = () => {
           </div>
         </div>
 
-        <p className="text-white text-lg mb-6 max-w-3xl">
+        <p className="text-white text-lg mb-6 max-w-4xl">
           Building on your foundations, Year 2 introduces the critical skills of understanding
           wiring regulations and electrical testing. This knowledge underpins everything you'll do
           as a qualified electrician.

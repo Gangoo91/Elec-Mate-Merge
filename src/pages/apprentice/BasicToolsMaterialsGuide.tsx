@@ -513,7 +513,7 @@ const BasicToolsMaterialsGuide = () => {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight mb-3 sm:mb-4 text-elec-yellow">
           Basic Tools & Materials Guide
         </h1>
-        <p className="text-sm sm:text-base md:text-lg text-white max-w-3xl mx-auto mb-4 sm:mb-6">
+        <p className="text-sm sm:text-base md:text-lg text-white max-w-4xl mx-auto mb-4 sm:mb-6">
           Complete guide to electrical tools, materials, and equipment for UK apprentices. Learn
           what you need, when you need it, and where to get the best deals.
         </p>

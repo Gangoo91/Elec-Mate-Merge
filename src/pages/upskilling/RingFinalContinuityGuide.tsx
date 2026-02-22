@@ -119,7 +119,7 @@ const RingFinalContinuityGuide = () => {
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
             Ring Final Circuit Continuity
           </h1>
-          <p className="text-lg sm:text-xl text-white max-w-3xl">
+          <p className="text-lg sm:text-xl text-white max-w-4xl">
             Complete guide to testing ring final circuits including end-to-end and cross-connection
             tests
           </p>

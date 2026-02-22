@@ -220,7 +220,7 @@ export default function LearningVideos() {
             </div>
 
             {/* Video info */}
-            <div className="px-4 pt-4 pb-6 space-y-4 max-w-3xl mx-auto">
+            <div className="px-4 pt-4 pb-6 space-y-4 max-w-4xl mx-auto">
               {/* Title */}
               <h2 className="text-[15px] sm:text-base font-semibold text-white leading-snug">
                 {selectedVideo.title}

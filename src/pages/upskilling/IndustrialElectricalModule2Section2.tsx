@@ -220,7 +220,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
     <div className="bg-background text-foreground">
       {/* Header */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur border-b border-white/10">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
           <Button
             variant="ghost"
             size="sm"
@@ -237,7 +237,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
       </header>
 
       {/* Title */}
-      <section className="max-w-3xl mx-auto px-4 pt-8 pb-6 text-center">
+      <section className="max-w-4xl mx-auto px-4 pt-8 pb-6 text-center">
         <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-elec-yellow/10 mb-4">
           <CircuitBoard className="w-6 h-6 text-elec-yellow" />
         </div>
@@ -249,7 +249,7 @@ const IndustrialElectricalModule2Section2: React.FC = () => {
         </p>
       </section>
 
-      <div className="max-w-3xl mx-auto px-4 pb-12 space-y-10">
+      <div className="max-w-4xl mx-auto px-4 pb-12 space-y-10">
         {/* Learning Outcomes */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
           <h2 className="font-semibold text-foreground mb-3 flex items-center gap-2">

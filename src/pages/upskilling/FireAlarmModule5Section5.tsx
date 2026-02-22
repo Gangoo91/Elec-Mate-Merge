@@ -211,7 +211,7 @@ const FireAlarmModule5Section5 = () => {
         </div>
       </div>
 
-      <div className="px-4 sm:px-6 py-6 max-w-3xl mx-auto space-y-8">
+      <div className="px-4 sm:px-6 py-6 max-w-4xl mx-auto space-y-8">
         {/* Page Header */}
         <div className="space-y-4">
           <div className="flex items-center gap-3">

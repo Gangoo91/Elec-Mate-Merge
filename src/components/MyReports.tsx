@@ -617,7 +617,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     return (
       <div className="min-h-screen bg-background text-foreground pb-8">
         <div className="bg-background border-b border-border">
-          <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="max-w-6xl mx-auto px-4 py-4">
             <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
@@ -634,7 +634,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <Skeleton key={i} className="h-32 w-full" />
@@ -858,7 +858,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
 
         {/* Content */}
         <PullToRefresh onRefresh={handleRefresh} isRefreshing={isRefreshing}>
-          <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="max-w-6xl mx-auto px-4 py-4">
             {filteredReports.length === 0 ? (
               searchQuery || statusFilter !== 'all' || typeFilter !== 'all' ? (
                 <EmptyState

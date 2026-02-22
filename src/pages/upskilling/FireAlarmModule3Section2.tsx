@@ -186,7 +186,7 @@ const FireAlarmModule3Section2 = () => {
     <div className="bg-slate-950">
       {/* Header */}
       <header className="border-b border-white/10 bg-slate-950/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-4 h-14 flex items-center">
+        <div className="max-w-4xl mx-auto px-4 h-14 flex items-center">
           <Button variant="ghost" size="sm" asChild>
             <Link to="/electrician/upskilling/fire-alarm-course/module-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -196,7 +196,7 @@ const FireAlarmModule3Section2 = () => {
         </div>
       </header>
 
-      <main className="max-w-3xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Title Section */}
         <div className="mb-8 text-center">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">

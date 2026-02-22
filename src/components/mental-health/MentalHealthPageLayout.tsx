@@ -27,7 +27,7 @@ const MentalHealthPageLayout = ({
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in px-4 sm:px-6 lg:px-8 pb-20">
       {/* Hero Header */}
       <div className="flex flex-col items-center justify-center mb-6 text-center">
         <div

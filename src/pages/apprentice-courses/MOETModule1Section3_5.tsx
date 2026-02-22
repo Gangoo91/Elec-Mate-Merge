@@ -282,7 +282,7 @@ const MOETModule1Section3_5 = () => {
       </div>
 
       {/* Main Content */}
-      <article className="px-4 sm:px-6 py-8 sm:py-12">
+      <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Centred Title */}
         <header className="text-center mb-12">
           <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
