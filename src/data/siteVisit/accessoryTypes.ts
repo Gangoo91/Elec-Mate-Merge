@@ -18,6 +18,11 @@ export type AccessoryCategory =
   | 'heating'
   | 'ev_outdoor'
   | 'containment'
+  | 'distribution'
+  | 'fire_alarm'
+  | 'access_security'
+  | 'hvac'
+  | 'commercial_lighting'
   | 'other';
 
 export const ACCESSORY_CATEGORIES: { id: AccessoryCategory; label: string }[] = [
@@ -30,6 +35,11 @@ export const ACCESSORY_CATEGORIES: { id: AccessoryCategory; label: string }[] = 
   { id: 'heating', label: 'Heating' },
   { id: 'ev_outdoor', label: 'EV / Outdoor' },
   { id: 'containment', label: 'Containment' },
+  { id: 'distribution', label: 'Distribution' },
+  { id: 'fire_alarm', label: 'Fire Alarm' },
+  { id: 'access_security', label: 'Access / Security' },
+  { id: 'hvac', label: 'HVAC / Mechanical' },
+  { id: 'commercial_lighting', label: 'Commercial Lighting' },
   { id: 'other', label: 'Other' },
 ];
 
@@ -242,11 +252,349 @@ export const ACCESSORY_TYPES: AccessoryType[] = [
   { id: 'cable_tray', category: 'containment', label: 'Cable Tray', defaultUnit: 'metres' },
   { id: 'cable_basket', category: 'containment', label: 'Cable Basket', defaultUnit: 'metres' },
 
+  // Distribution
+  { id: 'consumer_unit', category: 'distribution', label: 'Consumer Unit', defaultUnit: 'each' },
+  {
+    id: 'distribution_board',
+    category: 'distribution',
+    label: 'Distribution Board',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'sub_distribution_board',
+    category: 'distribution',
+    label: 'Sub-Distribution Board',
+    defaultUnit: 'each',
+  },
+  { id: 'panel_board', category: 'distribution', label: 'Panel Board', defaultUnit: 'each' },
+  { id: 'mccb_panel', category: 'distribution', label: 'MCCB Panel', defaultUnit: 'each' },
+  {
+    id: 'busbar_trunking',
+    category: 'distribution',
+    label: 'Busbar Trunking',
+    defaultUnit: 'metres',
+  },
+  { id: 'tap_off_unit', category: 'distribution', label: 'Tap-Off Unit', defaultUnit: 'each' },
+  {
+    id: 'ats_panel',
+    category: 'distribution',
+    label: 'Automatic Transfer Switch (ATS)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'capacitor_bank',
+    category: 'distribution',
+    label: 'Power Factor Correction Unit',
+    defaultUnit: 'each',
+  },
+  { id: 'isolator', category: 'distribution', label: 'Isolator Switch', defaultUnit: 'each' },
+  {
+    id: 'rotary_isolator',
+    category: 'distribution',
+    label: 'Rotary Isolator',
+    defaultUnit: 'each',
+  },
+
+  // Sockets — Industrial / Commercial
+  {
+    id: 'industrial_socket_16a',
+    category: 'sockets',
+    label: 'Industrial Socket (16A CEE)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'industrial_socket_32a',
+    category: 'sockets',
+    label: 'Industrial Socket (32A CEE)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'industrial_socket_63a',
+    category: 'sockets',
+    label: 'Industrial Socket (63A CEE)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'three_phase_socket',
+    category: 'sockets',
+    label: '3-Phase Socket',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'commando_socket',
+    category: 'sockets',
+    label: 'Commando Socket',
+    defaultUnit: 'each',
+  },
+  { id: 'floor_box', category: 'sockets', label: 'Floor Box', defaultUnit: 'each' },
+  {
+    id: 'desk_power_module',
+    category: 'sockets',
+    label: 'Desk Power Module',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'powertrack',
+    category: 'sockets',
+    label: 'Power Track / Dado Rail Socket',
+    defaultUnit: 'each',
+  },
+
+  // Commercial Lighting
+  {
+    id: 'led_panel',
+    category: 'commercial_lighting',
+    label: 'LED Panel (600x600)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'led_batten',
+    category: 'commercial_lighting',
+    label: 'LED Batten',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'high_bay_light',
+    category: 'commercial_lighting',
+    label: 'High Bay Light',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'low_bay_light',
+    category: 'commercial_lighting',
+    label: 'Low Bay Light',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'floodlight',
+    category: 'commercial_lighting',
+    label: 'Floodlight',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'bulkhead_light',
+    category: 'commercial_lighting',
+    label: 'Bulkhead Light',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'emergency_exit_sign',
+    category: 'commercial_lighting',
+    label: 'Emergency Exit Sign',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'emergency_bulkhead',
+    category: 'commercial_lighting',
+    label: 'Emergency Bulkhead (3hr)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'occupancy_sensor',
+    category: 'commercial_lighting',
+    label: 'Occupancy / PIR Sensor',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'daylight_sensor',
+    category: 'commercial_lighting',
+    label: 'Daylight Sensor',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'lighting_control_panel',
+    category: 'commercial_lighting',
+    label: 'Lighting Control Panel',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'dali_driver',
+    category: 'commercial_lighting',
+    label: 'DALI Driver',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'track_light',
+    category: 'commercial_lighting',
+    label: 'Track Lighting',
+    defaultUnit: 'each',
+  },
+
+  // Fire Alarm
+  {
+    id: 'fire_alarm_call_point',
+    category: 'fire_alarm',
+    label: 'Fire Alarm Call Point',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fire_alarm_sounder',
+    category: 'fire_alarm',
+    label: 'Fire Alarm Sounder',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'sounder_beacon',
+    category: 'fire_alarm',
+    label: 'Sounder / Beacon',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fire_alarm_panel',
+    category: 'fire_alarm',
+    label: 'Fire Alarm Panel',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fire_alarm_detector',
+    category: 'fire_alarm',
+    label: 'Fire Alarm Detector (Optical/Heat)',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fire_door_holder',
+    category: 'fire_alarm',
+    label: 'Fire Door Holder',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fire_alarm_interface',
+    category: 'fire_alarm',
+    label: 'Fire Alarm Interface Module',
+    defaultUnit: 'each',
+  },
+
+  // Access / Security
+  {
+    id: 'access_control_reader',
+    category: 'access_security',
+    label: 'Access Control Reader',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'door_entry_panel',
+    category: 'access_security',
+    label: 'Door Entry Panel',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'magnetic_lock',
+    category: 'access_security',
+    label: 'Magnetic Door Lock',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'cctv_camera',
+    category: 'access_security',
+    label: 'CCTV Camera',
+    defaultUnit: 'each',
+  },
+  { id: 'nvr_dvr', category: 'access_security', label: 'NVR / DVR Unit', defaultUnit: 'each' },
+  {
+    id: 'intruder_alarm_panel',
+    category: 'access_security',
+    label: 'Intruder Alarm Panel',
+    defaultUnit: 'each',
+  },
+  { id: 'pir_detector', category: 'access_security', label: 'PIR Detector', defaultUnit: 'each' },
+  {
+    id: 'door_contact',
+    category: 'access_security',
+    label: 'Door Contact',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'emergency_stop',
+    category: 'access_security',
+    label: 'Emergency Stop Button',
+    defaultUnit: 'each',
+  },
+
+  // HVAC / Mechanical
+  {
+    id: 'ac_isolator',
+    category: 'hvac',
+    label: 'Air Conditioning Isolator',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'ac_unit',
+    category: 'hvac',
+    label: 'Air Conditioning Unit Supply',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fan_isolator',
+    category: 'hvac',
+    label: 'Fan Isolator Switch',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'ventilation_unit',
+    category: 'hvac',
+    label: 'Ventilation Unit / MVHR',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'hand_dryer',
+    category: 'hvac',
+    label: 'Hand Dryer',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'water_heater',
+    category: 'hvac',
+    label: 'Water Heater / Boiler Supply',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'pump_supply',
+    category: 'hvac',
+    label: 'Pump Supply',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'bms_controller',
+    category: 'hvac',
+    label: 'BMS Controller / Outstation',
+    defaultUnit: 'each',
+  },
+
+  // Data / Comms — Commercial
+  {
+    id: 'patch_panel',
+    category: 'data',
+    label: 'Patch Panel',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'data_cabinet',
+    category: 'data',
+    label: 'Data Cabinet / Rack',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'wifi_access_point',
+    category: 'data',
+    label: 'Wi-Fi Access Point',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'network_switch',
+    category: 'data',
+    label: 'Network Switch',
+    defaultUnit: 'each',
+  },
+  {
+    id: 'fibre_outlet',
+    category: 'data',
+    label: 'Fibre Optic Outlet',
+    defaultUnit: 'each',
+  },
+
   // Other
-  { id: 'consumer_unit', category: 'other', label: 'Consumer Unit', defaultUnit: 'each' },
-  { id: 'distribution_board', category: 'other', label: 'Distribution Board', defaultUnit: 'each' },
   { id: 'cable_run', category: 'other', label: 'Cable Run', defaultUnit: 'metres' },
-  { id: 'custom_item', category: 'other', label: 'Other', defaultUnit: 'each' },
+  { id: 'custom_item', category: 'other', label: 'Custom Item', defaultUnit: 'each' },
 ];
 
 /**

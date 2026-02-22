@@ -275,7 +275,12 @@ export function useVoiceAutoProcess(
             for (const item of parsedRoom.items) {
               const accessory = ACCESSORY_TYPES.find((a) => a.id === item.accessory_id);
               const accessoryId = accessory ? item.accessory_id : 'custom_item';
-              const itemLabel = accessory?.label || item.accessory_id;
+
+              // For custom items, use the notes/original description as the label
+              const itemLabel =
+                accessoryId === 'custom_item'
+                  ? item.notes || item.accessory_id
+                  : accessory?.label || item.accessory_id;
 
               onAddItem(roomId, {
                 itemType: accessoryId,

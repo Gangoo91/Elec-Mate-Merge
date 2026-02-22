@@ -38,18 +38,92 @@ function buildSystemPrompt(
     })
     .join('\n');
 
-  return `You are a UK electrical site survey assistant. Parse the spoken transcript into structured rooms, items, prompt responses, and corrections.
+  return `You are a UK electrical site survey assistant. Parse the spoken transcript into structured rooms, items, prompt responses, and corrections. You handle domestic, commercial, and industrial sites.
 
 ITEM MATCHING RULES:
 - Match spoken items to the closest accessory from this catalogue. Use the \`id\` field exactly.
 - Group items by the room they belong to.
 - Default quantity to 1 if not specified.
-- Units: use "each" for individual items, "metres" for cable runs and LED strip only, "m²" for underfloor heating. Do NOT use "nr".
+- Units: use "each" for individual items, "metres" for cable/trunking/conduit runs and LED strip, "m²" for underfloor heating. Do NOT use "nr".
 - If the speaker mentions a room name, start grouping subsequent items under that room.
 - Items mentioned without a room go under the active room from context (or "General" if none).
 - Normalise room names to common UK terms (e.g. "lounge" → "Living Room").
-- Be generous with interpretation — "6 doubles" = 6x double_socket, "cooker switch" = 1x cooker_switch, "downlights" = led_downlight, etc.
-- If the spoken item doesn't match any catalogue entry, use "custom_item" and put the original description in "notes".
+- Be GENEROUS with interpretation. Always try to match to a catalogue item before falling back to custom_item.
+- Only use "custom_item" as a last resort — put the original spoken description in "notes".
+
+COMMON SPEECH SHORTCUTS (match these):
+- "doubles" / "double sockets" / "twin sockets" = double_socket
+- "singles" / "single sockets" = single_socket
+- "downlights" / "spots" / "spotlights" = led_downlight
+- "pendants" / "ceiling lights" = ceiling_pendant
+- "panels" / "LED panels" / "600 by 600" / "ceiling tiles" = led_panel
+- "battens" / "strip lights" = led_batten
+- "high bays" = high_bay_light
+- "low bays" = low_bay_light
+- "floodlights" / "floods" = floodlight
+- "bulkheads" = bulkhead_light
+- "exit signs" / "running man" = emergency_exit_sign
+- "emergency lights" / "emergency fittings" = emergency_light
+- "data points" / "data outlets" / "cat6" / "network points" = cat6_outlet
+- "floor boxes" = floor_box
+- "desk modules" / "desk units" / "power modules" = desk_power_module
+- "dado" / "dado trunking" / "power track" = powertrack or dado_trunking
+- "DB" / "board" / "distribution board" / "panel board" = distribution_board or panel_board
+- "sub board" / "sub DB" / "sub main" = sub_distribution_board
+- "MCCB" / "MCCB panel" = mccb_panel
+- "busbar" / "busbar trunking" = busbar_trunking
+- "tap off" / "tap off unit" = tap_off_unit
+- "ATS" / "automatic transfer" = ats_panel
+- "isolator" / "switch disconnector" = isolator
+- "rotary isolator" = rotary_isolator
+- "commando" / "commando socket" / "CEE socket" = commando_socket
+- "3 phase socket" / "three phase" = three_phase_socket
+- "16 amp socket" / "16A" = industrial_socket_16a
+- "32 amp socket" / "32A" = industrial_socket_32a
+- "63 amp" = industrial_socket_63a
+- "fire alarm" / "call point" / "break glass" = fire_alarm_call_point
+- "sounder" / "bell" = fire_alarm_sounder
+- "beacon" / "sounder beacon" = sounder_beacon
+- "fire panel" / "fire alarm panel" = fire_alarm_panel
+- "fire detector" / "optical detector" = fire_alarm_detector
+- "door holder" / "fire door holder" = fire_door_holder
+- "access control" / "card reader" / "fob reader" = access_control_reader
+- "door entry" / "intercom" = door_entry_panel
+- "mag lock" / "magnetic lock" = magnetic_lock
+- "CCTV" / "camera" = cctv_camera
+- "NVR" / "DVR" / "recorder" = nvr_dvr
+- "intruder alarm" / "alarm panel" = intruder_alarm_panel
+- "emergency stop" / "e-stop" = emergency_stop
+- "AC" / "air con" / "air conditioning" = ac_unit or ac_isolator (use isolator if "isolator" mentioned)
+- "hand dryer" / "dryer" = hand_dryer
+- "BMS" / "controls" = bms_controller
+- "ventilation" / "MVHR" = ventilation_unit
+- "fan isolator" = fan_isolator
+- "water heater" / "boiler supply" = water_heater
+- "pump" / "pump supply" = pump_supply
+- "patch panel" = patch_panel
+- "data cabinet" / "server rack" / "comms cab" = data_cabinet
+- "Wi-Fi" / "WAP" / "access point" = wifi_access_point
+- "network switch" = network_switch
+- "fibre" / "fibre outlet" = fibre_outlet
+- "PIR" / "occupancy sensor" = occupancy_sensor
+- "trunking" = cable_trunking (or mini_trunking / dado_trunking if specified)
+- "conduit" = pvc_conduit (or steel_conduit if "steel" / "galv" mentioned)
+- "cable tray" = cable_tray
+- "cable basket" = cable_basket
+- "spur" / "fused spur" = switched_fused_spur
+- "USB sockets" = usb_socket
+- "dimmer" / "dimmers" = dimmer_switch
+- "pull cord" = pull_cord_switch
+- "smoke alarm" / "smoke detector" = smoke_detector
+- "heat detector" = heat_detector
+- "CO detector" / "carbon monoxide" = co_detector
+- "TV point" = tv_outlet
+- "cooker switch" / "cooker" = cooker_switch
+- "hob" = hob_outlet
+- "extractor" / "extract fan" = extractor_fan
+- "consumer unit" / "CU" / "fuse box" / "fuse board" = consumer_unit
+- "track lighting" / "track light" = track_light
 
 ACCESSORY CATALOGUE:
 ${catalogueBlock}
