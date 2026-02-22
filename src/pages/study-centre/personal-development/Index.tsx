@@ -91,7 +91,6 @@ const courses: Course[] = [
     level: 'Foundation',
     duration: '4 hours',
     link: 'resilience-stress-management',
-    comingSoon: true,
   },
   {
     id: 7,
@@ -101,7 +100,6 @@ const courses: Course[] = [
     level: 'Foundation',
     duration: '4 hours',
     link: 'time-management-organisation',
-    comingSoon: true,
   },
   {
     id: 8,
@@ -112,7 +110,6 @@ const courses: Course[] = [
     level: 'Intermediate',
     duration: '4 hours',
     link: 'conflict-resolution',
-    comingSoon: true,
   },
   {
     id: 9,
@@ -123,7 +120,6 @@ const courses: Course[] = [
     level: 'Foundation',
     duration: '5 hours',
     link: 'personal-finance',
-    comingSoon: true,
   },
   {
     id: 10,

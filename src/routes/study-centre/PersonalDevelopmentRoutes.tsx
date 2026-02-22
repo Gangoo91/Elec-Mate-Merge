@@ -7,6 +7,10 @@ import { mentalHealthAwarenessRoutes } from './mentalHealthAwarenessRoutes';
 import { emotionalIntelligenceRoutes } from './emotionalIntelligenceRoutes';
 import { communicationConfidenceRoutes } from './communicationConfidenceRoutes';
 import { mentoringDevelopingOthersRoutes } from './mentoringDevelopingOthersRoutes';
+import { resilienceStressManagementRoutes } from './resilienceStressManagementRoutes';
+import { timeManagementOrganisationRoutes } from './timeManagementOrganisationRoutes';
+import { conflictResolutionRoutes } from './conflictResolutionRoutes';
+import { personalFinanceRoutes } from './personalFinanceRoutes';
 
 const PersonalDevelopmentIndex = lazyWithRetry(
   () => import('@/pages/study-centre/personal-development/Index')
@@ -24,6 +28,10 @@ export default function PersonalDevelopmentRoutes() {
         {emotionalIntelligenceRoutes}
         {communicationConfidenceRoutes}
         {mentoringDevelopingOthersRoutes}
+        {resilienceStressManagementRoutes}
+        {timeManagementOrganisationRoutes}
+        {conflictResolutionRoutes}
+        {personalFinanceRoutes}
       </Routes>
     </Suspense>
   );
