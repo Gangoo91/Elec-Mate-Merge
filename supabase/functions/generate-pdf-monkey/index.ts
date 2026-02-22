@@ -656,11 +656,25 @@ serve(async (req) => {
       const settings = freshQuote?.settings || {};
       const overhead = itemsSubtotal * ((settings.overheadPercentage || 0) / 100);
       const profit = (itemsSubtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered
-        ? (itemsSubtotal + overhead + profit) * ((settings.vatRate || 20) / 100)
+      const invoiceSubtotalWithMarkups = itemsSubtotal + overhead + profit;
+
+      // Discount/deduction (CIS etc.) — same logic as quotes
+      const invDiscountEnabled = settings.discountEnabled || false;
+      const invDiscountType = settings.discountType || 'percentage';
+      const invDiscountValue = parseFloat(settings.discountValue) || 0;
+      const invDiscountLabel = settings.discountLabel ||
+        (invDiscountType === 'percentage' ? `Discount (${invDiscountValue}%)` : 'Discount');
+      const invDiscountAmount = invDiscountEnabled
+        ? (invDiscountType === 'percentage'
+            ? invoiceSubtotalWithMarkups * (invDiscountValue / 100)
+            : Math.min(invDiscountValue, invoiceSubtotalWithMarkups))
         : 0;
-      // FIXED: Include overhead + profit in total calculation
-      const total = itemsSubtotal + overhead + profit + vatAmount;
+      const invNetAfterDiscount = invoiceSubtotalWithMarkups - invDiscountAmount;
+
+      const vatAmount = settings.vatRegistered
+        ? invNetAfterDiscount * ((settings.vatRate || 20) / 100)
+        : 0;
+      const total = invNetAfterDiscount + vatAmount;
 
       console.log('[PDF-MONKEY] Recalculated totals:', {
         itemsSubtotal,
@@ -689,6 +703,8 @@ serve(async (req) => {
           overheadPercentage: settings.overheadPercentage || 0,
           profit: profit,
           profitMargin: settings.profitMargin || 0,
+          discountAmount: invDiscountAmount,
+          discountLabel: invDiscountLabel,
           vatAmount: vatAmount,
           vatRate: settings.vatRate || 20,
           total: total,
@@ -698,6 +714,12 @@ serve(async (req) => {
           primaryColor: freshCompanyProfile?.primary_color || '#1e40af',
           secondaryColor: freshCompanyProfile?.secondary_color || '#1F2937',
           accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
+        },
+        // Professional credentials (scheme logo etc.)
+        credentials: {
+          registrationScheme: freshCompanyProfile?.registration_scheme || null,
+          registrationNumber: freshCompanyProfile?.registration_number || null,
+          schemeLogo: freshCompanyProfile?.registration_scheme_logo || freshCompanyProfile?.scheme_logo_data_url || null,
         },
         // Invoice-specific terms and settings
         terms: buildInvoiceTermsList(freshCompanyProfile?.invoice_terms || null),
@@ -778,12 +800,26 @@ serve(async (req) => {
         parseFloat(freshQuote?.profit) ||
         (itemsSubtotal + overhead) * ((quoteSettings.profitMargin || 0) / 100);
       const subtotalWithMarkups = itemsSubtotal + overhead + profit;
+
+      // Discount/deduction (CIS etc.)
+      const discountEnabled = quoteSettings.discountEnabled || false;
+      const discountType = quoteSettings.discountType || 'percentage';
+      const discountValue = parseFloat(quoteSettings.discountValue) || 0;
+      const discountLabel = quoteSettings.discountLabel ||
+        (discountType === 'percentage' ? `Discount (${discountValue}%)` : 'Discount');
+      const discountAmount = discountEnabled
+        ? (discountType === 'percentage'
+            ? subtotalWithMarkups * (discountValue / 100)
+            : Math.min(discountValue, subtotalWithMarkups))
+        : 0;
+      const netAfterDiscount = subtotalWithMarkups - discountAmount;
+
       const vatAmount = quoteSettings.vatRegistered
         ? parseFloat(freshQuote?.vat_amount) ||
           parseFloat(freshQuote?.vatAmount) ||
-          subtotalWithMarkups * ((quoteSettings.vatRate || 20) / 100)
+          netAfterDiscount * ((quoteSettings.vatRate || 20) / 100)
         : 0;
-      const total = parseFloat(freshQuote?.total) || subtotalWithMarkups + vatAmount;
+      const total = parseFloat(freshQuote?.total) || netAfterDiscount + vatAmount;
 
       // Calculate valid until date
       const validUntilDate =
@@ -891,6 +927,8 @@ serve(async (req) => {
           overheadPercentage: quoteSettings.overheadPercentage || 0,
           profit: profit,
           profitMargin: quoteSettings.profitMargin || 0,
+          discountAmount: discountAmount,
+          discountLabel: discountLabel,
           vatAmount: vatAmount,
           vatRate: quoteSettings.vatRate || 20,
           total: total,
@@ -898,6 +936,7 @@ serve(async (req) => {
           subtotalFormatted: `£${itemsSubtotal.toFixed(2)}`,
           overheadFormatted: overhead > 0 ? `£${overhead.toFixed(2)}` : null,
           profitFormatted: profit > 0 ? `£${profit.toFixed(2)}` : null,
+          discountFormatted: discountAmount > 0 ? `-£${discountAmount.toFixed(2)}` : null,
           vatFormatted: vatAmount > 0 ? `£${vatAmount.toFixed(2)}` : null,
           totalFormatted: `£${total.toFixed(2)}`,
         },
@@ -929,6 +968,7 @@ serve(async (req) => {
         credentials: {
           registrationScheme: freshCompanyProfile?.registration_scheme || null,
           registrationNumber: freshCompanyProfile?.registration_number || null,
+          schemeLogo: freshCompanyProfile?.registration_scheme_logo || freshCompanyProfile?.scheme_logo_data_url || null,
           insuranceProvider: freshCompanyProfile?.insurance_provider || null,
           insuranceCoverage: freshCompanyProfile?.insurance_coverage || null,
           qualifications: freshCompanyProfile?.inspector_qualifications || [],

@@ -143,6 +143,18 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 </span>
               </div>
 
+              {/* Discount - only show if enabled */}
+              {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="text-[12px] text-red-400">
+                    {invoice.settings.discountLabel || 'Discount'}
+                  </span>
+                  <span className="text-[13px] font-medium text-red-400">
+                    -{formatCurrency(invoice.discountAmount || 0)}
+                  </span>
+                </div>
+              )}
+
               {/* VAT - only show if VAT registered */}
               {invoice.settings?.vatRegistered && (
                 <div className="flex items-center justify-between">
@@ -414,6 +426,18 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                     {formatCurrency(invoice.subtotal || 0)}
                   </span>
                 </div>
+
+                {/* Discount - only show if enabled */}
+                {invoice.settings?.discountEnabled && (invoice.discountAmount || 0) > 0 && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-[13px] text-red-400">
+                      {invoice.settings.discountLabel || 'Discount'}
+                    </span>
+                    <span className="text-[14px] font-medium text-red-400">
+                      -{formatCurrency(invoice.discountAmount || 0)}
+                    </span>
+                  </div>
+                )}
 
                 {/* VAT - only show if VAT registered */}
                 {invoice.settings?.vatRegistered && (

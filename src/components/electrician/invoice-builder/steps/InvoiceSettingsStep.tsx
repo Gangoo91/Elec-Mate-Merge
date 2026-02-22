@@ -9,6 +9,10 @@ import {
   SortAsc,
   LayoutList,
   LayoutGrid,
+  BadgePercent,
+  Percent,
+  PoundSterling,
+  Settings,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -125,6 +129,165 @@ export const InvoiceSettingsStep = ({
                 />
               </div>
             </div>
+          )}
+        </div>
+      </div>
+
+      {/* Deductions & Discounts Section */}
+      <div>
+        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+          <BadgePercent className="h-3.5 w-3.5" />
+          Deductions & Discounts
+        </p>
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
+          {/* Enable Toggle */}
+          <div className="flex items-center gap-3 p-3.5">
+            <div
+              className={cn(
+                'w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors',
+                settings?.discountEnabled ? 'bg-elec-yellow' : 'bg-white/[0.1]'
+              )}
+            >
+              <BadgePercent className="h-5 w-5 text-black" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[15px] font-medium text-white">Apply Deduction/Discount</p>
+              <p className="text-[13px] text-white/70">CIS, OAP discount, etc.</p>
+            </div>
+            <Switch
+              checked={settings?.discountEnabled || false}
+              onCheckedChange={(checked) => {
+                if (!checked) {
+                  onUpdateSettings({ discountEnabled: false, discountValue: 0, discountLabel: '' });
+                } else {
+                  onUpdateSettings({ discountEnabled: true });
+                }
+              }}
+              className="data-[state=checked]:bg-elec-yellow"
+            />
+          </div>
+
+          {settings?.discountEnabled && (
+            <>
+              {/* Quick CIS Presets */}
+              <div className="p-3.5">
+                <label className="text-[12px] text-white/40 block mb-2">Quick Presets</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onUpdateSettings({
+                        discountEnabled: true,
+                        discountType: 'percentage',
+                        discountValue: 20,
+                        discountLabel: 'CIS Deduction (20%)',
+                      })
+                    }
+                    className="px-4 py-2.5 rounded-xl text-[13px] font-medium bg-white/[0.03] text-white border border-white/[0.08] touch-manipulation active:scale-[0.97] transition-all"
+                  >
+                    CIS 20%
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      onUpdateSettings({
+                        discountEnabled: true,
+                        discountType: 'percentage',
+                        discountValue: 30,
+                        discountLabel: 'CIS Deduction (30%)',
+                      })
+                    }
+                    className="px-4 py-2.5 rounded-xl text-[13px] font-medium bg-white/[0.03] text-white border border-white/[0.08] touch-manipulation active:scale-[0.97] transition-all"
+                  >
+                    CIS 30%
+                  </button>
+                </div>
+              </div>
+
+              {/* Type Picker */}
+              <div className="p-3.5">
+                <label className="text-[12px] text-white/40 block mb-2">Type</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => onUpdateSettings({ discountType: 'percentage' })}
+                    className={cn(
+                      'flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                      (settings?.discountType || 'percentage') === 'percentage'
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.03] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    <Percent className="h-4 w-4" />
+                    Percentage
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onUpdateSettings({ discountType: 'fixed' })}
+                    className={cn(
+                      'flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                      settings?.discountType === 'fixed'
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.03] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    <PoundSterling className="h-4 w-4" />
+                    Fixed Amount
+                  </button>
+                </div>
+              </div>
+
+              {/* Value Input */}
+              <div className="flex items-center gap-3 p-3.5">
+                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                  {(settings?.discountType || 'percentage') === 'percentage' ? (
+                    <Percent className="h-5 w-5 text-black" />
+                  ) : (
+                    <PoundSterling className="h-5 w-5 text-black" />
+                  )}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <label className="text-[12px] text-white/40 block">
+                    {(settings?.discountType || 'percentage') === 'percentage'
+                      ? 'Percentage (%)'
+                      : 'Amount (£)'}
+                  </label>
+                  <input
+                    type="number"
+                    inputMode="decimal"
+                    step="0.1"
+                    placeholder={
+                      (settings?.discountType || 'percentage') === 'percentage' ? '20' : '150.00'
+                    }
+                    className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none max-w-[120px]"
+                    value={settings?.discountValue || ''}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      onUpdateSettings({
+                        discountValue: value === '' ? 0 : parseFloat(value) || 0,
+                      });
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Label Input */}
+              <div className="flex items-center gap-3 p-3.5">
+                <div className="w-10 h-10 rounded-xl bg-elec-yellow flex items-center justify-center flex-shrink-0">
+                  <Settings className="h-5 w-5 text-black" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <label className="text-[12px] text-white/40 block">Label (shown on PDF)</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. CIS Deduction (20%)"
+                    className="h-9 w-full px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
+                    value={settings?.discountLabel || ''}
+                    onChange={(e) => onUpdateSettings({ discountLabel: e.target.value })}
+                  />
+                </div>
+              </div>
+            </>
           )}
         </div>
       </div>

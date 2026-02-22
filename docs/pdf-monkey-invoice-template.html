@@ -90,6 +90,11 @@
             }}<br />{% endif %} {% if companyProfile.vat_number != blank %}VAT: {{
             companyProfile.vat_number }}{% endif %}
           </div>
+          {% if credentials.schemeLogo != blank %}
+          <div style="margin-top: 8px; text-align: right;">
+            <img src="{{ credentials.schemeLogo }}" alt="{{ credentials.registrationScheme }}" style="max-height: 40px; max-width: 120px; object-fit: contain;" />
+          </div>
+          {% endif %}
         </div>
       </div>
 
@@ -217,6 +222,11 @@
           <div class="totals-row">
             <span>Profit ({{ calculations.profitMargin }}%)</span>
             <span class="amount">£{{ calculations.profit | round: 2 }}</span>
+          </div>
+          {% endif %} {% if calculations.discountAmount > 0 %}
+          <div class="totals-row" style="color: #dc2626;">
+            <span>{{ calculations.discountLabel }}</span>
+            <span class="amount" style="color: #dc2626;">-£{{ calculations.discountAmount | round: 2 }}</span>
           </div>
           {% endif %} {% if useVat %}
           <div class="totals-row">
