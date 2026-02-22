@@ -56,6 +56,7 @@ export interface UseSiteVisitReturn {
   // Photos
   addPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => string;
   removePhoto: (photoId: string) => void;
+  updatePhotoUrl: (photoId: string, newUrl: string) => void;
 
   // Prompts
   setPromptResponse: (
@@ -288,6 +289,13 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     }));
   }, []);
 
+  const updatePhotoUrl = useCallback((photoId: string, newUrl: string) => {
+    setVisit((v) => ({
+      ...v,
+      photos: v.photos.map((p) => (p.id === photoId ? { ...p, photoUrl: newUrl } : p)),
+    }));
+  }, []);
+
   // Prompts
   const setPromptResponse = useCallback(
     (promptKey: string, response: string, roomId?: string, question?: string) => {
@@ -355,6 +363,7 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     removeItem,
     addPhoto,
     removePhoto,
+    updatePhotoUrl,
     setPromptResponse,
     getPromptResponse,
     lastSaved,

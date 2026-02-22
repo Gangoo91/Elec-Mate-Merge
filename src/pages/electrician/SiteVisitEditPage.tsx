@@ -62,7 +62,7 @@ const SiteVisitEditPage = () => {
     visit?.status === 'signed' ||
     visit?.status === 'post_job';
 
-  const showPostJobTab = postJobEligible || visit?.status === 'post_job';
+  const showPostJobTab = showAfterTab;
 
   const handleAddAfterPhoto = (photoUrl: string, description?: string) => {
     const newPhoto: SiteVisitPhoto = {

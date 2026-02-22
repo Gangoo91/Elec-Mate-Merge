@@ -15,6 +15,7 @@ interface RoomPanelProps {
   onUpdateRoomNotes: (roomId: string, notes: string) => void;
   onAddPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => void;
   onRemovePhoto: (photoId: string) => void;
+  onUpdatePhotoUrl?: (photoId: string, newUrl: string) => void;
   getPromptResponse: (promptKey: string, roomId?: string) => string | undefined;
   setPromptResponse: (
     promptKey: string,
@@ -33,6 +34,7 @@ export const RoomPanel = ({
   onUpdateRoomNotes,
   onAddPhoto,
   onRemovePhoto,
+  onUpdatePhotoUrl,
   getPromptResponse,
   setPromptResponse,
 }: RoomPanelProps) => {
@@ -100,6 +102,7 @@ export const RoomPanel = ({
         photoPhase="before"
         onAddPhoto={handleAddPhoto}
         onRemovePhoto={onRemovePhoto}
+        onUpdatePhotoUrl={onUpdatePhotoUrl}
       />
 
       {/* Smart prompts */}

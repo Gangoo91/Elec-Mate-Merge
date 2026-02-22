@@ -205,7 +205,6 @@ export const SiteVisitClientStep = ({
               placeholder="Client name"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
               autoCapitalize="words"
-              autoComplete="name"
               enterKeyHint="next"
             />
           </div>
@@ -219,7 +218,6 @@ export const SiteVisitClientStep = ({
               placeholder="07xxx xxxxxx"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
               autoCapitalize="off"
-              autoComplete="tel"
               enterKeyHint="next"
             />
           </div>
@@ -233,7 +231,6 @@ export const SiteVisitClientStep = ({
               placeholder="client@email.com"
               className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
               autoCapitalize="off"
-              autoComplete="email"
               enterKeyHint="done"
             />
           </div>

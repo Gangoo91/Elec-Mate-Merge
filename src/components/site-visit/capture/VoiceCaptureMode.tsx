@@ -1,10 +1,20 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
-import { Mic, Loader2, X, Plus, Minus, CheckCircle, Undo2 } from 'lucide-react';
+import { Mic, Loader2, X, Plus, Minus, CheckCircle, Undo2, Lightbulb, WifiOff } from 'lucide-react';
 import { useSpeechToText } from '@/hooks/useSpeechToText';
 import { useVoiceAutoProcess } from '@/hooks/useVoiceAutoProcess';
 import { getAccessoryLabel } from '@/data/siteVisit/accessoryTypes';
 import { toast } from 'sonner';
 import type { SiteVisit, SiteVisitItem, SiteVisitPhoto, RoomType } from '@/types/siteVisit';
+
+const VOICE_HINTS = [
+  'Say "move to kitchen" to switch rooms',
+  'Say "3 double sockets" to add items with quantity',
+  'Say "actually make that 4" to correct the last item',
+  'Say "remove the last socket" to undo',
+  'Say "the earthing is TN-S" to answer prompts',
+  'Walk through each room — items appear in real time',
+  'Speak naturally — pauses trigger automatic processing',
+];
 
 type Phase = 'idle' | 'capturing' | 'finishing';
 
@@ -46,8 +56,18 @@ export const VoiceCaptureMode = ({
 }: VoiceCaptureModeProps) => {
   const [phase, setPhase] = useState<Phase>('idle');
   const [elapsed, setElapsed] = useState(0);
+  const [hintIndex, setHintIndex] = useState(0);
   const elapsedRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const transcriptEndRef = useRef<HTMLDivElement>(null);
+
+  // Cycle voice hints when idle
+  useEffect(() => {
+    if (phase !== 'idle') return;
+    const timer = setInterval(() => {
+      setHintIndex((i) => (i + 1) % VOICE_HINTS.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [phase]);
 
   // Auto-process hook — handles buffering, silence detection, and edge function calls
   const autoProcess = useVoiceAutoProcess({
@@ -158,6 +178,17 @@ export const VoiceCaptureMode = ({
 
   return (
     <div className="space-y-4">
+      {/* Offline banner */}
+      {!autoProcess.isOnline && (
+        <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl border border-amber-500/30 bg-amber-500/10">
+          <WifiOff className="h-4 w-4 text-amber-400 flex-shrink-0" />
+          <p className="text-xs text-white">
+            Offline — voice batches will be queued
+            {autoProcess.offlineQueueCount > 0 && ` (${autoProcess.offlineQueueCount} pending)`}
+          </p>
+        </div>
+      )}
+
       {/* === IDLE STATE === */}
       {phase === 'idle' && (
         <>
@@ -167,6 +198,13 @@ export const VoiceCaptureMode = ({
               Tap to start. Walk through the property and describe what you see — rooms, items,
               quantities. Items appear in real time.
             </p>
+            <div
+              className="flex items-center justify-center gap-2 pt-1 animate-in fade-in duration-500"
+              key={hintIndex}
+            >
+              <Lightbulb className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
+              <p className="text-xs text-white">{VOICE_HINTS[hintIndex]}</p>
+            </div>
           </div>
           <button
             onClick={handleStart}

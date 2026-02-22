@@ -5,6 +5,8 @@ import { RoomList } from '../capture/RoomList';
 import { RoomSelector } from '../capture/RoomSelector';
 import { RoomPanel } from '../capture/RoomPanel';
 import { VoiceCaptureMode } from '../capture/VoiceCaptureMode';
+import { CaptureTimer } from '../capture/CaptureTimer';
+import { RoomTemplateSelector } from '../capture/RoomTemplateSelector';
 import type {
   SiteVisit,
   SiteVisitRoom,
@@ -27,6 +29,7 @@ interface SiteVisitCaptureStepProps {
   onUpdateRoomNotes: (roomId: string, notes: string) => void;
   onAddPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => void;
   onRemovePhoto: (photoId: string) => void;
+  onUpdatePhotoUrl?: (photoId: string, newUrl: string) => void;
   getPromptResponse: (promptKey: string, roomId?: string) => string | undefined;
   setPromptResponse: (
     promptKey: string,
@@ -34,6 +37,9 @@ interface SiteVisitCaptureStepProps {
     roomId?: string,
     question?: string
   ) => void;
+  onReorderRooms?: (roomIds: string[]) => void;
+  captureSeconds?: number;
+  onCaptureTimerTick?: (seconds: number) => void;
 }
 
 export const SiteVisitCaptureStep = ({
@@ -48,11 +54,18 @@ export const SiteVisitCaptureStep = ({
   onUpdateRoomNotes,
   onAddPhoto,
   onRemovePhoto,
+  onUpdatePhotoUrl,
   getPromptResponse,
   setPromptResponse,
+  onReorderRooms,
+  captureSeconds = 0,
+  onCaptureTimerTick,
 }: SiteVisitCaptureStepProps) => {
   const [showSelector, setShowSelector] = useState(visit.rooms.length === 0);
   const [captureMode, setCaptureMode] = useState<CaptureMode>('manual');
+  const [showTemplates, setShowTemplates] = useState(
+    visit.rooms.length === 0 && !!visit.propertyType
+  );
 
   const activeRoom = visit.rooms.find((r) => r.id === activeRoomId);
 
@@ -63,11 +76,20 @@ export const SiteVisitCaptureStep = ({
 
   return (
     <div className="space-y-4">
-      <div>
-        <h2 className="text-lg font-bold text-white">Room-by-Room Capture</h2>
-        <p className="text-sm text-white mt-1">
-          Add rooms and capture accessories, photos and prompts
-        </p>
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-lg font-bold text-white">Room-by-Room Capture</h2>
+          <p className="text-sm text-white mt-1">
+            Add rooms and capture accessories, photos and prompts
+          </p>
+        </div>
+        {onCaptureTimerTick && (
+          <CaptureTimer
+            isActive={true}
+            initialSeconds={captureSeconds}
+            onTick={onCaptureTimerTick}
+          />
+        )}
       </div>
 
       {/* Manual / Voice toggle */}
@@ -110,6 +132,15 @@ export const SiteVisitCaptureStep = ({
         />
       ) : (
         <>
+          {/* Room templates (shown when no rooms and property type is set) */}
+          {showTemplates && captureMode === 'manual' && (
+            <RoomTemplateSelector
+              propertyType={visit.propertyType}
+              onAddRoom={onAddRoom}
+              onDismiss={() => setShowTemplates(false)}
+            />
+          )}
+
           {/* Global prompts */}
           <GlobalPromptsPanel
             getResponse={(key) => getPromptResponse(key)}
@@ -125,6 +156,7 @@ export const SiteVisitCaptureStep = ({
               onSelectRoom={onSetActiveRoom}
               onRemoveRoom={onRemoveRoom}
               onShowSelector={() => setShowSelector(true)}
+              onReorderRooms={onReorderRooms}
             />
           )}
 
@@ -148,6 +180,7 @@ export const SiteVisitCaptureStep = ({
               onUpdateRoomNotes={onUpdateRoomNotes}
               onAddPhoto={onAddPhoto}
               onRemovePhoto={onRemovePhoto}
+              onUpdatePhotoUrl={onUpdatePhotoUrl}
               getPromptResponse={getPromptResponse}
               setPromptResponse={setPromptResponse}
             />

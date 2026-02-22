@@ -10,7 +10,7 @@
  * room-transition pauses are 3-5s.
  */
 
-import { useRef, useCallback, useState } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { ACCESSORY_TYPES, getAccessoryLabel } from '@/data/siteVisit/accessoryTypes';
 import { getGlobalPrompts, ROOM_PROMPTS } from '@/data/siteVisit/smartPrompts';
@@ -19,6 +19,7 @@ import { toast } from 'sonner';
 import type { SiteVisit, SiteVisitItem, RoomType } from '@/types/siteVisit';
 
 const SILENCE_TIMEOUT_MS = 3000;
+const VOICE_OFFLINE_KEY = 'elecmate_voice_offline_queue';
 
 /** A confirmed item returned from a successful parse batch */
 export interface ConfirmedItem {
@@ -63,6 +64,10 @@ interface UseVoiceAutoProcessReturn {
   reset: () => void;
   /** Number of batches processed so far */
   batchCount: number;
+  /** Whether the device is online */
+  isOnline: boolean;
+  /** Number of batches queued offline */
+  offlineQueueCount: number;
 }
 
 let itemIdCounter = 0;
@@ -87,6 +92,20 @@ export function useVoiceAutoProcess(
   const [isProcessing, setIsProcessing] = useState(false);
   const [confirmedItems, setConfirmedItems] = useState<ConfirmedItem[]>([]);
   const [batchCount, setBatchCount] = useState(0);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [offlineQueueCount, setOfflineQueueCount] = useState(0);
+
+  // Online/offline detection
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   // Refs for stable access
   const visitRef = useRef(visit);
@@ -122,7 +141,38 @@ export function useVoiceAutoProcess(
   /**
    * Process a buffer of text through the edge function.
    */
-  const processBuffer = useCallback(
+  // Process offline queue when coming back online
+  useEffect(() => {
+    if (!isOnline) return;
+
+    const processOfflineQueue = async () => {
+      try {
+        const stored = localStorage.getItem(VOICE_OFFLINE_KEY);
+        if (!stored) return;
+        const queue: string[] = JSON.parse(stored);
+        if (queue.length === 0) return;
+
+        // Process each queued batch sequentially
+        for (let i = 0; i < queue.length; i++) {
+          await processBufferOnline(queue[i]);
+          // Remove processed item
+          const remaining = queue.slice(i + 1);
+          localStorage.setItem(VOICE_OFFLINE_KEY, JSON.stringify(remaining));
+          setOfflineQueueCount(remaining.length);
+        }
+
+        localStorage.removeItem(VOICE_OFFLINE_KEY);
+        setOfflineQueueCount(0);
+        toast.success('Offline voice batches processed');
+      } catch (err) {
+        console.error('[AUTO-PROCESS] Offline queue processing error:', err);
+      }
+    };
+
+    processOfflineQueue();
+  }, [isOnline]);
+
+  const processBufferOnline = useCallback(
     async (text: string) => {
       if (!text.trim()) return;
 
@@ -278,6 +328,33 @@ export function useVoiceAutoProcess(
   );
 
   /**
+   * Process a buffer — offline-aware wrapper around processBufferOnline.
+   */
+  const processBuffer = useCallback(
+    async (text: string) => {
+      if (!text.trim()) return;
+
+      // Offline: queue to localStorage
+      if (!navigator.onLine) {
+        try {
+          const stored = localStorage.getItem(VOICE_OFFLINE_KEY);
+          const queue: string[] = stored ? JSON.parse(stored) : [];
+          queue.push(text.trim());
+          localStorage.setItem(VOICE_OFFLINE_KEY, JSON.stringify(queue));
+          setOfflineQueueCount(queue.length);
+          toast.info('Saved offline — will process when connected');
+        } catch (err) {
+          console.error('[AUTO-PROCESS] Offline queue save error:', err);
+        }
+        return;
+      }
+
+      await processBufferOnline(text);
+    },
+    [processBufferOnline]
+  );
+
+  /**
    * Feed a new final chunk. Resets the 3s silence timer.
    */
   const feedChunk = useCallback(
@@ -366,5 +443,7 @@ export function useVoiceAutoProcess(
     flush,
     reset,
     batchCount,
+    isOnline,
+    offlineQueueCount,
   };
 }

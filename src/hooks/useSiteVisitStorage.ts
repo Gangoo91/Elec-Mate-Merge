@@ -37,6 +37,9 @@ interface UseSiteVisitStorageReturn {
   createPhotoProject: (visit: SiteVisit) => Promise<string | null>;
   bridgePhotosToSafetyPhotos: (visit: SiteVisit) => Promise<void>;
   getQuoteStatus: (quoteId: string) => Promise<{ acceptanceStatus: string; tags: string[] } | null>;
+  searchPreviousVisits: (
+    addressQuery: string
+  ) => Promise<Array<{ id: string; propertyAddress: string; status: string; updatedAt: string }>>;
 }
 
 export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
@@ -727,6 +730,43 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
     return sessionId;
   }, []);
 
+  const searchPreviousVisits = useCallback(
+    async (
+      addressQuery: string
+    ): Promise<
+      Array<{ id: string; propertyAddress: string; status: string; updatedAt: string }>
+    > => {
+      try {
+        if (!addressQuery || addressQuery.trim().length < 3) return [];
+
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) return [];
+
+        const { data, error } = await supabase
+          .from('site_visits')
+          .select('id, property_address, status, updated_at')
+          .eq('user_id', user.id)
+          .ilike('property_address', `%${addressQuery.trim()}%`)
+          .order('updated_at', { ascending: false })
+          .limit(5);
+
+        if (error) throw error;
+        return (data || []).map((r: Record<string, unknown>) => ({
+          id: r.id as string,
+          propertyAddress: r.property_address as string,
+          status: r.status as string,
+          updatedAt: r.updated_at as string,
+        }));
+      } catch (error: unknown) {
+        console.error('[SiteVisitStorage] Previous visit search failed:', error);
+        return [];
+      }
+    },
+    []
+  );
+
   return {
     isLoading,
     isSaving,
@@ -743,6 +783,7 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
     createPhotoProject,
     bridgePhotosToSafetyPhotos,
     getQuoteStatus,
+    searchPreviousVisits,
   };
 }
 

@@ -13,6 +13,8 @@ export interface SmartPrompt {
   /** Which property types this prompt applies to (undefined = all) */
   propertyTypes?: PropertyType[];
   helpText?: string;
+  /** If true, a warning is shown on the Review step when this prompt is unanswered */
+  required?: boolean;
 }
 
 // ============================================================
@@ -35,6 +37,7 @@ export const GLOBAL_PROMPTS: SmartPrompt[] = [
     ],
     scope: 'global',
     helpText: 'Current consumer unit in the property',
+    required: true,
   },
   {
     key: 'earthing_arrangement',
@@ -43,6 +46,7 @@ export const GLOBAL_PROMPTS: SmartPrompt[] = [
     options: ['TN-C-S (PME)', 'TN-S', 'TT', 'Unknown'],
     scope: 'global',
     helpText: 'Check at the meter / intake position',
+    required: true,
   },
   {
     key: 'asbestos_risk',
@@ -51,6 +55,7 @@ export const GLOBAL_PROMPTS: SmartPrompt[] = [
     options: ['No — confirmed', 'Possible — pre-2000 build', 'Yes — survey required', 'Unknown'],
     scope: 'global',
     helpText: 'Properties built before 2000 may contain asbestos',
+    required: true,
   },
   {
     key: 'existing_rcd',
@@ -187,6 +192,7 @@ export const ROOM_PROMPTS: SmartPrompt[] = [
     scope: 'room',
     roomTypes: ['bathroom', 'en_suite'],
     helpText: 'Reg 701.415.2 — check cross-bonding of services',
+    required: true,
   },
   {
     key: 'bathroom_zones',
@@ -196,6 +202,7 @@ export const ROOM_PROMPTS: SmartPrompt[] = [
     scope: 'room',
     roomTypes: ['bathroom', 'en_suite'],
     helpText: 'BS 7671 Section 701 — bathroom zones',
+    required: true,
   },
   {
     key: 'shower_kw',
@@ -214,6 +221,7 @@ export const ROOM_PROMPTS: SmartPrompt[] = [
     scope: 'room',
     roomTypes: ['kitchen'],
     helpText: 'Reg 411.3.3 — socket-outlets up to 32A require RCD ≤30mA',
+    required: true,
   },
   {
     key: 'kitchen_circuit_type',
@@ -316,6 +324,7 @@ export const ROOM_PROMPTS: SmartPrompt[] = [
     scope: 'room',
     roomTypes: ['hazardous_area'],
     helpText: 'BS EN 60079-10 zone classification for this area',
+    required: true,
   },
   {
     key: 'hazardous_gas_dust_group',
@@ -343,6 +352,7 @@ export const ROOM_PROMPTS: SmartPrompt[] = [
     scope: 'room',
     roomTypes: ['switch_room'],
     helpText: 'IEEE 1584 / NFPA 70E arc flash study',
+    required: true,
   },
   {
     key: 'switch_room_clearance',

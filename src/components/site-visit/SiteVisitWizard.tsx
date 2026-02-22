@@ -9,18 +9,22 @@ import {
   Eye,
   FileText,
   Zap,
+  PenTool,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useNavigate } from 'react-router-dom';
 import { draftStorage } from '@/utils/draftStorage';
 import { getDefaultAssumptions } from '@/utils/defaultAssumptions';
 import { AutoSaveIndicator } from '@/components/electrician/shared/AutoSaveIndicator';
 import { useSiteVisit } from '@/hooks/useSiteVisit';
+import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
 import { SiteVisitClientStep } from './steps/SiteVisitClientStep';
 import { SiteVisitPropertyStep } from './steps/SiteVisitPropertyStep';
 import { SiteVisitCaptureStep } from './steps/SiteVisitCaptureStep';
 import { SiteVisitReviewStep } from './steps/SiteVisitReviewStep';
 import { SiteVisitScopeStep } from './steps/SiteVisitScopeStep';
 import { SiteVisitGenerateStep } from './steps/SiteVisitGenerateStep';
+import { SiteVisitSignOffStep } from './steps/SiteVisitSignOffStep';
 import type { SiteVisit } from '@/types/siteVisit';
 
 type RecoveredDraft = Partial<SiteVisit> & {
@@ -36,6 +40,7 @@ const STEPS = [
   { id: 3, title: 'Review', shortTitle: 'Review', icon: Eye },
   { id: 4, title: 'Scope', shortTitle: 'Scope', icon: FileText },
   { id: 5, title: 'Generate', shortTitle: 'Generate', icon: Zap },
+  { id: 6, title: 'Sign-Off', shortTitle: 'Sign', icon: PenTool },
 ];
 
 interface SiteVisitWizardProps {
@@ -45,11 +50,19 @@ interface SiteVisitWizardProps {
 
 export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardProps) => {
   const contentRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
   const [recoveredDraft, setRecoveredDraft] = useState<RecoveredDraft | null>(null);
   const [assumptions, setAssumptions] = useState('');
+  const [captureSeconds, setCaptureSeconds] = useState(0);
 
   const sv = useSiteVisit(initialVisit);
+  const { sendToQuoteWizard } = useSiteVisitStorage();
+
+  const handleSendToQuote = useCallback(() => {
+    const sessionId = sendToQuoteWizard(sv.visit);
+    navigate(`/electrician/quote-builder/create?siteVisitSessionId=${sessionId}`);
+  }, [sv.visit, sendToQuoteWizard, navigate]);
 
   // Check for recoverable draft on mount
   useEffect(() => {
@@ -70,7 +83,7 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
   // Auto-populate assumptions when first arriving at Scope step
   useEffect(() => {
     if (sv.currentStep === 4 && !assumptions.trim()) {
-      setAssumptions(getDefaultAssumptions(sv.visit.propertyType));
+      setAssumptions(getDefaultAssumptions(sv.visit.propertyType, sv.visit));
     }
   }, [sv.currentStep]);
 
@@ -200,8 +213,12 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
             onUpdateRoomNotes={sv.updateRoomNotes}
             onAddPhoto={sv.addPhoto}
             onRemovePhoto={sv.removePhoto}
+            onUpdatePhotoUrl={sv.updatePhotoUrl}
             getPromptResponse={sv.getPromptResponse}
             setPromptResponse={sv.setPromptResponse}
+            onReorderRooms={sv.reorderRooms}
+            captureSeconds={captureSeconds}
+            onCaptureTimerTick={setCaptureSeconds}
           />
         )}
         {sv.currentStep === 3 && (
@@ -221,7 +238,18 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
           />
         )}
         {sv.currentStep === 5 && (
-          <SiteVisitGenerateStep visit={sv.visit} assumptions={assumptions} />
+          <SiteVisitGenerateStep
+            visit={sv.visit}
+            assumptions={assumptions}
+            onContinueToSignOff={sv.nextStep}
+          />
+        )}
+        {sv.currentStep === 6 && (
+          <SiteVisitSignOffStep
+            visit={sv.visit}
+            assumptions={assumptions}
+            onSendToQuote={handleSendToQuote}
+          />
         )}
       </div>
 

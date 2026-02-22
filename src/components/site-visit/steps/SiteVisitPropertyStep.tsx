@@ -1,7 +1,8 @@
-import React from 'react';
-import { MapPin } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { Clock, ExternalLink } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { PlacesAutocomplete } from '@/components/ui/PlacesAutocomplete';
 import {
   Select,
   SelectContent,
@@ -9,7 +10,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
 import type { SiteVisit, PropertyType } from '@/types/siteVisit';
+
+interface PreviousVisitResult {
+  id: string;
+  propertyAddress: string;
+  status: string;
+  updatedAt: string;
+}
 
 interface SiteVisitPropertyStepProps {
   visit: SiteVisit;
@@ -21,6 +30,48 @@ interface SiteVisitPropertyStepProps {
 }
 
 export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitPropertyStepProps) => {
+  const { searchPreviousVisits } = useSiteVisitStorage();
+  const [previousVisits, setPreviousVisits] = useState<PreviousVisitResult[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const searchTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Debounced search on address changes
+  useEffect(() => {
+    if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+
+    const query = visit.propertyAddress || '';
+    if (query.trim().length < 3) {
+      setPreviousVisits([]);
+      return;
+    }
+
+    searchTimerRef.current = setTimeout(async () => {
+      setIsSearching(true);
+      const results = await searchPreviousVisits(query);
+      // Exclude current visit from results
+      setPreviousVisits(results.filter((r) => r.id !== visit.id));
+      setIsSearching(false);
+    }, 300);
+
+    return () => {
+      if (searchTimerRef.current) clearTimeout(searchTimerRef.current);
+    };
+  }, [visit.propertyAddress, visit.id, searchPreviousVisits]);
+
+  // Handle Google Places selection — auto-fill address + postcode
+  const handlePlaceSelect = useCallback(
+    (place: { address: string; postcode?: string }) => {
+      const updates: Partial<Pick<SiteVisit, 'propertyAddress' | 'propertyPostcode'>> = {
+        propertyAddress: place.address,
+      };
+      if (place.postcode) {
+        updates.propertyPostcode = place.postcode.toUpperCase();
+      }
+      onUpdateProperty(updates);
+    },
+    [onUpdateProperty]
+  );
+
   return (
     <div className="space-y-4">
       <div>
@@ -31,18 +82,43 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
       <div className="space-y-3">
         <div className="space-y-1">
           <label className="text-xs font-medium text-white">Property Address *</label>
-          <div className="relative">
-            <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-            <Input
-              value={visit.propertyAddress || ''}
-              onChange={(e) => onUpdateProperty({ propertyAddress: e.target.value })}
-              placeholder="123 High Street, Town"
-              className="h-11 pl-10 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-              autoCapitalize="words"
-              autoComplete="street-address"
-              enterKeyHint="next"
-            />
-          </div>
+          <PlacesAutocomplete
+            value={visit.propertyAddress || ''}
+            onChange={(value) => onUpdateProperty({ propertyAddress: value })}
+            onPlaceSelect={handlePlaceSelect}
+            placeholder="Start typing an address..."
+            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+          />
+
+          {/* Previous visits dropdown */}
+          {previousVisits.length > 0 && (
+            <div className="rounded-xl border border-white/10 overflow-hidden mt-1">
+              <div className="px-3 py-1.5 bg-white/[0.02]">
+                <p className="text-[11px] text-white font-medium">
+                  Previous visits at this address
+                </p>
+              </div>
+              <div className="divide-y divide-white/[0.04]">
+                {previousVisits.map((pv) => (
+                  <button
+                    key={pv.id}
+                    onClick={() => window.open(`/electrician/site-visit/${pv.id}`, '_blank')}
+                    className="w-full flex items-center gap-2 px-3 py-2 touch-manipulation active:bg-white/[0.05] text-left"
+                  >
+                    <Clock className="h-3.5 w-3.5 text-white flex-shrink-0" />
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs text-white truncate">{pv.propertyAddress}</p>
+                      <p className="text-[11px] text-white">
+                        {new Date(pv.updatedAt).toLocaleDateString('en-GB')} ·{' '}
+                        {pv.status.replace('_', ' ')}
+                      </p>
+                    </div>
+                    <ExternalLink className="h-3 w-3 text-white flex-shrink-0" />
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         <div className="space-y-1">
@@ -54,7 +130,7 @@ export const SiteVisitPropertyStep = ({ visit, onUpdateProperty }: SiteVisitProp
             className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 uppercase"
             maxLength={8}
             autoCapitalize="characters"
-            autoComplete="postal-code"
+            autoComplete="off"
             enterKeyHint="next"
           />
         </div>

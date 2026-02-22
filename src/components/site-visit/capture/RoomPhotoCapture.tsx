@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
-import { Camera, X, Image as ImageIcon } from 'lucide-react';
+import React, { useRef, useState } from 'react';
+import { Camera, X, PenTool } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { PhotoAnnotationCanvas } from './PhotoAnnotationCanvas';
 import type { SiteVisitPhoto, PhotoPhase } from '@/types/siteVisit';
 
 interface RoomPhotoCaptureProps {
@@ -9,6 +10,7 @@ interface RoomPhotoCaptureProps {
   photoPhase: PhotoPhase;
   onAddPhoto: (photoUrl: string, description?: string) => void;
   onRemovePhoto: (photoId: string) => void;
+  onUpdatePhotoUrl?: (photoId: string, newUrl: string) => void;
 }
 
 export const RoomPhotoCapture = ({
@@ -17,8 +19,10 @@ export const RoomPhotoCapture = ({
   photoPhase,
   onAddPhoto,
   onRemovePhoto,
+  onUpdatePhotoUrl,
 }: RoomPhotoCaptureProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [annotatingPhotoId, setAnnotatingPhotoId] = useState<string | null>(null);
 
   const roomPhotos = photos.filter((p) => p.roomId === roomId && p.photoPhase === photoPhase);
 
@@ -65,9 +69,31 @@ export const RoomPhotoCapture = ({
               >
                 <X className="h-3 w-3 text-white" />
               </button>
+              {onUpdatePhotoUrl && (
+                <button
+                  onClick={() => setAnnotatingPhotoId(photo.id)}
+                  className="absolute bottom-1 right-1 p-1.5 rounded-full bg-black/60 touch-manipulation"
+                  aria-label="Annotate photo"
+                >
+                  <PenTool className="h-3 w-3 text-elec-yellow" />
+                </button>
+              )}
             </div>
           ))}
         </div>
+      )}
+
+      {/* Photo annotation canvas */}
+      {onUpdatePhotoUrl && annotatingPhotoId && (
+        <PhotoAnnotationCanvas
+          photoUrl={roomPhotos.find((p) => p.id === annotatingPhotoId)?.photoUrl || ''}
+          open={!!annotatingPhotoId}
+          onClose={() => setAnnotatingPhotoId(null)}
+          onSave={(annotatedUrl) => {
+            onUpdatePhotoUrl(annotatingPhotoId, annotatedUrl);
+            setAnnotatingPhotoId(null);
+          }}
+        />
       )}
 
       {/* Capture button */}

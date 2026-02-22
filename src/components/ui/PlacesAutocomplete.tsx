@@ -9,6 +9,7 @@ interface PlaceResult {
   lat: number;
   lng: number;
   placeId: string;
+  postcode?: string;
 }
 
 interface PlacesAutocompleteProps {
@@ -97,17 +98,23 @@ export function PlacesAutocomplete({
 
       const request: google.maps.places.PlaceDetailsRequest = {
         placeId: prediction.place_id,
-        fields: ['formatted_address', 'geometry', 'place_id'],
+        fields: ['formatted_address', 'geometry', 'place_id', 'address_components'],
         sessionToken: sessionToken.current || undefined,
       };
 
       placesService.current.getDetails(request, (place, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+          // Extract postcode from address components
+          const postcodeComponent = place.address_components?.find((c) =>
+            c.types.includes('postal_code')
+          );
+
           const result: PlaceResult = {
             address: place.formatted_address || prediction.description,
             lat: place.geometry?.location?.lat() || 0,
             lng: place.geometry?.location?.lng() || 0,
             placeId: place.place_id || prediction.place_id,
+            postcode: postcodeComponent?.long_name,
           };
 
           onChange(result.address);
@@ -180,14 +187,14 @@ export function PlacesAutocomplete({
               <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div className="min-w-0">
                 <p className="font-medium truncate">{prediction.structured_formatting.main_text}</p>
-                <p className="text-xs text-white/60 truncate">
+                <p className="text-xs text-white truncate">
                   {prediction.structured_formatting.secondary_text}
                 </p>
               </div>
             </button>
           ))}
           <div className="px-4 py-2 border-t border-white/10">
-            <p className="text-[10px] text-white/40 flex items-center gap-1">
+            <p className="text-[10px] text-white flex items-center gap-1">
               <img
                 loading="lazy"
                 src="https://www.gstatic.com/mapspro/images/stock/20180110_google_my_business_logo.svg"

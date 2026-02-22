@@ -4,6 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide browser autofill icons (location pin, contacts, etc.) in all inputs */
+input::-webkit-contacts-auto-fill-button,
+input::-webkit-credentials-auto-fill-button,
+input::-webkit-caps-lock-indicator,
+input::-webkit-textfield-decoration-container {
+  visibility: hidden !important;
+  display: none !important;
+  pointer-events: none !important;
+  position: absolute !important;
+  right: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

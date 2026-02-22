@@ -1,4 +1,4 @@
-import type { PropertyType } from '@/types/siteVisit';
+import type { PropertyType, SiteVisit } from '@/types/siteVisit';
 
 const COMMON = [
   'Price excludes making good / decoration',
@@ -30,7 +30,10 @@ const INDUSTRIAL = [
   'Client to confirm safe working clearances',
 ];
 
-export function getDefaultAssumptions(propertyType?: PropertyType): string {
+/**
+ * Generate default assumptions, optionally enriched by captured site visit data.
+ */
+export function getDefaultAssumptions(propertyType?: PropertyType, visit?: SiteVisit): string {
   const lines = [...COMMON];
 
   switch (propertyType) {
@@ -44,6 +47,43 @@ export function getDefaultAssumptions(propertyType?: PropertyType): string {
     default:
       lines.push(...RESIDENTIAL);
       break;
+  }
+
+  // Context-aware assumptions based on captured data
+  if (visit) {
+    const promptAnswer = (key: string) => visit.prompts.find((p) => p.promptKey === key)?.response;
+    const roomTypes = visit.rooms.map((r) => r.roomType);
+    const allItems = visit.rooms.flatMap((r) => r.items);
+
+    // Shower circuit assumption
+    const showerKw = promptAnswer('shower_kw');
+    if (showerKw && showerKw !== 'No electric shower') {
+      lines.push(`Dedicated shower circuit rated for ${showerKw} electric shower`);
+    }
+
+    // EV / DNO assumptions
+    const evCapacity = promptAnswer('ev_capacity');
+    const hasEvItem = allItems.some((i) => i.itemType === 'ev_charger');
+    if (evCapacity === 'Yes' || hasEvItem) {
+      lines.push('DNO notification required for EV charger installation (>3.68 kW)');
+      lines.push('EV charger location subject to site survey confirmation');
+    }
+
+    // Loft access assumption
+    if (roomTypes.includes('loft')) {
+      lines.push('Adequate loft access required — client to confirm ladder/hatch availability');
+    }
+
+    // External route assumption
+    if (roomTypes.includes('garden_external') || roomTypes.includes('garage')) {
+      lines.push('External cable route subject to survey — SWA or suitable containment');
+    }
+
+    // Three phase balanced loading
+    const supplyType = promptAnswer('supply_type');
+    if (supplyType === 'Three phase') {
+      lines.push('Load balancing across all three phases assumed in design');
+    }
   }
 
   return lines.map((l) => `- ${l}`).join('\n');

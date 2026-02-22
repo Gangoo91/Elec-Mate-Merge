@@ -1,7 +1,8 @@
-import React from 'react';
-import { Home, Camera, HelpCircle, Package } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { Home, Camera, HelpCircle, Package, AlertTriangle } from 'lucide-react';
 import type { SiteVisit } from '@/types/siteVisit';
 import { SurveyAnalysisPanel } from '../review/SurveyAnalysisPanel';
+import { GLOBAL_PROMPTS, ROOM_PROMPTS } from '@/data/siteVisit/smartPrompts';
 
 interface SiteVisitReviewStepProps {
   visit: SiteVisit;
@@ -19,6 +20,38 @@ export const SiteVisitReviewStep = ({
   totalPromptsAnswered,
 }: SiteVisitReviewStepProps) => {
   const beforePhotos = visit.photos.filter((p) => p.photoPhase === 'before');
+
+  // Compute missing required prompts
+  const missingPrompts = useMemo(() => {
+    const missing: { label: string; question: string }[] = [];
+
+    // Check global required prompts
+    for (const prompt of GLOBAL_PROMPTS) {
+      if (!prompt.required) continue;
+      const answered = visit.prompts.find(
+        (p) => p.promptKey === prompt.key && !p.roomId && p.response
+      );
+      if (!answered) {
+        missing.push({ label: 'Property', question: prompt.question });
+      }
+    }
+
+    // Check room-specific required prompts
+    for (const room of visit.rooms) {
+      for (const prompt of ROOM_PROMPTS) {
+        if (!prompt.required) continue;
+        if (prompt.roomTypes && !prompt.roomTypes.includes(room.roomType)) continue;
+        const answered = visit.prompts.find(
+          (p) => p.promptKey === prompt.key && p.roomId === room.id && p.response
+        );
+        if (!answered) {
+          missing.push({ label: room.roomName, question: prompt.question });
+        }
+      }
+    }
+
+    return missing;
+  }, [visit]);
 
   return (
     <div className="space-y-4">
@@ -64,6 +97,26 @@ export const SiteVisitReviewStep = ({
           <p className="text-[11px] text-white">Prompts</p>
         </div>
       </div>
+
+      {/* Missing required prompts warning */}
+      {missingPrompts.length > 0 && (
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-3.5 space-y-2">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />
+            <p className="text-sm font-medium text-white">
+              {missingPrompts.length} required prompt{missingPrompts.length !== 1 ? 's' : ''} not
+              answered
+            </p>
+          </div>
+          <div className="space-y-1 pl-6">
+            {missingPrompts.map((mp, idx) => (
+              <p key={idx} className="text-xs text-white">
+                {mp.label}: {mp.question.replace('?', '')} not answered
+              </p>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Client & property summary */}
       <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">

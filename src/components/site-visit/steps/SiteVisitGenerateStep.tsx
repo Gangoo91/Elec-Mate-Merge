@@ -1,7 +1,6 @@
-import React, { useState, useCallback } from 'react';
-import { Check, Loader2, AlertCircle, FileText } from 'lucide-react';
+import React, { useState, useCallback, useRef } from 'react';
+import { Check, Loader2, AlertCircle, PenTool, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import { useSiteVisitStorage } from '@/hooks/useSiteVisitStorage';
 import { PreStartChecklistView } from '../generate/PreStartChecklistView';
 import { ScopeBaselineConfirmation } from '../generate/ScopeBaselineConfirmation';
@@ -17,15 +16,18 @@ interface GenerateStepItem {
 interface SiteVisitGenerateStepProps {
   visit: SiteVisit;
   assumptions: string;
+  onContinueToSignOff: () => void;
 }
 
-export const SiteVisitGenerateStep = ({ visit, assumptions }: SiteVisitGenerateStepProps) => {
-  const navigate = useNavigate();
+export const SiteVisitGenerateStep = ({
+  visit,
+  assumptions,
+  onContinueToSignOff,
+}: SiteVisitGenerateStepProps) => {
   const {
     saveSiteVisit,
     lockScopeBaseline,
     generatePreStartChecklistForVisit,
-    sendToQuoteWizard,
     ensureCustomer,
     uploadSiteVisitPhotos,
     createPhotoProject,
@@ -42,116 +44,140 @@ export const SiteVisitGenerateStep = ({ visit, assumptions }: SiteVisitGenerateS
     { id: 'checklist', label: 'Generate pre-start checklist', status: 'pending' },
   ]);
   const [isRunning, setIsRunning] = useState(false);
-  const [isDone, setIsDone] = useState(false);
   const [baseline, setBaseline] = useState<ScopeBaseline | null>(null);
   const [checklist, setChecklist] = useState<PreStartChecklist | null>(null);
 
-  // Mutable copy we update as we go (photos get persistent URLs, customer_id set, etc.)
-  const [workingVisit, setWorkingVisit] = useState<SiteVisit>(visit);
+  // Keep a mutable ref to the latest visit state for retries
+  const visitRef = useRef<SiteVisit>(visit);
+  visitRef.current = visit;
+
+  const isDone = steps.every((s) => s.status === 'done');
 
   const updateStep = (id: string, status: GenerateStepItem['status'], error?: string) => {
     setSteps((prev) => prev.map((s) => (s.id === id ? { ...s, status, error } : s)));
   };
 
-  const handleGenerate = useCallback(async () => {
-    setIsRunning(true);
-    let current = { ...visit };
-
-    // Step 1: Save
+  // Individual step runners
+  const runSave = useCallback(async () => {
     updateStep('save', 'running');
-    const savedId = await saveSiteVisit(current);
+    const savedId = await saveSiteVisit(visitRef.current);
     if (!savedId) {
       updateStep('save', 'error', 'Failed to save');
-      setIsRunning(false);
-      return;
+      return false;
     }
     updateStep('save', 'done');
+    return true;
+  }, [saveSiteVisit]);
 
-    // Step 2: Ensure customer in CRM
+  const runCustomer = useCallback(async () => {
     updateStep('customer', 'running');
-    const customerId = await ensureCustomer(current);
+    const customerId = await ensureCustomer(visitRef.current);
     if (customerId) {
-      current = { ...current, customerId };
+      visitRef.current = { ...visitRef.current, customerId };
     }
     updateStep('customer', 'done');
+    return true;
+  }, [ensureCustomer]);
 
-    // Step 3: Upload photos + create project
+  const runPhotos = useCallback(async () => {
     updateStep('photos', 'running');
     try {
-      // Upload blob photos to Supabase storage
+      const current = visitRef.current;
+      let updated = { ...current };
+
       const blobCount = current.photos.filter((p) => p.photoUrl.startsWith('blob:')).length;
       if (blobCount > 0) {
         const uploadedPhotos = await uploadSiteVisitPhotos(current);
-        current = { ...current, photos: uploadedPhotos };
+        updated = { ...updated, photos: uploadedPhotos };
       }
 
-      // Create photo project
-      if (current.photos.length > 0) {
-        const projectId = await createPhotoProject(current);
+      if (updated.photos.length > 0) {
+        const projectId = await createPhotoProject(updated);
         if (projectId) {
-          current = { ...current, photoProjectId: projectId };
+          updated = { ...updated, photoProjectId: projectId };
         }
       }
 
-      // Re-save with updated photo URLs, customer_id, and photo_project_id
-      await saveSiteVisit(current);
+      await saveSiteVisit(updated);
+      visitRef.current = updated;
       updateStep('photos', 'done');
+      return true;
     } catch (err: unknown) {
       updateStep('photos', 'error', err instanceof Error ? err.message : 'Photo upload failed');
+      return false;
     }
+  }, [uploadSiteVisitPhotos, createPhotoProject, saveSiteVisit]);
 
-    setWorkingVisit(current);
-
-    // Step 3.5: Bridge photos to safety_photos for Photo Documentation
+  const runBridge = useCallback(async () => {
     updateStep('bridge', 'running');
     try {
-      await bridgePhotosToSafetyPhotos(current);
+      await bridgePhotosToSafetyPhotos(visitRef.current);
       updateStep('bridge', 'done');
+      return true;
     } catch (err: unknown) {
       updateStep('bridge', 'error', err instanceof Error ? err.message : 'Photo bridge failed');
+      return false;
     }
+  }, [bridgePhotosToSafetyPhotos]);
 
-    // Step 4: Lock baseline
+  const runBaseline = useCallback(async () => {
     updateStep('baseline', 'running');
-    const bl = await lockScopeBaseline(current);
+    const bl = await lockScopeBaseline(visitRef.current);
     if (bl) {
       setBaseline(bl);
       updateStep('baseline', 'done');
-    } else {
-      updateStep('baseline', 'error', 'Failed to lock baseline');
+      return true;
     }
+    updateStep('baseline', 'error', 'Failed to lock baseline');
+    return false;
+  }, [lockScopeBaseline]);
 
-    // Step 5: Generate checklist
+  const runChecklist = useCallback(async () => {
     updateStep('checklist', 'running');
-    const cl = await generatePreStartChecklistForVisit(current);
+    const cl = await generatePreStartChecklistForVisit(visitRef.current);
     if (cl) {
       setChecklist(cl);
       updateStep('checklist', 'done');
-    } else {
-      updateStep('checklist', 'error', 'Failed to generate checklist');
+      return true;
     }
+    updateStep('checklist', 'error', 'Failed to generate checklist');
+    return false;
+  }, [generatePreStartChecklistForVisit]);
+
+  const stepRunners: Record<string, () => Promise<boolean>> = {
+    save: runSave,
+    customer: runCustomer,
+    photos: runPhotos,
+    bridge: runBridge,
+    baseline: runBaseline,
+    checklist: runChecklist,
+  };
+
+  const retryStep = useCallback(
+    async (stepId: string) => {
+      const runner = stepRunners[stepId];
+      if (!runner) return;
+      await runner();
+    },
+    [stepRunners]
+  );
+
+  const handleGenerate = useCallback(async () => {
+    setIsRunning(true);
+    visitRef.current = { ...visit };
+
+    await runSave();
+    await runCustomer();
+    await runPhotos();
+    await runBridge();
+    await runBaseline();
+    await runChecklist();
 
     // Mark visit as completed
-    await updateStatus(current.id, 'completed');
+    await updateStatus(visitRef.current.id, 'completed');
 
     setIsRunning(false);
-    setIsDone(true);
-  }, [
-    visit,
-    saveSiteVisit,
-    ensureCustomer,
-    uploadSiteVisitPhotos,
-    createPhotoProject,
-    bridgePhotosToSafetyPhotos,
-    lockScopeBaseline,
-    generatePreStartChecklistForVisit,
-    updateStatus,
-  ]);
-
-  const handleSendToQuote = useCallback(() => {
-    const sessionId = sendToQuoteWizard(workingVisit);
-    navigate(`/electrician/quote-builder/create?siteVisitSessionId=${sessionId}`);
-  }, [workingVisit, sendToQuoteWizard, navigate]);
+  }, [visit, runSave, runCustomer, runPhotos, runBridge, runBaseline, runChecklist, updateStatus]);
 
   return (
     <div className="space-y-4">
@@ -189,6 +215,15 @@ export const SiteVisitGenerateStep = ({ visit, assumptions }: SiteVisitGenerateS
               <p className="text-sm font-medium text-white">{step.label}</p>
               {step.error && <p className="text-xs text-red-400">{step.error}</p>}
             </div>
+            {step.status === 'error' && !isRunning && (
+              <button
+                onClick={() => retryStep(step.id)}
+                className="h-8 px-2 flex items-center gap-1 rounded-lg text-xs font-medium text-white bg-white/[0.05] border border-white/[0.1] touch-manipulation active:bg-white/10"
+              >
+                <RotateCcw className="h-3 w-3" />
+                Retry
+              </button>
+            )}
           </div>
         ))}
       </div>
@@ -215,18 +250,18 @@ export const SiteVisitGenerateStep = ({ visit, assumptions }: SiteVisitGenerateS
       {baseline && <ScopeBaselineConfirmation baseline={baseline} />}
       {checklist && <PreStartChecklistView checklist={checklist} />}
 
-      {/* Send to Quote Wizard */}
+      {/* Continue to Client Sign-Off */}
       {isDone && (
         <div className="space-y-2 pt-4 border-t border-white/[0.06]">
           <Button
-            onClick={handleSendToQuote}
+            onClick={onContinueToSignOff}
             className="w-full h-12 text-base font-semibold touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
           >
-            <FileText className="h-5 w-5 mr-2" />
-            Send to Quote Wizard
+            <PenTool className="h-5 w-5 mr-2" />
+            Continue to Client Sign-Off
           </Button>
           <p className="text-xs text-white text-center">
-            Pre-fills materials from your scope into the quote builder
+            Get the client to sign the scope of works on your device
           </p>
         </div>
       )}
