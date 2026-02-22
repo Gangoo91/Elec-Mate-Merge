@@ -244,7 +244,7 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
           'parse-invoice-photo',
           {
             body: {
-              image_base64: imageBase64.replace(/^data:image\/\w+;base64,/, ''),
+              image_base64: imageBase64.replace(/^data:[^;]+;base64,/, ''),
               image_type: imageType,
             },
           }
@@ -359,7 +359,7 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
             'parse-invoice-photo',
             {
               body: {
-                image_base64: base64.replace(/^data:image\/\w+;base64,/, ''),
+                image_base64: base64.replace(/^data:[^;]+;base64,/, ''),
                 image_type: file.type || 'image/jpeg',
               },
             }
@@ -414,7 +414,7 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
 
       setState('uploading');
       setProgress(
-        `Processing ${fileArray.length} ${fileArray.length === 1 ? 'image' : 'images'}...`
+        `Processing ${fileArray.length} ${fileArray.length === 1 ? 'file' : 'files'}...`
       );
 
       try {

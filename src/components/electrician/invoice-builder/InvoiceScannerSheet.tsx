@@ -194,8 +194,8 @@ export function InvoiceScannerSheet({
 
       // Validate all files
       for (const file of files) {
-        if (!file.type.startsWith('image/')) {
-          setError(`${file.name} is not an image file`);
+        if (!file.type.startsWith('image/') && file.type !== 'application/pdf') {
+          setError(`${file.name} is not a supported file type`);
           return;
         }
         if (file.size > 20 * 1024 * 1024) {
@@ -276,7 +276,7 @@ export function InvoiceScannerSheet({
                   <div>
                     <p className="text-[14px] font-medium text-white">AI-Powered Scanning</p>
                     <p className="text-[12px] text-white/60">
-                      Take a photo or upload an invoice image. AI will extract all line items
+                      Take a photo or upload an invoice image or PDF. AI will extract all line items
                       automatically.
                     </p>
                   </div>
@@ -316,8 +316,8 @@ export function InvoiceScannerSheet({
                     <Upload className="h-7 w-7 text-white/70" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[16px] font-medium text-white">Upload Image</p>
-                    <p className="text-[13px] text-white/60">Select from gallery or files</p>
+                    <p className="text-[16px] font-medium text-white">Upload File</p>
+                    <p className="text-[13px] text-white/60">Select image or PDF from files</p>
                   </div>
                 </button>
               </div>
@@ -325,7 +325,7 @@ export function InvoiceScannerSheet({
               <input
                 ref={fileInputRef}
                 type="file"
-                accept="image/*"
+                accept="image/*,application/pdf"
                 multiple
                 onChange={handleFileSelect}
                 className="hidden"

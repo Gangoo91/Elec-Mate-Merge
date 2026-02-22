@@ -9,7 +9,7 @@ import { createLogger, generateRequestId } from '../_shared/logger.ts';
 
 interface ParseInvoiceRequest {
   image_base64: string;
-  image_type: string; // "image/jpeg" | "image/png" | "image/heic"
+  image_type: string; // "image/jpeg" | "image/png" | "image/heic" | "application/pdf"
 }
 
 interface ExtractedItem {
@@ -48,10 +48,12 @@ serve(async (req) => {
 
     if (
       !image_type ||
-      !['image/jpeg', 'image/png', 'image/heic', 'image/webp'].includes(image_type)
+      !['image/jpeg', 'image/png', 'image/heic', 'image/webp', 'application/pdf'].includes(
+        image_type
+      )
     ) {
       throw new ValidationError(
-        'image_type must be one of: image/jpeg, image/png, image/heic, image/webp'
+        'image_type must be one of: image/jpeg, image/png, image/heic, image/webp, application/pdf'
       );
     }
 
