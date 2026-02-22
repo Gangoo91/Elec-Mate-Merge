@@ -86,12 +86,15 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
             <Minus className="h-4 w-4" />
           </Button>
           <Input
-            type="number"
+            type="text"
             inputMode="numeric"
+            pattern="[0-9]*"
             value={item.quantity}
-            onChange={(e) => onUpdate({ quantity: Math.max(1, parseInt(e.target.value) || 1) })}
-            className="h-11 w-14 text-center text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-            min={1}
+            onChange={(e) => {
+              const val = parseInt(e.target.value) || 1;
+              onUpdate({ quantity: Math.max(1, val) });
+            }}
+            className="h-11 w-14 text-center text-base text-white touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             enterKeyHint="done"
           />
           <Button
