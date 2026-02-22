@@ -71,6 +71,10 @@ export interface QuoteSettings {
   vatRate: number;
   vatRegistered: boolean;
   showMaterialsBreakdown?: boolean;
+  discountEnabled?: boolean;
+  discountType?: 'percentage' | 'fixed';
+  discountValue?: number;
+  discountLabel?: string;
 }
 
 export interface Quote {
@@ -83,6 +87,7 @@ export interface Quote {
   subtotal: number;
   overhead: number;
   profit: number;
+  discountAmount: number;
   vatAmount: number;
   total: number;
   status: 'draft' | 'sent' | 'pending' | 'approved' | 'rejected';

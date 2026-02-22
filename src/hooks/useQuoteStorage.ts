@@ -23,6 +23,7 @@ export const useQuoteStorage = () => {
       subtotal: parseFloat(row.subtotal),
       overhead: parseFloat(row.overhead),
       profit: parseFloat(row.profit),
+      discountAmount: 0,
       vatAmount: parseFloat(row.vat_amount),
       total: parseFloat(row.total),
       status: row.status,

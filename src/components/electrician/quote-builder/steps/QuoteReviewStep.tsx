@@ -133,6 +133,12 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
   };
 
   const categories = ['labour', 'materials', 'equipment', 'manual'];
+  const categoryLabels: Record<string, string> = {
+    labour: 'Labour',
+    materials: 'Materials',
+    equipment: 'Equipment',
+    manual: 'Additional Items',
+  };
 
   return (
     <div className="space-y-4">
@@ -154,6 +160,14 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
             <span className="text-white/60">Subtotal</span>
             <span className="text-white">£{(quote.subtotal || 0).toFixed(2)}</span>
           </div>
+          {quote.settings?.discountEnabled && (quote.discountAmount || 0) > 0 && (
+            <div className="flex justify-between text-[14px]">
+              <span className="text-red-400">
+                {quote.settings.discountLabel || 'Discount'}
+              </span>
+              <span className="text-red-400">-£{(quote.discountAmount || 0).toFixed(2)}</span>
+            </div>
+          )}
           {quote.settings?.vatRegistered && (
             <div className="flex justify-between text-[14px]">
               <span className="text-white/60">VAT ({quote.settings.vatRate}%)</span>
@@ -247,7 +261,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                     <Icon className="h-5 w-5 text-black" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[15px] font-medium text-white capitalize">{category}</p>
+                    <p className="text-[15px] font-medium text-white">{categoryLabels[category] || category}</p>
                     <p className="text-[12px] text-white/70">
                       {categoryItems.length} item{categoryItems.length !== 1 && 's'}
                     </p>

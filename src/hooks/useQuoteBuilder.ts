@@ -147,9 +147,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     // Calculate subtotal - profit and overhead are now built into unit prices
     const subtotal = displayItems.reduce((sum, item) => sum + item.totalPrice, 0);
 
-    // Calculate VAT on the subtotal (which already includes profit and overhead)
-    const vatAmount = quote.settings.vatRegistered ? subtotal * (quote.settings.vatRate / 100) : 0;
-    const total = subtotal + vatAmount;
+    // Discount/deduction (CIS, OAP, etc.)
+    const discountAmount = quote.settings.discountEnabled
+      ? quote.settings.discountType === 'percentage'
+        ? subtotal * ((quote.settings.discountValue || 0) / 100)
+        : Math.min(quote.settings.discountValue || 0, subtotal)
+      : 0;
+    const netAfterDiscount = subtotal - discountAmount;
+
+    // VAT applies AFTER discount (CIS-correct: HMRC says VAT on net amount)
+    const vatAmount = quote.settings.vatRegistered
+      ? netAfterDiscount * (quote.settings.vatRate / 100)
+      : 0;
+    const total = netAfterDiscount + vatAmount;
 
     return {
       ...quote,
@@ -157,6 +167,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
       subtotal,
       overhead: 0, // No longer calculated separately
       profit: 0, // No longer calculated separately
+      discountAmount,
       vatAmount,
       total,
     };

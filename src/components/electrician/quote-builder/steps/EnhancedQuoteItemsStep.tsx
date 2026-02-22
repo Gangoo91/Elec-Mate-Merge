@@ -121,6 +121,7 @@ export const EnhancedQuoteItemsStep = ({
     notes: '',
   });
 
+  const [customCategory, setCustomCategory] = useState<'manual' | 'materials' | 'labour' | 'equipment'>('manual');
   const [materialSearch, setMaterialSearch] = useState('');
   const [ragResults, setRagResults] = useState<any[]>([]);
   const [isSearchingRAG, setIsSearchingRAG] = useState(false);
@@ -250,10 +251,15 @@ export const EnhancedQuoteItemsStep = ({
     if (newItem.description && newItem.unitPrice > 0) {
       const itemToAdd = {
         ...newItem,
+        // When using Custom tab, override category with the user's chosen "Appears Under" value
+        category: newItem.category === 'manual' ? customCategory : newItem.category,
         quantity:
           newItem.category === 'labour' && newItem.hours > 0 ? newItem.hours : newItem.quantity,
       };
       onAdd(itemToAdd);
+
+      // Reset custom category after adding
+      setCustomCategory('manual');
 
       setNewItem((prev) => ({
         description: '',
@@ -733,6 +739,34 @@ export const EnhancedQuoteItemsStep = ({
         {/* Manual Entry Fields */}
         {newItem.category === 'manual' && (
           <div className="divide-y divide-white/[0.06]">
+            {/* Appears Under - Category Picker */}
+            <div className="p-3.5">
+              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">
+                Appears Under (on PDF)
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {([
+                  { id: 'materials' as const, label: 'Materials' },
+                  { id: 'labour' as const, label: 'Labour' },
+                  { id: 'equipment' as const, label: 'Equipment' },
+                  { id: 'manual' as const, label: 'Other' },
+                ]).map((opt) => (
+                  <button
+                    key={opt.id}
+                    type="button"
+                    onClick={() => setCustomCategory(opt.id)}
+                    className={cn(
+                      'px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                      customCategory === opt.id
+                        ? 'bg-elec-yellow text-black'
+                        : 'bg-white/[0.03] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             {/* Description */}
             <div className="p-3.5">
               <div className="flex items-start gap-3">
