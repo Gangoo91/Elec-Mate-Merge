@@ -21,7 +21,7 @@ import {
   Camera,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { BusinessCard, BusinessKPIStrip } from '@/components/business-hub';
+import { BusinessCard } from '@/components/business-hub';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics/QuoteInvoiceAnalytics';
 import { useBusinessHubData } from '@/hooks/useBusinessHubData';
@@ -43,19 +43,8 @@ const BusinessHub = () => {
   const navigate = useNavigate();
   const [insightsOpen, setInsightsOpen] = useState(false);
 
-  const {
-    revenue,
-    paidThisMonth,
-    outstanding,
-    overdueAmount,
-    winRate,
-    quotes,
-    invoices,
-    isLoading,
-    lastUpdated,
-    refresh,
-    formatCurrency,
-  } = useBusinessHubData();
+  const { revenue, quotes, invoices, isLoading, lastUpdated, refresh, formatCurrency } =
+    useBusinessHubData();
 
   // Money In
   const moneyInTools = [
@@ -230,18 +219,6 @@ const BusinessHub = () => {
             />
           </div>
         </motion.section>
-
-        {/* KPI Strip */}
-        <motion.div variants={itemVariants}>
-          <BusinessKPIStrip
-            paidThisMonth={paidThisMonth}
-            outstanding={outstanding}
-            overdueAmount={overdueAmount}
-            winRate={winRate}
-            isLoading={isLoading}
-            formatCurrency={formatCurrency}
-          />
-        </motion.div>
 
         {/* Money In */}
         <motion.section variants={itemVariants} className="space-y-3">
