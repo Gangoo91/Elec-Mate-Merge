@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ArrowLeft, CheckCircle, ChevronDown, ChevronUp, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
@@ -20,7 +20,7 @@ const FireAlarmModule5SectionTemplate = ({
   next,
   blocksLayout = 'grid',
 }: {
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   sectionNumber: string;
   title: string;
   description: string;
@@ -111,7 +111,7 @@ const FireAlarmModule5SectionTemplate = ({
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-5">

@@ -1,20 +1,22 @@
 /**
  * Formats Fire Alarm certificate form data for PDF generation
- * Compliant with BS 5839-1:2017 Fire detection and fire alarm systems
+ * Compliant with BS 5839-1:2025 Fire detection and fire alarm systems
  */
 
 import { FireAlarmFormData, FireAlarmZone } from '@/types/fire-alarm';
 
 export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
-  const get = (key: string, defaultValue: any = ''): string => {
-    const value = (formData as any)[key] ?? defaultValue;
+  const data = formData as Record<string, unknown>;
+
+  const get = (key: string, defaultValue: string = ''): string => {
+    const value = data[key] ?? defaultValue;
     if (value === null || value === undefined) return '';
     if (typeof value === 'number') return String(value);
-    return value;
+    return value as string;
   };
 
   const getNum = (key: string, defaultValue: number = 0): number => {
-    const value = (formData as any)[key];
+    const value = data[key];
     if (typeof value === 'number') return value;
     if (typeof value === 'string') {
       const parsed = parseFloat(value);
@@ -24,7 +26,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   };
 
   const getBool = (key: string): boolean => {
-    const value = (formData as any)[key];
+    const value = data[key];
     return value === true || value === 'true';
   };
 
@@ -221,7 +223,7 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   const totalAlarmDevices = (formData.sounderCount || 0) + (formData.visualAlarmCount || 0);
 
   // Format zones for PDF
-  const formatZones = (): any[] => {
+  const formatZones = (): Record<string, string | number>[] => {
     const zones: FireAlarmZone[] = formData.zones || [];
     return zones.map((zone) => ({
       zone_number: zone.zoneNumber,
@@ -286,9 +288,9 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   };
 
   // Format sound readings
-  const formatSoundReadings = (): any[] => {
+  const formatSoundReadings = (): Record<string, string | number | boolean>[] => {
     const readings = formData.soundLevelReadings || [];
-    return readings.map((r: any) => {
+    return readings.map((r) => {
       const dbValue = parseFloat(r.dBReading) || 0;
       const minRequired = parseFloat(r.minRequired) || 65;
       const isPassing = dbValue >= minRequired;
@@ -306,9 +308,9 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   };
 
   // Format defects
-  const formatDefects = (): any[] => {
+  const formatDefects = (): Record<string, string | number | boolean>[] => {
     const defects = formData.defectsFound || [];
-    return defects.map((d: any, index: number) => ({
+    return defects.map((d, index: number) => ({
       number: index + 1,
       description: d.description || '',
       severity: formatSeverity(d.severity),
@@ -395,9 +397,9 @@ export const formatFireAlarmJson = (formData: Partial<FireAlarmFormData>) => {
   };
 
   // Format previous defects (for periodic testing)
-  const formatPreviousDefects = (): any[] => {
+  const formatPreviousDefects = (): Record<string, string | number | boolean>[] => {
     const defects = formData.previousDefects || [];
-    return defects.map((d: any, index: number) => {
+    return defects.map((d, index: number) => {
       const statusDisplay =
         {
           outstanding: 'Outstanding',
