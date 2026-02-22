@@ -31,7 +31,7 @@ export function useSurveyMaterialsActions() {
         title: 'Materials list created',
         description: `${materials.length} items saved to "${listName}"`,
       });
-      navigate('/electrician/materials/lists');
+      navigate(`/electrician/materials/lists?from=site-visit&visitId=${visit.id}`);
     },
     [createList, addItem, navigate, toast]
   );

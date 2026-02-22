@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import {
   ArrowLeft,
   Plus,
@@ -54,6 +54,9 @@ export default function MaterialsLists() {
   } = useMaterialsLists();
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const fromSiteVisit = searchParams.get('from') === 'site-visit';
+  const siteVisitId = searchParams.get('visitId');
   const [selectedList, setSelectedList] = useState<MaterialsList | null>(null);
   const [showNewListInput, setShowNewListInput] = useState(false);
   const [newListName, setNewListName] = useState('');
@@ -135,15 +138,24 @@ export default function MaterialsLists() {
         {/* Header */}
         <div className="bg-gradient-to-b from-yellow-500/10 to-transparent border-b border-white/10">
           <div className="container mx-auto px-4 py-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setSelectedList(null)}
-              className="mb-3 -ml-2 touch-manipulation h-10 text-white"
-            >
-              <ArrowLeft className="h-4 w-4 mr-1.5" />
-              Back to Lists
-            </Button>
+            <div className="flex items-center gap-2 mb-3 -ml-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setSelectedList(null)}
+                className="touch-manipulation h-10 text-white"
+              >
+                <ArrowLeft className="h-4 w-4 mr-1.5" />
+                Back to Lists
+              </Button>
+              {fromSiteVisit && siteVisitId && (
+                <Link to={`/electrician/site-visit/${siteVisitId}`}>
+                  <Button variant="ghost" size="sm" className="touch-manipulation h-10 text-white">
+                    Back to Site Visit
+                  </Button>
+                </Link>
+              )}
+            </div>
 
             <div className="flex items-center justify-between">
               <div>
@@ -380,16 +392,29 @@ export default function MaterialsLists() {
       {/* Header */}
       <div className="bg-gradient-to-b from-yellow-500/10 to-transparent border-b border-white/10">
         <div className="container mx-auto px-4 py-4">
-          <Link to="/electrician/materials">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mb-3 -ml-2 touch-manipulation h-10 text-white"
-            >
-              <ArrowLeft className="h-4 w-4 mr-1.5" />
-              Materials Marketplace
-            </Button>
-          </Link>
+          {fromSiteVisit && siteVisitId ? (
+            <Link to={`/electrician/site-visit/${siteVisitId}`}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mb-3 -ml-2 touch-manipulation h-10 text-white"
+              >
+                <ArrowLeft className="h-4 w-4 mr-1.5" />
+                Back to Site Visit
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/electrician/materials">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="mb-3 -ml-2 touch-manipulation h-10 text-white"
+              >
+                <ArrowLeft className="h-4 w-4 mr-1.5" />
+                Materials Marketplace
+              </Button>
+            </Link>
+          )}
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
