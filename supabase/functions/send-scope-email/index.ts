@@ -135,13 +135,14 @@ serve(async (req: Request) => {
     // ========================================================================
     // STEP 7: Build scope data for email
     // ========================================================================
-    const scopeData = scopeLink.scope_data as Record<string, any> | null;
-    const clientName = scopeLink.client_name || scopeData?.customerName || 'Client';
-    const propertyAddress = scopeData?.propertyAddress || 'your property';
-    const rooms = (scopeData?.rooms as any[]) || [];
+     
+    const scopeData = scopeLink.scope_data as Record<string, unknown> | null;
+    const clientName = scopeLink.client_name || (scopeData?.customerName as string) || 'Client';
+    const propertyAddress = (scopeData?.propertyAddress as string) || 'your property';
+    const rooms = (scopeData?.rooms as Array<{ items?: unknown[] }>) || [];
     const roomCount = rooms.length;
     const itemCount = rooms.reduce(
-      (sum: number, r: any) => sum + (r.items?.length || 0),
+      (sum: number, r: { items?: unknown[] }) => sum + (r.items?.length || 0),
       0
     );
 
@@ -255,7 +256,7 @@ serve(async (req: Request) => {
     // ========================================================================
     // STEP 9: Send via Resend
     // ========================================================================
-    const emailPayload: Record<string, any> = {
+    const emailPayload: Record<string, string> = {
       from: `${companyName} <founder@elec-mate.com>`,
       to: clientEmail.trim(),
       subject: `Scope of Works — ${propertyAddress}`,
@@ -284,17 +285,14 @@ serve(async (req: Request) => {
     const result = await response.json();
     console.log(`✅ Scope email sent to ${clientEmail} | Resend ID: ${result.id}`);
 
-    return new Response(
-      JSON.stringify({ success: true, emailId: result.id }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
-  } catch (error: any) {
+    return new Response(JSON.stringify({ success: true, emailId: result.id }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  } catch (error: unknown) {
     console.error('❌ send-scope-email error:', error);
     return new Response(
-      JSON.stringify({ error: error.message || 'Internal server error' }),
+      JSON.stringify({ error: error instanceof Error ? error.message : 'Internal server error' }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

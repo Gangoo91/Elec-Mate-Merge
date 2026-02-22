@@ -85,13 +85,10 @@ serve(async (req: Request) => {
     if (scopeLink.status !== 'signed') {
       console.warn('⚠️ Scope not in signed status:', scopeLink.status);
       // Non-fatal — still return success since signing may have already been processed
-      return new Response(
-        JSON.stringify({ success: true, skipped: true }),
-        {
-          status: 200,
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        }
-      );
+      return new Response(JSON.stringify({ success: true, skipped: true }), {
+        status: 200,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
     }
 
     console.log('✅ Scope link verified, status: signed');
@@ -114,9 +111,9 @@ serve(async (req: Request) => {
     // ========================================================================
     // STEP 5: Build notification data
     // ========================================================================
-    const scopeData = scopeLink.scope_data as Record<string, any> | null;
-    const clientName = scopeLink.client_name || scopeData?.customerName || 'Client';
-    const propertyAddress = scopeData?.propertyAddress || 'the property';
+    const scopeData = scopeLink.scope_data as Record<string, unknown> | null;
+    const clientName = scopeLink.client_name || (scopeData?.customerName as string) || 'Client';
+    const propertyAddress = (scopeData?.propertyAddress as string) || 'the property';
     const siteVisitId = scopeLink.site_visit_id;
 
     const appUrl = siteVisitId
@@ -218,18 +215,18 @@ serve(async (req: Request) => {
     const result = await response.json();
     console.log(`✅ Signing notification sent to ${electricianEmail} | Resend ID: ${result.id}`);
 
-    return new Response(
-      JSON.stringify({ success: true, emailSent: true }),
-      {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      }
-    );
-  } catch (error: any) {
+    return new Response(JSON.stringify({ success: true, emailSent: true }), {
+      status: 200,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    });
+  } catch (error: unknown) {
     console.error('❌ scope-signed-webhook error:', error);
     // Non-fatal — always return 200 so the client signing flow isn't disrupted
     return new Response(
-      JSON.stringify({ success: false, error: error.message || 'Internal server error' }),
+      JSON.stringify({
+        success: false,
+        error: error instanceof Error ? error.message : 'Internal server error',
+      }),
       {
         status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
