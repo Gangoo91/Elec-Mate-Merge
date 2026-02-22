@@ -58,7 +58,7 @@ const FireAlarmModule3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course">
@@ -74,10 +74,10 @@ const FireAlarmModule3 = () => {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
             <span className="text-elec-yellow text-xs font-semibold">MODULE 3</span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/60 text-xs">{sections.length} Sections</span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/60 text-xs">3-4 hours</span>
+            <span className="text-white text-xs">•</span>
+            <span className="text-white text-xs">{sections.length} Sections</span>
+            <span className="text-white text-xs">•</span>
+            <span className="text-white text-xs">3-4 hours</span>
           </div>
           <div className="flex items-center gap-3 mb-3">
             <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
@@ -87,7 +87,7 @@ const FireAlarmModule3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             System Design & Zone Planning
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Designing effective zone layouts, selecting system architectures and programming cause &
             effect relationships.
           </p>

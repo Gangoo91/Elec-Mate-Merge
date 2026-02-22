@@ -168,7 +168,7 @@ const FireAlarmModule7Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-7">
@@ -192,11 +192,11 @@ const FireAlarmModule7Section3 = () => {
         <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
           BS 5839-1 Requirements
         </h1>
-        <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-4">
+        <p className="text-base sm:text-lg text-white leading-relaxed mb-4">
           Non-domestic fire detection and alarm systems: categories, design principles and
           installation standards.
         </p>
-        <div className="flex items-center gap-4 text-sm text-white/50">
+        <div className="flex items-center gap-4 text-sm text-white">
           <span className="flex items-center gap-1">
             <Target className="h-4 w-4" />6 learning outcomes
           </span>
@@ -211,7 +211,7 @@ const FireAlarmModule7Section3 = () => {
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -239,7 +239,7 @@ const FireAlarmModule7Section3 = () => {
 
       {/* Learning Outcomes */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Learning Outcomes
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -256,7 +256,7 @@ const FireAlarmModule7Section3 = () => {
                 <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                 </div>
-                <p className="text-sm text-white/80">{outcome}</p>
+                <p className="text-sm text-white">{outcome}</p>
               </div>
             </div>
           ))}
@@ -273,7 +273,7 @@ const FireAlarmModule7Section3 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Introduction to BS 5839-1</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-white">BS 5839-1</strong> is the code of practice for fire
               detection and fire alarm systems in non-domestic premises. It covers design,
@@ -300,7 +300,7 @@ const FireAlarmModule7Section3 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               BS 5839-1 does not apply to individual domestic dwellings - these are covered by BS
               5839-6.
             </p>
@@ -315,7 +315,7 @@ const FireAlarmModule7Section3 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">L Categories - Life Safety Systems</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-elec-yellow">L categories</strong> are designed for{' '}
               <strong className="text-white">life safety</strong>, providing early warning to enable
@@ -382,7 +382,7 @@ const FireAlarmModule7Section3 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">P Categories and M Systems</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-elec-yellow">P categories</strong> are designed for{' '}
               <strong className="text-white">property protection</strong>, minimising damage to the
@@ -441,12 +441,12 @@ const FireAlarmModule7Section3 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             A care home with sleeping accommodation requires maximum early warning for vulnerable
             residents. Which category is most appropriate?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> L1 - providing automatic detection
               throughout all areas. Care homes with sleeping residents require the highest level of
               life safety protection to maximise warning time.
@@ -462,7 +462,7 @@ const FireAlarmModule7Section3 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Detector Spacing and Positioning</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               BS 5839-1 provides detailed guidance on{' '}
               <strong className="text-white">detector spacing</strong> to ensure adequate coverage
@@ -515,7 +515,7 @@ const FireAlarmModule7Section3 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Sound Levels and Alarm Devices</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Fire alarm sounders must achieve minimum{' '}
               <strong className="text-white">sound levels</strong> to ensure all occupants can hear
@@ -556,12 +556,12 @@ const FireAlarmModule7Section3 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             A hotel corridor is 25 metres long with a ceiling height of 2.8m. What is the maximum
             number of smoke detectors that could cover this corridor?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Two detectors could cover this
               corridor - maximum 10.6m spacing with 7.5m from end walls. However, three detectors
               may be needed depending on corridor width and actual layout.
@@ -577,7 +577,7 @@ const FireAlarmModule7Section3 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Power Supply Requirements</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Fire alarm systems must have{' '}
               <strong className="text-white">reliable power supplies</strong> with standby capacity
@@ -629,6 +629,14 @@ const FireAlarmModule7Section3 = () => {
                 </li>
               </ul>
             </div>
+            <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
+              <p className="text-sm text-white">
+                <strong className="text-elec-yellow">BS 5839-1:2025 Note:</strong> Extensions or
+                modifications to existing fire alarm systems must be assessed against the current
+                2025 edition. Where full compliance is not reasonably practicable, a documented risk
+                assessment should justify any departures.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -638,11 +646,11 @@ const FireAlarmModule7Section3 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             What is the difference between an L2 and L3 system in terms of coverage?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> L2 covers escape routes plus
               specifically identified high-risk rooms (based on fire risk assessment). L3 covers
               escape routes plus ALL rooms that open directly onto escape routes, regardless of
@@ -654,14 +662,14 @@ const FireAlarmModule7Section3 = () => {
 
       {/* Practical Guidance */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Practical Guidance
         </h2>
 
         <div className="space-y-3">
           <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
             <h4 className="text-base font-semibold text-green-400 mb-2">Pro Tips</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Always start with the fire risk assessment - let the risk drive system category
@@ -682,7 +690,7 @@ const FireAlarmModule7Section3 = () => {
 
           <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
             <h4 className="text-base font-semibold text-red-400 mb-2">Common Mistakes</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                 Selecting a lower category to reduce costs without proper risk assessment
@@ -704,7 +712,7 @@ const FireAlarmModule7Section3 = () => {
 
       {/* FAQs */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Frequently Asked Questions
         </h2>
         <div className="space-y-3">
@@ -736,7 +744,7 @@ const FireAlarmModule7Section3 = () => {
           ].map((faq, i) => (
             <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-base font-semibold text-white mb-2">{faq.q}</p>
-              <p className="text-sm text-white/70">{faq.a}</p>
+              <p className="text-sm text-white">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -752,7 +760,7 @@ const FireAlarmModule7Section3 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of BS 5839-1 with 10 questions.
               </p>
               <Button
@@ -768,7 +776,7 @@ const FireAlarmModule7Section3 = () => {
                 <p className="text-4xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -785,11 +793,11 @@ const FireAlarmModule7Section3 = () => {
                         Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -821,7 +829,7 @@ const FireAlarmModule7Section3 = () => {
                         className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -860,7 +868,7 @@ const FireAlarmModule7Section3 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-white/5 text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../section-2">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7/section-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
@@ -869,7 +877,7 @@ const FireAlarmModule7Section3 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../section-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7/section-4">
               Next Section
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

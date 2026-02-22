@@ -54,7 +54,7 @@ const faqs = [
   {
     question: 'What is the difference between BS 5839-1 and BS 5839-6?',
     answer:
-      'BS 5839-1:2017 covers fire detection and fire alarm systems for buildings other than domestic dwellings. It applies to commercial, industrial, and public buildings including offices, factories, shops, hospitals, schools, and hotels. BS 5839-6:2019 specifically covers fire detection and fire alarm systems for domestic dwellings — houses, flats, and houses in multiple occupation (HMOs). The domestic standard is simpler and uses the grading system (A to F) to specify equipment levels. Electricians working on domestic installations need to understand BS 5839-6, while those working on commercial systems need BS 5839-1. Many electricians need to know both.',
+      'BS 5839-1:2025 covers fire detection and fire alarm systems for buildings other than domestic dwellings. It applies to commercial, industrial, and public buildings including offices, factories, shops, hospitals, schools, and hotels. BS 5839-6:2019 specifically covers fire detection and fire alarm systems for domestic dwellings — houses, flats, and houses in multiple occupation (HMOs). The domestic standard is simpler and uses the grading system (A to F) to specify equipment levels. Electricians working on domestic installations need to understand BS 5839-6, while those working on commercial systems need BS 5839-1. Many electricians need to know both.',
   },
   {
     question: 'What system category should be installed in an HMO?',
@@ -205,7 +205,7 @@ const sections = [
       <>
         <p>
           BS 5839 is the British Standard for fire detection and fire alarm systems. It is published
-          in multiple parts, with the two most important for electricians being BS 5839-1:2017 (for
+          in multiple parts, with the two most important for electricians being BS 5839-1:2025 (for
           non-domestic buildings) and BS 5839-6:2019 (for domestic dwellings). These standards
           define how fire alarm systems should be designed, installed, commissioned, and maintained.
         </p>

@@ -484,8 +484,9 @@ const FireAlarmModule2Section4 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="text-sm text-white">
-                <strong>Note:</strong> Voice alarm systems must comply with BS 5839-8 for design,
-                installation and maintenance.
+                <strong>Note:</strong> Voice alarm systems must comply with BS 5839-8:2023 for
+                design, installation and maintenance. This edition aligns with BS 5839-1:2025 and
+                reflects updated requirements for voice alarm control and indicating equipment.
               </p>
             </div>
           </div>
@@ -618,7 +619,7 @@ const FireAlarmModule2Section4 = () => {
             className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-3">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-2/section-3">
               <ArrowLeft className="w-4 h-4 mr-2" />
               Previous Section
             </Link>
@@ -628,7 +629,7 @@ const FireAlarmModule2Section4 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-5">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-2/section-5">
               Next Section
               <ArrowLeft className="w-4 h-4 ml-2 rotate-180" />
             </Link>

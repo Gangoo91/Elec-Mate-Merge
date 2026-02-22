@@ -198,7 +198,7 @@ const FireAlarmModule6Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -216,10 +216,10 @@ const FireAlarmModule6Section6 = () => {
             <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
               <Users className="h-5 w-5 text-elec-yellow" />
             </div>
-            <span className="text-sm text-white/50">Section 6 of 6</span>
+            <span className="text-sm text-white">Section 6 of 6</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">Handover & Client Training</h1>
-          <p className="text-white/70">
+          <p className="text-white">
             System handover procedures, user training delivery and ongoing support.
           </p>
         </div>
@@ -227,7 +227,7 @@ const FireAlarmModule6Section6 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -269,7 +269,7 @@ const FireAlarmModule6Section6 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -283,14 +283,14 @@ const FireAlarmModule6Section6 = () => {
             Handover Process Overview
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Handover is the{' '}
               <strong className="text-white">formal transfer of responsibility</strong> from
               installer to client, marking when the system becomes operational.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Handover Checklist:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Verification testing complete and documented
@@ -313,7 +313,7 @@ const FireAlarmModule6Section6 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Never handover a system before training has been delivered and accepted.
             </p>
           </div>
@@ -326,13 +326,13 @@ const FireAlarmModule6Section6 = () => {
             Documentation Package
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               A complete <strong className="text-elec-yellow">documentation package</strong> is
               essential for effective system management.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Required Documents:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Certificate of Compliance
@@ -373,14 +373,14 @@ const FireAlarmModule6Section6 = () => {
             Identifying Training Needs
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Different personnel require{' '}
               <strong className="text-white">different levels of training</strong> based on their
               roles and responsibilities.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Training Levels by Role:</p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow mt-1" />
                   <span>
@@ -420,11 +420,11 @@ const FireAlarmModule6Section6 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             The security manager has changed since handover. What action is required?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> The new security manager should
               receive comprehensive training appropriate to their role before assuming
               responsibility. This should be documented in the logbook and may be arranged through
@@ -440,14 +440,14 @@ const FireAlarmModule6Section6 = () => {
             Operator Training Content
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Comprehensive operator training ensures staff can{' '}
               <strong className="text-elec-yellow">manage the system effectively</strong> in all
               situations.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Training Topics:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   System overview and zone layout
@@ -492,13 +492,13 @@ const FireAlarmModule6Section6 = () => {
             Practical Demonstrations
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Hands-on practice is <strong className="text-white">essential for confidence</strong>{' '}
               in operating the system.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Practical Exercises:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Activate a detector and observe panel response
@@ -542,14 +542,14 @@ const FireAlarmModule6Section6 = () => {
             Ongoing Support Arrangements
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Establishing{' '}
               <strong className="text-elec-yellow">ongoing support arrangements</strong> ensures
               continued effective system management.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Support Options to Discuss:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Maintenance contract options and coverage
@@ -585,12 +585,12 @@ const FireAlarmModule6Section6 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             A client wants to bring the system live immediately without training as they are
             short-staffed. How should you respond?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Explain that training is essential
               before handover - operating an unfamiliar system could result in incorrect responses
               to alarms or faults, potentially endangering life. Offer flexible training times or a
@@ -605,7 +605,7 @@ const FireAlarmModule6Section6 = () => {
           <div className="space-y-3">
             <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
               <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Use the actual panel during training rather than just describing controls
@@ -623,7 +623,7 @@ const FireAlarmModule6Section6 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
               <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Rushing through training to meet deadlines
@@ -673,7 +673,7 @@ const FireAlarmModule6Section6 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -688,7 +688,7 @@ const FireAlarmModule6Section6 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-white/70 mb-4">
+              <p className="text-white mb-4">
                 Test your understanding of handover and client training with 10 questions.
               </p>
               <Button
@@ -704,7 +704,7 @@ const FireAlarmModule6Section6 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-white/70">
+                <p className="text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -722,11 +722,11 @@ const FireAlarmModule6Section6 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -759,7 +759,7 @@ const FireAlarmModule6Section6 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -797,7 +797,7 @@ const FireAlarmModule6Section6 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-5">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-5">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -806,7 +806,7 @@ const FireAlarmModule6Section6 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-7">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7">
               Module 7
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -199,7 +199,7 @@ const FireAlarmModule7Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-7">
@@ -223,11 +223,11 @@ const FireAlarmModule7Section2 = () => {
         <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
           Building Regulations
         </h1>
-        <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-4">
+        <p className="text-base sm:text-lg text-white leading-relaxed mb-4">
           Approved Document B requirements, Building Control notification and competent persons
           schemes for fire alarm compliance.
         </p>
-        <div className="flex items-center gap-4 text-sm text-white/50">
+        <div className="flex items-center gap-4 text-sm text-white">
           <span className="flex items-center gap-1">
             <Target className="h-4 w-4" />6 learning outcomes
           </span>
@@ -242,7 +242,7 @@ const FireAlarmModule7Section2 = () => {
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -270,7 +270,7 @@ const FireAlarmModule7Section2 = () => {
 
       {/* Learning Outcomes */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Learning Outcomes
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -287,7 +287,7 @@ const FireAlarmModule7Section2 = () => {
                 <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                 </div>
-                <p className="text-sm text-white/80">{outcome}</p>
+                <p className="text-sm text-white">{outcome}</p>
               </div>
             </div>
           ))}
@@ -304,7 +304,7 @@ const FireAlarmModule7Section2 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Approved Document B Overview</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-white">Approved Document B (Fire Safety)</strong> provides
               practical guidance on meeting Building Regulations requirements for fire safety in
@@ -347,7 +347,7 @@ const FireAlarmModule7Section2 = () => {
               Fire Detection Requirements for Dwellings
             </h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Section B1 of Approved Document B specifies minimum fire detection requirements for
               new-build dwellings. These requirements reference{' '}
@@ -377,7 +377,7 @@ const FireAlarmModule7Section2 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Since October 2022, the regulations also require carbon monoxide alarms in rooms with
               fixed combustion appliances (excluding gas cookers).
             </p>
@@ -394,7 +394,7 @@ const FireAlarmModule7Section2 = () => {
               Requirements for Flats and Maisonettes
             </h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Flats and maisonettes have additional requirements due to the presence of common areas
               and multiple dwellings sharing a building.
@@ -442,12 +442,12 @@ const FireAlarmModule7Section2 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             A new-build three-storey house requires fire detection. What is the minimum system grade
             and where must detectors be located?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Minimum Grade D (mains with battery
               backup), with interlinked smoke alarms on all three storeys in circulation spaces. A
               heat alarm should be in the kitchen if it opens onto the escape route.
@@ -463,7 +463,7 @@ const FireAlarmModule7Section2 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Building Control Notification</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Fire alarm installation may require{' '}
               <strong className="text-white">Building Control notification</strong> depending on the
@@ -511,7 +511,7 @@ const FireAlarmModule7Section2 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Competent Person Schemes</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-elec-yellow">Competent Person Schemes</strong> allow
               registered installers to self-certify that work complies with Building Regulations
@@ -568,12 +568,12 @@ const FireAlarmModule7Section2 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             An installer completes fire alarm work in a loft conversion but is not registered with a
             Competent Person Scheme. What must happen?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Building Control must be notified of
               the work. The local authority (or Approved Inspector) will inspect and issue a
               completion certificate if the work complies. Failure to notify is a breach of Building
@@ -592,7 +592,7 @@ const FireAlarmModule7Section2 = () => {
               Compliance Routes and Documentation
             </h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               There are two main routes to demonstrate compliance with Building Regulations for fire
               alarm work.
@@ -648,12 +648,12 @@ const FireAlarmModule7Section2 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             What documents should a homeowner receive after a Competent Person Scheme installer
             completes fire alarm work?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> The homeowner should receive a
               Building Regulations Compliance Certificate from the scheme operator, plus an
               installation certificate and operating instructions for the fire alarm system.
@@ -664,14 +664,14 @@ const FireAlarmModule7Section2 = () => {
 
       {/* Practical Guidance */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Practical Guidance
         </h2>
 
         <div className="space-y-3">
           <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
             <h4 className="text-base font-semibold text-green-400 mb-2">Pro Tips</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Always check if work requires Building Control notification before starting -
@@ -692,7 +692,7 @@ const FireAlarmModule7Section2 = () => {
 
           <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
             <h4 className="text-base font-semibold text-red-400 mb-2">Common Mistakes</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                 Assuming all fire alarm work is exempt from Building Regulations - it depends on the
@@ -713,9 +713,28 @@ const FireAlarmModule7Section2 = () => {
         </div>
       </section>
 
+      {/* Upcoming Changes */}
+      <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
+        <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
+          <div className="flex items-center gap-2 mb-3">
+            <AlertTriangle className="h-5 w-5 text-blue-400" />
+            <h3 className="text-base font-semibold text-blue-400">Upcoming Changes</h3>
+          </div>
+          <div className="space-y-3 text-sm text-white">
+            <p>
+              <strong className="text-white">Approved Document B — 2026 Amendments:</strong> Taking
+              effect <strong className="text-elec-yellow">30 September 2026</strong>, significant
+              changes include a requirement for second staircases in residential buildings over 18m
+              and the introduction of evacuation lifts. These changes will affect fire alarm system
+              design for new-build high-rise residential projects.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* FAQs */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Frequently Asked Questions
         </h2>
         <div className="space-y-3">
@@ -747,7 +766,7 @@ const FireAlarmModule7Section2 = () => {
           ].map((faq, i) => (
             <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-base font-semibold text-white mb-2">{faq.q}</p>
-              <p className="text-sm text-white/70">{faq.a}</p>
+              <p className="text-sm text-white">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -763,7 +782,7 @@ const FireAlarmModule7Section2 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of Building Regulations with 10 questions.
               </p>
               <Button
@@ -779,7 +798,7 @@ const FireAlarmModule7Section2 = () => {
                 <p className="text-4xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -796,11 +815,11 @@ const FireAlarmModule7Section2 = () => {
                         Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -832,7 +851,7 @@ const FireAlarmModule7Section2 = () => {
                         className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -871,7 +890,7 @@ const FireAlarmModule7Section2 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-white/5 text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../section-1">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7/section-1">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
@@ -880,7 +899,7 @@ const FireAlarmModule7Section2 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../section-3">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7/section-3">
               Next Section
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

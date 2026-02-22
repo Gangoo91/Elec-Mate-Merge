@@ -115,7 +115,7 @@ const features = [
     icon: ShieldCheck,
     title: 'BS 5839-1 Compliant',
     description:
-      'Certificate structure and inspection checklists follow BS 5839-1:2017 + A2:2019, the current code of practice for fire detection and alarm systems.',
+      'Certificate structure and inspection checklists follow BS 5839-1:2025, the current code of practice for fire detection and alarm systems.',
   },
   {
     icon: AlertTriangle,
@@ -216,9 +216,7 @@ export default function FireAlarmCertificatePage() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/20 mb-6">
             <Bell className="w-4 h-4 text-yellow-400" />
-            <span className="text-sm font-medium text-yellow-400">
-              BS 5839-1:2017 + A2:2019 Compliant
-            </span>
+            <span className="text-sm font-medium text-yellow-400">BS 5839-1:2025 Compliant</span>
           </div>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight mb-5">
             Digital <span className="text-yellow-400">Fire Alarm Certificates</span> on Your Phone
@@ -262,8 +260,8 @@ export default function FireAlarmCertificatePage() {
             </p>
             <p>
               In the UK, the design, installation, commissioning, and maintenance of fire alarm
-              systems in non-domestic premises is governed by BS 5839-1:2017 + A2:2019, the code of
-              practice for the design, installation, commissioning, and maintenance of systems in
+              systems in non-domestic premises is governed by BS 5839-1:2025, the code of practice
+              for the design, installation, commissioning, and maintenance of systems in
               non-domestic premises. For domestic premises, BS 5839-6 applies. These standards are
               referenced by the fire safety legislation and by insurers as the benchmark for
               competent fire alarm practice.

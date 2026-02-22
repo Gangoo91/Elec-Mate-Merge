@@ -2,7 +2,7 @@
  * Fire Alarm Compliance Data
  *
  * Contains verified requirements from:
- * - BS 5839-1:2017 Fire detection and fire alarm systems for buildings
+ * - BS 5839-1:2025 Fire detection and fire alarm systems for buildings
  * - BS EN 54 Fire detection and fire alarm systems
  *
  * All values are from official British Standards documents.
@@ -50,11 +50,11 @@ export interface ServiceInterval {
 }
 
 // ============================================
-// BS 5839-1:2017 SOUND LEVEL REQUIREMENTS
+// BS 5839-1:2025 SOUND LEVEL REQUIREMENTS
 // ============================================
 
 /**
- * Sound level requirements per BS 5839-1:2017 Clause 16.5
+ * Sound level requirements per BS 5839-1:2025 Clause 16.5
  *
  * General areas:
  * - Minimum 65 dB(A) at any occupiable point
@@ -71,26 +71,26 @@ export const SOUND_LEVEL_REQUIREMENTS: Record<AreaType, SoundLevelRequirement> =
   general: {
     minDb: 65,
     description: 'General occupied areas - minimum 65 dB(A) or 5 dB above ambient',
-    reference: 'BS 5839-1:2017 Clause 16.5.1',
+    reference: 'BS 5839-1:2025 Clause 16.5.1',
   },
   sleeping: {
     minDb: 75,
     description: 'Sleeping areas (bedrooms) - minimum 75 dB(A) at bedhead',
-    reference: 'BS 5839-1:2017 Clause 16.5.2',
+    reference: 'BS 5839-1:2025 Clause 16.5.2',
   },
   'high-ambient-noise': {
     minDb: 65,
     description: 'High ambient noise areas - 5 dB(A) above ambient noise level',
-    reference: 'BS 5839-1:2017 Clause 16.5.1',
+    reference: 'BS 5839-1:2025 Clause 16.5.1',
   },
 };
 
 // ============================================
-// BS 5839-1:2017 SERVICE INTERVALS
+// BS 5839-1:2025 SERVICE INTERVALS
 // ============================================
 
 /**
- * Service and inspection intervals per BS 5839-1:2017 Clause 45
+ * Service and inspection intervals per BS 5839-1:2025 Clause 45
  *
  * Weekly:
  * - User check of panel indicators
@@ -118,40 +118,40 @@ export const SERVICE_INTERVALS = {
     months: 0.25,
     days: 7,
     description: 'Weekly user check - verify panel shows normal, no faults',
-    reference: 'BS 5839-1:2017 Clause 45.2',
+    reference: 'BS 5839-1:2025 Clause 45.2',
   },
   monthly: {
     months: 1,
     days: 30,
     description: 'Monthly test - operate one device per zone (rotation)',
-    reference: 'BS 5839-1:2017 Clause 45.3',
+    reference: 'BS 5839-1:2025 Clause 45.3',
   },
   quarterly: {
     months: 3,
     days: 90,
     description: 'Quarterly test - 25% of devices, check batteries',
-    reference: 'BS 5839-1:2017 Clause 45.4',
+    reference: 'BS 5839-1:2025 Clause 45.4',
   },
   sixMonthly: {
     months: 6,
     days: 183,
     description: 'Six-monthly service - full inspection by competent person',
-    reference: 'BS 5839-1:2017 Clause 45.5',
+    reference: 'BS 5839-1:2025 Clause 45.5',
   },
   annual: {
     months: 12,
     days: 365,
     description: 'Annual comprehensive test - load test batteries, check all cables',
-    reference: 'BS 5839-1:2017 Clause 45.6',
+    reference: 'BS 5839-1:2025 Clause 45.6',
   },
 };
 
 // ============================================
-// BS 5839-1:2017 BATTERY REQUIREMENTS
+// BS 5839-1:2025 BATTERY REQUIREMENTS
 // ============================================
 
 /**
- * Battery standby requirements per BS 5839-1:2017 Clause 25.2
+ * Battery standby requirements per BS 5839-1:2025 Clause 25.2
  *
  * The system must be capable of operating from batteries for:
  * - 24 hours standby PLUS
@@ -168,26 +168,26 @@ export const BATTERY_REQUIREMENTS = {
   standardStandby: {
     hours: 24,
     description: '24 hours normal standby operation',
-    reference: 'BS 5839-1:2017 Clause 25.2',
+    reference: 'BS 5839-1:2025 Clause 25.2',
   },
   alarmDuration: {
     minutes: 30,
     description: '30 minutes in alarm condition after standby',
-    reference: 'BS 5839-1:2017 Clause 25.2',
+    reference: 'BS 5839-1:2025 Clause 25.2',
   },
   extendedStandby: {
     hours: 72,
     description: 'Extended standby for remote/unmonitored sites',
-    reference: 'BS 5839-1:2017 Clause 25.2 Note',
+    reference: 'BS 5839-1:2025 Clause 25.2 Note',
   },
 };
 
 // ============================================
-// BS 5839-1:2017 SYSTEM CATEGORIES
+// BS 5839-1:2025 SYSTEM CATEGORIES
 // ============================================
 
 /**
- * System category definitions per BS 5839-1:2017 Clause 6
+ * System category definitions per BS 5839-1:2025 Clause 6
  *
  * Life Protection Categories (L):
  * L1 - Full coverage throughout the building
@@ -218,56 +218,56 @@ export const SYSTEM_CATEGORIES: Record<
     description: 'Automatic detection throughout all areas of the building',
     coverage: 'All areas including voids, roof spaces, and risers',
     typicalUse: ['Care homes', 'Hospitals', 'Hotels', 'HMOs', 'High-risk residential'],
-    reference: 'BS 5839-1:2017 Clause 8.2',
+    reference: 'BS 5839-1:2025 Clause 8.2',
   },
   L2: {
     name: 'L2 - Enhanced Coverage (Life)',
     description: 'Automatic detection in escape routes plus high-risk/specified areas',
     coverage: 'Escape routes + specified rooms (often bedrooms, high fire load areas)',
     typicalUse: ['Residential care', 'Sheltered housing', 'Large HMOs'],
-    reference: 'BS 5839-1:2017 Clause 8.3',
+    reference: 'BS 5839-1:2025 Clause 8.3',
   },
   L3: {
     name: 'L3 - Standard Coverage (Life)',
     description: 'Automatic detection in escape routes only',
     coverage: 'All circulation spaces forming escape routes',
     typicalUse: ['Offices', 'Shops', 'Warehouses', 'Standard commercial'],
-    reference: 'BS 5839-1:2017 Clause 8.4',
+    reference: 'BS 5839-1:2025 Clause 8.4',
   },
   L4: {
     name: 'L4 - Escape Route Only (Life)',
     description: 'Automatic detection within escape routes',
     coverage: 'Circulation routes (corridors, stairwells, lobbies)',
     typicalUse: ['Single-occupancy dwellings', 'Small premises'],
-    reference: 'BS 5839-1:2017 Clause 8.5',
+    reference: 'BS 5839-1:2025 Clause 8.5',
   },
   L5: {
     name: 'L5 - Engineered System (Life)',
     description: 'Coverage as determined by fire risk assessment',
     coverage: 'Custom coverage based on fire engineering principles',
     typicalUse: ['Complex buildings', 'Fire-engineered solutions'],
-    reference: 'BS 5839-1:2017 Clause 8.6',
+    reference: 'BS 5839-1:2025 Clause 8.6',
   },
   M: {
     name: 'M - Manual System',
     description: 'Manual call points only, no automatic detection',
     coverage: 'Manual call points at exits and on escape routes',
     typicalUse: ['Low-risk premises', 'Simple buildings with good visibility'],
-    reference: 'BS 5839-1:2017 Clause 7',
+    reference: 'BS 5839-1:2025 Clause 7',
   },
   P1: {
     name: 'P1 - Full Coverage (Property)',
     description: 'Automatic detection throughout for property protection',
     coverage: 'All areas to protect property and contents',
     typicalUse: ['Museums', 'Archives', 'High-value storage', 'Insurance requirement'],
-    reference: 'BS 5839-1:2017 Clause 9.2',
+    reference: 'BS 5839-1:2025 Clause 9.2',
   },
   P2: {
     name: 'P2 - Partial Coverage (Property)',
     description: 'Automatic detection in defined high-risk areas for property protection',
     coverage: 'Specified high-value or high-risk areas only',
     typicalUse: ['Server rooms', 'Plant rooms', 'Storage areas'],
-    reference: 'BS 5839-1:2017 Clause 9.3',
+    reference: 'BS 5839-1:2025 Clause 9.3',
   },
 };
 
@@ -277,7 +277,7 @@ export const SYSTEM_CATEGORIES: Record<
 
 /**
  * Suggested system categories based on premises type
- * Per BS 5839-1:2017 recommendations and fire safety guidance
+ * Per BS 5839-1:2025 recommendations and fire safety guidance
  */
 export const PREMISES_CATEGORY_SUGGESTIONS: Record<
   PremisesCategory,

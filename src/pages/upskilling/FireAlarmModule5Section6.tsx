@@ -197,7 +197,7 @@ const FireAlarmModule5Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-5">
@@ -223,7 +223,7 @@ const FireAlarmModule5Section6 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white">
             Customer Witness Testing & Sign-Off
           </h1>
-          <p className="text-white/70 text-base sm:text-lg leading-relaxed">
+          <p className="text-white text-base sm:text-lg leading-relaxed">
             Structured witness testing, customer demonstrations, training delivery and formal
             handover procedures.
           </p>
@@ -232,7 +232,7 @@ const FireAlarmModule5Section6 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -274,7 +274,7 @@ const FireAlarmModule5Section6 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -289,7 +289,7 @@ const FireAlarmModule5Section6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Pre-Witness Planning
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Thorough planning</strong> ensures witness testing
                 runs smoothly and demonstrates system compliance effectively to the client.
@@ -315,7 +315,7 @@ const FireAlarmModule5Section6 = () => {
                   </li>
                 </ul>
               </div>
-              <p className="text-sm text-white/60 italic">
+              <p className="text-sm text-white italic">
                 Schedule witness testing when all relevant stakeholders can attend and interfaces
                 can be safely tested.
               </p>
@@ -328,7 +328,7 @@ const FireAlarmModule5Section6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Scripted Live Tests
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Use <strong className="text-elec-yellow">pre-agreed test scripts</strong> mapped to
                 the cause and effect matrix to systematically demonstrate all system functions.
@@ -391,7 +391,7 @@ const FireAlarmModule5Section6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Safety and Risk Controls
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Safety controls</strong> must be in place before
                 activating any alarms or testing interfaces with other building systems.
@@ -433,12 +433,12 @@ const FireAlarmModule5Section6 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               You are about to demonstrate fire alarm activation that will trigger HVAC shutdown.
               What safety preparations are essential?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> Notify the ARC and pause monitoring,
                 brief fire wardens, obtain authorisation for HVAC shutdown, ensure HVAC personnel
                 are present and aware, have a rollback plan, and confirm communications with
@@ -453,7 +453,7 @@ const FireAlarmModule5Section6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Training Delivery
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Provide <strong className="text-elec-yellow">comprehensive training</strong> to the
                 Responsible Person and key staff on system operation, testing and basic maintenance.
@@ -515,7 +515,7 @@ const FireAlarmModule5Section6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Evidence and Acceptance
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Formal acceptance requires{' '}
                 <strong className="text-white">signed documentation</strong> confirming the system
@@ -562,11 +562,11 @@ const FireAlarmModule5Section6 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               What should be included in training records for fire alarm handover?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> Training records should include:
                 names of all attendees, date and duration of training, scope and topics covered, and
                 trainer name with signature. These records form part of the handover documentation.
@@ -580,7 +580,7 @@ const FireAlarmModule5Section6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Post-Handover and Aftercare
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Following acceptance, establish clear{' '}
                 <strong className="text-elec-yellow">aftercare arrangements</strong> and ensure any
@@ -639,11 +639,11 @@ const FireAlarmModule5Section6 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               Some minor snags remain at the time of handover. How should these be managed?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> Outstanding items should be
                 documented in a snag register with clear ownership, target completion dates and
                 severity classifications. Progress should be tracked and the client kept informed.
@@ -662,7 +662,7 @@ const FireAlarmModule5Section6 = () => {
                 <Lightbulb className="h-5 w-5 text-green-400" />
                 <h4 className="text-sm font-semibold text-green-400">Pro Tips</h4>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Provide quick-reference cards for common operations like weekly testing and fault
@@ -685,7 +685,7 @@ const FireAlarmModule5Section6 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400" />
                 <h4 className="text-sm font-semibold text-red-400">Common Mistakes</h4>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Rushing witness testing without proper stakeholder coordination and safety
@@ -736,7 +736,7 @@ const FireAlarmModule5Section6 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -750,7 +750,7 @@ const FireAlarmModule5Section6 = () => {
           </div>
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of witness testing and handover with 10 questions.
               </p>
               <Button
@@ -766,7 +766,7 @@ const FireAlarmModule5Section6 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -784,11 +784,11 @@ const FireAlarmModule5Section6 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -821,7 +821,7 @@ const FireAlarmModule5Section6 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -859,7 +859,7 @@ const FireAlarmModule5Section6 = () => {
             asChild
             className="flex-1 min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation"
           >
-            <Link to="../section-5">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-5/section-5">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -868,7 +868,7 @@ const FireAlarmModule5Section6 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
           >
-            <Link to="/upskilling/fire-alarm-course/module-6">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6">
               Next Module
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

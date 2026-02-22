@@ -193,7 +193,7 @@ const FireAlarmModule6Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -211,12 +211,12 @@ const FireAlarmModule6Section5 = () => {
             <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
               <Award className="h-5 w-5 text-elec-yellow" />
             </div>
-            <span className="text-sm text-white/50">Section 5 of 6</span>
+            <span className="text-sm text-white">Section 5 of 6</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">
             Verification & Certification
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             System verification, certificates of compliance and third-party approval processes.
           </p>
         </div>
@@ -224,7 +224,7 @@ const FireAlarmModule6Section5 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -266,7 +266,7 @@ const FireAlarmModule6Section5 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -280,14 +280,14 @@ const FireAlarmModule6Section5 = () => {
             Purpose of System Verification
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Verification confirms that the installed fire alarm system{' '}
               <strong className="text-white">meets design requirements</strong> and complies with BS
               5839-1.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Verification Objectives:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Confirm all devices installed and functioning correctly
@@ -310,7 +310,7 @@ const FireAlarmModule6Section5 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Verification should be performed by someone independent of the installation team where
               possible.
             </p>
@@ -324,13 +324,13 @@ const FireAlarmModule6Section5 = () => {
             Verification Testing Procedures
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Verification requires <strong className="text-elec-yellow">100% testing</strong> of
               all system components, unlike routine quarterly sampling.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Verification Test Checklist:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Every detector - functional test with appropriate stimulus
@@ -367,14 +367,14 @@ const FireAlarmModule6Section5 = () => {
             Certificate of Compliance
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               The Certificate of Compliance is a{' '}
               <strong className="text-white">formal declaration</strong> that the system meets BS
               5839-1 requirements.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Certificate Contents:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Premises details and system description
@@ -417,12 +417,12 @@ const FireAlarmModule6Section5 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             During verification, you discover that sound levels in one area are below 65 dB(A). Can
             you still issue a certificate?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> No - sound levels not meeting the
               minimum is a non-compliance. You must either add sounders to achieve compliance, or
               document this as a departure from the standard with risk assessment justification. The
@@ -438,7 +438,7 @@ const FireAlarmModule6Section5 = () => {
             Third-Party Certification
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Third-party certification schemes like{' '}
               <strong className="text-elec-yellow">BAFE</strong> provide independent assurance of
               company competence.
@@ -447,7 +447,7 @@ const FireAlarmModule6Section5 = () => {
               <p className="text-sm font-semibold text-white mb-2">
                 BAFE Certification Requirements:
               </p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Quality management system (ISO 9001 or equivalent)
@@ -470,9 +470,10 @@ const FireAlarmModule6Section5 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
-              BAFE SP203-1 covers design, installation, commissioning and maintenance of fire
-              detection systems.
+            <p className="text-sm text-white italic">
+              BAFE SP203-1 (Version 8.0, August 2023) covers design, installation, commissioning and
+              maintenance of fire detection systems. Lead individuals must hold a minimum Level 3
+              qualification in fire detection and alarm systems.
             </p>
           </div>
         </div>
@@ -484,13 +485,13 @@ const FireAlarmModule6Section5 = () => {
             Documentation Package
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               A comprehensive <strong className="text-white">documentation package</strong> must
               accompany the Certificate of Compliance.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Required Documentation:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   As-fitted drawings showing all device locations
@@ -527,14 +528,14 @@ const FireAlarmModule6Section5 = () => {
             Managing Non-Compliance
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Non-compliance discovered during verification must be{' '}
               <strong className="text-elec-yellow">documented and resolved</strong> before
               certification.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Non-Compliance Management:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Document all deficiencies in detail
@@ -572,11 +573,11 @@ const FireAlarmModule6Section5 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             A client asks if third-party certification is legally required. How would you respond?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Third-party certification is not a
               legal requirement, but is often required by insurers and may be specified in lease
               agreements. It provides independent verification of competence and is increasingly
@@ -591,7 +592,7 @@ const FireAlarmModule6Section5 = () => {
           <div className="space-y-3">
             <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
               <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Use a systematic checklist during verification to ensure nothing is missed
@@ -609,7 +610,7 @@ const FireAlarmModule6Section5 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
               <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Issuing certificates before completing all verification tests
@@ -659,7 +660,7 @@ const FireAlarmModule6Section5 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -674,7 +675,7 @@ const FireAlarmModule6Section5 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-white/70 mb-4">
+              <p className="text-white mb-4">
                 Test your understanding of verification and certification with 10 questions.
               </p>
               <Button
@@ -690,7 +691,7 @@ const FireAlarmModule6Section5 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-white/70">
+                <p className="text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -708,11 +709,11 @@ const FireAlarmModule6Section5 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -745,7 +746,7 @@ const FireAlarmModule6Section5 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -783,7 +784,7 @@ const FireAlarmModule6Section5 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -792,7 +793,7 @@ const FireAlarmModule6Section5 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-6">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-6">
               Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

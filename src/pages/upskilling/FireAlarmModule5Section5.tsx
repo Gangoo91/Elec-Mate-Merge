@@ -199,7 +199,7 @@ const FireAlarmModule5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-5">
@@ -225,7 +225,7 @@ const FireAlarmModule5Section5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white">
             Commissioning Test Sheet Completion
           </h1>
-          <p className="text-white/70 text-base sm:text-lg leading-relaxed">
+          <p className="text-white text-base sm:text-lg leading-relaxed">
             Documentation requirements, test sheet completion, and O&M manual structure for fire
             alarm commissioning.
           </p>
@@ -234,7 +234,7 @@ const FireAlarmModule5Section5 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -276,7 +276,7 @@ const FireAlarmModule5Section5 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -291,7 +291,7 @@ const FireAlarmModule5Section5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Certificates and Test Records
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">BS 5839-1</strong> requires specific certificates and
                 test records to demonstrate compliance. These must be completed accurately and
@@ -318,7 +318,7 @@ const FireAlarmModule5Section5 = () => {
                   </li>
                 </ul>
               </div>
-              <p className="text-sm text-white/60 italic">
+              <p className="text-sm text-white italic">
                 All certificates should reference the project specification and design documents.
               </p>
             </div>
@@ -330,7 +330,7 @@ const FireAlarmModule5Section5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Instrument Traceability
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Test instruments used during commissioning must be{' '}
                 <strong className="text-elec-yellow">traceable</strong> and within their calibration
@@ -373,7 +373,7 @@ const FireAlarmModule5Section5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               As-Built Drawings and Zone Plans
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">As-built drawings</strong> must accurately reflect
                 what has been installed, not just what was designed. Any variations from the
@@ -416,6 +416,15 @@ const FireAlarmModule5Section5 = () => {
                     Copy included in O&M documentation
                   </li>
                 </ul>
+                <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-elec-yellow">BS 5839-1:2025 Update:</strong> The 2025
+                    edition places higher expectations on commissioning documentation. Zone drawings
+                    must follow a standardised format, cause and effect matrices are mandatory for
+                    systems with automatic responses, and full test certification must be provided
+                    as part of the handover package.
+                  </p>
+                </div>
               </div>
             </div>
           </section>
@@ -426,12 +435,12 @@ const FireAlarmModule5Section5 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               A commissioning engineer discovers that the actual detector locations differ from the
               design drawings. What action is required?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> The as-built drawings must be
                 updated to show the actual installed locations. The device schedule must also be
                 updated and the variation recorded with approval from the designer or consultant if
@@ -446,7 +455,7 @@ const FireAlarmModule5Section5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               O&M Manual Structure
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 The{' '}
                 <strong className="text-elec-yellow">Operation and Maintenance (O&M) manual</strong>{' '}
@@ -505,7 +514,7 @@ const FireAlarmModule5Section5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Battery Calculations and Autonomy
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Battery autonomy calculations</strong> must be
                 included in the documentation to demonstrate the system meets standby requirements
@@ -560,12 +569,12 @@ const FireAlarmModule5Section5 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               Why is it important to include the calibration date of test instruments on
               commissioning documentation?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> Calibration dates provide
                 traceability and prove that instruments were accurate at the time of testing. This
                 is essential for audit purposes and demonstrates that test results are valid and
@@ -580,7 +589,7 @@ const FireAlarmModule5Section5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Defect Management and Close-Out
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Any <strong className="text-elec-yellow">defects or non-conformances</strong> found
                 during commissioning must be recorded and closed out with evidence before final
@@ -631,12 +640,12 @@ const FireAlarmModule5Section5 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               What documentation should be provided as part of the O&M manual for a fire alarm
               system?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> The O&M manual should include:
                 system description, as-built drawings, zone plans, device schedules, cause and
                 effect matrix, certificates, test sheets, equipment data sheets, maintenance
@@ -655,7 +664,7 @@ const FireAlarmModule5Section5 = () => {
                 <Lightbulb className="h-5 w-5 text-green-400" />
                 <h4 className="text-sm font-semibold text-green-400">Pro Tips</h4>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Use a completion checklist to verify all documentation is complete before witness
@@ -677,7 +686,7 @@ const FireAlarmModule5Section5 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400" />
                 <h4 className="text-sm font-semibold text-red-400">Common Mistakes</h4>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Using design drawings as as-builts without updating for actual installed
@@ -729,7 +738,7 @@ const FireAlarmModule5Section5 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -743,7 +752,7 @@ const FireAlarmModule5Section5 = () => {
           </div>
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of commissioning documentation with 10 questions.
               </p>
               <Button
@@ -759,7 +768,7 @@ const FireAlarmModule5Section5 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -777,11 +786,11 @@ const FireAlarmModule5Section5 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -814,7 +823,7 @@ const FireAlarmModule5Section5 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -852,7 +861,7 @@ const FireAlarmModule5Section5 = () => {
             asChild
             className="flex-1 min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-5-section-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-5/section-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -861,7 +870,7 @@ const FireAlarmModule5Section5 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-5-section-6">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-5/section-6">
               Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

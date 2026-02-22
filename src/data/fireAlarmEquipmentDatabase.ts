@@ -5,7 +5,7 @@
  * from manufacturer documentation. All data sourced from official product pages.
  *
  * Standards Reference:
- * - BS 5839-1:2017 Fire detection and fire alarm systems for buildings
+ * - BS 5839-1:2025 Fire detection and fire alarm systems for buildings
  * - BS EN 54 Fire detection and fire alarm systems
  *
  * UK Market Manufacturers:

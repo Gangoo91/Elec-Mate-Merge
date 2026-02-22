@@ -561,6 +561,16 @@ const FireAlarmModule3Section6 = () => {
               All documentation must be kept up to date throughout the building lifecycle. Any
               changes to the system require documentation updates.
             </p>
+
+            <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
+              <p className="text-sm text-white">
+                <strong className="text-elec-yellow">BS 5839-1:2025 Update:</strong> The 2025
+                edition raises expectations for commissioning documentation. Zone drawings must be
+                provided in a clear, standardised format. Cause and effect matrices are required for
+                all systems with automatic response functions. Full test certification must
+                accompany the commissioning documentation package.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -652,13 +662,13 @@ const FireAlarmModule3Section6 = () => {
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
           <Button variant="outline" asChild className="gap-2">
-            <Link to="/study-centre/upskilling/fire-alarm-module-3-section-5">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-5">
               <ArrowLeft className="h-4 w-4" />
               Previous: Special Applications
             </Link>
           </Button>
           <Button asChild className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Link to="/study-centre/upskilling/fire-alarm-module-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-4">
               Next: Module 4
               <ArrowRight className="h-4 w-4" />
             </Link>

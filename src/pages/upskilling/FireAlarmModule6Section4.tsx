@@ -194,7 +194,7 @@ const FireAlarmModule6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -212,10 +212,10 @@ const FireAlarmModule6Section4 = () => {
             <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
               <ClipboardList className="h-5 w-5 text-elec-yellow" />
             </div>
-            <span className="text-sm text-white/50">Section 4 of 6</span>
+            <span className="text-sm text-white">Section 4 of 6</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">Record Keeping & Logbooks</h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Maintenance records, logbook entries and compliance evidence requirements.
           </p>
         </div>
@@ -223,7 +223,7 @@ const FireAlarmModule6Section4 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -265,7 +265,7 @@ const FireAlarmModule6Section4 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -279,14 +279,14 @@ const FireAlarmModule6Section4 = () => {
             Legal Requirements for Record Keeping
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               BS 5839-1 mandates comprehensive record keeping as{' '}
               <strong className="text-white">legal evidence of compliance</strong> with fire safety
               regulations.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Key Legal Requirements:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Minimum 3-year retention of all records
@@ -305,7 +305,7 @@ const FireAlarmModule6Section4 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Poor record keeping can invalidate insurance and result in enforcement action.
             </p>
           </div>
@@ -318,13 +318,13 @@ const FireAlarmModule6Section4 = () => {
             Fire Alarm Logbook Contents
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               The logbook is the <strong className="text-elec-yellow">central record</strong> of all
               fire alarm system activities and should be maintained throughout the system's life.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Essential Logbook Sections:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   System description and zone schedule
@@ -365,7 +365,7 @@ const FireAlarmModule6Section4 = () => {
             Recording Weekly Tests
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Every weekly test must be{' '}
               <strong className="text-white">documented immediately</strong> with sufficient detail
               to demonstrate compliance.
@@ -374,7 +374,7 @@ const FireAlarmModule6Section4 = () => {
               <p className="text-sm font-semibold text-white mb-2">
                 Weekly Test Entry Requirements:
               </p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Date and time of test
@@ -410,11 +410,11 @@ const FireAlarmModule6Section4 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             A weekly test entry simply states "Test OK". Is this adequate?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> No - the entry lacks required detail.
               It should specify which zone/device was tested, the time, who conducted the test, and
               their signature. Without this detail, compliance cannot be demonstrated.
@@ -429,14 +429,14 @@ const FireAlarmModule6Section4 = () => {
             Fault Recording Procedures
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Comprehensive fault recording enables{' '}
               <strong className="text-elec-yellow">effective remediation</strong> and helps identify
               recurring issues.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Fault Entry Requirements:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Date and time fault discovered
@@ -479,14 +479,14 @@ const FireAlarmModule6Section4 = () => {
             False Alarm Recording
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Recording false alarms supports{' '}
               <strong className="text-white">unwanted alarm reduction</strong> and helps identify
               problem areas.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">False Alarm Record Contents:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Date and time of alarm activation
@@ -513,7 +513,7 @@ const FireAlarmModule6Section4 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               High false alarm rates may trigger fire brigade charging schemes.
             </p>
           </div>
@@ -526,14 +526,14 @@ const FireAlarmModule6Section4 = () => {
             Digital Record Systems
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Digital systems offer advantages but must meet{' '}
               <strong className="text-elec-yellow">specific security requirements</strong> to be
               acceptable.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Digital System Requirements:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Secure user authentication and access control
@@ -560,7 +560,7 @@ const FireAlarmModule6Section4 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Consider maintaining paper backup for critical records.
             </p>
           </div>
@@ -572,12 +572,12 @@ const FireAlarmModule6Section4 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             The fire authority requests to see test records from 2 years ago. The records have been
             deleted to save storage space. What are the implications?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> This is a compliance breach - BS
               5839-1 requires 3-year retention. The responsible person may face enforcement action,
               and insurance validity could be questioned. Always maintain records for the full
@@ -592,12 +592,12 @@ const FireAlarmModule6Section4 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             A building has experienced 5 false alarms from the same detector in the past month. What
             should the logbook show?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Each incident should be recorded
               separately with investigation findings. The pattern should trigger escalated
               investigation, documented in the fault log. Actions might include detector cleaning,
@@ -612,7 +612,7 @@ const FireAlarmModule6Section4 = () => {
           <div className="space-y-3">
             <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
               <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Use standardised forms to ensure all required information is captured
@@ -630,7 +630,7 @@ const FireAlarmModule6Section4 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
               <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Vague entries that lack specific details about what was tested or found
@@ -680,7 +680,7 @@ const FireAlarmModule6Section4 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -695,7 +695,7 @@ const FireAlarmModule6Section4 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-white/70 mb-4">
+              <p className="text-white mb-4">
                 Test your understanding of record keeping and logbooks with 10 questions.
               </p>
               <Button
@@ -711,7 +711,7 @@ const FireAlarmModule6Section4 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-white/70">
+                <p className="text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -729,11 +729,11 @@ const FireAlarmModule6Section4 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -766,7 +766,7 @@ const FireAlarmModule6Section4 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -804,7 +804,7 @@ const FireAlarmModule6Section4 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-3">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -813,7 +813,7 @@ const FireAlarmModule6Section4 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-5">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-5">
               Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

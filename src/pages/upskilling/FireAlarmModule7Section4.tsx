@@ -191,7 +191,7 @@ const FireAlarmModule7Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-7">
@@ -215,11 +215,11 @@ const FireAlarmModule7Section4 = () => {
         <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
           BS 5839-6 Requirements
         </h1>
-        <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-4">
+        <p className="text-base sm:text-lg text-white leading-relaxed mb-4">
           Domestic fire detection and alarm systems: grades, LD categories and requirements for
           dwellings.
         </p>
-        <div className="flex items-center gap-4 text-sm text-white/50">
+        <div className="flex items-center gap-4 text-sm text-white">
           <span className="flex items-center gap-1">
             <Target className="h-4 w-4" />6 learning outcomes
           </span>
@@ -234,7 +234,7 @@ const FireAlarmModule7Section4 = () => {
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -262,7 +262,7 @@ const FireAlarmModule7Section4 = () => {
 
       {/* Learning Outcomes */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Learning Outcomes
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -279,7 +279,7 @@ const FireAlarmModule7Section4 = () => {
                 <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                 </div>
-                <p className="text-sm text-white/80">{outcome}</p>
+                <p className="text-sm text-white">{outcome}</p>
               </div>
             </div>
           ))}
@@ -296,7 +296,7 @@ const FireAlarmModule7Section4 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Introduction to BS 5839-6</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-white">BS 5839-6</strong> is the code of practice for fire
               detection and fire alarm systems in{' '}
@@ -324,9 +324,17 @@ const FireAlarmModule7Section4 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Common areas of blocks of flats are covered by BS 5839-1, not BS 5839-6.
             </p>
+            <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
+              <p className="text-sm text-white">
+                <strong className="text-elec-yellow">Current Edition:</strong> BS
+                5839-6:2019+A1:2020 is the current edition for domestic fire detection systems. It
+                introduced the distinction between Grade D1 (mains-powered with integral battery
+                backup) and Grade D2 (mains-powered with central battery backup).
+              </p>
+            </div>
           </div>
         </div>
 
@@ -338,7 +346,7 @@ const FireAlarmModule7Section4 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">System Grades (A-F)</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-elec-yellow">Grades</strong> define the{' '}
               <strong className="text-white">type of system components</strong> and how they are
@@ -414,7 +422,7 @@ const FireAlarmModule7Section4 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">LD Categories (Coverage)</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               <strong className="text-elec-yellow">LD categories</strong> define the{' '}
               <strong className="text-white">extent of detection coverage</strong> within the
@@ -469,12 +477,12 @@ const FireAlarmModule7Section4 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             A new three-bedroom house is being built. What minimum grade and category is required by
             Building Regulations?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Grade D (mains with integral standby
               battery) at Category LD2 (smoke alarms in hallway, landing and principal habitable
               room, plus heat alarm in kitchen). All alarms must be interlinked.
@@ -490,7 +498,7 @@ const FireAlarmModule7Section4 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Detector Selection and Positioning</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Correct <strong className="text-white">detector selection and positioning</strong> is
               critical for effective protection without excessive false alarms.
@@ -557,7 +565,7 @@ const FireAlarmModule7Section4 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Interconnection and Power Supply</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               All fire alarms in a dwelling must be{' '}
               <strong className="text-elec-yellow">interconnected</strong> so that when one
@@ -613,11 +621,11 @@ const FireAlarmModule7Section4 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             Why should a heat detector rather than smoke detector be used in a kitchen?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Smoke detectors in kitchens cause
               frequent false alarms from cooking fumes and steam. Heat detectors respond to
               temperature rise and are not affected by normal cooking activities, reducing nuisance
@@ -634,7 +642,7 @@ const FireAlarmModule7Section4 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Special Situations and HMOs</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Some dwellings have <strong className="text-white">special requirements</strong>{' '}
               beyond the standard Building Regulations minimum.
@@ -699,11 +707,11 @@ const FireAlarmModule7Section4 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             What is the key difference between Grade D and Grade F systems?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Grade D uses mains power with integral
               battery backup, providing reliable power with automatic standby. Grade F is
               battery-only with no mains connection, relying entirely on batteries which must be
@@ -715,14 +723,14 @@ const FireAlarmModule7Section4 = () => {
 
       {/* Practical Guidance */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Practical Guidance
         </h2>
 
         <div className="space-y-3">
           <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
             <h4 className="text-base font-semibold text-green-400 mb-2">Pro Tips</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Always recommend 10-year sealed battery alarms for Grade D - eliminates battery
@@ -743,7 +751,7 @@ const FireAlarmModule7Section4 = () => {
 
           <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
             <h4 className="text-base font-semibold text-red-400 mb-2">Common Mistakes</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                 Installing smoke detectors in kitchens - always use heat detectors to avoid nuisance
@@ -766,7 +774,7 @@ const FireAlarmModule7Section4 = () => {
 
       {/* FAQs */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Frequently Asked Questions
         </h2>
         <div className="space-y-3">
@@ -798,7 +806,7 @@ const FireAlarmModule7Section4 = () => {
           ].map((faq, i) => (
             <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-base font-semibold text-white mb-2">{faq.q}</p>
-              <p className="text-sm text-white/70">{faq.a}</p>
+              <p className="text-sm text-white">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -814,7 +822,7 @@ const FireAlarmModule7Section4 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of BS 5839-6 with 10 questions.
               </p>
               <Button
@@ -830,7 +838,7 @@ const FireAlarmModule7Section4 = () => {
                 <p className="text-4xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -847,11 +855,11 @@ const FireAlarmModule7Section4 = () => {
                         Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -883,7 +891,7 @@ const FireAlarmModule7Section4 = () => {
                         className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -922,7 +930,7 @@ const FireAlarmModule7Section4 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-white/5 text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../section-3">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7/section-3">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
@@ -931,7 +939,7 @@ const FireAlarmModule7Section4 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="/upskilling/fire-alarm-course/mock-exam">
+            <Link to="/electrician/upskilling/fire-alarm-course/mock-exam">
               Mock Exam
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -184,7 +184,7 @@ const FireAlarmModule6Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -202,10 +202,10 @@ const FireAlarmModule6Section3 = () => {
             <div className="w-10 h-10 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
               <Search className="h-5 w-5 text-elec-yellow" />
             </div>
-            <span className="text-sm text-white/50">Section 3 of 6</span>
+            <span className="text-sm text-white">Section 3 of 6</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">Fault Finding Techniques</h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Systematic diagnosis methods, common fault types and professional repair procedures.
           </p>
         </div>
@@ -213,7 +213,7 @@ const FireAlarmModule6Section3 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -255,7 +255,7 @@ const FireAlarmModule6Section3 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -269,14 +269,14 @@ const FireAlarmModule6Section3 = () => {
             Systematic Fault Finding Approach
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Effective fault finding requires a{' '}
               <strong className="text-white">methodical approach</strong> that starts with
               information gathering before physical investigation.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Fault Finding Methodology:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Step 1: Check control panel - fault type, zone, event log
@@ -299,7 +299,7 @@ const FireAlarmModule6Section3 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Never assume - always verify each step before proceeding to the next.
             </p>
           </div>
@@ -312,14 +312,14 @@ const FireAlarmModule6Section3 = () => {
             Earth Fault Diagnosis
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Earth faults are among the most common issues and can cause{' '}
               <strong className="text-elec-yellow">intermittent problems</strong> or system
               instability.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Earth Fault Symptoms:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Earth fault LED illuminated on panel
@@ -340,7 +340,7 @@ const FireAlarmModule6Section3 = () => {
             </div>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Common Earth Fault Causes:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <AlertTriangle className="h-3 w-3 text-amber-400" />
                   Water ingress in junction boxes or devices
@@ -369,13 +369,13 @@ const FireAlarmModule6Section3 = () => {
             Insulation Resistance Testing
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Insulation resistance testing at <strong className="text-white">500V DC</strong>{' '}
               identifies insulation breakdown between conductors and earth.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Test Procedure:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Isolate the circuit from the control panel
@@ -409,12 +409,12 @@ const FireAlarmModule6Section3 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             An earth fault appears intermittently, only during wet weather. Where would you focus
             your investigation?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Focus on external cable routes,
               junction boxes exposed to weather, devices in unheated areas, and any locations where
               water ingress is possible. Check seals, glands, and enclosure integrity.
@@ -429,14 +429,14 @@ const FireAlarmModule6Section3 = () => {
             Open Circuit Faults
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Open circuit faults indicate a{' '}
               <strong className="text-elec-yellow">break in circuit continuity</strong>, preventing
               signal transmission.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Open Circuit Causes:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Broken or severed cables
@@ -457,7 +457,7 @@ const FireAlarmModule6Section3 = () => {
             </div>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Diagnosis Method:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Measure resistance across circuit at panel
@@ -486,13 +486,13 @@ const FireAlarmModule6Section3 = () => {
             Short Circuit Faults
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Short circuits create <strong className="text-white">unintended connections</strong>{' '}
               between conductors, triggering fault conditions.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Short Circuit Indicators:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Very low or zero resistance reading
@@ -513,7 +513,7 @@ const FireAlarmModule6Section3 = () => {
             </div>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Common Short Circuit Causes:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <AlertTriangle className="h-3 w-3 text-amber-400" />
                   Cable damage exposing conductors
@@ -542,14 +542,14 @@ const FireAlarmModule6Section3 = () => {
             Addressable Loop Faults
           </h2>
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
-            <p className="text-white/70">
+            <p className="text-white">
               Addressable systems have unique fault types related to{' '}
               <strong className="text-elec-yellow">digital communication</strong> between panel and
               devices.
             </p>
             <div className="p-3 rounded-lg bg-white/5">
               <p className="text-sm font-semibold text-white mb-2">Communication Fault Causes:</p>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="h-3 w-3 text-elec-yellow" />
                   Voltage drop on long cable runs
@@ -572,7 +572,7 @@ const FireAlarmModule6Section3 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               Use panel diagnostics to identify specific device communication issues.
             </p>
           </div>
@@ -584,12 +584,12 @@ const FireAlarmModule6Section3 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             A conventional zone shows a fault. Resistance measurement at the panel reads infinite.
             What does this indicate?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> An open circuit fault - the circuit
               continuity is broken somewhere between the panel and the end-of-line resistor. Check
               for broken cables, loose connections, or removed devices.
@@ -603,12 +603,12 @@ const FireAlarmModule6Section3 = () => {
             <HelpCircle className="h-5 w-5 text-elec-yellow" />
             <span className="font-semibold text-elec-yellow">Quick Check</span>
           </div>
-          <p className="text-white/80 mb-3">
+          <p className="text-white mb-3">
             Multiple devices at the far end of an addressable loop show communication errors. What
             is the likely cause?
           </p>
           <div className="p-3 rounded-lg bg-white/5">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Voltage drop - the loop is too long or
               cables are undersized. Check voltage at distant devices and compare with panel output.
               Solutions include upgrading cable size or installing a loop powered repeater.
@@ -622,7 +622,7 @@ const FireAlarmModule6Section3 = () => {
           <div className="space-y-3">
             <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
               <h4 className="font-semibold text-green-400 mb-2">Pro Tips</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Always check the event log - it often shows when the fault first occurred and any
@@ -641,7 +641,7 @@ const FireAlarmModule6Section3 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
               <h4 className="font-semibold text-red-400 mb-2">Common Mistakes</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Replacing components without finding the root cause - the fault often returns
@@ -691,7 +691,7 @@ const FireAlarmModule6Section3 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -706,7 +706,7 @@ const FireAlarmModule6Section3 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-white/70 mb-4">
+              <p className="text-white mb-4">
                 Test your understanding of fault finding techniques with 10 questions.
               </p>
               <Button
@@ -722,7 +722,7 @@ const FireAlarmModule6Section3 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-white/70">
+                <p className="text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -740,11 +740,11 @@ const FireAlarmModule6Section3 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -777,7 +777,7 @@ const FireAlarmModule6Section3 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -815,7 +815,7 @@ const FireAlarmModule6Section3 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation border-white/20 text-white hover:bg-white/10"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-2">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-2">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -824,7 +824,7 @@ const FireAlarmModule6Section3 = () => {
             asChild
             className="flex-1 min-h-[44px] touch-manipulation bg-elec-yellow text-black hover:bg-elec-yellow/90"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-4">
               Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

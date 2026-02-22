@@ -613,13 +613,13 @@ const FireAlarmModule3Section3 = () => {
         {/* Navigation */}
         <nav className="flex flex-col sm:flex-row gap-4 justify-between pt-8 border-t border-white/10">
           <Button variant="outline" asChild className="gap-2">
-            <Link to="/study-centre/upskilling/fire-alarm-module-3-section-2">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-2">
               <ArrowLeft className="h-4 w-4" />
               Previous: Detection Zones & Categories
             </Link>
           </Button>
           <Button asChild className="gap-2 bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Link to="/study-centre/upskilling/fire-alarm-module-3-section-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-3/section-4">
               Next: Detector Spacing & Coverage
               <ArrowRight className="h-4 w-4" />
             </Link>

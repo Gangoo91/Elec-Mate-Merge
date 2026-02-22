@@ -186,7 +186,7 @@ const FireAlarmModule6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -208,11 +208,11 @@ const FireAlarmModule6Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Routine Testing Requirements
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Weekly, monthly, quarterly and annual test schedules per BS 5839-1 for maintaining fire
             alarm system reliability
           </p>
-          <div className="flex items-center justify-center gap-4 mt-4 text-sm text-white/60">
+          <div className="flex items-center justify-center gap-4 mt-4 text-sm text-white">
             <span className="flex items-center gap-1">
               <Target className="h-4 w-4" />6 learning outcomes
             </span>
@@ -320,7 +320,7 @@ const FireAlarmModule6Section1 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               The testing regime applies to all fire alarm systems regardless of size or category.
             </p>
           </div>
@@ -364,7 +364,7 @@ const FireAlarmModule6Section1 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               Use a different call point each week to ensure all are tested over time.
             </p>
           </div>
@@ -402,7 +402,7 @@ const FireAlarmModule6Section1 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               Monthly checks help identify emerging issues before they become critical.
             </p>
           </div>
@@ -509,7 +509,7 @@ const FireAlarmModule6Section1 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               Annual tests must be conducted by a competent fire alarm engineer with appropriate
               qualifications.
             </p>
@@ -549,7 +549,7 @@ const FireAlarmModule6Section1 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               Sound level meters must be calibrated within the previous 12 months.
             </p>
           </div>
@@ -675,7 +675,7 @@ const FireAlarmModule6Section1 = () => {
             ].map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.q}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.a}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -708,7 +708,7 @@ const FireAlarmModule6Section1 = () => {
                   <p className="text-4xl font-bold text-elec-yellow">
                     {calculateScore()}/{questions.length}
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                   </p>
                 </div>
@@ -725,11 +725,11 @@ const FireAlarmModule6Section1 = () => {
                           Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
                         </p>
                         {!correct && (
-                          <p className="text-sm text-white/60 mt-1">
+                          <p className="text-sm text-white mt-1">
                             Correct: {q.options[q.correctAnswer]}
                           </p>
                         )}
-                        <p className="text-sm text-white/80 mt-2">{q.explanation}</p>
+                        <p className="text-sm text-white mt-2">{q.explanation}</p>
                       </div>
                     );
                   })}
@@ -739,7 +739,7 @@ const FireAlarmModule6Section1 = () => {
                   variant="ghost"
                   size="lg"
                   onClick={resetQuiz}
-                  className="w-full min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] gap-2"
+                  className="w-full min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] gap-2"
                 >
                   <RotateCcw className="h-4 w-4" />
                   Restart Quiz
@@ -779,7 +779,7 @@ const FireAlarmModule6Section1 = () => {
                     size="lg"
                     onClick={handlePrevious}
                     disabled={currentQuestion === 0}
-                    className="flex-1 min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                    className="flex-1 min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
                   >
                     Previous
                   </Button>
@@ -802,7 +802,7 @@ const FireAlarmModule6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -815,7 +815,7 @@ const FireAlarmModule6Section1 = () => {
             className="w-full sm:w-auto min-h-[48px] bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.98]"
             asChild
           >
-            <Link to="../section-2">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-2">
               Next Section
               <ArrowRight className="w-4 h-4 ml-2" />
             </Link>

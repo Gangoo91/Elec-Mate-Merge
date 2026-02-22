@@ -771,13 +771,13 @@ const FireAlarmModule2Section5 = () => {
         {/* Navigation */}
         <div className="flex items-center justify-between gap-4 pt-6 border-t border-white/10">
           <Button variant="outline" asChild>
-            <Link to="../fire-alarm-module-2-section-4">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-2/section-4">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous Section
             </Link>
           </Button>
           <Button asChild className="bg-elec-yellow text-black hover:bg-elec-yellow/90">
-            <Link to="../fire-alarm-module-3">Module 3</Link>
+            <Link to="/electrician/upskilling/fire-alarm-course/module-3">Module 3</Link>
           </Button>
         </div>
       </main>

@@ -191,7 +191,7 @@ const FireAlarmModule6Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-6">
@@ -215,7 +215,7 @@ const FireAlarmModule6Section2 = () => {
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">Servicing & Maintenance</h1>
-          <p className="text-white/70 text-base sm:text-lg leading-relaxed">
+          <p className="text-white text-base sm:text-lg leading-relaxed">
             Service visit procedures, preventive maintenance programmes and component replacement
             strategies.
           </p>
@@ -224,7 +224,7 @@ const FireAlarmModule6Section2 = () => {
         {/* Quick Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -266,7 +266,7 @@ const FireAlarmModule6Section2 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                     <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{outcome}</p>
+                  <p className="text-sm text-white">{outcome}</p>
                 </div>
               </div>
             ))}
@@ -281,7 +281,7 @@ const FireAlarmModule6Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Service Visit Planning
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Professional service visits require{' '}
                 <strong className="text-white">careful planning</strong> to ensure comprehensive
@@ -294,7 +294,7 @@ const FireAlarmModule6Section2 = () => {
                 <ul className="space-y-2 text-sm">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-elec-yellow" />
-                    Standard commercial: Six-monthly visits
+                    Standard commercial: Six-monthly visits (5-7 month tolerance per BS 5839-1:2025)
                   </li>
                   <li className="flex items-center gap-2">
                     <CheckCircle className="h-4 w-4 text-elec-yellow" />
@@ -310,7 +310,7 @@ const FireAlarmModule6Section2 = () => {
                   </li>
                 </ul>
               </div>
-              <p className="text-sm text-white/60 italic">
+              <p className="text-sm text-white italic">
                 Service frequency should be determined by risk assessment and system complexity.
               </p>
             </div>
@@ -322,7 +322,7 @@ const FireAlarmModule6Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Pre-Service Procedures
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Before commencing any maintenance work,{' '}
                 <strong className="text-elec-yellow">essential procedures</strong> must be followed
@@ -369,7 +369,7 @@ const FireAlarmModule6Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Detector Maintenance
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Detectors require{' '}
                 <strong className="text-white">regular cleaning and testing</strong> to maintain
@@ -400,7 +400,7 @@ const FireAlarmModule6Section2 = () => {
                   </li>
                 </ul>
               </div>
-              <p className="text-sm text-white/60 italic">
+              <p className="text-sm text-white italic">
                 Never use silicone sprays or solvents that may damage detector sensors.
               </p>
             </div>
@@ -412,12 +412,12 @@ const FireAlarmModule6Section2 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               A smoke detector shows consistently high sensitivity readings. What maintenance action
               is required?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> High sensitivity usually indicates
                 contamination. Clean the detector chamber thoroughly. If readings remain high after
                 cleaning, the detector may need replacement due to sensor drift or damage.
@@ -431,7 +431,7 @@ const FireAlarmModule6Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Battery Maintenance
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Standby batteries are{' '}
                 <strong className="text-elec-yellow">critical for system integrity</strong> during
@@ -460,12 +460,23 @@ const FireAlarmModule6Section2 = () => {
                     <CheckCircle className="h-4 w-4 text-elec-yellow" />
                     Replace every 3-5 years or when capacity fails
                   </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-elec-yellow" />
+                    Check battery installation date label is present and legible
+                  </li>
                 </ul>
               </div>
-              <p className="text-sm text-white/60 italic">
+              <p className="text-sm text-white italic">
                 Sealed lead-acid batteries should maintain system operation for 24-72 hours plus 30
                 minutes alarm.
               </p>
+              <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-3 mt-3">
+                <p className="text-sm text-white">
+                  <strong className="text-elec-yellow">BS 5839-1:2025 Update:</strong> Batteries
+                  must display an installation date label. During servicing, verify the label is
+                  present and record the installation date in the service report.
+                </p>
+              </div>
             </div>
           </section>
 
@@ -475,7 +486,7 @@ const FireAlarmModule6Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Component Replacement Schedules
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Preventive replacement</strong> reduces failures and
                 maintains system reliability throughout service life.
@@ -522,7 +533,7 @@ const FireAlarmModule6Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Service Documentation
             </h2>
-            <div className="space-y-4 text-white/70">
+            <div className="space-y-4 text-white">
               <p>
                 Comprehensive <strong className="text-elec-yellow">service documentation</strong>{' '}
                 demonstrates compliance and provides valuable system history.
@@ -556,7 +567,7 @@ const FireAlarmModule6Section2 = () => {
                   </li>
                 </ul>
               </div>
-              <p className="text-sm text-white/60 italic">
+              <p className="text-sm text-white italic">
                 Retain service reports for minimum 3 years per BS 5839-1.
               </p>
             </div>
@@ -568,12 +579,12 @@ const FireAlarmModule6Section2 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               During a service visit, you discover damaged cable insulation in a ceiling void. What
               action should you take?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> Repair or replace the damaged cable
                 section immediately if possible. If the damage is extensive, implement temporary
                 measures, notify the responsible person, and schedule urgent follow-up. Document all
@@ -588,12 +599,12 @@ const FireAlarmModule6Section2 = () => {
               <HelpCircle className="h-5 w-5 text-elec-yellow" />
               <span className="text-sm font-semibold text-elec-yellow">Quick Check</span>
             </div>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               A client questions why smoke detectors need replacing when they still pass testing.
               How would you explain?
             </p>
             <div className="p-3 rounded-lg bg-white/5">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Answer:</strong> Detector sensors degrade over time
                 due to environmental exposure. A detector may pass basic testing but have reduced
                 sensitivity to real smoke. Manufacturer replacement intervals (typically 8-10 years)
@@ -612,7 +623,7 @@ const FireAlarmModule6Section2 = () => {
                 <Lightbulb className="h-5 w-5 text-green-400" />
                 <h4 className="text-sm font-semibold text-green-400">Pro Tips</h4>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   Carry common spare parts to resolve minor faults during routine visits
@@ -633,7 +644,7 @@ const FireAlarmModule6Section2 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400" />
                 <h4 className="text-sm font-semibold text-red-400">Common Mistakes</h4>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                   Forgetting to notify the monitoring station before starting work
@@ -683,7 +694,7 @@ const FireAlarmModule6Section2 = () => {
             ].map((faq, i) => (
               <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-semibold text-white mb-2">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -697,7 +708,7 @@ const FireAlarmModule6Section2 = () => {
           </div>
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of servicing and maintenance with 10 questions.
               </p>
               <Button
@@ -713,7 +724,7 @@ const FireAlarmModule6Section2 = () => {
                 <p className="text-3xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -731,11 +742,11 @@ const FireAlarmModule6Section2 = () => {
                         {correct ? '(Correct)' : '(Incorrect)'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -768,7 +779,7 @@ const FireAlarmModule6Section2 = () => {
                         className={`w-full text-left p-4 rounded-lg border transition-all touch-manipulation min-h-[44px] ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -806,7 +817,7 @@ const FireAlarmModule6Section2 = () => {
             asChild
             className="flex-1 min-h-[44px] border-white/20 text-white hover:bg-white/5 touch-manipulation"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-1">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-1">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Previous
             </Link>
@@ -815,7 +826,7 @@ const FireAlarmModule6Section2 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium touch-manipulation"
           >
-            <Link to="/study-centre/upskilling/fire-alarm-module-6-section-3">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-6/section-3">
               Next
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

@@ -196,7 +196,7 @@ const FireAlarmModule7Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course/module-7">
@@ -220,11 +220,11 @@ const FireAlarmModule7Section1 = () => {
         <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight mb-3">
           Fire Safety Legislation
         </h1>
-        <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-4">
+        <p className="text-base sm:text-lg text-white leading-relaxed mb-4">
           Understanding the Regulatory Reform (Fire Safety) Order 2005 and the legal framework for
           fire safety in England and Wales.
         </p>
-        <div className="flex items-center gap-4 text-sm text-white/50">
+        <div className="flex items-center gap-4 text-sm text-white">
           <span className="flex items-center gap-1">
             <Target className="h-4 w-4" />6 learning outcomes
           </span>
@@ -239,7 +239,7 @@ const FireAlarmModule7Section1 = () => {
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
           <p className="text-elec-yellow text-sm font-medium mb-2">In 30 Seconds</p>
-          <ul className="space-y-2 text-white/80 text-sm">
+          <ul className="space-y-2 text-white text-sm">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -267,7 +267,7 @@ const FireAlarmModule7Section1 = () => {
 
       {/* Learning Outcomes */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Learning Outcomes
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -284,7 +284,7 @@ const FireAlarmModule7Section1 = () => {
                 <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0">
                   <span className="text-xs font-bold text-elec-yellow">{i + 1}</span>
                 </div>
-                <p className="text-sm text-white/80">{outcome}</p>
+                <p className="text-sm text-white">{outcome}</p>
               </div>
             </div>
           ))}
@@ -303,7 +303,7 @@ const FireAlarmModule7Section1 = () => {
               The Regulatory Reform (Fire Safety) Order 2005
             </h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               The <strong className="text-white">Regulatory Reform (Fire Safety) Order 2005</strong>{' '}
               (commonly known as the RR(FS)O or Fire Safety Order) came into force on{' '}
@@ -347,7 +347,7 @@ const FireAlarmModule7Section1 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">The Responsible Person</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               The <strong className="text-elec-yellow">Responsible Person</strong> is the individual
               or organisation with ultimate responsibility for fire safety in regulated premises.
@@ -391,7 +391,7 @@ const FireAlarmModule7Section1 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Fire Risk Assessment Requirements</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Article 9 requires the Responsible Person to carry out a{' '}
               <strong className="text-white">suitable and sufficient fire risk assessment</strong>.
@@ -449,7 +449,7 @@ const FireAlarmModule7Section1 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/60 italic">
+            <p className="text-sm text-white italic">
               For premises with 5 or more employees, the significant findings must be recorded in
               writing.
             </p>
@@ -462,12 +462,12 @@ const FireAlarmModule7Section1 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             A small business has 3 employees. Must they record their fire risk assessment in
             writing?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Technically, written recording is only
               legally required for premises with 5+ employees. However, it is strongly recommended
               to record all fire risk assessments as evidence of compliance and for review purposes.
@@ -485,7 +485,7 @@ const FireAlarmModule7Section1 = () => {
               General Fire Precautions (Articles 8-22)
             </h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               The Order specifies <strong className="text-white">general fire precautions</strong>{' '}
               that the Responsible Person must implement based on the fire risk assessment.
@@ -533,7 +533,7 @@ const FireAlarmModule7Section1 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Enforcement and Penalties</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               The <strong className="text-elec-yellow">Fire and Rescue Authority</strong> is the
               enforcing authority for most premises. They have extensive powers to ensure
@@ -588,12 +588,12 @@ const FireAlarmModule7Section1 = () => {
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             A fire inspector issues a Prohibition Notice on a nightclub. Can the club continue
             operating?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> No. A Prohibition Notice takes
               immediate effect and prohibits or restricts use of the premises until the serious fire
               risk is remedied. Operating in breach is a criminal offence.
@@ -609,7 +609,7 @@ const FireAlarmModule7Section1 = () => {
             </span>
             <h3 className="text-lg font-semibold text-white">Penalties and Criminal Liability</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/70">
+          <div className="space-y-3 text-sm text-white">
             <p>
               Failure to comply with the RR(FS)O 2005 can result in{' '}
               <strong className="text-white">criminal prosecution</strong> with significant
@@ -652,18 +652,98 @@ const FireAlarmModule7Section1 = () => {
           </div>
         </div>
 
+        {/* Recent Legislation Updates */}
+        <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+          <div className="flex items-center gap-2 mb-3">
+            <Scale className="h-5 w-5 text-elec-yellow" />
+            <h3 className="text-lg font-semibold text-white">Recent Legislation Updates</h3>
+          </div>
+          <div className="space-y-4 text-sm text-white">
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">
+                Fire Safety (England) Regulations 2022
+              </p>
+              <p className="mb-2">
+                In force since <strong className="text-elec-yellow">23 January 2023</strong>, these
+                regulations impose additional duties on responsible persons for multi-occupied
+                residential buildings:
+              </p>
+              <ul className="space-y-1 text-sm ml-4 list-disc">
+                <li>Fire safety instructions must be provided to all residents</li>
+                <li>Annual checks on flat entrance doors in buildings over 11m</li>
+                <li>Quarterly checks on common fire doors in buildings over 11m</li>
+                <li>
+                  High-rise buildings (18m+) must share external wall information with the Fire and
+                  Rescue Service
+                </li>
+                <li>
+                  Electronic floor plans and secure information boxes required in high-rise
+                  buildings
+                </li>
+                <li>Monthly checks on firefighting lifts in high-rise buildings</li>
+              </ul>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Building Safety Act 2022</p>
+              <p>
+                Strengthens the framework for building safety, particularly for higher-risk
+                buildings. Section 156 enhances fire safety information sharing requirements and
+                mandates stricter audit trails for fire safety measures throughout the building
+                lifecycle.
+              </p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">
+                Fire Safety (Residential Evacuation Plans) Regulations 2025
+              </p>
+              <p>
+                Coming into force <strong className="text-elec-yellow">6 April 2026</strong>, these
+                regulations require Person-Centred Fire Risk Assessments (PCFRAs) and Personal
+                Emergency Evacuation Plans (PEEPs) for residents who would have difficulty
+                self-evacuating. Fire alarm engineers should be aware of how evacuation plans may
+                affect system design requirements.
+              </p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">Evacuation Alert Systems</p>
+              <p>
+                Following recommendations from the Grenfell Tower Inquiry, evacuation alert systems
+                are a distinct category from fire alarm systems. They are manually activated by the
+                Fire and Rescue Service to signal a full building evacuation when the "stay put"
+                strategy is overridden. These are separate from the building's fire detection and
+                alarm system.
+              </p>
+            </div>
+
+            <div className="bg-white/5 rounded-lg p-3">
+              <p className="text-sm font-semibold text-white mb-2">PAS 79 Update</p>
+              <p>
+                PAS 79:2012 has been withdrawn and replaced by{' '}
+                <strong className="text-elec-yellow">PAS 79-1:2020</strong> (fire risk assessment
+                for non-housing premises) and{' '}
+                <strong className="text-elec-yellow">BS 9792:2025</strong> (fire risk assessment for
+                housing). Fire risk assessors should use the current editions when conducting
+                assessments.
+              </p>
+            </div>
+          </div>
+        </div>
+
         {/* Quick Check 3 */}
         <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
           <div className="flex items-center gap-2 mb-3">
             <HelpCircle className="h-5 w-5 text-amber-400" />
             <span className="text-base font-semibold text-amber-400">Quick Check</span>
           </div>
-          <p className="text-sm text-white/80 mb-3">
+          <p className="text-sm text-white mb-3">
             Which Article of the RR(FS)O 2005 relates specifically to fire detection and warning
             systems?
           </p>
           <div className="bg-white/5 rounded-lg p-3">
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-white">Answer:</strong> Article 17 deals with fire detection
               and fire warning. It requires the Responsible Person to ensure premises are equipped
               with appropriate fire detection and alarm systems.
@@ -674,14 +754,14 @@ const FireAlarmModule7Section1 = () => {
 
       {/* Practical Guidance */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Practical Guidance
         </h2>
 
         <div className="space-y-3">
           <div className="p-4 rounded-lg bg-white/5 border border-green-500/20">
             <h4 className="text-base font-semibold text-green-400 mb-2">Pro Tips</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 Always check who the Responsible Person is before starting any fire alarm work -
@@ -702,7 +782,7 @@ const FireAlarmModule7Section1 = () => {
 
           <div className="p-4 rounded-lg bg-white/5 border border-red-500/20">
             <h4 className="text-base font-semibold text-red-400 mb-2">Common Mistakes</h4>
-            <ul className="space-y-2 text-sm text-white/70">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                 Assuming building management handles all fire safety - everyone has duties
@@ -723,7 +803,7 @@ const FireAlarmModule7Section1 = () => {
 
       {/* FAQs */}
       <section className="px-4 sm:px-6 pb-6 max-w-3xl mx-auto">
-        <h2 className="text-sm font-semibold text-white/50 uppercase tracking-wide mb-3">
+        <h2 className="text-sm font-semibold text-white uppercase tracking-wide mb-3">
           Frequently Asked Questions
         </h2>
         <div className="space-y-3">
@@ -755,7 +835,7 @@ const FireAlarmModule7Section1 = () => {
           ].map((faq, i) => (
             <div key={i} className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-base font-semibold text-white mb-2">{faq.q}</p>
-              <p className="text-sm text-white/70">{faq.a}</p>
+              <p className="text-sm text-white">{faq.a}</p>
             </div>
           ))}
         </div>
@@ -771,7 +851,7 @@ const FireAlarmModule7Section1 = () => {
 
           {!showQuiz ? (
             <div className="text-center py-6">
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Test your understanding of fire safety legislation with 10 questions.
               </p>
               <Button
@@ -787,7 +867,7 @@ const FireAlarmModule7Section1 = () => {
                 <p className="text-4xl font-bold text-elec-yellow">
                   {calculateScore()}/{questions.length}
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   ({Math.round((calculateScore() / questions.length) * 100)}% correct)
                 </p>
               </div>
@@ -804,11 +884,11 @@ const FireAlarmModule7Section1 = () => {
                         Your answer: {q.options[selectedAnswers[i]] ?? '—'} {correct ? '✓' : '✗'}
                       </p>
                       {!correct && (
-                        <p className="text-sm text-white/50 mt-1">
+                        <p className="text-sm text-white mt-1">
                           Correct: {q.options[q.correctAnswer]}
                         </p>
                       )}
-                      <p className="text-sm text-white/70 mt-2">{q.explanation}</p>
+                      <p className="text-sm text-white mt-2">{q.explanation}</p>
                     </div>
                   );
                 })}
@@ -840,7 +920,7 @@ const FireAlarmModule7Section1 = () => {
                         className={`w-full text-left p-4 rounded-xl border transition-all touch-manipulation ${
                           selected
                             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-white'
-                            : 'bg-white/5 border-white/10 text-white/80 active:bg-white/10'
+                            : 'bg-white/5 border-white/10 text-white active:bg-white/10'
                         }`}
                       >
                         {opt}
@@ -888,7 +968,7 @@ const FireAlarmModule7Section1 = () => {
             asChild
             className="flex-1 min-h-[44px] bg-elec-yellow text-black font-semibold hover:bg-elec-yellow/90 touch-manipulation active:scale-[0.98]"
           >
-            <Link to="../section-2">
+            <Link to="/electrician/upskilling/fire-alarm-course/module-7/section-2">
               Next Section
               <ArrowRight className="h-4 w-4 ml-2" />
             </Link>

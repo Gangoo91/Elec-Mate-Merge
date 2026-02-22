@@ -46,7 +46,7 @@ const FireAlarmModule1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fire-alarm-course">
@@ -62,10 +62,10 @@ const FireAlarmModule1 = () => {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
             <span className="text-elec-yellow text-xs font-semibold">MODULE 1</span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/60 text-xs">{sections.length} Sections</span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/60 text-xs">2-3 hours</span>
+            <span className="text-white text-xs">•</span>
+            <span className="text-white text-xs">{sections.length} Sections</span>
+            <span className="text-white text-xs">•</span>
+            <span className="text-white text-xs">2-3 hours</span>
           </div>
           <div className="flex items-center gap-3 mb-3">
             <div className="p-3 rounded-2xl bg-elec-yellow/10 border border-elec-yellow/20">
@@ -75,7 +75,7 @@ const FireAlarmModule1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Categories of Fire Alarm Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding L, P, and M categories under BS 5839-1 and how to select the appropriate
             system for different applications.
           </p>
