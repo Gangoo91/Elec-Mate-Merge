@@ -45,6 +45,14 @@ export const InvoiceSettingsStep = ({
   const inputClassName =
     'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
 
+  // Force dark text rendering — Chrome on light-mode OS overrides class-based styles
+  const darkStyle: React.CSSProperties = {
+    color: '#fafafa',
+    WebkitTextFillColor: '#fafafa',
+    backgroundColor: 'transparent',
+    colorScheme: 'dark',
+  };
+
   return (
     <div className="space-y-5 text-left">
       {/* Display Mode Section */}
@@ -114,15 +122,15 @@ export const InvoiceSettingsStep = ({
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white block mb-0.5">VAT Rate (%)</label>
                 <input
-                  type="number"
+                  type="text"
                   inputMode="decimal"
-                  step="0.1"
-                  min="0"
-                  max="100"
+                  style={darkStyle}
                   value={settings?.vatRate ?? 20}
                   onChange={(e) => {
                     const value = e.target.value;
-                    onUpdateSettings({ vatRate: value === '' ? 20 : parseFloat(value) || 20 });
+                    if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                      onUpdateSettings({ vatRate: value === '' ? 20 : parseFloat(value) || 20 });
+                    }
                   }}
                   className={inputClassName}
                   placeholder="20"
@@ -253,9 +261,9 @@ export const InvoiceSettingsStep = ({
                       : 'Amount (£)'}
                   </label>
                   <input
-                    type="number"
+                    type="text"
                     inputMode="decimal"
-                    step="0.1"
+                    style={darkStyle}
                     placeholder={
                       (settings?.discountType || 'percentage') === 'percentage' ? '20' : '150.00'
                     }
@@ -263,9 +271,11 @@ export const InvoiceSettingsStep = ({
                     value={settings?.discountValue || ''}
                     onChange={(e) => {
                       const value = e.target.value;
-                      onUpdateSettings({
-                        discountValue: value === '' ? 0 : parseFloat(value) || 0,
-                      });
+                      if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                        onUpdateSettings({
+                          discountValue: value === '' ? 0 : parseFloat(value) || 0,
+                        });
+                      }
                     }}
                   />
                 </div>
@@ -280,6 +290,7 @@ export const InvoiceSettingsStep = ({
                   <label className="text-[12px] text-white/40 block">Label (shown on PDF)</label>
                   <input
                     type="text"
+                    style={darkStyle}
                     placeholder="e.g. CIS Deduction (20%)"
                     className="h-9 w-full px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
                     value={settings?.discountLabel || ''}
@@ -406,6 +417,7 @@ export const InvoiceSettingsStep = ({
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Bank Name</label>
               <input
+                style={darkStyle}
                 value={settings?.bankDetails?.bankName || ''}
                 onChange={(e) =>
                   onUpdateSettings({
@@ -431,6 +443,7 @@ export const InvoiceSettingsStep = ({
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Account Name</label>
               <input
+                style={darkStyle}
                 value={settings?.bankDetails?.accountName || ''}
                 onChange={(e) =>
                   onUpdateSettings({
@@ -456,6 +469,7 @@ export const InvoiceSettingsStep = ({
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Account Number</label>
               <input
+                style={darkStyle}
                 value={settings?.bankDetails?.accountNumber || ''}
                 onChange={(e) => {
                   const numericValue = e.target.value.replace(/\D/g, '').slice(0, 8);
@@ -483,6 +497,7 @@ export const InvoiceSettingsStep = ({
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Sort Code</label>
               <input
+                style={darkStyle}
                 value={settings?.bankDetails?.sortCode || ''}
                 onChange={(e) => {
                   let formattedValue = e.target.value.replace(/\D/g, '');
@@ -523,6 +538,7 @@ export const InvoiceSettingsStep = ({
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Notes (Optional)</label>
               <textarea
+                style={darkStyle}
                 value={notes || ''}
                 onChange={(e) => onUpdateNotes(e.target.value)}
                 placeholder="e.g., Thank you for your business. Please ensure payment is made within the agreed terms."

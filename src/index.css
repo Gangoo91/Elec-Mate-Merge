@@ -4,12 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Force white text on ALL form inputs in dark mode — fixes iOS/Safari number input invisible text */
+/* Force dark color-scheme on ALL form controls in dark mode.
+   Without this, Chrome on a light-mode OS renders native form control
+   text (numbers, dates, spinners, autofill) as BLACK — invisible on dark bg. */
 .dark input,
 .dark textarea,
 .dark select {
   color: #fafafa !important;
   -webkit-text-fill-color: #fafafa !important;
+  color-scheme: dark !important;
+  -webkit-appearance: none !important;
+  appearance: none !important;
 }
 
 .dark input::placeholder,

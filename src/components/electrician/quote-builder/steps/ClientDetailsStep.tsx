@@ -1,3 +1,4 @@
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -98,6 +99,12 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
 
   const inputClassName =
     'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+  const darkStyle: React.CSSProperties = {
+    color: '#fafafa',
+    WebkitTextFillColor: '#fafafa',
+    backgroundColor: 'transparent',
+    colorScheme: 'dark',
+  };
 
   return (
     <Form {...form}>
@@ -157,6 +164,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                       <FormControl>
                         <input
                           {...field}
+                          style={darkStyle}
                           placeholder="Enter client name"
                           className={inputClassName}
                           autoComplete="name"
@@ -186,6 +194,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                           {...field}
                           type="email"
                           inputMode="email"
+                          style={darkStyle}
                           placeholder="client@example.com"
                           className={inputClassName}
                           autoComplete="email"
@@ -215,6 +224,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                           {...field}
                           type="tel"
                           inputMode="tel"
+                          style={darkStyle}
                           placeholder="07xxx xxxxxx"
                           className={inputClassName}
                           autoComplete="tel"

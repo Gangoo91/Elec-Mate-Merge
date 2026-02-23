@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Invoice } from '@/types/invoice';
@@ -99,7 +100,7 @@ export const useInvoiceStorage = () => {
         .eq('user_id', user.id)
         .eq('invoice_raised', true)
         .is('deleted_at', null)
-        .order('created_at', { ascending: false });
+        .order('updated_at', { ascending: false });
 
       if (error) throw error;
 

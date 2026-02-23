@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import {
   ArrowLeft,
@@ -10,7 +10,6 @@ import {
   Calculator,
   CreditCard,
   FileText,
-  ArrowRight,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { BusinessCard } from '@/components/business-hub';
@@ -23,6 +22,8 @@ const containerVariants = {
 };
 
 const BusinessDevelopment = () => {
+  const navigate = useNavigate();
+
   const businessSections = [
     {
       id: 1,
@@ -111,14 +112,15 @@ const BusinessDevelopment = () => {
 
       {/* Header */}
       <header className="sticky top-0 z-40 bg-[#1a1a1a]/95 backdrop-blur-xl border-b border-white/10">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="px-4 sm:px-6">
           <div className="flex items-center h-14 sm:h-16">
-            <Link
-              to="/electrician/business"
+            <button
+              type="button"
+              onClick={() => navigate('/electrician/business')}
               className="flex items-center justify-center h-11 w-11 rounded-xl text-white hover:bg-white/10 mr-3 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
-            </Link>
+            </button>
             <div className="flex-1">
               <h1 className="text-lg sm:text-xl font-bold text-white">Start & Grow</h1>
             </div>
@@ -133,7 +135,7 @@ const BusinessDevelopment = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="px-4 sm:px-6 py-8 sm:py-12">
           <div className="flex flex-col sm:flex-row items-center gap-6">
             <div className="p-4 bg-yellow-400/10 rounded-2xl border border-yellow-400/20">
               <TrendingUp className="h-10 w-10 sm:h-12 sm:w-12 text-yellow-400" />
@@ -142,7 +144,7 @@ const BusinessDevelopment = () => {
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white">
                 Business Development
               </h2>
-              <p className="mt-2 text-base sm:text-lg text-white max-w-2xl">
+              <p className="mt-2 text-base sm:text-lg text-white">
                 Resources and guidance to establish and grow your electrical contracting business
               </p>
             </div>
@@ -151,7 +153,7 @@ const BusinessDevelopment = () => {
       </motion.section>
 
       {/* Cards Grid */}
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+      <main className="px-4 sm:px-6 py-6 sm:py-8">
         <motion.div
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           variants={containerVariants}

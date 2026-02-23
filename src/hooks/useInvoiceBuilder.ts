@@ -21,6 +21,33 @@ const calculateSafeSubtotal = (items: InvoiceItem[]): number => {
   return items.reduce((sum, item) => sum + safeItemPrice(item), 0);
 };
 
+// Shared calculation logic — single source of truth for all totals
+const calculateAllTotals = (items: InvoiceItem[], settings: InvoiceSettings) => {
+  const subtotal = calculateSafeSubtotal(items);
+  const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
+  const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
+
+  // Discount / CIS deduction
+  let discountAmount = 0;
+  if (settings.discountEnabled && (settings.discountValue || 0) > 0) {
+    if (settings.discountType === 'percentage') {
+      discountAmount = subtotal * ((settings.discountValue || 0) / 100);
+    } else {
+      // Fixed amount
+      discountAmount = settings.discountValue || 0;
+    }
+  }
+  discountAmount = Math.round(discountAmount * 100) / 100;
+
+  const taxableAmount = subtotal + overhead + profit - discountAmount;
+  const vatAmount = settings.vatRegistered
+    ? Math.round(taxableAmount * ((settings.vatRate || 0) / 100) * 100) / 100
+    : 0;
+  const total = Math.round((taxableAmount + vatAmount) * 100) / 100;
+
+  return { subtotal, overhead, profit, discountAmount, vatAmount, total };
+};
+
 const generateInvoiceNumber = async (): Promise<string> => {
   return await generateSequentialInvoiceNumber();
 };
@@ -149,22 +176,11 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...(existingInvoice.items || []),
         ...(existingInvoice.additional_invoice_items || []),
       ];
-      const subtotal = calculateSafeSubtotal(allItems);
-      const settings = existingInvoice.settings!;
-      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
-      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered
-        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
-        : 0;
-      const total = subtotal + overhead + profit + vatAmount;
+      const totals = calculateAllTotals(allItems, existingInvoice.settings!);
 
       return {
         ...existingInvoice,
-        subtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
+        ...totals,
       };
     }
     // Otherwise create from quote
@@ -234,23 +250,9 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...(updatedInvoice.items || []),
         ...(updatedInvoice.additional_invoice_items || []),
       ];
-      const subtotal = calculateSafeSubtotal(allItems);
-      const settings = updatedInvoice.settings!;
-      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
-      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered
-        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
-        : 0;
-      const total = subtotal + overhead + profit + vatAmount;
+      const totals = calculateAllTotals(allItems, updatedInvoice.settings!);
 
-      return {
-        ...updatedInvoice,
-        subtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-      };
+      return { ...updatedInvoice, ...totals };
     });
   }, []);
 
@@ -287,23 +289,9 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...(updatedInvoice.items || []),
         ...(updatedInvoice.additional_invoice_items || []),
       ];
-      const subtotal = calculateSafeSubtotal(allItems);
-      const settings = updatedInvoice.settings!;
-      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
-      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered
-        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
-        : 0;
-      const total = subtotal + overhead + profit + vatAmount;
+      const totals = calculateAllTotals(allItems, updatedInvoice.settings!);
 
-      return {
-        ...updatedInvoice,
-        subtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-      };
+      return { ...updatedInvoice, ...totals };
     });
   }, []);
 
@@ -321,23 +309,9 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...(updatedInvoice.items || []),
         ...(updatedInvoice.additional_invoice_items || []),
       ];
-      const subtotal = calculateSafeSubtotal(allItems);
-      const settings = updatedInvoice.settings!;
-      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
-      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered
-        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
-        : 0;
-      const total = subtotal + overhead + profit + vatAmount;
+      const totals = calculateAllTotals(allItems, updatedInvoice.settings!);
 
-      return {
-        ...updatedInvoice,
-        subtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-      };
+      return { ...updatedInvoice, ...totals };
     });
   }, []);
 
@@ -355,47 +329,18 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
         ...(updatedInvoice.items || []),
         ...(updatedInvoice.additional_invoice_items || []),
       ];
-      const subtotal = calculateSafeSubtotal(allItems);
-      const updatedSettings = updatedInvoice.settings!;
-      const overhead = subtotal * ((updatedSettings.overheadPercentage || 0) / 100);
-      const profit = (subtotal + overhead) * ((updatedSettings.profitMargin || 0) / 100);
-      const vatAmount = updatedSettings.vatRegistered
-        ? (subtotal + overhead + profit) * ((updatedSettings.vatRate || 0) / 100)
-        : 0;
-      const total = subtotal + overhead + profit + vatAmount;
+      const totals = calculateAllTotals(allItems, updatedInvoice.settings!);
 
-      return {
-        ...updatedInvoice,
-        subtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-      };
+      return { ...updatedInvoice, ...totals };
     });
   }, []);
 
   const recalculateTotals = useCallback(() => {
     setInvoice((prev) => {
       const allItems = [...(prev.items || []), ...(prev.additional_invoice_items || [])];
-      const subtotal = calculateSafeSubtotal(allItems);
+      const totals = calculateAllTotals(allItems, prev.settings!);
 
-      const settings = prev.settings!;
-      const overhead = subtotal * ((settings.overheadPercentage || 0) / 100);
-      const profit = (subtotal + overhead) * ((settings.profitMargin || 0) / 100);
-      const vatAmount = settings.vatRegistered
-        ? (subtotal + overhead + profit) * ((settings.vatRate || 0) / 100)
-        : 0;
-      const total = subtotal + overhead + profit + vatAmount;
-
-      return {
-        ...prev,
-        subtotal,
-        overhead,
-        profit,
-        vatAmount,
-        total,
-      };
+      return { ...prev, ...totals };
     });
   }, []);
 

@@ -3030,7 +3030,7 @@ export const firstAidQuestionBank: StandardMockQuestion[] = [
   {
     id: 170,
     question: 'Which British Standard specifies the contents of workplace first aid kits?',
-    options: ['BS 7671:2018', 'BS 8599-1:2019', 'BS EN 166:2002', 'BS 5839-1:2017'],
+    options: ['BS 7671:2018', 'BS 8599-1:2019', 'BS EN 166:2002', 'BS 5839-1:2025'],
     correctAnswer: 1,
     explanation:
       'BS 8599-1:2019 is the British Standard that specifies the contents of workplace first aid kits. It defines three kit sizes — small, medium, and large — based on the number of employees. This standard replaced the earlier 2011 edition and introduced updated contents including burn dressings and foil blankets.',

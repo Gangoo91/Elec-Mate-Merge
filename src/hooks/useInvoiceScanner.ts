@@ -198,6 +198,7 @@ async function findServerMatches(
       return [];
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return (data.suggestions || []).map((suggestion: any) => ({
       id: `server-${suggestion.name.toLowerCase().replace(/\s+/g, '-')}`,
       name: suggestion.name,
@@ -413,13 +414,11 @@ export function useInvoiceScanner(options: InvoiceScannerOptions = {}) {
       const fileArray = Array.isArray(files) ? files : [files];
 
       setState('uploading');
-      setProgress(
-        `Processing ${fileArray.length} ${fileArray.length === 1 ? 'file' : 'files'}...`
-      );
+      setProgress(`Processing ${fileArray.length} ${fileArray.length === 1 ? 'file' : 'files'}...`);
 
       try {
         const allItems: ScannedInvoiceItem[] = [];
-        let supplierName: string | null = null;
+        const supplierName: string | null = null;
 
         for (let i = 0; i < fileArray.length; i++) {
           setProgress(`Processing ${i + 1} of ${fileArray.length}...`);

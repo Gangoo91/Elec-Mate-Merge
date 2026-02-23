@@ -355,9 +355,8 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                     (() => {
                       const categoryTotals = allItems.reduce(
                         (acc, item) => {
-                          const qty =
-                            item.actualQuantity !== undefined ? item.actualQuantity : item.quantity;
-                          const total = qty * item.unitPrice;
+                          const qty = item.quantity || 0;
+                          const total = qty * (item.unitPrice || 0);
                           const category = item.category || 'manual';
                           if (!acc[category]) acc[category] = 0;
                           acc[category] += total;

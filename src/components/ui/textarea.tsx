@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {}
+export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, ...props }, ref) => {
@@ -16,7 +16,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           // Base layout
           'flex w-full min-h-[100px] md:min-h-[80px]',
           'px-4 py-3 md:px-3 md:py-2',
-          'text-base md:text-sm text-white',
+          'text-base md:text-sm',
           // Background & border - match Input
           'bg-input border border-border/50 rounded-lg',
           // Typography
@@ -38,7 +38,9 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           'touch-manipulation',
           // Selection
           'selection:bg-elec-yellow/20 selection:text-white',
-          className
+          '[color-scheme:dark]',
+          className,
+          'text-white'
         )}
         ref={ref}
         {...props}

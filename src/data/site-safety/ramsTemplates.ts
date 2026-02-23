@@ -371,7 +371,7 @@ export const ramsTemplates: RAMSTemplate[] = [
       'Provide comprehensive system documentation',
     ],
     ppe: ['Standard electrical PPE', 'High-vis clothing'],
-    regulations: ['BS 5839-1:2017', 'Regulatory Reform (Fire Safety) Order 2005'],
+    regulations: ['BS 5839-1:2025', 'Regulatory Reform (Fire Safety) Order 2005'],
     furtherActions: ['System commissioning certificates', 'User training'],
     icon: 'Shield',
   },

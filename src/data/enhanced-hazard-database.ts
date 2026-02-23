@@ -2079,7 +2079,7 @@ export const enhancedRiskDatabase: EnhancedRiskConsequence[] = [
     bs7671References: [
       '560 - Safety services',
       '313 - Supplies for safety services',
-      'BS 5839-1:2017 Fire alarm systems',
+      'BS 5839-1:2025 Fire alarm systems',
     ],
     category: 'regulatory-compliance',
     workType: ['installation', 'maintenance', 'testing'],
@@ -3471,10 +3471,12 @@ export const riskAssessmentHelpers = {
   },
 
   getHazardsByEnvironment: (environment: string): EnhancedRiskConsequence[] => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return enhancedRiskDatabase.filter((hazard) => hazard.environment.includes(environment as any));
   },
 
   getHazardsByWorkType: (workType: string): EnhancedRiskConsequence[] => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return enhancedRiskDatabase.filter((hazard) => hazard.workType.includes(workType as any));
   },
 

@@ -69,7 +69,7 @@ const faqs = [
   {
     question: 'Is a fire alarm certificate required for a restaurant?',
     answer:
-      'Under the Regulatory Reform (Fire Safety) Order 2005, the responsible person must carry out a fire risk assessment and install appropriate fire detection and alarm systems. For most restaurants, a fire alarm system designed and installed to BS 5839-1:2017 is required. The system category depends on the fire risk assessment — most restaurants require at least a Category L2 system (covering defined areas of risk, such as the kitchen, store rooms, and escape routes) or Category M (manual call points only, for smaller premises with simple layouts). After installation, the fire alarm system must be commissioned, and a Fire Alarm Certificate should be issued. Ongoing maintenance requires weekly testing of the alarm, quarterly inspection by a competent fire alarm engineer, and an annual service. Records of all testing and maintenance must be kept. Elec-Mate supports fire alarm certificates with BS 5839-1 compliance built into the form structure.',
+      'Under the Regulatory Reform (Fire Safety) Order 2005, the responsible person must carry out a fire risk assessment and install appropriate fire detection and alarm systems. For most restaurants, a fire alarm system designed and installed to BS 5839-1:2025 is required. The system category depends on the fire risk assessment — most restaurants require at least a Category L2 system (covering defined areas of risk, such as the kitchen, store rooms, and escape routes) or Category M (manual call points only, for smaller premises with simple layouts). After installation, the fire alarm system must be commissioned, and a Fire Alarm Certificate should be issued. Ongoing maintenance requires weekly testing of the alarm, quarterly inspection by a competent fire alarm engineer, and an annual service. Records of all testing and maintenance must be kept. Elec-Mate supports fire alarm certificates with BS 5839-1 compliance built into the form structure.',
   },
   {
     question: 'What electrical certificates are needed to open a restaurant?',
@@ -454,7 +454,7 @@ const sections = [
           The Regulatory Reform (Fire Safety) Order 2005 requires the responsible person (typically
           the restaurant owner or operator) to ensure that appropriate fire detection and alarm
           systems are in place. The fire alarm system must be designed, installed, and maintained to{' '}
-          <SEOInternalLink href="/tools/fire-alarm-certificate">BS 5839-1:2017</SEOInternalLink>.
+          <SEOInternalLink href="/tools/fire-alarm-certificate">BS 5839-1:2025</SEOInternalLink>.
         </p>
         <p>
           The system category depends on the fire risk assessment. Common categories for restaurants

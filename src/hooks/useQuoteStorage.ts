@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback } from 'react';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
@@ -94,7 +95,7 @@ export const useQuoteStorage = () => {
           `
           )
           .eq('invoice_raised', false)
-          .order('created_at', { ascending: false });
+          .order('updated_at', { ascending: false });
 
         if (error) {
           console.error('Error loading quotes:', error);
@@ -467,7 +468,7 @@ export const useQuoteStorage = () => {
         `
         )
         .eq('invoice_raised', false)
-        .order('created_at', { ascending: false });
+        .order('updated_at', { ascending: false });
 
       if (error) {
         console.error('Error refreshing quotes:', error);

@@ -1,6 +1,5 @@
 import { useState, useMemo } from 'react';
 import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
   Plus,
@@ -84,6 +83,17 @@ export const InvoiceItemsStep = ({
   vatAmount = 0,
   total = 0,
 }: InvoiceItemsStepProps) => {
+  // Inline styles to force dark-mode rendering on inputs.
+  // Chrome on light-mode OS overrides class-based bg/color with its UA stylesheet
+  // for type="number" inputs. We use type="text" + inputMode="decimal" to avoid
+  // Chrome's native number control rendering entirely.
+  const darkInputStyle: React.CSSProperties = {
+    color: '#fafafa',
+    WebkitTextFillColor: '#fafafa',
+    backgroundColor: '#1a1a1e',
+    colorScheme: 'dark',
+  };
+
   const [activeAddMethod, setActiveAddMethod] = useState<AddMethod>('quick');
   const [showOriginalItems, setShowOriginalItems] = useState(true);
   const [workerSheetOpen, setWorkerSheetOpen] = useState(false);
@@ -434,36 +444,44 @@ export const InvoiceItemsStep = ({
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Input
-                      type="number"
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      style={darkInputStyle}
                       value={item.quantity === 0 ? '' : item.quantity}
                       onChange={(e) => {
                         const val = e.target.value;
-                        const quantity = val === '' ? 0 : parseFloat(val);
-                        if (!isNaN(quantity)) {
-                          onUpdateItem(item.id, {
-                            quantity,
-                            totalPrice: quantity * item.unitPrice,
-                          });
+                        if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                          const quantity = val === '' ? 0 : parseFloat(val);
+                          if (!isNaN(quantity)) {
+                            onUpdateItem(item.id, {
+                              quantity,
+                              totalPrice: quantity * item.unitPrice,
+                            });
+                          }
                         }
                       }}
-                      className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                      className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                     />
                     <span className="text-[12px] text-white/50">×</span>
-                    <Input
-                      type="number"
+                    <input
+                      type="text"
+                      inputMode="decimal"
+                      style={darkInputStyle}
                       value={item.unitPrice === 0 ? '' : item.unitPrice}
                       onChange={(e) => {
                         const val = e.target.value;
-                        const unitPrice = val === '' ? 0 : parseFloat(val);
-                        if (!isNaN(unitPrice)) {
-                          onUpdateItem(item.id, {
-                            unitPrice,
-                            totalPrice: item.quantity * unitPrice,
-                          });
+                        if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                          const unitPrice = val === '' ? 0 : parseFloat(val);
+                          if (!isNaN(unitPrice)) {
+                            onUpdateItem(item.id, {
+                              unitPrice,
+                              totalPrice: item.quantity * unitPrice,
+                            });
+                          }
                         }
                       }}
-                      className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                      className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                     />
                     <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
                   </div>
@@ -602,7 +620,8 @@ export const InvoiceItemsStep = ({
                   placeholder="Search materials..."
                   value={materialSearch}
                   onChange={(e) => setMaterialSearch(e.target.value)}
-                  className="w-full h-11 pl-10 pr-4 rounded-xl bg-white/[0.05] border border-white/[0.06] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow"
+                  style={darkInputStyle}
+                  className="w-full h-11 pl-10 pr-4 rounded-xl bg-[#1a1a1e] border border-white/[0.06] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow"
                 />
               </div>
 
@@ -747,7 +766,8 @@ export const InvoiceItemsStep = ({
                 value={newItem.description}
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
                 placeholder="Enter item description"
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                style={darkInputStyle}
+                className="w-full h-11 px-3 rounded-lg bg-[#1a1a1e] border-0 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-elec-yellow"
               />
             </div>
             <div className="grid grid-cols-2 divide-x divide-white/[0.06]">
@@ -756,16 +776,20 @@ export const InvoiceItemsStep = ({
                   Quantity
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
+                  style={darkInputStyle}
                   value={newItem.quantity === 0 ? '' : newItem.quantity}
                   onChange={(e) => {
                     const val = e.target.value;
-                    const quantity = val === '' ? 0 : parseFloat(val);
-                    if (!isNaN(quantity)) {
-                      setNewItem((prev) => ({ ...prev, quantity }));
+                    if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                      const quantity = val === '' ? 0 : parseFloat(val);
+                      if (!isNaN(quantity)) {
+                        setNewItem((prev) => ({ ...prev, quantity }));
+                      }
                     }
                   }}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                  className="w-full h-11 px-3 rounded-lg bg-[#1a1a1e] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
                   placeholder="1"
                 />
               </div>
@@ -774,16 +798,20 @@ export const InvoiceItemsStep = ({
                   Unit Price (£)
                 </label>
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="decimal"
+                  style={darkInputStyle}
                   value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
                   onChange={(e) => {
                     const val = e.target.value;
-                    const unitPrice = val === '' ? 0 : parseFloat(val);
-                    if (!isNaN(unitPrice)) {
-                      setNewItem((prev) => ({ ...prev, unitPrice }));
+                    if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                      const unitPrice = val === '' ? 0 : parseFloat(val);
+                      if (!isNaN(unitPrice)) {
+                        setNewItem((prev) => ({ ...prev, unitPrice }));
+                      }
                     }
                   }}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.05] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
+                  className="w-full h-11 px-3 rounded-lg bg-[#1a1a1e] border-0 text-[15px] text-white focus:outline-none focus:ring-1 focus:ring-elec-yellow"
                   placeholder="0.00"
                 />
               </div>
@@ -897,30 +925,38 @@ export const InvoiceItemsStep = ({
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Input
-                    type="number"
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    style={darkInputStyle}
                     value={item.quantity === 0 ? '' : item.quantity}
                     onChange={(e) => {
                       const val = e.target.value;
-                      const quantity = val === '' ? 0 : parseFloat(val);
-                      if (!isNaN(quantity)) {
-                        onUpdateItem(item.id, { quantity });
+                      if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                        const quantity = val === '' ? 0 : parseFloat(val);
+                        if (!isNaN(quantity)) {
+                          onUpdateItem(item.id, { quantity });
+                        }
                       }
                     }}
-                    className="h-8 w-16 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                    className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                   />
                   <span className="text-[12px] text-white/50">×</span>
-                  <Input
-                    type="number"
+                  <input
+                    type="text"
+                    inputMode="decimal"
+                    style={darkInputStyle}
                     value={item.unitPrice === 0 ? '' : item.unitPrice}
                     onChange={(e) => {
                       const val = e.target.value;
-                      const unitPrice = val === '' ? 0 : parseFloat(val);
-                      if (!isNaN(unitPrice)) {
-                        onUpdateItem(item.id, { unitPrice });
+                      if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                        const unitPrice = val === '' ? 0 : parseFloat(val);
+                        if (!isNaN(unitPrice)) {
+                          onUpdateItem(item.id, { unitPrice });
+                        }
                       }
                     }}
-                    className="h-8 w-20 text-[13px] bg-white/[0.05] border-white/[0.06]"
+                    className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                   />
                   <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
                   <span className="text-[13px] font-bold text-elec-yellow">

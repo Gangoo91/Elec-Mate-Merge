@@ -7,6 +7,7 @@ import {
   MapPin,
   AlertTriangle,
 } from 'lucide-react';
+import React from 'react';
 import { JobDetails } from '@/types/quote';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -50,6 +51,12 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
     'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
   const textareaClassName =
     'w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow resize-none';
+  const darkStyle: React.CSSProperties = {
+    color: '#fafafa',
+    WebkitTextFillColor: '#fafafa',
+    backgroundColor: 'transparent',
+    colorScheme: 'dark',
+  };
 
   return (
     <div className="space-y-4 text-left">
@@ -68,6 +75,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white/70 block mb-0.5">Job Title *</label>
               <input
+                style={darkStyle}
                 value={jobDetails?.title || ''}
                 onChange={(e) => handleChange('title', e.target.value)}
                 placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
@@ -85,6 +93,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white/70 block mb-1">Job Description *</label>
                 <textarea
+                  style={darkStyle}
                   value={jobDetails?.description || ''}
                   onChange={(e) => handleChange('description', e.target.value)}
                   placeholder="Describe the scope of work..."
@@ -114,6 +123,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
                 <label className="text-[12px] text-white/70 block mb-0.5">Custom Duration</label>
                 <div className="flex items-center gap-2">
                   <input
+                    style={darkStyle}
                     value={jobDetails?.customDuration || ''}
                     onChange={(e) => handleChange('customDuration', e.target.value)}
                     placeholder="Enter duration"
@@ -168,6 +178,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <label className="text-[12px] text-white/70 block mb-0.5">Proposed Start Date</label>
               <input
                 type="date"
+                style={darkStyle}
                 value={jobDetails?.workStartDate || ''}
                 onChange={(e) => handleChange('workStartDate', e.target.value)}
                 className={cn(inputClassName, '[color-scheme:dark]')}
@@ -204,6 +215,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white/70 block mb-0.5">Work Location</label>
               <input
+                style={darkStyle}
                 value={jobDetails?.location || ''}
                 onChange={(e) => handleChange('location', e.target.value)}
                 placeholder="If different from client address"
@@ -221,6 +233,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white/70 block mb-1">Special Requirements</label>
                 <textarea
+                  style={darkStyle}
                   value={jobDetails?.specialRequirements || ''}
                   onChange={(e) => handleChange('specialRequirements', e.target.value)}
                   placeholder="Access restrictions, working hours, safety considerations..."

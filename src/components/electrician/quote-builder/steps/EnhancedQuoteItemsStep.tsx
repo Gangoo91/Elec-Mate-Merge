@@ -121,8 +121,11 @@ export const EnhancedQuoteItemsStep = ({
     notes: '',
   });
 
-  const [customCategory, setCustomCategory] = useState<'manual' | 'materials' | 'labour' | 'equipment'>('manual');
+  const [customCategory, setCustomCategory] = useState<
+    'manual' | 'materials' | 'labour' | 'equipment'
+  >('manual');
   const [materialSearch, setMaterialSearch] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ragResults, setRagResults] = useState<any[]>([]);
   const [isSearchingRAG, setIsSearchingRAG] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
@@ -745,12 +748,12 @@ export const EnhancedQuoteItemsStep = ({
                 Appears Under (on PDF)
               </label>
               <div className="flex flex-wrap gap-2">
-                {([
+                {[
                   { id: 'materials' as const, label: 'Materials' },
                   { id: 'labour' as const, label: 'Labour' },
                   { id: 'equipment' as const, label: 'Equipment' },
                   { id: 'manual' as const, label: 'Other' },
-                ]).map((opt) => (
+                ].map((opt) => (
                   <button
                     key={opt.id}
                     type="button"
@@ -895,29 +898,47 @@ export const EnhancedQuoteItemsStep = ({
                     {/* Quantity and Price inputs */}
                     <div className="flex items-center gap-1.5">
                       <input
-                        type="number"
+                        type="text"
                         inputMode="decimal"
+                        style={{
+                          color: '#fafafa',
+                          WebkitTextFillColor: '#fafafa',
+                          backgroundColor: '#1a1a1e',
+                          colorScheme: 'dark',
+                        }}
                         value={item.quantity === 0 ? '' : item.quantity}
-                        onChange={(e) =>
-                          onUpdate(item.id, {
-                            quantity: e.target.value === '' ? 0 : parseFloat(e.target.value),
-                          })
-                        }
-                        className="w-12 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                            onUpdate(item.id, {
+                              quantity: val === '' ? 0 : parseFloat(val),
+                            });
+                          }
+                        }}
+                        className="w-12 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                       <span className="text-[11px] text-white/50 w-8 truncate">{item.unit}</span>
                       <span className="text-[12px] text-white/30">×</span>
                       <span className="text-[11px] text-white/50">£</span>
                       <input
-                        type="number"
+                        type="text"
                         inputMode="decimal"
+                        style={{
+                          color: '#fafafa',
+                          WebkitTextFillColor: '#fafafa',
+                          backgroundColor: '#1a1a1e',
+                          colorScheme: 'dark',
+                        }}
                         value={item.unitPrice === 0 ? '' : item.unitPrice}
-                        onChange={(e) =>
-                          onUpdate(item.id, {
-                            unitPrice: e.target.value === '' ? 0 : parseFloat(e.target.value),
-                          })
-                        }
-                        className="w-14 h-8 text-center text-[13px] bg-white/[0.05] border border-white/[0.1] rounded-lg text-white touch-manipulation"
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (val === '' || /^\d*\.?\d*$/.test(val)) {
+                            onUpdate(item.id, {
+                              unitPrice: val === '' ? 0 : parseFloat(val),
+                            });
+                          }
+                        }}
+                        className="w-14 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                     </div>
 
