@@ -7,6 +7,7 @@ import { FileText, Download } from 'lucide-react';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 interface InvoiceGenerationStepProps {
   invoice: Partial<Invoice>;
@@ -122,7 +123,7 @@ export const InvoiceGenerationStep = ({
       }
 
       // Open the fresh PDF URL directly (S3 signed URLs expire, so don't store them)
-      window.open(pdfUrl, '_blank');
+      await openOrDownloadPdf(pdfUrl, `Invoice-${invoice.invoice_number || 'draft'}.pdf`);
 
       toast({
         title: 'PDF ready',

@@ -34,6 +34,7 @@ import { cn } from '@/lib/utils';
 import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 
 const InvoicesPage = () => {
   const { invoices, isLoading, fetchInvoices, deleteInvoice, lastUpdated } = useInvoiceStorage();
@@ -110,7 +111,10 @@ const InvoicesPage = () => {
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 
       if (pdfIsCurrent) {
-        window.open(invoice.pdf_url, '_blank');
+        await openOrDownloadPdf(
+          invoice.pdf_url,
+          `Invoice-${invoice.invoice_number || invoice.id}.pdf`
+        );
         setDownloadingPdfId(null);
         return;
       }
@@ -173,7 +177,7 @@ const InvoicesPage = () => {
           .eq('id', invoice.id);
       }
 
-      window.open(pdfUrl, '_blank');
+      await openOrDownloadPdf(pdfUrl, `Invoice-${invoice.invoice_number || invoice.id}.pdf`);
       toast({
         title: 'PDF downloaded',
         description: `Invoice ${invoice.invoice_number} downloaded successfully`,

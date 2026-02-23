@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { Helmet } from 'react-helmet';
 import { QuoteSendDropdown } from '@/components/electrician/quote-builder/QuoteSendDropdown';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
@@ -224,8 +225,8 @@ const QuoteViewPage = () => {
           })
           .eq('id', quote.id);
 
-        window.open(downloadUrl, '_blank');
-        toast({ title: 'PDF ready', description: 'Opening in new tab', variant: 'success' });
+        await openOrDownloadPdf(downloadUrl, `Quote-${quote.quoteNumber || quote.id}.pdf`);
+        toast({ title: 'PDF ready', variant: 'success' });
       } else {
         throw new Error('Failed to generate PDF');
       }

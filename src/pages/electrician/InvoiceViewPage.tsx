@@ -25,6 +25,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Quote } from '@/types/quote';
 import { format, isPast, differenceInDays } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -161,7 +162,10 @@ const InvoiceViewPage = () => {
         new Date(invoice.pdf_generated_at) >= new Date(invoice.updatedAt);
 
       if (pdfIsCurrent) {
-        window.open(invoice.pdf_url, '_blank');
+        await openOrDownloadPdf(
+          invoice.pdf_url,
+          `Invoice-${invoice.invoice_number || invoice.id}.pdf`
+        );
         setIsDownloading(false);
         return;
       }
@@ -209,7 +213,7 @@ const InvoiceViewPage = () => {
           .eq('id', invoice.id);
       }
 
-      window.open(pdfUrl, '_blank');
+      await openOrDownloadPdf(pdfUrl, `Invoice-${invoice.invoice_number || invoice.id}.pdf`);
     } catch (error) {
       console.error('Error generating invoice PDF:', error);
       toast({
