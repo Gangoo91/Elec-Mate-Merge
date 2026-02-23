@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { PenTool, Lock, Check, Loader2, FileText, Send, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,6 +32,50 @@ export const SiteVisitSignOffStep = ({
   const [isSigned, setIsSigned] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
   const [isDownloadingPDF, setIsDownloadingPDF] = useState(false);
+  const [signedAt, setSignedAt] = useState<string | null>(null);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Check for remote signature on mount + poll when fallback is shown
+  useEffect(() => {
+    if (isSigned || !visit.id) return;
+
+    const checkRemoteSignature = async () => {
+      const { data } = await supabase
+        .from('scope_share_links')
+        .select('client_name, signature_data, signed_at')
+        .eq('site_visit_id', visit.id!)
+        .eq('status', 'signed')
+        .order('signed_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (data?.signature_data) {
+        setIsSigned(true);
+        setClientName(data.client_name || '');
+        setSignatureData(data.signature_data);
+        setSignedAt(data.signed_at || null);
+        if (pollRef.current) {
+          clearInterval(pollRef.current);
+          pollRef.current = null;
+        }
+      }
+    };
+
+    // Check immediately on mount
+    checkRemoteSignature();
+
+    // Start polling when fallback (send-link) is visible
+    if (showFallback && !pollRef.current) {
+      pollRef.current = setInterval(checkRemoteSignature, 10_000);
+    }
+
+    return () => {
+      if (pollRef.current) {
+        clearInterval(pollRef.current);
+        pollRef.current = null;
+      }
+    };
+  }, [visit.id, isSigned, showFallback]);
 
   const totalRooms = visit.rooms.length;
   const totalItems = visit.rooms.reduce((sum, r) => sum + r.items.length, 0);
@@ -99,6 +143,7 @@ export const SiteVisitSignOffStep = ({
       }
 
       setIsSigned(true);
+      setSignedAt(new Date().toISOString());
       toast({
         title: 'Scope signed',
         description: 'The client has signed the scope of works.',
@@ -149,11 +194,11 @@ export const SiteVisitSignOffStep = ({
         ? {
             signatureData,
             signedByName: clientName.trim(),
-            signedAt: new Date().toISOString(),
+            signedAt: signedAt || new Date().toISOString(),
           }
         : {}),
     }),
-    [visit, assumptions, companyProfile, signatureData, clientName]
+    [visit, assumptions, companyProfile, signatureData, clientName, signedAt]
   );
 
   const handleDownloadPDF = useCallback(async () => {
@@ -280,13 +325,38 @@ export const SiteVisitSignOffStep = ({
               <p className="text-[15px] font-medium text-emerald-400">Scope Signed</p>
               <p className="text-[13px] text-white">
                 Signed by {clientName} ·{' '}
-                {new Date().toLocaleTimeString('en-GB', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                })}
+                {signedAt
+                  ? new Date(signedAt).toLocaleDateString('en-GB', {
+                      day: 'numeric',
+                      month: 'short',
+                      year: 'numeric',
+                    }) +
+                    ' at ' +
+                    new Date(signedAt).toLocaleTimeString('en-GB', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })
+                  : new Date().toLocaleTimeString('en-GB', {
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
               </p>
             </div>
           </div>
+
+          {/* Signature preview */}
+          {signatureData && (
+            <div className="rounded-xl border border-white/[0.06] bg-white/[0.03] p-3">
+              <p className="text-xs text-white mb-2">Client Signature</p>
+              <div className="rounded-lg bg-white p-2">
+                <img
+                  src={signatureData}
+                  alt={`Signature by ${clientName}`}
+                  className="w-full h-auto max-h-32 object-contain"
+                />
+              </div>
+            </div>
+          )}
 
           {/* Download Signed PDF */}
           <Button
