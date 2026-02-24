@@ -12,9 +12,17 @@ textarea,
 select {
   color: #fafafa !important;
   -webkit-text-fill-color: #fafafa !important;
+  background-color: hsl(240 5.9% 15%) !important;
   color-scheme: dark !important;
   -webkit-appearance: none !important;
   appearance: none !important;
+}
+
+/* Allow transparent backgrounds only where explicitly needed (table cells, etc.) */
+input[data-transparent],
+textarea[data-transparent],
+select[data-transparent] {
+  background-color: transparent !important;
 }
 
 /* Autofill: browsers inject light backgrounds + dark text — override both */

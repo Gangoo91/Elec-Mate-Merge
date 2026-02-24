@@ -1107,7 +1107,7 @@ const BusinessTab = () => {
             <Input
               {...register('company_name', { required: 'Required' })}
               placeholder="ABC Electrical Ltd"
-              className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+              className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
             />
           </div>
 
@@ -1119,7 +1119,7 @@ const BusinessTab = () => {
                 {...register('company_email')}
                 type="email"
                 placeholder="info@company.com"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1127,7 +1127,7 @@ const BusinessTab = () => {
               <Input
                 {...register('company_phone')}
                 placeholder="0123 456 7890"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1135,7 +1135,7 @@ const BusinessTab = () => {
               <Input
                 {...register('company_website')}
                 placeholder="www.company.com"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1143,7 +1143,7 @@ const BusinessTab = () => {
               <Input
                 {...register('vat_number')}
                 placeholder="GB123456789"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
           </div>
@@ -1160,7 +1160,7 @@ const BusinessTab = () => {
                 setOfficeLng(place.lng);
               }}
               placeholder="Start typing your address..."
-              className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+              className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
             />
             {officeLat && officeLng && (
               <p className="text-[11px] text-green-400 flex items-center gap-1">
@@ -1175,7 +1175,7 @@ const BusinessTab = () => {
               <Input
                 {...register('company_postcode')}
                 placeholder="AB1 2CD"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1183,7 +1183,7 @@ const BusinessTab = () => {
               <Input
                 {...register('company_registration')}
                 placeholder="12345678"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
           </div>
@@ -1285,7 +1285,7 @@ const BusinessTab = () => {
                   value={bankDetails.accountName}
                   onChange={(e) => setBankDetails({ ...bankDetails, accountName: e.target.value })}
                   placeholder="ABC Electrical Ltd"
-                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+                  className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
                 />
               </div>
               <div className="space-y-2">
@@ -1294,7 +1294,7 @@ const BusinessTab = () => {
                   value={bankDetails.bankName}
                   onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
                   placeholder="e.g. Barclays"
-                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+                  className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
                 />
               </div>
               <div className="space-y-2">
@@ -1305,7 +1305,7 @@ const BusinessTab = () => {
                     setBankDetails({ ...bankDetails, sortCode: formatSortCode(e.target.value) })
                   }
                   placeholder="12-34-56"
-                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+                  className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
                   inputMode="numeric"
                 />
               </div>
@@ -1320,7 +1320,7 @@ const BusinessTab = () => {
                     })
                   }
                   placeholder="12345678"
-                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+                  className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
                   inputMode="numeric"
                 />
               </div>
@@ -1579,7 +1579,7 @@ const BusinessTab = () => {
                 step="0.50"
                 {...register('hourly_rate', { valueAsNumber: true })}
                 placeholder="45"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-emerald-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-emerald-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1588,7 +1588,7 @@ const BusinessTab = () => {
                 value={watch('payment_terms') || '30 days'}
                 onValueChange={(value) => setValue('payment_terms', value)}
               >
-                <SelectTrigger className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-emerald-500/50 focus:ring-0">
+                <SelectTrigger className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-emerald-500/50 focus:ring-0">
                   <SelectValue placeholder="Select payment terms" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-white/[0.1]">
@@ -1614,7 +1614,7 @@ const BusinessTab = () => {
                   max="100"
                   {...register('overhead_percentage', { valueAsNumber: true })}
                   placeholder="15"
-                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
+                  className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
                   %
@@ -1632,7 +1632,7 @@ const BusinessTab = () => {
                   max="100"
                   {...register('profit_margin', { valueAsNumber: true })}
                   placeholder="20"
-                  className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
+                  className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
                 />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
                   %
@@ -1670,7 +1670,7 @@ const BusinessTab = () => {
                           };
                           setValue('worker_rates', newRates);
                         }}
-                        className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl pl-7 focus:border-emerald-500/50 focus:ring-0"
+                        className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl pl-7 focus:border-emerald-500/50 focus:ring-0"
                       />
                     </div>
                   </div>
@@ -1698,7 +1698,7 @@ const BusinessTab = () => {
                 type="number"
                 {...register('quote_validity_days', { valueAsNumber: true })}
                 placeholder="30"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0"
+                className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1707,7 +1707,7 @@ const BusinessTab = () => {
                 value={String(watch('deposit_percentage') ?? 30)}
                 onValueChange={(value) => setValue('deposit_percentage', parseInt(value, 10))}
               >
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0">
+                <SelectTrigger className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0">
                   <SelectValue placeholder="Select deposit" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-white/[0.1]">
@@ -1727,7 +1727,7 @@ const BusinessTab = () => {
               <Input
                 {...register('warranty_period')}
                 placeholder="12 months"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0"
+                className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl focus:border-amber-500/50 focus:ring-0"
               />
             </div>
           </div>
@@ -1888,7 +1888,7 @@ const BusinessTab = () => {
                 value={latePaymentInterestRate}
                 onChange={(e) => setLatePaymentInterestRate(e.target.value)}
                 placeholder="8% p.a."
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+                className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
               />
             </div>
             <div className="space-y-2">
@@ -1897,7 +1897,7 @@ const BusinessTab = () => {
                 value={preferredPaymentMethod}
                 onChange={(e) => setPreferredPaymentMethod(e.target.value)}
                 placeholder="Bank Transfer"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
+                className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl focus:border-cyan-500/50 focus:ring-0"
               />
             </div>
           </div>
@@ -2103,7 +2103,7 @@ const BusinessTab = () => {
               <Input
                 {...register('inspector_name')}
                 placeholder="Full name"
-                className="h-12 text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
+                className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl focus:border-blue-500/50 focus:ring-0"
               />
             </div>
             <div className="sm:col-span-2">
@@ -2162,7 +2162,7 @@ const BusinessTab = () => {
                 value={watch('insurance_provider') || ''}
                 onValueChange={(value) => setValue('insurance_provider', value)}
               >
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl">
+                <SelectTrigger className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl">
                   <SelectValue placeholder="Provider" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-white/[0.1]">
@@ -2177,7 +2177,7 @@ const BusinessTab = () => {
                 value={watch('insurance_coverage') || ''}
                 onValueChange={(value) => setValue('insurance_coverage', value)}
               >
-                <SelectTrigger className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl">
+                <SelectTrigger className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl">
                   <SelectValue placeholder="Coverage" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-dark border-white/[0.1]">
@@ -2191,12 +2191,12 @@ const BusinessTab = () => {
               <Input
                 {...register('insurance_policy_number')}
                 placeholder="Policy number"
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl"
+                className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl"
               />
               <Input
                 type="date"
                 {...register('insurance_expiry')}
-                className="h-11 text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl"
+                className="h-11 text-[15px] bg-input border-white/[0.08] rounded-xl"
               />
             </div>
           </div>
