@@ -2,8 +2,7 @@ import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
-// TODO: Replace with actual PAT Testing template ID once created in PDF Monkey
-const TEMPLATE_ID = 'PAT-TESTING-TEMPLATE-ID';
+const TEMPLATE_ID = '9B374EDE-A879-4470-A507-4FBA2F7DA7A6';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -21,6 +20,7 @@ interface PDFMonkeyDocument {
 }
 
 async function createPDFMonkeyDocument(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any,
   templateId?: string
 ): Promise<PDFMonkeyDocument> {
@@ -91,6 +91,165 @@ async function waitForPDFGeneration(
   throw new Error('PDF generation timed out');
 }
 
+/**
+ * Server-side formatter for raw (camelCase) form data.
+ * Used when the email flow sends report.data directly without client-side formatting.
+ * Detects raw data by checking for camelCase keys (e.g. clientName) vs formatted keys (e.g. client_details).
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function formatRawFormData(raw: any): any {
+  const resultCode = (val: string): string => {
+    if (val === 'pass') return 'P';
+    if (val === 'fail') return 'F';
+    if (val === 'na') return 'N/A';
+    return '';
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const appliances = (raw.appliances || []).map((app: any, index: number) => ({
+    asset_number: app.assetNumber || '',
+    description: app.description || '',
+    make: app.make || '',
+    model: app.model || '',
+    serial_number: app.serialNumber || '',
+    location: app.location || '',
+    appliance_class: app.applianceClass || 'I',
+    category: app.category || 'portable',
+    visual: {
+      flex: resultCode(app.visualInspection?.flexCondition || ''),
+      plug: resultCode(app.visualInspection?.plugCondition || ''),
+      fuse: app.visualInspection?.fuseRating || '',
+      case: resultCode(app.visualInspection?.enclosureCondition || ''),
+      switch: resultCode(app.visualInspection?.switchesControls || ''),
+      env: resultCode(app.visualInspection?.suitableForEnvironment || ''),
+    },
+    electrical: {
+      earth: app.electricalTests?.earthContinuity?.reading || '',
+      earth_result: resultCode(app.electricalTests?.earthContinuity?.result || ''),
+      insulation: app.electricalTests?.insulationResistance?.reading || '',
+      insulation_result: resultCode(app.electricalTests?.insulationResistance?.result || ''),
+      load: app.electricalTests?.loadTest?.reading || '',
+      load_result: resultCode(app.electricalTests?.loadTest?.result || ''),
+      leakage: app.electricalTests?.leakageCurrent?.reading || '',
+      leakage_result: resultCode(app.electricalTests?.leakageCurrent?.result || ''),
+      polarity: resultCode(app.electricalTests?.polarity || ''),
+      functional: resultCode(app.electricalTests?.functionalCheck || ''),
+    },
+    visual_notes: app.visualInspection?.notes || '',
+    overall_result: app.overallResult || '',
+    repair_code: app.repairCode || '',
+    next_test_due: app.nextTestDue || '',
+    notes: app.notes || '',
+    test_date: app.testDate || '',
+    tested_by: app.testedBy || '',
+    has_photos: (app.photos || []).length > 0,
+    photo_count: (app.photos || []).length,
+    first_photo: (app.photos || [])[0] || '',
+  }));
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const totalTested = appliances.filter((a: any) => a.overall_result !== '').length;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const totalPassed = appliances.filter((a: any) => a.overall_result === 'pass').length;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const totalFailed = appliances.filter((a: any) => a.overall_result === 'fail').length;
+  const passRate = totalTested > 0 ? Math.round((totalPassed / totalTested) * 100) : 0;
+
+  const failedAppliances = appliances
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .filter((a: any) => a.overall_result === 'fail')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .map((a: any) => ({
+      asset_number: a.asset_number,
+      description: a.description,
+      make: a.make,
+      model: a.model,
+      serial_number: a.serial_number,
+      location: a.location,
+      repair_code: a.repair_code || '',
+      repair_code_label: '',
+      failure_reasons: '',
+      notes: a.notes || '',
+      visual_notes: a.visual_notes || '',
+      photos: [],
+      has_photos: false,
+    }));
+
+  return {
+    metadata: {
+      certificate_number: raw.certificateNumber || `PAT-${Date.now()}`,
+      test_date: raw.testDate || '',
+      report_reference: raw.reportReference || '',
+      standard: 'IET Code of Practice (5th Edition)',
+    },
+    client_details: {
+      client_name: raw.clientName || '',
+      client_address: raw.clientAddress || '',
+      client_phone: raw.clientTelephone || '',
+      client_email: raw.clientEmail || '',
+      contact_person: raw.contactPerson || '',
+    },
+    site_details: {
+      site_name: raw.siteName || '',
+      site_address: raw.siteAddress || '',
+      site_contact_name: raw.siteContactName || '',
+      site_contact_phone: raw.siteContactPhone || '',
+    },
+    test_equipment: {
+      make: raw.testEquipment?.make || '',
+      model: raw.testEquipment?.model || '',
+      serial_number: raw.testEquipment?.serialNumber || '',
+      last_calibration: raw.testEquipment?.lastCalibrationDate || '',
+      next_calibration: raw.testEquipment?.nextCalibrationDue || '',
+    },
+    appliances,
+    summary: {
+      total_tested: totalTested,
+      total_passed: totalPassed,
+      total_failed: totalFailed,
+      pass_rate: passRate,
+    },
+    failed_appliances: failedAppliances,
+    recommendations: raw.recommendations || '',
+    retest_interval: raw.suggestedRetestInterval || '12',
+    next_test_due: raw.nextTestDue || '',
+    additional_notes: raw.additionalNotes || '',
+    declarations: {
+      tester: {
+        name: raw.testerName || '',
+        company: raw.testerCompany || '',
+        qualifications: raw.testerQualifications || '',
+        signature: raw.testerSignature || '',
+        date: raw.testerDate || '',
+      },
+    },
+    has_photos: false,
+    appliance_photos: [],
+    company_logo: '',
+    company_name: raw.testerCompany || '',
+    company_address: '',
+    company_phone: '',
+    company_email: '',
+    company_tagline: '',
+    company_accent_color: '#22c55e',
+    registration_scheme: '',
+    registration_number: '',
+    registration_scheme_logo: '',
+  };
+}
+
+/**
+ * Detect if data is already formatted (has metadata/client_details)
+ * or raw (has clientName/siteAddress)
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function isRawFormData(data: any): boolean {
+  return (
+    !data.metadata &&
+    (data.clientName !== undefined || data.appliances?.[0]?.assetNumber !== undefined)
+  );
+}
+
 Deno.serve(async (req: Request) => {
   // Handle CORS preflight
   if (req.method === 'OPTIONS') {
@@ -102,13 +261,17 @@ Deno.serve(async (req: Request) => {
       throw new Error('PDFMONKEY_API_KEY environment variable is not set');
     }
 
-    const { formData, templateId } = await req.json();
+    const { formData: rawFormData, templateId } = await req.json();
 
-    if (!formData) {
+    if (!rawFormData) {
       throw new Error('No form data provided');
     }
 
+    // Auto-format raw data (from email flow) or use pre-formatted data (from app)
+    const formData = isRawFormData(rawFormData) ? formatRawFormData(rawFormData) : rawFormData;
+
     console.log('[generate-pat-testing-pdf] Creating PDF document');
+    console.log('[generate-pat-testing-pdf] Data was raw:', isRawFormData(rawFormData));
     console.log('[generate-pat-testing-pdf] Form data keys:', Object.keys(formData));
 
     // Log key sections for debugging

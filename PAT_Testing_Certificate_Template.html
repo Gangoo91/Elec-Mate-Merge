@@ -1,0 +1,1365 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portable Appliance Testing (PAT) Certificate</title>
+    <style>
+      /* Dynamic accent colour */
+      :root {
+          --accent-color: {{ company_accent_color | default: "#22c55e" }};
+          --accent-light: {{ company_accent_color | default: "#22c55e" }}33;
+      }
+
+      @page {
+          size: A4;
+          margin: 3mm 3mm 4mm 3mm;
+      }
+
+      @page landscape {
+          size: A4 landscape;
+          margin: 2mm 2mm 3mm 2mm;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+          font-size: 8.5px;
+          line-height: 1.4;
+          color: #1a1a1a;
+          background: #fff;
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+      }
+
+      /* ========== HEADER ========== */
+      .doc-header {
+          background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+          color: #fff;
+          padding: 10px 12px;
+          margin-bottom: 2px;
+          border-radius: 2px;
+          position: relative;
+          overflow: hidden;
+      }
+
+      .doc-header::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 3px;
+          background: linear-gradient(90deg, var(--accent-color), var(--accent-color), var(--accent-color));
+      }
+
+      .doc-header-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      .doc-title-section { flex: 1; }
+
+      .doc-title {
+          font-size: 16px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+          margin-bottom: 2px;
+      }
+
+      .doc-subtitle {
+          font-size: 7.5px;
+          font-weight: 400;
+          opacity: 0.85;
+          letter-spacing: 0.3px;
+      }
+
+      .doc-meta { text-align: right; }
+
+      .cert-number {
+          font-size: 11px;
+          font-weight: 700;
+          color: var(--accent-color);
+          letter-spacing: 0.5px;
+      }
+
+      .page-number {
+          font-size: 8px;
+          opacity: 0.7;
+          margin-top: 2px;
+      }
+
+      .company-logo {
+          flex-shrink: 0;
+          margin-right: 12px;
+      }
+
+      .company-logo img {
+          max-height: 45px;
+          max-width: 120px;
+          object-fit: contain;
+      }
+
+      .company-brand {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          margin-right: 12px;
+      }
+
+      .company-brand-info {
+          display: flex;
+          flex-direction: column;
+      }
+
+      .company-brand-name {
+          font-size: 11px;
+          font-weight: 700;
+          color: #fff;
+          letter-spacing: 0.3px;
+      }
+
+      .company-brand-tagline {
+          font-size: 7px;
+          color: rgba(255,255,255,0.7);
+          font-style: italic;
+      }
+
+      .company-brand-reg {
+          font-size: 7px;
+          color: var(--accent-color);
+          margin-top: 1px;
+      }
+
+      /* ========== SECTIONS ========== */
+      .section { margin-bottom: 4px; }
+
+      .section-title {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-size: 9px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.8px;
+          padding: 4px 8px;
+          margin-bottom: 3px;
+          border-left: 3px solid var(--accent-color);
+      }
+
+      .section-subtitle {
+          background: #f1f5f9;
+          color: #334155;
+          font-size: 8px;
+          font-weight: 600;
+          padding: 3px 10px;
+          margin-bottom: 2px;
+          border-left: 3px solid #64748b;
+      }
+
+      /* ========== FORM GRID ========== */
+      .form-grid {
+          display: table;
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 2px;
+      }
+
+      .form-row { display: table-row; }
+
+      .form-label {
+          display: table-cell;
+          font-size: 7.5px;
+          font-weight: 600;
+          color: #475569;
+          padding: 4px 6px;
+          width: 120px;
+          vertical-align: middle;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+      }
+
+      .form-value {
+          display: table-cell;
+          font-size: 8.5px;
+          color: #1e293b;
+          padding: 4px 6px;
+          vertical-align: middle;
+          border: 1px solid #e2e8f0;
+          background: #fff;
+      }
+
+      .inline-form {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+          padding: 4px 6px;
+          background: #fafbfc;
+          border: 1px solid #e2e8f0;
+          border-radius: 2px;
+      }
+
+      .inline-group {
+          display: flex;
+          align-items: center;
+          gap: 3px;
+      }
+
+      .inline-label {
+          font-size: 7.5px;
+          font-weight: 600;
+          color: #64748b;
+          white-space: nowrap;
+      }
+
+      .inline-value {
+          font-size: 8px;
+          color: #1e293b;
+          padding: 3px 5px;
+          background: #fff;
+          border: 1px solid #cbd5e1;
+          border-radius: 2px;
+          min-width: 50px;
+          min-height: 18px;
+          line-height: 1.3;
+      }
+
+      .inline-value.wide {
+          min-width: 100px;
+          flex: 1;
+      }
+
+      /* ========== TWO-COL LAYOUT ========== */
+      .two-col { display: flex; gap: 4px; }
+      .two-col > .col { flex: 1; }
+
+      /* ========== DATA TABLE ========== */
+      .data-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 8px;
+          margin-bottom: 3px;
+      }
+
+      .data-table th {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-weight: 600;
+          font-size: 7.5px;
+          padding: 4px 6px;
+          text-align: left;
+          border: 1px solid #0f172a;
+      }
+
+      .data-table td {
+          padding: 4px 6px;
+          border: 1px solid #e2e8f0;
+          vertical-align: top;
+          background: #fff;
+      }
+
+      .data-field { margin-bottom: 3px; }
+      .data-field:last-child { margin-bottom: 0; }
+
+      .data-field-label {
+          font-size: 7px;
+          font-weight: 600;
+          color: #64748b;
+          margin-bottom: 1px;
+      }
+
+      .data-field-value {
+          font-size: 8px;
+          color: #1e293b;
+          padding: 2px 4px;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 1px;
+      }
+
+      /* ========== STATUS BADGES ========== */
+      .status-badge {
+          display: inline-block;
+          padding: 2px 8px;
+          border-radius: 2px;
+          font-size: 7px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+      }
+
+      .status-badge.pass {
+          background: #dcfce7;
+          color: #166534;
+          border: 1px solid #86efac;
+      }
+
+      .status-badge.fail {
+          background: #fee2e2;
+          color: #991b1b;
+          border: 1px solid #fca5a5;
+      }
+
+      .status-badge.info {
+          background: #dbeafe;
+          color: #1e40af;
+          border: 1px solid #93c5fd;
+      }
+
+      /* ========== SUMMARY STATS ========== */
+      .stats-grid {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 4px;
+      }
+
+      .stat-card {
+          flex: 1;
+          text-align: center;
+          padding: 6px 4px;
+          border: 1px solid #e2e8f0;
+          border-radius: 3px;
+          background: #fff;
+      }
+
+      .stat-card.total { border-left: 3px solid #3b82f6; }
+      .stat-card.passed { border-left: 3px solid #22c55e; }
+      .stat-card.failed { border-left: 3px solid #ef4444; }
+
+      .stat-value {
+          font-size: 18px;
+          font-weight: 800;
+          line-height: 1.2;
+      }
+
+      .stat-value.total-val { color: #1e40af; }
+      .stat-value.passed-val { color: #166534; }
+      .stat-value.failed-val { color: #991b1b; }
+
+      .stat-label {
+          font-size: 7px;
+          font-weight: 600;
+          color: #64748b;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-top: 2px;
+      }
+
+      .pass-rate-bar {
+          height: 8px;
+          background: #f1f5f9;
+          border-radius: 4px;
+          overflow: hidden;
+          margin-top: 4px;
+      }
+
+      .pass-rate-fill {
+          height: 100%;
+          background: linear-gradient(90deg, #22c55e, #16a34a);
+          border-radius: 4px;
+      }
+
+      .pass-rate-text {
+          text-align: center;
+          font-size: 8px;
+          font-weight: 700;
+          color: #166534;
+          margin-top: 2px;
+      }
+
+      /* ========== DECLARATION ========== */
+      .declaration-box {
+          background: #f0fdf4;
+          border: 1px solid #86efac;
+          border-left: 3px solid var(--accent-color);
+          border-radius: 2px;
+          padding: 6px 10px;
+          margin-bottom: 4px;
+      }
+
+      .declaration-text {
+          font-size: 7.5px;
+          color: #166534;
+          line-height: 1.5;
+          text-align: justify;
+      }
+
+      .declaration-text strong {
+          color: #14532d;
+      }
+
+      /* ========== SIGNATURE ========== */
+      .signature-grid {
+          display: flex;
+          gap: 6px;
+          margin-top: 2px;
+      }
+
+      .signature-box {
+          flex: 1;
+          border: 1px solid #cbd5e1;
+          border-radius: 2px;
+          overflow: hidden;
+      }
+
+      .signature-box-header {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-size: 7.5px;
+          font-weight: 600;
+          padding: 3px 8px;
+          border-bottom: 2px solid var(--accent-color);
+      }
+
+      .signature-box-body { padding: 4px 6px; background: #fafbfc; }
+
+      .sig-field {
+          display: flex;
+          align-items: center;
+          margin-bottom: 3px;
+          gap: 4px;
+      }
+
+      .sig-field:last-child { margin-bottom: 0; }
+
+      .sig-field-label {
+          font-size: 7px;
+          font-weight: 600;
+          color: #64748b;
+          min-width: 70px;
+          flex-shrink: 0;
+      }
+
+      .sig-field-value {
+          flex: 1;
+          font-size: 8px;
+          color: #1e293b;
+          padding: 3px 5px;
+          background: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 1px;
+          min-height: 18px;
+      }
+
+      .sig-field-value.signature {
+          min-height: 35px;
+          display: flex;
+          align-items: center;
+      }
+
+      .sig-field-value img { max-height: 30px; }
+
+      /* ========== WARNING BOX ========== */
+      .warning-box {
+          background: #fef2f2;
+          border: 1px solid #fca5a5;
+          border-left: 3px solid #ef4444;
+          border-radius: 2px;
+          padding: 5px 8px;
+          margin-bottom: 4px;
+      }
+
+      .warning-box-text {
+          font-size: 7.5px;
+          font-weight: 600;
+          color: #991b1b;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+      }
+
+      .info-box {
+          background: #fffbeb;
+          border: 1px solid #fcd34d;
+          border-left: 3px solid #f59e0b;
+          border-radius: 2px;
+          padding: 4px 8px;
+          margin: 4px 0;
+          font-size: 7.5px;
+          color: #92400e;
+      }
+
+      .info-box strong { color: #78350f; }
+
+      /* ========== LANDSCAPE REGISTER TABLE ========== */
+      .landscape-page {
+          page: landscape;
+          page-break-before: always;
+      }
+
+      .landscape-header {
+          background: linear-gradient(180deg, #0a1628 0%, #152238 100%);
+          color: #fff;
+          padding: 6px 8px;
+          margin-bottom: 2px;
+          border-radius: 2px;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+      }
+
+      .landscape-header::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: var(--accent-color);
+      }
+
+      .landscape-title {
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+      }
+
+      .landscape-meta {
+          text-align: right;
+          font-size: 7.5px;
+      }
+
+      .landscape-cert {
+          color: var(--accent-color);
+          font-weight: 700;
+          font-size: 9px;
+      }
+
+      .register-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 7px;
+          table-layout: fixed;
+      }
+
+      .register-table thead th {
+          background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+          color: #fff;
+          font-weight: 600;
+          font-size: 6px;
+          padding: 3px 2px;
+          text-align: center;
+          border: 1px solid #0f172a;
+          letter-spacing: 0.2px;
+          text-transform: uppercase;
+          vertical-align: bottom;
+          line-height: 1.3;
+      }
+
+      .register-table thead th.group-header {
+          background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+          font-size: 6.5px;
+          padding: 2px 2px;
+          border-bottom: 2px solid var(--accent-color);
+      }
+
+      .register-table thead th:first-child {
+          text-align: center;
+      }
+
+      .register-table tbody td {
+          padding: 2.5px 2px;
+          border: 1px solid #e2e8f0;
+          text-align: center;
+          font-size: 7px;
+          background: #fff;
+          vertical-align: middle;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+      }
+
+      .register-table tbody td.photo-cell {
+          padding: 1px;
+          overflow: hidden;
+      }
+
+      .register-table tbody td.photo-cell img {
+          width: 36px;
+          height: 28px;
+          object-fit: cover;
+          border-radius: 1px;
+          display: block;
+      }
+
+      .register-table tbody td.no-photo {
+          color: #cbd5e1;
+          font-size: 6px;
+      }
+
+      .register-table tbody td:nth-child(1) { /* # */
+          font-weight: 700;
+          color: #64748b;
+          font-size: 6.5px;
+      }
+
+      .register-table tbody td:nth-child(3),
+      .register-table tbody td:nth-child(4) { /* Asset, Description */
+          text-align: left;
+          font-weight: 500;
+      }
+
+      .register-table tbody td:nth-child(5) { /* Location */
+          text-align: left;
+          font-size: 6.5px;
+      }
+
+      .register-table tbody tr:nth-child(even) td {
+          background: #f8fafc;
+      }
+
+      /* Result cells */
+      .r-pass {
+          background: #dcfce7 !important;
+          color: #166534;
+          font-weight: 700;
+      }
+
+      .r-fail {
+          background: #fee2e2 !important;
+          color: #991b1b;
+          font-weight: 700;
+      }
+
+      .r-na {
+          color: #94a3b8;
+          font-size: 6px;
+      }
+
+      .result-pass {
+          background: #dcfce7 !important;
+          color: #166534;
+          font-weight: 800;
+          font-size: 8px;
+          letter-spacing: 0.5px;
+      }
+
+      .result-fail {
+          background: #fee2e2 !important;
+          color: #991b1b;
+          font-weight: 800;
+          font-size: 8px;
+          letter-spacing: 0.5px;
+      }
+
+      /* Row highlight for failed appliances */
+      .register-table tbody tr.row-fail td {
+          background: #fff5f5 !important;
+      }
+
+      .register-table tbody tr.row-fail td:nth-child(even) {
+          background: #fef2f2 !important;
+      }
+
+      /* ========== REPAIR CODES LEGEND ========== */
+      .legend-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 6.5px;
+          margin-top: 4px;
+      }
+
+      .legend-table th {
+          background: #f1f5f9;
+          color: #334155;
+          font-weight: 600;
+          padding: 2px 4px;
+          text-align: left;
+          border: 1px solid #e2e8f0;
+          font-size: 6px;
+          text-transform: uppercase;
+          letter-spacing: 0.3px;
+      }
+
+      .legend-table td {
+          padding: 2px 4px;
+          border: 1px solid #e2e8f0;
+          background: #fff;
+      }
+
+      .legend-table td:first-child {
+          font-weight: 700;
+          color: #1e293b;
+          width: 40px;
+          text-align: center;
+      }
+
+      /* ========== FAILED APPLIANCES APPENDIX ========== */
+      .fail-card {
+          border: 1px solid #fca5a5;
+          border-left: 3px solid #ef4444;
+          border-radius: 2px;
+          margin-bottom: 4px;
+          overflow: hidden;
+      }
+
+      .fail-card-header {
+          background: #fef2f2;
+          padding: 3px 8px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          border-bottom: 1px solid #fecaca;
+      }
+
+      .fail-card-title {
+          font-size: 8px;
+          font-weight: 700;
+          color: #991b1b;
+      }
+
+      .fail-card-badge {
+          background: #fee2e2;
+          color: #991b1b;
+          font-size: 6.5px;
+          font-weight: 700;
+          padding: 1px 6px;
+          border-radius: 2px;
+          border: 1px solid #fca5a5;
+          text-transform: uppercase;
+      }
+
+      .fail-card-body {
+          padding: 4px 8px;
+          background: #fff;
+      }
+
+      .fail-card-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+      }
+
+      .fail-card-field {
+          flex: 1;
+          min-width: 120px;
+      }
+
+      .fail-card-field-label {
+          font-size: 6.5px;
+          font-weight: 600;
+          color: #64748b;
+      }
+
+      .fail-card-field-value {
+          font-size: 7.5px;
+          color: #1e293b;
+          font-weight: 500;
+      }
+
+      /* ========== PHOTO GRID ========== */
+      .photo-grid {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 4px;
+      }
+
+      .photo-card {
+          width: 120px;
+          border: 1px solid #e2e8f0;
+          border-radius: 3px;
+          overflow: hidden;
+      }
+
+      .photo-card img {
+          width: 120px;
+          height: 90px;
+          object-fit: cover;
+      }
+
+      .photo-card-label {
+          font-size: 6.5px;
+          font-weight: 600;
+          color: #334155;
+          padding: 2px 4px;
+          background: #f8fafc;
+          text-align: center;
+          border-top: 1px solid #e2e8f0;
+      }
+
+      /* ========== FOOTER ========== */
+      .footer {
+          margin-top: 8px;
+          padding-top: 6px;
+          border-top: 2px solid var(--accent-color);
+          display: flex;
+          justify-content: space-between;
+          font-size: 7px;
+          color: #64748b;
+      }
+
+      .footer-left { line-height: 1.5; }
+      .footer-right { text-align: right; }
+
+      .landscape-footer {
+          margin-top: 4px;
+          padding-top: 4px;
+          border-top: 2px solid var(--accent-color);
+          display: flex;
+          justify-content: space-between;
+          font-size: 6.5px;
+          color: #64748b;
+      }
+
+      /* ========== UTILITIES ========== */
+      .page-break { page-break-before: always; }
+      .avoid-break { page-break-inside: avoid; }
+      .text-center { text-align: center; }
+      .font-bold { font-weight: 600; }
+      .mt-2 { margin-top: 4px; }
+      .mb-2 { margin-bottom: 4px; }
+    </style>
+  </head>
+  <body>
+
+    <!-- ============================================================ -->
+    <!-- PAGE 1: COVER (PORTRAIT)                                      -->
+    <!-- ============================================================ -->
+
+    <div class="doc-header">
+      <div class="doc-header-content">
+        <!-- Company Branding -->
+        <div class="company-brand">
+          {% if company_logo %}
+          <div class="company-logo">
+            <img src="{{ company_logo }}" alt="Company Logo" />
+          </div>
+          {% endif %}
+          <div class="company-brand-info">
+            <div class="company-brand-name">{{ company_name }}</div>
+            {% if company_tagline %}
+            <div class="company-brand-tagline">{{ company_tagline }}</div>
+            {% endif %}
+            {% if registration_scheme %}
+            <div class="company-brand-reg">
+              {% if registration_scheme_logo %}<img src="{{ registration_scheme_logo }}" style="max-height: 14px; vertical-align: middle; margin-right: 4px;" />{% endif %}
+              {{ registration_scheme }}{% if registration_number %}: {{ registration_number }}{% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <!-- Certificate Title -->
+        <div class="doc-title-section">
+          <div class="doc-title">PORTABLE APPLIANCE TEST CERTIFICATE</div>
+          <div class="doc-subtitle">
+            In accordance with the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment (5th Edition)
+          </div>
+        </div>
+        <!-- Certificate Number -->
+        <div class="doc-meta">
+          <div class="cert-number">{{ metadata.certificate_number }}</div>
+          <div class="page-number">Page 1</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION A: CLIENT DETAILS -->
+    <div class="section">
+      <div class="section-title">Section A: Client Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Client Name</div>
+          <div class="form-value">{{ client_details.client_name }}</div>
+          <div class="form-label">Telephone</div>
+          <div class="form-value">{{ client_details.client_phone }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Address</div>
+          <div class="form-value" colspan="3">{{ client_details.client_address }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Email</div>
+          <div class="form-value">{{ client_details.client_email }}</div>
+          <div class="form-label">Contact Person</div>
+          <div class="form-value">{{ client_details.contact_person }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION B: SITE DETAILS -->
+    <div class="section">
+      <div class="section-title">Section B: Site Details</div>
+      <div class="form-grid">
+        <div class="form-row">
+          <div class="form-label">Site Name</div>
+          <div class="form-value">{{ site_details.site_name }}</div>
+          <div class="form-label">Contact Name</div>
+          <div class="form-value">{{ site_details.site_contact_name }}</div>
+        </div>
+        <div class="form-row">
+          <div class="form-label">Site Address</div>
+          <div class="form-value">
+            {% if site_details.site_address != client_details.client_address and site_details.site_address != "" %}
+              {{ site_details.site_address }}
+            {% else %}
+              As above
+            {% endif %}
+          </div>
+          <div class="form-label">Contact Phone</div>
+          <div class="form-value">{{ site_details.site_contact_phone }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION C: TEST EQUIPMENT -->
+    <div class="section">
+      <div class="section-title">Section C: Test Equipment</div>
+      <div class="inline-form">
+        <div class="inline-group">
+          <span class="inline-label">PAT Tester Make:</span>
+          <span class="inline-value">{{ test_equipment.make }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Model:</span>
+          <span class="inline-value">{{ test_equipment.model }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Serial No:</span>
+          <span class="inline-value">{{ test_equipment.serial_number }}</span>
+        </div>
+      </div>
+      <div class="inline-form" style="margin-top: 2px">
+        <div class="inline-group">
+          <span class="inline-label">Last Calibration:</span>
+          <span class="inline-value">{{ test_equipment.last_calibration }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Next Calibration Due:</span>
+          <span class="inline-value">{{ test_equipment.next_calibration }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION D: TEST SUMMARY -->
+    <div class="section">
+      <div class="section-title">Section D: Test Summary</div>
+      <div class="stats-grid">
+        <div class="stat-card total">
+          <div class="stat-value total-val">{{ summary.total_tested }}</div>
+          <div class="stat-label">Total Tested</div>
+        </div>
+        <div class="stat-card passed">
+          <div class="stat-value passed-val">{{ summary.total_passed }}</div>
+          <div class="stat-label">Passed</div>
+        </div>
+        <div class="stat-card failed">
+          <div class="stat-value failed-val">{{ summary.total_failed }}</div>
+          <div class="stat-label">Failed</div>
+        </div>
+        <div class="stat-card" style="border-left: 3px solid var(--accent-color);">
+          <div class="stat-value" style="color: var(--accent-color);">{{ summary.pass_rate }}%</div>
+          <div class="stat-label">Pass Rate</div>
+        </div>
+      </div>
+      <div class="pass-rate-bar">
+        <div class="pass-rate-fill" style="width: {{ summary.pass_rate }}%"></div>
+      </div>
+      <div class="inline-form" style="margin-top: 4px">
+        <div class="inline-group">
+          <span class="inline-label">Test Date:</span>
+          <span class="inline-value" style="font-weight: 600">{{ metadata.test_date }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Report Reference:</span>
+          <span class="inline-value">{{ metadata.report_reference }}</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Suggested Retest Interval:</span>
+          <span class="inline-value" style="font-weight: 600">{{ retest_interval }} months</span>
+        </div>
+        <div class="inline-group">
+          <span class="inline-label">Next Test Due:</span>
+          <span class="inline-value" style="font-weight: 600">{{ next_test_due }}</span>
+        </div>
+      </div>
+    </div>
+
+    {% if summary.total_failed > 0 %}
+    <!-- FAILED APPLIANCES WARNING -->
+    <div class="warning-box">
+      <div class="warning-box-text">
+        &#9888; {{ summary.total_failed }} appliance{{ summary.total_failed | pluralize: '', 's' }} failed testing. Failed appliances should be removed from service until the defect has been rectified. See Appendix A for details.
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- SECTION E: DECLARATION -->
+    <div class="section">
+      <div class="section-title">Section E: Declaration</div>
+      <div class="declaration-box">
+        <div class="declaration-text">
+          <strong>Declaration:</strong> I/We certify that the portable electrical appliances listed in the attached register have been inspected and tested in accordance with the IET Code of Practice for In-Service Inspection and Testing of Electrical Equipment (5th Edition). The results are an accurate record of the inspection and testing carried out. Any appliance that has failed testing has been identified and the duty holder notified.
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION F: TESTER DETAILS & SIGNATURE -->
+    <div class="section">
+      <div class="section-title">Section F: Tester Details</div>
+      <div class="signature-grid">
+        <div class="signature-box" style="flex: 2">
+          <div class="signature-box-header">Tester Details</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name</span>
+              <span class="sig-field-value" style="font-weight: 600">{{ declarations.tester.name }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Company</span>
+              <span class="sig-field-value">{{ declarations.tester.company }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Qualifications</span>
+              <span class="sig-field-value">{{ declarations.tester.qualifications }}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date</span>
+              <span class="sig-field-value">{{ declarations.tester.date }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="signature-box" style="flex: 1">
+          <div class="signature-box-header">Signature</div>
+          <div class="signature-box-body" style="min-height: 80px; display: flex; align-items: center; justify-content: center">
+            {% if declarations.tester.signature %}
+            <img src="{{ declarations.tester.signature }}" style="max-height: 60px; max-width: 100%" />
+            {% else %}
+            <div style="width: 100%; border-bottom: 1px solid #64748b; margin: 20px 10px"></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if recommendations != "" or additional_notes != "" %}
+    <!-- SECTION G: RECOMMENDATIONS -->
+    <div class="section">
+      <div class="section-title">Section G: Recommendations</div>
+      {% if recommendations != "" %}
+      <div class="inline-form">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Recommendations:</span>
+          <span class="inline-value wide" style="min-height: 24px">{{ recommendations }}</span>
+        </div>
+      </div>
+      {% endif %}
+      {% if additional_notes != "" %}
+      <div class="inline-form" style="margin-top: 2px">
+        <div class="inline-group" style="flex: 1">
+          <span class="inline-label">Additional Notes:</span>
+          <span class="inline-value wide" style="min-height: 24px">{{ additional_notes }}</span>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- FOOTER (Page 1) -->
+    <div class="footer">
+      <div class="footer-left">
+        <strong>{{ company_name }}</strong><br />
+        {{ company_address }}<br />
+        {% if company_phone %}Tel: {{ company_phone }}{% endif %}
+        {% if company_email %} | {{ company_email }}{% endif %}
+      </div>
+      <div class="footer-right">
+        {% if registration_scheme %}
+        <strong>{{ registration_scheme }}</strong><br />
+        {% if registration_number %}Reg No: {{ registration_number }}<br />{% endif %}
+        {% endif %}
+        <span style="color: #94a3b8">IET Code of Practice (5th Edition) | In-Service Inspection &amp; Testing</span>
+      </div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- PAGE 2+: APPLIANCE REGISTER (LANDSCAPE)                       -->
+    <!-- Single continuous table — PDF engine handles page breaks      -->
+    <!-- ============================================================ -->
+
+    <div class="landscape-page">
+      <div class="landscape-header">
+        <div>
+          {% if company_logo %}
+          <img src="{{ company_logo }}" style="max-height: 22px; max-width: 80px; vertical-align: middle; margin-right: 8px;" />
+          {% endif %}
+          <span class="landscape-title">APPLIANCE REGISTER</span>
+        </div>
+        <div class="landscape-meta">
+          <div class="landscape-cert">{{ metadata.certificate_number }}</div>
+          <div>{{ site_details.site_name }}{% if site_details.site_name != "" %} &mdash; {% endif %}{{ metadata.test_date }}</div>
+        </div>
+      </div>
+
+      <table class="register-table">
+        <thead>
+          <tr>
+            <th rowspan="2" style="width: 16px;">#</th>
+            <th rowspan="2" style="width: 40px;">Photo</th>
+            <th rowspan="2" style="width: 42px;">Asset No</th>
+            <th rowspan="2" style="width: 62px;">Appliance</th>
+            <th rowspan="2" style="width: 48px;">Location</th>
+            <th rowspan="2" style="width: 42px;">Serial No</th>
+            <th rowspan="2" style="width: 20px;">Cl.</th>
+            <th colspan="6" class="group-header">Visual Inspection</th>
+            <th colspan="6" class="group-header">Electrical Tests</th>
+            <th rowspan="2" style="width: 30px;">Result</th>
+            <th rowspan="2" style="width: 28px;">Repair</th>
+          </tr>
+          <tr>
+            <!-- Visual -->
+            <th style="width: 22px;">Flex</th>
+            <th style="width: 22px;">Plug</th>
+            <th style="width: 24px;">Fuse</th>
+            <th style="width: 22px;">Case</th>
+            <th style="width: 22px;">Sw.</th>
+            <th style="width: 22px;">Env.</th>
+            <!-- Electrical -->
+            <th style="width: 34px;">Earth (&Omega;)</th>
+            <th style="width: 36px;">Ins. (M&Omega;)</th>
+            <th style="width: 32px;">Load</th>
+            <th style="width: 32px;">Leak (mA)</th>
+            <th style="width: 22px;">Pol.</th>
+            <th style="width: 22px;">Func.</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for appliance in appliances %}
+          <tr class="{% if appliance.overall_result == 'fail' %}row-fail{% endif %}">
+            <td>{{ forloop.index }}</td>
+            <td class="{% if appliance.has_photos %}photo-cell{% else %}no-photo{% endif %}">
+              {% if appliance.has_photos %}<img src="{{ appliance.first_photo }}" alt="{{ appliance.description }}" />{% else %}&mdash;{% endif %}
+            </td>
+            <td>{{ appliance.asset_number }}</td>
+            <td title="{{ appliance.description }}">{{ appliance.description }}</td>
+            <td title="{{ appliance.location }}">{{ appliance.location }}</td>
+            <td style="font-size: 6px;">{{ appliance.serial_number }}</td>
+            <td>{{ appliance.appliance_class }}</td>
+            <!-- Visual Inspection -->
+            <td class="{% if appliance.visual.flex == 'P' %}r-pass{% elsif appliance.visual.flex == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.visual.flex | default: '-' }}</td>
+            <td class="{% if appliance.visual.plug == 'P' %}r-pass{% elsif appliance.visual.plug == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.visual.plug | default: '-' }}</td>
+            <td>{{ appliance.visual.fuse | default: '-' }}</td>
+            <td class="{% if appliance.visual.case == 'P' %}r-pass{% elsif appliance.visual.case == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.visual.case | default: '-' }}</td>
+            <td class="{% if appliance.visual.switch == 'P' %}r-pass{% elsif appliance.visual.switch == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.visual.switch | default: '-' }}</td>
+            <td class="{% if appliance.visual.env == 'P' %}r-pass{% elsif appliance.visual.env == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.visual.env | default: '-' }}</td>
+            <!-- Electrical Tests -->
+            <td class="{% if appliance.electrical.earth_result == 'P' %}r-pass{% elsif appliance.electrical.earth_result == 'F' %}r-fail{% endif %}">{{ appliance.electrical.earth | default: '-' }}</td>
+            <td class="{% if appliance.electrical.insulation_result == 'P' %}r-pass{% elsif appliance.electrical.insulation_result == 'F' %}r-fail{% endif %}">{{ appliance.electrical.insulation | default: '-' }}</td>
+            <td class="{% if appliance.electrical.load_result == 'P' %}r-pass{% elsif appliance.electrical.load_result == 'F' %}r-fail{% endif %}">{{ appliance.electrical.load | default: '-' }}</td>
+            <td class="{% if appliance.electrical.leakage_result == 'P' %}r-pass{% elsif appliance.electrical.leakage_result == 'F' %}r-fail{% endif %}">{{ appliance.electrical.leakage | default: '-' }}</td>
+            <td class="{% if appliance.electrical.polarity == 'P' %}r-pass{% elsif appliance.electrical.polarity == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.electrical.polarity | default: '-' }}</td>
+            <td class="{% if appliance.electrical.functional == 'P' %}r-pass{% elsif appliance.electrical.functional == 'F' %}r-fail{% else %}r-na{% endif %}">{{ appliance.electrical.functional | default: '-' }}</td>
+            <!-- Overall Result -->
+            <td class="{% if appliance.overall_result == 'pass' %}result-pass{% elsif appliance.overall_result == 'fail' %}result-fail{% endif %}">
+              {% if appliance.overall_result == 'pass' %}PASS{% elsif appliance.overall_result == 'fail' %}FAIL{% else %}&mdash;{% endif %}
+            </td>
+            <td style="font-size: 6.5px; font-weight: 600;">{{ appliance.repair_code }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Repair Codes Legend -->
+      <div style="margin-top: 4px;">
+        <table class="legend-table">
+          <thead>
+            <tr>
+              <th colspan="2">Repair Codes</th>
+              <th colspan="2">Key: &#10003; = Pass &nbsp; &#10007; = Fail &nbsp; N/A = Not Applicable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RP</td><td>Replaced 13A plug</td>
+              <td>RS</td><td>Replaced trailing socket</td>
+            </tr>
+            <tr>
+              <td>RF3</td><td>Changed fuse to 3A</td>
+              <td>RE</td><td>Repaired enclosure</td>
+            </tr>
+            <tr>
+              <td>RF5</td><td>Changed fuse to 5A</td>
+              <td>RO</td><td>Other repair (see notes)</td>
+            </tr>
+            <tr>
+              <td>RF13</td><td>Changed fuse to 13A</td>
+              <td>SCRAP</td><td>Scrapped &mdash; beyond repair</td>
+            </tr>
+            <tr>
+              <td>RC</td><td>Replaced/trimmed cable</td>
+              <td>RFS</td><td>Removed from service</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="landscape-footer">
+        <div><strong>{{ company_name }}</strong> &mdash; {{ metadata.certificate_number }}</div>
+        <div>IET Code of Practice (5th Edition)</div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================ -->
+    <!-- APPENDIX A: FAILED APPLIANCES (only if any)                   -->
+    <!-- ============================================================ -->
+
+    {% if failed_appliances.size > 0 %}
+    <div class="page-break"></div>
+
+    <div class="doc-header">
+      <div class="doc-header-content">
+        {% if company_logo %}
+        <div class="company-brand">
+          <div class="company-logo">
+            <img src="{{ company_logo }}" alt="Company Logo" />
+          </div>
+        </div>
+        {% endif %}
+        <div class="doc-title-section">
+          <div class="doc-title" style="font-size: 14px;">APPENDIX A: FAILED APPLIANCES</div>
+          <div class="doc-subtitle">
+            Appliances that have failed inspection and/or testing &mdash; must be removed from service
+          </div>
+        </div>
+        <div class="doc-meta">
+          <div class="cert-number">{{ metadata.certificate_number }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <div class="warning-box-text">
+        &#9888; ANY FAILED APPLIANCES SHOULD BE REMOVED FROM SERVICE UNTIL THE DEFECT HAS BEEN RECTIFIED
+      </div>
+    </div>
+
+    {% for item in failed_appliances %}
+    <div class="fail-card avoid-break">
+      <div class="fail-card-header">
+        <div class="fail-card-title">
+          {% if item.asset_number != "" %}#{{ item.asset_number }} &mdash; {% endif %}{{ item.description }}
+        </div>
+        <div class="fail-card-badge">FAIL</div>
+      </div>
+      <div class="fail-card-body">
+        <div class="fail-card-grid">
+          <div class="fail-card-field">
+            <div class="fail-card-field-label">Location</div>
+            <div class="fail-card-field-value">{{ item.location }}</div>
+          </div>
+          <div class="fail-card-field">
+            <div class="fail-card-field-label">Make / Model</div>
+            <div class="fail-card-field-value">{{ item.make }}{% if item.model != "" %} {{ item.model }}{% endif %}</div>
+          </div>
+          <div class="fail-card-field">
+            <div class="fail-card-field-label">Repair Code</div>
+            <div class="fail-card-field-value" style="font-weight: 700; color: #991b1b;">{{ item.repair_code | default: 'N/A' }} &mdash; {{ item.repair_code_label }}</div>
+          </div>
+        </div>
+        {% if item.failure_reasons != "" %}
+        <div style="margin-top: 4px;">
+          <div class="fail-card-field-label">Failure Reasons</div>
+          <div class="fail-card-field-value">{{ item.failure_reasons }}</div>
+        </div>
+        {% endif %}
+        {% if item.visual_notes != "" %}
+        <div style="margin-top: 3px;">
+          <div class="fail-card-field-label">Visual Inspection Notes</div>
+          <div class="fail-card-field-value">{{ item.visual_notes }}</div>
+        </div>
+        {% endif %}
+        {% if item.notes != "" %}
+        <div style="margin-top: 3px;">
+          <div class="fail-card-field-label">Notes</div>
+          <div class="fail-card-field-value">{{ item.notes }}</div>
+        </div>
+        {% endif %}
+        {% if item.has_photos %}
+        <div style="margin-top: 4px; display: flex; gap: 4px; flex-wrap: wrap;">
+          {% for photo in item.photos %}
+          <img src="{{ photo }}" style="width: 80px; height: 60px; object-fit: cover; border: 1px solid #fca5a5; border-radius: 2px;" />
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="footer">
+      <div class="footer-left">
+        <strong>{{ company_name }}</strong><br />
+        {{ company_address }}
+      </div>
+      <div class="footer-right">
+        <span style="color: #94a3b8">IET Code of Practice (5th Edition) | In-Service Inspection &amp; Testing</span>
+      </div>
+    </div>
+    {% endif %}
+
+
+    <!-- ============================================================ -->
+    <!-- APPENDIX B: APPLIANCE PHOTOS (only if any have photos)        -->
+    <!-- ============================================================ -->
+
+    {% if has_photos %}
+    <div class="page-break"></div>
+
+    <div class="doc-header">
+      <div class="doc-header-content">
+        {% if company_logo %}
+        <div class="company-brand">
+          <div class="company-logo">
+            <img src="{{ company_logo }}" alt="Company Logo" />
+          </div>
+        </div>
+        {% endif %}
+        <div class="doc-title-section">
+          <div class="doc-title" style="font-size: 14px;">APPENDIX B: APPLIANCE PHOTOGRAPHS</div>
+          <div class="doc-subtitle">
+            Photographic evidence of appliances inspected and tested
+          </div>
+        </div>
+        <div class="doc-meta">
+          <div class="cert-number">{{ metadata.certificate_number }}</div>
+        </div>
+      </div>
+    </div>
+
+    {% for group in appliance_photos %}
+    <div class="avoid-break" style="margin-bottom: 8px;">
+      <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 4px;">
+        {% if group.asset_number != "" %}<span style="font-size: 8px; font-weight: 700; color: #334155;">#{{ group.asset_number }}</span>{% endif %}
+        <span style="font-size: 8px; font-weight: 600; color: #1e293b;">{{ group.description }}</span>
+        {% if group.result == 'pass' %}<span class="status-badge pass">PASS</span>{% elsif group.result == 'fail' %}<span class="status-badge fail">FAIL</span>{% endif %}
+      </div>
+      <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+        {% for photo in group.photos %}
+        <div class="photo-card">
+          <img src="{{ photo }}" alt="{{ group.description }}" />
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+
+    <div class="footer" style="margin-top: 12px;">
+      <div class="footer-left">
+        <strong>{{ company_name }}</strong><br />
+        {{ company_address }}
+      </div>
+      <div class="footer-right">
+        <span style="color: #94a3b8">IET Code of Practice (5th Edition) | In-Service Inspection &amp; Testing</span>
+      </div>
+    </div>
+    {% endif %}
+
+  </body>
+</html>

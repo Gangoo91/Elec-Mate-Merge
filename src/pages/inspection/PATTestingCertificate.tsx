@@ -2,17 +2,33 @@
  * PATTestingCertificate.tsx
  * PAT Testing Certificate (IET Code of Practice)
  * Portable Appliance Test Register/Log
+ *
+ * Features:
+ * - 3-tier auto-save: localStorage 10s → cloud 30s → beforeunload emergency
+ * - Email certificate via Resend
+ * - PDF generation via PDF Monkey
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Plug, Save, Download, Loader2, FileText, Receipt } from 'lucide-react';
+import {
+  ArrowLeft,
+  Plug,
+  Save,
+  Download,
+  Loader2,
+  Mail,
+  Cloud,
+  CloudOff,
+  CheckCircle2,
+  AlertCircle,
+} from 'lucide-react';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { reportCloud } from '@/utils/reportCloud';
+import { draftStorage } from '@/utils/draftStorage';
 import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
@@ -20,9 +36,17 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 
 import PATTestingFormTabs from '@/components/inspection/pat-testing/PATTestingFormTabs';
-import { usePATTestingTabs, PATTestingTabValue } from '@/hooks/usePATTestingTabs';
-import { getDefaultPATTestingFormData } from '@/types/pat-testing';
+import { usePATTestingTabs } from '@/hooks/usePATTestingTabs';
+import { getDefaultPATTestingFormData, Appliance } from '@/types/pat-testing';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
+import { useCertificateEmail } from '@/hooks/useCertificateEmail';
+import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
+
+// ─── Constants ───────────────────────────────────────────────────────────────
+const REPORT_TYPE = 'pat-testing';
+const AUTO_SAVE_INTERVAL = 10000; // 10 seconds to localStorage
+const CLOUD_SYNC_DEBOUNCE = 30000; // 30 seconds to cloud
 
 export default function PATTestingCertificate() {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +54,8 @@ export default function PATTestingCertificate() {
 
   const isNew = id === 'new' || !id;
 
-  // State
+  // ─── State ───────────────────────────────────────────────────────────────
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [formData, setFormData] = useState<any>(getDefaultPATTestingFormData());
   const [isSaving, setIsSaving] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -38,6 +63,22 @@ export default function PATTestingCertificate() {
   const [savedReportId, setSavedReportId] = useState<string | null>(
     id !== 'new' ? id || null : null
   );
+  const [syncStatus, setSyncStatus] = useState<
+    'idle' | 'pending' | 'syncing' | 'synced' | 'error' | 'offline'
+  >('idle');
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+
+  // Per-appliance test sheet state
+  const [activeApplianceId, setActiveApplianceId] = useState<string | null>(null);
+  const [copiedApplianceData, setCopiedApplianceData] = useState<Partial<Appliance> | null>(null);
+
+  // ─── Refs ────────────────────────────────────────────────────────────────
+  const autoSaveTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const cloudSyncTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const lastSavedDataRef = useRef<string>('');
+  const hasUnsavedChangesRef = useRef(false);
 
   // Hooks for tabs
   const tabProps = usePATTestingTabs(formData);
@@ -52,8 +93,52 @@ export default function PATTestingCertificate() {
     companyProfile?.logo_data_url
   );
 
-  // Load company branding for PDF
-  const loadCompanyBranding = () => {
+  // ─── Email hook ──────────────────────────────────────────────────────────
+  const { sendCertificateEmail, isLoading: isEmailSending } = useCertificateEmail({
+    certificateType: 'pat-testing',
+    reportId: savedReportId || '',
+    certificateNumber: formData.certificateNumber,
+    clientName: formData.clientName,
+    clientEmail: formData.clientEmail,
+    installationAddress: formData.siteAddress,
+    inspectionDate: formData.testDate,
+    companyName: companyProfile?.company_name,
+  });
+
+  // ─── Online/Offline tracking ────────────────────────────────────────────
+  useEffect(() => {
+    const handleOnline = () => {
+      setIsOnline(true);
+      if (hasUnsavedChangesRef.current) {
+        setSyncStatus('pending');
+      }
+    };
+    const handleOffline = () => {
+      setIsOnline(false);
+      setSyncStatus('offline');
+    };
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
+
+  // ─── Auth setup ──────────────────────────────────────────────────────────
+  useEffect(() => {
+    const getUser = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) setUserId(user.id);
+    };
+    getUser();
+  }, []);
+
+  // ─── Load company branding for PDF ──────────────────────────────────────
+  const loadCompanyBranding = useCallback(() => {
     if (!companyProfile) return null;
 
     const fullAddress = companyProfile.company_postcode
@@ -70,9 +155,9 @@ export default function PATTestingCertificate() {
       registrationSchemeLogo: companyProfile.registration_scheme_logo || '',
       registrationScheme: companyProfile.registration_scheme || '',
     };
-  };
+  }, [companyProfile]);
 
-  // Load existing report
+  // ─── Load existing report ───────────────────────────────────────────────
   useEffect(() => {
     const loadReport = async () => {
       if (!isNew && id) {
@@ -82,13 +167,42 @@ export default function PATTestingCertificate() {
           } = await supabase.auth.getUser();
           if (!user) return;
 
-          const report = await reportCloud.getReport(id, user.id);
-          if (report && report.data) {
+          // Check for local draft first
+          const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
+          const report = await reportCloud.getReportByReportId(id, user.id);
+
+          if (localDraft && report) {
+            // Compare timestamps — use whichever is newer
+            const isLocalNewer = draftStorage.isLocalDraftNewer(REPORT_TYPE, id, report.updated_at);
+
+            if (isLocalNewer) {
+              console.log('[PAT] Loading from local draft (newer than cloud)');
+              setFormData({ ...getDefaultPATTestingFormData(), ...localDraft.data });
+            } else {
+              console.log('[PAT] Loading from cloud (newer than local)');
+              setFormData({ ...getDefaultPATTestingFormData(), ...report.data });
+            }
+          } else if (report && report.data) {
+            console.log('[PAT] Loading from cloud');
             setFormData({ ...getDefaultPATTestingFormData(), ...report.data });
+          } else if (localDraft) {
+            console.log('[PAT] Loading from local draft (no cloud data)');
+            setFormData({ ...getDefaultPATTestingFormData(), ...localDraft.data });
           }
+
+          // Set the initial sync baseline
+          lastSavedDataRef.current = JSON.stringify(formData);
         } catch (error) {
           console.error('Failed to load report:', error);
-          toast.error('Failed to load certificate');
+
+          // Try local draft as fallback
+          const localDraft = draftStorage.loadDraft(REPORT_TYPE, id);
+          if (localDraft) {
+            console.log('[PAT] Loading from local draft (cloud failed)');
+            setFormData({ ...getDefaultPATTestingFormData(), ...localDraft.data });
+          } else {
+            toast.error('Failed to load certificate');
+          }
         } finally {
           setIsLoading(false);
         }
@@ -98,22 +212,149 @@ export default function PATTestingCertificate() {
     loadReport();
   }, [id, isNew]);
 
-  // Update form field
-  const handleUpdate = (field: string, value: any) => {
+  // ─── Save to localStorage (fast, synchronous) ──────────────────────────
+  const saveToLocalStorage = useCallback(() => {
+    const reportId = savedReportId || null;
+    draftStorage.saveDraft(REPORT_TYPE, reportId, formData);
+    console.log('[PAT] Saved to localStorage');
+  }, [formData, savedReportId]);
+
+  // ─── Sync to cloud (debounced, async) ───────────────────────────────────
+  const syncToCloud = useCallback(async () => {
+    if (!userId || !isOnline) {
+      setSyncStatus(isOnline ? 'pending' : 'offline');
+      return;
+    }
+
+    const currentData = JSON.stringify(formData);
+    if (currentData === lastSavedDataRef.current) {
+      return; // No changes to sync
+    }
+
+    setSyncStatus('syncing');
+    try {
+      const dataToSave = {
+        ...formData,
+        status: 'auto-draft',
+        client_name: formData.clientName,
+        installation_address: formData.siteAddress,
+      };
+
+      if (savedReportId) {
+        const result = await reportCloud.updateReport(
+          savedReportId,
+          userId,
+          dataToSave,
+          undefined,
+          true // isAutoSync
+        );
+        if (result.success) {
+          lastSavedDataRef.current = currentData;
+          hasUnsavedChangesRef.current = false;
+          setSyncStatus('synced');
+          console.log('[PAT] Auto-synced to cloud');
+        } else {
+          setSyncStatus('error');
+        }
+      } else {
+        const result = await reportCloud.createReport(
+          userId,
+          'pat-testing',
+          dataToSave,
+          undefined,
+          true // isAutoSync
+        );
+        if (result.success && result.reportId) {
+          setSavedReportId(result.reportId);
+          lastSavedDataRef.current = currentData;
+          hasUnsavedChangesRef.current = false;
+          setSyncStatus('synced');
+          window.history.replaceState(
+            null,
+            '',
+            `/electrician/inspection-testing/pat-testing/${result.reportId}`
+          );
+          console.log('[PAT] Auto-created in cloud:', result.reportId);
+        } else {
+          setSyncStatus('error');
+        }
+      }
+    } catch (error) {
+      console.error('[PAT] Cloud sync failed:', error);
+      setSyncStatus('error');
+    }
+  }, [formData, savedReportId, userId, isOnline]);
+
+  // ─── Auto-save effect (localStorage every 10s) ─────────────────────────
+  useEffect(() => {
+    autoSaveTimerRef.current = setInterval(() => {
+      if (hasUnsavedChangesRef.current) {
+        saveToLocalStorage();
+      }
+    }, AUTO_SAVE_INTERVAL);
+
+    return () => {
+      if (autoSaveTimerRef.current) {
+        clearInterval(autoSaveTimerRef.current);
+      }
+    };
+  }, [saveToLocalStorage]);
+
+  // ─── Cloud sync effect (30s debounce after last change) ─────────────────
+  useEffect(() => {
+    if (cloudSyncTimerRef.current) {
+      clearTimeout(cloudSyncTimerRef.current);
+    }
+
+    if (hasUnsavedChangesRef.current && isOnline) {
+      cloudSyncTimerRef.current = setTimeout(() => {
+        syncToCloud();
+      }, CLOUD_SYNC_DEBOUNCE);
+    }
+
+    return () => {
+      if (cloudSyncTimerRef.current) {
+        clearTimeout(cloudSyncTimerRef.current);
+      }
+    };
+  }, [formData, syncToCloud, isOnline]);
+
+  // ─── Emergency save on page unload ──────────────────────────────────────
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (formData && (formData.clientName || formData.siteAddress)) {
+        draftStorage.saveDraft(REPORT_TYPE, savedReportId, formData);
+        console.log('[PAT] Emergency save on beforeunload');
+      }
+
+      if (hasUnsavedChangesRef.current && syncStatus !== 'synced') {
+        e.preventDefault();
+        e.returnValue = 'You have unsaved changes. Are you sure?';
+        return e.returnValue;
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [formData, savedReportId, syncStatus]);
+
+  // ─── Update form field ──────────────────────────────────────────────────
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleUpdate = useCallback((field: string, value: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setFormData((prev: any) => ({
       ...prev,
       [field]: value,
     }));
-  };
+    hasUnsavedChangesRef.current = true;
+    setSyncStatus('pending');
+  }, []);
 
-  // Save draft
+  // ─── Manual save draft ──────────────────────────────────────────────────
   const handleSaveDraft = async () => {
     setIsSaving(true);
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
+      if (!userId) {
         toast.error('Please sign in to save');
         return;
       }
@@ -126,16 +367,24 @@ export default function PATTestingCertificate() {
       };
 
       if (savedReportId) {
-        const result = await reportCloud.updateReport(savedReportId, user.id, dataToSave);
+        const result = await reportCloud.updateReport(savedReportId, userId, dataToSave);
         if (result.success) {
+          lastSavedDataRef.current = JSON.stringify(formData);
+          hasUnsavedChangesRef.current = false;
+          setSyncStatus('synced');
+          draftStorage.clearDraft(REPORT_TYPE, savedReportId);
           toast.success('Draft saved');
         } else {
           throw new Error(result.error?.message || 'Failed to save');
         }
       } else {
-        const result = await reportCloud.createReport(user.id, 'pat-testing', dataToSave);
+        const result = await reportCloud.createReport(userId, 'pat-testing', dataToSave);
         if (result.success && result.reportId) {
           setSavedReportId(result.reportId);
+          lastSavedDataRef.current = JSON.stringify(formData);
+          hasUnsavedChangesRef.current = false;
+          setSyncStatus('synced');
+          draftStorage.clearDraft(REPORT_TYPE, null);
           toast.success('Draft saved');
           window.history.replaceState(
             null,
@@ -153,7 +402,7 @@ export default function PATTestingCertificate() {
     }
   };
 
-  // Generate certificate PDF
+  // ─── Generate certificate PDF ───────────────────────────────────────────
   const handleGenerateCertificate = async () => {
     setIsGenerating(true);
     try {
@@ -162,76 +411,24 @@ export default function PATTestingCertificate() {
       // Get company branding
       const branding = hasSavedCompanyBranding ? loadCompanyBranding() : null;
 
-      // Prepare PDF data
-      const pdfData = {
-        metadata: {
-          certificate_number: formData.certificateNumber || `PAT-${Date.now()}`,
-          test_date: formData.testDate,
-          report_reference: formData.reportReference || '',
-        },
-        client_details: {
-          client_name: formData.clientName || '',
-          client_address: formData.clientAddress || '',
-          client_phone: formData.clientTelephone || '',
-          client_email: formData.clientEmail || '',
-          contact_person: formData.contactPerson || '',
-        },
-        site_details: {
-          site_name: formData.siteName || '',
-          site_address: formData.siteAddress || '',
-          site_contact_name: formData.siteContactName || '',
-          site_contact_phone: formData.siteContactPhone || '',
-        },
-        test_equipment: {
-          make: formData.testEquipment?.make || '',
-          model: formData.testEquipment?.model || '',
-          serial_number: formData.testEquipment?.serialNumber || '',
-          last_calibration: formData.testEquipment?.lastCalibrationDate || '',
-          next_calibration: formData.testEquipment?.nextCalibrationDue || '',
-        },
-        appliances: (formData.appliances || []).map((app: any) => ({
-          asset_number: app.assetNumber || '',
-          description: app.description || '',
-          make: app.make || '',
-          model: app.model || '',
-          serial_number: app.serialNumber || '',
-          location: app.location || '',
-          appliance_class: app.applianceClass || 'I',
-          category: app.category || 'portable',
-          visual_inspection: app.visualInspection || {},
-          electrical_tests: app.electricalTests || {},
-          overall_result: app.overallResult || '',
-          next_test_due: app.nextTestDue || '',
-          notes: app.notes || '',
-        })),
-        summary: {
-          total_tested: formData.totalAppliancesTested || 0,
-          total_passed: formData.totalPassed || 0,
-          total_failed: formData.totalFailed || 0,
-        },
-        failed_appliances: formData.failedAppliances || [],
-        recommendations: formData.recommendations || '',
-        retest_interval: formData.suggestedRetestInterval || '12',
-        next_test_due: formData.nextTestDue || '',
-        declarations: {
-          tester: {
-            name: formData.testerName || '',
-            company: formData.testerCompany || '',
-            qualifications: formData.testerQualifications || '',
-            signature: formData.testerSignature || '',
-            date: formData.testerDate || '',
-          },
-        },
-        additional_notes: formData.additionalNotes || '',
-        // Company branding for PDF
-        company_logo: branding?.companyLogo || formData.companyLogo || '',
-        company_name: branding?.companyName || formData.testerCompany || '',
-        company_address: branding?.companyAddress || '',
-        company_phone: branding?.companyPhone || '',
-        company_email: branding?.companyEmail || '',
-        registration_scheme_logo: branding?.registrationSchemeLogo || '',
-        registration_scheme: branding?.registrationScheme || '',
-      };
+      // Prepare PDF data using dedicated formatter
+      const pdfData = formatPATTestingJson(formData, {
+        companyLogo: branding?.companyLogo,
+        companyName: branding?.companyName,
+        companyAddress: branding?.companyAddress,
+        companyPhone: branding?.companyPhone,
+        companyEmail: branding?.companyEmail,
+        companyAccentColor: branding?.companyAccentColor,
+        registrationScheme: branding?.registrationScheme,
+        registrationNumber: branding?.registrationNumber,
+        registrationSchemeLogo: branding?.registrationSchemeLogo,
+      });
+
+      // Debug log — helps diagnose empty PDF issues
+      console.log('[PAT] PDF payload keys:', Object.keys(pdfData));
+      console.log('[PAT] Client details:', pdfData.client_details);
+      console.log('[PAT] Appliances count:', pdfData.appliances?.length);
+      console.log('[PAT] Summary:', pdfData.summary);
 
       // Call edge function
       const { data: functionData, error: functionError } = await supabase.functions.invoke(
@@ -278,7 +475,24 @@ export default function PATTestingCertificate() {
     }
   };
 
-  // Navigate to quote builder
+  // ─── Email handler ──────────────────────────────────────────────────────
+  const handleSendEmail = async (email: string, cc?: string[], message?: string) => {
+    try {
+      // Ensure report is saved before emailing
+      await handleSaveDraft();
+
+      await sendCertificateEmail({
+        recipientEmail: email,
+        cc,
+        customMessage: message,
+      });
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to send email');
+      throw error;
+    }
+  };
+
+  // ─── Navigate to quote builder ──────────────────────────────────────────
   const handleCreateQuote = () => {
     const url = createQuoteFromCertificate({
       clientName: formData.clientName || '',
@@ -292,7 +506,7 @@ export default function PATTestingCertificate() {
     navigate(url);
   };
 
-  // Navigate to invoice builder
+  // ─── Navigate to invoice builder ────────────────────────────────────────
   const handleCreateInvoice = () => {
     const url = createInvoiceFromCertificate({
       clientName: formData.clientName || '',
@@ -306,6 +520,18 @@ export default function PATTestingCertificate() {
     navigate(url);
   };
 
+  // ─── Sync status indicator ──────────────────────────────────────────────
+  const SyncIndicator = () => {
+    if (syncStatus === 'synced') return <CheckCircle2 className="h-3.5 w-3.5 text-green-400" />;
+    if (syncStatus === 'syncing')
+      return <Cloud className="h-3.5 w-3.5 text-blue-400 animate-pulse" />;
+    if (syncStatus === 'error') return <AlertCircle className="h-3.5 w-3.5 text-red-400" />;
+    if (syncStatus === 'offline') return <CloudOff className="h-3.5 w-3.5 text-white" />;
+    if (syncStatus === 'pending') return <Cloud className="h-3.5 w-3.5 text-white" />;
+    return null;
+  };
+
+  // ─── Loading state ──────────────────────────────────────────────────────
   if (isLoading) {
     return (
       <div className="bg-background min-h-screen">
@@ -327,7 +553,7 @@ export default function PATTestingCertificate() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-9 px-2"
+              className="text-white hover:text-white hover:bg-white/10 -ml-2 h-9 px-2 touch-manipulation"
               onClick={() => navigate('/electrician/inspection-testing')}
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
@@ -335,16 +561,29 @@ export default function PATTestingCertificate() {
             </Button>
 
             <div className="flex items-center gap-2">
-              <Badge className="bg-blue-500/20 text-blue-400 border-0 text-[10px] px-2 py-0.5 font-semibold">
-                Draft
-              </Badge>
+              <div className="flex items-center gap-1.5">
+                <SyncIndicator />
+                <Badge className="bg-blue-500/20 text-blue-400 border-0 text-[10px] px-2 py-0.5 font-semibold">
+                  {syncStatus === 'synced' ? 'Saved' : 'Draft'}
+                </Badge>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowEmailDialog(true)}
+                disabled={!savedReportId}
+                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
+              >
+                <Mail className="h-4 w-4" />
+              </Button>
 
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={handleSaveDraft}
                 disabled={isSaving}
-                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10"
+                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 touch-manipulation"
               >
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -357,7 +596,7 @@ export default function PATTestingCertificate() {
                 size="sm"
                 onClick={handleGenerateCertificate}
                 disabled={isGenerating}
-                className="bg-blue-500 hover:bg-blue-600 text-white h-9 px-3 font-semibold rounded-lg"
+                className="bg-blue-500 hover:bg-blue-600 text-white h-9 px-3 font-semibold rounded-lg touch-manipulation"
               >
                 {isGenerating ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -378,7 +617,7 @@ export default function PATTestingCertificate() {
                 {isNew ? 'New PAT Testing' : 'PAT Testing'}
               </h1>
               <h1 className="text-base font-bold text-white -mt-0.5">Certificate</h1>
-              <p className="text-[11px] text-white/50">IET Code of Practice</p>
+              <p className="text-[11px] text-white">IET Code of Practice</p>
             </div>
           </div>
         </div>
@@ -408,8 +647,28 @@ export default function PATTestingCertificate() {
           onGenerateCertificate={handleGenerateCertificate}
           onSaveDraft={handleSaveDraft}
           canGenerateCertificate={!isGenerating}
+          activeApplianceId={activeApplianceId}
+          onOpenAppliance={setActiveApplianceId}
+          onCloseAppliance={() => setActiveApplianceId(null)}
+          copiedApplianceData={copiedApplianceData}
+          onCopyApplianceData={setCopiedApplianceData}
         />
       </main>
+
+      {/* Email Certificate Dialog */}
+      <EmailCertificateDialog
+        open={showEmailDialog}
+        onOpenChange={setShowEmailDialog}
+        certificateType="PAT Testing"
+        certificateNumber={formData.certificateNumber}
+        clientName={formData.clientName}
+        clientEmail={formData.clientEmail}
+        installationAddress={formData.siteAddress}
+        inspectionDate={formData.testDate}
+        companyName={companyProfile?.company_name}
+        onSend={handleSendEmail}
+        isLoading={isEmailSending}
+      />
     </div>
   );
 }

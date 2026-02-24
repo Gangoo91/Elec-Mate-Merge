@@ -44,7 +44,14 @@ import { useHaptics } from '@/hooks/useHaptics';
 export interface EmailCertificateDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  certificateType: 'EICR' | 'EIC';
+  certificateType:
+    | 'EICR'
+    | 'EIC'
+    | 'PAT Testing'
+    | 'EV Charging'
+    | 'Fire Alarm'
+    | 'Emergency Lighting'
+    | 'Minor Works';
   certificateNumber?: string;
   clientName?: string;
   clientEmail?: string;

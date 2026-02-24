@@ -46,12 +46,12 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
         {/* Progress bar */}
         <div className="mb-3">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-sm text-muted-foreground">
+            <span className="text-sm text-white">
               Section {currentTabIndex + 1} of {totalTabs}
             </span>
-            <span className="text-sm font-medium text-foreground">{progress}% complete</span>
+            <span className="text-sm font-medium text-white">{progress}% complete</span>
           </div>
-          <div className="h-2 bg-muted rounded-full overflow-hidden">
+          <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
             <div
               className="h-full bg-blue-500 transition-all duration-300"
               style={{ width: `${progress}%` }}
@@ -73,9 +73,9 @@ const PATTestingTabNavigation: React.FC<PATTestingTabNavigationProps> = ({
 
           <div className="flex items-center gap-2">
             {isCurrentTabComplete && (
-              <div className="flex items-center gap-1 text-green-500 text-sm">
+              <div className="flex items-center gap-1 text-green-400 text-sm">
                 <CheckCircle2 className="h-4 w-4" />
-                <span className="hidden sm:inline">Section complete</span>
+                <span className="hidden sm:inline">Complete</span>
               </div>
             )}
           </div>

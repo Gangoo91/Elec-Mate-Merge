@@ -3,18 +3,20 @@ import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { PATTestingTabValue } from '@/hooks/usePATTestingTabs';
 import PATTestingClientDetails from './PATTestingClientDetails';
 import PATTestingApplianceList from './PATTestingApplianceList';
-import PATTestingResults from './PATTestingResults';
 import PATTestingDeclarations from './PATTestingDeclarations';
 import PATTestingTabNavigation from './PATTestingTabNavigation';
-import { User, Plug, TestTube, FileText } from 'lucide-react';
+import { User, Plug, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Appliance } from '@/types/pat-testing';
 
 interface PATTestingFormTabsProps {
   currentTab: PATTestingTabValue;
   onTabChange: (value: string) => void;
   canAccessTab: (tabId: PATTestingTabValue) => boolean;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   formData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onUpdate: (field: string, value: any) => void;
   tabNavigationProps: {
     currentTab: PATTestingTabValue;
@@ -32,6 +34,11 @@ interface PATTestingFormTabsProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
+  activeApplianceId: string | null;
+  onOpenAppliance: (id: string) => void;
+  onCloseAppliance: () => void;
+  copiedApplianceData: Partial<Appliance> | null;
+  onCopyApplianceData: (data: Partial<Appliance>) => void;
 }
 
 const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
@@ -44,6 +51,11 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
   onGenerateCertificate,
   onSaveDraft,
   canGenerateCertificate = true,
+  activeApplianceId,
+  onOpenAppliance,
+  onCloseAppliance,
+  copiedApplianceData,
+  onCopyApplianceData,
 }) => {
   const isMobile = useIsMobile();
 
@@ -65,25 +77,22 @@ const PATTestingFormTabs: React.FC<PATTestingFormTabsProps> = ({
       icon: <Plug className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
-          <PATTestingApplianceList formData={formData} onUpdate={onUpdate} />
-          <PATTestingTabNavigation {...tabNavigationProps} />
-        </div>
-      ),
-    },
-    {
-      value: 'results',
-      label: 'Results',
-      icon: <TestTube className="h-4 w-4" />,
-      content: (
-        <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>
-          <PATTestingResults formData={formData} onUpdate={onUpdate} />
+          <PATTestingApplianceList
+            formData={formData}
+            onUpdate={onUpdate}
+            activeApplianceId={activeApplianceId}
+            onOpenAppliance={onOpenAppliance}
+            onCloseAppliance={onCloseAppliance}
+            copiedApplianceData={copiedApplianceData}
+            onCopyApplianceData={onCopyApplianceData}
+          />
           <PATTestingTabNavigation {...tabNavigationProps} />
         </div>
       ),
     },
     {
       value: 'declarations',
-      label: 'Declarations',
+      label: 'Summary',
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className={cn(isMobile ? '' : 'md:max-w-6xl mx-auto space-y-6')}>

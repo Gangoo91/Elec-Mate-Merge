@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export type PATTestingTabValue = 'client' | 'appliances' | 'results' | 'declarations';
+export type PATTestingTabValue = 'client' | 'appliances' | 'declarations';
 
 interface TabConfig {
   id: PATTestingTabValue;
@@ -12,30 +12,25 @@ interface TabConfig {
 const tabConfigs: TabConfig[] = [
   {
     id: 'client',
-    label: 'Client Details',
+    label: 'Client & Tester',
     shortLabel: 'Client',
     requiredFields: ['clientName', 'siteAddress'],
   },
   {
     id: 'appliances',
-    label: 'Appliance List',
+    label: 'Appliances',
     shortLabel: 'Appliances',
     requiredFields: [],
   },
   {
-    id: 'results',
-    label: 'Test Results',
-    shortLabel: 'Results',
-    requiredFields: [],
-  },
-  {
     id: 'declarations',
-    label: 'Declarations',
-    shortLabel: 'Declarations',
+    label: 'Summary & Declaration',
+    shortLabel: 'Summary',
     requiredFields: ['testerName'],
   },
 ];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const usePATTestingTabs = (formData: any) => {
   const [currentTab, setCurrentTab] = useState<PATTestingTabValue>('client');
 
@@ -63,10 +58,10 @@ export const usePATTestingTabs = (formData: any) => {
       case 'client':
         return completedSections[tabId] || (formData.clientName && formData.siteAddress);
       case 'appliances':
-        return completedSections[tabId] || formData.appliances?.length > 0;
-      case 'results':
         return (
-          completedSections[tabId] || formData.appliances?.some((a: any) => a.overallResult !== '')
+          completedSections[tabId] ||
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          formData.appliances?.some((a: any) => a.overallResult !== '')
         );
       case 'declarations':
         return completedSections[tabId] || (formData.testerName && formData.testerSignature);
@@ -77,6 +72,7 @@ export const usePATTestingTabs = (formData: any) => {
 
   const toggleTabComplete = (
     tabId: PATTestingTabValue,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onUpdate: (field: string, value: any) => void
   ): void => {
     const completedSections = formData.completedSections || {};

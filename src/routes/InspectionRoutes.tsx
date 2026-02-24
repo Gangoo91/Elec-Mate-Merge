@@ -44,10 +44,9 @@ export default function InspectionRoutes() {
         <Route path="solar-pv/new" element={<SolarPVCertificate />} />
         <Route path="solar-pv/:id" element={<SolarPVCertificate />} />
 
-        {/* PAT Testing Certificate (IET CoP) - ARCHIVED */}
-        {/* Routes preserved for existing certificates but hidden from UI */}
-        {/* <Route path="pat-testing/new" element={<PATTestingCertificate />} /> */}
-        {/* <Route path="pat-testing/:id" element={<PATTestingCertificate />} /> */}
+        {/* PAT Testing Certificate (IET CoP) */}
+        <Route path="pat-testing/new" element={<PATTestingCertificate />} />
+        <Route path="pat-testing/:id" element={<PATTestingCertificate />} />
 
         {/* All other inspection routes handled by InspectionIndex with query params */}
         <Route path="*" element={<InspectionIndex />} />

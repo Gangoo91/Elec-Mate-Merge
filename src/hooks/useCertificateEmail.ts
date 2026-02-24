@@ -11,7 +11,14 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 
 export interface CertificateEmailData {
-  certificateType: 'EICR' | 'EIC' | 'minor-works';
+  certificateType:
+    | 'EICR'
+    | 'EIC'
+    | 'minor-works'
+    | 'ev-charging'
+    | 'pat-testing'
+    | 'fire-alarm'
+    | 'emergency-lighting';
   reportId: string;
   certificateNumber?: string;
   clientName?: string;

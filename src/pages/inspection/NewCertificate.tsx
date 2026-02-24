@@ -12,6 +12,7 @@ import {
   Sun,
   ChevronRight,
   Sparkles,
+  ClipboardCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -120,7 +121,7 @@ export default function NewCertificate() {
     },
     {
       title: 'Specialist Certificates',
-      description: 'EV charging and solar PV installations',
+      description: 'EV charging, solar PV, and portable appliance testing',
       certificates: [
         {
           id: 'ev-charging',
@@ -142,6 +143,17 @@ export default function NewCertificate() {
           iconBg: 'bg-yellow-500/12',
           borderColor: 'border-l-yellow-400',
           standard: 'MCS / BS EN 62446',
+          isNew: true,
+        },
+        {
+          id: 'pat-testing',
+          title: 'PAT Testing Certificate',
+          description: 'Portable appliance testing and documentation',
+          icon: ClipboardCheck,
+          iconColor: 'text-cyan-400',
+          iconBg: 'bg-cyan-500/12',
+          borderColor: 'border-l-cyan-400',
+          standard: 'IET CoP',
           isNew: true,
         },
       ],
@@ -189,36 +201,37 @@ export default function NewCertificate() {
                 <p className="text-sm text-white mt-0.5">{group.description}</p>
               </div>
 
-              {/* Certificates */}
-              <div className="space-y-3">
+              {/* Certificates Grid — 2 cols on md, 3 cols on lg */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                 {group.certificates.map((cert) => (
                   <motion.button
                     key={cert.id}
                     variants={itemVariants}
                     onClick={() => navigate(`/electrician/inspection-testing/${cert.id}/new`)}
                     className={cn(
-                      'group w-full text-left p-4 sm:p-5 rounded-2xl transition-all touch-manipulation',
+                      'group w-full text-left p-4 sm:p-5 rounded-2xl transition-all touch-manipulation h-full',
                       'bg-white/[0.06] border border-white/[0.08] border-l-[3px]',
                       cert.borderColor,
-                      'hover:bg-white/[0.09] hover:border-white/[0.1]',
-                      'active:scale-[0.98]'
+                      'hover:bg-white/[0.09] hover:border-white/[0.12]',
+                      'active:scale-[0.98]',
+                      'flex flex-col'
                     )}
                   >
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-start gap-4 flex-1">
                       {/* Icon */}
                       <div
                         className={cn(
-                          'w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0',
+                          'w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0',
                           cert.iconBg
                         )}
                       >
-                        <cert.icon className={cn('h-6 w-6', cert.iconColor)} />
+                        <cert.icon className={cn('h-5 w-5', cert.iconColor)} />
                       </div>
 
                       {/* Content */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="text-base font-bold text-white group-hover:text-elec-yellow transition-colors">
+                          <h3 className="text-sm font-bold text-white group-hover:text-elec-yellow transition-colors leading-tight">
                             {cert.title}
                           </h3>
                           {cert.isNew && (
@@ -227,16 +240,18 @@ export default function NewCertificate() {
                             </span>
                           )}
                         </div>
-                        <p className="text-sm text-white mb-2">{cert.description}</p>
-                        {cert.standard && (
-                          <span className="text-[10px] font-semibold text-white bg-white/[0.06] px-2 py-0.5 rounded">
-                            {cert.standard}
-                          </span>
-                        )}
+                        <p className="text-xs text-white leading-relaxed">{cert.description}</p>
                       </div>
+                    </div>
 
-                      {/* Chevron */}
-                      <ChevronRight className="w-5 h-5 text-white flex-shrink-0 group-hover:text-elec-yellow transition-colors" />
+                    {/* Footer: standard badge + chevron */}
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
+                      {cert.standard && (
+                        <span className="text-[10px] font-semibold text-white bg-white/[0.06] px-2 py-0.5 rounded">
+                          {cert.standard}
+                        </span>
+                      )}
+                      <ChevronRight className="w-4 h-4 text-white flex-shrink-0 group-hover:text-elec-yellow transition-colors ml-auto" />
                     </div>
                   </motion.button>
                 ))}

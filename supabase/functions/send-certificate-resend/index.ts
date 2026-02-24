@@ -505,6 +505,12 @@ const handler = async (req: Request): Promise<Response> => {
       edgeFunctionName = 'generate-minor-works-pdf';
     } else if (reportType === 'ev-charging' || reportType === 'ev charging') {
       edgeFunctionName = 'generate-ev-charging-pdf';
+    } else if (reportType === 'pat-testing' || reportType === 'pat testing') {
+      edgeFunctionName = 'generate-pat-testing-pdf';
+    } else if (reportType === 'fire-alarm' || reportType === 'fire alarm') {
+      edgeFunctionName = 'generate-fire-alarm-pdf';
+    } else if (reportType === 'emergency-lighting' || reportType === 'emergency lighting') {
+      edgeFunctionName = 'generate-emergency-lighting-pdf';
     } else {
       console.error('❌ Unsupported report type:', reportType);
       throw new Error(`Unsupported certificate type: "${report.report_type}"`);
@@ -590,9 +596,17 @@ const handler = async (req: Request): Promise<Response> => {
     // STEP 8: Build email HTML
     // ========================================================================
     const certificateTypeDisplay =
-      reportType === 'minor-works' ? 'Minor Works'
-      : reportType === 'ev-charging' ? 'EV Charging'
-      : reportType.toUpperCase();
+      reportType === 'minor-works'
+        ? 'Minor Works'
+        : reportType === 'ev-charging'
+          ? 'EV Charging'
+          : reportType === 'pat-testing'
+            ? 'PAT Testing'
+            : reportType === 'fire-alarm'
+              ? 'Fire Alarm'
+              : reportType === 'emergency-lighting'
+                ? 'Emergency Lighting'
+                : reportType.toUpperCase();
 
     const emailHtml = buildCertificateEmailHtml({
       certificateType: certificateTypeDisplay,

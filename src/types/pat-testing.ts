@@ -13,6 +13,26 @@ export type ApplianceCategory =
   | 'fixed'
   | 'hand-held';
 
+/**
+ * PAT repair codes — these describe what physical repair was done.
+ * NOT the same as EICR C1/C2/C3 severity/observation codes.
+ */
+export const PAT_REPAIR_CODES = [
+  { value: '', label: 'N/A — No repair needed' },
+  { value: 'RP', label: 'Replaced 13A plug' },
+  { value: 'RF3', label: 'Changed fuse to 3A' },
+  { value: 'RF5', label: 'Changed fuse to 5A' },
+  { value: 'RF13', label: 'Changed fuse to 13A' },
+  { value: 'RC', label: 'Replaced/trimmed cable' },
+  { value: 'RS', label: 'Replaced trailing socket' },
+  { value: 'RE', label: 'Repaired enclosure' },
+  { value: 'RO', label: 'Other repair (see notes)' },
+  { value: 'SCRAP', label: 'Scrapped — beyond repair' },
+  { value: 'RFS', label: 'Removed from service' },
+] as const;
+
+export type PATRepairCode = (typeof PAT_REPAIR_CODES)[number]['value'];
+
 export interface Appliance {
   id: string;
   assetNumber: string;
@@ -23,6 +43,9 @@ export interface Appliance {
   location: string;
   applianceClass: ApplianceClass;
   category: ApplianceCategory;
+
+  // Photos
+  photos: string[];
 
   // Visual inspection
   visualInspection: {
@@ -47,6 +70,11 @@ export interface Appliance {
       reading: string; // MOhms
       limit: string;
     };
+    loadTest: {
+      result: TestResult;
+      reading: string; // kVA
+      limit: string;
+    };
     polarity: TestResult;
     functionalCheck: TestResult;
     leakageCurrent?: {
@@ -58,6 +86,8 @@ export interface Appliance {
 
   // Overall result
   overallResult: 'pass' | 'fail' | '';
+  repairCode: PATRepairCode;
+  barcodeScanned: boolean;
   nextTestDue: string;
   notes: string;
 
@@ -71,6 +101,9 @@ export interface PATTestingFormData {
   certificateNumber: string;
   testDate: string;
   reportReference: string;
+
+  // CRM link
+  selectedCustomerId?: string;
 
   // Client details
   clientName: string;
@@ -146,6 +179,7 @@ export const getDefaultAppliance = (): Appliance => ({
   location: '',
   applianceClass: 'I',
   category: 'portable',
+  photos: [],
 
   visualInspection: {
     flexCondition: '',
@@ -168,11 +202,18 @@ export const getDefaultAppliance = (): Appliance => ({
       reading: '',
       limit: '1.0',
     },
+    loadTest: {
+      result: '',
+      reading: '',
+      limit: '',
+    },
     polarity: '',
     functionalCheck: '',
   },
 
   overallResult: '',
+  repairCode: '',
+  barcodeScanned: false,
   nextTestDue: '',
   notes: '',
   testDate: new Date().toISOString().split('T')[0],
@@ -184,6 +225,8 @@ export const getDefaultPATTestingFormData = (): PATTestingFormData => ({
   certificateNumber: '',
   testDate: new Date().toISOString().split('T')[0],
   reportReference: '',
+
+  selectedCustomerId: undefined,
 
   clientName: '',
   clientAddress: '',
