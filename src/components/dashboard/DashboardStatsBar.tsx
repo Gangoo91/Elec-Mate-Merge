@@ -70,22 +70,14 @@ const DashboardStatsBar = ({
     },
   ];
 
-  // Only show stats with non-zero counts
-  const stats = allStats.filter((s) => s.count > 0);
-
-  const colsClass =
-    stats.length === 1
-      ? 'grid-cols-1 max-w-[180px]'
-      : stats.length === 2
-        ? 'grid-cols-2 max-w-sm'
-        : 'grid-cols-3';
+  const stats = allStats;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: -6 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.25 }}
-      className={cn('grid gap-2 sm:gap-3', colsClass)}
+      className="grid grid-cols-3 gap-2 sm:gap-3"
     >
       {stats.map((stat) => (
         <button

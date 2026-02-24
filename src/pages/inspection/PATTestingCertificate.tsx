@@ -42,6 +42,7 @@ import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { formatPATTestingJson } from '@/utils/patTestingJsonFormatter';
 import { useCertificateEmail } from '@/hooks/useCertificateEmail';
 import { EmailCertificateDialog } from '@/components/certificate-completion/EmailCertificateDialog';
+import { WhatsAppShareButton } from '@/components/ui/WhatsAppShareButton';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const REPORT_TYPE = 'pat-testing';
@@ -604,6 +605,16 @@ export default function PATTestingCertificate() {
                   <Download className="h-4 w-4" />
                 )}
               </Button>
+
+              <WhatsAppShareButton
+                type="pat-testing"
+                id={savedReportId || id || 'new'}
+                recipientPhone={formData.clientPhone || ''}
+                recipientName={formData.clientName || ''}
+                documentLabel="PAT Testing Certificate"
+                variant="ghost"
+                className="h-9 w-9 touch-manipulation"
+              />
             </div>
           </div>
 

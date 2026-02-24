@@ -11,6 +11,7 @@ import {
   Sun,
   ChevronRight,
   Users,
+  ClipboardCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -105,6 +106,14 @@ const secondaryCerts: SecondaryCert[] = [
     useRouter: true,
     iconColor: 'text-yellow-400',
   },
+  {
+    id: 'pat-testing',
+    title: 'PAT Testing',
+    standard: 'IET CoP',
+    icon: ClipboardCheck,
+    useRouter: true,
+    iconColor: 'text-cyan-400',
+  },
 ];
 
 const containerVariants = {
@@ -188,7 +197,7 @@ const CertificateTypeGrid = ({ onNavigate }: CertificateTypeGridProps) => {
       {/* Secondary Certificates — specialist */}
       <div>
         <h2 className="text-base font-semibold text-white mb-3">Specialist</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-3">
           {secondaryCerts.map((cert) => (
             <motion.button
               key={cert.id}
