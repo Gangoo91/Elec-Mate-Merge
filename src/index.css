@@ -11,16 +11,23 @@ input,
 textarea,
 select {
   color: #fafafa !important;
-  -webkit-text-fill-color: #fafafa !important;
   color-scheme: dark !important;
   -webkit-appearance: none !important;
   appearance: none !important;
 }
 
+/* Autofill: browsers inject light backgrounds + dark text — override both */
+input:-webkit-autofill,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #fafafa !important;
+  -webkit-box-shadow: 0 0 0 1000px hsl(240 5.9% 15%) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
 input::placeholder,
 textarea::placeholder {
-  color: rgba(255, 255, 255, 0.4) !important;
-  -webkit-text-fill-color: rgba(255, 255, 255, 0.4) !important;
+  color: rgba(255, 255, 255, 0.5) !important;
 }
 
 /* Hide browser autofill icons (location pin, contacts, etc.) in all inputs */

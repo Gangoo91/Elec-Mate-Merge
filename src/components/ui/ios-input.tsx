@@ -113,7 +113,7 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               compact ? 'text-sm' : 'text-base',
               'text-white placeholder:text-white/35',
               // Clean dark background - subtle and professional
-              'bg-white/[0.04] border',
+              'bg-input border',
               // Border states - subtle gold accents
               error
                 ? 'border-elec-yellow/50 focus:border-elec-yellow'
