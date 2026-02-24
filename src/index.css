@@ -11,6 +11,7 @@ input,
 textarea,
 select {
   color: #fafafa !important;
+  -webkit-text-fill-color: #fafafa !important;
   color-scheme: dark !important;
   -webkit-appearance: none !important;
   appearance: none !important;

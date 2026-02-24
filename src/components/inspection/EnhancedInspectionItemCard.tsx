@@ -325,7 +325,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                 onChange={(e) => handleNotesChange(e.target.value)}
                 rows={2}
                 style={{ fontSize: '16px' }}
-                className="text-base bg-white/5 border-white/10 focus:border-elec-yellow/50 placeholder:text-white/30 resize-none min-h-[70px]"
+                className="text-base text-white bg-input border-white/10 focus:border-elec-yellow/50 placeholder:text-white/30 resize-none min-h-[70px]"
               />
             </div>
 

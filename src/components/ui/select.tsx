@@ -22,7 +22,7 @@ const SelectTrigger = React.forwardRef<
       'px-4 py-3 gap-2',
       'text-[16px] sm:text-[15px] text-white text-left font-medium',
       // Background & border - premium dark glass feel
-      'bg-white/[0.06] backdrop-blur-sm',
+      'bg-input',
       'border border-white/[0.12] rounded-xl',
       // Placeholder
       '[&>span:first-child]:text-white/40 [&>span:first-child:not(:empty)]:text-white',

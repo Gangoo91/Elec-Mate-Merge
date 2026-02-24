@@ -117,7 +117,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         value={circuit.type}
                         onValueChange={(value) => updateCircuit(circuit.id, 'type', value)}
                       >
-                        <SelectTrigger className="bg-transparent">
+                        <SelectTrigger className="">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -138,7 +138,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         value={circuit.rating}
                         onValueChange={(value) => updateCircuit(circuit.id, 'rating', value)}
                       >
-                        <SelectTrigger className="bg-transparent">
+                        <SelectTrigger className="">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -161,7 +161,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         value={circuit.liveSize}
                         onValueChange={(value) => updateCircuit(circuit.id, 'liveSize', value)}
                       >
-                        <SelectTrigger className="bg-transparent">
+                        <SelectTrigger className="">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -180,7 +180,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                         value={circuit.cpcSize}
                         onValueChange={(value) => updateCircuit(circuit.id, 'cpcSize', value)}
                       >
-                        <SelectTrigger className="bg-transparent">
+                        <SelectTrigger className="">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -201,7 +201,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                           updateCircuit(circuit.id, 'installationMethod', value)
                         }
                       >
-                        <SelectTrigger className="bg-transparent">
+                        <SelectTrigger className="">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -231,7 +231,7 @@ const EICCircuitSchedule: React.FC<EICCircuitScheduleProps> = ({ formData, onUpd
                           updateCircuit(circuit.id, 'rcdProtected', value === 'yes')
                         }
                       >
-                        <SelectTrigger className="bg-transparent">
+                        <SelectTrigger className="">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
