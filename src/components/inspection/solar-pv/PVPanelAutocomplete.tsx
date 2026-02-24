@@ -157,20 +157,14 @@ export function PVPanelAutocomplete({
         </div>
         {panel.yearIntroduced && panel.yearIntroduced >= 2024 && (
           <span
-            className={cn(
-              'ml-2 px-1.5 py-0.5 font-medium bg-elec-yellow/20 text-elec-yellow rounded',
-              text - xs
-            )}
+            className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-elec-yellow/20 text-elec-yellow rounded"
           >
             NEW
           </span>
         )}
         {showMake && (
           <span
-            className={cn(
-              'ml-2 px-1.5 py-0.5 font-medium bg-amber-500/20 text-amber-400 rounded',
-              text - xs
-            )}
+            className="ml-2 px-1.5 py-0.5 text-xs font-medium bg-amber-500/20 text-amber-400 rounded"
           >
             {panel.wattage}W
           </span>
