@@ -108,7 +108,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
 
       {/* Customer Search Sheet */}
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl flex flex-col">
+        <SheetContent side="bottom" className="h-[85dvh] p-0 rounded-t-2xl flex flex-col">
           <div className="flex flex-col h-full bg-background">
             {/* Header */}
             <SheetHeader className="px-4 pt-4 pb-2 border-b border-border">
@@ -124,7 +124,6 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className="pl-10 h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
-                  autoFocus
                 />
               </div>
             </div>

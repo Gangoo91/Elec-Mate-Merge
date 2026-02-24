@@ -162,12 +162,52 @@ export const useCustomers = (options?: UseCustomersOptions) => {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
+      const normalisedEmail = customer.email?.trim().toLowerCase() || null;
+
+      // Check for existing customer with same email
+      if (normalisedEmail) {
+        const { data: existing } = await supabase
+          .from('customers')
+          .select('id, name')
+          .eq('user_id', user.id)
+          .eq('email', normalisedEmail)
+          .maybeSingle();
+
+        if (existing) {
+          toast({
+            title: 'Customer already exists',
+            description: `A customer with this email already exists: "${existing.name}".`,
+            variant: 'destructive',
+          });
+          return null;
+        }
+      }
+
+      // Check for existing customer with same name (when no email)
+      if (!normalisedEmail && customer.name) {
+        const { data: existingByName } = await supabase
+          .from('customers')
+          .select('id, name')
+          .eq('user_id', user.id)
+          .ilike('name', customer.name.trim())
+          .maybeSingle();
+
+        if (existingByName) {
+          toast({
+            title: 'Customer already exists',
+            description: `A customer with this name already exists: "${existingByName.name}".`,
+            variant: 'destructive',
+          });
+          return null;
+        }
+      }
+
       const { data, error } = await supabase
         .from('customers')
         .insert({
           user_id: user.id,
           name: customer.name,
-          email: customer.email,
+          email: normalisedEmail,
           phone: customer.phone,
           address: customer.address,
           notes: customer.notes,
@@ -184,10 +224,14 @@ export const useCustomers = (options?: UseCustomersOptions) => {
 
       await loadCustomers(currentPage);
       return data.id;
-    } catch (error) {
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error && error.message?.includes('unique')
+          ? 'A customer with this email already exists.'
+          : 'Failed to save customer. Please try again.';
       toast({
         title: 'Save failed',
-        description: 'Failed to save customer.',
+        description: message,
         variant: 'destructive',
       });
       return null;
@@ -205,12 +249,17 @@ export const useCustomers = (options?: UseCustomersOptions) => {
     >
   ) => {
     try {
+      const normalisedUpdates = {
+        ...updates,
+        ...(updates.email !== undefined
+          ? { email: updates.email?.trim().toLowerCase() || null }
+          : {}),
+        updated_at: new Date().toISOString(),
+      };
+
       const { error } = await supabase
         .from('customers')
-        .update({
-          ...updates,
-          updated_at: new Date().toISOString(),
-        })
+        .update(normalisedUpdates)
         .eq('id', id);
 
       if (error) throw error;
