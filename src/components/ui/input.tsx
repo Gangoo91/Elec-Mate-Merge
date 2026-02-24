@@ -3,7 +3,7 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
-  ({ className, type, inputMode, ...props }, ref) => {
+  ({ className, type, inputMode, style, ...props }, ref) => {
     // Auto-set inputMode for better mobile experience
     const finalInputMode =
       inputMode ||
@@ -55,6 +55,11 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           className,
           'text-white'
         )}
+        style={{
+          color: '#fafafa',
+          WebkitTextFillColor: '#fafafa',
+          ...style,
+        }}
         ref={ref}
         {...props}
       />

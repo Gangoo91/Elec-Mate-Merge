@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 export type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ className, ...props }, ref) => {
+  ({ className, style, ...props }, ref) => {
     return (
       <textarea
         spellCheck="false"
@@ -42,6 +42,11 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
           className,
           'text-white'
         )}
+        style={{
+          color: '#fafafa',
+          WebkitTextFillColor: '#fafafa',
+          ...style,
+        }}
         ref={ref}
         {...props}
       />

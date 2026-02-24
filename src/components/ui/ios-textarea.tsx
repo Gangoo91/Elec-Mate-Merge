@@ -82,6 +82,10 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
               'selection:bg-elec-yellow/20',
               className
             )}
+            style={{
+              color: '#fafafa',
+              WebkitTextFillColor: '#fafafa',
+            }}
             onFocus={(e) => {
               setIsFocused(true);
               props.onFocus?.(e);

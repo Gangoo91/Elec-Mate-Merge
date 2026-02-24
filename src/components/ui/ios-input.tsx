@@ -134,6 +134,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               'selection:bg-elec-yellow/30',
               className
             )}
+            style={{
+              color: '#fafafa',
+              WebkitTextFillColor: '#fafafa',
+            }}
             placeholder={floatingLabel ? '' : props.placeholder}
             onFocus={(e) => {
               setIsFocused(true);

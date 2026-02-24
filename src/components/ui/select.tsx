@@ -13,7 +13,7 @@ const SelectValue = SelectPrimitive.Value;
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+>(({ className, children, style, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -43,6 +43,11 @@ const SelectTrigger = React.forwardRef<
       'touch-manipulation select-none cursor-pointer',
       className
     )}
+    style={{
+      color: '#fafafa',
+      WebkitTextFillColor: '#fafafa',
+      ...style,
+    }}
     {...props}
   >
     <span className="block truncate text-left flex-1">{children}</span>
