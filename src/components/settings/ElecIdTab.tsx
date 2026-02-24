@@ -433,10 +433,10 @@ const ElecIdTab = () => {
         exit={{ opacity: 0, x: -20 }}
         transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
         drag={isMobile ? 'x' : false}
-        dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={0.2}
-        onDragEnd={handleDragEnd}
-        className="touch-pan-y pb-4"
+        dragConstraints={isMobile ? { left: 0, right: 0 } : undefined}
+        dragElastic={isMobile ? 0.2 : undefined}
+        onDragEnd={isMobile ? handleDragEnd : undefined}
+        className="touch-pan-y pb-4 overflow-visible"
       >
         <SubTabComponent
           onNavigate={(tabId: string) => {
