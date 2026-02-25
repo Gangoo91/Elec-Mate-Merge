@@ -111,10 +111,10 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               isPasswordType && 'pr-12',
               // Typography
               compact ? 'text-sm' : 'text-base',
-              'text-white placeholder:text-white/35',
-              // Clean dark background - subtle and professional
+              'text-white placeholder:text-muted-foreground [color-scheme:dark]',
+              // Solid dark background — no semi-transparent glass
               'bg-input border',
-              // Border states - subtle gold accents
+              // Border states
               error
                 ? 'border-elec-yellow/50 focus:border-elec-yellow'
                 : success
@@ -122,22 +122,18 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
                   : isFocused
                     ? 'border-elec-yellow/60'
                     : 'border-white/[0.12] hover:border-white/20',
-              // Focus ring - subtle
+              // Focus ring
               isFocused && !error && 'ring-1 ring-elec-yellow/20',
               error && 'ring-1 ring-elec-yellow/15',
               success && 'ring-1 ring-green-500/15',
-              // Focus state
-              'focus:outline-none focus:bg-white/[0.06]',
-              // Touch - native app feel
+              // Focus state — no background change
+              'focus:outline-none',
+              // Touch
               'touch-manipulation',
               // Selection
               'selection:bg-elec-yellow/30',
               className
             )}
-            style={{
-              color: '#fafafa',
-              WebkitTextFillColor: '#fafafa',
-            }}
             placeholder={floatingLabel ? '' : props.placeholder}
             onFocus={(e) => {
               setIsFocused(true);

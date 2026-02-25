@@ -592,7 +592,7 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="Search materials by name or code..."
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
-                className="h-12 pl-11 pr-4 bg-white/[0.03] border-white/[0.08] text-[15px] text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
               />
             </div>
 
@@ -900,12 +900,7 @@ export const EnhancedQuoteItemsStep = ({
                       <input
                         type="text"
                         inputMode="decimal"
-                        style={{
-                          color: '#fafafa',
-                          WebkitTextFillColor: '#fafafa',
-                          backgroundColor: '#1a1a1e',
-                          colorScheme: 'dark',
-                        }}
+                        style={{ colorScheme: 'dark' }}
                         value={item.quantity === 0 ? '' : item.quantity}
                         onChange={(e) => {
                           const val = e.target.value;
@@ -923,12 +918,7 @@ export const EnhancedQuoteItemsStep = ({
                       <input
                         type="text"
                         inputMode="decimal"
-                        style={{
-                          color: '#fafafa',
-                          WebkitTextFillColor: '#fafafa',
-                          backgroundColor: '#1a1a1e',
-                          colorScheme: 'dark',
-                        }}
+                        style={{ colorScheme: 'dark' }}
                         value={item.unitPrice === 0 ? '' : item.unitPrice}
                         onChange={(e) => {
                           const val = e.target.value;

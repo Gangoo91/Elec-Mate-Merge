@@ -52,9 +52,6 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
   const textareaClassName =
     'w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow resize-none';
   const darkStyle: React.CSSProperties = {
-    color: '#fafafa',
-    WebkitTextFillColor: '#fafafa',
-    backgroundColor: 'transparent',
     colorScheme: 'dark',
   };
 

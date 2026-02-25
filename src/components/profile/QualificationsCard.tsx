@@ -311,7 +311,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                 placeholder="e.g. NIC/12345"
                 value={formData.registrationNumber}
                 onChange={(e) => setFormData({ ...formData, registrationNumber: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -323,7 +323,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                 type="date"
                 value={formData.registrationExpiry}
                 onChange={(e) => setFormData({ ...formData, registrationExpiry: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -370,7 +370,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                     onChange={(e) =>
                       setFormData({ ...formData, insuranceProvider: e.target.value })
                     }
-                    className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                    className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -383,7 +383,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                     onChange={(e) =>
                       setFormData({ ...formData, insurancePolicyNumber: e.target.value })
                     }
-                    className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                    className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -396,7 +396,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                     onChange={(e) =>
                       setFormData({ ...formData, insuranceCoverage: e.target.value })
                     }
-                    className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                    className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>
                 <div className="space-y-2">
@@ -407,7 +407,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                     type="date"
                     value={formData.insuranceExpiry}
                     onChange={(e) => setFormData({ ...formData, insuranceExpiry: e.target.value })}
-                    className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                    className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   />
                 </div>
               </CollapsibleContent>

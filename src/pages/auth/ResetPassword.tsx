@@ -103,8 +103,8 @@ const ResetPassword = () => {
         setIsSuccess(true);
         setTimeout(() => navigate('/auth/signin'), 2500);
       }
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }
@@ -295,10 +295,10 @@ const ResetPassword = () => {
                         autoComplete="new-password"
                         className={cn(
                           'w-full h-14 pl-14 pr-14 rounded-2xl',
-                          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+                          'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
                           'text-[16px] outline-none transition-all duration-200',
                           focusedField === 'password'
-                            ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                            ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                             : 'border-white/10 hover:border-white/20'
                         )}
                       />
@@ -363,10 +363,10 @@ const ResetPassword = () => {
                         autoComplete="new-password"
                         className={cn(
                           'w-full h-14 pl-14 pr-14 rounded-2xl',
-                          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+                          'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
                           'text-[16px] outline-none transition-all duration-200',
                           focusedField === 'confirm'
-                            ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+                            ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                             : confirmPassword && !passwordsMatch
                               ? 'border-red-500/50 bg-white/[0.06]'
                               : 'border-white/10 hover:border-white/20'

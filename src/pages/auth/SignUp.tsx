@@ -89,10 +89,10 @@ const InputField = ({
         autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'off'}
         className={cn(
           'w-full h-14 pl-14 pr-12 rounded-2xl',
-          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+          'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
           'text-[16px] outline-none transition-all duration-200',
           focusedField === field
-            ? 'border-elec-yellow/50 bg-white/[0.08] shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
+            ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
             : 'border-white/10 hover:border-white/20'
         )}
       />
@@ -317,8 +317,8 @@ const SignUp = () => {
 
       // Redirect to checkout trial page to collect card details
       navigate('/checkout-trial');
-    } catch (err: any) {
-      setError(err.message || 'An error occurred');
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsSubmitting(false);
     }

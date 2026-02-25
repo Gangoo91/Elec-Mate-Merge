@@ -402,7 +402,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                                 })
                               }
                             >
-                              <SelectTrigger className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
+                              <SelectTrigger className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-[#2c2c2e] border-white/[0.1] rounded-xl">
@@ -430,7 +430,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                                 updateInstrument(index, { make: value, model: '' });
                               }}
                             >
-                              <SelectTrigger className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
+                              <SelectTrigger className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
                                 <SelectValue placeholder="Select manufacturer..." />
                               </SelectTrigger>
                               <SelectContent className="bg-[#2c2c2e] border-white/[0.1] rounded-xl max-h-[300px]">
@@ -455,7 +455,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                                 value={instrument.model || ''}
                                 onValueChange={(value) => updateInstrument(index, { model: value })}
                               >
-                                <SelectTrigger className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
+                                <SelectTrigger className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 touch-manipulation text-white">
                                   <SelectValue placeholder="Select model..." />
                                 </SelectTrigger>
                                 <SelectContent className="bg-[#2c2c2e] border-white/[0.1] rounded-xl max-h-[300px]">
@@ -474,7 +474,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                                 placeholder="Enter model number"
                                 value={instrument.model}
                                 onChange={(e) => updateInstrument(index, { model: e.target.value })}
-                                className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                                className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                               />
                             )}
                             {instrument.model === 'other_model' && (
@@ -482,7 +482,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                                 placeholder="Enter model number"
                                 value={''}
                                 onChange={(e) => updateInstrument(index, { model: e.target.value })}
-                                className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white mt-2"
+                                className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white mt-2"
                                 autoFocus
                               />
                             )}
@@ -499,7 +499,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                               onChange={(e) =>
                                 updateInstrument(index, { serial_number: e.target.value })
                               }
-                              className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                              className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                             />
                           </div>
 
@@ -514,7 +514,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                               onChange={(e) =>
                                 updateInstrument(index, { calibration_date: e.target.value })
                               }
-                              className="h-[50px] text-[16px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white [color-scheme:dark]"
+                              className="h-[50px] text-[16px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white [color-scheme:dark]"
                             />
                           </div>
 

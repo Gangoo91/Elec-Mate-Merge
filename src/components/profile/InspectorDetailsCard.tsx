@@ -289,7 +289,7 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
                 placeholder="Full name for certificates"
                 value={formData.inspector_name}
                 onChange={(e) => setFormData({ ...formData, inspector_name: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 

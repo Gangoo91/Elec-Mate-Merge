@@ -55,18 +55,17 @@ const IOSSelect = React.forwardRef<HTMLButtonElement, IOSSelectProps>(
           <SelectTrigger
             ref={ref}
             className={cn(
-              // Base sizing - 50px height for iOS touch targets
+              // Base sizing - 50px height for touch targets
               'w-full h-[50px] py-3',
               icon ? 'pl-12 pr-4' : 'px-4',
-              // Typography - iOS body style
-              'text-ios-body text-white',
-              // Background & border - Consistent elec-yellow/gold styling
-              'bg-gradient-to-br from-elec-yellow/[0.08] to-amber-950/20 rounded-xl border',
-              'border-elec-yellow/30',
+              // Typography
+              'text-ios-body text-white [color-scheme:dark]',
+              // Solid dark background — no gradients or semi-transparent
+              'bg-input rounded-xl border',
+              'border-white/[0.12]',
               // Focus/Open state
               'focus:outline-none',
-              isOpen &&
-                'border-elec-yellow bg-elec-yellow/[0.12] shadow-[0_0_0_3px_hsl(var(--elec-yellow)/0.15)]',
+              isOpen && 'border-elec-yellow ring-1 ring-elec-yellow/20',
               // Animation
               'transition-all duration-ios-normal ease-ios-ease',
               // Error state

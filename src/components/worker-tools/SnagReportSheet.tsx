@@ -140,7 +140,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
             <div className="space-y-2">
               <label className="text-sm font-medium text-white/80">Select Job</label>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
-                <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-gray border-white/10">
@@ -186,7 +186,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What is the snag or quality issue? Be specific..."
-                className="min-h-[100px] bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
+                className="min-h-[100px] bg-input border-white/10 text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
               />
             </div>
 
@@ -201,7 +201,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
                   placeholder="e.g., Kitchen DB, First floor landing..."
-                  className="h-12 pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation"
+                  className="h-12 pl-10 bg-input border-white/10 text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation"
                 />
               </div>
             </div>

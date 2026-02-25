@@ -139,7 +139,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
             <div className="space-y-2">
               <label className="text-sm font-medium text-white/80">Category</label>
               <Select value={category} onValueChange={setCategory}>
-                <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select category..." />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-gray border-white/10">
@@ -168,7 +168,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                   placeholder="0.00"
-                  className="h-12 pl-10 bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation"
+                  className="h-12 pl-10 bg-input border-white/10 text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="What was this expense for?"
-                className="min-h-[80px] bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
+                className="min-h-[80px] bg-input border-white/10 text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
               />
             </div>
 
@@ -190,7 +190,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
                 Charge to Job <span className="text-white/40">(optional)</span>
               </label>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
-                <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="No job selected" />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-gray border-white/10">

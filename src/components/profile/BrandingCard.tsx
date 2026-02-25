@@ -418,7 +418,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                     <Input
                       value={formData.primary_color}
                       onChange={(e) => setFormData({ ...formData, primary_color: e.target.value })}
-                      className="flex-1 h-12 font-mono text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl px-3 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                      className="flex-1 h-12 font-mono text-[15px] bg-input border-white/[0.08] rounded-xl px-3 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                     />
                   </div>
                 </div>
@@ -438,7 +438,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                       onChange={(e) =>
                         setFormData({ ...formData, secondary_color: e.target.value })
                       }
-                      className="flex-1 h-12 font-mono text-[15px] bg-white/[0.06] border-white/[0.08] rounded-xl px-3 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                      className="flex-1 h-12 font-mono text-[15px] bg-input border-white/[0.08] rounded-xl px-3 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                     />
                   </div>
                 </div>

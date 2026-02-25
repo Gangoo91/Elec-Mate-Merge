@@ -160,7 +160,7 @@ const AccountTab = () => {
   }, [profile, user]);
 
   // Generic save handler
-  const handleSave = async (updateData: Record<string, any>, closeSheet: () => void) => {
+  const handleSave = async (updateData: Record<string, unknown>, closeSheet: () => void) => {
     if (!user?.id) return;
     setIsSaving(true);
 
@@ -235,8 +235,12 @@ const AccountTab = () => {
 
       await fetchProfile(user.id);
       addNotification({ title: 'Photo updated', message: 'Profile photo saved', type: 'success' });
-    } catch (error: any) {
-      addNotification({ title: 'Upload failed', message: error.message, type: 'error' });
+    } catch (error: unknown) {
+      addNotification({
+        title: 'Upload failed',
+        message: error instanceof Error ? error.message : 'Upload failed',
+        type: 'error',
+      });
     } finally {
       setUploading(false);
     }
@@ -602,7 +606,7 @@ const AccountTab = () => {
                 placeholder="Your name"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -646,7 +650,7 @@ const AccountTab = () => {
                 Course Level
               </Label>
               <Select value={apprenticeLevel} onValueChange={setApprenticeLevel}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select level" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -664,7 +668,7 @@ const AccountTab = () => {
                 Current Year
               </Label>
               <Select value={apprenticeYear} onValueChange={setApprenticeYear}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -684,7 +688,7 @@ const AccountTab = () => {
                 placeholder="e.g. City College"
                 value={trainingProvider}
                 onChange={(e) => setTrainingProvider(e.target.value)}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -693,7 +697,7 @@ const AccountTab = () => {
                 ECS Card Status
               </Label>
               <Select value={ecsCardStatus} onValueChange={setEcsCardStatus}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -712,7 +716,7 @@ const AccountTab = () => {
                 placeholder="Supervisor name"
                 value={supervisorName}
                 onChange={(e) => setSupervisorName(e.target.value)}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
           </div>
@@ -746,7 +750,7 @@ const AccountTab = () => {
                 Job Title
               </Label>
               <Select value={jobTitle} onValueChange={setJobTitle}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select job title" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -764,7 +768,7 @@ const AccountTab = () => {
                 Specialisation
               </Label>
               <Select value={specialisation} onValueChange={setSpecialisation}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select area" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -788,7 +792,7 @@ const AccountTab = () => {
                 placeholder="0"
                 value={yearsExperience}
                 onChange={(e) => setYearsExperience(e.target.value)}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -797,7 +801,7 @@ const AccountTab = () => {
                 ECS Card Type
               </Label>
               <Select value={ecsCardType} onValueChange={setEcsCardType}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select card type" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -840,7 +844,7 @@ const AccountTab = () => {
                 Position
               </Label>
               <Select value={businessPosition} onValueChange={setBusinessPosition}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select position" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">
@@ -858,7 +862,7 @@ const AccountTab = () => {
                 Company Size
               </Label>
               <Select value={companySize} onValueChange={setCompanySize}>
-                <SelectTrigger className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white">
+                <SelectTrigger className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white">
                   <SelectValue placeholder="Select size" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#2c2c2e] border-white/10">

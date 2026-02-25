@@ -194,7 +194,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                 placeholder="ABC Electrical Ltd"
                 value={formData.company_name}
                 onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -206,7 +206,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                 placeholder="123 High Street&#10;London"
                 value={formData.company_address}
                 onChange={(e) => setFormData({ ...formData, company_address: e.target.value })}
-                className="min-h-[100px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 py-3 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation resize-none text-white"
+                className="min-h-[100px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 py-3 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation resize-none text-white"
               />
             </div>
 
@@ -220,7 +220,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, company_postcode: e.target.value.toUpperCase() })
                 }
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -233,7 +233,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                 placeholder="www.yourcompany.co.uk"
                 value={formData.company_website}
                 onChange={(e) => setFormData({ ...formData, company_website: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -245,7 +245,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                 placeholder="12345678"
                 value={formData.company_registration}
                 onChange={(e) => setFormData({ ...formData, company_registration: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -266,7 +266,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                   placeholder="GB 123 4567 89"
                   value={formData.vat_number}
                   onChange={(e) => setFormData({ ...formData, vat_number: e.target.value })}
-                  className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                  className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                 />
               </div>
             )}

@@ -40,9 +40,9 @@ interface BriefingData {
   safety_points: string[] | null;
   conductor_name: string | null;
   created_by_name: string | null;
-  attendees: any[];
-  attendee_signatures: any[];
-  photos: any[] | null;
+  attendees: { name: string }[];
+  attendee_signatures: { name: string; signed_at?: string }[];
+  photos: { url: string }[] | null;
   status: string | null;
   expired: boolean;
   expires_at: string;
@@ -134,7 +134,7 @@ const PublicBriefingSign = () => {
       }
 
       setBriefing(data as BriefingData);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error loading briefing:', err);
       setError('Could not load the briefing. The link may be invalid.');
     } finally {
@@ -257,9 +257,9 @@ const PublicBriefingSign = () => {
       if (data && !data.success) throw new Error(data.error);
 
       setShowSuccess(true);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Signing error:', err);
-      alert(err.message || 'Failed to submit signature. Please try again.');
+      alert(err instanceof Error ? err.message : 'Failed to submit signature. Please try again.');
     } finally {
       setSubmitting(false);
     }
@@ -328,7 +328,7 @@ const PublicBriefingSign = () => {
   const riskStyle = RISK_STYLES[briefing.risk_level || 'medium'] || RISK_STYLES.medium;
   const signatures = briefing.attendee_signatures || [];
   const expectedAttendees = briefing.attendees || [];
-  const signedNames = new Set(signatures.map((s: any) => s.name?.toLowerCase?.()));
+  const signedNames = new Set(signatures.map((s: { name: string }) => s.name?.toLowerCase?.()));
   const signedCount = signatures.length;
   const totalExpected = expectedAttendees.length;
   const progressPct = totalExpected > 0 ? Math.round((signedCount / totalExpected) * 100) : 0;
@@ -479,11 +479,13 @@ const PublicBriefingSign = () => {
 
               {/* Attendee list */}
               <div className="space-y-1.5">
-                {expectedAttendees.map((attendee: any, idx: number) => {
+                {expectedAttendees.map((attendee: { name: string }, idx: number) => {
                   const name = attendee.name || '';
                   const isSigned = signedNames.has(name.toLowerCase());
                   const sig = isSigned
-                    ? signatures.find((s: any) => s.name?.toLowerCase() === name.toLowerCase())
+                    ? signatures.find(
+                        (s: { name: string }) => s.name?.toLowerCase() === name.toLowerCase()
+                      )
                     : null;
 
                   return (
@@ -601,8 +603,8 @@ const PublicBriefingSign = () => {
                       placeholder="Enter your full name"
                       className={cn(
                         'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
-                        'bg-white/[0.06] border border-white/10 text-white',
-                        'placeholder:text-white/30',
+                        'bg-input border border-white/10 text-white [color-scheme:dark]',
+                        'placeholder:text-muted-foreground',
                         'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
                         'touch-manipulation'
                       )}
@@ -622,8 +624,8 @@ const PublicBriefingSign = () => {
                       placeholder="Your company name"
                       className={cn(
                         'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
-                        'bg-white/[0.06] border border-white/10 text-white',
-                        'placeholder:text-white/30',
+                        'bg-input border border-white/10 text-white [color-scheme:dark]',
+                        'placeholder:text-muted-foreground',
                         'focus:outline-none focus:ring-2 focus:ring-yellow-500/40 focus:border-yellow-500/40',
                         'touch-manipulation'
                       )}

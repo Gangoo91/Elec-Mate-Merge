@@ -10,7 +10,7 @@ import { toast } from 'sonner';
 
 interface ContactDetailsCardProps {
   user: User | null;
-  profile: any;
+  profile: Record<string, unknown> | null;
   companyProfile: CompanyProfile | null;
   onSave: (data: Partial<CompanyProfile>) => Promise<boolean>;
   isLoading: boolean;
@@ -184,7 +184,7 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
                 placeholder="07XXX XXXXXX"
                 value={formData.company_phone}
                 onChange={(e) => setFormData({ ...formData, company_phone: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -197,7 +197,7 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
                 placeholder="info@yourcompany.com"
                 value={formData.company_email}
                 onChange={(e) => setFormData({ ...formData, company_email: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
               <p className="text-[12px] text-white/40 px-1">
                 This email appears on quotes and invoices

@@ -63,14 +63,13 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
             className={cn(
               // Base sizing
               'w-full min-h-[120px] py-4 px-4',
-              // Typography - iOS body style
-              'text-ios-body text-white placeholder:text-white/40',
-              // Background & border - iOS style rounded rect
+              // Typography
+              'text-ios-body text-white placeholder:text-muted-foreground [color-scheme:dark]',
+              // Solid dark background — no semi-transparent glass
               'bg-input rounded-xl border-2',
               'border-white/10',
-              // Focus state
+              // Focus state — no background change
               'focus:outline-none focus:border-elec-yellow/60',
-              'focus:bg-white/[0.15]',
               'focus:shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.1)]',
               // Animation
               'transition-all duration-ios-normal ease-ios-ease',
@@ -82,10 +81,6 @@ const IOSTextarea = React.forwardRef<HTMLTextAreaElement, IOSTextareaProps>(
               'selection:bg-elec-yellow/20',
               className
             )}
-            style={{
-              color: '#fafafa',
-              WebkitTextFillColor: '#fafafa',
-            }}
             onFocus={(e) => {
               setIsFocused(true);
               props.onFocus?.(e);

@@ -177,7 +177,7 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
                     min="0"
                     value={formData[worker.key] || ''}
                     onChange={(e) => updateRate(worker.key, e.target.value)}
-                    className="w-20 h-[44px] text-[17px] text-right bg-white/[0.06] border-white/[0.08] rounded-xl px-3 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                    className="w-20 h-[44px] text-[17px] text-right bg-input border-white/[0.08] rounded-xl px-3 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   />
                   <span className="text-[13px] text-white/50">/hr</span>
                 </div>

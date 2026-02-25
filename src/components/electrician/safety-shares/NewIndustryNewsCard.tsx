@@ -251,7 +251,7 @@ const NewIndustryNewsCard = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                   className={cn(
-                    'w-full h-12 pr-4 bg-white/[0.03] border-white/[0.08] rounded-xl text-white placeholder:text-white/30 focus:bg-white/[0.05] focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
+                    'w-full h-12 pr-4 bg-input border-white/[0.08] rounded-xl text-white placeholder:text-muted-foreground focus:border-elec-yellow/30 focus:ring-1 focus:ring-elec-yellow/20 transition-all',
                     !searchTerm && 'pl-11'
                   )}
                 />

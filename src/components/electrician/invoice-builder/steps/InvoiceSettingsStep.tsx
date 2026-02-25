@@ -45,11 +45,7 @@ export const InvoiceSettingsStep = ({
   const inputClassName =
     'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
 
-  // Force dark text rendering — Chrome on light-mode OS overrides class-based styles
   const darkStyle: React.CSSProperties = {
-    color: '#fafafa',
-    WebkitTextFillColor: '#fafafa',
-    backgroundColor: 'transparent',
     colorScheme: 'dark',
   };
 

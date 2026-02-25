@@ -13,28 +13,27 @@ const SelectValue = SelectPrimitive.Value;
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, style, ...props }, ref) => (
+>(({ className, children, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      // Base layout - iOS-style large touch targets
+      // Base layout — large touch targets
       'flex w-full h-14 sm:h-12 items-center justify-between',
       'px-4 py-3 gap-2',
       'text-[16px] sm:text-[15px] text-white text-left font-medium',
-      // Background & border - premium dark glass feel
-      'bg-input',
+      // Solid dark background — no semi-transparent
+      'bg-input [color-scheme:dark]',
       'border border-white/[0.12] rounded-xl',
       // Placeholder
-      '[&>span:first-child]:text-white/40 [&>span:first-child:not(:empty)]:text-white',
-      // Focus states - elec-yellow glow
+      '[&>span:first-child]:text-muted-foreground [&>span:first-child:not(:empty)]:text-white',
+      // Focus states
       'focus:outline-none focus:border-elec-yellow/50',
       'focus:ring-2 focus:ring-elec-yellow/20',
-      // Active/pressed state - iOS-like feedback
-      'active:scale-[0.98] active:bg-white/[0.08]',
+      // Active/pressed state
+      'active:scale-[0.98]',
       // Data state when open
       'data-[state=open]:border-elec-yellow/50',
       'data-[state=open]:ring-2 data-[state=open]:ring-elec-yellow/20',
-      'data-[state=open]:bg-white/[0.08]',
       // Transitions
       'transition-all duration-150 ease-out',
       // Disabled
@@ -43,11 +42,6 @@ const SelectTrigger = React.forwardRef<
       'touch-manipulation select-none cursor-pointer',
       className
     )}
-    style={{
-      color: '#fafafa',
-      WebkitTextFillColor: '#fafafa',
-      ...style,
-    }}
     {...props}
   >
     <span className="block truncate text-left flex-1">{children}</span>

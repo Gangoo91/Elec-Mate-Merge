@@ -83,14 +83,7 @@ export const InvoiceItemsStep = ({
   vatAmount = 0,
   total = 0,
 }: InvoiceItemsStepProps) => {
-  // Inline styles to force dark-mode rendering on inputs.
-  // Chrome on light-mode OS overrides class-based bg/color with its UA stylesheet
-  // for type="number" inputs. We use type="text" + inputMode="decimal" to avoid
-  // Chrome's native number control rendering entirely.
   const darkInputStyle: React.CSSProperties = {
-    color: '#fafafa',
-    WebkitTextFillColor: '#fafafa',
-    backgroundColor: '#1a1a1e',
     colorScheme: 'dark',
   };
 

@@ -112,9 +112,9 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
       if (response.data?.url) {
         window.location.href = response.data.url;
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error connecting Stripe:', error);
-      toast.error(error?.message || 'Failed to connect Stripe');
+      toast.error(error instanceof Error ? error.message : 'Failed to connect Stripe');
     } finally {
       setConnecting(false);
     }
@@ -383,7 +383,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                 placeholder="ABC Electrical Ltd"
                 value={formData.accountName}
                 onChange={(e) => setFormData({ ...formData, accountName: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -396,7 +396,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                 placeholder="e.g. Lloyds Bank"
                 value={formData.bankName}
                 onChange={(e) => setFormData({ ...formData, bankName: e.target.value })}
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
             </div>
 
@@ -414,7 +414,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                     accountNumber: e.target.value.replace(/\D/g, '').slice(0, 8),
                   })
                 }
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                 inputMode="numeric"
               />
             </div>
@@ -430,7 +430,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                 onChange={(e) =>
                   setFormData({ ...formData, sortCode: formatSortCode(e.target.value) })
                 }
-                className="h-[50px] text-[17px] bg-white/[0.06] border-white/[0.08] rounded-xl px-4 placeholder:text-white/30 focus:bg-white/[0.08] focus:border-blue-500/50 focus:ring-0 touch-manipulation text-white"
+                className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                 inputMode="numeric"
               />
             </div>

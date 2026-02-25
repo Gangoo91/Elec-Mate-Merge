@@ -348,7 +348,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                       onValueChange={setSelectedJobId}
                       disabled={jobsLoading}
                     >
-                      <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                         <SelectValue placeholder="Choose a job..." />
                       </SelectTrigger>
                       <SelectContent className="bg-elec-gray border-white/10">
@@ -441,7 +441,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                       onValueChange={setSelectedJobId}
                       disabled={jobsLoading}
                     >
-                      <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                      <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                         <SelectValue placeholder="Choose a job..." />
                       </SelectTrigger>
                       <SelectContent className="bg-elec-gray border-white/10">

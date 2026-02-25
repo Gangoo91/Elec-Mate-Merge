@@ -102,7 +102,7 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
             <div className="space-y-2">
               <label className="text-sm font-medium text-white/80">Select Job</label>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
-                <SelectTrigger className="h-12 bg-white/[0.03] border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
+                <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Choose a job..." />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-gray border-white/10">
@@ -126,7 +126,7 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Describe work completed today, any issues encountered, materials used..."
-                className="min-h-[120px] bg-white/[0.03] border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
+                className="min-h-[120px] bg-input border-white/10 text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
               />
               <p className="text-xs text-white/40 flex items-center gap-1">
                 <Clock className="h-3 w-3" />
