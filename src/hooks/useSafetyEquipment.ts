@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
@@ -201,37 +202,102 @@ export function useSafetyEquipment() {
     },
   });
 
-  // Calculate stats
-  const now = new Date();
-  const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  // Calculate stats (memoised to avoid re-computing on every render)
+  const { stats, overdueItems, dueSoonItems } = useMemo(() => {
+    const now = new Date();
+    const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-  const overdueItems = equipment.filter((e) => {
-    if (e.next_inspection) return new Date(e.next_inspection) < now;
-    if (e.calibration_due) return new Date(e.calibration_due) < now;
-    return false;
+    const overdue = equipment.filter((e) => {
+      if (e.next_inspection) return new Date(e.next_inspection) < now;
+      if (e.calibration_due) return new Date(e.calibration_due) < now;
+      return false;
+    });
+
+    const dueSoon = equipment.filter((e) => {
+      if (overdue.some((o) => o.id === e.id)) return false;
+      if (e.next_inspection) {
+        const d = new Date(e.next_inspection);
+        return d >= now && d <= sevenDaysFromNow;
+      }
+      if (e.calibration_due) {
+        const d = new Date(e.calibration_due);
+        return d >= now && d <= sevenDaysFromNow;
+      }
+      return false;
+    });
+
+    return {
+      stats: {
+        total: equipment.length,
+        good: equipment.filter((e) => e.status === 'good').length,
+        needsAttention: equipment.filter((e) => e.status === 'needs_attention').length,
+        overdue: overdue.length,
+        outOfService: equipment.filter((e) => e.status === 'out_of_service').length,
+        dueSoon: dueSoon.length,
+      },
+      overdueItems: overdue,
+      dueSoonItems: dueSoon,
+    };
+  }, [equipment]);
+
+  // Lookup helpers for barcode/QR scanning
+  const findBySerialNumber = useCallback(
+    (serial: string): SafetyEquipment | undefined => {
+      const normalised = serial.trim().toLowerCase();
+      return equipment.find(
+        (e) => e.serial_number && e.serial_number.trim().toLowerCase() === normalised
+      );
+    },
+    [equipment]
+  );
+
+  const findByQrCode = useCallback(
+    (scannedValue: string): SafetyEquipment | undefined => {
+      // First check against stored qr_code values in DB
+      const dbMatch = equipment.find((e) => e.qr_code && e.qr_code === scannedValue);
+      if (dbMatch) return dbMatch;
+
+      // Parse the https://elecmate.app/e/<id> URL and match by equipment ID
+      const urlPrefix = 'https://elecmate.app/e/';
+      if (scannedValue.startsWith(urlPrefix)) {
+        const id = scannedValue.slice(urlPrefix.length);
+        return equipment.find((e) => e.id === id);
+      }
+
+      // Backwards compat: parse old elecmate://equipment/<id> URI scheme
+      const legacyPrefix = 'elecmate://equipment/';
+      if (scannedValue.startsWith(legacyPrefix)) {
+        const id = scannedValue.slice(legacyPrefix.length);
+        return equipment.find((e) => e.id === id);
+      }
+
+      return undefined;
+    },
+    [equipment]
+  );
+
+  const saveQrCode = useMutation({
+    mutationFn: async ({ id, qrValue }: { id: string; qrValue: string }) => {
+      if (!user?.id) throw new Error('Not authenticated');
+
+      const { data, error } = await supabase
+        .from('safety_equipment')
+        .update({ qr_code: qrValue })
+        .eq('id', id)
+        .eq('user_id', user.id)
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data as SafetyEquipment;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['safety-equipment', user?.id] });
+    },
+    onError: (error) => {
+      console.error('Failed to save QR code:', error.message);
+    },
   });
-
-  const dueSoonItems = equipment.filter((e) => {
-    if (overdueItems.some((o) => o.id === e.id)) return false;
-    if (e.next_inspection) {
-      const d = new Date(e.next_inspection);
-      return d >= now && d <= sevenDaysFromNow;
-    }
-    if (e.calibration_due) {
-      const d = new Date(e.calibration_due);
-      return d >= now && d <= sevenDaysFromNow;
-    }
-    return false;
-  });
-
-  const stats = {
-    total: equipment.length,
-    good: equipment.filter((e) => e.status === 'good').length,
-    needsAttention: equipment.filter((e) => e.status === 'needs_attention').length,
-    overdue: overdueItems.length,
-    outOfService: equipment.filter((e) => e.status === 'out_of_service').length,
-    dueSoon: dueSoonItems.length,
-  };
 
   return {
     equipment,
@@ -246,5 +312,8 @@ export function useSafetyEquipment() {
     deleteEquipment,
     markInspected,
     markCalibrated,
+    findBySerialNumber,
+    findByQrCode,
+    saveQrCode,
   };
 }

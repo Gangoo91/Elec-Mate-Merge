@@ -3,10 +3,21 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { ArrowLeft, Package, Tag, MapPin, Calendar, FileText, Check, Loader2 } from 'lucide-react';
+import {
+  ArrowLeft,
+  Package,
+  Tag,
+  MapPin,
+  Calendar,
+  FileText,
+  Check,
+  Loader2,
+  ScanBarcode,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { IOSInput } from '@/components/ui/ios-input';
 import { cn } from '@/lib/utils';
+import { EquipmentBarcodeScanner } from './EquipmentBarcodeScanner';
 import {
   EquipmentCategoryPicker,
   type EquipmentCategory,
@@ -53,6 +64,7 @@ export function EquipmentFormWizard({
   const [currentStep, setCurrentStep] = useState(1);
   const [direction, setDirection] = useState(1);
   const [photos, setPhotos] = useState<string[]>([]);
+  const [showSerialScanner, setShowSerialScanner] = useState(false);
 
   const {
     register,
@@ -264,13 +276,34 @@ export function EquipmentFormWizard({
                 {...register('name')}
               />
 
-              <IOSInput
-                label="Serial Number (Optional)"
-                icon={<Tag className="h-5 w-5" />}
-                placeholder="e.g. PAT-2024-001"
-                error={errors.serial_number?.message}
-                {...register('serial_number')}
-              />
+              <div className="space-y-1.5">
+                <label className="block text-sm font-medium text-white">
+                  Serial Number (Optional)
+                </label>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1">
+                    <IOSInput
+                      label=""
+                      icon={<Tag className="h-5 w-5" />}
+                      placeholder="e.g. PAT-2024-001"
+                      error={errors.serial_number?.message}
+                      {...register('serial_number')}
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowSerialScanner(true)}
+                    className={cn(
+                      'flex items-center justify-center h-11 w-11 rounded-xl flex-shrink-0',
+                      'bg-elec-yellow text-black',
+                      'touch-manipulation active:scale-[0.95] transition-all'
+                    )}
+                    title="Scan barcode"
+                  >
+                    <ScanBarcode className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
             </motion.div>
           )}
 
@@ -377,10 +410,15 @@ export function EquipmentFormWizard({
                   <div className="flex justify-between">
                     <span className="text-xs text-white">Frequency</span>
                     <span className="text-xs text-white">
-                      {watchedValues.inspection_interval_days <= 90 && '3 months'}
-                      {watchedValues.inspection_interval_days === 180 && '6 months'}
-                      {watchedValues.inspection_interval_days === 365 && '12 months'}
-                      {watchedValues.inspection_interval_days === 730 && '24 months'}
+                      {watchedValues.inspection_interval_days <= 90
+                        ? '3 months'
+                        : watchedValues.inspection_interval_days <= 180
+                          ? '6 months'
+                          : watchedValues.inspection_interval_days <= 365
+                            ? '12 months'
+                            : watchedValues.inspection_interval_days <= 730
+                              ? '24 months'
+                              : `${watchedValues.inspection_interval_days} days`}
                     </span>
                   </div>
                 </div>
@@ -421,7 +459,7 @@ export function EquipmentFormWizard({
             type="button"
             onClick={handleNext}
             className={cn(
-              'w-full h-11 text-sm font-semibold',
+              'w-full h-11 text-sm font-semibold touch-manipulation',
               'bg-elec-yellow text-black hover:bg-elec-yellow/90',
               'shadow-lg shadow-elec-yellow/20',
               'active:scale-[0.98]'
@@ -435,16 +473,16 @@ export function EquipmentFormWizard({
               type="button"
               variant="outline"
               onClick={onClose}
-              className="flex-1 h-11 text-sm border-white/[0.08] text-white hover:bg-white/10"
+              className="flex-1 h-11 text-sm border-white/[0.08] text-white hover:bg-white/10 touch-manipulation"
             >
               Cancel
             </Button>
             <Button
-              type="submit"
+              type="button"
               onClick={onFormSubmit}
               disabled={isSubmitting}
               className={cn(
-                'flex-1 h-11 text-sm font-semibold',
+                'flex-1 h-11 text-sm font-semibold touch-manipulation',
                 'bg-elec-yellow text-black hover:bg-elec-yellow/90',
                 'shadow-lg shadow-elec-yellow/20',
                 'active:scale-[0.98]',
@@ -466,6 +504,17 @@ export function EquipmentFormWizard({
           </div>
         )}
       </div>
+
+      <EquipmentBarcodeScanner
+        open={showSerialScanner}
+        onClose={() => setShowSerialScanner(false)}
+        onScan={(result) => {
+          setValue('serial_number', result.text, { shouldValidate: true });
+          setShowSerialScanner(false);
+        }}
+        title="Scan Serial Number"
+        description="Point at the barcode on the equipment"
+      />
     </div>
   );
 }

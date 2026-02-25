@@ -27,6 +27,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { usePreUseChecks, type PreUseCheck } from '@/hooks/usePreUseChecks';
+import { EquipmentQRCode } from './EquipmentQRCode';
 
 type EquipmentStatus = 'good' | 'needs_attention' | 'out_of_service' | 'overdue';
 
@@ -41,6 +42,7 @@ interface Equipment {
   inspection_interval_days: number;
   status: EquipmentStatus;
   condition_notes: string | null;
+  qr_code?: string | null;
 }
 
 // Category icons mapping
@@ -100,6 +102,7 @@ interface PremiumEquipmentCardProps {
   onDelete?: () => void;
   onMarkInspected?: () => void;
   onMarkCalibrated?: () => void;
+  onSaveQrCode?: (id: string, qrValue: string) => void;
   index?: number;
 }
 
@@ -109,6 +112,7 @@ export function PremiumEquipmentCard({
   onDelete,
   onMarkInspected,
   onMarkCalibrated,
+  onSaveQrCode,
   index = 0,
 }: PremiumEquipmentCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -155,7 +159,12 @@ export function PremiumEquipmentCard({
       )}
     >
       {/* Main Content - Clickable */}
-      <button onClick={() => setIsExpanded(!isExpanded)} className="w-full text-left p-3">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        aria-expanded={isExpanded}
+        aria-label={`${equipment.name} — ${status.label}`}
+        className="w-full text-left p-3 min-h-[44px] touch-manipulation"
+      >
         {/* Header */}
         <div className="flex items-start gap-2.5">
           {/* Category Icon */}
@@ -244,6 +253,17 @@ export function PremiumEquipmentCard({
                   <p className="text-xs text-white">{equipment.condition_notes}</p>
                 </div>
               )}
+
+              {/* QR Code */}
+              <div className="mb-3">
+                <EquipmentQRCode
+                  equipmentId={equipment.id}
+                  equipmentName={equipment.name}
+                  serialNumber={equipment.serial_number}
+                  currentQrValue={equipment.qr_code}
+                  onSaveQrCode={onSaveQrCode}
+                />
+              </div>
 
               {/* Recent Pre-Use Checks */}
               {recentChecks.length > 0 && (
@@ -355,6 +375,7 @@ export function PremiumEquipmentCard({
                   }}
                   disabled={isExporting && exportingId === equipment.id}
                   className="h-11 w-11 p-0 text-white hover:text-white hover:bg-white/10 border border-white/[0.08] touch-manipulation"
+                  aria-label="Export PDF"
                 >
                   {isExporting && exportingId === equipment.id ? (
                     <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -371,6 +392,7 @@ export function PremiumEquipmentCard({
                       onDelete();
                     }}
                     className="h-11 w-11 p-0 text-white hover:text-red-400 hover:bg-red-500/10 border border-white/[0.08] touch-manipulation"
+                    aria-label="Delete equipment"
                   >
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>

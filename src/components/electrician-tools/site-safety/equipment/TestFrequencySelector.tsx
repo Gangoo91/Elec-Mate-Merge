@@ -42,7 +42,7 @@ export function TestFrequencySelector({ value, onChange, error }: TestFrequencyS
                 'relative flex-1 px-2 py-2 rounded-md',
                 'text-xs font-medium text-center',
                 'transition-colors duration-200',
-                'touch-manipulation min-h-[40px]',
+                'touch-manipulation min-h-[44px]',
                 isSelected ? 'text-white' : 'text-white'
               )}
             >
