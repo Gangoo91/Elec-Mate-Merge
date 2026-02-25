@@ -300,7 +300,7 @@ const ResetPassword = () => {
                           !showPassword && 'pw-masked',
                           focusedField === 'password'
                             ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-                            : 'border-white/10 hover:border-white/20'
+                            : 'border-white/20 hover:border-white/30'
                         )}
                       />
                       <button
@@ -371,7 +371,7 @@ const ResetPassword = () => {
                             ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                             : confirmPassword && !passwordsMatch
                               ? 'border-red-500/50 bg-white/[0.06]'
-                              : 'border-white/10 hover:border-white/20'
+                              : 'border-white/20 hover:border-white/30'
                         )}
                       />
                       <button

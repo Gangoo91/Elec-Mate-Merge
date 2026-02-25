@@ -94,7 +94,7 @@ const InputField = ({
           type === 'password' && !isVisible && 'pw-masked',
           focusedField === field
             ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-            : 'border-white/10 hover:border-white/20'
+            : 'border-white/20 hover:border-white/30'
         )}
       />
       {showToggle && (
@@ -614,7 +614,7 @@ const SignUp = () => {
                         'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation',
                         profile.role === option.value
                           ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-                          : 'border-white/10 bg-white/[0.03] hover:border-white/20'
+                          : 'border-white/20 bg-white/[0.03] hover:border-white/30'
                       )}
                     >
                       <div className="flex items-center gap-4">
@@ -704,7 +704,7 @@ const SignUp = () => {
                         'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation flex items-center gap-3',
                         consent[item.key as keyof typeof consent]
                           ? 'border-green-500/50 bg-green-500/10'
-                          : 'border-white/10 bg-white/[0.03] hover:border-white/20'
+                          : 'border-white/20 bg-white/[0.03] hover:border-white/30'
                       )}
                     >
                       <Checkbox

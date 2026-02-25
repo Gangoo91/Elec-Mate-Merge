@@ -171,7 +171,7 @@ const CompleteProfile = () => {
                   'w-full p-4 rounded-2xl border-2 text-left transition-all touch-manipulation',
                   selectedRole === option.value
                     ? 'border-elec-yellow bg-elec-yellow/10 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
-                    : 'border-white/10 bg-white/[0.03] hover:border-white/20'
+                    : 'border-white/20 bg-white/[0.03] hover:border-white/30'
                 )}
               >
                 <div className="flex items-center gap-4">
