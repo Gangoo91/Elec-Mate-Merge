@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from '@/hooks/use-toast';
-import { Bell } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import type { User } from '@supabase/supabase-js';
 
 export type Notification = {
   id: string;
@@ -35,7 +35,7 @@ export const useNotifications = () => {
 
 export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // Get authenticated user from Supabase directly to avoid circular dependency
   useEffect(() => {
@@ -146,11 +146,19 @@ export const NotificationProvider: React.FC<{ children: React.ReactNode }> = ({ 
 
     setNotifications((prev) => [newNotification, ...prev]);
 
-    // Also show as toast
+    // Also show as toast — map notification type to toast variant
+    const variantMap: Record<Notification['type'], 'success' | 'warning' | 'info' | 'destructive'> =
+      {
+        success: 'success',
+        warning: 'warning',
+        info: 'info',
+        error: 'destructive',
+      };
+
     toast({
       title: notification.title,
       description: notification.message,
-      variant: notification.type === 'error' ? 'destructive' : 'default',
+      variant: variantMap[notification.type],
     });
 
     return newNotification;

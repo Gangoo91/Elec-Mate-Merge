@@ -78,7 +78,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
     return (
       <div className="flex items-center gap-3 p-3 bg-gradient-to-r from-purple-500/10 to-elec-yellow/10 rounded-lg border border-purple-500/20">
         <Bell className="w-5 h-5 text-elec-yellow flex-shrink-0" />
-        <p className="text-sm text-white/80 flex-1">{context}</p>
+        <p className="text-sm text-white flex-1">{context}</p>
         <Button
           size="sm"
           onClick={handleEnable}
@@ -87,7 +87,10 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
         >
           {isLoading ? 'Enabling...' : 'Enable'}
         </Button>
-        <button onClick={handleDismiss} className="text-white/40 hover:text-white/60 p-1">
+        <button
+          onClick={handleDismiss}
+          className="text-white hover:bg-white/10 h-11 w-11 flex items-center justify-center touch-manipulation"
+        >
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -104,11 +107,11 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
             </div>
             <div className="flex-1 min-w-0">
               <h4 className="font-semibold text-white text-sm">Enable Push Notifications</h4>
-              <p className="text-xs text-white/60 mt-1">{context}</p>
+              <p className="text-xs text-white mt-1">{context}</p>
             </div>
             <button
               onClick={handleDismiss}
-              className="text-white/40 hover:text-white/60 p-1 -mt-1 -mr-1"
+              className="text-white hover:bg-white/10 h-11 w-11 flex items-center justify-center touch-manipulation -mt-1 -mr-1"
             >
               <X className="w-4 h-4" />
             </button>
@@ -118,7 +121,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
               variant="ghost"
               size="sm"
               onClick={handleDismiss}
-              className="flex-1 h-10 text-white/60 hover:text-white hover:bg-white/5"
+              className="flex-1 h-11 text-white hover:text-white hover:bg-white/5 touch-manipulation"
             >
               Not Now
             </Button>
@@ -126,7 +129,7 @@ const PushNotificationPrompt: React.FC<PushNotificationPromptProps> = ({
               size="sm"
               onClick={handleEnable}
               disabled={isLoading}
-              className="flex-1 h-10 bg-gradient-to-r from-elec-yellow to-amber-500 hover:from-elec-yellow/90 hover:to-amber-500/90 text-black font-semibold"
+              className="flex-1 h-11 bg-gradient-to-r from-elec-yellow to-amber-500 hover:from-elec-yellow/90 hover:to-amber-500/90 text-black font-semibold touch-manipulation"
             >
               {isLoading ? 'Enabling...' : 'Enable'}
             </Button>

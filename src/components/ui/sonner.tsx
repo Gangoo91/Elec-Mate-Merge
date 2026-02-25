@@ -10,7 +10,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
     <Sonner
       theme={theme as ToasterProps['theme']}
       className="toaster group"
-      position="top-right"
+      position="top-center"
       expand={false}
       closeButton
       duration={3000}
@@ -25,14 +25,22 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            'group toast group-[.toaster]:bg-card group-[.toaster]:backdrop-blur-xl group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg',
-          description: 'group-[.toast]:text-muted-foreground',
-          actionButton: 'group-[.toast]:bg-primary group-[.toast]:text-primary-foreground',
-          cancelButton: 'group-[.toast]:bg-muted group-[.toast]:text-muted-foreground',
+            'group toast group-[.toaster]:bg-zinc-900/95 group-[.toaster]:backdrop-blur-xl group-[.toaster]:text-white group-[.toaster]:border group-[.toaster]:border-white/10 group-[.toaster]:shadow-2xl group-[.toaster]:rounded-2xl',
+          description: 'group-[.toast]:text-white',
+          actionButton:
+            'group-[.toast]:bg-elec-yellow group-[.toast]:text-black group-[.toast]:font-medium group-[.toast]:h-11 group-[.toast]:touch-manipulation',
+          cancelButton:
+            'group-[.toast]:bg-white/5 group-[.toast]:text-white group-[.toast]:border group-[.toast]:border-white/10 group-[.toast]:h-11 group-[.toast]:touch-manipulation',
+          closeButton:
+            'group-[.toast]:text-white group-[.toast]:hover:bg-white/10 group-[.toast]:touch-manipulation',
+          success: 'group-[.toaster]:border-elec-yellow/30',
+          error: 'group-[.toaster]:border-red-500/30',
+          warning: 'group-[.toaster]:border-amber-500/30',
+          info: 'group-[.toaster]:border-blue-500/30',
         },
         style: {
           opacity: 1,
-          backdropFilter: 'blur(12px)',
+          backdropFilter: 'blur(16px)',
         },
       }}
       {...props}
