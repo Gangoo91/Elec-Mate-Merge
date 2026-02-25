@@ -31,8 +31,7 @@ textarea::placeholder {
 /* Hide browser autofill icons (location pin, contacts, etc.) in all inputs */
 input::-webkit-contacts-auto-fill-button,
 input::-webkit-credentials-auto-fill-button,
-input::-webkit-caps-lock-indicator,
-input::-webkit-textfield-decoration-container {
+input::-webkit-caps-lock-indicator {
   visibility: hidden !important;
   display: none !important;
   pointer-events: none !important;
