@@ -33,8 +33,6 @@ import { InvoiceScanResults } from '../InvoiceScanResults';
 
 import { JobTemplate } from '@/types/quote';
 
-import {
-
 import React from 'react';
 // InlineDecimalInput: local string state prevents parseFloat stripping trailing dots (ELE-14)
 function InlineDecimalInput({
