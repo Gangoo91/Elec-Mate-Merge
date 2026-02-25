@@ -33,9 +33,15 @@ import { InvoiceScanResults } from '../InvoiceScanResults';
 
 import { JobTemplate } from '@/types/quote';
 
-import {
-
 import React from 'react';
+import {
+  workerTypes as defaultWorkerTypes,
+  materialCategories,
+  commonMaterials,
+  equipmentCategories,
+  commonEquipment,
+} from '@/data/electrician/presetData';
+
 // InlineDecimalInput: local string state prevents parseFloat stripping trailing dots (ELE-14)
 function InlineDecimalInput({
   value,
@@ -78,12 +84,6 @@ function InlineDecimalInput({
     />
   );
 }
-  workerTypes as defaultWorkerTypes,
-  materialCategories,
-  commonMaterials,
-  equipmentCategories,
-  commonEquipment,
-} from '@/data/electrician/presetData';
 
 interface InvoiceItemsStepProps {
   originalItems: InvoiceItem[];
