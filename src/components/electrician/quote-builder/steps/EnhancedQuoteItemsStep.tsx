@@ -129,6 +129,9 @@ export const EnhancedQuoteItemsStep = ({
   const [ragResults, setRagResults] = useState<any[]>([]);
   const [isSearchingRAG, setIsSearchingRAG] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
+  // String states for decimal input — prevents parseFloat stripping trailing dot
+  const [quantityInput, setQuantityInput] = useState('1');
+  const [unitPriceInput, setUnitPriceInput] = useState('');
   const debouncedSearch = useDebounce(materialSearch, 500);
 
   // Invoice Scanner State
@@ -797,15 +800,19 @@ export const EnhancedQuoteItemsStep = ({
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Quantity</label>
                 <Input
-                  type="number"
+                  type="text"
                   inputMode="decimal"
-                  value={newItem.quantity === 0 ? '' : newItem.quantity}
-                  onChange={(e) =>
-                    setNewItem((prev) => ({
-                      ...prev,
-                      quantity: e.target.value === '' ? 0 : parseFloat(e.target.value),
-                    }))
-                  }
+                  value={quantityInput}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === '' || /^\d*\.?\d*$/.test(val)) setQuantityInput(val);
+                  }}
+                  onBlur={() => {
+                    const parsed = parseFloat(quantityInput);
+                    const val = isNaN(parsed) || parsed <= 0 ? 1 : parsed;
+                    setNewItem((prev) => ({ ...prev, quantity: val }));
+                    setQuantityInput(String(val));
+                  }}
                   placeholder="1"
                   className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
@@ -819,15 +826,19 @@ export const EnhancedQuoteItemsStep = ({
               <div className="flex-1 min-w-0">
                 <label className="text-[12px] text-white/40 block">Unit Price (£)</label>
                 <Input
-                  type="number"
+                  type="text"
                   inputMode="decimal"
-                  value={newItem.unitPrice === 0 ? '' : newItem.unitPrice}
-                  onChange={(e) =>
-                    setNewItem((prev) => ({
-                      ...prev,
-                      unitPrice: e.target.value === '' ? 0 : parseFloat(e.target.value),
-                    }))
-                  }
+                  value={unitPriceInput}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    if (val === '' || /^\d*\.?\d*$/.test(val)) setUnitPriceInput(val);
+                  }}
+                  onBlur={() => {
+                    const parsed = parseFloat(unitPriceInput);
+                    const val = isNaN(parsed) ? 0 : parsed;
+                    setNewItem((prev) => ({ ...prev, unitPrice: val }));
+                    if (val > 0) setUnitPriceInput(val.toFixed(2));
+                  }}
                   placeholder="0.00"
                   className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
                 />

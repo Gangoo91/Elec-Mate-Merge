@@ -34,6 +34,50 @@ import { InvoiceScanResults } from '../InvoiceScanResults';
 import { JobTemplate } from '@/types/quote';
 
 import {
+
+import React from 'react';
+// InlineDecimalInput: local string state prevents parseFloat stripping trailing dots (ELE-14)
+function InlineDecimalInput({
+  value,
+  onChange,
+  className,
+  style,
+  placeholder,
+}: {
+  value: number;
+  onChange: (val: number) => void;
+  className?: string;
+  style?: React.CSSProperties;
+  placeholder?: string;
+}) {
+  const [draft, setDraft] = React.useState(value === 0 ? '' : String(value));
+
+  React.useEffect(() => {
+    // Sync if parent value changes externally (e.g. item reset)
+    setDraft(value === 0 ? '' : String(value));
+  }, [value]);
+
+  return (
+    <input
+      type="text"
+      inputMode="decimal"
+      style={style}
+      value={draft}
+      placeholder={placeholder}
+      onChange={(e) => {
+        const val = e.target.value;
+        if (val === '' || /^\d*\.?\d*$/.test(val)) setDraft(val);
+      }}
+      onBlur={() => {
+        const parsed = parseFloat(draft);
+        const final = isNaN(parsed) ? 0 : parsed;
+        onChange(final);
+        setDraft(final === 0 ? '' : String(final));
+      }}
+      className={className}
+    />
+  );
+}
   workerTypes as defaultWorkerTypes,
   materialCategories,
   commonMaterials,
@@ -437,43 +481,23 @@ export const InvoiceItemsStep = ({
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input
-                      type="text"
-                      inputMode="decimal"
+                    <InlineDecimalInput
+                      value={item.quantity}
+                      onChange={(quantity) => onUpdateItem(item.id, {
+                        quantity,
+                        totalPrice: quantity * item.unitPrice,
+                      })}
                       style={darkInputStyle}
-                      value={item.quantity === 0 ? '' : item.quantity}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                          const quantity = val === '' ? 0 : parseFloat(val);
-                          if (!isNaN(quantity)) {
-                            onUpdateItem(item.id, {
-                              quantity,
-                              totalPrice: quantity * item.unitPrice,
-                            });
-                          }
-                        }
-                      }}
                       className="h-8 w-16 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                     />
                     <span className="text-[12px] text-white/50">×</span>
-                    <input
-                      type="text"
-                      inputMode="decimal"
+                    <InlineDecimalInput
+                      value={item.unitPrice}
+                      onChange={(unitPrice) => onUpdateItem(item.id, {
+                        unitPrice,
+                        totalPrice: item.quantity * unitPrice,
+                      })}
                       style={darkInputStyle}
-                      value={item.unitPrice === 0 ? '' : item.unitPrice}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        if (val === '' || /^\d*\.?\d*$/.test(val)) {
-                          const unitPrice = val === '' ? 0 : parseFloat(val);
-                          if (!isNaN(unitPrice)) {
-                            onUpdateItem(item.id, {
-                              unitPrice,
-                              totalPrice: item.quantity * unitPrice,
-                            });
-                          }
-                        }
-                      }}
                       className="h-8 w-20 px-2 py-0 text-[13px] text-white bg-[#1a1a1e] border border-white/[0.06] rounded-lg caret-elec-yellow focus:outline-none focus:border-elec-yellow"
                     />
                     <span className="text-[12px] text-white/50 flex-1">{item.unit}</span>
