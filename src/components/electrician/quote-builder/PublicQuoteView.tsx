@@ -544,12 +544,19 @@ const PublicQuoteView = () => {
               {/* Signature Pad */}
               <div>
                 <Label className="text-elec-light/80 text-sm">Digital Signature *</Label>
-                <p className="text-elec-light/50 text-xs mb-2">Sign below to accept this quote</p>
+                <p className="text-elec-light/50 text-xs mb-2">
+                  Draw your signature in the box below using your finger or mouse — this is required to accept
+                </p>
                 <SignaturePad
                   ref={signaturePadRef}
                   onSignatureChange={setSignatureData}
                   className="w-full"
                 />
+                {!signatureData && (
+                  <p className="text-amber-400/80 text-xs mt-1.5 flex items-center gap-1">
+                    ✍️ Draw your signature above to enable the Accept button
+                  </p>
+                )}
               </div>
 
               {/* Action Buttons - Large touch targets */}

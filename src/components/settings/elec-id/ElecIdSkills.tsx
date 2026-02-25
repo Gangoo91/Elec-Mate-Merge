@@ -742,7 +742,9 @@ const ElecIdSkills = () => {
         <DialogHeader>
           <DialogTitle className="text-foreground">{title}</DialogTitle>
         </DialogHeader>
-        <FormContent isEdit={isEdit} />
+        <div className="max-h-[60vh] overflow-y-auto pr-1">
+          <FormContent isEdit={isEdit} />
+        </div>
         <div className="flex gap-3 pt-4">
           <Button
             variant="outline"
