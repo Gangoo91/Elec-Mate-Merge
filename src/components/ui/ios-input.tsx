@@ -34,7 +34,11 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
     const [showPassword, setShowPassword] = React.useState(false);
     const [hasValue, setHasValue] = React.useState(!!value);
     const isPasswordType = type === 'password';
-    const inputType = isPasswordType && showPassword ? 'text' : type;
+    // Always use type="text" for password fields — use pw-masked CSS class instead
+    // of type="password" to control dot masking. This bypasses iOS Safari's native
+    // password masking pipeline which ignores CSS colour on dark backgrounds.
+    const inputType = isPasswordType ? 'text' : type;
+    const isPwMasked = isPasswordType && !showPassword;
 
     React.useEffect(() => {
       setHasValue(!!value && String(value).length > 0);
@@ -109,6 +113,7 @@ const IOSInput = React.forwardRef<HTMLInputElement, IOSInputProps>(
               inputHeight,
               icon ? 'pl-11 pr-4' : 'px-4',
               isPasswordType && 'pr-12',
+              isPwMasked && 'pw-masked',
               // Typography
               compact ? 'text-sm' : 'text-base',
               'text-white placeholder:text-muted-foreground [color-scheme:dark]',
