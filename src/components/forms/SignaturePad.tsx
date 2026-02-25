@@ -25,7 +25,15 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
     }));
 
     useEffect(() => {
-      initCanvas();
+      // Use rAF to ensure container has been painted and has real dimensions
+      const frameId = requestAnimationFrame(() => {
+        initCanvas();
+        // Fallback: if canvas still has no width, retry after short delay
+        const canvas = canvasRef.current;
+        if (canvas && canvas.width === 0) {
+          setTimeout(initCanvas, 100);
+        }
+      });
 
       // Re-init on resize
       const handleResize = () => {
@@ -52,7 +60,10 @@ const SignaturePad = forwardRef<SignaturePadRef, SignaturePadProps>(
       };
 
       window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
+      return () => {
+        cancelAnimationFrame(frameId);
+        window.removeEventListener('resize', handleResize);
+      };
     }, []);
 
     const initCanvas = () => {
