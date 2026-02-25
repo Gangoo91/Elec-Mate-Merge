@@ -40,7 +40,7 @@ function App() {
       <InAppBrowserDetector />
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <ThemeProvider defaultTheme="dark" storageKey="elec-ui-theme">
+          <ThemeProvider forcedTheme="dark">
             <NotificationProvider>
               <NativeAppInit>
                 {/* Activity tracking - logs user events to Supabase */}
