@@ -13,10 +13,17 @@ select:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Password dots: iOS Safari renders these via -webkit-text-fill-color, not color.
-   Without this, dots are invisible on dark backgrounds after the ELE-6 global override removal. */
+/* Password fields: iOS Safari renders dots using its own native pipeline.
+   On light-mode devices with color-scheme:dark applied to the field, dots
+   can appear dark against the dark background — invisible.
+   Fix: explicitly set both color values AND background using hard-coded values
+   (not CSS variables which depend on .dark class being applied) so this works
+   regardless of OS light/dark mode or Capacitor WebView initialisation order. */
 input[type="password"] {
-  -webkit-text-fill-color: white;
+  color: #fafafa !important;
+  -webkit-text-fill-color: #fafafa !important;
+  background-color: hsl(240, 5.9%, 15%) !important;
+  caret-color: #fafafa;
 }
 
 input::placeholder,
