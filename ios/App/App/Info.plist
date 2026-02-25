@@ -53,5 +53,13 @@
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Elec-Mate sends notifications for certification updates, study reminders, and important messages from your team.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Elec-Mate uses your camera to scan distribution boards and capture site photos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Elec-Mate accesses your photo library to attach images to certificates and reports.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Elec-Mate uses your microphone for the voice assistant feature.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Elec-Mate uses your location to track job site attendance and routes.</string>
 </dict>
 </plist>
