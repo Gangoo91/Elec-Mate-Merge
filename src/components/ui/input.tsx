@@ -4,9 +4,12 @@ import { cn } from '@/lib/utils';
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
   ({ className, type, inputMode, ...props }, ref) => {
-    // Convert type=number to type=text + inputMode=decimal so that
-    // Blink never renders its light-mode number spinner chrome.
-    const finalType = type === 'number' ? 'text' : type;
+    // Convert type=number → type=text + inputMode=decimal (no spinner chrome)
+    // Convert type=password → type=text + pw-masked class (-webkit-text-security:disc)
+    // This bypasses iOS Safari's native password masking pipeline which ignores CSS
+    // colour overrides on dark backgrounds, making dots invisible.
+    const isPassword = type === 'password';
+    const finalType = type === 'number' ? 'text' : isPassword ? 'text' : type;
     const finalInputMode =
       inputMode ||
       (type === 'number'
@@ -53,6 +56,8 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<'input'>>(
           // Dark color-scheme tells the browser to render native form controls
           // (date pickers, autofill) with dark mode colours.
           '[color-scheme:dark]',
+          // Password masking via CSS rather than type="password" (iOS Safari fix)
+          isPassword && 'pw-masked',
           className
         )}
         ref={ref}

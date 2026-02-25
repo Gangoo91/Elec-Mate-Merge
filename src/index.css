@@ -13,15 +13,14 @@ select:-webkit-autofill {
   transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Password fields: iOS Safari renders dots using its own native pipeline.
-   We set color (dot colour) and background using hard-coded values so this
-   works regardless of OS light/dark mode or whether .dark class has applied.
-   NOTE: -webkit-text-fill-color must NOT be set here — on iOS Safari/PWA it
-   overrides the native masking pipeline and causes dots to disappear entirely. */
-input[type="password"] {
-  color: #fafafa !important;
-  background-color: hsl(240, 5.9%, 15%) !important;
-  caret-color: #fafafa;
+/* Password masking: use -webkit-text-security on type="text" fields rather than
+   type="password". This bypasses iOS Safari's native password masking pipeline
+   which ignores CSS colour overrides on dark backgrounds, causing dots to be
+   invisible. -webkit-text-security: disc shows bullet dots whose colour is
+   controlled purely by the CSS color property — reliable across iOS Safari PWA,
+   Chrome Android, and desktop browsers. */
+.pw-masked {
+  -webkit-text-security: disc !important;
 }
 
 input::placeholder,

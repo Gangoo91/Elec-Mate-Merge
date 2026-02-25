@@ -76,7 +76,7 @@ const InputField = ({
         <Icon className="h-5 w-5" />
       </div>
       <input
-        type={showToggle ? (isVisible ? 'text' : 'password') : type}
+        type={type === 'password' ? 'text' : type}
         value={value}
         onChange={onChange}
         onFocus={() => setFocusedField(field)}
@@ -89,6 +89,7 @@ const InputField = ({
           'w-full h-14 pl-14 pr-12 rounded-2xl',
           'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
           'text-[16px] outline-none transition-all duration-200',
+          type === 'password' && !isVisible && 'pw-masked',
           disabled || readOnly
             ? 'opacity-70 cursor-not-allowed border-white/5 bg-white/[0.03]'
             : focusedField === field

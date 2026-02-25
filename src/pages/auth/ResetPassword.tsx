@@ -286,7 +286,7 @@ const ResetPassword = () => {
                         <Lock className="h-5 w-5" />
                       </div>
                       <input
-                        type={showPassword ? 'text' : 'password'}
+                        type="text"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         onFocus={() => setFocusedField('password')}
@@ -297,6 +297,7 @@ const ResetPassword = () => {
                           'w-full h-14 pl-14 pr-14 rounded-2xl',
                           'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
                           'text-[16px] outline-none transition-all duration-200',
+                          !showPassword && 'pw-masked',
                           focusedField === 'password'
                             ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                             : 'border-white/10 hover:border-white/20'
@@ -354,7 +355,7 @@ const ResetPassword = () => {
                         <Lock className="h-5 w-5" />
                       </div>
                       <input
-                        type={showConfirmPassword ? 'text' : 'password'}
+                        type="text"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         onFocus={() => setFocusedField('confirm')}
@@ -365,6 +366,7 @@ const ResetPassword = () => {
                           'w-full h-14 pl-14 pr-14 rounded-2xl',
                           'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
                           'text-[16px] outline-none transition-all duration-200',
+                          !showConfirmPassword && 'pw-masked',
                           focusedField === 'confirm'
                             ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                             : confirmPassword && !passwordsMatch

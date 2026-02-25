@@ -273,7 +273,7 @@ const SignIn = () => {
                   <Lock className="h-5 w-5" />
                 </div>
                 <input
-                  type={showPassword ? 'text' : 'password'}
+                  type="text"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   onFocus={() => setFocusedField('password')}
@@ -286,6 +286,7 @@ const SignIn = () => {
                     'w-full h-14 pl-12 pr-12 rounded-2xl',
                     'bg-input border-2 text-white placeholder:text-muted-foreground [color-scheme:dark]',
                     'text-[16px] outline-none transition-all duration-200',
+                    !showPassword && 'pw-masked',
                     focusedField === 'password'
                       ? 'border-elec-yellow/50 shadow-[0_0_0_4px_rgba(255,209,0,0.1)]'
                       : 'border-white/10 hover:border-white/20'
