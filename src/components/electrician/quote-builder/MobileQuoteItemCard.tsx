@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -18,6 +19,12 @@ export const MobileQuoteItemCard = ({
   onRemove,
   onDuplicate,
 }: MobileQuoteItemCardProps) => {
+  const [qtyDraft, setQtyDraft] = useState(item.quantity === 0 ? '' : String(item.quantity));
+  const [priceDraft, setPriceDraft] = useState(item.unitPrice === 0 ? '' : String(item.unitPrice));
+
+  useEffect(() => { setQtyDraft(item.quantity === 0 ? '' : String(item.quantity)); }, [item.quantity]);
+  useEffect(() => { setPriceDraft(item.unitPrice === 0 ? '' : String(item.unitPrice)); }, [item.unitPrice]);
+
   const getCategoryIcon = (category: string) => {
     switch (category) {
       case 'labour':
@@ -79,39 +86,37 @@ export const MobileQuoteItemCard = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <MobileInput
           label="Quantity"
-          type="number"
+          type="text"
           inputMode="decimal"
-          value={item.quantity.toString()}
+          value={qtyDraft}
           onChange={(e) => {
-            const value = e.target.value;
-            if (value === '') {
-              onUpdate(item.id, { quantity: 0 });
-            } else {
-              const parsed = parseFloat(value);
-              if (!isNaN(parsed) && parsed >= 0) {
-                onUpdate(item.id, { quantity: parsed });
-              }
-            }
+            const val = e.target.value;
+            if (val === '' || /^\d*\.?\d*$/.test(val)) setQtyDraft(val);
           }}
-          onBlur={(e) => {
-            const value = parseFloat(e.target.value);
-            if (isNaN(value) || value <= 0) {
-              onUpdate(item.id, { quantity: 1 });
-            }
+          onBlur={() => {
+            const parsed = parseFloat(qtyDraft);
+            const val = isNaN(parsed) || parsed <= 0 ? 1 : parsed;
+            onUpdate(item.id, { quantity: val });
+            setQtyDraft(String(val));
           }}
           unit={item.unit}
-          min="0.1"
-          step="0.1"
         />
         <MobileInput
           label="Unit Price"
-          type="number"
+          type="text"
           inputMode="decimal"
-          value={item.unitPrice.toString()}
-          onChange={(e) => onUpdate(item.id, { unitPrice: parseFloat(e.target.value) || 0 })}
+          value={priceDraft}
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === '' || /^\d*\.?\d*$/.test(val)) setPriceDraft(val);
+          }}
+          onBlur={() => {
+            const parsed = parseFloat(priceDraft);
+            const val = isNaN(parsed) ? 0 : parsed;
+            onUpdate(item.id, { unitPrice: val });
+            setPriceDraft(val === 0 ? '' : String(val));
+          }}
           unit="£"
-          min="0"
-          step="0.01"
         />
       </div>
 

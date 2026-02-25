@@ -1,3 +1,4 @@
+import React from 'react';
 import { InputHTMLAttributes, forwardRef, SelectHTMLAttributes } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -148,15 +149,30 @@ export const CalculatorNumberInput = ({
   ...props
 }: CalculatorNumberInputProps) => {
   const inputId = label.toLowerCase().replace(/\s+/g, '-');
+  // Local string state prevents parseFloat stripping trailing dot (ELE-14)
+  const [draft, setDraft] = React.useState(value === '' || value === 0 ? '' : String(value));
+
+  React.useEffect(() => {
+    // Sync when parent resets value externally
+    const str = value === '' || value === 0 ? '' : String(value);
+    setDraft(str);
+  }, [value]);
 
   const handleChange = (inputValue: string) => {
-    const num = parseFloat(inputValue);
+    if (inputValue === '' || /^\d*\.?\d*$/.test(inputValue)) {
+      setDraft(inputValue);
+    }
+  };
+
+  const handleBlur = () => {
+    const num = parseFloat(draft);
     if (!isNaN(num)) {
-      if (min !== undefined && num < min) return onChange(min);
-      if (max !== undefined && num > max) return onChange(max);
+      if (min !== undefined && num < min) { onChange(min); setDraft(String(min)); return; }
+      if (max !== undefined && num > max) { onChange(max); setDraft(String(max)); return; }
       onChange(num);
-    } else if (inputValue === '') {
+    } else {
       onChange(0);
+      setDraft('');
     }
   };
 
@@ -176,10 +192,9 @@ export const CalculatorNumberInput = ({
         id={inputId}
         type="number"
         value={value}
+        value={draft}
         onChange={(e) => handleChange(e.target.value)}
-        min={min}
-        max={max}
-        step={step}
+        onBlur={handleBlur}
         className={cn(
           'calculator-input h-12 bg-white/5 border-white/10 rounded-xl',
           'text-base placeholder:text-white/30 touch-manipulation',
