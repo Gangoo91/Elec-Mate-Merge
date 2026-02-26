@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,11 @@ import {
   Mail,
   Sparkles,
   BadgeCheck,
+  RefreshCw,
 } from 'lucide-react';
+import { Capacitor } from '@capacitor/core';
+import { useRevenueCat } from '@/hooks/useRevenueCat';
+import { useToast } from '@/hooks/use-toast';
 import StripeConnectSetup from '@/components/electrician/settings/StripeConnectSetup';
 
 const containerVariants = {
@@ -38,8 +42,34 @@ const itemVariants = {
 };
 
 const BillingTab = () => {
-  const { isSubscribed, subscriptionTier } = useAuth();
+  const { isSubscribed, subscriptionTier, user } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const isNative = Capacitor.isNativePlatform();
+  const { restorePurchases } = useRevenueCat(user?.id);
+  const [isRestoring, setIsRestoring] = useState(false);
+
+  const handleRestorePurchases = async () => {
+    setIsRestoring(true);
+    try {
+      const restored = await restorePurchases();
+      toast({
+        title: restored ? 'Purchases Restored' : 'Nothing to Restore',
+        description: restored
+          ? 'Your subscription has been restored successfully.'
+          : 'No previous purchases found for this Apple ID.',
+        variant: restored ? 'success' : 'default',
+      });
+    } catch {
+      toast({
+        title: 'Restore Failed',
+        description: 'Could not restore purchases. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsRestoring(false);
+    }
+  };
 
   const proFeatures = [
     'Unlimited certificates & reports',
@@ -163,6 +193,18 @@ const BillingTab = () => {
               </Button>
             )}
           </div>
+
+          {/* Restore Purchases — native only, required by Apple */}
+          {isNative && (
+            <button
+              onClick={handleRestorePurchases}
+              disabled={isRestoring}
+              className="w-full mt-3 flex items-center justify-center gap-2 py-3 text-sm text-muted-foreground hover:text-foreground transition-colors touch-manipulation disabled:opacity-50"
+            >
+              <RefreshCw className={`h-4 w-4 ${isRestoring ? 'animate-spin' : ''}`} />
+              {isRestoring ? 'Restoring...' : 'Restore Purchases'}
+            </button>
+          )}
         </div>
       </motion.div>
 
@@ -184,41 +226,69 @@ const BillingTab = () => {
             </h3>
           </div>
           <div className="p-3 space-y-2">
-            <button
-              onClick={() =>
-                window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
-              }
-              className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-green-500/10 flex items-center justify-center">
-                  <Receipt className="h-5 w-5 text-green-400" />
+            {isNative ? (
+              /* On iOS/Android — subscriptions managed through Apple/Google */
+              <button
+                onClick={() =>
+                  window.open('https://apps.apple.com/account/subscriptions', '_system')
+                }
+                className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-11 h-11 rounded-xl bg-elec-yellow/10 flex items-center justify-center">
+                    <CreditCard className="h-5 w-5 text-elec-yellow" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-foreground">Manage Subscription</p>
+                    <p className="text-xs text-muted-foreground">
+                      {Capacitor.getPlatform() === 'ios'
+                        ? 'Manage via Apple ID Settings'
+                        : 'Manage via Google Play'}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">Billing History</p>
-                  <p className="text-xs text-muted-foreground">View invoices and receipts</p>
-                </div>
-              </div>
-              <ExternalLink className="h-4 w-4 text-muted-foreground" />
-            </button>
+                <ExternalLink className="h-4 w-4 text-muted-foreground" />
+              </button>
+            ) : (
+              /* On web — Stripe billing portal */
+              <>
+                <button
+                  onClick={() =>
+                    window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
+                  }
+                  className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-green-500/10 flex items-center justify-center">
+                      <Receipt className="h-5 w-5 text-green-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Billing History</p>
+                      <p className="text-xs text-muted-foreground">View invoices and receipts</p>
+                    </div>
+                  </div>
+                  <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                </button>
 
-            <button
-              onClick={() =>
-                window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
-              }
-              className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center">
-                  <Calendar className="h-5 w-5 text-blue-400" />
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">Payment Method</p>
-                  <p className="text-xs text-muted-foreground">Update card or billing details</p>
-                </div>
-              </div>
-              <ExternalLink className="h-4 w-4 text-muted-foreground" />
-            </button>
+                <button
+                  onClick={() =>
+                    window.open('https://billing.stripe.com/p/login/test_8wM6pY7xJ4j2bks000', '_blank')
+                  }
+                  className="w-full flex items-center justify-between gap-4 p-4 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-all text-left touch-manipulation active:scale-[0.99]"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center">
+                      <Calendar className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground">Payment Method</p>
+                      <p className="text-xs text-muted-foreground">Update card or billing details</p>
+                    </div>
+                  </div>
+                  <ExternalLink className="h-4 w-4 text-muted-foreground" />
+                </button>
+              </>
+            )}
           </div>
         </motion.div>
       )}
@@ -233,7 +303,13 @@ const BillingTab = () => {
             <Shield className="h-5 w-5 text-blue-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-foreground">Secured by Stripe</p>
+            <p className="text-sm font-medium text-foreground">
+              {isNative
+                ? Capacitor.getPlatform() === 'ios'
+                  ? 'Secured by Apple'
+                  : 'Secured by Google'
+                : 'Secured by Stripe'}
+            </p>
             <p className="text-xs text-muted-foreground">
               Bank-level encryption protects all transactions
             </p>
