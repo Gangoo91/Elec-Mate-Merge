@@ -16,6 +16,7 @@ import {
   Settings,
   Shield,
   Clock,
+  Eye,
   Mic,
   CreditCard,
   Send,
@@ -55,7 +56,7 @@ const LandingPage = () => {
     {
       question: 'What certificates can I create?',
       answer:
-        'EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, Solar PV, EV Charging — all with digital signatures and PDF export.',
+        'EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, Solar PV, EV Charging, and PAT Testing — all 8 with digital signatures and PDF export.',
     },
     {
       question: 'Do you sync with my accounting software?',
@@ -132,7 +133,7 @@ const LandingPage = () => {
               offerCount: '2',
             },
             featureList: [
-              'Level 2 & 3 Electrical Training',
+              '46+ Electrical & Upskilling Courses',
               'BS 7671 AI Assistants',
               '8 Certificate Types',
               'Voice Quotes & Invoices',
@@ -423,7 +424,7 @@ const LandingPage = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
                 </span>
                 <p className="text-white font-semibold text-sm">
-                  Approaching <span className="text-emerald-400">500 UK electricians</span>
+                  <span className="text-emerald-400">550+</span> UK electricians and growing
                 </p>
               </div>
             </motion.div>
@@ -444,7 +445,7 @@ const LandingPage = () => {
               <div className="text-xs sm:text-sm text-white/60">Calculators</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">22</div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">46+</div>
               <div className="text-xs sm:text-sm text-white/60">Courses</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
@@ -474,7 +475,7 @@ const LandingPage = () => {
               painPoint="Training courses cost thousands and revision materials are scattered everywhere"
               tagline="Everything to ace your training — from £4.99/mo"
               features={[
-                'Study Centre — Level 2, 3 & AM2',
+                '46+ courses — Level 2, 3, AM2 & upskilling',
                 'EPA Simulator with AI scoring',
                 'Inspection & Testing hub',
                 'AI Study Assistant',
@@ -492,9 +493,11 @@ const LandingPage = () => {
                 '8 digital certificate types',
                 '5 AI specialists (BS 7671)',
                 'Voice quote → invoice → paid',
-                '50+ electrical calculators',
+                'Pre & post site visit reports',
+                'Photo documentation per job',
+                'Expenses & materials tracking',
+                'Elec-ID digital professional card',
                 'AI RAMS & method statements',
-                'Xero & QuickBooks sync',
               ]}
               color="yellow"
               highlight
@@ -601,7 +604,7 @@ const LandingPage = () => {
             <p className="text-white/60 text-sm sm:text-base">Real electricians, real results</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Cole */}
             <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-3 mb-4">
@@ -644,6 +647,29 @@ const LandingPage = () => {
                 all aspects of our business from apprentices to the QS signing jobs off. The AI
                 circuit designer in our handover packs has already won us additional contracts — a
                 step above the rest."
+              </blockquote>
+            </div>
+
+            {/* Nathan */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-xl bg-zinc-700 overflow-hidden flex-shrink-0">
+                  <img
+                    src="/images/testimonials/np-electrical.png"
+                    alt="NP Electrical Services"
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm">Nathan Perry</p>
+                  <p className="text-yellow-400/70 text-xs">NP Electrical Services</p>
+                </div>
+              </div>
+              <blockquote className="text-white/70 text-sm leading-relaxed">
+                "Elec-Mate has become my go-to software for quoting, invoicing, and managing jobs.
+                It's really easy to use and keeps everything in one place — I'm not jumping between
+                different apps anymore. The calculation and circuit design features are a big help
+                when pricing jobs on site. It's made running my jobs smoother and more organised."
               </blockquote>
             </div>
           </div>
@@ -869,7 +895,7 @@ const LandingPage = () => {
               price="£4.99"
               description="Everything to ace your training"
               features={[
-                'Study Centre (Level 2, 3, AM2)',
+                '46+ courses (Level 2, 3, AM2 & upskilling)',
                 'EPA Simulator with AI grading',
                 'Inspection & Testing hub',
                 'AI Study Assistant',
@@ -887,9 +913,12 @@ const LandingPage = () => {
                 '5 AI specialists',
                 'Voice quotes & invoices',
                 '8 certificate types',
+                'Pre & post site visit reports',
+                'Photo documentation per job',
+                'Expenses & materials tracking',
+                'Elec-ID digital professional card',
                 '50+ electrical calculators',
-                '14 business calculators',
-                'Stripe payments',
+                'Stripe payments & Xero sync',
               ]}
               popular
               color="yellow"
@@ -1025,7 +1054,7 @@ const LandingPage = () => {
             <Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to work smarter?</h2>
             <p className="text-white/70 mb-6 max-w-md mx-auto">
-              Join 430+ UK electricians saving hours every week.
+              Join 550+ UK electricians saving hours every week.
             </p>
             <Link to="/auth/signup">
               <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -1083,7 +1112,7 @@ const LandingPage = () => {
                   Elec-<span className="text-yellow-400">Mate</span>
                 </span>
               </div>
-              <p className="text-sm text-white leading-relaxed">
+              <p className="text-sm text-white/60 leading-relaxed">
                 The complete platform for UK electricians. Training, AI tools, certificates, and
                 business management.
               </p>
