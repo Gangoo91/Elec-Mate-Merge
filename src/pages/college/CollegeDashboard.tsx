@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
+import { NotificationCenter } from '@/components/college/NotificationCenter';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { Button } from '@/components/ui/button';
 import { Search, ArrowLeft, School, Settings, Loader2 } from 'lucide-react';
@@ -472,6 +473,9 @@ const CollegeDashboard = () => {
             >
               <Search className="h-4 w-4 text-elec-yellow" />
             </Button>
+
+            {/* Notifications */}
+            <NotificationCenter onNavigate={handleNavigate} />
 
             {/* Settings button */}
             <Button
