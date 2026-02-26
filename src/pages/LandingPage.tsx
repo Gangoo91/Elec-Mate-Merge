@@ -133,7 +133,7 @@ const LandingPage = () => {
               offerCount: '2',
             },
             featureList: [
-              'Level 2 & 3 Electrical Training',
+              '46+ Electrical & Upskilling Courses',
               '7 BS 7671 AI Specialists',
               '8 Certificate Types',
               'Voice Quotes & Invoices',
@@ -445,7 +445,7 @@ const LandingPage = () => {
               <div className="text-xs sm:text-sm text-white/60">Calculators</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">38</div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">46+</div>
               <div className="text-xs sm:text-sm text-white/60">Courses</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
@@ -475,7 +475,7 @@ const LandingPage = () => {
               painPoint="Training courses cost thousands and revision materials are scattered everywhere"
               tagline="Everything to ace your training — from £4.99/mo"
               features={[
-                'Study Centre — Level 2, 3 & AM2',
+                '46+ courses — Level 2, 3, AM2 & upskilling',
                 'EPA Simulator with AI scoring',
                 'Inspection & Testing hub',
                 'AI Study Assistant',
@@ -603,7 +603,7 @@ const LandingPage = () => {
             <p className="text-white/60 text-sm sm:text-base">Real electricians, real results</p>
           </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {/* Cole */}
             <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-3 mb-4">
@@ -646,6 +646,25 @@ const LandingPage = () => {
                 all aspects of our business from apprentices to the QS signing jobs off. The AI
                 circuit designer in our handover packs has already won us additional contracts — a
                 step above the rest."
+              </blockquote>
+            </div>
+
+            {/* Nathan */}
+            <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-11 h-11 rounded-xl bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
+                  <span className="text-yellow-400 font-bold text-sm">NP</span>
+                </div>
+                <div>
+                  <p className="text-white font-semibold text-sm">Nathan Perry</p>
+                  <p className="text-yellow-400/70 text-xs">NP Electrical Ltd</p>
+                </div>
+              </div>
+              <blockquote className="text-white/70 text-sm leading-relaxed">
+                "Elec-Mate has become my go-to software for quoting, invoicing, and managing jobs.
+                It's really easy to use and keeps everything in one place — I'm not jumping between
+                different apps anymore. The calculation and circuit design features are a big help
+                when pricing jobs on site. It's made running my jobs smoother and more organised."
               </blockquote>
             </div>
           </div>
@@ -895,7 +914,7 @@ const LandingPage = () => {
               price="£4.99"
               description="Everything to ace your training"
               features={[
-                'Study Centre (Level 2, 3, AM2)',
+                '46+ courses (Level 2, 3, AM2 & upskilling)',
                 'EPA Simulator with AI grading',
                 'Inspection & Testing hub',
                 'AI Study Assistant',
