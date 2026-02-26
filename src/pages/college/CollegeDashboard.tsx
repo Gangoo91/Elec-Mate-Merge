@@ -367,7 +367,7 @@ const CollegeDashboard = () => {
   }, [activeSection]);
 
   const handleGoHome = useCallback(() => {
-    navigate('/');
+    navigate('/dashboard');
   }, [navigate]);
 
   const renderSection = () => {
@@ -443,71 +443,46 @@ const CollegeDashboard = () => {
     <CollegeSupabaseProvider collegeId={profile?.college_id ?? undefined}>
       <div className="mobile-safe-area bg-elec-dark">
         <div className="space-y-4 sm:space-y-6 md:space-y-8 animate-fade-in px-4 sm:px-6 py-4 md:py-6 pb-20 sm:pb-12">
-          {/* Header - Native App Style (non-sticky) */}
-          <div className="relative w-full">
-            {/* Back button - top left */}
-            <div className="absolute top-0 left-0">
-              {activeSection === 'overview' ? (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleGoHome}
-                  className="hover:bg-accent/10"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </Button>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleBack}
-                  className="hover:bg-accent/10"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                </Button>
-              )}
+          {/* Header - flex row matching ElectricalHub */}
+          <div className="flex items-center h-14 gap-2">
+            {/* Back button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label="Go back"
+              onClick={activeSection === 'overview' ? handleGoHome : handleBack}
+              className="h-10 w-10 -ml-2 hover:bg-accent/10 flex items-center justify-center rounded-xl touch-manipulation"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+
+            {/* Title */}
+            <div className="flex-1 flex items-center gap-2 min-w-0">
+              <School className="h-5 w-5 text-elec-yellow shrink-0" />
+              <h1 className="text-xl font-bold truncate">{sectionTitles[activeSection]}</h1>
             </div>
 
-            {/* Search and Settings - top right */}
-            <div className="absolute top-0 right-0 flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCommandPaletteOpen(true)}
-                aria-label="Search"
-                className="h-9 w-9 sm:h-10 sm:w-auto sm:px-3 rounded-full sm:rounded-md bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border-blue-500/50 hover:from-blue-500/30 hover:to-cyan-500/20 hover:border-blue-400/70 transition-all duration-200 p-0 sm:p-2"
-              >
-                <Search className="h-4 w-4 sm:h-5 sm:w-5 text-blue-400" />
-                <span className="hidden sm:inline ml-2 text-sm">Search...</span>
-                <kbd className="pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium ml-2">
-                  <span className="text-xs">Ctrl</span>K
-                </kbd>
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate('/settings')}
-                className="flex items-center gap-2"
-              >
-                <Settings className="h-4 w-4" />
-                <span className="hidden sm:inline">Settings</span>
-              </Button>
-            </div>
+            {/* Search button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setCommandPaletteOpen(true)}
+              aria-label="Search"
+              className="h-10 w-10 rounded-xl bg-elec-yellow/10 border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/50 transition-all p-0 touch-manipulation"
+            >
+              <Search className="h-4 w-4 text-elec-yellow" />
+            </Button>
 
-            {/* Main content - centered */}
-            <div className="flex flex-col items-center gap-4 w-full pt-8 sm:pt-0">
-              <div className="text-center w-full max-w-2xl mx-auto px-4">
-                <div className="flex justify-center mb-2">
-                  <School className="h-7 w-7 sm:h-9 sm:w-9 text-elec-yellow" />
-                </div>
-                <h1 className="text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-foreground mb-2">
-                  {sectionTitles[activeSection]}
-                </h1>
-                <p className="text-sm sm:text-base text-white">
-                  {activeSection === 'overview' ? 'Manage your apprenticeship programme' : ''}
-                </p>
-              </div>
-            </div>
+            {/* Settings button */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setActiveSection('collegesettings')}
+              aria-label="Settings"
+              className="h-10 w-10 rounded-xl hover:bg-accent/10 transition-all p-0 touch-manipulation"
+            >
+              <Settings className="h-4 w-4" />
+            </Button>
           </div>
 
           {/* Main Content */}
