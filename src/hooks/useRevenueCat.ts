@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { Purchases, type PurchasesPackage, LOG_LEVEL } from '@revenuecat/purchases-capacitor';
+import { useHaptic } from '@/hooks/useHaptic';
 
 // RevenueCat public API keys (loaded from .env — not secret, safe for client-side)
 const RC_IOS_API_KEY = import.meta.env.VITE_REVENUECAT_IOS_KEY || '';
@@ -19,6 +20,7 @@ interface RevenueCatState {
 export function useRevenueCat(userId?: string) {
   const isNative = Capacitor.isNativePlatform();
   const initRef = useRef(false);
+  const haptic = useHaptic();
 
   const [state, setState] = useState<RevenueCatState>({
     isInitialised: false,
@@ -120,6 +122,8 @@ export function useRevenueCat(userId?: string) {
           isPurchasing: false,
         }));
 
+        if (isEntitled) haptic.success(); // celebratory thud on successful purchase
+
         return isEntitled;
       } catch (err: any) {
         // User cancelled — not an error
@@ -129,6 +133,7 @@ export function useRevenueCat(userId?: string) {
         }
 
         console.error('RevenueCat purchase error:', err);
+        haptic.error(); // error buzz on purchase failure
         setState((prev) => ({
           ...prev,
           isPurchasing: false,
