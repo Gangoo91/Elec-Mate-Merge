@@ -53,6 +53,8 @@
 	</array>
 	<key>NSUserNotificationsUsageDescription</key>
 	<string>Elec-Mate sends notifications for certification updates, study reminders, and important messages from your team.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Elec-Mate accesses your contacts so you can import customers directly into the app.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Elec-Mate uses your camera to scan distribution boards and capture site photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
