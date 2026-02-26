@@ -1,10 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { Input } from '@/components/ui/input';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+} from '@/components/ui/alert-dialog';
 import {
   Shield,
   Database,
@@ -47,7 +57,11 @@ interface CookiePreferences {
 
 const PrivacyTab = () => {
   const { addNotification } = useNotifications();
+  const navigate = useNavigate();
   const [isExporting, setIsExporting] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
   const [cookiePrefs, setCookiePrefs] = useState<CookiePreferences>({
     essential: true,
     analytics: true,
@@ -133,11 +147,36 @@ const PrivacyTab = () => {
   };
 
   const handleDeleteRequest = () => {
-    addNotification({
-      title: 'Delete Request',
-      message: 'Please contact support@elec-mate.com to request account deletion.',
-      type: 'info',
-    });
+    setDeleteConfirmText('');
+    setShowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (deleteConfirmText !== 'DELETE') return;
+    setIsDeleting(true);
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('Not authenticated');
+
+      const { error } = await supabase.functions.invoke('delete-own-account', {
+        headers: { Authorization: `Bearer ${session.access_token}` },
+      });
+
+      if (error) throw error;
+
+      // Sign out and redirect to landing page
+      await supabase.auth.signOut();
+      navigate('/', { replace: true });
+    } catch (err) {
+      console.error('Account deletion error:', err);
+      addNotification({
+        title: 'Deletion Failed',
+        message: 'Could not delete your account. Please contact support@elec-mate.com',
+        type: 'error',
+      });
+      setIsDeleting(false);
+      setShowDeleteDialog(false);
+    }
   };
 
   return (
@@ -292,6 +331,69 @@ const PrivacyTab = () => {
               <Trash2 className="h-4 w-4" />
               <span>Delete Account</span>
             </Button>
+
+            {/* Delete Account Confirmation Dialog */}
+            <AlertDialog open={showDeleteDialog} onOpenChange={(open) => {
+              if (!isDeleting) setShowDeleteDialog(open);
+            }}>
+              <AlertDialogContent className="max-w-[90vw] sm:max-w-md bg-card/95 backdrop-blur-xl border-white/10 rounded-2xl">
+                <AlertDialogHeader>
+                  <AlertDialogTitle className="flex items-center gap-2 text-red-400">
+                    <Trash2 className="h-5 w-5" />
+                    Delete Your Account
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-muted-foreground space-y-3">
+                    <span className="block">
+                      This will permanently delete your account and all associated data including:
+                    </span>
+                    <ul className="text-sm space-y-1 list-none">
+                      {['Certificates & inspection reports', 'Quotes & invoices', 'Elec-ID profile', 'Site safety documents', 'Study progress & notes'].map((item) => (
+                        <li key={item} className="flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-400/60 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                    <span className="block font-medium text-foreground/80">
+                      This action cannot be undone.
+                    </span>
+                    <span className="block text-sm">
+                      Type <span className="font-mono font-bold text-red-400">DELETE</span> to confirm:
+                    </span>
+                    <Input
+                      value={deleteConfirmText}
+                      onChange={(e) => setDeleteConfirmText(e.target.value)}
+                      placeholder="Type DELETE to confirm"
+                      className="font-mono bg-white/5 border-white/10 focus:border-red-500/50"
+                      autoCapitalize="none"
+                      autoCorrect="off"
+                    />
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="gap-2">
+                  <AlertDialogCancel
+                    disabled={isDeleting}
+                    className="min-h-[44px] bg-white/[0.02] border-white/10 rounded-xl"
+                  >
+                    Cancel
+                  </AlertDialogCancel>
+                  <Button
+                    onClick={handleConfirmDelete}
+                    disabled={deleteConfirmText !== 'DELETE' || isDeleting}
+                    className="min-h-[44px] rounded-xl bg-red-600 hover:bg-red-700 border-0 disabled:opacity-40 text-white"
+                  >
+                    {isDeleting ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Deleting...
+                      </>
+                    ) : (
+                      'Delete My Account'
+                    )}
+                  </Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
 
           {/* Warning */}
