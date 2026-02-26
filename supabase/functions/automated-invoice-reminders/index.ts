@@ -217,8 +217,8 @@ serve(async (req: Request) => {
           `✅ ${reminderType} reminder sent for ${invoice.invoice_number} to ${clientEmail}`
         );
 
-        // Rate limit: Resend allows 2 req/sec — wait 600ms between sends
-        await new Promise((r) => setTimeout(r, 600));
+        // Delay between sends to avoid Resend rate limits and stagger delivery
+        await new Promise((r) => setTimeout(r, 10000));
       } catch (emailError: any) {
         console.error(`Error sending reminder for ${invoice.invoice_number}:`, emailError);
         results.push({
