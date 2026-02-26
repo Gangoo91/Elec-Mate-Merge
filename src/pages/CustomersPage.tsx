@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCustomers, Customer, SortField, SortDirection } from '@/hooks/inspection/useCustomers';
@@ -242,6 +243,7 @@ export default function CustomersPage() {
         )}
       </header>
 
+      <PullToRefresh onRefresh={refreshCustomers} isRefreshing={isLoading}>
       <main className="px-4 py-3 pb-24 space-y-3 max-w-4xl mx-auto">
         {/* Analytics Panel */}
         {customers.length > 0 && <CustomerAnalyticsPanel />}
@@ -341,6 +343,7 @@ export default function CustomersPage() {
           </motion.div>
         )}
       </main>
+      </PullToRefresh>
 
       {/* Add/Edit Customer Dialog */}
       <CustomerForm
