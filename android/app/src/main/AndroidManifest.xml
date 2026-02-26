@@ -41,6 +41,9 @@
     <!-- Push notifications — required for Android 13+ (API 33) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Contacts — required for contacts import feature -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <!-- Camera — photo capture for certificates, site safety, inspections -->
     <uses-permission android:name="android.permission.CAMERA" />
 
