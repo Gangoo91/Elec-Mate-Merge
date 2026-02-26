@@ -89,6 +89,7 @@ export const VoltageDropCalculator = () => {
   const [installationMethod, setInstallationMethod] = useState<string>('method1');
   const [ambientTemp, setAmbientTemp] = useState<string>('30');
   const [powerFactor, setPowerFactor] = useState<string>('1.0');
+  const [continuousLoad, setContinuousLoad] = useState<boolean>(true); // BS 7671 Reg 433.1.1 — 1.25× for continuous loads
   const [results, setResults] = useState<any>(null);
 
   const getTemperatureDerating = (temp: number): number => {
@@ -123,8 +124,9 @@ export const VoltageDropCalculator = () => {
         ? (powerNum * 1000) / (actualVoltage * powerFactorNum) // Convert kW to W
         : (powerNum * 1000) / (Math.sqrt(3) * actualVoltage * powerFactorNum);
 
-    // Add 125% factor for continuous loads (EV charging)
-    const adjustedCurrent = designCurrent * 1.25;
+    // BS 7671 Reg 433.1.1: apply 1.25× for continuous loads (>3h) such as EV charging.
+    // For non-continuous loads use design current directly.
+    const adjustedCurrent = continuousLoad ? designCurrent * 1.25 : designCurrent;
 
     // Apply temperature derating
     const tempDerating = getTemperatureDerating(ambientTempNum);
@@ -227,8 +229,8 @@ export const VoltageDropCalculator = () => {
     if (recommendedCable && recommendedCable.voltageDropPercent > 5.0) {
       complianceIssues.push('Voltage drop exceeds BS 7671 5% limit for power circuits');
     }
-    if (designCurrent < (adjustedCurrent / 1.25) * 0.8) {
-      complianceIssues.push('Consider protective device coordination per BS 7671 Section 433');
+    if (continuousLoad && adjustedCurrent > designCurrent) {
+      complianceIssues.push('125% continuous load factor applied — verify protective device rating per BS 7671 Reg 433.1.1');
     }
 
     setResults({
@@ -415,6 +417,25 @@ export const VoltageDropCalculator = () => {
           </div>
         </div>
 
+        {/* Continuous load toggle — BS 7671 Reg 433.1.1 */}
+        <div className="flex items-center gap-3 p-3 rounded-lg bg-elec-dark/40 border border-gray-700">
+          <input
+            id="continuous-load"
+            type="checkbox"
+            checked={continuousLoad}
+            onChange={(e) => setContinuousLoad(e.target.checked)}
+            className="h-4 w-4 accent-elec-yellow"
+          />
+          <div>
+            <Label htmlFor="continuous-load" className="text-foreground text-sm font-medium cursor-pointer">
+              Continuous load (×1.25 factor)
+            </Label>
+            <p className="text-xs text-white/50 mt-0.5">
+              BS 7671 Reg 433.1.1 — apply for loads running &gt;3 hours (e.g. EV charging). Uncheck for general/intermittent loads.
+            </p>
+          </div>
+        </div>
+
         <div className="flex gap-4">
           <Button
             onClick={calculateVoltageDropAndCableSize}
@@ -592,7 +613,7 @@ export const VoltageDropCalculator = () => {
           </h4>
           <ul className="text-blue-200 text-sm space-y-1">
             <li>• Calculations based on BS 7671:2018+A2:2022 requirements</li>
-            <li>• 125% continuous load factor applied for EV charging</li>
+            <li>• 125% continuous load factor (BS 7671 Reg 433.1.1) — toggle above to enable/disable</li>
             <li>• Copper conductors at 70°C operating temperature assumed</li>
             <li>• Protective device coordination should be verified separately</li>
             <li>• Consider earth fault loop impedance and shock protection requirements</li>

@@ -130,8 +130,10 @@ const R1R2Calculator = () => {
     const r2 = (r20CPC * length * tempCorrection) / 1000;
     const r1r2 = r1 + r2;
 
-    // Continuity test limit (typically R1+R2 × 1.67 for temperature correction during testing)
-    const continuityLimit = r1r2 * 1.67;
+    // Expected R1+R2 at ambient test temperature (~20°C) — BS 7671 GN3
+    // Convert the operating-temperature value back to ambient using the inverse correction factor.
+    // Measured values during testing should be ≤ this (ambient is always lower than operating).
+    const continuityLimit = r1r2 / tempCorrection;
 
     const testAcceptable = true;
 
@@ -296,7 +298,7 @@ const R1R2Calculator = () => {
                 className="mt-2 text-emerald-400"
                 style={{ borderColor: 'currentColor' }}
               >
-                Test Limit: {result.continuityLimit.toFixed(4)} Ω
+                Expected at ≈20°C: {result.continuityLimit.toFixed(4)} Ω
               </Badge>
             </div>
 
