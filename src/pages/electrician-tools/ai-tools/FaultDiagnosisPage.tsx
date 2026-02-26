@@ -202,13 +202,108 @@ const FaultDiagnosisPage = () => {
     );
   };
 
-  const handleAnalysis = async () => {
-    if (images.length === 0) {
-      toast({
-        title: 'No Image',
-        description: 'Please upload photos of the fault',
-        variant: 'destructive',
+  // Text-only path — routes to visual-fault-diagnosis-rag when no image provided
+  const handleTextOnlyFaultDiagnosis = async () => {
+    const symptomLabels = selectedSymptoms
+      .map((s) => symptoms.find((sym) => sym.id === s)?.label)
+      .filter(Boolean)
+      .join(', ');
+
+    const faultDescription = [symptomLabels, additionalNotes].filter(Boolean).join('. ');
+
+    setIsAnalyzing(true);
+    setAnalysisProgress(10);
+    const progressInterval = setInterval(() => {
+      setAnalysisProgress((prev) => Math.min(prev + 8, 70));
+    }, 500);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('visual-fault-diagnosis-rag', {
+        body: {
+          fault_description: faultDescription,
+          location_context: selectedLocation || '',
+          visible_indicators: selectedSymptoms
+            .map((s) => symptoms.find((sym) => sym.id === s)?.label)
+            .filter(Boolean),
+        },
       });
+
+      if (error) throw error;
+
+      const faultCode = (data.fault_code as string) || 'FI';
+      const isPass = faultCode === 'PASS';
+
+      // Map RAG response to the shape VisualAnalysisResults expects
+      setAnalysisResult({
+        findings: isPass
+          ? []
+          : [
+              {
+                description: data.reasoning || 'Fault identified based on your description.',
+                eicr_code: faultCode as 'C1' | 'C2' | 'C3' | 'FI',
+                confidence: data.confidence || 0.8,
+                bs7671_clauses: (data.regulation_references || []).map((r: any) => r.number),
+                fix_guidance: data.gn3_guidance || '',
+              },
+            ],
+        recommendations: isPass
+          ? []
+          : [
+              {
+                action: data.gn3_guidance || 'Remedial action required.',
+                priority:
+                  faultCode === 'C1' ? 'immediate' : faultCode === 'C2' ? 'urgent' : 'recommended',
+                bs7671_reference: data.regulation_references?.[0]?.number,
+                eicr_code: (faultCode === 'FI' ? 'C3' : faultCode) as 'C1' | 'C2' | 'C3',
+              },
+            ],
+        compliance_summary: {
+          overall_assessment:
+            faultCode === 'C1' || faultCode === 'C2' ? 'unsatisfactory' : 'satisfactory',
+          c1_count: faultCode === 'C1' ? 1 : 0,
+          c2_count: faultCode === 'C2' ? 1 : 0,
+          c3_count: faultCode === 'C3' ? 1 : 0,
+          fi_count: faultCode === 'FI' ? 1 : 0,
+          safety_rating: isPass ? 100 : faultCode === 'C1' ? 20 : faultCode === 'C2' ? 50 : 75,
+        },
+        summary: isPass
+          ? data.user_context_addressed ||
+            'No immediate concerns from your description. Installation appears compliant.'
+          : data.reasoning || '',
+        rag_verified: true,
+        verification_note:
+          'Text-based diagnostic — verified against BS 7671:2018+A3:2024 and GN3. Add a photo for visual confirmation.',
+      });
+
+      setAnalysisProgress(100);
+      toast({
+        title: 'Diagnosis complete',
+        description: isPass
+          ? 'No immediate concerns from your description.'
+          : `${faultCode} classification — see full diagnosis below.`,
+        duration: 3000,
+      });
+    } catch (err: any) {
+      toast({ title: 'Analysis Failed', description: 'Please try again', variant: 'destructive' });
+    } finally {
+      clearInterval(progressInterval);
+      setIsAnalyzing(false);
+    }
+  };
+
+  const handleAnalysis = async () => {
+    // Text-only path when no image — route to RAG function using symptoms + notes
+    if (images.length === 0) {
+      const hasDescription = selectedSymptoms.length > 0 || additionalNotes.trim().length > 0;
+      if (!hasDescription) {
+        toast({
+          title: 'Describe the fault first',
+          description: 'Select symptoms or add a description, or upload a photo of the fault.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      await handleTextOnlyFaultDiagnosis();
       return;
     }
 
@@ -598,16 +693,24 @@ const FaultDiagnosisPage = () => {
               <h3 className="font-medium text-foreground text-sm">Additional Details</h3>
               <input
                 type="text"
-                placeholder="Describe what you observed..."
+                placeholder="Describe the fault, symptoms, or what you have already tested..."
                 value={additionalNotes}
                 onChange={(e) => setAdditionalNotes(e.target.value)}
                 className="w-full h-12 px-4 rounded-xl border border-border/30 bg-background/50 text-foreground"
                 style={{ fontSize: '16px' }}
               />
+              {images.length === 0 && (
+                <p className="text-xs text-foreground/50">
+                  📸 Add a photo above for visual analysis, or select symptoms and describe the
+                  fault here to get a text-based diagnosis without one.
+                </p>
+              )}
             </div>
 
-            {/* Analyse Button */}
-            {images.length > 0 && (
+            {/* Analyse Button — visible when image uploaded OR symptoms/notes filled */}
+            {(images.length > 0 ||
+              selectedSymptoms.length > 0 ||
+              additionalNotes.trim().length > 0) && (
               <Button
                 onClick={handleAnalysis}
                 className={cn(
@@ -618,7 +721,7 @@ const FaultDiagnosisPage = () => {
                 )}
               >
                 <AlertTriangle className="h-5 w-5 mr-2" />
-                Diagnose Fault
+                {images.length === 0 ? 'Diagnose from Description' : 'Diagnose Fault'}
               </Button>
             )}
           </>
