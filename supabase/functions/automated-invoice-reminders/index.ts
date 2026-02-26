@@ -64,8 +64,10 @@ serve(async (req: Request) => {
       .not('invoice_status', 'eq', 'paid')
       .not('invoice_status', 'eq', 'cancelled')
       .not('invoice_status', 'eq', 'draft')
-      .not('invoice_sent_at', 'is', null) // Must have been sent to client first
-      .lt('invoice_due_date', today.toISOString());
+      .lt('invoice_due_date', today.toISOString())
+      // Include if: already formally sent to client OR already flagged as overdue in the system
+      // (overdue status means the system/user has already acknowledged it's past due)
+      .or('invoice_sent_at.not.is.null,invoice_status.eq.overdue');
 
     if (queryError) {
       console.error('Error fetching overdue invoices:', queryError);
@@ -214,6 +216,9 @@ serve(async (req: Request) => {
         console.log(
           `✅ ${reminderType} reminder sent for ${invoice.invoice_number} to ${clientEmail}`
         );
+
+        // Delay between sends to avoid Resend rate limits and stagger delivery
+        await new Promise((r) => setTimeout(r, 10000));
       } catch (emailError: any) {
         console.error(`Error sending reminder for ${invoice.invoice_number}:`, emailError);
         results.push({
