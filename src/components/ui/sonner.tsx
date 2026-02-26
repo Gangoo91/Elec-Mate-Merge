@@ -17,7 +17,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       offset={0}
       style={
         {
-          '--offset': 'calc(env(safe-area-inset-top, 0px) + 0.75rem)',
+          '--offset': 'calc(env(safe-area-inset-top, 44px) + 2.5rem)',
           '--width': 'calc(100vw - 2rem)',
           '--max-width': '420px',
         } as React.CSSProperties
