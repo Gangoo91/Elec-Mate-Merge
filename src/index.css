@@ -2777,3 +2777,35 @@ input::-webkit-caps-lock-indicator {
 .animate-scan {
   animation: scan 2s ease-in-out infinite;
 }
+
+/* ─── Date / Time input normalisation ─────────────────────────────────────────
+   On iOS Safari, type="date" and type="time" inputs render with different
+   native chrome heights. This forces them to be identical so side-by-side
+   date + time fields stay visually consistent on all iPhone sizes.
+   h-12 (3rem / 48px) matches the base Input component mobile height.
+   ─────────────────────────────────────────────────────────────────────────── */
+input[type="date"],
+input[type="time"],
+input[type="datetime-local"] {
+  /* Lock to the same height as our base Input component on mobile */
+  min-height: 3rem;
+  height: 3rem;
+  /* Prevent iOS from adding extra native padding that skews the height */
+  padding-top: 0;
+  padding-bottom: 0;
+  /* Vertically centre the date/time text within the fixed height */
+  line-height: 3rem;
+  /* Ensure text doesn't overflow on narrow screens */
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  input[type="date"],
+  input[type="time"],
+  input[type="datetime-local"] {
+    /* Match md:h-11 (2.75rem / 44px) on desktop */
+    min-height: 2.75rem;
+    height: 2.75rem;
+    line-height: 2.75rem;
+  }
+}
