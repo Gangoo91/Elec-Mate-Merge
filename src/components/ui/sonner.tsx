@@ -1,45 +1,45 @@
-import { useTheme } from 'next-themes';
 import { Toaster as Sonner, toast } from 'sonner';
+import { CheckCircle2, XCircle, AlertTriangle, Info } from 'lucide-react';
 
 type ToasterProps = React.ComponentProps<typeof Sonner>;
 
 const Toaster = ({ ...props }: ToasterProps) => {
-  const { theme = 'system' } = useTheme();
-
   return (
     <Sonner
-      theme={theme as ToasterProps['theme']}
+      theme="dark"
       className="toaster group"
-      position="bottom-center"
+      position="top-center"
       expand={false}
       closeButton={false}
       duration={3500}
-      richColors
+      richColors={false}
+      gap={8}
+      offset={0}
       style={
         {
-          '--offset': 'calc(1.25rem + env(safe-area-inset-bottom, 0px))',
+          '--offset': 'calc(env(safe-area-inset-top, 0px) + 0.75rem)',
           '--width': 'calc(100vw - 2rem)',
-          '--max-width': '400px',
+          '--max-width': '420px',
         } as React.CSSProperties
       }
+      icons={{
+        success: <CheckCircle2 className="w-5 h-5 text-white" />,
+        error: <XCircle className="w-5 h-5 text-white" />,
+        warning: <AlertTriangle className="w-5 h-5 text-white" />,
+        info: <Info className="w-5 h-5 text-white" />,
+      }}
       toastOptions={{
         classNames: {
           toast:
-            'group toast group-[.toaster]:bg-zinc-900 group-[.toaster]:backdrop-blur-2xl group-[.toaster]:text-white group-[.toaster]:border group-[.toaster]:border-white/10 group-[.toaster]:shadow-[0_8px_32px_rgba(0,0,0,0.4)] group-[.toaster]:rounded-2xl group-[.toaster]:px-4 group-[.toaster]:py-3.5',
-          title: 'group-[.toast]:text-white group-[.toast]:font-semibold group-[.toast]:text-sm',
-          description: 'group-[.toast]:text-white/60 group-[.toast]:text-xs group-[.toast]:mt-0.5',
-          actionButton:
-            'group-[.toast]:bg-elec-yellow group-[.toast]:text-black group-[.toast]:font-semibold group-[.toast]:rounded-xl group-[.toast]:h-9 group-[.toast]:px-4 group-[.toast]:text-sm group-[.toast]:touch-manipulation',
-          cancelButton:
-            'group-[.toast]:bg-white/5 group-[.toast]:text-white/70 group-[.toast]:border group-[.toast]:border-white/10 group-[.toast]:rounded-xl group-[.toast]:h-9 group-[.toast]:px-4 group-[.toast]:text-sm group-[.toast]:touch-manipulation',
-          success:
-            'group-[.toaster]:border-elec-yellow/40 group-[.toaster]:bg-zinc-900',
-          error:
-            'group-[.toaster]:border-red-500/40 group-[.toaster]:bg-zinc-900',
-          warning:
-            'group-[.toaster]:border-amber-500/40 group-[.toaster]:bg-zinc-900',
-          info:
-            'group-[.toaster]:border-blue-400/40 group-[.toaster]:bg-zinc-900',
+            'group toast !rounded-2xl !border-0 !shadow-[0_8px_40px_rgba(0,0,0,0.35)] !px-4 !py-3.5 !min-h-[60px] !items-start !gap-3 !w-full',
+          title: '!text-white !font-semibold !text-[14px] !leading-snug',
+          description: '!text-white/80 !text-[12px] !leading-snug !mt-0.5',
+          success: '!bg-emerald-600',
+          error: '!bg-red-600',
+          warning: '!bg-amber-500',
+          info: '!bg-blue-600',
+          default: '!bg-zinc-800 !border !border-white/10',
+          icon: 'self-start mt-0.5',
         },
         style: {
           opacity: 1,
