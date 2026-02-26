@@ -149,6 +149,7 @@ export default function CustomersPage() {
               {searchTerm && (
                 <button
                   onClick={() => setSearchTerm('')}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] hover:bg-white/[0.15] touch-manipulation"
                 >
                   <X className="h-3 w-3 text-white" />
@@ -171,6 +172,7 @@ export default function CustomersPage() {
             <div className="flex items-center h-14 px-4 gap-2">
               <button
                 onClick={() => navigate('/electrician/business')}
+                aria-label="Go back"
                 className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -181,6 +183,7 @@ export default function CustomersPage() {
               </span>
               <button
                 onClick={() => setShowSearch(true)}
+                aria-label="Search customers"
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white/80" />
@@ -190,6 +193,7 @@ export default function CustomersPage() {
                   setEditingCustomer(null);
                   setShowAddDialog(true);
                 }}
+                aria-label="Add customer"
                 className="h-10 w-10 rounded-xl bg-blue-500 flex items-center justify-center active:scale-[0.98] touch-manipulation shadow-lg shadow-blue-500/25"
               >
                 <Plus className="h-5 w-5 text-white" />

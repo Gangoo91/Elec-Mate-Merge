@@ -8,6 +8,7 @@ import {
 } from '@/hooks/useLegacyCertificates';
 import { useCustomers } from '@/hooks/inspection/useCustomers';
 import { LegacyCertificateUpload } from '@/components/LegacyCertificateUpload';
+import { EmptyStateGuide } from '@/components/electrician/shared/EmptyStateGuide';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
@@ -158,6 +159,7 @@ export default function LegacyCertificates() {
             variant="ghost"
             size="icon"
             onClick={() => navigate('/electrician/inspection-testing')}
+            aria-label="Go back"
             className="h-11 w-11 touch-manipulation -ml-2"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -218,27 +220,20 @@ export default function LegacyCertificates() {
             <Loader2 className="h-8 w-8 animate-spin text-elec-yellow" />
           </div>
         ) : filteredCertificates.length === 0 ? (
-          <div className="text-center py-12 space-y-4">
-            <FileText className="h-12 w-12 mx-auto text-muted-foreground" />
-            <div>
-              <p className="text-lg font-medium">
-                {certificates.length === 0
-                  ? 'No legacy certificates yet'
-                  : 'No matching certificates'}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {certificates.length === 0
-                  ? 'Import certificates from your previous software'
-                  : 'Try a different search term'}
-              </p>
+          certificates.length === 0 ? (
+            <EmptyStateGuide
+              type="certificate"
+              onCreateClick={() => setShowUploadDialog(true)}
+            />
+          ) : (
+            <div className="text-center py-12 space-y-4">
+              <FileText className="h-12 w-12 mx-auto text-muted-foreground" />
+              <div>
+                <p className="text-lg font-medium">No matching certificates</p>
+                <p className="text-sm text-muted-foreground">Try a different search term or filter</p>
+              </div>
             </div>
-            {certificates.length === 0 && (
-              <Button variant="accent" onClick={() => setShowUploadDialog(true)} className="gap-2">
-                <Plus className="h-4 w-4" />
-                Import Certificates
-              </Button>
-            )}
-          </div>
+          )
         ) : (
           <div className="space-y-3">
             {filteredCertificates.map((cert) => (
@@ -272,6 +267,7 @@ export default function LegacyCertificates() {
                       size="icon"
                       onClick={() => handleDownload(cert)}
                       disabled={isDownloading === cert.id}
+                      aria-label="Download certificate"
                       className="h-9 w-9"
                     >
                       {isDownloading === cert.id ? (
@@ -284,6 +280,7 @@ export default function LegacyCertificates() {
                       variant="ghost"
                       size="icon"
                       onClick={() => handleEdit(cert)}
+                      aria-label="Edit certificate"
                       className="h-9 w-9"
                     >
                       <Pencil className="h-4 w-4" />
@@ -292,6 +289,7 @@ export default function LegacyCertificates() {
                       variant="ghost"
                       size="icon"
                       onClick={() => setDeleteConfirm(cert)}
+                      aria-label="Delete certificate"
                       className="h-9 w-9 text-destructive hover:text-destructive"
                     >
                       <Trash2 className="h-4 w-4" />

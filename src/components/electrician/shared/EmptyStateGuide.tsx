@@ -11,14 +11,19 @@ import {
   Clock,
   ChevronRight,
   Sparkles,
+  Upload,
+  ClipboardCheck,
+  Search,
+  Share2,
 } from 'lucide-react';
 
 interface EmptyStateGuideProps {
-  type: 'quote' | 'invoice';
+  type: 'quote' | 'invoice' | 'certificate';
   onCreateClick: () => void;
+  createLabel?: string;
 }
 
-export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreateClick }) => {
+export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreateClick, createLabel }) => {
   const steps =
     type === 'quote'
       ? [
@@ -47,7 +52,8 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
             time: '30 sec',
           },
         ]
-      : [
+      : type === 'invoice'
+      ? [
           {
             icon: User,
             title: 'Client Details',
@@ -72,6 +78,32 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
             description: 'Download professional PDF',
             time: '30 sec',
           },
+        ]
+      : [
+          {
+            icon: Upload,
+            title: 'Import Certificates',
+            description: 'Upload PDFs from your previous software or paperwork',
+            time: '1 min',
+          },
+          {
+            icon: ClipboardCheck,
+            title: 'Add Details',
+            description: 'Tag certificate type, date, client and address',
+            time: '1 min',
+          },
+          {
+            icon: Search,
+            title: 'Search & Filter',
+            description: 'Find any certificate instantly by client or number',
+            time: 'Instant',
+          },
+          {
+            icon: Share2,
+            title: 'Share Anytime',
+            description: 'Download or share directly with clients',
+            time: 'Instant',
+          },
         ];
 
   return (
@@ -83,10 +115,18 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
         </div>
         <div className="space-y-2">
           <h2 className="text-xl sm:text-2xl font-bold text-white">
-            Create Your First {type === 'quote' ? 'Quote' : 'Invoice'}
+            {type === 'quote'
+              ? 'Create Your First Quote'
+              : type === 'invoice'
+              ? 'Create Your First Invoice'
+              : 'Import Your Certificates'}
           </h2>
           <p className="text-sm sm:text-base text-white/60 max-w-md mx-auto">
-            Professional {type === 'quote' ? 'quotes' : 'invoices'} in 4 easy steps
+            {type === 'quote'
+              ? 'Professional quotes in 4 easy steps'
+              : type === 'invoice'
+              ? 'Professional invoices in 4 easy steps'
+              : 'Bring your existing certificates into Elec-Mate'}
           </p>
         </div>
 
@@ -146,7 +186,9 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
               <p className="text-xs sm:text-sm text-white/60 mt-0.5">
                 {type === 'quote'
                   ? 'All fields are auto-saved as you type. Return anytime to complete your quote.'
-                  : 'Create invoices from accepted quotes or start fresh with new client details.'}
+                  : type === 'invoice'
+                  ? 'Create invoices from accepted quotes or start fresh with new client details.'
+                  : 'Supports EICR, EIC, Minor Works, and more. Import once, access forever.'}
               </p>
             </div>
           </div>
@@ -161,7 +203,7 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
           className="w-full h-14 sm:h-12 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-elec-yellow/20"
         >
           <Plus className="mr-2 h-5 w-5" />
-          Create {type === 'quote' ? 'Quote' : 'Invoice'} Now
+          {createLabel ?? (type === 'quote' ? 'Create Quote Now' : type === 'invoice' ? 'Create Invoice Now' : 'Import Certificates')}
           <ChevronRight className="ml-2 h-5 w-5" />
         </Button>
       </div>

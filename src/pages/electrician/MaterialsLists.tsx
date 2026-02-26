@@ -275,6 +275,7 @@ export default function MaterialsLists() {
                 <button
                   onClick={() => updateItemQuantity(activeList.id, item.id, item.quantity - 1)}
                   disabled={item.quantity <= 1}
+                  aria-label="Decrease quantity"
                   className="h-8 w-8 rounded-full bg-card border border-border flex items-center justify-center touch-manipulation disabled:opacity-30"
                 >
                   <Minus className="h-3 w-3" />
@@ -282,6 +283,7 @@ export default function MaterialsLists() {
                 <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
                 <button
                   onClick={() => updateItemQuantity(activeList.id, item.id, item.quantity + 1)}
+                  aria-label="Increase quantity"
                   className="h-8 w-8 rounded-full bg-card border border-border flex items-center justify-center touch-manipulation"
                 >
                   <Plus className="h-3 w-3" />
@@ -302,6 +304,7 @@ export default function MaterialsLists() {
                 )}
                 <button
                   onClick={() => removeItem(activeList.id, item.id)}
+                  aria-label="Remove item"
                   className="h-8 w-8 rounded-full bg-card border border-border flex items-center justify-center touch-manipulation hover:border-red-500/50 text-red-400"
                 >
                   <Trash2 className="h-3 w-3" />

@@ -472,6 +472,7 @@ const InvoicesPage = () => {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 h-8 w-8 flex items-center justify-center"
                 >
                   <X className="h-4 w-4 text-muted-foreground" />
@@ -494,6 +495,7 @@ const InvoicesPage = () => {
             <div className="flex items-center h-14 px-4 gap-2">
               <button
                 onClick={() => navigate('/electrician/business')}
+                aria-label="Go back"
                 className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -501,12 +503,14 @@ const InvoicesPage = () => {
               <h1 className="flex-1 text-xl font-bold">Invoices</h1>
               <button
                 onClick={() => setIsSearchOpen(true)}
+                aria-label="Search invoices"
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white/80" />
               </button>
               <button
                 onClick={() => navigate('/electrician/invoice-builder/create')}
+                aria-label="Create invoice"
                 className="h-10 w-10 flex items-center justify-center rounded-xl bg-elec-yellow active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Plus className="h-5 w-5 text-black" />
@@ -516,6 +520,7 @@ const InvoicesPage = () => {
               <div className="hidden lg:flex items-center gap-1 bg-white/[0.06] rounded-lg p-1 ml-2">
                 <button
                   onClick={() => setViewMode('card')}
+                  aria-label="Card view"
                   className={cn(
                     'h-9 w-9 flex items-center justify-center rounded-md transition-all',
                     viewMode === 'card'
@@ -527,6 +532,7 @@ const InvoicesPage = () => {
                 </button>
                 <button
                   onClick={() => setViewMode('table')}
+                  aria-label="Table view"
                   className={cn(
                     'h-9 w-9 flex items-center justify-center rounded-md transition-all',
                     viewMode === 'table'
@@ -552,6 +558,7 @@ const InvoicesPage = () => {
               <button
                 onClick={handleRefresh}
                 disabled={isRefreshing}
+                aria-label="Refresh invoices"
                 className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
               >
                 <RefreshCw
