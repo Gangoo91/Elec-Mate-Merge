@@ -10,7 +10,7 @@ import { QuickNoteDialog } from '@/components/customers/QuickNoteDialog';
 import { StartCertificateDialog } from '@/components/customers/StartCertificateDialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Search, Plus, Upload, Download, Users, ArrowLeft, Loader2, X } from 'lucide-react';
+import { Search, Plus, Upload, Download, Users, ArrowLeft, Loader2, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -56,6 +56,14 @@ export default function CustomersPage() {
   const {
     customers,
     isLoading,
+    totalCount,
+    currentPage,
+    totalPages,
+    hasNextPage,
+    hasPrevPage,
+    nextPage,
+    prevPage,
+    goToPage,
     saveCustomer,
     updateCustomer,
     deleteCustomer,
@@ -168,7 +176,7 @@ export default function CustomersPage() {
               </button>
               <h1 className="flex-1 text-xl font-bold">Customers</h1>
               <span className="text-xs text-muted-foreground bg-white/[0.06] px-2.5 py-1 rounded-full font-medium">
-                {customers.length}
+                {totalCount || customers.length}
               </span>
               <button
                 onClick={() => setShowSearch(true)}
@@ -302,6 +310,34 @@ export default function CustomersPage() {
                 </motion.div>
               ))}
             </AnimatePresence>
+
+            {/* Pagination */}
+            {totalPages > 1 && !searchTerm && (
+              <div className="flex items-center justify-between pt-4 pb-2">
+                <p className="text-xs text-muted-foreground">
+                  Showing {((currentPage - 1) * 50) + 1}–{Math.min(currentPage * 50, totalCount)} of {totalCount} customers
+                </p>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={prevPage}
+                    disabled={!hasPrevPage}
+                    className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 transition-colors touch-manipulation"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
+                  <span className="text-sm font-medium text-muted-foreground min-w-[60px] text-center">
+                    {currentPage} / {totalPages}
+                  </span>
+                  <button
+                    onClick={nextPage}
+                    disabled={!hasNextPage}
+                    className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/10 flex items-center justify-center disabled:opacity-30 disabled:cursor-not-allowed hover:bg-white/10 transition-colors touch-manipulation"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
       </main>
