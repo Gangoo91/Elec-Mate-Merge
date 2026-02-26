@@ -7,6 +7,7 @@ import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { useAppReview } from '@/hooks/useAppReview';
+import { useHaptic } from '@/hooks/useHaptic';
 
 interface QuoteActionsStepProps {
   quote: Quote;
@@ -17,6 +18,7 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
   const [loading, setLoading] = useState(false);
   const [publicLink, setPublicLink] = useState<string>('');
   const { recordPositiveAction } = useAppReview();
+  const haptic = useHaptic();
 
   const createPublicLink = async () => {
     setLoading(true);
@@ -79,6 +81,7 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
 
       if (error) throw error;
 
+      haptic.success();
       toast({
         title: 'Quote sent via DocuSign',
         description: 'Your client will receive an email to review and sign the quote',

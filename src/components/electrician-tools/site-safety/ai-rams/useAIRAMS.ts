@@ -4,6 +4,7 @@ import { combineAgentOutputsToRAMS } from '@/utils/rams-ai-transformer';
 import type { RAMSData } from '@/types/rams';
 import type { MethodStatementData } from '@/types/method-statement';
 import { useToast } from '@/hooks/use-toast';
+import { useAppReview } from '@/hooks/useAppReview';
 import { animateValue } from '@/utils/animation-helpers';
 
 interface SubStep {
@@ -85,6 +86,7 @@ export function useAIRAMS(): UseAIRAMSReturn {
   const [rawHSResponse, setRawHSResponse] = useState<any | null>(null);
   const [rawInstallerResponse, setRawInstallerResponse] = useState<any | null>(null);
   const { toast } = useToast();
+  const { recordPositiveAction } = useAppReview();
 
   const abortControllerRef = useRef<AbortController | null>(null);
   const progressIntervalsRef = useRef<NodeJS.Timeout[]>([]);
@@ -342,6 +344,8 @@ export function useAIRAMS(): UseAIRAMSReturn {
             title: 'Saved successfully',
             description: 'RAMS document saved to database',
           });
+          // Prompt for App Store review after a genuine win
+          recordPositiveAction();
         }
       } catch (err) {
         console.error('Save error:', err);

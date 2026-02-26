@@ -6,6 +6,7 @@ import { useNotifications } from '@/components/notifications/NotificationProvide
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { Link, useNavigate } from 'react-router-dom';
+import { useHaptic } from '@/hooks/useHaptic';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -58,6 +59,7 @@ interface CookiePreferences {
 const PrivacyTab = () => {
   const { addNotification } = useNotifications();
   const navigate = useNavigate();
+  const haptic = useHaptic();
   const [isExporting, setIsExporting] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [deleteConfirmText, setDeleteConfirmText] = useState('');
@@ -153,6 +155,7 @@ const PrivacyTab = () => {
 
   const handleConfirmDelete = async () => {
     if (deleteConfirmText !== 'DELETE') return;
+    haptic.heavy(); // deliberate, weighty feedback for a destructive action
     setIsDeleting(true);
     try {
       const { data: { session } } = await supabase.auth.getSession();
@@ -169,6 +172,7 @@ const PrivacyTab = () => {
       navigate('/', { replace: true });
     } catch (err) {
       console.error('Account deletion error:', err);
+      haptic.error();
       addNotification({
         title: 'Deletion Failed',
         message: 'Could not delete your account. Please contact support@elec-mate.com',
