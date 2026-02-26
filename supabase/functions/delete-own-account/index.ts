@@ -86,6 +86,33 @@ Deno.serve(async (req) => {
       { auth: { autoRefreshToken: false, persistSession: false } }
     );
 
+    // Explicitly delete from tables that may not have ON DELETE CASCADE
+    // This ensures deletion succeeds even if the cascade migration hasn't been applied
+    const tablesToClean = [
+      'portfolio_items',
+      'evidence_uploads',
+      'assessment_tracking',
+      'compliance_tracking',
+      'cost_engineer_jobs',
+      'user_safety_documents',
+      'safety_achievements',
+      'safe_isolation_records',
+      'pre_use_checks',
+      'completion_signoffs',
+      'design_exports',
+      'site_visits',
+    ];
+
+    for (const table of tablesToClean) {
+      const { error: cleanError } = await supabaseAdmin
+        .from(table)
+        .delete()
+        .eq('user_id', user.id);
+      if (cleanError) {
+        console.warn(`Non-fatal: could not clean ${table} for user ${user.id}:`, cleanError.message);
+      }
+    }
+
     // Delete the auth user — cascades to profile and all user data via FK constraints
     const { error: deleteError } = await supabaseAdmin.auth.admin.deleteUser(user.id);
 
