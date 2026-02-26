@@ -30,7 +30,7 @@ const STANDARD_SIZES = [
 
 const K_FACTORS: Record<string, Record<number, number>> = {
   copper: { 60: 103, 70: 115, 90: 143 },
-  aluminium: { 60: 65, 70: 76, 90: 94 },
+  aluminium: { 60: 65, 70: 76, 90: 87 }, // BS 7671 Table 54.3
   steel: { 60: 46, 70: 50, 90: 50 },
 };
 
