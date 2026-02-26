@@ -493,10 +493,11 @@ const LandingPage = () => {
                 '8 digital certificate types',
                 '5 AI specialists (BS 7671)',
                 'Voice quote → invoice → paid',
-                '50+ electrical calculators',
+                'Pre & post site visit reports',
+                'Photo documentation per job',
+                'Expenses & materials tracking',
                 'Elec-ID digital professional card',
                 'AI RAMS & method statements',
-                'Xero & QuickBooks sync',
               ]}
               color="yellow"
               highlight
@@ -912,10 +913,12 @@ const LandingPage = () => {
                 '5 AI specialists',
                 'Voice quotes & invoices',
                 '8 certificate types',
+                'Pre & post site visit reports',
+                'Photo documentation per job',
+                'Expenses & materials tracking',
                 'Elec-ID digital professional card',
                 '50+ electrical calculators',
-                '14 business calculators',
-                'Stripe payments',
+                'Stripe payments & Xero sync',
               ]}
               popular
               color="yellow"
