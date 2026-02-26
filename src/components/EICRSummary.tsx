@@ -57,6 +57,7 @@ import { EmailCertificateDialog } from '@/components/certificate-completion/Emai
 import { useCustomers } from '@/hooks/useCustomers';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
+import { useAppReview } from '@/hooks/useAppReview';
 import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
@@ -92,6 +93,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const haptics = useHaptics();
+  const { recordPositiveAction } = useAppReview();
   const [isJsonOpen, setIsJsonOpen] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
@@ -487,6 +489,9 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
           ? 'Your EICR certificate has been saved permanently.'
           : 'Your EICR certificate is ready for download.',
       });
+
+      // Prompt for App Store review after a positive win
+      recordPositiveAction();
 
       // Check if customer already exists in pool
       const existingCustomer = customers.find(

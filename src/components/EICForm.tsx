@@ -5,6 +5,7 @@ import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useCloudSync } from '@/hooks/useCloudSync';
 import { useReportId } from '@/hooks/useReportId';
 import { useToast } from '@/hooks/use-toast';
+import { useAppReview } from '@/hooks/useAppReview';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -43,6 +44,7 @@ const EICForm = ({
   const navigate = useNavigate();
   const location = useLocation();
   const queryClient = useQueryClient();
+  const { recordPositiveAction } = useAppReview();
   const lastSaveErrorToastRef = useRef<number>(0);
 
   // Capture customer data from navigation state
@@ -1038,6 +1040,9 @@ const EICForm = ({
         title: 'EIC Saved',
         description: 'Your certificate has been saved successfully.',
       });
+
+      // Prompt for App Store review after a positive win
+      recordPositiveAction();
     }
 
     // Invalidate queries to refresh dashboard

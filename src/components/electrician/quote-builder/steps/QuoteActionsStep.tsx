@@ -6,6 +6,7 @@ import { Copy, Mail, FileSignature, CheckCircle, Clock, AlertCircle } from 'luci
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
+import { useAppReview } from '@/hooks/useAppReview';
 
 interface QuoteActionsStepProps {
   quote: Quote;
@@ -15,6 +16,7 @@ interface QuoteActionsStepProps {
 const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
   const [loading, setLoading] = useState(false);
   const [publicLink, setPublicLink] = useState<string>('');
+  const { recordPositiveAction } = useAppReview();
 
   const createPublicLink = async () => {
     setLoading(true);
@@ -86,6 +88,9 @@ const QuoteActionsStep = ({ quote, onQuoteUpdate }: QuoteActionsStepProps) => {
       if (onQuoteUpdate) {
         onQuoteUpdate({ ...quote, status: 'sent' });
       }
+
+      // Prompt for App Store review after a positive win
+      recordPositiveAction();
     } catch (error) {
       console.error('Error sending via DocuSign:', error);
       toast({
