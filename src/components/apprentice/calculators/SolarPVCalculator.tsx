@@ -71,11 +71,13 @@ const locationOptions = UK_LOCATIONS.map((loc) => ({
   label: `${loc.name} (${loc.irradiance} kWh/m²/year)`,
 }));
 
+// Performance Ratio (PR) options — typical UK range 0.70–0.85
+// PR accounts for inverter losses, cable losses, temperature derating, soiling
 const efficiencyOptions = [
-  { value: '15', label: '15% (Budget panels - £1,000/kW)' },
-  { value: '18', label: '18% (Standard panels - £1,400/kW)' },
-  { value: '20', label: '20% (Premium panels - £1,800/kW)' },
-  { value: '22', label: '22% (High-efficiency - £2,600/kW)' },
+  { value: '70', label: '70% (Poor — shading, old system)' },
+  { value: '75', label: '75% (Below average)' },
+  { value: '80', label: '80% (Typical UK system)' },
+  { value: '85', label: '85% (Excellent — new, unshaded)' },
 ];
 
 const orientationOptions = [
@@ -97,12 +99,12 @@ const selfConsumptionOptions = [
 const SolarPVCalculator = () => {
   const [systemSize, setSystemSize] = useState<string>('');
   const [location, setLocation] = useState<string>('');
-  const [panelEfficiency, setPanelEfficiency] = useState<string>('20');
+  const [panelEfficiency, setPanelEfficiency] = useState<string>('80'); // System Performance Ratio %
   const [roofOrientation, setRoofOrientation] = useState<string>('south');
   const [roofTilt, setRoofTilt] = useState<string>('35');
   const [electricityRate, setElectricityRate] = useState<string>('0.25');
   const [selfConsumptionRate, setSelfConsumptionRate] = useState<string>('35');
-  const [exportRate, setExportRate] = useState<string>('0.05');
+  const [exportRate, setExportRate] = useState<string>('0.10'); // SEG typical rate 2025
   const [showWorkings, setShowWorkings] = useState(false);
   const [showRegs, setShowRegs] = useState(false);
   const [showAnalysis, setShowAnalysis] = useState(false);
@@ -214,9 +216,13 @@ const SolarPVCalculator = () => {
       const tiltDifference = Math.abs(tilt - optimalTilt);
       const tiltFactor = Math.max(0.7, 1 - tiltDifference / 100);
 
-      const systemEfficiency = efficiency * 0.85;
+      // Performance Ratio (PR) — accounts for inverter losses, cable losses,
+      // temperature derating, soiling etc. Typical UK value: 0.75–0.85.
+      // The kWp rating already incorporates panel efficiency, so we do NOT
+      // multiply by panel efficiency here — doing so would double-count it.
+      const systemPR = efficiency; // user-supplied PR (default 0.80)
       const annualGeneration =
-        size * irradiance * orientationFactor * tiltFactor * systemEfficiency;
+        size * irradiance * orientationFactor * tiltFactor * systemPR;
       const dailyGeneration = annualGeneration / 365;
 
       const costEstimate = calculateCostEstimate(size, efficiency);
@@ -246,7 +252,7 @@ const SolarPVCalculator = () => {
         annualSavings: Math.round(annualSavings),
         paybackPeriod: Math.round(paybackPeriod * 10) / 10,
         co2Savings: Math.round(co2Savings),
-        systemEfficiency: Math.round(systemEfficiency * 100),
+        systemEfficiency: Math.round(systemPR * 100),
         orientationFactor: Math.round(orientationFactor * 100),
         tiltFactor: Math.round(tiltFactor * 100),
         dnoConnectionType,
@@ -300,7 +306,7 @@ const SolarPVCalculator = () => {
               hint="Typical UK homes: 3-6kW"
             />
             <CalculatorSelect
-              label="Panel Efficiency"
+              label="System Performance Ratio"
               value={panelEfficiency}
               onChange={setPanelEfficiency}
               options={efficiencyOptions}
@@ -681,7 +687,7 @@ const SolarPVCalculator = () => {
                       Tilt: {roofTilt}° vs 35° optimal = {result.tiltFactor}%
                     </p>
                     <p>
-                      Panel: {panelEfficiency}% × 0.85 ={' '}
+                      Performance Ratio (PR):{' '}
                       <span className="text-purple-200 font-bold">{result.systemEfficiency}%</span>
                     </p>
                   </div>

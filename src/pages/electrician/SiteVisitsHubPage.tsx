@@ -129,16 +129,18 @@ const SiteVisitsHubPage = () => {
         <div className="flex items-center h-14 px-4 gap-2">
           <button
             onClick={() => navigate('/electrician/business')}
+            aria-label="Go back"
             className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
           >
             <ArrowLeft className="h-5 w-5" />
           </button>
           <div className="flex-1">
             <h1 className="text-xl font-bold text-white">Site Visits</h1>
-            <p className="text-[11px] text-white">Manage your site visits</p>
+            <p className="text-[11px] text-white/60">Manage your site visits</p>
           </div>
           <button
             onClick={() => navigate('/electrician/site-visit/new')}
+            aria-label="New site visit"
             className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
           >
             <Plus className="h-5 w-5 text-black" />

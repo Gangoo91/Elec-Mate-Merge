@@ -203,6 +203,7 @@ const ExpensesPage = () => {
               {searchQuery && (
                 <button
                   onClick={() => handleSearch('')}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] hover:bg-white/[0.15] touch-manipulation"
                 >
                   <X className="h-3 w-3 text-white" />
@@ -224,6 +225,7 @@ const ExpensesPage = () => {
             <div className="flex items-center h-14 px-4 gap-2">
               <button
                 onClick={() => navigate('/electrician/business')}
+                aria-label="Go back"
                 className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -231,12 +233,14 @@ const ExpensesPage = () => {
               <h1 className="flex-1 text-xl font-bold">Expenses</h1>
               <button
                 onClick={() => setShowSearch(true)}
+                aria-label="Search expenses"
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white/80" />
               </button>
               <button
                 onClick={() => setShowAddSheet(true)}
+                aria-label="Add expense"
                 className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
               >
                 <Plus className="h-5 w-5 text-black" />
@@ -254,6 +258,7 @@ const ExpensesPage = () => {
               <button
                 onClick={handleRefresh}
                 disabled={isRefreshing}
+                aria-label="Refresh expenses"
                 className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
               >
                 <RefreshCw
