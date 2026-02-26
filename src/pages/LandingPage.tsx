@@ -16,6 +16,7 @@ import {
   Settings,
   Shield,
   Clock,
+  Eye,
   Mic,
   CreditCard,
   Send,
@@ -55,7 +56,7 @@ const LandingPage = () => {
     {
       question: 'What certificates can I create?',
       answer:
-        'EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, Solar PV, EV Charging — all with digital signatures and PDF export.',
+        'EICR, EIC, Minor Works, Fire Alarm, Emergency Lighting, Solar PV, EV Charging, and PAT Testing — all 8 with digital signatures and PDF export.',
     },
     {
       question: 'Do you sync with my accounting software?',
@@ -103,7 +104,7 @@ const LandingPage = () => {
         />
         <meta
           name="twitter:description"
-          content="Training, AI tools, certificates & business management for UK electricians. 5 AI specialists trained on BS 7671. Start free today."
+          content="Training, AI tools, certificates & business management for UK electricians. 7 AI specialists trained on BS 7671. Start free today."
         />
         <meta name="twitter:image" content="https://elec-mate.com/og-image.jpg" />
 
@@ -133,7 +134,7 @@ const LandingPage = () => {
             },
             featureList: [
               'Level 2 & 3 Electrical Training',
-              'BS 7671 AI Assistants',
+              '7 BS 7671 AI Specialists',
               '8 Certificate Types',
               'Voice Quotes & Invoices',
               'Stripe Payment Integration',
@@ -423,7 +424,7 @@ const LandingPage = () => {
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400" />
                 </span>
                 <p className="text-white font-semibold text-sm">
-                  Approaching <span className="text-emerald-400">500 UK electricians</span>
+                  <span className="text-emerald-400">550+</span> UK electricians and growing
                 </p>
               </div>
             </motion.div>
@@ -444,11 +445,11 @@ const LandingPage = () => {
               <div className="text-xs sm:text-sm text-white/60">Calculators</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">22</div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">38</div>
               <div className="text-xs sm:text-sm text-white/60">Courses</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">5</div>
+              <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">7</div>
               <div className="text-xs sm:text-sm text-white/60">AI Specialists</div>
             </div>
           </div>
@@ -490,9 +491,10 @@ const LandingPage = () => {
               tagline="Your complete site companion"
               features={[
                 '8 digital certificate types',
-                '5 AI specialists (BS 7671)',
+                '7 AI specialists (BS 7671)',
                 'Voice quote → invoice → paid',
                 '50+ electrical calculators',
+                'Elec-ID digital professional card',
                 'AI RAMS & method statements',
                 'Xero & QuickBooks sync',
               ]}
@@ -663,7 +665,7 @@ const LandingPage = () => {
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Stop Googling regs</h2>
             <p className="text-white/60 max-w-xl mx-auto">
-              5 AI specialists trained on{' '}
+              7 AI specialists trained on{' '}
               <span className="text-yellow-400 font-medium">BS 7671:2018 + A3:2024</span> — ask
               anything
             </p>
@@ -711,15 +713,15 @@ const LandingPage = () => {
               />
             </div>
 
-            {/* Bottom row - 2 cards centered */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
+            {/* Bottom row - 4 cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <EnhancedAICard
                 icon={<Settings />}
                 name="Maintenance Agent"
                 tagline="Keep installations compliant"
                 features={[
                   'Maintenance schedules & intervals',
-                  'Inspection checklists by installation type',
+                  'Inspection checklists by type',
                   'Compliance reminders & tracking',
                   'Condition reporting guidance',
                 ]}
@@ -737,13 +739,37 @@ const LandingPage = () => {
                 ]}
                 color="red"
               />
+              <EnhancedAICard
+                icon={<Clock />}
+                name="Commissioning Engineer"
+                tagline="Hand over jobs with confidence"
+                features={[
+                  'Commissioning sequences by circuit type',
+                  'Functional test schedules',
+                  'Handover documentation packs',
+                  'BS 7671 sign-off checklists',
+                ]}
+                color="blue"
+              />
+              <EnhancedAICard
+                icon={<Eye />}
+                name="Inspector"
+                tagline="Faster, accurate EICRs"
+                features={[
+                  'Visual inspection sequences',
+                  'C1/C2/C3/FI observation guidance',
+                  'Schedule of circuits assistance',
+                  'Condition report writing support',
+                ]}
+                color="yellow"
+              />
             </div>
           </div>
 
           <div className="mt-8 text-center">
             <p className="text-white/50 text-sm">
-              <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />+ 3 more specialists
-              coming soon: Commissioning Engineer, Inspector & Training Coach
+              <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />+ 1 more specialist
+              coming soon: Training Coach
             </p>
           </div>
         </div>
@@ -884,9 +910,10 @@ const LandingPage = () => {
               description="Your complete site companion"
               features={[
                 'Everything in Apprentice',
-                '5 AI specialists',
+                '7 AI specialists',
                 'Voice quotes & invoices',
                 '8 certificate types',
+                'Elec-ID digital professional card',
                 '50+ electrical calculators',
                 '14 business calculators',
                 'Stripe payments',
@@ -1025,7 +1052,7 @@ const LandingPage = () => {
             <Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to work smarter?</h2>
             <p className="text-white/70 mb-6 max-w-md mx-auto">
-              Join 430+ UK electricians saving hours every week.
+              Join 550+ UK electricians saving hours every week.
             </p>
             <Link to="/auth/signup">
               <Button className="h-14 px-10 text-base font-semibold bg-yellow-500 hover:bg-yellow-400 active:scale-[0.97] text-black touch-manipulation transition-transform">
@@ -1083,7 +1110,7 @@ const LandingPage = () => {
                   Elec-<span className="text-yellow-400">Mate</span>
                 </span>
               </div>
-              <p className="text-sm text-white leading-relaxed">
+              <p className="text-sm text-white/60 leading-relaxed">
                 The complete platform for UK electricians. Training, AI tools, certificates, and
                 business management.
               </p>
