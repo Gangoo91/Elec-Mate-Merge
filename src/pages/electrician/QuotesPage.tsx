@@ -177,6 +177,7 @@ const QuotesPage = () => {
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery('')}
+                  aria-label="Clear search"
                   className="absolute right-3 top-1/2 -translate-y-1/2 h-5 w-5 flex items-center justify-center rounded-full bg-white/[0.1] hover:bg-white/[0.15] touch-manipulation"
                 >
                   <X className="h-3 w-3 text-white" />
@@ -199,6 +200,7 @@ const QuotesPage = () => {
             <div className="flex items-center h-14 px-4 gap-2">
               <button
                 onClick={() => navigate('/electrician/business')}
+                aria-label="Go back"
                 className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <ArrowLeft className="h-5 w-5" />
@@ -209,6 +211,7 @@ const QuotesPage = () => {
               {/* Right side actions */}
               <button
                 onClick={() => setShowSearch(true)}
+                aria-label="Search quotes"
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
                 <Search className="h-5 w-5 text-white/80" />
@@ -216,6 +219,7 @@ const QuotesPage = () => {
 
               <button
                 onClick={() => navigate('/electrician/quote-builder/create')}
+                aria-label="Create quote"
                 className="h-10 w-10 rounded-xl bg-elec-yellow flex items-center justify-center active:scale-[0.98] touch-manipulation"
               >
                 <Plus className="h-5 w-5 text-black" />
@@ -237,6 +241,7 @@ const QuotesPage = () => {
               <button
                 onClick={handleRefresh}
                 disabled={isRefreshing}
+                aria-label="Refresh quotes"
                 className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
               >
                 <RefreshCw

@@ -161,7 +161,7 @@ const CircuitCardInner = ({
         status.level === 'error' && 'border-red-500/30 bg-red-500/5',
         className
       )}
-      style={{ contain: 'layout style paint' }}
+      style={{ contain: 'layout style' }}
       onClick={handleEdit}
     >
       {/* Header Section */}
