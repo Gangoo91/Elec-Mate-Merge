@@ -652,12 +652,16 @@ const LandingPage = () => {
             {/* Nathan */}
             <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-11 h-11 rounded-xl bg-yellow-500/20 border border-yellow-500/30 flex items-center justify-center flex-shrink-0">
-                  <span className="text-yellow-400 font-bold text-sm">NP</span>
+                <div className="w-11 h-11 rounded-xl bg-zinc-700 overflow-hidden flex-shrink-0">
+                  <img
+                    src="/images/testimonials/np-electrical.png"
+                    alt="NP Electrical Services"
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Nathan Perry</p>
-                  <p className="text-yellow-400/70 text-xs">NP Electrical Ltd</p>
+                  <p className="text-yellow-400/70 text-xs">NP Electrical Services</p>
                 </div>
               </div>
               <blockquote className="text-white/70 text-sm leading-relaxed">
