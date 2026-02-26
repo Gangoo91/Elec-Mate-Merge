@@ -345,7 +345,133 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
     });
   };
 
+  // Text-only fault diagnosis — routes to visual-fault-diagnosis-rag when no image is provided
+  const handleTextOnlyFaultDiagnosis = async (description: string) => {
+    setIsAnalyzing(true);
+    setAnalysisResult(null);
+    setAnalysisProgress(10);
+    abortControllerRef.current = new AbortController();
+
+    progressIntervalRef.current = setInterval(() => {
+      setAnalysisProgress((prev) => {
+        if (prev >= 70) {
+          if (progressIntervalRef.current) {
+            clearInterval(progressIntervalRef.current);
+            progressIntervalRef.current = null;
+          }
+          return prev;
+        }
+        return prev + 8;
+      });
+    }, 500);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('visual-fault-diagnosis-rag', {
+        body: {
+          fault_description: description,
+          location_context: selectedTags.join(', ') || '',
+          visible_indicators: selectedTags,
+        },
+      });
+
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+
+      if (error) throw new Error(error.message);
+
+      const faultCode = (data.fault_code as string) || 'FI';
+      const isPass = faultCode === 'PASS';
+
+      // Map RAG text-only response to AnalysisResult shape for display
+      const result: AnalysisResult = {
+        findings: isPass
+          ? []
+          : [
+              {
+                description: data.reasoning || 'Fault identified based on your description.',
+                eicr_code: faultCode as 'C1' | 'C2' | 'C3' | 'FI',
+                confidence: data.confidence || 0.8,
+                bs7671_clauses: (data.regulation_references || []).map((r: any) => r.number),
+                fix_guidance: data.gn3_guidance || '',
+              },
+            ],
+        recommendations: isPass
+          ? []
+          : [
+              {
+                action: data.gn3_guidance || 'Remedial action required — see reasoning above.',
+                priority:
+                  faultCode === 'C1'
+                    ? 'immediate'
+                    : faultCode === 'C2'
+                      ? 'urgent'
+                      : 'recommended',
+                bs7671_reference: data.regulation_references?.[0]?.number || undefined,
+                eicr_code: (faultCode === 'FI' ? 'C3' : faultCode) as 'C1' | 'C2' | 'C3',
+              },
+            ],
+        compliance_summary: {
+          overall_assessment:
+            faultCode === 'C1' || faultCode === 'C2' ? 'unsatisfactory' : 'satisfactory',
+          c1_count: faultCode === 'C1' ? 1 : 0,
+          c2_count: faultCode === 'C2' ? 1 : 0,
+          c3_count: faultCode === 'C3' ? 1 : 0,
+          fi_count: faultCode === 'FI' ? 1 : 0,
+          safety_rating: isPass ? 100 : faultCode === 'C1' ? 20 : faultCode === 'C2' ? 50 : 75,
+        },
+        summary: isPass
+          ? data.user_context_addressed ||
+            'No immediate concerns identified based on your description. Installation appears compliant.'
+          : data.reasoning || '',
+        rag_verified: true,
+        verification_note:
+          'Text-based diagnostic — verified against BS 7671:2018+A3:2024 and GN3. Add a photo for visual confirmation.',
+      };
+
+      setAnalysisResult(result);
+      setAnalysisProgress(100);
+      setAnalysisTimestamp(new Date().toISOString());
+
+      toast({
+        title: 'Diagnosis complete',
+        description: isPass
+          ? 'No immediate concerns from your description.'
+          : `${faultCode} classification — see full diagnosis below.`,
+        duration: 3000,
+      });
+    } catch (err: any) {
+      if (progressIntervalRef.current) {
+        clearInterval(progressIntervalRef.current);
+        progressIntervalRef.current = null;
+      }
+      toast({
+        title: 'Diagnosis failed',
+        description: err.message || 'Unable to process fault description. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
+
   const handleAnalysis = async () => {
+    // Text-only path for fault diagnosis — no image required
+    if (images.length === 0 && selectedMode === 'fault_diagnosis') {
+      const description = [selectedTags.join(', '), additionalNotes].filter(Boolean).join('. ');
+      if (!description.trim()) {
+        toast({
+          title: 'Describe the fault first',
+          description: 'Add a photo, or use the tags and notes below to describe the fault.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      await handleTextOnlyFaultDiagnosis(description);
+      return;
+    }
+
     if (images.length === 0) {
       toast({
         title: 'No images selected',
@@ -1057,7 +1183,7 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
         return 'Upload installation photos';
       case 'fault_diagnosis':
       default:
-        return 'Upload photos of the defect';
+        return 'Upload photos of the defect (optional — enhances diagnosis)';
     }
   };
 
@@ -1216,14 +1342,24 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
               </div>
 
               {/* Additional Notes Input - Always Visible */}
-              <div className="pt-1">
+              <div className="pt-1 space-y-1.5">
                 <input
                   type="text"
-                  placeholder="Additional notes (optional)..."
+                  placeholder={
+                    selectedMode === 'fault_diagnosis'
+                      ? 'Describe the fault, symptoms, or what you have tested...'
+                      : 'Additional notes (optional)...'
+                  }
                   value={additionalNotes}
                   onChange={(e) => setAdditionalNotes(e.target.value)}
                   className="flex h-11 w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-sm placeholder:text-foreground/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 transition-all"
                 />
+                {selectedMode === 'fault_diagnosis' && images.length === 0 && (
+                  <p className="text-xs text-foreground/50 px-1">
+                    📸 Add a photo above for visual analysis, or describe the fault here to get a
+                    text-based diagnosis without one.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -1295,10 +1431,15 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
       ) : null}
 
       {/* Analyse Button - Fixed at bottom on mobile */}
-      {images.length > 0 && !isAnalyzing && !analysisResult && (
+      {/* Show for fault_diagnosis even without image if there's a description */}
+      {(images.length > 0 ||
+        (selectedMode === 'fault_diagnosis' &&
+          (selectedTags.length > 0 || additionalNotes.trim().length > 0))) &&
+        !isAnalyzing &&
+        !analysisResult && (
         <div className="fixed bottom-0 left-0 right-0 p-3 bg-elec-grey border-t border-border sm:relative sm:border-0 sm:bg-transparent sm:p-0 z-40 space-y-2">
-          {/* Quick/Full Toggle */}
-          <div className="flex items-center justify-center gap-2 bg-muted/50 rounded-lg p-1">
+          {/* Quick/Full Toggle — hidden in text-only fault diagnosis mode */}
+          <div className={`flex items-center justify-center gap-2 bg-muted/50 rounded-lg p-1 ${images.length === 0 && selectedMode === 'fault_diagnosis' ? 'hidden' : ''}`}>
             <button
               onClick={() => setFastMode(true)}
               className={`flex-1 px-3 py-1.5 rounded text-xs sm:text-sm font-medium transition-all ${
@@ -1327,7 +1468,9 @@ const VisualAnalysisRedesigned = ({ initialMode }: VisualAnalysisRedesignedProps
             className="w-full h-12 sm:h-14 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold shadow-lg"
           >
             <Sparkles className="h-5 w-5 mr-2" />
-            {fastMode ? 'Quick' : 'Full'} Analysis
+            {images.length === 0 && selectedMode === 'fault_diagnosis'
+              ? 'Diagnose from Description'
+              : `${fastMode ? 'Quick' : 'Full'} Analysis`}
           </Button>
         </div>
       )}
