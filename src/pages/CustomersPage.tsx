@@ -260,30 +260,51 @@ export default function CustomersPage() {
             transition={{ type: 'spring', stiffness: 300, damping: 24 }}
             className="text-center py-12"
           >
-            <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 max-w-sm mx-auto">
-              <motion.div
-                className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-white/[0.05] to-white/[0.02] border border-white/10 flex items-center justify-center"
-                animate={{ scale: [1, 1.05, 1], opacity: [0.7, 1, 0.7] }}
-                transition={{ duration: 3, repeat: Infinity }}
-              >
-                <Users className="h-8 w-8 text-white/40" />
-              </motion.div>
-              <p className="text-base font-medium mb-1">
-                {searchTerm ? 'No customers found' : 'No customers yet'}
-              </p>
-              <p className="text-sm text-muted-foreground mb-4">
-                {searchTerm
-                  ? 'Try a different search term'
-                  : 'Add your first customer to get started'}
-              </p>
-              {!searchTerm && (
-                <Button
-                  onClick={() => setShowAddDialog(true)}
-                  className="bg-blue-500 hover:bg-blue-600 border-0 shadow-lg shadow-blue-500/20"
-                >
-                  <Plus className="w-4 h-4 mr-2" />
-                  Add Customer
-                </Button>
+            <div className="max-w-sm mx-auto space-y-5">
+              {searchTerm ? (
+                /* Search empty state */
+                <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 text-center">
+                  <Search className="h-10 w-10 text-white/30 mx-auto mb-3" />
+                  <p className="text-base font-semibold text-white mb-1">No customers found</p>
+                  <p className="text-sm text-white/50">Try a different name or postcode</p>
+                </div>
+              ) : (
+                /* First-time empty state */
+                <>
+                  <div className="text-center space-y-3">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 border border-elec-yellow/30 mx-auto">
+                      <Users className="h-8 w-8 text-elec-yellow" />
+                    </div>
+                    <div>
+                      <p className="text-lg font-bold text-white">Build Your Customer Base</p>
+                      <p className="text-sm text-white/50 mt-1">
+                        Store clients, track jobs, and send quotes all in one place
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-3">
+                    <Button
+                      onClick={() => setShowAddDialog(true)}
+                      className="w-full h-12 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold rounded-xl shadow-lg shadow-elec-yellow/20 touch-manipulation"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add First Customer
+                    </Button>
+                    <Button
+                      onClick={() => setShowImportDialog(true)}
+                      variant="outline"
+                      className="w-full h-12 border-white/10 bg-white/5 text-white font-medium rounded-xl touch-manipulation"
+                    >
+                      <Upload className="w-4 h-4 mr-2" />
+                      Import from Contacts
+                    </Button>
+                  </div>
+
+                  <p className="text-center text-xs text-white/30">
+                    All customer data is stored securely and never shared
+                  </p>
+                </>
               )}
             </div>
           </motion.div>
