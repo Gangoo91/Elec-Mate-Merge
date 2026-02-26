@@ -23,23 +23,43 @@ const Toaster = ({ ...props }: ToasterProps) => {
         } as React.CSSProperties
       }
       icons={{
-        success: <CheckCircle2 className="w-5 h-5 text-white" />,
-        error: <XCircle className="w-5 h-5 text-white" />,
-        warning: <AlertTriangle className="w-5 h-5 text-white" />,
-        info: <Info className="w-5 h-5 text-white" />,
+        success: (
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-emerald-500/20 flex-shrink-0">
+            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+          </div>
+        ),
+        error: (
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-red-500/20 flex-shrink-0">
+            <XCircle className="w-4 h-4 text-red-400" />
+          </div>
+        ),
+        warning: (
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-amber-500/20 flex-shrink-0">
+            <AlertTriangle className="w-4 h-4 text-amber-400" />
+          </div>
+        ),
+        info: (
+          <div className="w-8 h-8 rounded-xl flex items-center justify-center bg-blue-500/20 flex-shrink-0">
+            <Info className="w-4 h-4 text-blue-400" />
+          </div>
+        ),
       }}
       toastOptions={{
         classNames: {
           toast:
-            'group toast !rounded-2xl !border-0 !shadow-[0_8px_40px_rgba(0,0,0,0.35)] !px-4 !py-3.5 !min-h-[60px] !items-start !gap-3 !w-full',
+            'group toast !rounded-2xl !border !border-white/[0.07] !border-l-[3px] !shadow-[0_8px_32px_rgba(0,0,0,0.5)] !px-4 !py-3.5 !min-h-[64px] !items-center !gap-3 !w-full !bg-zinc-900/95 !backdrop-blur-xl',
           title: '!text-white !font-semibold !text-[14px] !leading-snug',
-          description: '!text-white/80 !text-[12px] !leading-snug !mt-0.5',
-          success: '!bg-emerald-600',
-          error: '!bg-red-600',
-          warning: '!bg-amber-500',
-          info: '!bg-blue-600',
-          default: '!bg-zinc-800 !border !border-white/10',
-          icon: 'self-start mt-0.5',
+          description: '!text-white/55 !text-[12px] !leading-snug !mt-0.5',
+          success:
+            '!border-l-emerald-400 !shadow-[0_8px_32px_rgba(16,185,129,0.18)]',
+          error:
+            '!border-l-red-400 !shadow-[0_8px_32px_rgba(239,68,68,0.18)]',
+          warning:
+            '!border-l-amber-400 !shadow-[0_8px_32px_rgba(245,158,11,0.18)]',
+          info:
+            '!border-l-blue-400 !shadow-[0_8px_32px_rgba(59,130,246,0.18)]',
+          default: '!border-l-zinc-400',
+          icon: 'self-center !w-8 !h-8 !mr-0',
         },
         style: {
           opacity: 1,
