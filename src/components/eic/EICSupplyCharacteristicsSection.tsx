@@ -237,8 +237,8 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
       <Collapsible open={isOpen} onOpenChange={onToggle}>
         <CollapsibleTrigger className="w-full">
           {isMobile ? (
-            <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-              <div className="h-10 w-10 rounded-xl bg-yellow-500/20 flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+              <div className="h-10 w-10 rounded-xl bg-yellow-500/15 flex items-center justify-center shrink-0">
                 <Zap className="h-5 w-5 text-yellow-400" />
               </div>
               <div className="flex-1 text-left min-w-0">

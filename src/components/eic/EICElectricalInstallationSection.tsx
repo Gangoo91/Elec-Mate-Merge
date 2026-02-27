@@ -83,9 +83,9 @@ const EICElectricalInstallationSection = ({
         {isMobile ? (
           <button
             onClick={onToggle}
-            className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20 w-full text-left"
+            className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08] w-full text-left"
           >
-            <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+            <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center shrink-0">
               <Cable className="h-5 w-5 text-purple-400" />
             </div>
             <div className="flex-1 min-w-0">

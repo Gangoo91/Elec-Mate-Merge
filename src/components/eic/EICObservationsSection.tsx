@@ -52,7 +52,7 @@ const EICObservationsSection: React.FC<EICObservationsSectionProps> = ({
         className={cn(
           'flex items-center justify-between',
           isMobile
-            ? 'px-4 py-4 bg-card/30 border-y border-border/20'
+            ? 'px-4 py-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]'
             : 'pb-3 border-b border-border/30'
         )}
       >

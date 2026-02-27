@@ -241,13 +241,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <Collapsible open={openSections.designer} onOpenChange={() => toggleSection('designer')}>
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
                   <PenTool className="h-5 w-5 text-blue-400" />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Designer Declaration</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {getCompletionPercentage('designer')}% complete
                   </span>
                 </div>
@@ -542,13 +542,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         >
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-orange-500/20 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                <div className="h-10 w-10 rounded-xl bg-orange-500/15 flex items-center justify-center shrink-0">
                   <Wrench className="h-5 w-5 text-orange-400" />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Constructor Declaration</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {getCompletionPercentage('constructor')}% complete
                   </span>
                 </div>
@@ -774,13 +774,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <Collapsible open={openSections.inspector} onOpenChange={() => toggleSection('inspector')}>
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-green-500/20 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0">
                   <UserCheck className="h-5 w-5 text-green-400" />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Inspector Declaration</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     {getCompletionPercentage('inspector')}% complete
                   </span>
                 </div>
@@ -1063,13 +1063,13 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         >
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-                <div className="h-10 w-10 rounded-xl bg-purple-500/20 flex items-center justify-center shrink-0">
+              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+                <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center shrink-0">
                   <ClipboardCheck className="h-5 w-5 text-purple-400" />
                 </div>
                 <div className="flex-1 text-left min-w-0">
                   <h3 className="font-semibold text-foreground">Inspected By</h3>
-                  <span className="text-xs text-muted-foreground">
+                  <span className="text-xs text-white">
                     Certificate signatory details
                   </span>
                 </div>

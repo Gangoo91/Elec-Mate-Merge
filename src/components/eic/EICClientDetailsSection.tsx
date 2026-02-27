@@ -12,7 +12,7 @@ import {
 import { Checkbox } from '@/components/ui/checkbox';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
-import { Users, Calendar, FileText, ClipboardList, ChevronDown } from 'lucide-react';
+import { Users, FileText, ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
@@ -81,8 +81,8 @@ const EICClientDetailsSection = ({
         <CollapsibleTrigger className="w-full">
           {isMobile ? (
             // Mobile: Flat section header - no card wrapper
-            <div className="flex items-center gap-3 py-4 px-4 bg-card/30 border-y border-border/20">
-              <div className="h-10 w-10 rounded-xl bg-blue-500/20 flex items-center justify-center shrink-0">
+            <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
+              <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
                 <Users className="h-5 w-5 text-blue-400" />
               </div>
               <div className="flex-1 text-left min-w-0">
@@ -113,19 +113,19 @@ const EICClientDetailsSection = ({
             className={cn('space-y-5 sm:space-y-6', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5 md:p-6')}
           >
             {/* Certificate Number (Read-only) */}
-            <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
+            <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
               <div className="flex items-center gap-2 mb-2">
-                <FileText className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-medium text-blue-300">Certificate Number</span>
+                <FileText className="h-4 w-4 text-elec-yellow" />
+                <span className="text-sm font-medium text-foreground">Certificate Number</span>
               </div>
               <Input
                 id="certificateNumber"
                 value={formData.certificateNumber || ''}
                 readOnly
-                className="bg-white/5 cursor-not-allowed font-mono text-white border-blue-500/30"
+                className="bg-white/[0.03] cursor-not-allowed font-mono text-white border-white/[0.08]"
                 tabIndex={-1}
               />
-              <p className="text-xs text-white mt-1">Auto-generated and cannot be changed</p>
+              <p className="text-xs text-white mt-1.5">Auto-generated and cannot be changed</p>
             </div>
 
             {/* Client Information */}
@@ -203,7 +203,7 @@ const EICClientDetailsSection = ({
               </h4>
 
               {/* Same as client address checkbox */}
-              <div className="flex items-start gap-3 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
+              <div className="flex items-start gap-3 p-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20">
                 <Checkbox
                   id="sameAsClientAddress"
                   checked={formData.sameAsClientAddress === 'true'}
@@ -274,8 +274,8 @@ const EICClientDetailsSection = ({
 
             {/* Description and Extent of Installation (IET Form Section) */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-blue-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <ClipboardList className="h-4 w-4" />
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
                 Description and Extent of Installation
               </h4>
 
@@ -378,8 +378,8 @@ const EICClientDetailsSection = ({
 
             {/* Installation Dates */}
             <div className="space-y-4">
-              <h4 className="text-sm font-semibold text-green-400 border-b border-white/10 pb-2 flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
+              <h4 className="text-sm font-semibold text-elec-yellow border-b border-white/10 pb-2 flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
                 Installation Dates
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

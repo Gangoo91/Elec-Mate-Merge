@@ -1,18 +1,8 @@
 import React from 'react';
 import { EICTabValue } from '@/hooks/useEICTabs';
-import { motion, AnimatePresence } from 'framer-motion';
-import EICStepIndicator from './EICStepIndicator';
-import EICInstallationDetails from './EICInstallationDetails';
-import EICScheduleOfInspections from './EICScheduleOfInspections';
-import EICScheduleOfTesting from './EICScheduleOfTesting';
-import EICDeclarations from './EICDeclarations';
-import EICCertificateTab from './EICCertificateTab';
-import EICTabNavigation from './EICTabNavigation';
-import EICObservationsSection from './EICObservationsSection';
-import EICValidationPanel from './EICValidationPanel';
+import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
+import EICTabContent from './EICTabContent';
 import { EICObservation } from '@/hooks/useEICObservations';
-import { useIsMobile } from '@/hooks/use-mobile';
-import { cn } from '@/lib/utils';
 
 interface EICFormTabsProps {
   currentTab: EICTabValue;
@@ -53,7 +43,7 @@ interface EICFormTabsProps {
   onGenerateCertificate: () => void;
   onSaveDraft: () => void;
   canGenerateCertificate?: boolean;
-  onSyncOnTabChange?: () => void; // Trigger sync when switching tabs
+  onSyncOnTabChange?: () => void;
 }
 
 const EICFormTabs: React.FC<EICFormTabsProps> = ({
@@ -70,106 +60,72 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   canGenerateCertificate = true,
   onSyncOnTabChange,
 }) => {
-  const isMobile = useIsMobile();
-
-  const handleTabChange = (tab: EICTabValue) => {
-    // Trigger sync when switching tabs to ensure data is saved
+  const handleTabChange = (value: string) => {
     if (onSyncOnTabChange) {
       onSyncOnTabChange();
     }
-    onTabChange(tab);
+    onTabChange(value);
   };
 
-  // Render tab content based on current tab
-  const renderTabContent = () => {
-    switch (currentTab) {
-      case 'details':
-        return (
-          <div className={cn('space-y-6', isMobile ? '' : 'md:max-w-5xl mx-auto')}>
-            <EICInstallationDetails formData={formData} onUpdate={onUpdate} />
-            <EICTabNavigation {...tabNavigationProps} />
-          </div>
-        );
-      case 'inspection':
-        return (
-          <div className={cn('space-y-6', isMobile ? '' : 'md:max-w-6xl mx-auto')}>
-            <EICScheduleOfInspections
-              formData={formData}
-              onUpdate={onUpdate}
-              onAutoCreateObservation={observationsProps.onAutoCreateObservation}
-              onNavigateToObservations={observationsProps.onNavigateToObservations}
-            />
-            <EICObservationsSection
-              observations={observationsProps.observations}
-              reportId={observationsProps.reportId}
-              onAddObservation={observationsProps.onAddObservation}
-              onUpdateObservation={observationsProps.onUpdateObservation}
-              onRemoveObservation={observationsProps.onRemoveObservation}
-              onSyncToInspectionItem={observationsProps.onSyncToInspectionItem}
-              className="mt-6"
-            />
-            <EICTabNavigation {...tabNavigationProps} />
-          </div>
-        );
-      case 'testing':
-        return (
-          <div className="w-full max-w-none space-y-6">
-            <EICScheduleOfTesting formData={formData} onUpdate={onUpdate} />
-            <EICTabNavigation {...tabNavigationProps} />
-          </div>
-        );
-      case 'declarations':
-        return (
-          <div className={cn('space-y-6', isMobile ? '' : 'md:max-w-5xl mx-auto')}>
-            <EICDeclarations formData={formData} onUpdate={onUpdate} />
-            <EICTabNavigation {...tabNavigationProps} />
-          </div>
-        );
-      case 'certificate':
-        return (
-          <div className={cn('space-y-6', isMobile ? '' : 'md:max-w-5xl mx-auto')}>
-            <EICCertificateTab
-              formData={formData}
-              onUpdate={onUpdate}
-              reportId={observationsProps.reportId}
-              onGenerateCertificate={onGenerateCertificate}
-              onSaveDraft={onSaveDraft}
-              canGenerateCertificate={canGenerateCertificate}
-            />
-            <EICValidationPanel formData={formData} />
-            <EICTabNavigation {...tabNavigationProps} showGenerate />
-          </div>
-        );
-      default:
-        return null;
-    }
+  const contentProps = {
+    formData,
+    onUpdate,
+    tabNavigationProps,
+    observationsProps,
+    onGenerateCertificate,
+    onSaveDraft,
+    canGenerateCertificate,
+  };
+
+  const smartTabs: SmartTab[] = [
+    {
+      value: 'details',
+      label: 'Installation Details',
+      shortLabel: 'Details',
+      content: <EICTabContent tabValue="details" {...contentProps} />,
+    },
+    {
+      value: 'inspection',
+      label: 'Schedule of Inspections',
+      shortLabel: 'Inspection',
+      content: <EICTabContent tabValue="inspection" {...contentProps} />,
+    },
+    {
+      value: 'testing',
+      label: 'Schedule of Testing',
+      shortLabel: 'Testing',
+      content: <EICTabContent tabValue="testing" {...contentProps} />,
+    },
+    {
+      value: 'declarations',
+      label: 'Declarations',
+      shortLabel: 'Declarations',
+      content: <EICTabContent tabValue="declarations" {...contentProps} />,
+    },
+    {
+      value: 'certificate',
+      label: 'Certificate',
+      shortLabel: 'Certificate',
+      content: <EICTabContent tabValue="certificate" {...contentProps} />,
+    },
+  ];
+
+  const completedTabs: Record<string, boolean> = {
+    details: isTabComplete('details'),
+    inspection: isTabComplete('inspection'),
+    testing: isTabComplete('testing'),
+    declarations: isTabComplete('declarations'),
+    certificate: isTabComplete('certificate'),
   };
 
   return (
-    <div className={cn('space-y-4 sm:space-y-6', isMobile && '-mx-4')}>
-      {/* Step Indicator */}
-      <div className={cn(isMobile && 'px-4')}>
-        <EICStepIndicator
-          currentTab={currentTab}
-          onTabChange={handleTabChange}
-          isTabComplete={isTabComplete}
-        />
-      </div>
-
-      {/* Tab Content with Animation - edge-to-edge on mobile */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentTab}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.15 }}
-          className={cn(isMobile && 'px-4')}
-        >
-          {renderTabContent()}
-        </motion.div>
-      </AnimatePresence>
-    </div>
+    <SmartTabs
+      tabs={smartTabs}
+      value={currentTab}
+      onValueChange={handleTabChange}
+      completedTabs={completedTabs}
+      showProgress
+    />
   );
 };
 
