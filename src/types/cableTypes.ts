@@ -25,15 +25,18 @@ export const cableSizeOptions = [
   { value: '400mm', label: '400mm²', currentCarryingCapacity: 546 },
 ];
 
+// BS 7671 Table 4A2 — Reference Methods for current-carrying capacity
 export const referenceMethodOptions = [
-  { value: 'N/A', label: 'N/A' },
-  { value: 'A', label: 'A' },
-  { value: 'B', label: 'B' },
-  { value: 'C', label: 'C' },
-  { value: 'D', label: 'D' },
-  { value: 'E', label: 'E' },
-  { value: 'F', label: 'F' },
-  { value: 'G', label: 'G' },
+  { value: 'A1', label: 'A1 - Enclosed in conduit in a thermally insulated wall' },
+  { value: 'A2', label: 'A2 - Enclosed in conduit in masonry' },
+  { value: 'B1', label: 'B1 - Enclosed in conduit on a wall or ceiling' },
+  { value: 'B2', label: 'B2 - Enclosed in trunking on a wall or ceiling' },
+  { value: 'C', label: 'C - Clipped direct to a non-thermally insulating surface' },
+  { value: 'D1', label: 'D1 - In conduit or duct buried in the ground' },
+  { value: 'D2', label: 'D2 - Direct in the ground (without conduit)' },
+  { value: 'E', label: 'E - Free air on a perforated cable tray' },
+  { value: 'F', label: 'F - Free air, touching (cable ladder / cleats)' },
+  { value: 'G', label: 'G - Free air, spaced (from surface)' },
 ];
 
 export const bondingConductorSizes = [
