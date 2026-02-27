@@ -203,6 +203,11 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
         placeholder="Search students, staff, courses…"
         value={search}
         onValueChange={setSearch}
+        inputMode="search"
+        enterKeyHint="search"
+        autoComplete="off"
+        autoCorrect="off"
+        autoCapitalize="off"
       />
       <CommandList>
         <CommandEmpty>
