@@ -19,13 +19,15 @@ const SelectTrigger = React.forwardRef<
     className={cn(
       // Base layout — large touch targets
       'flex w-full h-14 sm:h-12 items-center justify-between',
-      'px-4 py-3 gap-2',
+      'px-4 py-3 gap-2 overflow-hidden',
       'text-[16px] sm:text-[15px] text-white text-left font-medium',
+      // Truncate selected value text
+      '[&>span]:truncate [&>span]:flex-1 [&>span]:text-left',
       // Solid dark background — no semi-transparent
       'bg-input [color-scheme:dark]',
       'border border-white/[0.12] rounded-xl',
-      // Placeholder
-      '[&>span:first-child]:text-muted-foreground [&>span:first-child:not(:empty)]:text-white',
+      // Placeholder — style the SelectValue span
+      '[&>span[data-placeholder]]:text-muted-foreground',
       // Focus states
       'focus:outline-none focus:border-elec-yellow/50',
       'focus:ring-2 focus:ring-elec-yellow/20',
@@ -44,7 +46,7 @@ const SelectTrigger = React.forwardRef<
     )}
     {...props}
   >
-    <span className="block truncate text-left flex-1">{children}</span>
+    {children}
     <SelectPrimitive.Icon asChild>
       <ChevronDown className="h-5 w-5 text-white/40 flex-shrink-0 transition-transform duration-200 data-[state=open]:rotate-180" />
     </SelectPrimitive.Icon>
