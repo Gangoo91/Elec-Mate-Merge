@@ -398,6 +398,11 @@ const MentalHealthContent = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 pb-24 space-y-5 animate-fade-in">
+      {/* Back Button */}
+      <div className="pt-1">
+        <SmartBackButton label="Back to Dashboard" to="/electrician" className="[&>span]:!inline" />
+      </div>
+
       {/* Personalized Header */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 via-pink-500/5 to-transparent border border-white/10 p-5">
         {/* Background decoration */}
@@ -613,11 +618,6 @@ const MentalHealthContent = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Back to Dashboard */}
-      <div className="pt-2">
-        <SmartBackButton />
-      </div>
 
       {/* Floating Crisis Button */}
       <button
