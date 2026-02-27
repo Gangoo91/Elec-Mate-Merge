@@ -2,6 +2,7 @@
 
 // BS 7671 Schedule of Test Results — Type of Wiring (cable/wiring system type)
 export const wiringTypeOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'T&E', label: 'T&E (Twin & Earth)' },
   { value: 'SWA', label: 'SWA (Steel Wire Armoured)' },
   { value: 'Singles', label: 'Singles in conduit' },
@@ -15,6 +16,7 @@ export const wiringTypeOptions = [
 ];
 
 export const rcdTypeOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'AC', label: 'AC' },
   { value: 'A', label: 'A' },
   { value: 'F', label: 'F' },
