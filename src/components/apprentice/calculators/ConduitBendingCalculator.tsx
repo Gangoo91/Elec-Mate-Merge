@@ -560,7 +560,7 @@ const ConduitBendingCalculator = () => {
 
             {/* Notes */}
             {result.notes.length > 0 && (
-              <div className="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl">
+              <div className="p-3 bg-white/[0.04] border border-blue-500/20 rounded-xl">
                 <h4 className="text-sm font-medium text-blue-400 mb-2">Bending Notes</h4>
                 <ul className="text-xs text-white space-y-1">
                   {result.notes.map((note, idx) => (
@@ -703,19 +703,19 @@ const ConduitBendingCalculator = () => {
                 </h4>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-amber-300">20mm:</span>{' '}
+                    <span className="text-white">20mm:</span>{' '}
                     <span className="text-white">100mm min</span>
                   </div>
                   <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-amber-300">25mm:</span>{' '}
+                    <span className="text-white">25mm:</span>{' '}
                     <span className="text-white">125mm min</span>
                   </div>
                   <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-amber-300">32mm:</span>{' '}
+                    <span className="text-white">32mm:</span>{' '}
                     <span className="text-white">160mm min</span>
                   </div>
                   <div className="p-2 bg-amber-500/10 rounded-lg border-l-2 border-amber-400/40">
-                    <span className="text-amber-300">40mm:</span>{' '}
+                    <span className="text-white">40mm:</span>{' '}
                     <span className="text-white">200mm min</span>
                   </div>
                 </div>

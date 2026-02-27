@@ -10,7 +10,6 @@ import {
   ChevronDown,
   Info,
 } from 'lucide-react';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
@@ -525,7 +524,7 @@ const CableCurrentCapacityCalculator = () => {
       description="Calculate current carrying capacity with BS 7671 compliance verification"
     >
       {/* Circuit Design Section */}
-      <div className="space-y-4 p-3 sm:p-4 rounded-xl bg-white/[0.04] border border-white/5">
+      <div className="space-y-3">
         <h4 className="font-medium text-white text-sm sm:text-base">Circuit Design</h4>
         <CalculatorInputGrid columns={2}>
           <CalculatorInput

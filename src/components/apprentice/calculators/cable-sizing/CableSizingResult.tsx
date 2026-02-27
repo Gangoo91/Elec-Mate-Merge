@@ -1,11 +1,13 @@
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Info, ChevronDown, CheckCircle2, Cable, Calculator } from 'lucide-react';
+import { Info, ChevronDown, CheckCircle2, Cable, Calculator, AlertTriangle } from 'lucide-react';
 import { CableSizingInputs, DeratingFactors, BS7671CableOption } from './useCableSizing';
 import { RequiredFieldTooltip } from '@/components/ui/required-field-tooltip';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import ProtectiveDeviceSection from './ProtectiveDeviceSection';
+import { CALCULATOR_CONFIG } from '@/components/calculators/shared';
+
+const config = CALCULATOR_CONFIG['cable'];
 
 interface CableSizingResultProps {
   recommendedCable: BS7671CableOption | null;
@@ -85,17 +87,36 @@ const CableSizingResult = ({
           {/* Recommended Cable */}
           <div>
             <div className="flex items-center gap-2 mb-6">
-              <CheckCircle2 className="h-6 w-6 text-elec-yellow" />
-              <h3 className="text-xl font-semibold text-elec-yellow">Recommended Cable</h3>
+              <CheckCircle2 className="h-6 w-6" style={{ color: config.gradientFrom }} />
+              <h3
+                className="text-xl font-semibold bg-clip-text text-transparent"
+                style={{
+                  backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                }}
+              >
+                Recommended Cable
+              </h3>
             </div>
 
-            {/* Cable Size - Centered, Prominent */}
+            {/* Cable Size - Centred, Prominent */}
             <div className="text-center mb-8">
               <div className="flex items-baseline justify-center gap-2 mb-2">
-                <span className="text-6xl md:text-7xl font-bold text-elec-yellow">
+                <span
+                  className="text-6xl md:text-7xl font-bold bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
+                >
                   {recommendedCable.size}
                 </span>
-                <span className="text-3xl md:text-4xl text-elec-yellow">mm²</span>
+                <span
+                  className="text-3xl md:text-4xl bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+                  }}
+                >
+                  mm²
+                </span>
               </div>
               <div className="space-y-1">
                 <p className="text-lg font-medium text-white">
@@ -110,22 +131,28 @@ const CableSizingResult = ({
 
             {/* Capacity Info */}
             <div className="space-y-4 mb-6">
-              <div className="flex items-center justify-between py-3 border-b border-elec-yellow/20">
+              <div
+                className="flex items-center justify-between py-3 border-b"
+                style={{ borderColor: `${config.gradientFrom}20` }}
+              >
                 <span className="text-sm text-white flex items-center gap-1">
                   Tabulated Capacity (It)
                   <RequiredFieldTooltip content="Current-carrying capacity from BS 7671 Appendix 4 tables at reference conditions" />
                 </span>
-                <span className="text-2xl font-bold text-elec-yellow">
+                <span className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
                   {recommendedCable.tabulatedCapacity}A
                 </span>
               </div>
 
-              <div className="flex items-center justify-between py-3 border-b border-elec-yellow/20">
+              <div
+                className="flex items-center justify-between py-3 border-b"
+                style={{ borderColor: `${config.gradientFrom}20` }}
+              >
                 <span className="text-sm text-white flex items-center gap-1">
                   Effective Capacity
                   <RequiredFieldTooltip content="It × Ca × Cg × Ci — the current-carrying capacity adjusted for installation conditions" />
                 </span>
-                <span className="text-2xl font-bold text-elec-yellow">
+                <span className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
                   {recommendedCable.deratedCapacity}A
                 </span>
               </div>
@@ -157,8 +184,11 @@ const CableSizingResult = ({
 
           {/* Alternative Options */}
           {alternativeCables.length > 0 && (
-            <div className="mt-8 pt-8 border-t border-elec-yellow/30">
-              <h3 className="text-lg font-semibold text-elec-yellow mb-4 flex items-center gap-2">
+            <div className="mt-8 pt-8 border-t" style={{ borderColor: `${config.gradientFrom}30` }}>
+              <h3
+                className="text-lg font-semibold mb-4 flex items-center gap-2"
+                style={{ color: config.gradientFrom }}
+              >
                 <Cable className="h-5 w-5" />
                 Alternative Options
               </h3>
@@ -206,7 +236,7 @@ const CableSizingResult = ({
           <Collapsible open={showDerivation} onOpenChange={setShowDerivation} className="mt-6">
             <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
               <div className="flex items-center gap-2">
-                <Calculator className="h-4 w-4 text-elec-yellow" />
+                <Calculator className="h-4 w-4" style={{ color: config.gradientFrom }} />
                 <span className="text-sm font-medium text-white">
                   {showDerivation ? 'Hide calculation derivation' : 'Show calculation derivation'}
                 </span>
@@ -221,24 +251,36 @@ const CableSizingResult = ({
             <CollapsibleContent className="pt-6">
               <div className="space-y-4">
                 <div className="flex items-center gap-2 mb-4">
-                  <Calculator className="h-5 w-5 text-elec-yellow" />
-                  <h4 className="text-lg font-semibold text-elec-yellow">
+                  <Calculator className="h-5 w-5" style={{ color: config.gradientFrom }} />
+                  <h4 className="text-lg font-semibold" style={{ color: config.gradientFrom }}>
                     BS 7671 Calculation Steps
                   </h4>
                 </div>
 
                 <div className="space-y-3">
                   {/* Step 1 */}
-                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+                  <div
+                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
+                    style={{ borderLeftColor: config.gradientFrom }}
+                  >
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
+                      <span
+                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
+                        style={{
+                          background: `${config.gradientFrom}20`,
+                          color: config.gradientFrom,
+                        }}
+                      >
                         1
                       </span>
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-base">Design Current (Ib)</h4>
                         <p className="text-sm text-white mt-1">
                           Load current:{' '}
-                          <span className="text-elec-yellow font-mono font-bold">
+                          <span
+                            className="font-mono font-bold"
+                            style={{ color: config.gradientFrom }}
+                          >
                             {inputs.current}A
                           </span>
                         </p>
@@ -247,9 +289,18 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 2 */}
-                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+                  <div
+                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
+                    style={{ borderLeftColor: config.gradientFrom }}
+                  >
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
+                      <span
+                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
+                        style={{
+                          background: `${config.gradientFrom}20`,
+                          color: config.gradientFrom,
+                        }}
+                      >
                         2
                       </span>
                       <div className="flex-1">
@@ -294,11 +345,17 @@ const CableSizingResult = ({
                               </span>
                             </div>
                           )}
-                          <div className="flex items-center justify-between gap-2 pt-2 border-t border-elec-yellow/10 mt-2">
+                          <div
+                            className="flex items-center justify-between gap-2 pt-2 mt-2 border-t"
+                            style={{ borderColor: `${config.gradientFrom}10` }}
+                          >
                             <span className="text-white font-medium whitespace-nowrap">
                               Overall:
                             </span>
-                            <span className="text-elec-yellow font-mono font-bold">
+                            <span
+                              className="font-mono font-bold"
+                              style={{ color: config.gradientFrom }}
+                            >
                               {totalDerating.toFixed(3)}
                             </span>
                           </div>
@@ -308,9 +365,18 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 3 */}
-                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+                  <div
+                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
+                    style={{ borderLeftColor: config.gradientFrom }}
+                  >
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
+                      <span
+                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
+                        style={{
+                          background: `${config.gradientFrom}20`,
+                          color: config.gradientFrom,
+                        }}
+                      >
                         3
                       </span>
                       <div className="flex-1">
@@ -323,7 +389,10 @@ const CableSizingResult = ({
                         </p>
                         <p className="text-sm text-white mt-1">
                           It ≥ {inputs.current}A ÷ {totalDerating.toFixed(3)} ={' '}
-                          <span className="text-elec-yellow font-mono font-bold">
+                          <span
+                            className="font-mono font-bold"
+                            style={{ color: config.gradientFrom }}
+                          >
                             {(parseFloat(inputs.current) / totalDerating).toFixed(1)}A
                           </span>
                         </p>
@@ -332,9 +401,18 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 4 */}
-                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+                  <div
+                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
+                    style={{ borderLeftColor: config.gradientFrom }}
+                  >
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
+                      <span
+                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
+                        style={{
+                          background: `${config.gradientFrom}20`,
+                          color: config.gradientFrom,
+                        }}
+                      >
                         4
                       </span>
                       <div className="flex-1">
@@ -342,7 +420,7 @@ const CableSizingResult = ({
                         <p className="text-xs text-white mb-1">{recommendedCable.tableReference}</p>
                         <p className="text-sm text-white">
                           Selected{' '}
-                          <span className="text-elec-yellow font-medium">
+                          <span className="font-medium" style={{ color: config.gradientFrom }}>
                             {recommendedCable.sizeLabel}
                           </span>{' '}
                           with It ={' '}
@@ -355,9 +433,18 @@ const CableSizingResult = ({
                   </div>
 
                   {/* Step 5 */}
-                  <div className="p-4 bg-white/[0.04] rounded-lg border-l-2 border-l-elec-yellow">
+                  <div
+                    className="p-4 bg-white/[0.04] rounded-lg border-l-2"
+                    style={{ borderLeftColor: config.gradientFrom }}
+                  >
                     <div className="flex items-start gap-3 text-left">
-                      <span className="flex items-center justify-center w-7 h-7 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex-shrink-0">
+                      <span
+                        className="flex items-center justify-center w-7 h-7 rounded-full text-sm font-bold flex-shrink-0"
+                        style={{
+                          background: `${config.gradientFrom}20`,
+                          color: config.gradientFrom,
+                        }}
+                      >
                         5
                       </span>
                       <div className="flex-1">
@@ -398,10 +485,12 @@ const CableSizingResult = ({
       )}
 
       {errors.general && (
-        <Alert className="bg-amber-900/30 border-amber-500/50">
-          <Info className="h-4 w-4 text-amber-500" />
-          <AlertDescription className="text-white">{errors.general}</AlertDescription>
-        </Alert>
+        <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
+          <div className="flex items-start gap-2">
+            <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-sm text-white">{errors.general}</p>
+          </div>
+        </div>
       )}
     </div>
   );

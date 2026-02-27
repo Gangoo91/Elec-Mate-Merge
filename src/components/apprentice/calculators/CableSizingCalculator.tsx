@@ -11,6 +11,7 @@ import { SimpleValidator, SimpleValidationResult } from '@/services/simplifiedVa
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   CalculatorCard,
+  CalculatorDivider,
   CalculatorInputGrid,
   CalculatorInput,
   CalculatorSelect,
@@ -181,168 +182,176 @@ const CableSizingCalculator = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="cable"
-        title="Cable Sizing Calculator"
-        description="Professional cable sizing with BS 7671 compliance validation"
-      >
-        <div className="space-y-6">
-          {/* Input Mode Selector */}
-          <div className="space-y-3">
-            <h3
-              className="text-sm font-semibold flex items-center gap-2"
-              style={{ color: config.gradientFrom }}
-            >
-              <Zap className="h-4 w-4" />
-              Current Specification
-            </h3>
-            <Tabs
-              value={inputMode}
-              onValueChange={(v) => setInputMode(v as 'current' | 'load')}
-              className="w-full"
-            >
-              <TabsList className="grid w-full grid-cols-2 h-12 bg-white/[0.04] rounded-xl p-1">
-                <TabsTrigger
-                  value="current"
-                  className="text-sm font-semibold rounded-lg data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400"
-                >
-                  Current
-                </TabsTrigger>
-                <TabsTrigger
-                  value="load"
-                  className="text-sm font-semibold rounded-lg data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400"
-                >
-                  Load
-                </TabsTrigger>
-              </TabsList>
-            </Tabs>
-          </div>
-
-          {/* Load Specification Section - Conditional */}
-          {inputMode === 'load' && (
-            <div
-              className="space-y-4 p-4 rounded-xl border"
-              style={{
-                borderColor: `${config.gradientFrom}30`,
-                background: `${config.gradientFrom}08`,
-              }}
-            >
-              <h4 className="font-medium text-white flex items-center gap-2 text-sm">
-                <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                Load Specification
-              </h4>
-
-              <CalculatorInputGrid columns={2}>
-                <CalculatorInput
-                  label="Load Power"
-                  unit="W"
-                  type="text"
-                  inputMode="decimal"
-                  value={loadPower}
-                  onChange={setLoadPower}
-                  placeholder="e.g., 7200"
-                />
-
-                <CalculatorSelect
-                  label="System Voltage"
-                  value={loadVoltage}
-                  onChange={setLoadVoltage}
-                  options={voltageOptions}
-                />
-
-                <CalculatorInput
-                  label="Power Factor"
-                  type="text"
-                  inputMode="decimal"
-                  value={powerFactor}
-                  onChange={setPowerFactor}
-                  placeholder="0.8 - 1.0"
-                  hint="Resistive: 1.0, Inductive: 0.8-0.9"
-                />
-
-                <CalculatorSelect
-                  label="Phase Type"
-                  value={phases}
-                  onChange={(v) => setPhases(v as 'single' | 'three')}
-                  options={phaseOptions}
-                />
-              </CalculatorInputGrid>
-
-              {/* Calculated Current Display */}
-              {calculatedCurrent && (
-                <div
-                  className="p-3 rounded-xl border"
-                  style={{
-                    borderColor: `${config.gradientFrom}40`,
-                    background: `${config.gradientFrom}10`,
-                  }}
-                >
-                  <div className="flex items-center gap-2 mb-1">
-                    <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                    <span className="text-sm font-medium text-white">
-                      Calculated Design Current
-                    </span>
-                  </div>
-                  <div className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
-                    {calculatedCurrent}A
-                  </div>
-                  <p className="text-xs text-white mt-1">
-                    {phases === 'single' ? 'I = P / (V × PF)' : 'I = P / (√3 × V × PF)'}
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-
-          <div className="border-t border-white/10 pt-4">
-            <CableSizingForm
-              inputs={inputs}
-              errors={result.errors}
-              uiSelections={uiSelections}
-              updateInput={updateInput}
-              setInstallationType={(type: string) => setInstallationType(type)}
-              setCableType={setCableType}
-              calculateCableSize={handleCalculate}
-              resetCalculator={handleReset}
-              inputMode={inputMode}
-            />
-          </div>
+    <CalculatorCard
+      category="cable"
+      title="Cable Sizing Calculator"
+      description="Professional cable sizing with BS 7671 compliance validation"
+    >
+      <div className="space-y-6">
+        {/* Input Mode Selector */}
+        <div className="space-y-3">
+          <h3
+            className="text-sm font-semibold flex items-center gap-2"
+            style={{ color: config.gradientFrom }}
+          >
+            <Zap className="h-4 w-4" />
+            Current Specification
+          </h3>
+          <Tabs
+            value={inputMode}
+            onValueChange={(v) => setInputMode(v as 'current' | 'load')}
+            className="w-full"
+          >
+            <TabsList className="grid w-full grid-cols-2 h-12 bg-white/[0.04] rounded-xl p-1">
+              <TabsTrigger
+                value="current"
+                className="text-sm font-semibold rounded-lg data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400"
+              >
+                Current
+              </TabsTrigger>
+              <TabsTrigger
+                value="load"
+                className="text-sm font-semibold rounded-lg data-[state=active]:bg-emerald-500/20 data-[state=active]:text-emerald-400"
+              >
+                Load
+              </TabsTrigger>
+            </TabsList>
+          </Tabs>
         </div>
-      </CalculatorCard>
+
+        {/* Load Specification Section - Conditional */}
+        {inputMode === 'load' && (
+          <div
+            className="space-y-4 p-4 rounded-xl border"
+            style={{
+              borderColor: `${config.gradientFrom}30`,
+              background: `${config.gradientFrom}08`,
+            }}
+          >
+            <h4 className="font-medium text-white flex items-center gap-2 text-sm">
+              <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
+              Load Specification
+            </h4>
+
+            <CalculatorInputGrid columns={2}>
+              <CalculatorInput
+                label="Load Power"
+                unit="W"
+                type="text"
+                inputMode="decimal"
+                value={loadPower}
+                onChange={setLoadPower}
+                placeholder="e.g., 7200"
+              />
+
+              <CalculatorSelect
+                label="System Voltage"
+                value={loadVoltage}
+                onChange={setLoadVoltage}
+                options={voltageOptions}
+              />
+
+              <CalculatorInput
+                label="Power Factor"
+                type="text"
+                inputMode="decimal"
+                value={powerFactor}
+                onChange={setPowerFactor}
+                placeholder="0.8 - 1.0"
+                hint="Resistive: 1.0, Inductive: 0.8-0.9"
+              />
+
+              <CalculatorSelect
+                label="Phase Type"
+                value={phases}
+                onChange={(v) => setPhases(v as 'single' | 'three')}
+                options={phaseOptions}
+              />
+            </CalculatorInputGrid>
+
+            {/* Calculated Current Display */}
+            {calculatedCurrent && (
+              <div
+                className="p-3 rounded-xl border"
+                style={{
+                  borderColor: `${config.gradientFrom}40`,
+                  background: `${config.gradientFrom}10`,
+                }}
+              >
+                <div className="flex items-center gap-2 mb-1">
+                  <Zap className="h-4 w-4" style={{ color: config.gradientFrom }} />
+                  <span className="text-sm font-medium text-white">Calculated Design Current</span>
+                </div>
+                <div className="text-2xl font-bold" style={{ color: config.gradientFrom }}>
+                  {calculatedCurrent}A
+                </div>
+                <p className="text-xs text-white mt-1">
+                  {phases === 'single' ? 'I = P / (V × PF)' : 'I = P / (√3 × V × PF)'}
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div className="border-t border-white/10 pt-4">
+          <CableSizingForm
+            inputs={inputs}
+            errors={result.errors}
+            uiSelections={uiSelections}
+            updateInput={updateInput}
+            setInstallationType={(type: string) => setInstallationType(type)}
+            setCableType={setCableType}
+            calculateCableSize={handleCalculate}
+            resetCalculator={handleReset}
+            inputMode={inputMode}
+          />
+        </div>
+      </div>
+
+      {/* ── Results Section (inside CalculatorCard) ── */}
 
       {/* Validation Results */}
       {validation && (
-        <SimpleValidationIndicator validation={validation} calculationType="cableSizing" />
+        <>
+          <CalculatorDivider category="cable" />
+          <SimpleValidationIndicator validation={validation} calculationType="cableSizing" />
+        </>
       )}
 
       {/* Cable Sizing Result */}
       {result.recommendedCable && (
-        <CableSizingResult
-          recommendedCable={result.recommendedCable}
-          alternativeCables={result.alternativeCables || []}
-          errors={result.errors || {}}
-          inputs={inputs}
-          deratingFactors={result.deratingFactors}
-          nextCableSizeUp={result.nextCableSizeUp}
-        />
+        <>
+          <CalculatorDivider category="cable" />
+          <CableSizingResult
+            recommendedCable={result.recommendedCable}
+            alternativeCables={result.alternativeCables || []}
+            errors={result.errors || {}}
+            inputs={inputs}
+            deratingFactors={result.deratingFactors}
+            nextCableSizeUp={result.nextCableSizeUp}
+          />
+        </>
       )}
 
       {/* Calculation Report */}
       {Object.keys(calculationInputs).length > 0 &&
         Object.keys(calculationResults).length > 0 &&
         validation && (
-          <CalculationReport
-            calculationType="cableSizing"
-            inputs={calculationInputs}
-            results={calculationResults}
-            validation={validation}
-          />
+          <>
+            <CalculatorDivider category="cable" />
+            <CalculationReport
+              calculationType="cableSizing"
+              inputs={calculationInputs}
+              results={calculationResults}
+              validation={validation}
+            />
+          </>
         )}
 
       {/* Info Section */}
+      <CalculatorDivider category="cable" />
       <CableSizingInfo />
-    </div>
+    </CalculatorCard>
   );
 };
 

@@ -1,7 +1,4 @@
-import { MobileInput } from '@/components/ui/mobile-input';
-import { MobileButton } from '@/components/ui/mobile-button';
-import { MobileSelectWrapper } from '@/components/ui/mobile-select-wrapper';
-import { Calculator, RefreshCw, ChevronRight } from 'lucide-react';
+import { Calculator, RotateCcw, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
 
 import { CableSizingInputs, CableSizingErrors, CableType } from './useCableSizing';
@@ -11,6 +8,14 @@ import {
   isUndergroundMethod,
   isDomesticInsulationMethod,
 } from '@/lib/calculators/bs7671-data/installationMethodFactors';
+import {
+  CalculatorInput,
+  CalculatorSelect,
+  CalculatorInputGrid,
+  CalculatorActions,
+  CALCULATOR_CONFIG,
+} from '@/components/calculators/shared';
+import { cn } from '@/lib/utils';
 
 interface CableSizingFormProps {
   inputs: CableSizingInputs;
@@ -61,15 +66,6 @@ const installationOptionsByCategory: Record<string, Array<{ value: string; label
   ],
 };
 
-// Flatten for select dropdown
-const allInstallationOptions = Object.entries(installationOptionsByCategory).flatMap(
-  ([category, options]) =>
-    options.map((opt) => ({
-      ...opt,
-      label: opt.label,
-    }))
-);
-
 const cableTypeOptions = [
   { value: 'pvc-twin-earth', label: 'Flat Twin & Earth 70°C (Table 4D5)' },
   { value: 'pvc-single', label: 'PVC Single-core 70°C (Table 4D1A)' },
@@ -115,6 +111,8 @@ const burialDepthOptions = [
   { value: '1.5', label: '1.5m (Road crossings)' },
 ];
 
+const config = CALCULATOR_CONFIG['cable'];
+
 const CableSizingForm = ({
   inputs,
   errors,
@@ -140,15 +138,6 @@ const CableSizingForm = ({
     setSelectedCategory(null);
   };
 
-  const getCategoryLabel = (method: string): string => {
-    for (const [cat, options] of Object.entries(installationOptionsByCategory)) {
-      if (options.some((opt) => opt.value === method)) {
-        return installationCategories[cat as keyof typeof installationCategories]?.label || cat;
-      }
-    }
-    return 'Select installation method';
-  };
-
   const getMethodLabel = (method: string): string => {
     for (const options of Object.values(installationOptionsByCategory)) {
       const found = options.find((opt) => opt.value === method);
@@ -158,100 +147,101 @@ const CableSizingForm = ({
   };
 
   return (
-    <div className="space-y-8">
-      <h3 className="text-lg font-semibold text-elec-yellow flex items-center gap-2">
-        <Calculator className="h-5 w-5" />
-        Cable Sizing Parameters
-      </h3>
+    <div className="space-y-6">
+      {/* Section: Basic Parameters */}
+      <div className="space-y-3">
+        <h3
+          className="text-sm font-semibold flex items-center gap-2"
+          style={{ color: config.gradientFrom }}
+        >
+          <Calculator className="h-4 w-4" />
+          Cable Sizing Parameters
+        </h3>
 
-      {/* Basic Parameters - Only show current input in "current" mode */}
-      {inputMode === 'current' && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
-          <MobileInput
-            label="Design Current (A)"
-            type="text"
-            inputMode="decimal"
-            step="0.1"
-            value={inputs.current}
-            onChange={(e) => updateInput('current', e.target.value)}
-            placeholder="Enter design current"
-            error={errors?.current}
-          />
-
-          <MobileInput
-            label="Cable Length (m)"
-            type="text"
-            inputMode="decimal"
-            step="0.1"
-            value={inputs.length}
-            onChange={(e) => updateInput('length', e.target.value)}
-            placeholder="Enter cable length"
-            error={errors?.length}
-          />
-        </div>
-      )}
-
-      {/* In load mode, only show cable length */}
-      {inputMode === 'load' && (
-        <div className="p-6 border border-blue-500/40 rounded-lg bg-blue-500/5">
-          <div className="space-y-3 max-w-md">
-            <MobileInput
+        {inputMode === 'current' && (
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Design Current (A)"
+              type="text"
+              inputMode="decimal"
+              value={inputs.current}
+              onChange={(value) => updateInput('current', value)}
+              placeholder="Enter design current"
+              error={errors?.current}
+            />
+            <CalculatorInput
               label="Cable Length (m)"
               type="text"
               inputMode="decimal"
-              step="0.1"
               value={inputs.length}
-              onChange={(e) => updateInput('length', e.target.value)}
+              onChange={(value) => updateInput('length', value)}
               placeholder="Enter cable length"
               error={errors?.length}
             />
-          </div>
-        </div>
-      )}
+          </CalculatorInputGrid>
+        )}
 
-      {/* Installation Method Selection - Mobile Friendly Two-Step */}
-      <div className="space-y-4 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
-        <h4 className="font-medium text-white flex items-center gap-2">
-          Installation Method (BS 7671)
-        </h4>
+        {inputMode === 'load' && (
+          <CalculatorInput
+            label="Cable Length (m)"
+            type="text"
+            inputMode="decimal"
+            value={inputs.length}
+            onChange={(value) => updateInput('length', value)}
+            placeholder="Enter cable length"
+            error={errors?.length}
+          />
+        )}
+      </div>
+
+      {/* Section: Installation Method */}
+      <div className="space-y-3">
+        <h4 className="text-sm font-medium text-white">Installation Method (BS 7671)</h4>
 
         {/* Current Selection Display */}
-        <div className="p-4 bg-white/10 rounded-lg border border-elec-yellow/20">
-          <div className="text-sm text-white mb-1">Selected Method</div>
-          <div className="text-white font-medium">
+        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/5">
+          <div className="text-xs text-white mb-1">Selected Method</div>
+          <div className="text-sm text-white font-medium">
             {getMethodLabel(uiSelections.installationMethodUI)}
           </div>
         </div>
 
         {/* Category Selection */}
         {!selectedCategory ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {Object.entries(installationCategories).map(([key, { label, description }]) => (
               <button
                 key={key}
                 onClick={() => handleCategorySelect(key)}
-                className="p-4 text-left rounded-lg border border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 transition-all"
+                className={cn(
+                  'p-3 text-left rounded-xl border transition-all touch-manipulation min-h-11',
+                  'border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
+                )}
               >
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="font-medium text-white text-sm">{label}</div>
-                    <div className="text-xs text-white mt-1">{description}</div>
+                    <div className="text-xs text-white mt-0.5">{description}</div>
                   </div>
-                  <ChevronRight className="h-4 w-4 text-elec-yellow/50" />
+                  <ChevronRight
+                    className="h-4 w-4 shrink-0"
+                    style={{ color: config.gradientFrom }}
+                  />
                 </div>
               </button>
             ))}
           </div>
         ) : (
           /* Method Selection within Category */
-          <div className="space-y-3">
+          <div className="space-y-2">
             <button
               onClick={() => setSelectedCategory(null)}
-              className="text-sm text-elec-yellow hover:underline flex items-center gap-1"
+              className="text-sm font-medium flex items-center gap-1 min-h-11 touch-manipulation"
+              style={{ color: config.gradientFrom }}
             >
               ← Back to categories
             </button>
-            <div className="text-sm text-white mb-2">
+            <div className="text-xs text-white mb-1">
               {
                 installationCategories[selectedCategory as keyof typeof installationCategories]
                   ?.label
@@ -262,11 +252,20 @@ const CableSizingForm = ({
                 <button
                   key={option.value}
                   onClick={() => handleMethodSelect(option.value)}
-                  className={`w-full p-4 text-left rounded-lg border transition-all ${
+                  className={cn(
+                    'w-full p-3 text-left rounded-xl border transition-all touch-manipulation min-h-11 text-sm text-white',
                     uiSelections.installationMethodUI === option.value
-                      ? 'border-elec-yellow bg-elec-yellow/20 text-white'
-                      : 'border-elec-yellow/30 hover:border-elec-yellow hover:bg-elec-yellow/10 text-white'
-                  }`}
+                      ? 'border-white/20'
+                      : 'border-white/10 hover:border-white/20 hover:bg-white/[0.04]'
+                  )}
+                  style={
+                    uiSelections.installationMethodUI === option.value
+                      ? {
+                          borderColor: `${config.gradientFrom}40`,
+                          background: `${config.gradientFrom}10`,
+                        }
+                      : undefined
+                  }
                 >
                   {option.label}
                 </button>
@@ -276,23 +275,23 @@ const CableSizingForm = ({
         )}
       </div>
 
-      {/* Cable Type Selection */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
-        <h4 className="font-medium text-white">Cable Type</h4>
-        <MobileSelectWrapper
+      {/* Section: Cable Type */}
+      <div className="space-y-3">
+        <h4 className="text-sm font-medium text-white">Cable Type</h4>
+        <CalculatorSelect
           label="Insulation Type"
           value={uiSelections.cableTypeUI}
-          onValueChange={setCableType}
+          onChange={setCableType}
           placeholder="Select cable type"
           options={cableTypeOptions}
         />
 
         {/* Core Selection for SWA Multicore Cables */}
         {uiSelections.cableTypeUI === 'swa' && (
-          <MobileSelectWrapper
+          <CalculatorSelect
             label="Number of Cores"
-            value={(inputs as any).cores || '2'}
-            onValueChange={(value) => updateInput('cores' as any, value)}
+            value={inputs.cores || '2'}
+            onChange={(value) => updateInput('cores', value)}
             placeholder="Select cores"
             options={[
               { value: '2', label: '2-core (Single Phase)' },
@@ -304,10 +303,10 @@ const CableSizingForm = ({
 
         {/* Cable Configuration for SWA Single-Core */}
         {uiSelections.cableTypeUI === 'swa-single-core' && (
-          <MobileSelectWrapper
+          <CalculatorSelect
             label="Cable Configuration"
-            value={(inputs as any).cores || '2'}
-            onValueChange={(value) => updateInput('cores' as any, value)}
+            value={inputs.cores || '2'}
+            onChange={(value) => updateInput('cores', value)}
             placeholder="Select configuration"
             options={[
               { value: '2', label: '2 cables (Single Phase L+N)' },
@@ -317,143 +316,125 @@ const CableSizingForm = ({
         )}
       </div>
 
-      {/* Underground-Specific Fields (Conditional) */}
+      {/* Section: Underground-Specific Fields (Conditional) */}
       {showUndergroundFields && (
-        <div className="space-y-6 p-6 border border-orange-500/40 rounded-lg bg-orange-500/5">
-          <h4 className="font-medium text-orange-400 flex items-center gap-2">
+        <div className="space-y-3">
+          <h4
+            className="text-sm font-medium flex items-center gap-2"
+            style={{ color: config.gradientFrom }}
+          >
             Underground Installation Factors (BS 7671 Tables 4B3/4B4)
           </h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <MobileSelectWrapper
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
               label="Soil Thermal Resistivity"
               value={inputs.soilResistivity ?? '2.5'}
-              onValueChange={(value) => updateInput('soilResistivity', value)}
+              onChange={(value) => updateInput('soilResistivity', value)}
               placeholder="Select soil type"
               options={soilResistivityOptions}
             />
-
-            <MobileSelectWrapper
+            <CalculatorSelect
               label="Depth of Laying"
               value={inputs.burialDepth ?? '0.7'}
-              onValueChange={(value) => updateInput('burialDepth', value)}
+              onChange={(value) => updateInput('burialDepth', value)}
               placeholder="Select depth"
               options={burialDepthOptions}
             />
-          </div>
+          </CalculatorInputGrid>
         </div>
       )}
 
-      {/* Environmental Conditions */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
-        <h4 className="font-medium text-white">Environmental Conditions</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <MobileInput
+      {/* Section: Environmental Conditions */}
+      <div className="space-y-3">
+        <h4 className="text-sm font-medium text-white">Environmental Conditions</h4>
+        <CalculatorInputGrid columns={3}>
+          <CalculatorInput
             label={showUndergroundFields ? 'Soil Temperature (°C)' : 'Ambient Temperature (°C)'}
             type="text"
             inputMode="numeric"
             value={inputs.ambientTemp ?? '30'}
-            onChange={(e) => updateInput('ambientTemp', e.target.value)}
+            onChange={(value) => updateInput('ambientTemp', value)}
             placeholder="30"
             hint={showUndergroundFields ? 'Standard: 20°C' : 'Standard: 30°C'}
           />
-
-          <MobileInput
-            label="Number of Cables Grouped"
+          <CalculatorInput
+            label="Cables Grouped"
             type="text"
             inputMode="numeric"
-            min="1"
             value={inputs.cableGrouping ?? '1'}
-            onChange={(e) => updateInput('cableGrouping', e.target.value)}
+            onChange={(value) => updateInput('cableGrouping', value)}
             placeholder="1"
             hint="Affects current rating"
           />
-
-          <MobileInput
+          <CalculatorInput
             label="Voltage Drop Limit (%)"
             type="text"
             inputMode="decimal"
-            step="0.1"
             value={inputs.voltageDrop ?? '3'}
-            onChange={(e) => updateInput('voltageDrop', e.target.value)}
+            onChange={(value) => updateInput('voltageDrop', value)}
             placeholder="3"
             hint="Lighting: 3%, Power: 5%"
           />
-        </div>
+        </CalculatorInputGrid>
       </div>
 
-      {/* Load Characteristics */}
-      <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
-        <h4 className="font-medium text-white">Load Characteristics</h4>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <MobileSelectWrapper
+      {/* Section: Load Characteristics */}
+      <div className="space-y-3">
+        <h4 className="text-sm font-medium text-white">Load Characteristics</h4>
+        <CalculatorInputGrid columns={2}>
+          <CalculatorSelect
             label="Load Type"
             value={inputs.loadType ?? 'resistive'}
-            onValueChange={(value) => updateInput('loadType', value)}
+            onChange={(value) => updateInput('loadType', value)}
             placeholder="Select load type"
             options={loadTypeOptions}
           />
-
-          <MobileInput
+          <CalculatorInput
             label="Diversity Factor"
             type="text"
             inputMode="decimal"
-            step="0.1"
-            min="0.1"
-            max="1.0"
             value={inputs.diversityFactor ?? '1.0'}
-            onChange={(e) => updateInput('diversityFactor', e.target.value)}
+            onChange={(value) => updateInput('diversityFactor', value)}
             placeholder="1.0"
             hint="1.0 = 100% simultaneous load"
           />
-        </div>
+        </CalculatorInputGrid>
       </div>
 
-      {/* System Parameters - Only show when NOT in load mode (already entered for load calc) */}
+      {/* Section: System Parameters (only in current mode) */}
       {inputMode !== 'load' && (
-        <div className="space-y-6 p-6 border border-elec-yellow/40 rounded-lg bg-white/10">
-          <h4 className="font-medium text-white">System Parameters</h4>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            <MobileSelectWrapper
+        <div className="space-y-3">
+          <h4 className="text-sm font-medium text-white">System Parameters</h4>
+          <CalculatorInputGrid columns={2}>
+            <CalculatorSelect
               label="System Voltage (V)"
               value={inputs.voltage ?? '230'}
-              onValueChange={(value) => updateInput('voltage', value)}
+              onChange={(value) => updateInput('voltage', value)}
               placeholder="Select voltage"
               options={voltageOptions}
             />
-
-            <MobileInput
+            <CalculatorInput
               label="Power Factor"
               type="text"
               inputMode="decimal"
-              step="0.01"
-              min="0.1"
-              max="1.0"
               value={inputs.powerFactor ?? '0.9'}
-              onChange={(e) => updateInput('powerFactor', e.target.value)}
+              onChange={(value) => updateInput('powerFactor', value)}
               placeholder="0.9"
               hint="For voltage drop calculation. Typical: 0.8-0.9"
             />
-          </div>
+          </CalculatorInputGrid>
         </div>
       )}
 
       {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row gap-4 pt-6">
-        <MobileButton
-          onClick={calculateCableSize}
-          variant="elec"
-          size="wide"
-          className="flex-1"
-          disabled={!inputs.current || !inputs.length}
-        >
-          <Calculator className="mr-2 h-5 w-5" />
-          Calculate Cable Size
-        </MobileButton>
-        <MobileButton variant="outline" onClick={resetCalculator} size="lg">
-          <RefreshCw className="mr-2 h-5 w-5" />
-          Reset All Fields
-        </MobileButton>
-      </div>
+      <CalculatorActions
+        category="cable"
+        onCalculate={calculateCableSize}
+        onReset={resetCalculator}
+        isDisabled={!inputs.current || !inputs.length}
+        calculateLabel="Calculate Cable Size"
+        resetLabel="Reset"
+      />
     </div>
   );
 };

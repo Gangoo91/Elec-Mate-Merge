@@ -340,7 +340,7 @@ const CableDeratingCalculator = () => {
       description="Calculate cable current carrying capacity with BS 7671 derating factors"
     >
       {/* Circuit Design Section */}
-      <div className="p-4 rounded-xl bg-white/5 border border-white/10 space-y-4">
+      <div className="space-y-3">
         <h4 className="text-sm font-medium text-white">Circuit Design (Optional)</h4>
         <CalculatorInputGrid columns={2}>
           <CalculatorInput
@@ -588,7 +588,7 @@ const CableDeratingCalculator = () => {
               <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-                  <div className="space-y-1 text-sm text-orange-200">
+                  <div className="space-y-1 text-sm text-white">
                     {result.warnings.map((warning, index) => (
                       <p key={index}>{warning}</p>
                     ))}
@@ -618,7 +618,7 @@ const CableDeratingCalculator = () => {
             </CollapsibleTrigger>
 
             <CollapsibleContent className="pt-2">
-              <div className="text-sm font-mono text-purple-300 space-y-2 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <div className="text-sm font-mono text-white space-y-2 p-3 rounded-xl bg-white/[0.04] border border-white/5">
                 <div className="text-xs text-purple-400">Derated capacity formula:</div>
                 <div>Iz = It × Ca × Cg × Ci × Cs</div>
                 <div className="pt-2 border-t border-purple-500/20">
@@ -626,9 +626,7 @@ const CableDeratingCalculator = () => {
                   {result.groupingFactor.toFixed(3)} × {result.thermalInsulationFactor.toFixed(3)} ×{' '}
                   {result.soilFactor.toFixed(3)}
                 </div>
-                <div className="text-purple-200 font-bold">
-                  Iz = {result.finalRating.toFixed(1)}A
-                </div>
+                <div className="text-white font-bold">Iz = {result.finalRating.toFixed(1)}A</div>
               </div>
             </CollapsibleContent>
           </Collapsible>
@@ -652,25 +650,25 @@ const CableDeratingCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Derating factors</strong> reduce cable
-                    capacity based on installation conditions.
+                    <strong className="text-white">Derating factors</strong> reduce cable capacity
+                    based on installation conditions.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Multiple factors</strong> combine to determine
+                    <strong className="text-white">Multiple factors</strong> combine to determine
                     safe operating current.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Ib ≤ In ≤ Iz</strong> ensures proper circuit
+                    <strong className="text-white">Ib ≤ In ≤ Iz</strong> ensures proper circuit
                     protection per BS 7671.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Safety margin</strong> should be positive for
+                    <strong className="text-white">Safety margin</strong> should be positive for
                     compliant design.
                   </p>
                 </div>
@@ -699,25 +697,24 @@ const CableDeratingCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">Table 4C1:</strong> Grouping factors for
-                    cables
+                    <strong className="text-white">Table 4C1:</strong> Grouping factors for cables
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">Table 4C4:</strong> Thermal insulation
-                    derating factors
-                  </p>
-                </div>
-                <div className="border-l-2 border-amber-400/40 pl-3">
-                  <p className="text-sm text-white">
-                    <strong className="text-amber-300">Appendix 4:</strong> Temperature correction
+                    <strong className="text-white">Table 4C4:</strong> Thermal insulation derating
                     factors
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">Regulation 433:</strong> Protection against
+                    <strong className="text-white">Appendix 4:</strong> Temperature correction
+                    factors
+                  </p>
+                </div>
+                <div className="border-l-2 border-amber-400/40 pl-3">
+                  <p className="text-sm text-white">
+                    <strong className="text-white">Regulation 433:</strong> Protection against
                     overload
                   </p>
                 </div>
@@ -731,7 +728,7 @@ const CableDeratingCalculator = () => {
       <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-emerald-200">
+          <p className="text-sm text-white">
             <strong>Iz = It × Ca × Cg × Ci × Cs</strong> where It is tabulated current, and C
             factors are derating corrections.
           </p>

@@ -331,14 +331,14 @@ const DiversityFactorCalculator = () => {
             <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/20">
               <div className="flex items-center gap-2">
                 <Zap className="h-4 w-4 text-green-400" />
-                <span className="text-sm font-medium text-green-300">Protection Device:</span>
-                <span className="text-sm text-green-200">{getMainDeviceRecommendation()}</span>
+                <span className="text-sm font-medium text-white">Protection Device:</span>
+                <span className="text-sm text-white">{getMainDeviceRecommendation()}</span>
               </div>
             </div>
 
             {/* Load Reduction Summary */}
             <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-              <p className="text-sm text-blue-300">
+              <p className="text-sm text-white">
                 <span className="font-medium">Total Load Reduction:</span>{' '}
                 {(result.totalInstalledLoad - result.diversifiedLoad).toFixed(2)} kW (
                 {(
@@ -371,7 +371,7 @@ const DiversityFactorCalculator = () => {
             <CollapsibleContent className="pt-2">
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
-                  <h4 className="font-medium text-blue-300">Practical Impact:</h4>
+                  <h4 className="font-medium text-white">Practical Impact:</h4>
                   <div className="space-y-2">
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
@@ -397,7 +397,7 @@ const DiversityFactorCalculator = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-medium text-blue-300">Engineering Basis:</h4>
+                  <h4 className="font-medium text-white">Engineering Basis:</h4>
                   <div className="space-y-2">
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
@@ -440,7 +440,7 @@ const DiversityFactorCalculator = () => {
             <CollapsibleContent className="pt-2">
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="space-y-2">
-                  <h4 className="font-medium text-green-300">Cable Sizing:</h4>
+                  <h4 className="font-medium text-white">Cable Sizing:</h4>
                   <div className="space-y-2">
                     <div className="border-l-2 border-green-400/40 pl-3">
                       <p className="text-white">
@@ -457,7 +457,7 @@ const DiversityFactorCalculator = () => {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h4 className="font-medium text-green-300">Future Considerations:</h4>
+                  <h4 className="font-medium text-white">Future Considerations:</h4>
                   <div className="space-y-2">
                     <div className="border-l-2 border-green-400/40 pl-3">
                       <p className="text-white">Plan for 20-30% future load growth</p>
@@ -535,8 +535,8 @@ const DiversityFactorCalculator = () => {
           <div className="space-y-3 pl-1">
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
-                <strong className="text-amber-300">Diversity factors from Table 311:</strong>{' '}
-                Applied based on installation type
+                <strong className="text-white">Diversity factors from Table 311:</strong> Applied
+                based on installation type
               </p>
             </div>
             <div className="border-l-2 border-amber-400/40 pl-3">

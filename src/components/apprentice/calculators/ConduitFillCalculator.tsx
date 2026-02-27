@@ -324,7 +324,7 @@ const ConduitFillCalculator = () => {
               <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/30">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-                  <div className="space-y-1 text-sm text-orange-200">
+                  <div className="space-y-1 text-sm text-white">
                     {result.warnings.map((warning, index) => (
                       <p key={index}>{warning}</p>
                     ))}
@@ -355,7 +355,7 @@ const ConduitFillCalculator = () => {
               </CollapsibleTrigger>
 
               <CollapsibleContent className="pt-2">
-                <div className="text-sm font-mono text-purple-300 space-y-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+                <div className="text-sm font-mono text-white space-y-3 p-3 rounded-xl bg-white/[0.04] border border-white/5">
                   <div>
                     <div className="text-xs text-purple-400 mb-1">
                       Step 1: Cable cross-sectional area
@@ -364,7 +364,7 @@ const ConduitFillCalculator = () => {
                     <div>
                       A = π × ({cableData[cableSize as keyof typeof cableData].diameter / 2})²
                     </div>
-                    <div className="text-purple-200 font-bold">
+                    <div className="text-white font-bold">
                       A ={' '}
                       {(
                         Math.PI *
@@ -384,7 +384,7 @@ const ConduitFillCalculator = () => {
                       ).toFixed(1)}{' '}
                       × {cableQuantity}
                     </div>
-                    <div className="text-purple-200 font-bold">
+                    <div className="text-white font-bold">
                       Total ={' '}
                       {(
                         Math.PI *
@@ -413,7 +413,7 @@ const ConduitFillCalculator = () => {
                       }
                       ) × 100
                     </div>
-                    <div className="text-purple-200 font-bold">Fill = {result.fillPercentage}%</div>
+                    <div className="text-white font-bold">Fill = {result.fillPercentage}%</div>
                   </div>
                 </div>
               </CollapsibleContent>
@@ -439,25 +439,25 @@ const ConduitFillCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Fill percentage</strong> affects cable pulling
+                    <strong className="text-white">Fill percentage</strong> affects cable pulling
                     difficulty and heat dissipation.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">High fill</strong> causes cables to jam during
+                    <strong className="text-white">High fill</strong> causes cables to jam during
                     pulling and overheat in operation.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Proper fill</strong> allows easier maintenance
+                    <strong className="text-white">Proper fill</strong> allows easier maintenance
                     and future cable additions.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Pull tension</strong> indicates if cable
+                    <strong className="text-white">Pull tension</strong> indicates if cable
                     lubricant may be needed.
                   </p>
                 </div>
@@ -486,28 +486,28 @@ const ConduitFillCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">BS EN 61386-1:</strong> Conduit systems for
-                    cable management
+                    <strong className="text-white">BS EN 61386-1:</strong> Conduit systems for cable
+                    management
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">1 cable:</strong> 53% maximum fill
+                    <strong className="text-white">1 cable:</strong> 53% maximum fill
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">2 cables:</strong> 31% maximum fill
+                    <strong className="text-white">2 cables:</strong> 31% maximum fill
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">3+ cables:</strong> 40% max for straight runs
+                    <strong className="text-white">3+ cables:</strong> 40% max for straight runs
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">With bends:</strong> Reduce to 35% maximum
+                    <strong className="text-white">With bends:</strong> Reduce to 35% maximum
                   </p>
                 </div>
               </div>
@@ -520,7 +520,7 @@ const ConduitFillCalculator = () => {
       <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-emerald-200">
+          <p className="text-sm text-white">
             <strong>Fill %</strong> = (Total Cable Area ÷ Conduit Area) × 100. Lower fill = easier
             installation.
           </p>

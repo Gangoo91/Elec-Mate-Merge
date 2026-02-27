@@ -257,7 +257,7 @@ const MaximumDemandCalculator = () => {
             key={load.id}
             className={cn(
               'p-4 rounded-xl border transition-colors',
-              errors[load.id] ? 'border-red-500/50 bg-red-500/5' : 'bg-white/5 border-white/10'
+              errors[load.id] ? 'border-red-500/50 bg-red-500/5' : 'bg-white/[0.04] border-white/10'
             )}
           >
             <div className="space-y-3">
@@ -412,18 +412,16 @@ const MaximumDemandCalculator = () => {
                 </h4>
 
                 <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-xs text-blue-300 mb-1">Supply Adequacy</p>
-                  <p className="text-sm text-blue-200">{supplyInfo.supplyAdequacy}</p>
+                  <p className="text-xs text-white mb-1">Supply Adequacy</p>
+                  <p className="text-sm text-white">{supplyInfo.supplyAdequacy}</p>
                 </div>
 
                 <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                   <div className="flex items-center gap-2">
                     <Zap className="h-4 w-4 text-emerald-400" />
-                    <p className="text-xs text-emerald-300">Recommended</p>
+                    <p className="text-xs text-white">Recommended</p>
                   </div>
-                  <p className="text-sm text-emerald-200 mt-1">
-                    {supplyInfo.mainSwitchRecommendation}
-                  </p>
+                  <p className="text-sm text-white mt-1">{supplyInfo.mainSwitchRecommendation}</p>
                 </div>
               </div>
             );
@@ -449,7 +447,7 @@ const MaximumDemandCalculator = () => {
             </CollapsibleTrigger>
 
             <CollapsibleContent className="pt-2">
-              <div className="text-sm font-mono text-purple-300 space-y-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <div className="text-sm font-mono text-white space-y-3 p-3 rounded-xl bg-white/[0.04] border border-white/5">
                 <div>
                   <p className="text-xs text-purple-400 mb-2">
                     Step 1: Calculate each load contribution
@@ -457,7 +455,7 @@ const MaximumDemandCalculator = () => {
                   {loadsWithPower.map((load) => (
                     <div key={load.id} className="pl-3 border-l-2 border-purple-500/30 mb-1">
                       {load.name}: {load.power}kW × {load.diversityFactor} ={' '}
-                      <span className="text-purple-200 font-bold">
+                      <span className="text-white font-bold">
                         {(
                           (parseFloat(load.power) || 0) * (parseFloat(load.diversityFactor) || 0)
                         ).toFixed(2)}
@@ -479,7 +477,7 @@ const MaximumDemandCalculator = () => {
                       .join(' + ')}
                   </p>
                   <p>
-                    MD = <span className="text-purple-200 font-bold">{result.maximumDemand}kW</span>
+                    MD = <span className="text-white font-bold">{result.maximumDemand}kW</span>
                   </p>
                 </div>
 
@@ -491,7 +489,7 @@ const MaximumDemandCalculator = () => {
                   <p>I = ({result.maximumDemand} × 1000) ÷ 230</p>
                   <p>
                     I ={' '}
-                    <span className="text-purple-200 font-bold">
+                    <span className="text-white font-bold">
                       {((result.maximumDemand * 1000) / 230).toFixed(1)}A
                     </span>
                   </p>
@@ -519,20 +517,20 @@ const MaximumDemandCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Maximum Demand:</strong> The calculated peak
-                    load after applying diversity factors based on realistic usage patterns.
+                    <strong className="text-white">Maximum Demand:</strong> The calculated peak load
+                    after applying diversity factors based on realistic usage patterns.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Diversity Factor:</strong> Accounts for the
-                    fact that not all loads operate at full capacity simultaneously. Lower factors =
-                    more diversity.
+                    <strong className="text-white">Diversity Factor:</strong> Accounts for the fact
+                    that not all loads operate at full capacity simultaneously. Lower factors = more
+                    diversity.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Supply Assessment:</strong> Helps determine if
+                    <strong className="text-white">Supply Assessment:</strong> Helps determine if
                     your electrical supply is adequate for the calculated demand.
                   </p>
                 </div>
@@ -561,26 +559,26 @@ const MaximumDemandCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">311.1:</strong> Assessment of maximum demand
+                    <strong className="text-white">311.1:</strong> Assessment of maximum demand
                     shall take diversity into account
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">Appendix 1:</strong> Guidance on diversity
+                    <strong className="text-white">Appendix 1:</strong> Guidance on diversity
                     factors for different installation types
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">433.1:</strong> Overcurrent protection
+                    <strong className="text-white">433.1:</strong> Overcurrent protection
                     coordination with calculated demand
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">314.1:</strong> Division of installation
-                    relative to the maximum demand
+                    <strong className="text-white">314.1:</strong> Division of installation relative
+                    to the maximum demand
                   </p>
                 </div>
               </div>
@@ -593,7 +591,7 @@ const MaximumDemandCalculator = () => {
       <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-200">
+          <p className="text-sm text-white">
             <strong>Maximum Demand</strong> = Σ(Load Power × Diversity Factor). Design current I =
             (MD × 1000) ÷ V
           </p>

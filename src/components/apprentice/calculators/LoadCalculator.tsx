@@ -412,7 +412,7 @@ export const LoadCalculator = () => {
             </ResultsGrid>
 
             <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20">
-              <p className="text-xs text-amber-200">
+              <p className="text-xs text-white">
                 <strong>Note:</strong> Based on Method C installation. Consider derating factors for
                 final design.
               </p>
@@ -480,20 +480,20 @@ export const LoadCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Maximum Demand:</strong> The estimated peak
-                    load after applying diversity factors. This accounts for the fact that not all
-                    loads operate simultaneously at full capacity.
+                    <strong className="text-white">Maximum Demand:</strong> The estimated peak load
+                    after applying diversity factors. This accounts for the fact that not all loads
+                    operate simultaneously at full capacity.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Design Current:</strong> The maximum demand
+                    <strong className="text-white">Design Current:</strong> The maximum demand
                     current plus a 25% safety margin for future expansion and unexpected loads.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-blue-300">Diversity Factors:</strong> Heating loads
+                    <strong className="text-white">Diversity Factors:</strong> Heating loads
                     typically run at full capacity (100%), while socket outlets have lower diversity
                     (40%) as they're rarely all used simultaneously.
                   </p>
@@ -523,26 +523,26 @@ export const LoadCalculator = () => {
               <div className="space-y-3 pl-1">
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">311.1:</strong> Assessment of maximum demand
+                    <strong className="text-white">311.1:</strong> Assessment of maximum demand
                     shall account for diversity
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">433.1:</strong> Protective devices shall be
+                    <strong className="text-white">433.1:</strong> Protective devices shall be
                     selected for design current (Ib ≤ In ≤ Iz)
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">525:</strong> Voltage drop limits: 3%
-                    lighting, 5% other uses from origin
+                    <strong className="text-white">525:</strong> Voltage drop limits: 3% lighting,
+                    5% other uses from origin
                   </p>
                 </div>
                 <div className="border-l-2 border-amber-400/40 pl-3">
                   <p className="text-sm text-white">
-                    <strong className="text-amber-300">Appendix 4:</strong> Current-carrying
-                    capacities and cable sizing tables
+                    <strong className="text-white">Appendix 4:</strong> Current-carrying capacities
+                    and cable sizing tables
                   </p>
                 </div>
               </div>
@@ -555,7 +555,7 @@ export const LoadCalculator = () => {
       <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
         <div className="flex items-start gap-2">
           <Info className="h-4 w-4 text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-200">
+          <p className="text-sm text-white">
             <strong>Maximum Demand</strong> = Σ(Connected Load × Diversity Factor). Design Current =
             Max Demand Current × 1.25
           </p>
