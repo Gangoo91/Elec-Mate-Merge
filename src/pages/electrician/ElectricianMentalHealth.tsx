@@ -205,18 +205,20 @@ const ElectricianMentalHealth = () => {
   return (
     <MentalHealthProvider>
       <div className="max-w-4xl mx-auto px-4 pb-8 space-y-6 animate-fade-in">
+        {/* Back Button */}
+        <div className="pt-2">
+          <SmartBackButton label="Back to Electrician Hub" className="[&>span]:inline" />
+        </div>
+
         {/* Header */}
-        <div className="text-center pt-2 pb-4">
+        <div className="text-center pb-4">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pink-500/20 to-purple-500/20 mb-4">
             <Heart className="h-8 w-8 text-pink-400" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-2">Mental Health Hub</h1>
-          <p className="text-white/80 text-sm sm:text-base max-w-md mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-md mx-auto">
             Your wellbeing matters. Take a moment for yourself.
           </p>
-          <div className="mt-4">
-            <SmartBackButton />
-          </div>
         </div>
 
         {/* Emergency Banner - Always Visible */}
