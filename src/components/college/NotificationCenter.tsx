@@ -227,11 +227,21 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
               <Bell className="h-4 w-4" />
               Notifications
             </h3>
-            {unreadCount > 0 && (
-              <Button variant="ghost" size="sm" className="text-xs h-7">
-                Mark all read
+            <div className="flex items-center gap-1">
+              {unreadCount > 0 && (
+                <Button variant="ghost" size="sm" className="text-xs h-7">
+                  Mark all read
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                onClick={() => setOpen(false)}
+              >
+                <X className="h-4 w-4" />
               </Button>
-            )}
+            </div>
           </div>
         </div>
 
@@ -275,12 +285,13 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
             </TabsTrigger>
           </TabsList>
 
-          <ScrollArea className="h-[400px]">
+          <ScrollArea className="max-h-[400px]">
             <TabsContent value={activeTab} className="m-0">
               {filteredNotifications.length === 0 ? (
-                <div className="p-8 text-center">
-                  <Bell className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-50" />
-                  <p className="text-sm text-muted-foreground">No notifications</p>
+                <div className="py-10 text-center">
+                  <Bell className="h-8 w-8 text-muted-foreground mx-auto mb-2 opacity-30" />
+                  <p className="text-sm font-medium text-white">All caught up</p>
+                  <p className="text-xs text-muted-foreground mt-1">No notifications right now</p>
                 </div>
               ) : (
                 <div className="divide-y">
@@ -347,12 +358,16 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
           </ScrollArea>
         </Tabs>
 
-        <Separator />
-        <div className="p-2">
-          <Button variant="ghost" className="w-full text-xs h-8" onClick={() => setOpen(false)}>
-            View all notifications
-          </Button>
-        </div>
+        {notifications.length > 0 && (
+          <>
+            <Separator />
+            <div className="p-2">
+              <Button variant="ghost" className="w-full text-xs h-8" onClick={() => setOpen(false)}>
+                View all notifications
+              </Button>
+            </div>
+          </>
+        )}
       </PopoverContent>
     </Popover>
   );

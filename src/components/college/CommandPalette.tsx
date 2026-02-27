@@ -200,7 +200,7 @@ export function CommandPalette({ open, onOpenChange, onNavigate }: CommandPalett
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
       <CommandInput
-        placeholder="Search students, staff, courses... or type a command"
+        placeholder="Search students, staff, courses…"
         value={search}
         onValueChange={setSearch}
       />

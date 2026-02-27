@@ -737,8 +737,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       </motion.section>
 
       {/* Activity Feed */}
-      <motion.section variants={itemVariants} className="space-y-4">
-        <SectionHeader title="Recent Activity" />
+      <motion.section variants={itemVariants}>
         <ActivityFeed maxItems={8} compact />
       </motion.section>
     </motion.div>
