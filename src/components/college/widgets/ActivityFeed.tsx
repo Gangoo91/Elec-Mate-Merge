@@ -165,16 +165,18 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
         <CardContent className="pt-0">
           <div className="space-y-3">
             {activities.slice(0, 5).map((activity) => (
-              <div key={activity.id} className="flex items-start gap-2">
-                <div className="mt-0.5">{getTypeIcon(activity.type)}</div>
+              <div key={activity.id} className="flex items-start gap-2 text-left">
+                <div className="mt-0.5 flex-shrink-0">{getTypeIcon(activity.type)}</div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs line-clamp-2">
-                    <span className="font-medium">{activity.actor}</span> {activity.action}{' '}
-                    <span className="text-white">{activity.subject}</span>
-                  </p>
-                  <p className="text-[10px] text-white mt-0.5">
-                    {formatTime(activity.timestamp)}
-                  </p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-xs line-clamp-2 text-left">
+                      <span className="font-medium">{activity.actor}</span> {activity.action}{' '}
+                      <span className="text-white">{activity.subject}</span>
+                    </p>
+                    <span className="text-[10px] text-white/60 shrink-0 mt-0.5">
+                      {formatTime(activity.timestamp)}
+                    </span>
+                  </div>
                 </div>
               </div>
             ))}
