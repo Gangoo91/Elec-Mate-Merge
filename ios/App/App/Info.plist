@@ -59,9 +59,13 @@
 	<string>Elec-Mate uses your camera to scan distribution boards and capture site photos.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Elec-Mate accesses your photo library to attach images to certificates and reports.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Elec-Mate saves exported certificates and site photos to your photo library.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Elec-Mate uses your microphone for the voice assistant feature.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Elec-Mate uses your location to track job site attendance and routes.</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 </dict>
 </plist>
