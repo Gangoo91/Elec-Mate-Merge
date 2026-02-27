@@ -209,9 +209,21 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <>
+      {/* Backdrop scrim — dims page content behind panel, consistent with search overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40"
+          onClick={() => setOpen(false)}
+        />
+      )}
+      <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative">
+        <Button
+          variant="ghost"
+          size="icon"
+          className={cn('relative', open && 'bg-elec-yellow/10 text-elec-yellow')}
+        >
           <Bell className="h-5 w-5" />
           {unreadCount > 0 && (
             <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-destructive text-destructive-foreground text-xs font-bold flex items-center justify-center animate-pulse">
@@ -220,7 +232,7 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-96 p-0" align="end">
+      <PopoverContent className="w-[calc(100vw-1rem)] sm:w-96 p-0 z-50" align="end">
         <div className="p-4 border-b">
           <div className="flex items-center justify-between">
             <h3 className="font-semibold flex items-center gap-2">
@@ -370,5 +382,6 @@ export function NotificationCenter({ onNavigate }: NotificationCenterProps) {
         )}
       </PopoverContent>
     </Popover>
+    </>
   );
 }
