@@ -121,7 +121,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 left-0 right-0 z-50',
+        'fixed top-0 left-0 right-0 z-50 md:left-64',
         'backdrop-blur-xl bg-background/95',
         'border-b transition-all duration-300',
         isScrolled ? 'border-white/10 shadow-lg shadow-black/20' : 'border-white/[0.06]'
