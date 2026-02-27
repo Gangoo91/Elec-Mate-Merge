@@ -206,19 +206,19 @@ const LandingPage = () => {
           <div className="hidden md:flex items-center gap-1">
             <a
               href="#features"
-              className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+              className="px-4 py-2 text-sm text-white hover:text-white transition-colors rounded-lg hover:bg-white/5"
             >
               Features
             </a>
             <a
               href="#pricing"
-              className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+              className="px-4 py-2 text-sm text-white hover:text-white transition-colors rounded-lg hover:bg-white/5"
             >
               Pricing
             </a>
             <a
               href="#ai"
-              className="px-4 py-2 text-sm text-white/60 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+              className="px-4 py-2 text-sm text-white hover:text-white transition-colors rounded-lg hover:bg-white/5"
             >
               AI Tools
             </a>
@@ -238,7 +238,7 @@ const LandingPage = () => {
               <>
                 <Link
                   to="/auth/signin"
-                  className="text-sm text-white/60 hover:text-white px-4 py-2 transition-colors"
+                  className="text-sm text-white hover:text-white px-4 py-2 transition-colors"
                 >
                   Sign in
                 </Link>
@@ -359,7 +359,7 @@ const LandingPage = () => {
             </motion.h1>
 
             <motion.p
-              className="text-white/60 text-base sm:text-lg lg:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 px-2"
+              className="text-white text-base sm:text-lg lg:text-xl max-w-2xl mx-auto mb-6 sm:mb-8 px-2"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -390,8 +390,12 @@ const LandingPage = () => {
               </Link>
             </motion.div>
 
+            <p className="text-center text-white text-sm mt-3">
+              Plans from <span className="text-yellow-400 font-semibold">£4.99/mo</span> after your free trial
+            </p>
+
             <motion.div
-              className="flex items-center justify-center gap-3 text-white/40 text-sm mt-5"
+              className="flex items-center justify-center gap-3 text-white text-sm mt-5"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
@@ -438,19 +442,19 @@ const LandingPage = () => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">8</div>
-              <div className="text-xs sm:text-sm text-white/60">Certificate Types</div>
+              <div className="text-xs sm:text-sm text-white">Certificate Types</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">50+</div>
-              <div className="text-xs sm:text-sm text-white/60">Calculators</div>
+              <div className="text-xs sm:text-sm text-white">Calculators</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">46+</div>
-              <div className="text-xs sm:text-sm text-white/60">Courses</div>
+              <div className="text-xs sm:text-sm text-white">Courses</div>
             </div>
             <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
               <div className="text-2xl sm:text-3xl font-bold text-yellow-400 mb-1">5</div>
-              <div className="text-xs sm:text-sm text-white/60">AI Specialists</div>
+              <div className="text-xs sm:text-sm text-white">AI Specialists</div>
             </div>
           </div>
         </div>
@@ -463,7 +467,7 @@ const LandingPage = () => {
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">
               One platform, every stage of your career
             </h2>
-            <p className="text-white/60 max-w-lg mx-auto">
+            <p className="text-white max-w-lg mx-auto">
               Whether you're starting out or running a team, Elec-Mate grows with you
             </p>
           </div>
@@ -531,7 +535,7 @@ const LandingPage = () => {
               <span className="text-xs text-blue-400 font-semibold">REAL SPARKS, REAL SITES</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Elec-Mate in action</h2>
-            <p className="text-white/60 max-w-lg mx-auto">
+            <p className="text-white max-w-lg mx-auto">
               See how electricians are using Elec-Mate on site every day
             </p>
           </div>
@@ -547,7 +551,7 @@ const LandingPage = () => {
               />
               <div className="absolute bottom-3 left-3 right-3 z-20">
                 <p className="text-white font-semibold text-sm">AI Board Scanner</p>
-                <p className="text-white/60 text-xs">Scan & auto-populate circuits</p>
+                <p className="text-white text-xs">Scan & auto-populate circuits</p>
               </div>
             </div>
 
@@ -561,7 +565,7 @@ const LandingPage = () => {
               />
               <div className="absolute bottom-3 left-3 right-3 z-20">
                 <p className="text-white font-semibold text-sm">Site Testing</p>
-                <p className="text-white/60 text-xs">Log results as you test</p>
+                <p className="text-white text-xs">Log results as you test</p>
               </div>
             </div>
 
@@ -575,7 +579,7 @@ const LandingPage = () => {
               />
               <div className="absolute bottom-3 left-3 right-3 z-20">
                 <p className="text-white font-semibold text-sm">Digital Certificates</p>
-                <p className="text-white/60 text-xs">EIC, EICR & Minor Works</p>
+                <p className="text-white text-xs">EIC, EICR & Minor Works</p>
               </div>
             </div>
 
@@ -589,7 +593,7 @@ const LandingPage = () => {
               />
               <div className="absolute bottom-3 left-3 right-3 z-20">
                 <p className="text-white font-semibold text-sm">All-in-One Dashboard</p>
-                <p className="text-white/60 text-xs">Everything at your fingertips</p>
+                <p className="text-white text-xs">Everything at your fingertips</p>
               </div>
             </div>
           </div>
@@ -601,7 +605,7 @@ const LandingPage = () => {
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Trusted by UK sparks</h2>
-            <p className="text-white/60 text-sm sm:text-base">Real electricians, real results</p>
+            <p className="text-white text-sm sm:text-base">Real electricians, real results</p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -617,10 +621,11 @@ const LandingPage = () => {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Cole Humphreys</p>
-                  <p className="text-yellow-400/70 text-xs">Corevolt Electrical</p>
+                  <p className="text-yellow-400 text-xs">Corevolt Electrical</p>
                 </div>
               </div>
-              <blockquote className="text-white/70 text-sm leading-relaxed">
+              <div className="flex gap-0.5 mb-3 text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <blockquote className="text-white text-sm leading-relaxed">
                 "Everything is practical, easy to use, and actually useful on site. It saves time,
                 takes the hassle out of calculations and checks, and just makes day-to-day work
                 smoother. I genuinely love using it — it's an absolute game-changer."
@@ -639,10 +644,11 @@ const LandingPage = () => {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Dan Palmer</p>
-                  <p className="text-yellow-400/70 text-xs">Dan Palmer Services</p>
+                  <p className="text-yellow-400 text-xs">Dan Palmer Services</p>
                 </div>
               </div>
-              <blockquote className="text-white/70 text-sm leading-relaxed">
+              <div className="flex gap-0.5 mb-3 text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <blockquote className="text-white text-sm leading-relaxed">
                 "Elec-Mate has replaced 2/3 other apps and merged them into one. It's streamlined
                 all aspects of our business from apprentices to the QS signing jobs off. The AI
                 circuit designer in our handover packs has already won us additional contracts — a
@@ -662,10 +668,11 @@ const LandingPage = () => {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Nathan Perry</p>
-                  <p className="text-yellow-400/70 text-xs">NP Electrical Services</p>
+                  <p className="text-yellow-400 text-xs">NP Electrical Services</p>
                 </div>
               </div>
-              <blockquote className="text-white/70 text-sm leading-relaxed">
+              <div className="flex gap-0.5 mb-3 text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+              <blockquote className="text-white text-sm leading-relaxed">
                 "Elec-Mate has become my go-to software for quoting, invoicing, and managing jobs.
                 It's really easy to use and keeps everything in one place — I'm not jumping between
                 different apps anymore. The calculation and circuit design features are a big help
@@ -688,7 +695,7 @@ const LandingPage = () => {
               <span className="text-xs text-yellow-400 font-semibold">POWERED BY AI</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Stop Googling regs</h2>
-            <p className="text-white/60 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               5 AI specialists trained on{' '}
               <span className="text-yellow-400 font-medium">BS 7671:2018 + A3:2024</span> — ask
               anything
@@ -767,9 +774,9 @@ const LandingPage = () => {
           </div>
 
           <div className="mt-8 text-center">
-            <p className="text-white/50 text-sm">
-              <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />+ 3 more specialists
-              coming soon: Commissioning Engineer, Inspector & Training Coach
+            <p className="text-white text-sm">
+              <Sparkles className="w-4 h-4 inline mr-1.5 text-purple-400" />+ 2 more specialists
+              coming soon: Project Manager & Commissioning Agent
             </p>
           </div>
         </div>
@@ -784,7 +791,7 @@ const LandingPage = () => {
               <span className="text-xs text-emerald-400 font-semibold">GET PAID FASTER</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Quote to payment in minutes</h2>
-            <p className="text-white/60 text-sm sm:text-base max-w-lg mx-auto">
+            <p className="text-white text-sm sm:text-base max-w-lg mx-auto">
               Create a quote by hand or voice, scan materials, send it for signing, do the work,
               convert to invoice, get paid — all from your phone.
             </p>
@@ -796,20 +803,20 @@ const LandingPage = () => {
                 <Mic className="w-6 h-6 text-yellow-400" />
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Create Quotes Your Way</h3>
-              <p className="text-sm text-white/60 mb-3">
+              <p className="text-sm text-white mb-3">
                 Type it, speak it, or scan materials with your camera — get a professional quote
                 ready to send in minutes.
               </p>
               <div className="space-y-1.5">
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-yellow-400" />
                   <span>Voice, manual, or scanner input</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-yellow-400" />
                   <span>AI formats line items & pricing</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-yellow-400" />
                   <span>Send via email or WhatsApp</span>
                 </div>
@@ -821,20 +828,20 @@ const LandingPage = () => {
                 <Send className="w-6 h-6 text-blue-400" />
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Send, Sign & Start Work</h3>
-              <p className="text-sm text-white/60 mb-3">
+              <p className="text-sm text-white mb-3">
                 Clients get accept or reject buttons straight in their email. Chase signatures with
                 automatic reminders.
               </p>
               <div className="space-y-1.5">
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-blue-400" />
                   <span>Client accept/reject buttons</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-blue-400" />
                   <span>Automated email reminders</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-blue-400" />
                   <span>Digital signatures built in</span>
                 </div>
@@ -846,20 +853,20 @@ const LandingPage = () => {
                 <CreditCard className="w-6 h-6 text-emerald-400" />
               </div>
               <h3 className="font-bold text-white text-lg mb-2">Get Paid the Same Day</h3>
-              <p className="text-sm text-white/60 mb-3">
+              <p className="text-sm text-white mb-3">
                 Convert any signed quote to an invoice in one tap. Stripe payment links mean
                 customers pay instantly by card.
               </p>
               <div className="space-y-1.5">
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-emerald-400" />
                   <span>One-tap quote to invoice</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-emerald-400" />
                   <span>Stripe payment links in every invoice</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <div className="w-1 h-1 rounded-full bg-emerald-400" />
                   <span>Auto-sync to Xero & QuickBooks</span>
                 </div>
@@ -886,7 +893,7 @@ const LandingPage = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Simple, honest pricing</h2>
-            <p className="text-white/60">Try everything free for 7 days. No charge until day 8.</p>
+            <p className="text-white">Try everything free for 7 days. No charge until day 8.</p>
           </div>
 
           <div className="grid sm:grid-cols-3 gap-5">
@@ -939,7 +946,7 @@ const LandingPage = () => {
             />
           </div>
 
-          <p className="text-center text-white/40 text-sm mt-8">
+          <p className="text-center text-white text-sm mt-8">
             7-day free trial on all plans · No charge until day 8 · Cancel anytime
           </p>
         </div>
@@ -965,12 +972,12 @@ const LandingPage = () => {
                     {faq.question}
                   </span>
                   <ChevronDown
-                    className={`w-5 h-5 text-white/50 flex-shrink-0 transition-transform ${openFaqIndex === index ? 'rotate-180' : ''}`}
+                    className={`w-5 h-5 text-white flex-shrink-0 transition-transform ${openFaqIndex === index ? 'rotate-180' : ''}`}
                   />
                 </button>
                 {openFaqIndex === index && (
                   <div className="px-4 sm:px-5 pb-4 sm:pb-5">
-                    <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                    <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
                   </div>
                 )}
               </div>
@@ -1053,7 +1060,7 @@ const LandingPage = () => {
           <div className="text-center rounded-2xl bg-gradient-to-br from-yellow-500/20 via-amber-500/15 to-orange-500/10 border border-yellow-500/30 p-10">
             <Zap className="w-12 h-12 text-yellow-400 mx-auto mb-4" />
             <h2 className="text-2xl sm:text-3xl font-bold mb-3">Ready to work smarter?</h2>
-            <p className="text-white/70 mb-6 max-w-md mx-auto">
+            <p className="text-white mb-6 max-w-md mx-auto">
               Join 550+ UK electricians saving hours every week.
             </p>
             <Link to="/auth/signup">
@@ -1072,21 +1079,21 @@ const LandingPage = () => {
               </div>
               <div>
                 <h3 className="font-bold text-white text-base mb-1">Mental Health Mates</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Construction has the highest suicide rate of any sector. We've built a safe space
                   with mood tracking, breathing exercises, journals, and crisis resources.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white text-xs">
                     Mood Tracking
                   </span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white text-xs">
                     Breathing Exercises
                   </span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white text-xs">
                     Crisis Resources
                   </span>
-                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white/70 text-xs">
+                  <span className="px-2.5 py-1 rounded-full bg-white/10 text-white text-xs">
                     Peer Support
                   </span>
                 </div>
@@ -1112,7 +1119,7 @@ const LandingPage = () => {
                   Elec-<span className="text-yellow-400">Mate</span>
                 </span>
               </div>
-              <p className="text-sm text-white/60 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 The complete platform for UK electricians. Training, AI tools, certificates, and
                 business management.
               </p>
@@ -1307,7 +1314,7 @@ const AudienceCard = ({
       </div>
 
       <h3 className="font-bold text-white text-xl mb-1">{title}</h3>
-      <p className="text-white/50 text-sm mb-3">{tagline}</p>
+      <p className="text-white text-sm mb-3">{tagline}</p>
 
       {/* Pain point callout */}
       <div className={`rounded-lg border px-3 py-2 mb-4 ${config.painBg}`}>
@@ -1316,7 +1323,7 @@ const AudienceCard = ({
 
       <div className="space-y-2.5">
         {features.map((feature) => (
-          <div key={feature} className="flex items-start gap-2.5 text-sm text-white/80">
+          <div key={feature} className="flex items-start gap-2.5 text-sm text-white">
             <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${config.dot}`} />
             {feature}
           </div>
@@ -1399,10 +1406,10 @@ const EnhancedAICard = ({
         </div>
         <div className="flex-1 min-w-0">
           <h4 className="font-bold text-white text-base mb-0.5">{name}</h4>
-          <p className="text-xs text-white/50 mb-3">{tagline}</p>
+          <p className="text-xs text-white mb-3">{tagline}</p>
           <div className="space-y-1.5">
             {features.map((feature) => (
-              <div key={feature} className="flex items-start gap-2 text-xs text-white/70">
+              <div key={feature} className="flex items-start gap-2 text-xs text-white">
                 <div className={`w-1 h-1 rounded-full mt-1.5 flex-shrink-0 ${config.dot}`} />
                 <span>{feature}</span>
               </div>
@@ -1485,11 +1492,11 @@ const PricingCard = ({
         ) : (
           <>
             <span className="text-4xl font-bold text-white">{price}</span>
-            <span className="text-sm text-white/50">/month</span>
+            <span className="text-sm text-white">/month</span>
           </>
         )}
       </div>
-      <p className="text-sm text-white/60 mb-6">{description}</p>
+      <p className="text-sm text-white mb-6">{description}</p>
 
       {comingSoon ? (
         <a href="mailto:hello@elec-mate.com?subject=Employer%20Early%20Access">
@@ -1511,7 +1518,7 @@ const PricingCard = ({
 
       <div className="mt-6 space-y-3">
         {features.map((feature) => (
-          <div key={feature} className="flex items-start gap-2.5 text-sm text-white/80">
+          <div key={feature} className="flex items-start gap-2.5 text-sm text-white">
             <Check className={`w-4 h-4 flex-shrink-0 mt-0.5 ${config.check}`} />
             {feature}
           </div>
