@@ -136,7 +136,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           value={result.bsStandard || ''}
           onValueChange={handleBsStandardChange}
         >
-          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="BS EN" className="truncate" />
           </SelectTrigger>
           <SelectContent
@@ -166,7 +166,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           onValueChange={handleCurveChange}
           disabled={!showCurveSelector}
         >
-          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 disabled:opacity-50">
             <SelectValue placeholder="Type" className="truncate" />
           </SelectTrigger>
           <SelectContent
@@ -195,7 +195,7 @@ const ProtectiveDeviceCellsComponent: React.FC<ProtectiveDeviceCellsProps> = ({
           value={result.protectiveDeviceRating || ''}
           onValueChange={handleRatingChange}
         >
-          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="A" className="truncate" />
           </SelectTrigger>
           <SelectContent

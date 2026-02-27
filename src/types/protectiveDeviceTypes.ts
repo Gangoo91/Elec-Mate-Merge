@@ -9,6 +9,7 @@ export const protectiveDeviceTypeOptions = [
 
 // Protective device ratings
 export const protectiveDeviceRatingOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: '6', label: '6A' },
   { value: '10', label: '10A' },
   { value: '16', label: '16A' },
@@ -24,6 +25,7 @@ export const protectiveDeviceRatingOptions = [
 
 // BS Standards for protective devices
 export const bsStandardOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'MCB (BS EN 60898)', label: 'MCB (BS EN 60898)' },
   { value: 'RCBO (BS EN 61009)', label: 'RCBO (BS EN 61009)' },
   { value: 'RCD (BS EN 61008)', label: 'RCD (BS EN 61008)' },
@@ -35,6 +37,7 @@ export const bsStandardOptions = [
 
 // RCD-specific BS Standards (for RCD Details section)
 export const rcdBsStandardOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'RCD (BS EN 61008)', label: 'RCD (BS EN 61008)' },
   { value: 'RCBO (BS EN 61009)', label: 'RCBO (BS EN 61009)' },
   { value: 'RCD (BS 7288)', label: 'RCD (BS 7288)' },
@@ -44,6 +47,7 @@ export const rcdBsStandardOptions = [
 // MCB Curve Type Options (Tripping Characteristics)
 // BS 7671 compliant - only B, C, D curves for BS EN 60898/61009
 export const protectiveDeviceCurveOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'B', label: 'B' },
   { value: 'C', label: 'C' },
   { value: 'D', label: 'D' },

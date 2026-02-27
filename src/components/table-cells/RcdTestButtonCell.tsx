@@ -17,7 +17,7 @@ const RcdTestButtonCellComponent = ({ value, onChange }: RcdTestButtonCellProps)
   return (
     <TableCell className="p-0 h-8 align-middle text-center">
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+        <SelectTrigger className="h-8 text-sm px-2 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
           <SelectValue placeholder="Select" />
         </SelectTrigger>
         <SelectContent className="bg-background border border-border rounded-md z-[100]">

@@ -1,6 +1,7 @@
 // BS 7671 Reference Methods / Types of Wiring
 
 export const wiringTypeOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'A', label: 'A - Enclosed in conduit in thermally insulated wall' },
   { value: 'B', label: 'B - Enclosed in conduit on a wall or in trunking' },
   { value: 'C', label: 'C - Clipped direct' },
@@ -13,6 +14,7 @@ export const wiringTypeOptions = [
 ];
 
 export const rcdTypeOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'AC', label: 'AC' },
   { value: 'A', label: 'A' },
   { value: 'F', label: 'F' },

@@ -39,7 +39,7 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
           value={result.liveSize || ''}
           onValueChange={handleLiveSizeChange}
         >
-          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="Live" />
           </SelectTrigger>
           <SelectContent
@@ -66,7 +66,7 @@ const ConductorCellsComponent: React.FC<ConductorCellsProps> = ({ result, onUpda
           value={result.cpcSize || ''}
           onValueChange={handleCpcSizeChange}
         >
-          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border-0 rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
+          <SelectTrigger className="h-8 text-sm px-2 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30">
             <SelectValue placeholder="CPC" />
           </SelectTrigger>
           <SelectContent

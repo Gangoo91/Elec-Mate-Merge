@@ -2,6 +2,7 @@
 // Current carrying capacities for single-phase 70°C thermoplastic insulated (PVC) cables
 // Note: Large sizes (150mm²+) typically use XLPE - capacities shown are indicative
 export const cableSizeOptions = [
+  { value: 'N/A', label: 'N/A', currentCarryingCapacity: 0 },
   { value: '0.5mm', label: '0.5mm²', currentCarryingCapacity: 3 },
   { value: '0.75mm', label: '0.75mm²', currentCarryingCapacity: 6 },
   { value: '1.0mm', label: '1.0mm²', currentCarryingCapacity: 13.5 },
@@ -25,6 +26,7 @@ export const cableSizeOptions = [
 ];
 
 export const referenceMethodOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'A', label: 'A' },
   { value: 'B', label: 'B' },
   { value: 'C', label: 'C' },

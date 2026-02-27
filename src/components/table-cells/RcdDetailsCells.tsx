@@ -53,7 +53,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdBsStandard || ''}
           onValueChange={handleRcdBsStandardChange}
         >
-          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="BS EN" />
           </SelectTrigger>
           <SelectContent
@@ -82,7 +82,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdType || ''}
           onValueChange={handleRcdTypeChange}
         >
-          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="Type" />
           </SelectTrigger>
           <SelectContent
@@ -111,7 +111,7 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
           value={result.rcdRating || ''}
           onValueChange={handleRcdRatingChange}
         >
-          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border-0 rounded-none hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
+          <SelectTrigger className="h-8 text-sm px-0 bg-transparent border border-transparent text-white rounded-md hover:bg-muted/20 focus:bg-muted/30 focus:ring-1 focus:ring-elec-yellow/30 focus:bg-transparent data-[state=open]:bg-transparent">
             <SelectValue placeholder="mA" />
           </SelectTrigger>
           <SelectContent
@@ -120,6 +120,9 @@ const RcdDetailsCellsComponent: React.FC<RcdDetailsCellsProps> = ({
             sideOffset={5}
             className="bg-background border border-border rounded-md z-[9999]"
           >
+            <SelectItem value="N/A" className="text-xs text-neutral-100">
+              N/A
+            </SelectItem>
             <SelectItem value="10mA" className="text-xs text-neutral-100">
               10mA
             </SelectItem>
