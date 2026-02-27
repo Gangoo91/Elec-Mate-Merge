@@ -21,8 +21,8 @@ import {
 } from 'lucide-react';
 
 const PrivacyPolicy = () => {
-  const lastUpdated = '30 January 2026';
-  const effectiveDate = '30 January 2026';
+  const lastUpdated = '27 February 2026';
+  const effectiveDate = '27 February 2026';
 
   return (
     <div className="bg-black text-white min-h-screen">
@@ -131,6 +131,10 @@ const PrivacyPolicy = () => {
                   <li>Profile photograph (optional)</li>
                   <li>Account role (apprentice, electrician, employer, college)</li>
                   <li>Phone number (optional)</li>
+                  <li>
+                    Photos and images you capture or upload (site visit photos, safety
+                    documentation, board scanner images, portfolio evidence, document scans)
+                  </li>
                 </ul>
               </div>
 
@@ -171,6 +175,11 @@ const PrivacyPolicy = () => {
                 <h3 className="font-semibold text-white mb-2">Technical & Usage Data</h3>
                 <ul className="text-gray-300 text-sm space-y-1 list-disc list-inside">
                   <li>IP address and approximate location (country/region)</li>
+                  <li>
+                    Precise location data (GPS coordinates) when you use map features such as job
+                    location search, travel time estimates, or address lookup — only with your
+                    device permission
+                  </li>
                   <li>Browser type and version</li>
                   <li>Device type and operating system</li>
                   <li>Pages visited and features used</li>
@@ -221,6 +230,19 @@ const PrivacyPolicy = () => {
                 <p className="text-gray-300 text-sm">
                   Sending service notifications, security alerts, subscription reminders, and (with
                   your consent) marketing communications about new features.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
+                <h3 className="font-semibold text-white mb-1">AI-Powered Features</h3>
+                <p className="text-gray-300 text-sm">
+                  When you use AI tools (such as the Circuit Designer, RAMS Generator, Fault
+                  Diagnosis, Cost Engineer, Commissioning Agent, or Elec-AI Assistant), the
+                  information you enter — including project details, circuit specifications,
+                  inspection observations, and uploaded images — is sent to OpenAI for processing.
+                  OpenAI processes this data under a Data Processing Agreement and does not use it
+                  to train their models. We do not send your name, email, or account details to
+                  OpenAI.
                 </p>
               </div>
 
@@ -349,9 +371,26 @@ const PrivacyPolicy = () => {
                         <td className="py-2 px-3">AI-powered features</td>
                         <td className="py-2 px-3">USA (DPA in place)</td>
                       </tr>
-                      <tr>
+                      <tr className="border-b border-white/5">
+                        <td className="py-2 px-3">Google</td>
+                        <td className="py-2 px-3">Maps, address search & geocoding</td>
+                        <td className="py-2 px-3">USA (DPA in place)</td>
+                      </tr>
+                      <tr className="border-b border-white/5">
                         <td className="py-2 px-3">Resend</td>
                         <td className="py-2 px-3">Transactional emails</td>
+                        <td className="py-2 px-3">USA (DPA in place)</td>
+                      </tr>
+                      <tr className="border-b border-white/5">
+                        <td className="py-2 px-3">Sentry</td>
+                        <td className="py-2 px-3">
+                          Error tracking, crash reporting & session replay for debugging
+                        </td>
+                        <td className="py-2 px-3">USA (DPA in place)</td>
+                      </tr>
+                      <tr>
+                        <td className="py-2 px-3">RevenueCat</td>
+                        <td className="py-2 px-3">Subscription management</td>
                         <td className="py-2 px-3">USA (DPA in place)</td>
                       </tr>
                     </tbody>
@@ -450,6 +489,26 @@ const PrivacyPolicy = () => {
                   <li>Incident response procedures</li>
                 </ul>
               </div>
+            </div>
+
+            <div className="p-4 rounded-xl bg-white/5 border border-white/10 mt-4">
+              <h3 className="font-semibold text-white mb-2">On-Device Storage</h3>
+              <p className="text-white text-sm mb-2">
+                To support offline use and faster performance, we store certain data locally on your
+                device using browser localStorage and IndexedDB:
+              </p>
+              <ul className="text-white text-sm space-y-1 list-disc list-inside">
+                <li>Mental health check-ins and daily reflections</li>
+                <li>Form drafts (including customer names, addresses, and project details)</li>
+                <li>Offline message queues (sent automatically when connectivity resumes)</li>
+                <li>Study progress and session data</li>
+                <li>User preferences and settings</li>
+              </ul>
+              <p className="text-white text-sm mt-2">
+                This data remains on your device until you clear your browser data or sign out. It
+                is not encrypted separately from your device's own protections. We recommend using a
+                device passcode or biometric lock to secure your device.
+              </p>
             </div>
           </section>
 
