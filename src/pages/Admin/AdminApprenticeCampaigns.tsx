@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 import { formatDistanceToNow, parseISO, format } from 'date-fns';
 import PullToRefresh from '@/components/admin/PullToRefresh';
 import AdminSearchInput from '@/components/admin/AdminSearchInput';
@@ -202,7 +202,7 @@ export default function AdminApprenticeCampaigns() {
     },
     onSuccess: (data) => {
       haptic.success();
-      toast.success(`Campaign email sent to ${data.email}`);
+      toast({ title: `Campaign email sent to ${data.email}`, variant: 'success' });
       queryClient.invalidateQueries({
         queryKey: ['apprentice-campaign-stats'],
       });
@@ -219,9 +219,9 @@ export default function AdminApprenticeCampaigns() {
         return next;
       });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       haptic.error();
-      toast.error(err.message || 'Failed to send email');
+      toast({ title: err.message || 'Failed to send email', variant: 'destructive' });
     },
   });
 
@@ -235,9 +235,10 @@ export default function AdminApprenticeCampaigns() {
     },
     onSuccess: (data) => {
       haptic.success();
-      toast.success(
-        `Sent ${data.sent} emails${data.skipped ? `, ${data.skipped} skipped` : ''}${data.failed ? `, ${data.failed} failed` : ''}`
-      );
+      toast({
+        title: `Sent ${data.sent} of ${data.sent + (data.failed || 0)} emails${data.skipped ? ` (${data.skipped} skipped)` : ''}${data.failed ? ` (${data.failed} failed)` : ''}`,
+        variant: data.failed ? 'warning' : 'success',
+      });
       queryClient.invalidateQueries({
         queryKey: ['apprentice-campaign-stats'],
       });
@@ -250,9 +251,9 @@ export default function AdminApprenticeCampaigns() {
       setSelectedUsers(new Set());
       setConfirmSendAll(false);
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       haptic.error();
-      toast.error(err.message || 'Bulk send failed');
+      toast({ title: err.message || 'Bulk send failed', variant: 'destructive' });
     },
   });
 
@@ -266,12 +267,12 @@ export default function AdminApprenticeCampaigns() {
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Test email sent!');
+      toast({ title: 'Test email sent!', variant: 'success' });
       setTestEmail('');
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       haptic.error();
-      toast.error(err.message || 'Failed to send test email');
+      toast({ title: err.message || 'Failed to send test email', variant: 'destructive' });
     },
   });
 
@@ -289,15 +290,15 @@ export default function AdminApprenticeCampaigns() {
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Email sent!');
+      toast({ title: 'Email sent!', variant: 'success' });
       setManualEmail('');
       queryClient.invalidateQueries({
         queryKey: ['apprentice-campaign-stats'],
       });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       haptic.error();
-      toast.error(err.message || 'Failed to send email');
+      toast({ title: err.message || 'Failed to send email', variant: 'destructive' });
     },
   });
 
@@ -311,7 +312,7 @@ export default function AdminApprenticeCampaigns() {
     },
     onSuccess: (data) => {
       haptic.success();
-      toast.success(data.message || `${data.reset} users reset`);
+      toast({ title: data.message || `${data.reset} users reset`, variant: 'success' });
       queryClient.invalidateQueries({
         queryKey: ['apprentice-campaign-stats'],
       });
@@ -322,9 +323,9 @@ export default function AdminApprenticeCampaigns() {
         queryKey: ['apprentice-campaign-sent'],
       });
     },
-    onError: (err: any) => {
+    onError: (err: Error) => {
       haptic.error();
-      toast.error(err.message || 'Failed to reset sent status');
+      toast({ title: err.message || 'Failed to reset sent status', variant: 'destructive' });
     },
   });
 
@@ -392,9 +393,7 @@ export default function AdminApprenticeCampaigns() {
           </div>
           <div>
             <h2 className="text-lg font-bold">Apprentice Campaigns</h2>
-            <p className="text-xs text-white">
-              Targeted email campaigns for apprentice users
-            </p>
+            <p className="text-xs text-white">Targeted email campaigns for apprentice users</p>
           </div>
         </div>
 
@@ -563,9 +562,7 @@ export default function AdminApprenticeCampaigns() {
           <CardContent className="space-y-4">
             {campaignType === 'feature_spotlight' && (
               <div>
-                <label className="text-sm text-white mb-2 block">
-                  Feature to highlight
-                </label>
+                <label className="text-sm text-white mb-2 block">Feature to highlight</label>
                 <Select value={featureKey} onValueChange={setFeatureKey}>
                   <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
                     <SelectValue />
@@ -937,9 +934,7 @@ export default function AdminApprenticeCampaigns() {
                   </div>
                   <div>
                     <p className="text-left">{selectedUser?.full_name || 'Unknown'}</p>
-                    <p className="text-sm font-normal text-white">
-                      {selectedUser?.email}
-                    </p>
+                    <p className="text-sm font-normal text-white">{selectedUser?.email}</p>
                   </div>
                 </SheetTitle>
               </SheetHeader>

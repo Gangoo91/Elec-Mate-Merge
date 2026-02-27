@@ -47,7 +47,7 @@ import {
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { format, formatDistanceToNow, parseISO } from 'date-fns';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 
 interface EligibleUser {
@@ -258,7 +258,7 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Win-back offer sent successfully');
+      toast({ title: 'Win-back offer sent successfully', variant: 'success' });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
       queryClient.invalidateQueries({ queryKey: ['admin-winback-sent'] });
@@ -271,7 +271,7 @@ export default function AdminWinback() {
     },
     onError: (error) => {
       haptic.error();
-      toast.error(`Failed to send: ${error.message}`);
+      toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
     },
   });
 
@@ -309,20 +309,22 @@ export default function AdminWinback() {
         totalSent += data.sent || 0;
         totalFailed += data.failed || 0;
         setBatchProgress((prev) => ({ ...prev, sent: totalSent, failed: totalFailed }));
-        toast.success(`Batch ${i + 1}/${batches.length} done — ${data.sent} sent`);
       } catch (err: unknown) {
         totalFailed += batches[i].length;
         setBatchProgress((prev) => ({ ...prev, failed: totalFailed }));
-        toast.error(
-          `Batch ${i + 1} failed: ${err instanceof Error ? err.message : 'Unknown error'}`
-        );
       }
 
       if (i < batches.length - 1) await new Promise((r) => setTimeout(r, 2000));
     }
 
     haptic.success();
-    toast.success(`All done! ${totalSent} sent, ${totalFailed} failed out of ${userIds.length}`);
+    toast({
+      title:
+        totalFailed === 0
+          ? `Sent ${totalSent} of ${userIds.length} emails`
+          : `Sent ${totalSent} of ${userIds.length} emails (${totalFailed} failed)`,
+      variant: totalFailed === 0 ? 'success' : 'warning',
+    });
     setBatchSending(false);
     setBatchProgress({ sent: 0, failed: 0, total: 0, batch: 0, totalBatches: 0 });
     setSelectedUsers(new Set());
@@ -344,13 +346,13 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Test email sent! Check your inbox.');
+      toast({ title: 'Test email sent! Check your inbox.', variant: 'success' });
       setTestEmail('');
       setShowTestEmail(false);
     },
     onError: (error) => {
       haptic.error();
-      toast.error(`Failed to send test email: ${error.message}`);
+      toast({ title: `Failed to send test email: ${error.message}`, variant: 'destructive' });
     },
   });
 
@@ -366,13 +368,13 @@ export default function AdminWinback() {
     },
     onSuccess: () => {
       haptic.success();
-      toast.success('Win-back offer sent!');
+      toast({ title: 'Win-back offer sent!', variant: 'success' });
       setManualEmail('');
       queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
     },
     onError: (error) => {
       haptic.error();
-      toast.error(`Failed to send: ${error.message}`);
+      toast({ title: `Failed to send: ${error.message}`, variant: 'destructive' });
     },
   });
 
@@ -1126,7 +1128,10 @@ export default function AdminWinback() {
                     if (data?.error) throw new Error(data.error);
 
                     haptic.success();
-                    toast.success(`${data.reset} users reset — now sending new email...`);
+                    toast({
+                      title: `${data.reset} users reset — now sending new email...`,
+                      variant: 'success',
+                    });
 
                     await queryClient.invalidateQueries({ queryKey: ['admin-winback-eligible'] });
                     await queryClient.invalidateQueries({ queryKey: ['admin-winback-stats'] });
@@ -1138,14 +1143,18 @@ export default function AdminWinback() {
                     if (freshUsers.length > 0) {
                       sendBatchedEmails(freshUsers.map((u: EligibleUser) => u.id));
                     } else {
-                      toast.info('No users to resend to (all subscribed or sent < 24h ago)');
+                      toast({
+                        title: 'No users to resend to (all subscribed or sent < 24h ago)',
+                        variant: 'info',
+                      });
                     }
                   } catch (err: unknown) {
                     setResetting(false);
                     haptic.error();
-                    toast.error(
-                      `Reset failed: ${err instanceof Error ? err.message : 'Unknown error'}`
-                    );
+                    toast({
+                      title: `Reset failed: ${err instanceof Error ? err.message : 'Unknown error'}`,
+                      variant: 'destructive',
+                    });
                   }
                 }}
                 className="h-12 sm:h-11 touch-manipulation text-base sm:text-sm bg-amber-500 hover:bg-amber-600 text-black font-semibold w-full sm:w-auto"
