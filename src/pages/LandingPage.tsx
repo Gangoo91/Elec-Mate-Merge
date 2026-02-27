@@ -624,7 +624,7 @@ const LandingPage = () => {
                   <p className="text-yellow-400 text-xs">Corevolt Electrical</p>
                 </div>
               </div>
-              <div className="flex gap-0.5 mb-3 text-yellow-400">★★★★★</div>
+              <div className="flex gap-0.5 mb-3 text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
               <blockquote className="text-white text-sm leading-relaxed">
                 "Everything is practical, easy to use, and actually useful on site. It saves time,
                 takes the hassle out of calculations and checks, and just makes day-to-day work
@@ -647,7 +647,7 @@ const LandingPage = () => {
                   <p className="text-yellow-400 text-xs">Dan Palmer Services</p>
                 </div>
               </div>
-              <div className="flex gap-0.5 mb-3 text-yellow-400">★★★★★</div>
+              <div className="flex gap-0.5 mb-3 text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
               <blockquote className="text-white text-sm leading-relaxed">
                 "Elec-Mate has replaced 2/3 other apps and merged them into one. It's streamlined
                 all aspects of our business from apprentices to the QS signing jobs off. The AI
@@ -671,7 +671,7 @@ const LandingPage = () => {
                   <p className="text-yellow-400 text-xs">NP Electrical Services</p>
                 </div>
               </div>
-              <div className="flex gap-0.5 mb-3 text-yellow-400">★★★★★</div>
+              <div className="flex gap-0.5 mb-3 text-yellow-400">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
               <blockquote className="text-white text-sm leading-relaxed">
                 "Elec-Mate has become my go-to software for quoting, invoicing, and managing jobs.
                 It's really easy to use and keeps everything in one place — I'm not jumping between
