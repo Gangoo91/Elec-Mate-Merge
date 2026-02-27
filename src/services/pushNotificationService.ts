@@ -37,7 +37,7 @@ export const requestPermission = async (): Promise<NotificationPermission> => {
 };
 
 /**
- * Register service worker for push notifications
+ * Get the active service worker registration (registered by VitePWA)
  */
 export const registerServiceWorker = async (): Promise<ServiceWorkerRegistration | null> => {
   if (!('serviceWorker' in navigator)) {
@@ -46,14 +46,11 @@ export const registerServiceWorker = async (): Promise<ServiceWorkerRegistration
   }
 
   try {
-    const registration = await navigator.serviceWorker.register('/sw.js', {
-      scope: '/',
-    });
-
-    console.log('Service Worker registered:', registration.scope);
+    const registration = await navigator.serviceWorker.ready;
+    console.log('Service Worker ready:', registration.scope);
     return registration;
   } catch (error) {
-    console.error('Service Worker registration failed:', error);
+    console.error('Service Worker not available:', error);
     return null;
   }
 };

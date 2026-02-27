@@ -1,10 +1,70 @@
-// Elec-Mate Service Worker for Push Notifications
-// Handles push events, notification clicks, and background sync
+/// <reference lib="webworker" />
 
-const CACHE_NAME = 'elec-mate-v1';
+import {
+  cleanupOutdatedCaches,
+  createHandlerBoundToURL,
+  precacheAndRoute,
+} from 'workbox-precaching';
+import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { NetworkFirst } from 'workbox-strategies';
+import { ExpirationPlugin } from 'workbox-expiration';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
-// Type-specific notification configuration
-const NOTIFICATION_CONFIG = {
+declare const self: ServiceWorkerGlobalScope;
+
+// Background Sync API types (not in standard TS lib)
+interface SyncEvent extends ExtendableEvent {
+  tag: string;
+}
+
+// ─── Workbox: Precaching ─────────────────────────────────────────
+// VitePWA injects the precache manifest at build time
+precacheAndRoute(self.__WB_MANIFEST);
+cleanupOutdatedCaches();
+
+// ─── Workbox: SPA Navigation Fallback ────────────────────────────
+// All navigation requests serve the precached index.html (standard SPA pattern).
+// This ensures ANY route works offline — not just previously visited URLs.
+// New deploys are picked up via SW update (autoUpdate + PWAUpdatePrompt).
+registerRoute(new NavigationRoute(createHandlerBoundToURL('/index.html')));
+
+// ─── Workbox: Runtime Caching ────────────────────────────────────
+
+// JS chunks: NetworkFirst with 24hr cache
+registerRoute(
+  /\.js$/,
+  new NetworkFirst({
+    cacheName: 'js-cache',
+    networkTimeoutSeconds: 5,
+    plugins: [new ExpirationPlugin({ maxEntries: 100, maxAgeSeconds: 24 * 60 * 60 })],
+  })
+);
+
+// Supabase API: NetworkFirst with 60s cache, only cache successful responses
+registerRoute(
+  /^https:\/\/.*supabase\.co\/.*/i,
+  new NetworkFirst({
+    cacheName: 'supabase-cache',
+    networkTimeoutSeconds: 8,
+    plugins: [
+      new CacheableResponsePlugin({ statuses: [0, 200] }),
+      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 60 }),
+    ],
+  })
+);
+
+// ─── Push Notifications ──────────────────────────────────────────
+
+interface NotificationTypeConfig {
+  icon: string;
+  badge: string;
+  color: string;
+  vibrate: number[];
+  requireInteraction: boolean;
+  actions: NotificationAction[];
+}
+
+const NOTIFICATION_CONFIG: Record<string, NotificationTypeConfig> = {
   peer: {
     icon: '/icons/peer.svg',
     badge: '/icons/badge.svg',
@@ -117,27 +177,32 @@ const NOTIFICATION_CONFIG = {
   },
 };
 
-// Install event - cache static assets
-self.addEventListener('install', (event) => {
-  console.log('[SW] Installing service worker...');
+// ─── SW Lifecycle ────────────────────────────────────────────────
+
+self.addEventListener('install', () => {
   self.skipWaiting();
 });
 
-// Activate event - clean up old caches
 self.addEventListener('activate', (event) => {
-  console.log('[SW] Activating service worker...');
-  event.waitUntil(clients.claim());
+  event.waitUntil(
+    Promise.all([
+      self.clients.claim(),
+      // Clean up orphaned cache from the old manual service worker
+      caches.delete('elec-mate-v1'),
+      caches.delete('html-cache'),
+    ])
+  );
 });
 
-// Push event - handle incoming push notifications
-self.addEventListener('push', (event) => {
-  console.log('[SW] Push received:', event);
+// ─── Push Event Handler ──────────────────────────────────────────
 
+self.addEventListener('push', (event: PushEvent) => {
   let payload = {
     title: 'Elec-Mate',
     body: 'You have a new notification',
     type: 'default',
-    data: {},
+    data: {} as Record<string, unknown>,
+    image: undefined as string | undefined,
   };
 
   if (event.data) {
@@ -150,20 +215,19 @@ self.addEventListener('push', (event) => {
         data: jsonPayload.data || {},
         image: jsonPayload.image,
       };
-    } catch (e) {
+    } catch {
       payload.body = event.data.text();
     }
   }
 
-  // Get type-specific config
   const type = payload.type || 'default';
   const config = NOTIFICATION_CONFIG[type] || NOTIFICATION_CONFIG.default;
 
-  // Check for overdue invoice (special case with different icon)
+  // Overdue invoice gets a different icon
   const isOverdue = type === 'invoice' && payload.data?.status === 'overdue';
   const icon = isOverdue ? '/icons/invoice-overdue.svg' : config.icon;
 
-  const options = {
+  const options: NotificationOptions & { actions?: NotificationAction[] } = {
     body: payload.body,
     icon: icon,
     badge: config.badge,
@@ -176,13 +240,10 @@ self.addEventListener('push', (event) => {
       ...payload.data,
     },
     actions: config.actions,
-    // Add timestamp for when the event happened
     timestamp: payload.data?.timestamp || Date.now(),
-    // Silent for less urgent notifications
     silent: type === 'vacancy' || type === 'college',
   };
 
-  // Add image for certain notification types if provided
   if (payload.image) {
     options.image = payload.image;
   }
@@ -190,21 +251,18 @@ self.addEventListener('push', (event) => {
   event.waitUntil(self.registration.showNotification(payload.title, options));
 });
 
-// Notification click event
-self.addEventListener('notificationclick', (event) => {
-  console.log('[SW] Notification clicked:', event);
+// ─── Notification Click Handler ──────────────────────────────────
 
+self.addEventListener('notificationclick', (event: NotificationEvent) => {
   event.notification.close();
 
   const data = event.notification.data || {};
   const action = event.action;
 
-  // Handle dismiss action
   if (action === 'dismiss') {
     return;
   }
 
-  // Determine URL based on message type
   let url = '/';
   switch (data.type) {
     case 'peer':
@@ -243,47 +301,46 @@ self.addEventListener('notificationclick', (event) => {
   }
 
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
-      // If a window is already open, focus it and navigate
+    self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
       for (const client of clientList) {
         if ('focus' in client) {
-          return client.focus().then((focusedClient) => {
+          return (client as WindowClient).focus().then((focusedClient) => {
             if ('navigate' in focusedClient) {
               return focusedClient.navigate(url);
             }
           });
         }
       }
-      // Otherwise, open a new window
-      if (clients.openWindow) {
-        return clients.openWindow(url);
+      if (self.clients.openWindow) {
+        return self.clients.openWindow(url);
       }
     })
   );
 });
 
-// Notification close event (for analytics)
-self.addEventListener('notificationclose', (event) => {
-  console.log('[SW] Notification closed:', event);
+// ─── Notification Close (analytics hook) ─────────────────────────
+
+self.addEventListener('notificationclose', () => {
   // Could send analytics here
 });
 
-// Background sync for offline messages
-self.addEventListener('sync', (event) => {
-  console.log('[SW] Background sync:', event.tag);
+// ─── Background Sync ─────────────────────────────────────────────
 
+self.addEventListener('sync', ((event: SyncEvent) => {
   if (event.tag === 'send-message') {
     event.waitUntil(sendQueuedMessages());
   }
-});
+}) as EventListener);
 
-// Send queued messages when back online
-async function sendQueuedMessages() {
+async function sendQueuedMessages(): Promise<void> {
   try {
     const db = await openDB();
     const tx = db.transaction('outbox', 'readonly');
     const store = tx.objectStore('outbox');
-    const messages = await store.getAll();
+    const messages = (await idbRequest(store.getAll())) as {
+      id: IDBValidKey;
+      [key: string]: unknown;
+    }[];
 
     for (const message of messages) {
       try {
@@ -293,9 +350,8 @@ async function sendQueuedMessages() {
           body: JSON.stringify(message),
         });
 
-        // Remove from outbox after successful send
         const deleteTx = db.transaction('outbox', 'readwrite');
-        await deleteTx.objectStore('outbox').delete(message.id);
+        await idbRequest(deleteTx.objectStore('outbox').delete(message.id));
       } catch (error) {
         console.error('[SW] Failed to send queued message:', error);
       }
@@ -305,16 +361,15 @@ async function sendQueuedMessages() {
   }
 }
 
-// Simple IndexedDB helper for message queue
-function openDB() {
+// ─── IndexedDB Helpers ───────────────────────────────────────────
+
+function openDB(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open('elec-mate-offline', 1);
-
     request.onerror = () => reject(request.error);
     request.onsuccess = () => resolve(request.result);
-
-    request.onupgradeneeded = (event) => {
-      const db = event.target.result;
+    request.onupgradeneeded = () => {
+      const db = request.result;
       if (!db.objectStoreNames.contains('outbox')) {
         db.createObjectStore('outbox', { keyPath: 'id', autoIncrement: true });
       }
@@ -322,10 +377,16 @@ function openDB() {
   });
 }
 
-// Listen for messages from the main app
-self.addEventListener('message', (event) => {
-  console.log('[SW] Message received:', event.data);
+function idbRequest<T>(request: IDBRequest<T>): Promise<T> {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
 
+// ─── Message Handler (PWA update + client comms) ─────────────────
+
+self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }

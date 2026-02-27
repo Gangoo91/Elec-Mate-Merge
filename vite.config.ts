@@ -16,6 +16,9 @@ export default defineConfig(({ mode }) => ({
     // Lovable tagger disabled - was corrupting JSX with malformed data attributes
     // mode === 'development' && componentTagger(),
     VitePWA({
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.ts',
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'logo.jpg'],
       manifest: {
@@ -45,50 +48,13 @@ export default defineConfig(({ mode }) => ({
           },
         ],
       },
-      workbox: {
-        globPatterns: ['**/*.{css,ico,png,jpg,jpeg,svg,woff2}'], // NO html — always fetch fresh from network
+      injectManifest: {
+        globPatterns: ['**/*.{html,css,ico,png,jpg,jpeg,svg,woff2}'],
         maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
-        navigateFallback: null, // Disable — let navigation requests hit the network
-        runtimeCaching: [
-          {
-            // HTML: always network-first so new deploys are picked up immediately
-            urlPattern: ({ request }) => request.mode === 'navigate',
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'html-cache',
-              networkTimeoutSeconds: 3,
-              expiration: {
-                maxEntries: 1,
-                maxAgeSeconds: 60 * 60, // 1 hour max
-              },
-            },
-          },
-          {
-            // JS chunks: network-first with short cache
-            urlPattern: /\.js$/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'js-cache',
-              networkTimeoutSeconds: 5,
-              expiration: {
-                maxEntries: 100,
-                maxAgeSeconds: 24 * 60 * 60,
-              },
-            },
-          },
-          {
-            urlPattern: /^https:\/\/.*supabase\.co\/.*/i,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'supabase-cache',
-              networkTimeoutSeconds: 8,
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60,
-              },
-            },
-          },
-        ],
+      },
+      devOptions: {
+        enabled: false, // Set to true to test SW in dev mode
+        type: 'module',
       },
     }),
     compression({ algorithm: 'gzip', threshold: 1024 }),
