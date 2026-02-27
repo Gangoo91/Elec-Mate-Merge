@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, useSpring, useTransform } from 'framer-motion';
-import { Wrench, CheckCircle, AlertTriangle, AlertCircle, Plus } from 'lucide-react';
+import { Wrench, CheckCircle, AlertTriangle, AlertCircle, Plus, ShieldCheck, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -16,7 +16,9 @@ interface EquipmentHeroCardProps {
   goodCount: number;
   attentionCount: number;
   overdueCount: number;
+  warrantyAlertCount?: number;
   onAddEquipment: () => void;
+  onWarrantyAlertTap?: () => void;
 }
 
 function AnimatedCounter({ value }: { value: number }) {
@@ -35,10 +37,10 @@ function AnimatedCounter({ value }: { value: number }) {
 
 function StatCard({ stat, index }: { stat: StatItem; index: number }) {
   const colorMap = {
-    yellow: 'from-elec-yellow/20 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow',
-    green: 'from-emerald-500/20 to-emerald-500/5 border-emerald-500/30 text-emerald-500',
-    amber: 'from-amber-500/20 to-amber-500/5 border-amber-500/30 text-amber-500',
-    red: 'from-red-500/20 to-red-500/5 border-red-500/30 text-red-500',
+    yellow: 'from-elec-yellow/25 to-elec-yellow/5 border-elec-yellow/30 text-elec-yellow',
+    green: 'from-emerald-500/25 to-emerald-500/5 border-emerald-500/30 text-emerald-500',
+    amber: 'from-amber-500/25 to-amber-500/5 border-amber-500/30 text-amber-500',
+    red: 'from-red-500/25 to-red-500/5 border-red-500/30 text-red-500',
   };
 
   const iconBgMap = {
@@ -56,7 +58,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05, type: 'spring', stiffness: 200 }}
       className={cn(
-        'relative overflow-hidden rounded-lg p-2.5',
+        'relative overflow-hidden rounded-xl p-2.5',
         'bg-gradient-to-br border',
         'backdrop-blur-sm',
         colorMap[stat.color]
@@ -80,7 +82,9 @@ export function EquipmentHeroCard({
   goodCount,
   attentionCount,
   overdueCount,
+  warrantyAlertCount = 0,
   onAddEquipment,
+  onWarrantyAlertTap,
 }: EquipmentHeroCardProps) {
   const stats: StatItem[] = [
     {
@@ -114,27 +118,29 @@ export function EquipmentHeroCard({
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        'relative overflow-hidden rounded-xl',
-        'bg-gradient-to-br from-white/5 via-white/[0.02] to-transparent',
-        'border border-white/[0.08]',
-        'p-3'
+        'relative overflow-hidden rounded-2xl',
+        'bg-gradient-to-br from-slate-800/60 via-background to-background',
+        'border border-white/10'
       )}
     >
-      {/* Background decoration - subtle */}
+      {/* Gradient accent line */}
+      <div className="h-0.5 bg-gradient-to-r from-elec-yellow via-amber-400 to-elec-yellow" />
+
+      {/* Background decoration - ambient glow */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-24 -right-24 w-32 h-32 rounded-full bg-elec-yellow/5 blur-3xl" />
-        <div className="absolute -bottom-24 -left-24 w-32 h-32 rounded-full bg-emerald-500/5 blur-3xl" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 rounded-full bg-elec-yellow/5 blur-3xl" />
+        <div className="absolute -bottom-24 -left-24 w-48 h-48 rounded-full bg-emerald-500/5 blur-3xl" />
       </div>
 
       {/* Content */}
-      <div className="relative z-10 space-y-3">
+      <div className="relative z-10 p-3 space-y-3">
         {/* Header - compact */}
         <div className="flex items-center gap-2.5">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-            className="p-2 rounded-lg bg-elec-yellow/20 border border-elec-yellow/30"
+            className="p-2 rounded-lg bg-gradient-to-br from-elec-yellow/30 to-amber-500/10 border border-elec-yellow/30"
           >
             <Wrench className="h-5 w-5 text-elec-yellow" />
           </motion.div>
@@ -165,6 +171,23 @@ export function EquipmentHeroCard({
           ))}
         </div>
 
+        {/* Warranty Alert Banner */}
+        {warrantyAlertCount > 0 && (
+          <motion.button
+            type="button"
+            onClick={onWarrantyAlertTap}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="w-full flex items-center gap-2 px-3 rounded-lg bg-amber-500/10 border border-amber-500/20 min-h-[44px] touch-manipulation active:scale-[0.98] transition-transform"
+          >
+            <ShieldCheck className="h-4 w-4 text-amber-400 flex-shrink-0" />
+            <span className="text-xs font-medium text-amber-400 flex-1 text-left">
+              {warrantyAlertCount} warranty {warrantyAlertCount === 1 ? 'alert' : 'alerts'}
+            </span>
+            <ChevronRight className="h-4 w-4 text-amber-400 flex-shrink-0" />
+          </motion.button>
+        )}
+
         {/* CTA Button - compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -174,9 +197,9 @@ export function EquipmentHeroCard({
           <Button
             onClick={onAddEquipment}
             className={cn(
-              'w-full h-10 text-sm font-semibold',
+              'w-full h-11 text-sm font-semibold rounded-xl',
               'bg-elec-yellow text-black hover:bg-elec-yellow/90',
-              'shadow-lg shadow-elec-yellow/20',
+              'shadow-lg shadow-elec-yellow/25',
               'transition-all duration-300',
               'active:scale-[0.98]'
             )}

@@ -292,6 +292,12 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
               '',
             companyPhone: branding.companyPhone || dataWithBranding.companyPhone || '',
             companyEmail: branding.companyEmail || dataWithBranding.companyEmail || '',
+            brandingTagline: branding.companyTagline || dataWithBranding.brandingTagline || '',
+            brandingAccentColor:
+              branding.companyAccentColor || dataWithBranding.brandingAccentColor || '#d69e2e',
+            brandingWebsite: branding.companyWebsite || dataWithBranding.brandingWebsite || '',
+            schemeLogo:
+              branding.registrationSchemeLogo || dataWithBranding.schemeLogo || '',
           };
         }
       }

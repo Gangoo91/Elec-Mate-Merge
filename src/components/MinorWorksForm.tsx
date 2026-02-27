@@ -33,7 +33,7 @@ import MWDetailsTab from '@/components/minor-works/MWDetailsTab';
 import MWCircuitTab from '@/components/minor-works/MWCircuitTab';
 import MWTestingTab from '@/components/minor-works/MWTestingTab';
 import MWDeclarationTab from '@/components/minor-works/MWDeclarationTab';
-import MWTabNavigation from '@/components/minor-works/MWTabNavigation';
+import EICRTabNavigation from '@/components/EICRTabNavigation';
 import { SmartTabs, SmartTab } from '@/components/ui/smart-tabs';
 import { useMinorWorksSmartForm } from '@/hooks/useMinorWorksSmartForm';
 
@@ -75,12 +75,17 @@ const MinorWorksForm = ({
     workType: '',
     workLocation: '',
     departuresFromBS7671: '',
+    permittedExceptions: '',
+    riskAssessmentAttached: false,
+    commentsOnExistingInstallation: '',
 
     // Supply & Earthing Details
     supplyVoltage: '230V',
     frequency: '50Hz',
     supplyPhases: '1',
     earthingArrangement: '',
+    zdb: '',
+    earthingConductorPresent: false,
     mainEarthingConductorSize: '',
     mainEarthingConductorSizeCustom: '',
     mainBondingConductorSize: '',
@@ -92,12 +97,15 @@ const MinorWorksForm = ({
     bondingOil: false,
     bondingStructural: false,
     bondingOther: false,
+    bondingOtherSpecify: '',
 
     // Circuit Details
     distributionBoard: '',
+    dbLocationType: '',
     circuitDesignation: '',
     circuitDescription: '',
     circuitType: 'radial',
+    overcurrentDeviceBsEn: '',
     protectiveDeviceType: '',
     protectiveDeviceRating: '',
     protectiveDeviceKaRating: '',
@@ -107,6 +115,15 @@ const MinorWorksForm = ({
     protectionRcbo: false,
     protectionAfdd: false,
     protectionSpd: false,
+    rcdBsEn: '',
+    rcdType: '',
+    rcdRatingAmps: '',
+    rcdIdn: '',
+    afddBsEn: '',
+    afddRating: '',
+    spdBsEn: '',
+    spdType: '',
+    numberOfConductors: '',
     liveConductorSize: '',
     cpcSize: '',
     cableType: '',
@@ -115,6 +132,8 @@ const MinorWorksForm = ({
 
     // Test Results
     continuityR1R2: '',
+    r2Continuity: '',
+    insulationLiveLive: '',
     insulationLiveNeutral: '',
     insulationLiveEarth: '',
     insulationNeutralEarth: '',
@@ -128,6 +147,8 @@ const MinorWorksForm = ({
     // RCD/RCBO Testing
     rcdRating: '',
     rcdOneX: '',
+    rcdFiveX: '',
+    rcdHalfX: '',
     rcdTestButton: '',
     rcboTripTime: '',
 
@@ -176,6 +197,9 @@ const MinorWorksForm = ({
 
     // Declaration
     electricianName: '',
+    forAndOnBehalfOf: '',
+    electricianPhone: '',
+    electricianEmail: '',
     position: '',
     qualificationLevel: '',
     schemeProvider: '',
@@ -211,6 +235,8 @@ const MinorWorksForm = ({
     navigatePrevious,
     getProgressPercentage,
     isTabComplete,
+    toggleTabComplete,
+    hasRequiredFields,
     getCurrentTabLabel,
   } = useMinorWorksTabs(formData);
 
@@ -669,10 +695,15 @@ const MinorWorksForm = ({
       workType: '',
       workLocation: '',
       departuresFromBS7671: '',
+      permittedExceptions: '',
+      riskAssessmentAttached: false,
+      commentsOnExistingInstallation: '',
       supplyVoltage: '230V',
       frequency: '50Hz',
       supplyPhases: '1',
       earthingArrangement: '',
+      zdb: '',
+      earthingConductorPresent: false,
       mainEarthingConductorSize: '',
       mainEarthingConductorSizeCustom: '',
       mainBondingConductorSize: '',
@@ -682,10 +713,13 @@ const MinorWorksForm = ({
       bondingOil: false,
       bondingStructural: false,
       bondingOther: false,
+      bondingOtherSpecify: '',
       distributionBoard: '',
+      dbLocationType: '',
       circuitDesignation: '',
       circuitDescription: '',
       circuitType: 'radial',
+      overcurrentDeviceBsEn: '',
       protectiveDeviceType: '',
       protectiveDeviceRating: '',
       protectiveDeviceKaRating: '',
@@ -693,12 +727,23 @@ const MinorWorksForm = ({
       protectionRcbo: false,
       protectionAfdd: false,
       protectionSpd: false,
+      rcdBsEn: '',
+      rcdType: '',
+      rcdRatingAmps: '',
+      rcdIdn: '',
+      afddBsEn: '',
+      afddRating: '',
+      spdBsEn: '',
+      spdType: '',
+      numberOfConductors: '',
       liveConductorSize: '',
       cpcSize: '',
       cableType: '',
       installationMethod: '',
       referenceMethod: '',
       continuityR1R2: '',
+      r2Continuity: '',
+      insulationLiveLive: '',
       insulationLiveNeutral: '',
       insulationLiveEarth: '',
       insulationNeutralEarth: '',
@@ -710,6 +755,8 @@ const MinorWorksForm = ({
       functionalTesting: '',
       rcdRating: '',
       rcdOneX: '',
+      rcdFiveX: '',
+      rcdHalfX: '',
       rcdTestButton: '',
       rcboTripTime: '',
       afddTestButton: '',
@@ -743,6 +790,9 @@ const MinorWorksForm = ({
       loopTesterSerial: '',
       loopTesterCalDate: '',
       electricianName: '',
+      forAndOnBehalfOf: '',
+      electricianPhone: '',
+      electricianEmail: '',
       position: '',
       qualificationLevel: '',
       schemeProvider: '',
@@ -791,33 +841,6 @@ const MinorWorksForm = ({
       title: 'Report duplicated',
       description: `New certificate number: ${certificateNumber}`,
     });
-  };
-
-  // Allow PDF generation without strict field validation
-  const canGenerateCertificate = () => {
-    return true;
-  };
-
-  // Determine if current tab has required fields for "Mark as Complete" functionality
-  const currentTabHasRequiredFields = () => {
-    const requiredFieldsByTab: Record<string, string[]> = {
-      details: [
-        'clientName',
-        'propertyAddress',
-        'workDate',
-        'workDescription',
-        'earthingArrangement',
-      ],
-      circuit: [
-        'circuitDesignation',
-        'protectiveDeviceType',
-        'protectiveDeviceRating',
-        'liveConductorSize',
-      ],
-      testing: ['continuityR1R2', 'polarity', 'earthFaultLoopImpedance'],
-      declaration: ['electricianName', 'position', 'signatureDate', 'signature'],
-    };
-    return requiredFieldsByTab[currentTab]?.length > 0;
   };
 
   // Handle PDF generation success
@@ -894,25 +917,55 @@ const MinorWorksForm = ({
     return 'synced';
   };
 
+  // Shared nav props for inline EICRTabNavigation in each tab
+  const navProps = {
+    currentTab,
+    currentTabIndex,
+    totalTabs,
+    canNavigateNext,
+    canNavigatePrevious,
+    navigateNext,
+    navigatePrevious,
+    getProgressPercentage,
+    isCurrentTabComplete: isTabComplete(currentTab),
+    currentTabHasRequiredFields: hasRequiredFields(currentTab),
+    onToggleComplete: () => toggleTabComplete(currentTab, handleUpdate),
+  };
+
   // Build SmartTabs configuration
   const smartTabs: SmartTab[] = [
     {
       value: 'details',
       label: 'Client & Details',
       shortLabel: 'Details',
-      content: <MWDetailsTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />,
+      content: (
+        <>
+          <MWDetailsTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
+          <EICRTabNavigation {...navProps} />
+        </>
+      ),
     },
     {
       value: 'circuit',
       label: 'Circuit Details',
       shortLabel: 'Circuit',
-      content: <MWCircuitTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />,
+      content: (
+        <>
+          <MWCircuitTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
+          <EICRTabNavigation {...navProps} />
+        </>
+      ),
     },
     {
       value: 'testing',
       label: 'Test Results',
       shortLabel: 'Tests',
-      content: <MWTestingTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />,
+      content: (
+        <>
+          <MWTestingTab formData={formData} onUpdate={handleUpdate} isMobile={isMobile} />
+          <EICRTabNavigation {...navProps} />
+        </>
+      ),
     },
     {
       value: 'declaration',
@@ -958,6 +1011,8 @@ const MinorWorksForm = ({
               </div>
             </div>
           </div>
+
+          <EICRTabNavigation {...navProps} />
         </>
       ),
     },
@@ -1008,8 +1063,8 @@ const MinorWorksForm = ({
         {/* Main Content - Edge-to-edge on mobile, contained on desktop */}
         <div
           className={cn(
-            'minor-works-container pb-20 sm:pb-16',
-            isMobile ? '' : 'px-4 sm:px-6 lg:px-8'
+            'pb-6',
+            isMobile ? '' : 'max-w-6xl mx-auto px-4 sm:px-6 lg:px-8'
           )}
         >
           <SmartTabs
@@ -1023,26 +1078,6 @@ const MinorWorksForm = ({
             showProgress={true}
           />
         </div>
-
-        {/* Sticky Bottom Navigation */}
-        <MWTabNavigation
-          currentTab={currentTab}
-          currentTabIndex={currentTabIndex}
-          totalTabs={totalTabs}
-          canNavigateNext={canNavigateNext}
-          canNavigatePrevious={canNavigatePrevious}
-          navigateNext={navigateNext}
-          navigatePrevious={navigatePrevious}
-          getProgressPercentage={getProgressPercentage}
-          isCurrentTabComplete={isTabComplete(currentTab)}
-          whatsApp={{
-            type: 'minor-works',
-            id: currentReportId || formData.certificateNumber || 'new',
-            recipientPhone: '',
-            recipientName: formData.clientName || '',
-            documentLabel: 'Minor Works Certificate',
-          }}
-        />
 
         <StartNewEICRDialog
           isOpen={showStartNewDialog}

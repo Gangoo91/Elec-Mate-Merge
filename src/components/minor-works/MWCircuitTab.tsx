@@ -699,7 +699,29 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
           </CollapsibleTrigger>
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                <div className="space-y-2">
+                  <Label className="text-sm">No. of Conductors</Label>
+                  <Select
+                    value={formData.numberOfConductors || ''}
+                    onValueChange={(v) =>
+                      onUpdate('numberOfConductors', v === '__clear__' ? '' : v)
+                    }
+                  >
+                    <SelectTrigger className="">
+                      <SelectValue placeholder="Cores" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="__clear__">
+                        <span className="text-muted-foreground">Clear selection</span>
+                      </SelectItem>
+                      <SelectItem value="2">2-core</SelectItem>
+                      <SelectItem value="3">3-core</SelectItem>
+                      <SelectItem value="4">4-core</SelectItem>
+                      <SelectItem value="5">5-core</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <div className="space-y-2">
                   <Label className="text-sm">Live Conductor Size *</Label>
                   <Select

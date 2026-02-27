@@ -66,6 +66,16 @@ export const SafetyEquipmentTracker: React.FC = () => {
           return e.status === 'overdue';
         });
         break;
+      case 'warranty': {
+        const now = new Date();
+        const thirtyDays = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+        result = result.filter((e) => {
+          if (!e.warranty_expiry) return false;
+          const expiry = new Date(e.warranty_expiry);
+          return expiry < thirtyDays; // expired or expiring within 30 days
+        });
+        break;
+      }
     }
 
     // Apply search filter
@@ -100,6 +110,12 @@ export const SafetyEquipmentTracker: React.FC = () => {
       color: 'amber' as const,
     },
     { id: 'overdue' as const, label: 'Overdue', count: stats.overdue, color: 'red' as const },
+    {
+      id: 'warranty' as const,
+      label: 'Warranty',
+      count: stats.warrantyAlert,
+      color: 'amber' as const,
+    },
   ];
 
   const handleAddEquipment = async (data: Record<string, unknown>) => {
@@ -123,6 +139,9 @@ export const SafetyEquipmentTracker: React.FC = () => {
       status: 'good',
       requires_calibration: false,
       photos: (data.photos as string[]) || [],
+      warranty_expiry: data.warranty_expiry || null,
+      warranty_provider: data.warranty_provider || null,
+      warranty_claim_contact: data.warranty_claim_contact || null,
     });
     setShowForm(false);
     setEditingEquipment(null);
@@ -151,6 +170,9 @@ export const SafetyEquipmentTracker: React.FC = () => {
         inspection_interval_days: data.inspection_interval_days || 180,
         condition_notes: data.condition_notes || null,
         photos: (data.photos as string[]) || [],
+        warranty_expiry: data.warranty_expiry || null,
+        warranty_provider: data.warranty_provider || null,
+        warranty_claim_contact: data.warranty_claim_contact || null,
       },
     });
     setShowForm(false);
@@ -268,14 +290,16 @@ export const SafetyEquipmentTracker: React.FC = () => {
       </div>
 
       <PullToRefresh onRefresh={handleRefresh}>
-        <div className="px-2 py-2 space-y-3">
+        <div className="px-3 py-3 space-y-3">
           {/* Hero Card with Stats */}
           <EquipmentHeroCard
             totalEquipment={stats.total}
             goodCount={stats.good}
             attentionCount={stats.needsAttention}
             overdueCount={stats.overdue}
+            warrantyAlertCount={stats.warrantyAlert}
             onAddEquipment={() => setShowForm(true)}
+            onWarrantyAlertTap={() => setActiveFilter('warranty')}
           />
 
           {/* Search + Scan Row */}
@@ -284,7 +308,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
               <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <Input
                 placeholder="Search equipment..."
-                className="pl-8 pr-12 h-11 bg-white/5 border-0 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
+                className="pl-8 pr-12 h-11 bg-white/5 border border-white/10 focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation rounded-lg"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -299,7 +323,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
             </div>
             <button
               onClick={() => setShowScanner(true)}
-              className="flex items-center justify-center h-11 w-11 rounded-xl bg-elec-yellow text-black touch-manipulation active:scale-[0.95] transition-all flex-shrink-0"
+              className="flex items-center justify-center h-11 w-11 rounded-xl bg-elec-yellow text-black shadow-lg shadow-elec-yellow/25 touch-manipulation active:scale-[0.95] transition-all flex-shrink-0"
               title="Scan Equipment"
             >
               <ScanBarcode className="h-5 w-5" />
@@ -312,7 +336,7 @@ export const SafetyEquipmentTracker: React.FC = () => {
           {/* Equipment List */}
           <div className="space-y-2">
             {isLoading ? (
-              <Card className="bg-white/5 border border-white/[0.08] rounded-xl">
+              <Card className="bg-card/80 backdrop-blur-sm border border-white/10 rounded-2xl">
                 <CardContent className="py-12">
                   <div className="flex flex-col items-center justify-center gap-3">
                     <div className="p-3 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
@@ -326,20 +350,26 @@ export const SafetyEquipmentTracker: React.FC = () => {
                 </CardContent>
               </Card>
             ) : filteredEquipment.length === 0 ? (
-              <Card className="bg-white/5 border border-white/[0.08] border-dashed rounded-xl">
-                <CardContent className="py-8 text-center">
+              <Card className="relative overflow-hidden bg-card/80 backdrop-blur-sm border border-white/10 border-dashed rounded-2xl">
+                {/* Subtle glow orb */}
+                <div className="absolute -top-16 -right-16 w-32 h-32 rounded-full bg-elec-yellow/5 blur-3xl pointer-events-none" />
+                <CardContent className="relative z-10 py-8 text-center">
                   <div className="p-3 mx-auto w-fit rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
                     <Package className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <h3 className="text-base font-semibold text-white mb-1">
                     {activeFilter === 'all'
                       ? 'No Equipment'
-                      : `No ${tabs.find((t) => t.id === activeFilter)?.label} Equipment`}
+                      : activeFilter === 'warranty'
+                        ? 'No Warranty Alerts'
+                        : `No ${tabs.find((t) => t.id === activeFilter)?.label} Equipment`}
                   </h3>
                   <p className="text-xs text-white mb-4 max-w-[200px] mx-auto">
                     {activeFilter === 'all'
                       ? 'Add your first piece of equipment to start tracking'
-                      : `No equipment in ${activeFilter} status`}
+                      : activeFilter === 'warranty'
+                        ? 'No warranties expiring or expired'
+                        : `No equipment in ${activeFilter} status`}
                   </p>
                   {activeFilter === 'all' && (
                     <button

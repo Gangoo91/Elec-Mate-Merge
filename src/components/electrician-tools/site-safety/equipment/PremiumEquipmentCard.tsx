@@ -22,6 +22,7 @@ import {
   Download,
   Loader2,
   ClipboardCheck,
+  ShieldCheck,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -43,7 +44,43 @@ interface Equipment {
   status: EquipmentStatus;
   condition_notes: string | null;
   qr_code?: string | null;
+  warranty_expiry?: string | null;
+  warranty_provider?: string | null;
+  warranty_claim_contact?: string | null;
 }
+
+type WarrantyStatus = 'valid' | 'expiring' | 'expired' | 'none';
+
+function getWarrantyStatus(warrantyExpiry: string | null | undefined): WarrantyStatus {
+  if (!warrantyExpiry) return 'none';
+  const now = new Date();
+  const expiry = new Date(warrantyExpiry);
+  if (expiry < now) return 'expired';
+  const thirtyDays = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+  if (expiry <= thirtyDays) return 'expiring';
+  return 'valid';
+}
+
+const warrantyStatusConfig: Record<
+  Exclude<WarrantyStatus, 'none'>,
+  { bg: string; text: string; label: string }
+> = {
+  valid: {
+    bg: 'bg-emerald-500/10',
+    text: 'text-emerald-400',
+    label: 'Warranty',
+  },
+  expiring: {
+    bg: 'bg-amber-500/10',
+    text: 'text-amber-400',
+    label: 'Warranty Expiring',
+  },
+  expired: {
+    bg: 'bg-red-500/10',
+    text: 'text-red-400',
+    label: 'Warranty Expired',
+  },
+};
 
 // Category icons mapping
 const categoryIcons: Record<string, typeof Plug> = {
@@ -128,6 +165,7 @@ export function PremiumEquipmentCard({
   const status = statusConfig[equipment.status] || statusConfig.good;
   const StatusIcon = status.icon;
   const CategoryIcon = categoryIcons[equipment.category] || Settings;
+  const warrantyStatus = getWarrantyStatus(equipment.warranty_expiry);
 
   const formatDate = (dateString: string | null) => {
     if (!dateString) return 'Not set';
@@ -145,19 +183,29 @@ export function PremiumEquipmentCard({
     return `${Math.round(days / 30)} months`;
   };
 
+  const statusGradientMap: Record<EquipmentStatus, string> = {
+    good: 'from-emerald-500 via-emerald-400 to-emerald-500',
+    needs_attention: 'from-amber-500 via-amber-400 to-amber-500',
+    overdue: 'from-red-500 via-red-400 to-red-500',
+    out_of_service: 'from-gray-500 via-gray-400 to-gray-500',
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.03, type: 'spring', stiffness: 200 }}
       className={cn(
-        'relative overflow-hidden rounded-xl',
-        'bg-white/5 border',
+        'relative overflow-hidden rounded-2xl',
+        'bg-card/80 backdrop-blur-sm border',
         status.border,
         'transition-all duration-300',
         'active:scale-[0.99]'
       )}
     >
+      {/* Status accent line */}
+      <div className={cn('h-0.5 rounded-t-2xl bg-gradient-to-r', statusGradientMap[equipment.status])} />
+
       {/* Main Content - Clickable */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
@@ -168,13 +216,19 @@ export function PremiumEquipmentCard({
         {/* Header */}
         <div className="flex items-start gap-2.5">
           {/* Category Icon */}
-          <div className={cn('p-2 rounded-lg border flex-shrink-0', status.bg, status.border)}>
+          <div className={cn('p-2 rounded-xl bg-gradient-to-br border flex-shrink-0',
+            equipment.status === 'good' ? 'from-emerald-500/25 to-emerald-500/5' :
+            equipment.status === 'needs_attention' ? 'from-amber-500/25 to-amber-500/5' :
+            equipment.status === 'overdue' ? 'from-red-500/25 to-red-500/5' :
+            'from-gray-500/25 to-gray-500/5',
+            status.border
+          )}>
             <CategoryIcon className={cn('h-4 w-4', status.text)} />
           </div>
 
           {/* Info */}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 gap-y-1 flex-wrap">
               <h3 className="text-sm font-semibold text-white truncate">{equipment.name}</h3>
               <div
                 className={cn(
@@ -186,6 +240,18 @@ export function PremiumEquipmentCard({
                 <StatusIcon className="h-2.5 w-2.5" />
                 {status.label}
               </div>
+              {warrantyStatus !== 'none' && (
+                <div
+                  className={cn(
+                    'flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-medium',
+                    warrantyStatusConfig[warrantyStatus].bg,
+                    warrantyStatusConfig[warrantyStatus].text
+                  )}
+                >
+                  <ShieldCheck className="h-2.5 w-2.5" />
+                  {warrantyStatusConfig[warrantyStatus].label}
+                </div>
+              )}
             </div>
 
             {/* Meta row */}
@@ -233,16 +299,18 @@ export function PremiumEquipmentCard({
               <div className="h-px bg-white/[0.08] mb-3" />
 
               {/* Details Grid */}
-              <div className="grid grid-cols-2 gap-2 mb-3">
-                <div className="space-y-0.5">
-                  <p className="text-[10px] text-white">Last Tested</p>
-                  <p className="text-xs text-white">{formatDate(equipment.last_inspection)}</p>
-                </div>
-                <div className="space-y-0.5">
-                  <p className="text-[10px] text-white">Test Frequency</p>
-                  <p className="text-xs text-white">
-                    {formatFrequency(equipment.inspection_interval_days)}
-                  </p>
+              <div className="p-2.5 rounded-xl bg-white/[0.03] mb-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="space-y-0.5">
+                    <p className="text-[10px] text-white">Last Tested</p>
+                    <p className="text-xs text-white">{formatDate(equipment.last_inspection)}</p>
+                  </div>
+                  <div className="space-y-0.5">
+                    <p className="text-[10px] text-white">Test Frequency</p>
+                    <p className="text-xs text-white">
+                      {formatFrequency(equipment.inspection_interval_days)}
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -251,6 +319,55 @@ export function PremiumEquipmentCard({
                 <div className="mb-3 p-2.5 rounded-lg bg-white/5 border border-white/[0.08]">
                   <p className="text-[10px] text-white mb-0.5">Notes</p>
                   <p className="text-xs text-white">{equipment.condition_notes}</p>
+                </div>
+              )}
+
+              {/* Warranty Details */}
+              {warrantyStatus !== 'none' && (
+                <div
+                  className={cn(
+                    'mb-3 p-2.5 rounded-lg border',
+                    warrantyStatusConfig[warrantyStatus].bg,
+                    warrantyStatus === 'valid'
+                      ? 'border-emerald-500/20'
+                      : warrantyStatus === 'expiring'
+                        ? 'border-amber-500/20'
+                        : 'border-red-500/20'
+                  )}
+                >
+                  <p
+                    className={cn(
+                      'text-[10px] mb-1.5 flex items-center gap-1',
+                      warrantyStatusConfig[warrantyStatus].text
+                    )}
+                  >
+                    <ShieldCheck className="h-3 w-3" />
+                    Warranty Details
+                  </p>
+                  <div className="space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-[10px] text-white">Expires</span>
+                      <span
+                        className={cn('text-[10px]', warrantyStatusConfig[warrantyStatus].text)}
+                      >
+                        {formatDate(equipment.warranty_expiry ?? null)}
+                      </span>
+                    </div>
+                    {equipment.warranty_provider && (
+                      <div className="flex justify-between">
+                        <span className="text-[10px] text-white">Provider</span>
+                        <span className="text-xs text-white">{equipment.warranty_provider}</span>
+                      </div>
+                    )}
+                    {equipment.warranty_claim_contact && (
+                      <div className="flex justify-between">
+                        <span className="text-[10px] text-white">Claim Contact</span>
+                        <span className="text-xs text-white">
+                          {equipment.warranty_claim_contact}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
@@ -347,7 +464,7 @@ export function PremiumEquipmentCard({
                       e.stopPropagation();
                       onMarkInspected();
                     }}
-                    className="flex-1 h-11 text-xs bg-emerald-500 text-white hover:bg-emerald-600 touch-manipulation"
+                    className="flex-1 h-11 text-xs bg-emerald-500 text-white hover:bg-emerald-600 shadow-sm shadow-emerald-500/20 touch-manipulation"
                   >
                     <Check className="h-3.5 w-3.5 mr-1" />
                     Tested
@@ -360,7 +477,7 @@ export function PremiumEquipmentCard({
                       e.stopPropagation();
                       onMarkCalibrated();
                     }}
-                    className="flex-1 h-11 text-xs bg-blue-500 text-white hover:bg-blue-600 touch-manipulation"
+                    className="flex-1 h-11 text-xs bg-blue-500 text-white hover:bg-blue-600 shadow-sm shadow-blue-500/20 touch-manipulation"
                   >
                     <Gauge className="h-3.5 w-3.5 mr-1" />
                     Calibrated

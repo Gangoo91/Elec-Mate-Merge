@@ -2,10 +2,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { ArrowLeft, ArrowRight, CheckCircle, Circle } from 'lucide-react';
-import { EICRTabValue } from '@/hooks/useEICRTabs';
-
 interface EICRTabNavigationProps {
-  currentTab: EICRTabValue;
+  currentTab: string;
   currentTabIndex: number;
   totalTabs: number;
   canNavigateNext: boolean;

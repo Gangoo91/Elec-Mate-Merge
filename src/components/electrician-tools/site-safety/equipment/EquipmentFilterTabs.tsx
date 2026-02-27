@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-export type EquipmentFilterId = 'all' | 'good' | 'attention' | 'overdue';
+export type EquipmentFilterId = 'all' | 'good' | 'attention' | 'overdue' | 'warranty';
 
 interface Tab {
   id: EquipmentFilterId;
@@ -39,13 +39,20 @@ export function EquipmentFilterTabs({
             onClick={() => onChange(tab.id)}
             className={cn(
               'relative flex items-center justify-center gap-1',
-              'px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap',
-              'transition-all duration-200',
-              'touch-manipulation min-h-[36px]',
+              'px-3 py-2 rounded-full text-xs whitespace-nowrap',
+              'transition-all duration-200 border',
+              'touch-manipulation min-h-[44px]',
               'active:scale-[0.96]',
+              isActive ? 'font-semibold' : 'font-medium',
               isActive
-                ? 'bg-elec-yellow text-black'
-                : 'bg-white/5 text-white border border-white/[0.08]'
+                ? tab.color === 'green'
+                  ? 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25 shadow-sm shadow-emerald-500/20'
+                  : tab.color === 'amber'
+                    ? 'bg-amber-500/15 text-amber-400 border-amber-500/25 shadow-sm shadow-amber-500/20'
+                    : tab.color === 'red'
+                      ? 'bg-red-500/15 text-red-400 border-red-500/25 shadow-sm shadow-red-500/20'
+                      : 'bg-white/15 text-white border-white/20'
+                : 'bg-white/5 text-white border-white/[0.08]'
             )}
           >
             <span>{tab.label}</span>
@@ -54,7 +61,7 @@ export function EquipmentFilterTabs({
                 className={cn(
                   'min-w-[16px] h-4 flex items-center justify-center',
                   'px-1 rounded-full text-[10px] font-bold',
-                  isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
+                  isActive ? 'bg-white/20 text-inherit' : 'bg-white/10 text-white'
                 )}
               >
                 {tab.count}
@@ -88,6 +95,7 @@ interface EquipmentFilterPillsProps {
     good: number;
     attention: number;
     overdue: number;
+    warranty?: number;
   };
   onChange: (id: EquipmentFilterId) => void;
   className?: string;

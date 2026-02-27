@@ -176,6 +176,9 @@ export function useMinorWorksSmartForm() {
       companyPhone: companyProfile.company_phone || '',
       companyEmail: companyProfile.company_email || '',
       companyAccentColor: companyProfile.primary_color || '#f59e0b',
+      companyWebsite: (companyProfile as any).company_website || '',
+      companyTagline: (companyProfile as any).company_tagline || '',
+      registrationSchemeLogo: (companyProfile as any).scheme_logo_data_url || '',
     };
   }, [companyProfile]);
 

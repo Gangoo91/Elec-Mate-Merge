@@ -210,6 +210,10 @@ function transformFormDataForTemplate(formData: any): any {
       registration_no: formData.registrationNumber
         ? `${formData.schemeProvider || ''}/${formData.registrationNumber}`
         : '',
+      tagline: formData.brandingTagline || formData.companyTagline || '',
+      accent_color: formData.brandingAccentColor || formData.companyAccentColor || '#d69e2e',
+      website: formData.brandingWebsite || formData.companyWebsite || '',
+      scheme_logo: formData.schemeLogo || formData.schemeLogoDataUrl || '',
     },
 
     // Client details
@@ -268,6 +272,7 @@ function transformFormDataForTemplate(formData: any): any {
       description: formData.circuitDescription || '',
       type: formData.circuitType || '',
       reference_method: formData.referenceMethod || '',
+      number_of_conductors: formData.numberOfConductors || '',
       live_size: formData.liveConductorSize || '',
       cpc_size: formData.cpcSize || '',
       cable_type: formData.cableType || '',

@@ -13,6 +13,8 @@ export interface SafetyEquipment {
   purchase_date: string | null;
   purchase_price: number | null;
   warranty_expiry: string | null;
+  warranty_provider: string | null;
+  warranty_claim_contact: string | null;
   location: string;
   assigned_to: string | null;
   last_inspection: string | null;
@@ -226,6 +228,19 @@ export function useSafetyEquipment() {
       return false;
     });
 
+    const thirtyDaysFromNow = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+
+    const warrantyExpired = equipment.filter((e) => {
+      if (!e.warranty_expiry) return false;
+      return new Date(e.warranty_expiry) < now;
+    });
+
+    const warrantyExpiring = equipment.filter((e) => {
+      if (!e.warranty_expiry) return false;
+      const expiry = new Date(e.warranty_expiry);
+      return expiry >= now && expiry <= thirtyDaysFromNow;
+    });
+
     return {
       stats: {
         total: equipment.length,
@@ -234,6 +249,9 @@ export function useSafetyEquipment() {
         overdue: overdue.length,
         outOfService: equipment.filter((e) => e.status === 'out_of_service').length,
         dueSoon: dueSoon.length,
+        warrantyExpiring: warrantyExpiring.length,
+        warrantyExpired: warrantyExpired.length,
+        warrantyAlert: warrantyExpired.length + warrantyExpiring.length,
       },
       overdueItems: overdue,
       dueSoonItems: dueSoon,

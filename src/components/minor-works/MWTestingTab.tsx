@@ -759,6 +759,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         </Select>
                       </div>
                     </div>
+                    <p className="text-xs text-white">
+                      NOTE: Not all AFDDs have a test button
+                    </p>
                   </div>
                 )}
 
@@ -843,6 +846,9 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         SPD test button operates correctly
                       </Label>
                     </div>
+                    <p className="text-xs text-white">
+                      NOTE: Not all SPDs have visible functionality indication
+                    </p>
                   </div>
                 )}
               </div>
