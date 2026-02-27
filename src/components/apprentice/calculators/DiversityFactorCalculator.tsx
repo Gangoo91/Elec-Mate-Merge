@@ -32,6 +32,7 @@ const DiversityFactorCalculator = () => {
     loads,
     location,
     supplyVoltage,
+    supplyType,
     inputMode,
     result,
     errors,
@@ -41,6 +42,7 @@ const DiversityFactorCalculator = () => {
     updateLoad,
     setLocation,
     setSupplyVoltage,
+    setSupplyType,
     toggleInputMode,
     calculateDemand,
     resetCalculator,
@@ -48,18 +50,14 @@ const DiversityFactorCalculator = () => {
     loadTypes,
   } = useMultiLoadDiversityCalculator();
 
-  const [supplyType, setSupplyType] = useState<string>('single-phase');
   const [showGuidance, setShowGuidance] = useState(false);
   const [showReference, setShowReference] = useState(false);
   const [showPractical, setShowPractical] = useState(false);
-
-  const calculateEstimatedCurrent = () => {
-    if (!result) return 0;
-    return result.diversifiedCurrent;
-  };
+  const [showWorkings, setShowWorkings] = useState(false);
 
   const getMainDeviceRecommendation = () => {
-    const current = calculateEstimatedCurrent();
+    if (!result) return '';
+    const current = result.diversifiedCurrent;
 
     if (current <= 6) return '6A MCB/RCBO';
     if (current <= 10) return '10A MCB/RCBO';
@@ -69,10 +67,10 @@ const DiversityFactorCalculator = () => {
     if (current <= 32) return '32A MCB/RCBO';
     if (current <= 40) return '40A MCB/RCBO';
     if (current <= 50) return '50A MCB/RCBO';
-    if (current <= 63) return '63A MCB/RCBO';
-    if (current <= 80) return '80A Switch Disconnector';
-    if (current <= 100) return '100A Switch Disconnector';
-    return '125A+ Switch Disconnector';
+    if (current <= 63) return '63A Main Switch';
+    if (current <= 80) return '80A Main Switch';
+    if (current <= 100) return '100A Main Switch';
+    return '125A+ Main Switch';
   };
 
   const locationOptions = [
@@ -95,7 +93,7 @@ const DiversityFactorCalculator = () => {
     <CalculatorCard
       category="power"
       title="Diversity Factor Calculator"
-      description="Calculate electrical demand after applying BS 7671 diversity factors"
+      description="Calculate electrical demand after applying IET On-Site Guide diversity allowances"
     >
       {/* Input Mode Toggle */}
       <div className="space-y-2">
@@ -294,32 +292,41 @@ const DiversityFactorCalculator = () => {
               </div>
             </div>
 
-            {/* Load Breakdown */}
+            {/* Per-Circuit-Type Breakdown */}
             {result.breakdownByType.length > 0 && (
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <BarChart3 className="h-4 w-4 text-white" />
-                  <span className="text-sm font-medium text-white">Load Breakdown</span>
+                  <span className="text-sm font-medium text-white">Load Breakdown by Type</span>
                 </div>
                 <div className="space-y-2">
                   {result.breakdownByType.map((breakdown, index) => (
-                    <div key={index} className="p-2 rounded-lg bg-white/[0.04]">
+                    <div
+                      key={index}
+                      className="p-3 rounded-lg bg-white/[0.04] border border-white/5"
+                    >
                       <div className="flex justify-between items-center mb-1">
-                        <span className="text-sm font-medium text-white capitalize">
-                          {breakdown.type.replace('-', ' ')}
+                        <span className="text-sm font-medium text-white">
+                          {breakdown.displayName}
+                          {breakdown.count > 1 ? ` (${breakdown.count})` : ''}
                         </span>
                         <span className="text-sm font-semibold text-amber-400">
                           {(breakdown.diversityFactor * 100).toFixed(0)}%
                         </span>
                       </div>
-                      <div className="flex justify-between text-xs text-white">
-                        <span>
-                          {breakdown.installedLoad.toFixed(2)} kW →{' '}
-                          {breakdown.diversifiedLoad.toFixed(2)} kW
-                        </span>
-                        <span>
-                          -{(breakdown.installedLoad - breakdown.diversifiedLoad).toFixed(2)} kW
-                        </span>
+                      <div className="text-xs text-white space-y-1">
+                        <div className="flex justify-between">
+                          <span>
+                            {breakdown.installedCurrent.toFixed(1)}A /{' '}
+                            {breakdown.installedLoad.toFixed(2)} kW installed
+                          </span>
+                          <span className="font-medium">
+                            {breakdown.diversifiedCurrent.toFixed(1)}A /{' '}
+                            {breakdown.diversifiedLoad.toFixed(2)} kW diversified
+                          </span>
+                        </div>
+                        <p className="text-white font-mono text-xs">{breakdown.formula}</p>
+                        <p className="text-white text-xs">{breakdown.regulation}</p>
                       </div>
                     </div>
                   ))}
@@ -352,6 +359,113 @@ const DiversityFactorCalculator = () => {
           </div>
 
           <CalculatorDivider category="power" />
+
+          {/* How It Worked Out — step-by-step */}
+          <Collapsible open={showWorkings} onOpenChange={setShowWorkings}>
+            <CollapsibleTrigger className="calculator-collapsible-trigger w-full">
+              <div className="flex items-center gap-3">
+                <Calculator className="h-4 w-4 text-purple-400" />
+                <span className="text-sm sm:text-base font-medium text-white">
+                  How It Worked Out
+                </span>
+              </div>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 text-white transition-transform duration-200',
+                  showWorkings && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+
+            <CollapsibleContent className="pt-2">
+              <div className="text-sm font-mono text-white space-y-4 p-3 rounded-xl bg-white/[0.04] border border-white/5">
+                {/* Step 1: List circuits */}
+                <div>
+                  <p className="text-xs text-purple-400 mb-2">Step 1: Circuit loads by type</p>
+                  {result.breakdownByType.map((b, i) => (
+                    <div key={i} className="pl-3 border-l-2 border-purple-500/30 mb-1">
+                      {b.displayName}: {b.installedCurrent.toFixed(1)}A (
+                      {b.installedLoad.toFixed(2)} kW)
+                    </div>
+                  ))}
+                </div>
+
+                {/* Step 2: Per-type diversity with formulas */}
+                <div className="pt-2 border-t border-purple-500/20">
+                  <p className="text-xs text-purple-400 mb-2">Step 2: Apply diversity per type</p>
+                  {result.breakdownByType.map((b, i) => (
+                    <div key={i} className="pl-3 border-l-2 border-purple-500/30 mb-2">
+                      <p className="font-semibold text-white">{b.displayName}:</p>
+                      {b.steps.map((step, si) => (
+                        <p key={si} className="text-white text-xs ml-2">
+                          {step}
+                        </p>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Step 3: Sum */}
+                <div className="pt-2 border-t border-purple-500/20">
+                  <p className="text-xs text-purple-400 mb-1">Step 3: Sum diversified demand</p>
+                  <p>
+                    Total diversified ={' '}
+                    {result.breakdownByType
+                      .map((b) => `${b.diversifiedCurrent.toFixed(1)}`)
+                      .join(' + ')}
+                  </p>
+                  <p>
+                    ={' '}
+                    <span className="text-white font-bold">
+                      {result.breakdownByType
+                        .reduce((sum, b) => sum + b.diversifiedCurrent, 0)
+                        .toFixed(1)}
+                      A
+                    </span>
+                  </p>
+                </div>
+
+                {/* Step 4: Convert to current */}
+                <div className="pt-2 border-t border-purple-500/20">
+                  <p className="text-xs text-purple-400 mb-1">
+                    Step 4: Overall current (
+                    {supplyType === 'three-phase' ? '3-phase' : 'single-phase'})
+                  </p>
+                  {supplyType === 'three-phase' ? (
+                    <>
+                      <p>I = (P × 1000) / (sqrt(3) × V)</p>
+                      <p>
+                        I = ({result.diversifiedLoad.toFixed(2)} × 1000) / (1.732 × {supplyVoltage})
+                      </p>
+                    </>
+                  ) : (
+                    <>
+                      <p>I = (P × 1000) / V</p>
+                      <p>
+                        I = ({result.diversifiedLoad.toFixed(2)} × 1000) / {supplyVoltage}
+                      </p>
+                    </>
+                  )}
+                  <p>
+                    I ={' '}
+                    <span className="text-white font-bold">
+                      {result.diversifiedCurrent.toFixed(1)}A
+                    </span>
+                  </p>
+                </div>
+
+                {/* Step 5: Protection sizing */}
+                <div className="pt-2 border-t border-purple-500/20">
+                  <p className="text-xs text-purple-400 mb-1">Step 5: Protection device sizing</p>
+                  <p>Diversified current: {result.diversifiedCurrent.toFixed(1)}A</p>
+                  <p>
+                    Recommended:{' '}
+                    <span className="text-white font-bold">{getMainDeviceRecommendation()}</span>
+                  </p>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
           {/* What This Means */}
           <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
@@ -406,12 +520,14 @@ const DiversityFactorCalculator = () => {
                     </div>
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
-                        <strong>BS 7671 Compliance:</strong> Based on Table 311 diversity factors
+                        <strong>IET On-Site Guide:</strong> Based on Table 1B diversity allowances
+                        (domestic) and Table H2 (commercial/industrial)
                       </p>
                     </div>
                     <div className="border-l-2 border-blue-400/40 pl-3">
                       <p className="text-white">
-                        <strong>Real Usage:</strong> Reflects actual electrical demand patterns
+                        <strong>Note:</strong> Diversity allowances are published in the IET On-Site
+                        Guide, not BS 7671 directly
                       </p>
                     </div>
                   </div>
@@ -508,7 +624,7 @@ const DiversityFactorCalculator = () => {
               <p>• Configure installation type and voltage</p>
               <p>• Add circuit loads with their types</p>
               <p>• Choose between kW or Amperage input</p>
-              <p>• Get BS 7671 compliant diversity calculations</p>
+              <p>• Get IET On-Site Guide compliant diversity calculations</p>
             </div>
           </div>
         </>
@@ -520,7 +636,7 @@ const DiversityFactorCalculator = () => {
           <div className="flex items-center gap-3">
             <BookOpen className="h-4 w-4 text-amber-400" />
             <span className="text-sm sm:text-base font-medium text-white">
-              BS 7671 Diversity Reference
+              IET Diversity Reference
             </span>
           </div>
           <ChevronDown
@@ -535,19 +651,25 @@ const DiversityFactorCalculator = () => {
           <div className="space-y-3 pl-1">
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
-                <strong className="text-white">Diversity factors from Table 311:</strong> Applied
-                based on installation type
+                <strong className="text-white">IET On-Site Guide Table 1B:</strong> Diversity
+                allowances for domestic installations
               </p>
             </div>
             <div className="border-l-2 border-amber-400/40 pl-3">
-              <p className="text-sm text-white">Consider simultaneity and load patterns</p>
-            </div>
-            <div className="border-l-2 border-amber-400/40 pl-3">
-              <p className="text-sm text-white">Apply to final circuits and distribution boards</p>
+              <p className="text-sm text-white">
+                <strong className="text-white">IET On-Site Guide Table H2:</strong> Diversity
+                allowances for commercial and industrial installations
+              </p>
             </div>
             <div className="border-l-2 border-amber-400/40 pl-3">
               <p className="text-sm text-white">
-                Document diversity assumptions for future reference
+                <strong className="text-white">Note:</strong> Diversity allowances are not published
+                in BS 7671 directly. They appear in the IET On-Site Guide (a companion publication).
+              </p>
+            </div>
+            <div className="border-l-2 border-amber-400/40 pl-3">
+              <p className="text-sm text-white">
+                Consider simultaneity and load patterns when applying diversity
               </p>
             </div>
           </div>

@@ -1,16 +1,6 @@
-import { useMemo, useState } from 'react';
-import { Badge } from '@/components/ui/badge';
-import {
-  Shield,
-  Info,
-  CheckCircle,
-  AlertTriangle,
-  BookOpen,
-  Lightbulb,
-  ChevronDown,
-  Zap,
-  FileText,
-} from 'lucide-react';
+import { useMemo, useState, useCallback } from 'react';
+import { Copy, Check, CheckCircle, AlertTriangle, ChevronDown, Zap } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 import {
   CalculatorCard,
@@ -18,11 +8,18 @@ import {
   CalculatorInput,
   CalculatorSelect,
   CalculatorActions,
-  CalculatorResult,
+  ResultValue,
   ResultsGrid,
+  ResultBadge,
+  CalculatorFormula,
+  CalculatorDivider,
+  FormulaReference,
   CALCULATOR_CONFIG,
 } from '@/components/calculators/shared';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+
+const CAT = 'protection' as const;
+const config = CALCULATOR_CONFIG[CAT];
 
 const STANDARD_SIZES = [
   1, 1.5, 2.5, 4, 6, 10, 16, 25, 35, 50, 70, 95, 120, 150, 185, 240, 300, 400,
@@ -30,7 +27,7 @@ const STANDARD_SIZES = [
 
 const K_FACTORS: Record<string, Record<number, number>> = {
   copper: { 60: 103, 70: 115, 90: 143 },
-  aluminium: { 60: 65, 70: 76, 90: 87 }, // BS 7671 Table 54.3
+  aluminium: { 60: 65, 70: 76, 90: 87 },
   steel: { 60: 46, 70: 50, 90: 50 },
 };
 
@@ -60,8 +57,25 @@ const tempOptions = [
   { value: '90', label: '90°C (XLPE)' },
 ];
 
+interface AdiabaticResult {
+  minimumCsa: number;
+  roundedCsa: number;
+  k: number;
+  usedFaultCurrent: number;
+  disconnectionTime: number;
+  material: string;
+  maxTemp: string;
+  isCompliant: boolean;
+  complianceNotes: string[];
+  safetyMargin: number;
+  zsMode: boolean;
+  zsValue?: number;
+  voltage?: number;
+}
+
 const AdiabaticCalculator = () => {
-  const config = CALCULATOR_CONFIG['protection'];
+  const { toast } = useToast();
+  const [copied, setCopied] = useState(false);
 
   const [mode, setMode] = useState<'current' | 'zs'>('current');
   const [disconnectionTime, setDisconnectionTime] = useState<string>('');
@@ -73,24 +87,14 @@ const AdiabaticCalculator = () => {
   const [zs, setZs] = useState<string>('');
   const [voltage, setVoltage] = useState<string>('230');
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const [result, setResult] = useState<{
-    minimumCsa: number;
-    roundedCsa: number;
-    k: number;
-    usedFaultCurrent: number;
-    disconnectionTime: number;
-    material: string;
-    maxTemp: string;
-    isCompliant: boolean;
-    complianceNotes: string[];
-  } | null>(null);
+  const [result, setResult] = useState<AdiabaticResult | null>(null);
 
   // Collapsible states
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [showGuidance, setShowGuidance] = useState(false);
-  const [showRegs, setShowRegs] = useState(false);
+  const [showReference, setShowReference] = useState(false);
 
+  // Derived display values (not results)
   const effectiveK = useMemo(() => {
     const kFromMap = K_FACTORS[material]?.[parseFloat(maxTemp)] ?? 115;
     const kCustom = parseFloat(customK);
@@ -123,29 +127,22 @@ const AdiabaticCalculator = () => {
 
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
-
     if (mode === 'current') {
       if (!faultCurrent || parseFloat(faultCurrent) <= 0) {
         newErrors.faultCurrent = 'Fault current must be > 0';
       }
     } else {
-      if (!zs || parseFloat(zs) <= 0) {
-        newErrors.zs = 'Zs must be > 0';
-      }
-      if (!voltage || parseFloat(voltage) <= 0) {
-        newErrors.voltage = 'Voltage must be > 0';
-      }
+      if (!zs || parseFloat(zs) <= 0) newErrors.zs = 'Zs must be > 0';
+      if (!voltage || parseFloat(voltage) <= 0) newErrors.voltage = 'Voltage must be > 0';
     }
-
     if (timePreset === 'custom' && (!disconnectionTime || parseFloat(disconnectionTime) <= 0)) {
       newErrors.disconnectionTime = 'Time must be > 0';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const calculateAdiabatic = () => {
+  const handleCalculate = useCallback(() => {
     if (!validateInputs()) return;
 
     const I = computeFaultCurrent;
@@ -166,6 +163,7 @@ const AdiabaticCalculator = () => {
 
     const minimumCsa = (I * Math.sqrt(t)) / k;
     const roundedCsa = roundUpToStandard(minimumCsa);
+    const safetyMargin = (roundedCsa / minimumCsa - 1) * 100;
 
     const complianceNotes: string[] = [];
     let isCompliant = true;
@@ -176,13 +174,11 @@ const AdiabaticCalculator = () => {
       );
       isCompliant = false;
     }
-
     if (I > 10000) {
       complianceNotes.push(
-        'Very high fault current - verify calculation method and protection coordination'
+        'Very high fault current — verify calculation method and protection coordination'
       );
     }
-
     if (roundedCsa < 1.5) {
       complianceNotes.push('Minimum 1.5mm² generally required for fixed wiring per BS 7671');
     }
@@ -197,10 +193,14 @@ const AdiabaticCalculator = () => {
       maxTemp,
       isCompliant,
       complianceNotes,
+      safetyMargin,
+      zsMode: mode === 'zs',
+      zsValue: mode === 'zs' ? parseFloat(zs) : undefined,
+      voltage: mode === 'zs' ? parseFloat(voltage) : undefined,
     });
-  };
+  }, [computeFaultCurrent, effectiveTime, effectiveK, mode, zs, voltage, material, maxTemp]);
 
-  const reset = () => {
+  const handleReset = useCallback(() => {
     setMode('current');
     setFaultCurrent('');
     setZs('');
@@ -212,354 +212,472 @@ const AdiabaticCalculator = () => {
     setCustomK('');
     setResult(null);
     setErrors({});
+  }, []);
+
+  const handleCopy = () => {
+    if (!result) return;
+    let text = `Adiabatic Equation Calculator\nMinimum CSA: ${result.minimumCsa.toFixed(2)} mm²`;
+    text += `\nStandard Size: ${result.roundedCsa} mm²`;
+    text += `\nFault Current: ${result.usedFaultCurrent.toFixed(0)} A`;
+    text += `\nDisconnection Time: ${result.disconnectionTime} s`;
+    text += `\nk Factor: ${result.k} (${result.material} @ ${result.maxTemp}°C)`;
+    text += `\nSafety Margin: ${result.safetyMargin.toFixed(1)}%`;
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    toast({ title: 'Copied to clipboard' });
+    setTimeout(() => setCopied(false), 2000);
   };
 
   const canCalculate = mode === 'current' ? !!faultCurrent : !!zs && !!voltage;
 
   return (
-    <div className="space-y-4">
-      <CalculatorCard
-        category="protection"
-        title="Adiabatic Equation Calculator"
-        description="Calculate minimum cable CSA to withstand fault current per BS 7671"
-      >
-        <CalculatorSelect
-          label="Input Mode"
-          value={mode}
-          onChange={(v) => setMode(v as 'current' | 'zs')}
-          options={modeOptions}
+    <CalculatorCard
+      category={CAT}
+      title="Adiabatic Equation Calculator"
+      description="Calculate minimum cable CSA to withstand fault current per BS 7671"
+    >
+      <CalculatorSelect
+        label="Input Mode"
+        value={mode}
+        onChange={(v) => setMode(v as 'current' | 'zs')}
+        options={modeOptions}
+      />
+
+      {mode === 'current' ? (
+        <CalculatorInput
+          label="Prospective Fault Current (I)"
+          unit="A"
+          type="text"
+          inputMode="decimal"
+          value={faultCurrent}
+          onChange={setFaultCurrent}
+          placeholder="e.g., 1000"
+          error={errors.faultCurrent}
+          hint="Prospective fault current at connection point"
         />
+      ) : (
+        <div className="space-y-4">
+          <CalculatorInputGrid columns={2}>
+            <CalculatorInput
+              label="Earth Fault Loop Impedance (Zs)"
+              unit="Ω"
+              type="text"
+              inputMode="decimal"
+              value={zs}
+              onChange={setZs}
+              placeholder="e.g., 0.35"
+              error={errors.zs}
+            />
+            <CalculatorInput
+              label="Supply Voltage (Uo)"
+              unit="V"
+              type="text"
+              inputMode="decimal"
+              value={voltage}
+              onChange={setVoltage}
+              placeholder="230"
+              error={errors.voltage}
+            />
+          </CalculatorInputGrid>
 
-        {mode === 'current' ? (
-          <CalculatorInput
-            label="Prospective Fault Current (I)"
-            unit="A"
-            type="text"
-            inputMode="decimal"
-            value={faultCurrent}
-            onChange={setFaultCurrent}
-            placeholder="e.g., 1000"
-            error={errors.faultCurrent}
-            hint="Prospective fault current at connection point"
-          />
-        ) : (
-          <div className="space-y-4">
-            <CalculatorInputGrid columns={2}>
-              <CalculatorInput
-                label="Earth Fault Loop Impedance (Zs)"
-                unit="Ω"
-                type="text"
-                inputMode="decimal"
-                value={zs}
-                onChange={setZs}
-                placeholder="e.g., 0.35"
-                error={errors.zs}
-              />
-              <CalculatorInput
-                label="Supply Voltage (Uo)"
-                unit="V"
-                type="text"
-                inputMode="decimal"
-                value={voltage}
-                onChange={setVoltage}
-                placeholder="230"
-                error={errors.voltage}
-              />
-            </CalculatorInputGrid>
-
-            {Number.isFinite(computeFaultCurrent) && computeFaultCurrent > 0 && (
-              <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
-                <div className="flex items-center gap-2 text-sm">
-                  <Zap className="h-4 w-4 text-orange-400" />
-                  <span className="text-white/70">Calculated fault current:</span>
-                  <span className="font-mono font-bold text-orange-400">
-                    {computeFaultCurrent.toFixed(0)} A
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        <CalculatorSelect
-          label="Disconnection Time"
-          value={timePreset}
-          onChange={setTimePreset}
-          options={timePresetOptions}
-        />
-
-        {timePreset === 'custom' && (
-          <CalculatorInput
-            label="Custom Time (t)"
-            unit="s"
-            type="text"
-            inputMode="decimal"
-            value={disconnectionTime}
-            onChange={setDisconnectionTime}
-            placeholder="e.g., 0.4"
-            error={errors.disconnectionTime}
-          />
-        )}
-
-        <CalculatorInputGrid columns={2}>
-          <CalculatorSelect
-            label="Conductor Material"
-            value={material}
-            onChange={setMaterial}
-            options={materialOptions}
-          />
-          <CalculatorSelect
-            label="Insulation / Max Temp"
-            value={maxTemp}
-            onChange={setMaxTemp}
-            options={tempOptions}
-          />
-        </CalculatorInputGrid>
-
-        {/* Advanced Options */}
-        <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
-          <div
-            className="rounded-xl border overflow-hidden"
-            style={{
-              borderColor: `${config.gradientFrom}30`,
-              background: `${config.gradientFrom}08`,
-            }}
-          >
-            <CollapsibleTrigger className="flex items-center justify-between w-full p-4">
-              <span className="text-sm font-medium text-white">Advanced Options</span>
-              <ChevronDown
-                className={cn(
-                  'h-4 w-4 text-white/70 transition-transform duration-200',
-                  showAdvanced && 'rotate-180'
-                )}
-              />
-            </CollapsibleTrigger>
-            <CollapsibleContent className="px-4 pb-4">
-              <CalculatorInput
-                label="Custom k Factor (optional)"
-                type="text"
-                inputMode="decimal"
-                value={customK}
-                onChange={setCustomK}
-                placeholder={`Default: ${effectiveK}`}
-                hint="Override material-based k factor from BS 7671 Table 54.3"
-              />
-            </CollapsibleContent>
-          </div>
-        </Collapsible>
-
-        <CalculatorActions
-          category="protection"
-          onCalculate={calculateAdiabatic}
-          onReset={reset}
-          isDisabled={!canCalculate}
-        />
-      </CalculatorCard>
-
-      {/* Results */}
-      {result && (
-        <div className="space-y-4 animate-fade-in">
-          <CalculatorResult category="protection">
-            <div className="text-center pb-3 border-b border-white/10">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                {result.isCompliant ? (
-                  <CheckCircle className="h-5 w-5 text-green-400" />
-                ) : (
-                  <AlertTriangle className="h-5 w-5 text-amber-400" />
-                )}
-                <p className="text-sm text-white/60">Adiabatic Calculation Results</p>
-              </div>
-              <Badge
-                variant="outline"
-                className="mb-2"
-                style={{ borderColor: `${config.gradientFrom}50`, color: config.gradientFrom }}
-              >
-                {result.material.charAt(0).toUpperCase() + result.material.slice(1)} @{' '}
-                {result.maxTemp}°C (k={result.k})
-              </Badge>
-            </div>
-
-            <ResultsGrid columns={2}>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-                <p className="text-xs text-white/60 mb-1">Minimum CSA Required</p>
-                <p className="text-2xl font-bold font-mono" style={{ color: config.gradientFrom }}>
-                  {result.minimumCsa.toFixed(2)} mm²
-                </p>
-              </div>
-              <div className="p-3 rounded-xl bg-white/5 border border-white/10 text-center">
-                <p className="text-xs text-white/60 mb-1">Standard Cable Size</p>
-                <p className="text-2xl font-bold font-mono" style={{ color: config.gradientFrom }}>
-                  {result.roundedCsa} mm²
-                </p>
-              </div>
-            </ResultsGrid>
-
-            <div className="pt-3 border-t border-white/10">
-              <div className="flex items-center gap-2 mb-2">
-                <FileText className="h-4 w-4" style={{ color: config.gradientFrom }} />
-                <span className="font-medium text-white text-sm">Calculation Details</span>
-              </div>
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div>
-                  <span className="text-white/60">Fault Current:</span>
-                  <p className="font-mono" style={{ color: config.gradientFrom }}>
-                    {result.usedFaultCurrent.toFixed(0)} A
-                  </p>
-                </div>
-                <div>
-                  <span className="text-white/60">Disconnection Time:</span>
-                  <p className="font-mono" style={{ color: config.gradientFrom }}>
-                    {result.disconnectionTime} s
-                  </p>
-                </div>
-              </div>
-              <div className="mt-3 p-2 rounded-lg bg-white/5 text-xs text-white/60">
-                <span className="font-mono">
-                  S = I × √t / k = {result.usedFaultCurrent.toFixed(0)} × √
-                  {result.disconnectionTime} / {result.k} = {result.minimumCsa.toFixed(2)} mm²
+          {Number.isFinite(computeFaultCurrent) && computeFaultCurrent > 0 && (
+            <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
+              <div className="flex items-center gap-2 text-sm">
+                <Zap className="h-4 w-4 text-orange-400" />
+                <span className="text-white">Calculated fault current:</span>
+                <span className="font-mono font-bold text-orange-400">
+                  {computeFaultCurrent.toFixed(0)} A
                 </span>
               </div>
             </div>
+          )}
+        </div>
+      )}
 
-            {result.complianceNotes.length > 0 && (
-              <div
+      <CalculatorSelect
+        label="Disconnection Time"
+        value={timePreset}
+        onChange={setTimePreset}
+        options={timePresetOptions}
+      />
+
+      {timePreset === 'custom' && (
+        <CalculatorInput
+          label="Custom Time (t)"
+          unit="s"
+          type="text"
+          inputMode="decimal"
+          value={disconnectionTime}
+          onChange={setDisconnectionTime}
+          placeholder="e.g., 0.4"
+          error={errors.disconnectionTime}
+        />
+      )}
+
+      <CalculatorInputGrid columns={2}>
+        <CalculatorSelect
+          label="Conductor Material"
+          value={material}
+          onChange={setMaterial}
+          options={materialOptions}
+        />
+        <CalculatorSelect
+          label="Insulation / Max Temp"
+          value={maxTemp}
+          onChange={setMaxTemp}
+          options={tempOptions}
+        />
+      </CalculatorInputGrid>
+
+      {/* Advanced Options */}
+      <Collapsible open={showAdvanced} onOpenChange={setShowAdvanced}>
+        <div
+          className="rounded-xl border overflow-hidden"
+          style={{
+            borderColor: `${config.gradientFrom}30`,
+            background: `${config.gradientFrom}08`,
+          }}
+        >
+          <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 px-4 py-2 text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+            <span>Advanced Options</span>
+            <ChevronDown
+              className={cn(
+                'h-4 w-4 transition-transform duration-200',
+                showAdvanced && 'rotate-180'
+              )}
+            />
+          </CollapsibleTrigger>
+          <CollapsibleContent className="px-4 pb-4">
+            <CalculatorInput
+              label="Custom k Factor (optional)"
+              type="text"
+              inputMode="decimal"
+              value={customK}
+              onChange={setCustomK}
+              placeholder={`Default: ${effectiveK}`}
+              hint="Override material-based k factor from BS 7671 Table 54.3"
+            />
+          </CollapsibleContent>
+        </div>
+      </Collapsible>
+
+      <CalculatorActions
+        category={CAT}
+        onCalculate={handleCalculate}
+        onReset={handleReset}
+        isDisabled={!canCalculate}
+        showReset={!!result}
+      />
+
+      {/* ── Results ── */}
+      {result && (
+        <div className="space-y-4 animate-fade-in">
+          {/* Status + Copy */}
+          <div className="flex items-center justify-between">
+            <ResultBadge
+              status={result.isCompliant ? 'pass' : 'warning'}
+              label={
+                result.isCompliant
+                  ? `${result.material.charAt(0).toUpperCase() + result.material.slice(1)} @ ${result.maxTemp}°C (k=${result.k})`
+                  : 'Review Required'
+              }
+            />
+            <button
+              onClick={handleCopy}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-white text-xs font-medium transition-colors touch-manipulation min-h-[44px]"
+            >
+              {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+              {copied ? 'Copied' : 'Copy'}
+            </button>
+          </div>
+
+          {/* Hero value */}
+          <div className="text-center py-3">
+            <p className="text-sm font-medium text-white mb-1">Standard Cable Size</p>
+            <p
+              className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent"
+              style={{
+                backgroundImage: `linear-gradient(135deg, ${config.gradientFrom}, ${config.gradientTo})`,
+              }}
+            >
+              {result.roundedCsa} mm²
+            </p>
+            <p className="text-sm text-white mt-2">
+              Minimum required: {result.minimumCsa.toFixed(2)} mm²
+            </p>
+          </div>
+
+          {/* Result cards */}
+          <ResultsGrid columns={2}>
+            <ResultValue
+              label="Minimum CSA"
+              value={result.minimumCsa.toFixed(2)}
+              unit="mm²"
+              category={CAT}
+              size="sm"
+            />
+            <ResultValue
+              label="Safety Margin"
+              value={`${result.safetyMargin.toFixed(1)}%`}
+              category={CAT}
+              size="sm"
+            />
+          </ResultsGrid>
+
+          {/* Safety margin indicator */}
+          {result.roundedCsa !== result.minimumCsa && (
+            <div className="flex items-center justify-between p-3 rounded-lg border text-sm bg-green-500/5 border-green-500/20">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                <span className="text-white font-medium">Safety Margin</span>
+              </div>
+              <span className="text-white shrink-0 ml-2">
+                {result.roundedCsa}mm² is {result.safetyMargin.toFixed(1)}% above minimum
+              </span>
+            </div>
+          )}
+
+          {/* Compliance notes */}
+          {result.complianceNotes.length > 0 && (
+            <div
+              className={cn(
+                'p-3 rounded-lg border text-sm',
+                result.isCompliant
+                  ? 'bg-amber-500/5 border-amber-500/20'
+                  : 'bg-red-500/5 border-red-500/20'
+              )}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle
+                  className={cn('h-4 w-4', result.isCompliant ? 'text-amber-400' : 'text-red-400')}
+                />
+                <span className="text-white font-medium">Compliance Notes</span>
+              </div>
+              <ul className="space-y-1">
+                {result.complianceNotes.map((note, index) => (
+                  <li key={index} className="flex items-start gap-2 text-white">
+                    <span
+                      className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                      style={{ backgroundColor: config.gradientFrom }}
+                    />
+                    {note}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <CalculatorDivider category={CAT} />
+
+          {/* ── How It Worked Out ── */}
+          <CalculatorFormula
+            category={CAT}
+            title="How It Worked Out"
+            defaultOpen
+            steps={[
+              {
+                label: 'Input values',
+                formula: `I = ${result.usedFaultCurrent.toFixed(0)} A | t = ${result.disconnectionTime} s | k = ${result.k} (${result.material} @ ${result.maxTemp}°C)`,
+                description: `The k factor of ${result.k} comes from BS 7671 Table 54.3 — it represents how much energy ${result.material} can absorb per mm² before the insulation (rated ${result.maxTemp}°C) is damaged.`,
+              },
+              ...(result.zsMode && result.zsValue && result.voltage
+                ? [
+                    {
+                      label: 'Fault current from Zs',
+                      formula: `I = Uo / Zs = ${result.voltage} / ${result.zsValue}`,
+                      value: `${result.usedFaultCurrent.toFixed(0)} A`,
+                      description:
+                        'Fault current calculated from measured loop impedance. This is the maximum current that would flow during a dead short at this point in the circuit.',
+                    },
+                  ]
+                : []),
+              {
+                label: 'Minimum CSA',
+                formula: `S = I × √t / k = ${result.usedFaultCurrent.toFixed(0)} × √${result.disconnectionTime} / ${result.k}`,
+                value: `${result.minimumCsa.toFixed(2)} mm²`,
+                description:
+                  'This is the smallest conductor that can carry the fault current for the disconnection time without the insulation exceeding its maximum temperature.',
+              },
+              {
+                label: 'Round up to standard size',
+                formula: `${result.minimumCsa.toFixed(2)} mm² → next standard cable size`,
+                value: `${result.roundedCsa} mm²`,
+                description:
+                  'Cables only come in standard sizes. We round up to the next available size to ensure the cable is never undersized.',
+              },
+              {
+                label: 'Safety margin',
+                value: `${result.safetyMargin.toFixed(1)}% above minimum requirement`,
+                description:
+                  result.safetyMargin > 50
+                    ? 'Generous safety margin — the selected standard size is well above the minimum. This gives extra protection against unexpected fault conditions.'
+                    : result.safetyMargin > 10
+                      ? 'Adequate safety margin above the calculated minimum.'
+                      : 'Tight margin — the cable only just meets the requirement. Consider using the next size up for additional protection.',
+              },
+            ]}
+          />
+
+          {/* ── What This Means ── */}
+          <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>What This Means</span>
+              <ChevronDown
                 className={cn(
-                  'p-3 rounded-xl border',
-                  result.isCompliant
-                    ? 'bg-amber-500/10 border-amber-500/30'
-                    : 'bg-red-500/10 border-red-500/30'
+                  'h-4 w-4 transition-transform duration-200',
+                  showGuidance && 'rotate-180'
                 )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-4"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
               >
-                <div className="flex items-center gap-2 mb-2">
-                  <AlertTriangle
-                    className={cn(
-                      'h-4 w-4',
-                      result.isCompliant ? 'text-amber-400' : 'text-red-400'
-                    )}
-                  />
-                  <span
-                    className={cn(
-                      'font-medium text-sm',
-                      result.isCompliant ? 'text-amber-300' : 'text-red-300'
-                    )}
-                  >
-                    Compliance Notes
-                  </span>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Why This Matters</p>
+                  <p className="text-sm text-white">
+                    During a fault, thousands of amps flow through the protective conductor for a
+                    fraction of a second. The "adiabatic" calculation works out whether the cable
+                    can handle that energy without its insulation melting or catching fire — it
+                    assumes all the heat stays in the conductor (no time to dissipate).
+                  </p>
                 </div>
-                <ul className="space-y-1">
-                  {result.complianceNotes.map((note, index) => (
-                    <li
-                      key={index}
-                      className={cn(
-                        'text-xs flex items-start gap-2',
-                        result.isCompliant ? 'text-amber-200' : 'text-red-200'
-                      )}
-                    >
-                      <span className="w-1 h-1 rounded-full bg-current mt-1.5 shrink-0" />
-                      {note}
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">When You Need This</p>
+                  <ul className="space-y-1">
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Sizing earthing conductors and main bonding conductors
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Verifying protective conductors in existing installations
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Checking CPCs are adequate where reduced sizes are used (e.g., 1mm² CPC in a
+                      2.5mm² T&E)
+                    </li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-sm text-white font-medium">Common k Factors (Table 54.3)</p>
+                  <ul className="space-y-1">
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Copper/PVC (70°C): k = 115 — most domestic cables
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Copper/XLPE (90°C): k = 143 — SWA and thermosetting cables
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Aluminium/PVC (70°C): k = 76 — older/commercial installations
+                    </li>
+                    <li className="flex items-start gap-2 text-sm text-white">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      Steel conduit (60°C): k = 46 — when used as CPC
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
+
+          {/* ── BS 7671 Reference ── */}
+          <Collapsible open={showReference} onOpenChange={setShowReference}>
+            <CollapsibleTrigger className="flex items-center justify-between w-full min-h-11 py-2.5 px-3 rounded-lg text-sm font-medium text-white hover:bg-white/5 transition-all touch-manipulation">
+              <span>BS 7671 Reference</span>
+              <ChevronDown
+                className={cn(
+                  'h-4 w-4 transition-transform duration-200',
+                  showReference && 'rotate-180'
+                )}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent className="pt-2">
+              <div
+                className="p-3 rounded-xl border space-y-3"
+                style={{
+                  borderColor: `${config.gradientFrom}15`,
+                  background: `${config.gradientFrom}05`,
+                }}
+              >
+                <ul className="space-y-2">
+                  {[
+                    {
+                      reg: 'Regulation 543.1.3',
+                      desc: 'Earthing conductor sizing using adiabatic equation',
+                    },
+                    {
+                      reg: 'Table 54.3',
+                      desc: 'k factors for protective conductors — copper, aluminium, steel at various temperatures',
+                    },
+                    {
+                      reg: 'Regulation 434.5.2',
+                      desc: 'Protection against fault current — breaking capacity requirements',
+                    },
+                    {
+                      reg: 'Regulation 411.3.2',
+                      desc: 'Maximum disconnection times for automatic disconnection of supply',
+                    },
+                  ].map((item) => (
+                    <li key={item.reg} className="flex items-start gap-2 text-sm">
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-2 shrink-0"
+                        style={{ backgroundColor: config.gradientFrom }}
+                      />
+                      <span className="text-white">
+                        <span className="font-medium">{item.reg}:</span> {item.desc}
+                      </span>
                     </li>
                   ))}
                 </ul>
               </div>
-            )}
-
-            {result.roundedCsa !== result.minimumCsa && (
-              <div className="p-3 rounded-xl bg-green-500/10 border border-green-500/30">
-                <div className="flex items-center gap-2 mb-1">
-                  <CheckCircle className="h-4 w-4 text-green-400" />
-                  <span className="text-sm font-medium text-green-300">Safety Margin</span>
-                </div>
-                <p className="text-xs text-green-200">
-                  The {result.roundedCsa}mm² cable provides a{' '}
-                  {((result.roundedCsa / result.minimumCsa - 1) * 100).toFixed(1)}% margin above
-                  minimum.
-                </p>
-              </div>
-            )}
-          </CalculatorResult>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       )}
 
-      {/* Why This Matters */}
-      <Collapsible open={showGuidance} onOpenChange={setShowGuidance}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#60a5fa15' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <Lightbulb className="h-4 w-4 text-blue-400" />
-              <span className="text-sm sm:text-base font-medium text-blue-300">
-                Why Adiabatic Calculations Matter
-              </span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showGuidance && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-blue-200/80">
-            <p>• Ensures cables can withstand fault currents without dangerous overheating</p>
-            <p>• BS 7671 requires protective devices to operate within specific time limits</p>
-            <p>• Undersized cables during fault conditions can cause fires</p>
-            <p>• Mandatory for earthing conductor sizing and short-circuit protection</p>
-            <p>• Proper sizing ensures compliance with UK electrical regulations</p>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
-
-      {/* BS 7671 Requirements */}
-      <Collapsible open={showRegs} onOpenChange={setShowRegs}>
-        <div className="calculator-card overflow-hidden" style={{ borderColor: '#fbbf2415' }}>
-          <CollapsibleTrigger className="agent-collapsible-trigger w-full">
-            <div className="flex items-center gap-3">
-              <BookOpen className="h-4 w-4 text-amber-400" />
-              <span className="text-sm sm:text-base font-medium text-amber-300">
-                BS 7671 Requirements
-              </span>
-            </div>
-            <ChevronDown
-              className={cn(
-                'h-4 w-4 text-white/70 transition-transform duration-200',
-                showRegs && 'rotate-180'
-              )}
-            />
-          </CollapsibleTrigger>
-          <CollapsibleContent className="p-4 pt-0 space-y-2 text-sm text-amber-200/80">
-            <p>
-              <strong className="text-amber-300">Section 543:</strong> Earthing conductors must be
-              sized using adiabatic equation
-            </p>
-            <p>
-              <strong className="text-amber-300">Table 54.3:</strong> k factors for different
-              conductor materials and insulation
-            </p>
-            <p>
-              <strong className="text-amber-300">Regulation 411.3.2:</strong> Maximum disconnection
-              times for automatic disconnection
-            </p>
-            <p>
-              <strong className="text-amber-300">Section 434:</strong> Protection against
-              overcurrent in case of short-circuit
-            </p>
-          </CollapsibleContent>
-        </div>
-      </Collapsible>
-
-      {/* Formula Reference */}
-      <div className="p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
-        <div className="flex items-start gap-2">
-          <Info className="h-4 w-4 text-orange-400 mt-0.5 shrink-0" />
-          <div className="text-sm text-orange-200">
-            <p>
-              <strong>Adiabatic Equation:</strong> S = I × √t / k
-            </p>
-            <p className="text-xs mt-1">
-              Where S = CSA (mm²), I = fault current (A), t = time (s), k = material factor
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
+      {/* Formula reference (always visible) */}
+      <FormulaReference
+        category={CAT}
+        name="Adiabatic Equation"
+        formula="S = I × √t / k"
+        variables={[
+          { symbol: 'S', description: 'Minimum CSA (mm²)' },
+          { symbol: 'I', description: 'Fault current (A)' },
+          { symbol: 't', description: 'Disconnection time (s)' },
+          { symbol: 'k', description: 'Material factor (Table 54.3)' },
+        ]}
+      />
+    </CalculatorCard>
   );
 };
 
