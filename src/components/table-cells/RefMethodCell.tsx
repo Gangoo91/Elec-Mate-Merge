@@ -35,13 +35,13 @@ const RefMethodCellComponent: React.FC<RefMethodCellProps> = ({ result, onUpdate
         </SelectTrigger>
         <SelectContent
           key={`referenceMethod-content-${result.id}`}
-          className="max-h-60 bg-background border border-border rounded-md z-[9999]"
+          className="max-h-60 w-[320px] bg-background border border-border rounded-md z-[9999]"
         >
           {referenceMethodOptions.map((option) => (
             <SelectItem
               key={option.value}
               value={option.value}
-              className="text-xs text-neutral-100"
+              className="text-xs text-neutral-100 whitespace-normal break-words"
             >
               {option.label}
             </SelectItem>

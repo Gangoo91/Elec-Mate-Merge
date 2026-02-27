@@ -1,15 +1,17 @@
 // BS 7671 Reference Methods / Types of Wiring
 
+// BS 7671 Schedule of Test Results — Type of Wiring (cable/wiring system type)
 export const wiringTypeOptions = [
-  { value: 'A', label: 'A - Enclosed in conduit in thermally insulated wall' },
-  { value: 'B', label: 'B - Enclosed in conduit on a wall or in trunking' },
-  { value: 'C', label: 'C - Clipped direct' },
-  { value: 'D', label: 'D - In conduit in masonry' },
-  { value: 'E', label: 'E - In free air or on a perforated cable tray' },
-  { value: 'F', label: 'F - Embedded direct in masonry' },
-  { value: 'G', label: 'G - Enclosed in conduit in a timber-framed wall' },
-  { value: 'H', label: 'H - Suspended from or incorporating a support wire' },
-  { value: 'O', label: 'O - Other (specify in remarks)' },
+  { value: 'T&E', label: 'T&E (Twin & Earth)' },
+  { value: 'SWA', label: 'SWA (Steel Wire Armoured)' },
+  { value: 'Singles', label: 'Singles in conduit' },
+  { value: 'Singles-trunking', label: 'Singles in trunking' },
+  { value: 'Flex', label: 'Flexible cable' },
+  { value: 'FP200', label: 'FP200 (Fire Performance)' },
+  { value: 'MICC', label: 'MICC (Mineral Insulated)' },
+  { value: 'XLPE', label: 'XLPE' },
+  { value: 'LSF', label: 'LSF / LSZH' },
+  { value: 'Other', label: 'Other (see remarks)' },
 ];
 
 export const rcdTypeOptions = [
