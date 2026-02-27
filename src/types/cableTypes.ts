@@ -27,6 +27,7 @@ export const cableSizeOptions = [
 
 // BS 7671 Table 4A2 — Reference Methods for current-carrying capacity
 export const referenceMethodOptions = [
+  { value: 'N/A', label: 'N/A' },
   { value: 'A1', label: 'A1 - Enclosed in conduit in a thermally insulated wall' },
   { value: 'A2', label: 'A2 - Enclosed in conduit in masonry' },
   { value: 'B1', label: 'B1 - Enclosed in conduit on a wall or ceiling' },
