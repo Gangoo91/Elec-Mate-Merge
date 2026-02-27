@@ -207,7 +207,11 @@ const ElectricianMentalHealth = () => {
       <div className="max-w-4xl mx-auto px-4 pb-8 space-y-6 animate-fade-in">
         {/* Back Button */}
         <div className="pt-2">
-          <SmartBackButton label="Back to Electrician Hub" className="[&>span]:inline" />
+          <SmartBackButton
+            label="Back to Dashboard"
+            to="/electrician"
+            className="[&>span]:!inline"
+          />
         </div>
 
         {/* Header */}
